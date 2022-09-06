@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('event_schedules', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('tournament_id');
+            $table->foreignId('poker_tournament_id');
             $table->string('name');
             $table->text('description');
             $table->dateTime('date_start');

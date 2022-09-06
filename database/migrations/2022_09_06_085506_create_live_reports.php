@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreignId('event_schedule_id');
             $table->string('image_caption');
             $table->dateTime('date_added');
+            $table->text('players');
             $table->timestamps();
         });
     }
