@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('live_reports', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->foreignId('event_schedule_id');
-            $table->string('image_caption');
+            $table->string('image_caption')->nullable();
             $table->dateTime('date_added');
             $table->text('players');
             $table->timestamps();

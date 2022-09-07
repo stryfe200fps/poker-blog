@@ -14,13 +14,9 @@ class LiveReport extends Model implements HasMedia
 
     use InteractsWithMedia;
     use \Backpack\CRUD\app\Models\Traits\CrudTrait;
+
     use HasFactory;
 
-    protected $guarded = ['id'];
-
-    protected $casts = [
-        'players' => 'json',
-    ];
 
     public function registerMediaConversions(?Media $media = null): void
     {
@@ -29,24 +25,47 @@ class LiveReport extends Model implements HasMedia
             ->height(300);
     }
 
-    // public function getLogoAttribute($value)
-    // {
-    //     return $this->getFirstMediaUrl('logo', 'img-logo');
-    // }
+    protected $guarded = ['id'];
 
-    public function setLogoAttribute(string $value): void
+
+ 
+
+    // protected $attributes = [
+    //     'logo' => ''
+    // ];
+
+    protected $casts = [
+        'players' => 'json',
+    ];
+
+
+    public function getFeaturedImageAttribute($value)
     {
+        return $this->getFirstMediaUrl('logo', 'img-logo');
+    }
+
+    public function setFeaturedImageAttribute($value)
+    {
+
         $this->addMediaFromBase64($value)
             ->toMediaCollection('logo');
     }
 
-    protected function logo(): Attribute 
-    {
-        return Attribute::make(
-            get: fn($value) => $this->getFirstMediaUrl('logo', 'img-logo'),
-            set: fn($value) => $value 
-        );
-    }
+    // protected function featured_image(): Attribute
+    // {
+    //     return new Attribute(
+    //         get: fn () => 'yes',
+    //         set: fn() => dd('burat')
+    //     );
+    // }
+
+    // protected function logo(): Attribute 
+    // {
+    //     return Attribute::make(
+    //         get: fn($value) => $this->getFirstMediaUrl('logo', 'img-logo'),
+    //         set: fn($value) =>  dd('burathing') 
+    //     );
+    // }
 
 
     public function event_schedule()

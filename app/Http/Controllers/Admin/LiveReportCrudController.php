@@ -41,11 +41,24 @@ class LiveReportCrudController extends CrudController
      *
      * @return void
      */
+    protected function setupShowOperation()
+    {
+        $this->setupListOperation();
+    }
+
+
     protected function setupListOperation()
     {
         CRUD::column('name');
-        // CRUD::column('description');
-        CRUD::column('event_schedule_id');
+        CRUD::column('body');
+        CRUD::column('description');
+        $this->crud->addColumns([
+            [
+                'name' => 'players',
+                ''
+            ]
+        ]);
+        // CRUD::column('event_schedule_id');
         // CRUD::column('image_caption');
         /**
          * Columns can be defined using the fluent syntax or array syntax:
@@ -54,13 +67,6 @@ class LiveReportCrudController extends CrudController
          */
     }
 
-    /**
-     * Define what happens when the Create operation is loaded.
-     *
-     * @see https://backpackforlaravel.com/docs/crud-operation-create
-     *
-     * @return void
-     */
     protected function setupCreateOperation()
     {
         CRUD::setValidation(LiveReportRequest::class);
@@ -100,7 +106,7 @@ class LiveReportCrudController extends CrudController
 
              [   //image
                 'label' => 'Image',
-                'name' => 'logo',
+                'name' => 'featured_image',
                 'type' => 'image',
                 'crop' => true, // set to true to allow cropping, false to disable
                 'aspect_ratio' => 1, // omit or set to 0 to allow any aspect ratio
@@ -181,8 +187,7 @@ class LiveReportCrudController extends CrudController
                $item->liveReportPlayers()->attach($liveReportPlayer);
            }
 
-            // $logo = $this->crud->model->addMediaFromBase64($request->get('logo'))
-            // ->toMediaCollection('logo');
+          
 
             // dd($request->get('logo'), $logo);
 
@@ -201,6 +206,7 @@ class LiveReportCrudController extends CrudController
 
            // save the redirect choice for next time
            $this->crud->setSaveAction();
+
 
            return $this->crud->performSaveAction($item->getKey());
 
