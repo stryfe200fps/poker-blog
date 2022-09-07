@@ -24,6 +24,7 @@ class ArticleFactory extends Factory
         return [
             'name' => $this->faker->name,
             'body' => $this->faker->text,
+            'slug' => $this->faker->slug,
             'user_id' => $this->faker->numberBetween(-100000, 100000),
         ];
     }

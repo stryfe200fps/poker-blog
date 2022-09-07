@@ -7,13 +7,12 @@ use Illuminate\Database\Seeder;
 
 class ArticleCategorySeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
     public function run()
     {
-        ArticleCategory::factory()->count(5)->create();
+        $categories = ['Poker News', 'Poker Article', 'Poker Blog'];
+
+        foreach ($categories as $category) { 
+            ArticleCategory::factory()->create([ 'name' => $category ]);
+        }
     }
 }

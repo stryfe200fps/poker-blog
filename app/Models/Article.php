@@ -21,4 +21,5 @@ class Article extends Model
     {
         return $this->belongsTo(ArticleCategory::class);
     }
+
 }

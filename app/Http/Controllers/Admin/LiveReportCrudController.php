@@ -55,7 +55,6 @@ class LiveReportCrudController extends CrudController
         $this->crud->addColumns([
             [
                 'name' => 'players',
-                ''
             ]
         ]);
         // CRUD::column('event_schedule_id');

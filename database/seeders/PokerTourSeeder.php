@@ -12,8 +12,12 @@ class PokerTourSeeder extends Seeder
      *
      * @return void
      */
+
     public function run()
     {
-        PokerTour::factory()->count(5)->create();
+        $tours = ['World Series of poker', 'World Poker Tour', 'European Poker Tour', '888poker LIVE', 'partypoker LIVE'];
+        foreach ($tours as $tour) { 
+            PokerTour::factory()->create(['name' => $tour]);
+        }
     }
 }

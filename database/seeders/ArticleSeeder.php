@@ -14,6 +14,11 @@ class ArticleSeeder extends Seeder
      */
     public function run()
     {
-        Article::factory()->count(5)->create();
+
+        $articles = ['Poke article sample', 'This is a poker', 'Poker', 'Article', 'Factort Poker'];
+
+        foreach ($articles as $article) { 
+            Article::factory()->create(['name' => $article, 'article_category_id' => rand(1,3)]);
+        }
     }
 }
