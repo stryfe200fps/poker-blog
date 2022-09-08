@@ -11,8 +11,8 @@ class ArticleCategorySeeder extends Seeder
     {
         $categories = ['Poker News', 'Poker Article', 'Poker Blog'];
 
-        foreach ($categories as $category) { 
-            ArticleCategory::factory()->create([ 'name' => $category ]);
+        foreach ($categories as $category) {
+            ArticleCategory::factory()->create(['title' => $category]);
         }
     }
 }

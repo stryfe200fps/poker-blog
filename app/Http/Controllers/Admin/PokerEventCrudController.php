@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\EventScheduleRequest;
+use App\Http\Requests\PokerEventRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
- * Class EventScheduleCrudController
+ * Class PokerEventCrudController
  *
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class EventScheduleCrudController extends CrudController
+class PokerEventCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -26,7 +26,7 @@ class EventScheduleCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\EventSchedule::class);
+        CRUD::setModel(\App\Models\PokerEvent::class);
         CRUD::setRoute(config('backpack.base.route_prefix').'/event-schedule');
         CRUD::setEntityNameStrings('event schedule', 'event schedules');
     }
@@ -40,7 +40,7 @@ class EventScheduleCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::column('name');
+        CRUD::column('title');
         CRUD::column('description');
         CRUD::column('date_start');
         CRUD::column('date_end');
@@ -61,9 +61,9 @@ class EventScheduleCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(EventScheduleRequest::class);
+        CRUD::setValidation(PokerEventRequest::class);
 
-        CRUD::field('name');
+        CRUD::field('title');
         CRUD::field('description');
 
         $this->crud->addFields([

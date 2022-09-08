@@ -22,7 +22,7 @@ class ArticleFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name,
+            'title' => $this->faker->name,
             'body' => $this->faker->text,
             'slug' => $this->faker->slug,
             'user_id' => $this->faker->numberBetween(-100000, 100000),

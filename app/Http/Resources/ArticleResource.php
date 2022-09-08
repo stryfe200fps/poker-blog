@@ -3,7 +3,6 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class ArticleResource extends JsonResource
 {
@@ -13,8 +12,8 @@ class ArticleResource extends JsonResource
             'name' => $this->name,
             'description' => $this->description,
             'category' => $this->article_category->name,
-            
-            'body' => $this->body 
+
+            'body' => $this->body,
         ];
     }
 }

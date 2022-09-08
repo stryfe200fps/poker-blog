@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\PokerTournamentRequest;
+use App\Http\Requests\CountryRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
- * Class PokerTournamentCrudController
+ * Class CountryCrudController
  *
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class PokerTournamentCrudController extends CrudController
+class CountryCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -26,9 +26,9 @@ class PokerTournamentCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\PokerTournament::class);
-        CRUD::setRoute(config('backpack.base.route_prefix').'/poker-tournament');
-        CRUD::setEntityNameStrings('poker tournament', 'poker tournaments');
+        CRUD::setModel(\App\Models\Country::class);
+        CRUD::setRoute(config('backpack.base.route_prefix').'/country');
+        CRUD::setEntityNameStrings('country', 'countries');
     }
 
     /**
@@ -40,11 +40,8 @@ class PokerTournamentCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::column('title');
-        CRUD::column('description');
-        CRUD::column('date_start');
-        CRUD::column('date_end');
-        CRUD::column('poker_tour');
+        CRUD::column('name');
+        CRUD::column('country_icon');
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
@@ -62,31 +59,10 @@ class PokerTournamentCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(PokerTournamentRequest::class);
+        CRUD::setValidation(CountryRequest::class);
 
-        CRUD::field('title');
-        CRUD::field('description');
-
-        $this->crud->addFields([
-
-            [   // date_range
-                'name' => ['date_start', 'date_end'], // db columns for start_date & end_date
-                'label' => 'Event Date Range',
-                'type' => 'date_range',
-
-                // OPTIONALS
-                // default values for start_date & end_date
-                'default' => ['2019-03-28 01:01', '2019-04-05 02:00'],
-                // options sent to daterangepicker.js
-                'date_range_options' => [
-                    'drops' => 'down', // can be one of [down/up/auto]
-                    'timePicker' => true,
-                    'locale' => ['format' => 'DD/MM/YYYY HH:mm'],
-                ],
-            ],
-
-        ]);
-        CRUD::field('poker_tour_id');
+        CRUD::field('name');
+        CRUD::field('country_icon');
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:

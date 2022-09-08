@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('event_schedules', function (Blueprint $table) {
+        Schema::create('poker_events', function (Blueprint $table) {
             $table->id();
             $table->foreignId('poker_tournament_id');
-            $table->string('name');
+            $table->string('title');
             $table->text('description');
             $table->dateTime('date_start');
             $table->dateTime('date_end');
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('event_schedules');
+        Schema::dropIfExists('poker_events');
     }
 };

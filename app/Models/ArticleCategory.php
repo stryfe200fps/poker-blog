@@ -18,7 +18,7 @@ class ArticleCategory extends Model
     protected $table = 'article_categories';
 
     protected $fillable = [
-        'name',
+        'title',
     ];
 
     /**

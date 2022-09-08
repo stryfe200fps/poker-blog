@@ -22,11 +22,11 @@ class PokerTournamentFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name,
+            'title' => $this->faker->name,
             'description' => $this->faker->text,
             'date_start' => $this->faker->dateTime(),
             'date_end' => $this->faker->dateTime(),
-            'poker_tour_id' => $this->faker->numberBetween(-100000, 100000),
+            'poker_tour_id' => $this->faker->numberBetween(1, 3),
         ];
     }
 }

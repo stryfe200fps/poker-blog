@@ -15,12 +15,13 @@ return new class extends Migration
     {
         Schema::create('live_reports', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->text('description')->nullable();
-            $table->foreignId('event_schedule_id');
-            $table->string('image_caption')->nullable();
+            $table->string('title');
+            $table->text('content')->nullable();
+            $table->string('day')->nullable();
+            $table->foreignId('poker_event_id');
             $table->dateTime('date_added');
             $table->text('players');
+            $table->string('image_caption')->nullable();
             $table->timestamps();
         });
     }

@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\EventSchedule;
+use App\Models\Country;
 use Illuminate\Database\Seeder;
 
-class EventScheduleSeeder extends Seeder
+class CountrySeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +14,6 @@ class EventScheduleSeeder extends Seeder
      */
     public function run()
     {
-        EventSchedule::factory()->count(5)->create();
+        Country::factory()->count(5)->create();
     }
 }

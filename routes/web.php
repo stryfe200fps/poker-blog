@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,7 +13,7 @@ use App\Http\Controllers\HomeController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/{any}',  HomeController::class)->where('any', '^(?!admin).*$');
+Route::get('/{any}', HomeController::class)->where('any', '^(?!admin).*$');
 
 Route::get('/', function () {
     return view('main');
