@@ -40,7 +40,7 @@ class PokerTourCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::column('name');
+        CRUD::column('title');
         CRUD::column('description');
 
         /**
@@ -61,7 +61,7 @@ class PokerTourCrudController extends CrudController
     {
         CRUD::setValidation(PokerTourRequest::class);
 
-        CRUD::field('name');
+        CRUD::field('title');
         CRUD::field('description');
 
         /**

@@ -7,6 +7,9 @@ use App\Models\LiveReport;
 use App\Models\LiveReportPlayer;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use Backpack\CRUD\app\Library\Widget;
+use Carbon\Carbon;
+use DateTime;
 use Illuminate\Http\Request;
 
 /**
@@ -46,16 +49,15 @@ class LiveReportCrudController extends CrudController
         $this->setupListOperation();
     }
 
-
     protected function setupListOperation()
     {
-        CRUD::column('name');
-        CRUD::column('body');
-        CRUD::column('description');
+        CRUD::column('title');
         $this->crud->addColumns([
             [
                 'name' => 'players',
-            ]
+                'type' => 'select2',
+                'attributes' => 'player_name'
+            ],
         ]);
         // CRUD::column('event_schedule_id');
         // CRUD::column('image_caption');
@@ -70,12 +72,12 @@ class LiveReportCrudController extends CrudController
     {
         CRUD::setValidation(LiveReportRequest::class);
 
-        CRUD::field('name');
+        CRUD::field('title');
         $this->crud->addFields([
 
             [   // CKEditor
-                'name' => 'description',
-                'label' => 'body',
+                'name' => 'content',
+                'label' => 'Content',
                 'type' => 'ckeditor',
                 // optional:
                 'options' => [
@@ -85,9 +87,15 @@ class LiveReportCrudController extends CrudController
                 ],
             ],
 
+            [
+                'name' => 'poker_event_id',
+                'wrapper' => [
+                    'class' => 'form-group col-md-6',
+                ],
+            ],
             [   // DateTime
                 'name' => 'date_added',
-                'label' => 'Event start',
+                'label' => 'Date',
                 'type' => 'datetime_picker',
 
                 // optional:
@@ -99,50 +107,64 @@ class LiveReportCrudController extends CrudController
                         // available tooltips: today, clear, close, selectMonth, prevMonth, nextMonth, selectYear, prevYear, nextYear, selectDecade, prevDecade, nextDecade, prevCentury, nextCentury, pickHour, incrementHour, decrementHour, pickMinute, incrementMinute, decrementMinute, pickSecond, incrementSecond, decrementSecond, togglePeriod, selectTime, selectDate
                     ],
                 ],
+                'default' => Carbon::now()->toDateTimeString(),
                 'allows_null' => true,
-                // 'default' => '2017-05-12 11:59:59',
-            ],
+                'wrapper' => [
+                    'class' => 'form-group col-md-6',
+                ],
 
-             [   //image
+            ],
+            [
+                'label' => 'Media',
+                'name' => 'divider',
+                'type' => 'custom_html',
+                'value' => '<b>Media</b>'
+            ],
+            [   
                 'label' => 'Image',
                 'name' => 'featured_image',
                 'type' => 'image',
                 'crop' => true, // set to true to allow cropping, false to disable
                 'aspect_ratio' => 1, // omit or set to 0 to allow any aspect ratio
                 'wrapper' => [
-                    'class' => 'form-group col-md-12',
+                    'class' => 'form-group col-md-6',
                 ],
-                // 'prefix'        => 'public/img/' // in case your db value is only the file name (no path), you can use this to prepend your path to the image src (in HTML), before it's shown to the user;
             ],
             [
-                'name' => 'players',
-                'label' => 'Players',
-                'type' => 'repeatable',
-                'new_item_label' => 'add player',
-                'tab' => 'Player',
-                'subfields' => [
-                    [   //image
-                        'label' => 'player',
-                        'name' => 'player_name',
-                        'options' => [
-                            'default' => '-',
-                            'p1' => 'Player 1',
-                            'p2' => 'Player 2',
-                            'p3' => 'Player 3',
-                        ],
-                        'type' => 'select_from_array',
-                    ],
-                    [   //image
-                        'label' => 'chips',
-                        'name' => 'chips',
-                        'type' => 'text',
-                    ],
+                'name' => 'image_caption',
+                'wrapper' => [
+                    'class' => 'form-group col-md-6',
                 ],
             ],
-        ]);
-        CRUD::field('event_schedule_id');
-        CRUD::field('image_caption');
 
+            
+            [
+                'name' => 'players',
+                //chip stack
+                'label' => 'Chip Counts',
+                'type' => 'repeatable',
+                'new_item_label' => 'add stack',
+                'tab' => 'Chip Stack',
+                'subfields' => [
+                    [   //image
+                        'label' => 'Player',
+                        'name' => 'player_name',
+                        'model' => 'App\Models\Player',
+                        'attribute' => 'name',
+                        'type' => 'select2',
+                    ],
+                    [   //image
+                        'label' => 'Chips',
+                        'name' => 'chips',
+                        'type' => 'number',
+                        'value' => 0
+                    ],
+                ],
+                'init_rows' => 1
+            ],
+        ]);
+
+        Widget::add()->type('script')->content('assets/js/admin/forms/chip_count.js');
 
         if ($this->crud->getCurrentOperation() === 'update') {
             $liveReport = LiveReport::find($this->crud->getCurrentEntryId());
@@ -172,9 +194,7 @@ class LiveReportCrudController extends CrudController
            // register any Model Events defined on fields
            $this->crud->registerFieldEvents();
 
-           // insert item in the db
            $item = $this->crud->create($this->crud->getStrippedSaveRequest($request));
-           // dd($request);
            $this->data['entry'] = $this->crud->entry = $item;
 
            foreach ($request->get('players') as $player) {
@@ -185,11 +205,6 @@ class LiveReportCrudController extends CrudController
                $liveReportPlayer->save();
                $item->liveReportPlayers()->attach($liveReportPlayer);
            }
-
-          
-
-            // dd($request->get('logo'), $logo);
-
 
            // collect($request->get('gallery'))
         //     ->filter(fn ($image) => $image['gallery'] != null && $image != '')
@@ -205,7 +220,6 @@ class LiveReportCrudController extends CrudController
 
            // save the redirect choice for next time
            $this->crud->setSaveAction();
-
 
            return $this->crud->performSaveAction($item->getKey());
 

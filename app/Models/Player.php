@@ -2,18 +2,19 @@
 
 namespace App\Models;
 
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class EventSchedule extends Model
+class Player extends Model
 {
-    use \Backpack\CRUD\app\Models\Traits\CrudTrait;
+    use CrudTrait;
     use HasFactory;
 
     protected $guarded = ['id'];
 
-    public function poker_tournament()
+    public function country()
     {
-        return $this->belongsTo(PokerTournament::class);
+        return $this->belongsTo(Country::class);
     }
 }

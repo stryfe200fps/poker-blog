@@ -15,8 +15,10 @@ return new class extends Migration
     {
         Schema::create('poker_tours', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('title');
+            $table->string('logo')->nullable();
             $table->text('description');
+            $table->text('content')->nullable();
             $table->timestamps();
         });
     }

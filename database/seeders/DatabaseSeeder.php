@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-use App\Models\ArticleCategory;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -17,19 +16,24 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-
         User::factory()->create([
             'name' => 'Adi',
             'email' => 'admin@chanzglobal.com',
-            'password' => bcrypt('admin')
+            'password' => bcrypt('admin'),
         ]);
 
         $this->call([
             ArticleCategorySeeder::class,
-            PokerTourSeeder::class,
-            ArticleSeeder::class
-        ]);
+            ArticleSeeder::class,
+            CountrySeeder::class,
+            PlayerSeeder::class,
 
-       
+            PokerTourSeeder::class,
+            PokerTournamentSeeder::class,
+            PokerEventSeeder::class,
+
+            LiveReportSeeder::class,
+
+        ]);
     }
 }

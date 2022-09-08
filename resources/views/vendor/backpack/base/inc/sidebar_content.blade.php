@@ -15,18 +15,21 @@
 @endrole
 
 <li class="nav-item nav-dropdown">
-    <a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon la la-heart"></i> Poker</a>
+    <a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon la la-heart"></i> Live Reporting </a>
     <ul class="nav-dropdown-items">
-
-<li class="nav-item"><a class="nav-link" href="{{ backpack_url('event-schedule') }}"><i class="nav-icon la la-calendar"></i> Event schedules</a></li>
-<li class="nav-item"><a class="nav-link" href="{{ backpack_url('live-report') }}"><i class="nav-icon la la-table"></i> Live reports</a></li>
-<li class="nav-item"><a class="nav-link" href="{{ backpack_url('poker-tour') }}"><i class="nav-icon la la-plane"></i> Poker tours</a></li>
-<li class="nav-item"><a class="nav-link" href="{{ backpack_url('poker-tournament') }}"><i class="nav-icon la la-heart"></i> Poker tournaments</a></li>
-
+        <li class="nav-item"><a class="nav-link" href="{{ backpack_url('live-report') }}"><i class="nav-icon la la-calendar"></i> Live Events </a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ backpack_url('tsournament') }}"><i class="nav-icon la la-heart"></i> All reports </a></li>
     </ul>
 </li>
 
-
+<li class="nav-item nav-dropdown">
+    <a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon la la-heart"></i> Tours & Events</a>
+    <ul class="nav-dropdown-items">
+<li class="nav-item"><a class="nav-link" href="{{ backpack_url('event-schedule') }}"><i class="nav-icon la la-calendar"></i> Events </a></li>
+<li class="nav-item"><a class="nav-link" href="{{ backpack_url('poker-tournament') }}"><i class="nav-icon la la-heart"></i> Tournaments</a></li>
+<li class="nav-item"><a class="nav-link" href="{{ backpack_url('poker-tour') }}"><i class="nav-icon la la-plane"></i> Tours</a></li>
+    </ul>
+</li>
 
 
 <li class="nav-item nav-dropdown">
@@ -40,8 +43,10 @@
 </li>
 
 
-
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('page') }}'><i class='nav-icon la la-file-o'></i> <span>Pages</span></a></li>
 <li class="nav-item"><a class="nav-link" href="{{ backpack_url('elfinder') }}"><i class="nav-icon la la-files-o"></i> <span>{{ trans('backpack::crud.file_manager') }}</span></a></li>
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('setting') }}'><i class='nav-icon la la-cog'></i> <span>Settings</span></a></li>
 <li class="nav-item"><a class="nav-link" href="{{ backpack_url('live-report-player') }}"><i class="nav-icon la la-users"></i> Live report players</a></li>
+<li class="nav-item"><a class="nav-link" href="{{ backpack_url('country') }}"><i class="nav-icon la la-question"></i> Countries</a></li>
+<li class="nav-item"><a class="nav-link" href="{{ backpack_url('player') }}"><i class="nav-icon la la-question"></i> Players</a></li>
+<li class="nav-item"><a class="nav-link" href="{{ backpack_url('chip-count') }}"><i class="nav-icon la la-question"></i> Chip counts</a></li>

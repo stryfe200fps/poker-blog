@@ -14,6 +14,11 @@ class PokerTournamentSeeder extends Seeder
      */
     public function run()
     {
-        PokerTournament::factory()->count(5)->create();
+        // PokerTournament::factory()->count(5)->create();
+        $tournaments = ['2020 Poker Tournament', '2020 Online Poker Tournament', 'Tours 2021'];
+
+        foreach ($tournaments as $tournament) {
+            PokerTournament::factory()->create(['title' => $tournament]);
+        }
     }
 }

@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\PokerTour;
+use App\Models\Country;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class PokerTourFactory extends Factory
+class CountryFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = PokerTour::class;
+    protected $model = Country::class;
 
     /**
      * Define the model's default state.
@@ -22,8 +22,8 @@ class PokerTourFactory extends Factory
     public function definition()
     {
         return [
-            'title' => $this->faker->name,
-            'description' => $this->faker->text,
+            'name' => $this->faker->country,
+            'country_icon' => $this->faker->word,
         ];
     }
 }
