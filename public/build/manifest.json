@@ -1,0 +1,47 @@
+{
+  "resources/css/app.css": {
+    "file": "assets/app.7c3c19f8.js",
+    "src": "resources/css/app.css",
+    "isEntry": true
+  },
+  "resources/js/app.js": {
+    "file": "assets/app.b00ef529.js",
+    "src": "resources/js/app.js",
+    "isEntry": true,
+    "dynamicImports": [
+      "resources/src/pages/poker/index.vue",
+      "resources/src/pages/article/index.vue",
+      "resources/src/pages/about/index.vue",
+      "resources/src/pages/Adi.vue"
+    ]
+  },
+  "resources/src/pages/poker/index.vue": {
+    "file": "assets/index.42ddd0ce.js",
+    "src": "resources/src/pages/poker/index.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/src/pages/article/index.vue": {
+    "file": "assets/index.b9f0c5ac.js",
+    "src": "resources/src/pages/article/index.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/src/pages/about/index.vue": {
+    "file": "assets/index.bd804c7f.js",
+    "src": "resources/src/pages/about/index.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/src/pages/Adi.vue": {
+    "file": "assets/Adi.e403e044.js",
+    "src": "resources/src/pages/Adi.vue",
+    "isDynamicEntry": true
+  }
+}
