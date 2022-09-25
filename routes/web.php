@@ -1,16 +1,17 @@
 <?php
 
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use App\Http\Controllers\HomeController;
-use App\Models\Article;
-use App\Models\EventPayout;
-use App\Models\EventReport;
 use App\Models\Payout;
 use App\Models\Player;
-use Illuminate\Support\Facades\Schema;
+use App\Models\Article;
+use App\Models\EventChip;
+use App\Models\EventPayout;
+use App\Models\EventReport;
 use Rap2hpoutre\FastExcel\FastExcel;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Schema;
+use App\Http\Controllers\HomeController;
 use Backpack\PageManager\app\Models\Page;
 use App\Http\Resources\LOFApiEventReportsResource;
 
@@ -77,6 +78,12 @@ Route::middleware([
 Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
 Route::get('admin/live_events', function () {
     return view('vendor.backpack.page.live_events');
+});
+
+Route::get('admin/player_history/{id}', function ($id) {
+    return view('vendor.backpack.page.player_chips_history', [
+        'chips' => EventChip::with('event')->orderByDesc('updated_at')->where('player_id', $id)->limit(10)->get()
+    ]);
 });
 
 Route::post('filepond', function () {

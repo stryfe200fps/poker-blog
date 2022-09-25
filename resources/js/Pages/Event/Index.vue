@@ -65,7 +65,7 @@ onMounted(async() => {
     // selectDay.value[0].setAttribute("selected", true);
 
     if (eventStore.eventData.data) {
-        days.value = Object.keys(eventData.value.available_days)[0]
+        days.value = Object.keys(eventData.value.available_days)[Object.keys(eventData.value.available_days).length - 1]
         fetchLiveReports()
     } 
 });
