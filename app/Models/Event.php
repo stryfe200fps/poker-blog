@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Cocur\Slugify\Slugify;
 use Spatie\Sluggable\HasSlug;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\Sluggable\SlugOptions;
@@ -15,8 +16,29 @@ class Event extends Model implements HasMedia
     use \Backpack\CRUD\app\Models\Traits\CrudTrait;
     use HasFactory;
     use InteractsWithMedia;
+    use HasSlug;
 
     protected $guarded = ['id'];
+
+    public function getSlugOptions(): SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('title')
+            ->saveSlugsTo('slug');
+    }
+
+    public function getSlugAttribute($value)
+    {
+        return $value;
+    }
+
+    public function setSlugAttribute($value)
+    {
+        if ($value !== null) 
+        {
+            $this->attributes['slug'] = $value;
+        }
+    }
     // use HasSlug;
 
     // public function getSlugOptions(): SlugOptions
@@ -114,4 +136,6 @@ class Event extends Model implements HasMedia
     {
         return '<a class="btn btn-sm btn-link"  href="chip-count?event='.urlencode($this->attributes['id']).'" data-toggle="tooltip" title="Chip  Count"><i class="fa fa-search"></i> Chip Counts  </a>';
     }
+
+
 }

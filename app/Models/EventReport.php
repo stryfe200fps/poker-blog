@@ -212,7 +212,6 @@ class EventReport extends Model implements HasMedia
                     // }
 
                     // if (!$checkIfHasPayout->count() ) {
-
                     //  $createdEvent =   EventPayout::create([
                     //         'name' =>  Player::find($eventChipPlayer->player_id)->name,
                     //         'prize' => $eventChipPlayer->payout,
@@ -228,11 +227,9 @@ class EventReport extends Model implements HasMedia
                     //     $payout = $checkIfHasPayout->first();
                     //     $payout->prize = $eventChipPlayer->payout;
                     //     $payout->position = $eventChipPlayer->rank;
-
                     //     $savedEventChip->event_payout_id = $payout->id;
                     //     $payout->save();
                     // }
-
 
                 }
             }

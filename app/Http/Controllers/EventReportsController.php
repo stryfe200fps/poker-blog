@@ -47,7 +47,8 @@ class EventReportsController extends Controller
             ])
            ->thenReturn();
 
-        return LOFApiEventReportsResource::collection($pipe->paginate(10));
+        return LOFApiEventReportsResource::collection($pipe->paginate(10))->collection->groupBy('level.name');
+        // return LOFApiEventReportsResource::collection($pipe->paginate(10));
     }
 
 

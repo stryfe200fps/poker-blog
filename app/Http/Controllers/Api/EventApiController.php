@@ -34,7 +34,6 @@ class EventApiController extends Controller
             $things = $event->addMediaFromRequest('image')
                     ->toMediaCollection('event_gallery');
         }
-
         return 200;
     }
 

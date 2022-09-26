@@ -30,7 +30,6 @@ class LOFApiEventReportsResource extends JsonResource
             'article_author' => $this->article_author,
             'level' => $this->level,
             'event_chips' => EventChipsResource::collection($this->event_chips),
-         
         ];
     }
 }
