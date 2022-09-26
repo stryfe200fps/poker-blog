@@ -58,8 +58,7 @@ class EventChip extends Model
         if ($this->attributes['event_report_id'] === null)
             return;
 
-
-        $q = EventChip::
+        $q = $this-> 
         where('event_id', $this->event_id)
         ->whereNotNull('event_report_id');
 

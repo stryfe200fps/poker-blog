@@ -31,10 +31,10 @@ class EventReportsController extends Controller
    
         // return LOFApiEventReportsResource::collection(EventReport::with(['player', 'article_author', 'level', 'event_chips', 'event_chips.player', 'event_chips.player.country'])->where('event_id', request()->all()['event'])->paginate(10));
         $liveReport = EventReport::with(
-            ['player', 'article_author', 'level' => function ($q){ 
+            [ 'player', 'article_author', 'level' => function ($q){ 
                 $q->orderByDesc('level');
             }, 'event_chips', 
-            'event_chips.player', 'event_chips.player.country'])
+            'event_chips' , 'event_chips.player', 'event_chips.player.country', 'event', 'media'])
              ->where('event_id', request()->all()['event'])
              ;
 
@@ -47,7 +47,7 @@ class EventReportsController extends Controller
             ])
            ->thenReturn();
 
-        return LOFApiEventReportsResource::collection($pipe->paginate(100));
+        return LOFApiEventReportsResource::collection($pipe->paginate(10));
     }
 
 
