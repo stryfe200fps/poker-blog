@@ -9,6 +9,7 @@ use App\Helpers\LiveReportOrder;
 use App\Helpers\LiveReportFilterByDays;
 use App\Http\Resources\LOFApiLiveReportsResource;
 use App\Http\Resources\LOFApiEventReportsResource;
+use App\Http\Resources\ReportCollection;
 
 class EventReportsController extends Controller
 {
@@ -47,7 +48,17 @@ class EventReportsController extends Controller
             ])
            ->thenReturn();
 
-        return LOFApiEventReportsResource::collection($pipe->paginate(10))->collection->groupBy('level.name');
+           return new ReportCollection($pipe->paginate(10));
+
+        // $reports = LOFApiEventReportsResource::collection($pipe->paginate(10));
+
+        // return $reports;
+        // $reports->setCollection($reports );
+        // $reports->setCollection( LOFApiEventReportsResource::collection($reports) );
+
+        // return $reports;
+       
+        return LOFApiEventReportsResource::collection($pipe->paginate(10))->groupBy('level.name');
         // return LOFApiEventReportsResource::collection($pipe->paginate(10));
     }
 

@@ -24,7 +24,9 @@
             </li>
         </ul>
         <div class="tab-content">
-            <div v-show="tab == 0 && reports.length"  id="liveReport">
+            repo
+            {{ reports }}
+            <!-- <div v-show="tab == 0 && reports.length"  id="liveReport">
                 <div v-for="(reports, level, index) in groupedReports" :key="index" class="single-post-box round">
                     <EachReport v-for="(item, index) in reports" :key="index" :item="item"/>
 
@@ -33,7 +35,7 @@
                     </div>
                     <EachReport v-for="(item, index) in reports" :key="index" :item="item"/>
                 </div>
-            </div>
+            </div> -->
             <div v-show="tab == 1">
                 <div class="margin-top">
                     <CustomeTable v-if="event?.chip_stacks?.length">
@@ -137,15 +139,15 @@ const props = defineProps({
     }
 });
 
-    const groupedReports = computed(() => {
-        const levels = [... new Set(props.reports.map(report => report.level.name))];
-        const testObj = {}
-        const levelObj = levels.map(level => testObj[level] = []);
-        const groupedLevels = props.reports.map(report => {
-            testObj[report.level.name].push(report);
-        })
-        return testObj;
-    });
+    // const groupedReports = computed(() => {
+    //     const levels = [... new Set(props.reports.map(report => report.level.name))];
+    //     const testObj = {}
+    //     const levelObj = levels.map(level => testObj[level] = []);
+    //     const groupedLevels = props.reports.map(report => {
+    //         testObj[report.level.name].push(report);
+    //     })
+    //     return testObj;
+    // });
 
     const items = ref([]);
 
