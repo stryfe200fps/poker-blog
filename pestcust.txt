@@ -1,0 +1,215 @@
+App\Models\EventReport {#5080
+  #connection: "sqlite"
+  #table: null
+  #primaryKey: "id"
+  #keyType: "int"
+  +incrementing: true
+  #with: []
+  #withCount: []
+  +preventsLazyLoading: false
+  #perPage: 15
+  +exists: true
+  +wasRecentlyCreated: true
+  #escapeWhenCastingToString: false
+  #attributes: array:12 [
+    "title" => "Prof."
+    "content" => "Quasi rerum sint molestiae quia soluta. Repellendus itaque quia pariatur non labore. Sunt a quaerat vitae quia dolores laboriosam quia ipsa."
+    "day" => 1
+    "level_id" => 2
+    "players" => "1"
+    "event_id" => 1
+    "article_author_id" => 1
+    "date_added" => "1975-07-09"
+    "image_caption" => "Prof. Vada Purdy Jr."
+    "id" => 20
+    "updated_at" => "2022-09-22 06:49:58"
+    "created_at" => "2022-09-22 06:49:58"
+  ]
+  #original: array:12 [
+    "title" => "Prof."
+    "content" => "Quasi rerum sint molestiae quia soluta. Repellendus itaque quia pariatur non labore. Sunt a quaerat vitae quia dolores laboriosam quia ipsa."
+    "day" => 1
+    "level_id" => 2
+    "players" => "1"
+    "event_id" => 1
+    "article_author_id" => 1
+    "date_added" => "1975-07-09"
+    "image_caption" => "Prof. Vada Purdy Jr."
+    "id" => 20
+    "updated_at" => "2022-09-22 06:49:58"
+    "created_at" => "2022-09-22 06:49:58"
+  ]
+  #changes: []
+  #casts: []
+  #classCastCache: []
+  #attributeCastCache: []
+  #dates: []
+  #dateFormat: null
+  #appends: []
+  #dispatchesEvents: []
+  #observables: []
+  #relations: array:1 [
+    "event_chips" => Illuminate\Database\Eloquent\Collection {#5015
+      #items: array:1 [
+        0 => App\Models\EventChip {#5019
+          #connection: "sqlite"
+          #table: "event_chips"
+          #primaryKey: "id"
+          #keyType: "int"
+          +incrementing: true
+          #with: []
+          #withCount: []
+          +preventsLazyLoading: false
+          #perPage: 15
+          +exists: true
+          +wasRecentlyCreated: false
+          #escapeWhenCastingToString: false
+          #attributes: array:11 [
+            "id" => 1
+            "name" => "Mr. Davin Prosacco"
+            "player_id" => 1
+            "event_id" => 1
+            "event_report_id" => 20
+            "current_chips" => 3000
+            "payout" => 0.0
+            "rank" => 1
+            "chips_before" => 6445
+            "created_at" => "2022-09-22 06:49:58"
+            "updated_at" => "2022-09-22 06:49:58"
+          ]
+          #original: array:11 [
+            "id" => 1
+            "name" => "Mr. Davin Prosacco"
+            "player_id" => 1
+            "event_id" => 1
+            "event_report_id" => 20
+            "current_chips" => 3000
+            "payout" => 0.0
+            "rank" => 1
+            "chips_before" => 6445
+            "created_at" => "2022-09-22 06:49:58"
+            "updated_at" => "2022-09-22 06:49:58"
+          ]
+          #changes: []
+          #casts: array:1 [
+            "id" => "integer"
+          ]
+          #classCastCache: []
+          #attributeCastCache: []
+          #dates: []
+          #dateFormat: null
+          #appends: []
+          #dispatchesEvents: []
+          #observables: []
+          #relations: []
+          #touches: []
+          +timestamps: true
+          #hidden: []
+          #visible: []
+          #fillable: array:9 [
+            0 => "chips"
+            1 => "name"
+            2 => "current_chips"
+            3 => "player_id"
+            4 => "event_id"
+            5 => "event_report_id"
+            6 => "chips_before"
+            7 => "rank"
+            8 => "payout"
+          ]
+          #guarded: array:1 [
+            0 => "*"
+          ]
+        }
+      ]
+      #escapeWhenCastingToString: false
+    }
+  ]
+  #touches: []
+  +timestamps: true
+  #hidden: []
+  #visible: []
+  #fillable: []
+  #guarded: array:1 [
+    0 => "id"
+  ]
+  +mediaConversions: []
+  +mediaCollections: []
+  #deletePreservingMedia: false
+  #unAttachedMediaLibraryItems: []
+}
+Illuminate\Database\Eloquent\Collection {#5015
+  #items: array:1 [
+    0 => App\Models\EventChip {#5019
+      #connection: "sqlite"
+      #table: "event_chips"
+      #primaryKey: "id"
+      #keyType: "int"
+      +incrementing: true
+      #with: []
+      #withCount: []
+      +preventsLazyLoading: false
+      #perPage: 15
+      +exists: true
+      +wasRecentlyCreated: false
+      #escapeWhenCastingToString: false
+      #attributes: array:11 [
+        "id" => 1
+        "name" => "Mr. Davin Prosacco"
+        "player_id" => 1
+        "event_id" => 1
+        "event_report_id" => 20
+        "current_chips" => 3000
+        "payout" => 0.0
+        "rank" => 1
+        "chips_before" => 6445
+        "created_at" => "2022-09-22 06:49:58"
+        "updated_at" => "2022-09-22 06:49:58"
+      ]
+      #original: array:11 [
+        "id" => 1
+        "name" => "Mr. Davin Prosacco"
+        "player_id" => 1
+        "event_id" => 1
+        "event_report_id" => 20
+        "current_chips" => 3000
+        "payout" => 0.0
+        "rank" => 1
+        "chips_before" => 6445
+        "created_at" => "2022-09-22 06:49:58"
+        "updated_at" => "2022-09-22 06:49:58"
+      ]
+      #changes: []
+      #casts: array:1 [
+        "id" => "integer"
+      ]
+      #classCastCache: []
+      #attributeCastCache: []
+      #dates: []
+      #dateFormat: null
+      #appends: []
+      #dispatchesEvents: []
+      #observables: []
+      #relations: []
+      #touches: []
+      +timestamps: true
+      #hidden: []
+      #visible: []
+      #fillable: array:9 [
+        0 => "chips"
+        1 => "name"
+        2 => "current_chips"
+        3 => "player_id"
+        4 => "event_id"
+        5 => "event_report_id"
+        6 => "chips_before"
+        7 => "rank"
+        8 => "payout"
+      ]
+      #guarded: array:1 [
+        0 => "*"
+      ]
+    }
+  ]
+  #escapeWhenCastingToString: false
+}

@@ -13,10 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('poker_tours', function (Blueprint $table) {
+        Schema::create('tours', function (Blueprint $table) {
+        // Schema::create('poker_tours', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('logo')->nullable();
+            $table->string('image')->nullable();
             $table->text('description');
             $table->text('content')->nullable();
             $table->timestamps();
@@ -30,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('poker_tours');
+        Schema::dropIfExists('tours');
     }
 };

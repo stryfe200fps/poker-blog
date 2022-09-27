@@ -26,6 +26,7 @@ class CountryCrudController extends CrudController
      */
     public function setup()
     {
+        $this->crud->denyAccess('show');
         CRUD::setModel(\App\Models\Country::class);
         CRUD::setRoute(config('backpack.base.route_prefix').'/country');
         CRUD::setEntityNameStrings('country', 'countries');
@@ -41,7 +42,8 @@ class CountryCrudController extends CrudController
     protected function setupListOperation()
     {
         CRUD::column('name');
-        CRUD::column('country_icon');
+
+        $this->crud->denyAccess('show');
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
@@ -62,7 +64,6 @@ class CountryCrudController extends CrudController
         CRUD::setValidation(CountryRequest::class);
 
         CRUD::field('name');
-        CRUD::field('country_icon');
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:

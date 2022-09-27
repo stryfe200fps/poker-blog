@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\PokerTour;
+use App\Models\Tour;
 use Illuminate\Database\Seeder;
 
-class PokerTourSeeder extends Seeder
+class TourSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,7 +16,7 @@ class PokerTourSeeder extends Seeder
     {
         $tours = ['World Series of poker', 'World Poker Tour', 'European Poker Tour', '888poker LIVE', 'partypoker LIVE'];
         foreach ($tours as $tour) {
-            PokerTour::factory()->create(['title' => $tour]);
+            Tour::factory()->create(['title' => $tour]);
         }
     }
 }

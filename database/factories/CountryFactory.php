@@ -23,7 +23,6 @@ class CountryFactory extends Factory
     {
         return [
             'name' => $this->faker->country,
-            'country_icon' => $this->faker->word,
         ];
     }
 }

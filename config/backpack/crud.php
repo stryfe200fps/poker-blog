@@ -451,6 +451,7 @@ return [
         // "zu_ZA" => "Zulu (South Africa)",
         // "zu" => "Zulu"
     ],
+    'saveAllInputsExcept' => false,
 
     'view_namespaces' => [
         'buttons' => [

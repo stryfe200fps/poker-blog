@@ -1,0 +1,65 @@
+App\Models\EventReport {#5080
+  #connection: "sqlite"
+  #table: null
+  #primaryKey: "id"
+  #keyType: "int"
+  +incrementing: true
+  #with: []
+  #withCount: []
+  +preventsLazyLoading: false
+  #perPage: 15
+  +exists: true
+  +wasRecentlyCreated: true
+  #escapeWhenCastingToString: false
+  #attributes: array:12 [
+    "title" => "Prof."
+    "content" => "Consequatur quia voluptas eum est. Libero harum harum ad velit vel. Magni quibusdam corrupti aut sint ullam. Illo porro corrupti accusamus quasi."
+    "day" => 1
+    "level_id" => 2
+    "players" => "1"
+    "event_id" => 1
+    "article_author_id" => 1
+    "date_added" => "1996-03-06"
+    "image_caption" => "Marques Bruen II"
+    "id" => 20
+    "updated_at" => "2022-09-22 06:49:19"
+    "created_at" => "2022-09-22 06:49:19"
+  ]
+  #original: array:12 [
+    "title" => "Prof."
+    "content" => "Consequatur quia voluptas eum est. Libero harum harum ad velit vel. Magni quibusdam corrupti aut sint ullam. Illo porro corrupti accusamus quasi."
+    "day" => 1
+    "level_id" => 2
+    "players" => "1"
+    "event_id" => 1
+    "article_author_id" => 1
+    "date_added" => "1996-03-06"
+    "image_caption" => "Marques Bruen II"
+    "id" => 20
+    "updated_at" => "2022-09-22 06:49:19"
+    "created_at" => "2022-09-22 06:49:19"
+  ]
+  #changes: []
+  #casts: []
+  #classCastCache: []
+  #attributeCastCache: []
+  #dates: []
+  #dateFormat: null
+  #appends: []
+  #dispatchesEvents: []
+  #observables: []
+  #relations: []
+  #touches: []
+  +timestamps: true
+  #hidden: []
+  #visible: []
+  #fillable: []
+  #guarded: array:1 [
+    0 => "id"
+  ]
+  +mediaConversions: []
+  +mediaCollections: []
+  #deletePreservingMedia: false
+  #unAttachedMediaLibraryItems: []
+}
+"1"

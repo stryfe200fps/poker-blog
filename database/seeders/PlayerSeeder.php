@@ -14,6 +14,11 @@ class PlayerSeeder extends Seeder
      */
     public function run()
     {
-        Player::factory()->count(5)->create();
+        $players = ['Justin Bonomo', 'Bryn kenney', 'Daniel Negreanu', 'Stephen Chidwick', 'Erik Seidel', 'David Peters', 'Dan Smith'];
+        foreach ($players as $name) {
+            Player::factory()->create([
+                'name' => $name,
+            ]);
+        }
     }
 }

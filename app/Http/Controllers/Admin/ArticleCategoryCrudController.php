@@ -26,6 +26,7 @@ class ArticleCategoryCrudController extends CrudController
      */
     public function setup()
     {
+        $this->crud->denyAccess('show');
         CRUD::setModel(\App\Models\ArticleCategory::class);
         CRUD::setRoute(config('backpack.base.route_prefix').'/article-category');
         CRUD::setEntityNameStrings('article category', 'article categories');
@@ -40,7 +41,7 @@ class ArticleCategoryCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::column('name');
+        CRUD::column('title');
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
@@ -60,7 +61,7 @@ class ArticleCategoryCrudController extends CrudController
     {
         CRUD::setValidation(ArticleCategoryRequest::class);
 
-        CRUD::field('name');
+        CRUD::field('title');
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:

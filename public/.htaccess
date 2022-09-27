@@ -5,6 +5,7 @@
 
     RewriteEngine On
 
+    Redirect 301 /home https://www.lifeofpoker.com
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]

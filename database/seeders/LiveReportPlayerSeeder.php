@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\LiveReportPlayer;
+use App\Models\EventChip;
 use Illuminate\Database\Seeder;
 
-class LiveReportPlayerSeeder extends Seeder
+class EventChipSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +14,6 @@ class LiveReportPlayerSeeder extends Seeder
      */
     public function run()
     {
-        LiveReportPlayer::factory()->count(5)->create();
+        EventChip::factory()->count(5)->create();
     }
 }
