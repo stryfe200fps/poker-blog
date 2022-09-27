@@ -29,4 +29,9 @@ class ArticleCategory extends Model
     protected $casts = [
         'id' => 'integer',
     ];
+
+    public function articles()
+    {
+        return $this->belongsToMany(Article::class);
+    }
 }

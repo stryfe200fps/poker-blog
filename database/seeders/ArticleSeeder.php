@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Article;
+use App\Models\ArticleCategory;
 use Illuminate\Database\Seeder;
 
 class ArticleSeeder extends Seeder
@@ -14,9 +15,13 @@ class ArticleSeeder extends Seeder
      */
     public function run()
     {
-        $articles = ['Poke article sample', 'This is a poker', 'Poker', 'Article', 'Factort Poker'];
+        $articles = ['Xin Hua Lai wins the APPT Main Event for ₱5,973,000 ', 'Seina Asagiri leads last 21 players into final day of the APPT Main Event ',
+            'Poker', 'APPT Main Event attracts a total of 801 entries ', 'James Mendoza wins the APPT Super High Roller ₱6,206,333 ',
+            'Junya Kubo wins APPT National for ₱2,465,000! ',
+        ];
         foreach ($articles as $article) {
-            Article::factory()->create(['title' => $article, 'article_category_id' => rand(1, 3)]);
+            $createdArticle = Article::factory()->create(['title' => $article]);
+            $createdArticle->article_categories()->attach(ArticleCategory::first());
         }
     }
 }

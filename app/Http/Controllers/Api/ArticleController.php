@@ -10,10 +10,11 @@ class ArticleController extends Controller
 {
     public function index()
     {
-        return  ArticleResource::collection(Article::paginate(10));
+        return  ArticleResource::collection(Article::with(['article_author', 'media','article_categories'])->latest()->paginate(10));
     }
 
     public function show($slug)
     {
+        return new ArticleResource(Article::where('slug', $slug)->first());
     }
 }

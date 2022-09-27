@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ArticleCategoryRequest extends FormRequest
@@ -25,7 +26,9 @@ class ArticleCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string',
+                'title' => [
+                    'required',
+                Rule::unique('article_categories')->ignore(request()->get('id')), ],
         ];
     }
 
@@ -50,6 +53,7 @@ class ArticleCategoryRequest extends FormRequest
     {
         return [
             //
+            'title.required' => 'Title is required',
         ];
     }
 }

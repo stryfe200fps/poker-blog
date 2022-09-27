@@ -24,7 +24,7 @@ class PlayerFactory extends Factory
         return [
             'name' => $this->faker->firstName.' '.$this->faker->lastName,
             'pseudonym' => $this->faker->name,
-            'country_id' => $this->faker->numberBetween(-100000, 100000),
+            'country_id' => $this->faker->numberBetween(1, 4),
         ];
     }
 }

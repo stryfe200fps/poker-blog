@@ -25,7 +25,13 @@ class ArticleRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'name' => 'required|min:5|max:255'
+            'title' => [
+                'required',
+                // Rule::unique('organizations')->ignore(request()->get('id')),
+            ],
+            'article_categories' => 'required',
+            'body' => 'required',
+            'published_date' => 'required'
         ];
     }
 
@@ -49,7 +55,10 @@ class ArticleRequest extends FormRequest
     public function messages()
     {
         return [
-            //
+            'title.required' => 'Title is required',
+            'article_category.required' => 'Category is required',
+            'body.required' => 'Content is required',
+            'published_date.required' => 'Published date is required',
         ];
     }
 }

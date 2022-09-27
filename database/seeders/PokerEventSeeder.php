@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\PokerEvent;
+use App\Models\Event;
 use Illuminate\Database\Seeder;
 
 class PokerEventSeeder extends Seeder
@@ -14,10 +14,11 @@ class PokerEventSeeder extends Seeder
      */
     public function run()
     {
-        $schedules = ['#75 Online In Okada', '#76 Online in World Trade', '#200 Nice Trade Poker'];
+        $schedules = ['Event #5: $500 NLH Turbo Deepstack', 'Event #4: $1,000 PLO 6-Max',
+            'Event #3: $3,200 NLH High Roller', 'Event #2: $500 NLH Monster Stack', 'Event #1: $400 NLH Kick-Off', ];
 
         foreach ($schedules as $schedule) {
-            PokerEvent::factory()->create(['title' => $schedule]);
+            Event::factory()->create(['title' => $schedule]);
         }
     }
 }

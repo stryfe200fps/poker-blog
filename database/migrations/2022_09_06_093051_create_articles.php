@@ -18,9 +18,10 @@ return new class extends Migration
             $table->string('title');
             $table->text('description')->nullable();
             $table->text('body')->nullable();
+            $table->string('image')->nullable();
             $table->string('slug');
-            $table->foreignId('article_category_id');
-            $table->foreignId('user_id')->nullable();
+            $table->dateTime('published_date');
+            $table->foreignId('article_author_id')->nullable();
             $table->timestamps();
         });
     }

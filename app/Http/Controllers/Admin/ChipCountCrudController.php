@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Event;
 use App\Http\Requests\ChipCountRequest;
+use App\Models\EventChip;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -18,6 +20,7 @@ class ChipCountCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    use \Backpack\EditableColumns\Http\Controllers\Operations\MinorUpdateOperation;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -26,9 +29,22 @@ class ChipCountCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\ChipCount::class);
+        $this->crud->denyAccess('show');
+        CRUD::setModel(\App\Models\EventChip::class);
         CRUD::setRoute(config('backpack.base.route_prefix').'/chip-count');
         CRUD::setEntityNameStrings('chip count', 'chip counts');
+
+        if (request()->get('event') || session()->get('event_id')) {
+            if (request()->get('event') !== null) {
+                session()->put('event_id', request()->get('event'));
+            }
+
+            $getEvent = Event::where('id', session()->get('event_id'))->first();
+            CRUD::setEntityNameStrings('chips', $getEvent->title);
+
+        } else {
+            $this->crud->denyAccess('create');
+        }
     }
 
     /**
@@ -40,9 +56,84 @@ class ChipCountCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::column('id');
-        CRUD::column('created_at');
-        CRUD::column('updated_at');
+
+       
+        $this->crud->addClause('where', 'event_id', session()->get('event_id'));
+
+        $this->crud->addClause('where', 'event_report_id', '=', null);
+
+
+
+        // 'chip_stacks' => collect(EventChipsResource::collection
+        // ($this->latest_event_chips->sortByDesc('created_at')->unique('player_id')))->
+        // sortByDesc('current_chips')->values()->all() ,
+
+        $this->crud->addColumn([
+            'name' => 'player_id',
+            'type' => 'relationship',
+            'searchLogic' => function ($query, $column, $searchTerm) {
+                $query->whereHas('player', function ($q) use ($searchTerm) {
+                    $q->where('name', 'like', '%'.$searchTerm.'%');
+                });
+            },
+        ]);
+
+    //     CRUD::addColumn([
+    //     'name'    => 'name',
+    //     'label'   => 'Source',
+    //     'type'    => 'editable_select',
+    //     'options' => [ 'normal' => 'normal', 'whatsapp' => 'whatsapp' ],
+    //     // or 
+    //     // 'options' => [
+    //     //     '1' => 'One',
+    //     //     '2' => 'Two',
+    //     //     '3' => 'Three',
+    //     // ],
+
+    //     // Optionals
+    //     'underlined'       => true, // show a dotted line under the editable column for differentiation? default: true
+    //     'save_on_focusout' => true, // if user clicks out, the value should be saved (instead of greyed out)
+    //     'save_on_change'   => true,
+    //     'on_error' => [
+    //         'text_color'          => '#df4759', // set a custom text color instead of the red
+    //         'text_color_duration' => 0, // how long (in miliseconds) should the text stay that color (0 for infinite, aka until page refresh)
+    //         'text_value_undo'     => false, // set text to the original value (user will lose the value that was recently input)
+    //     ],
+    //     'on_success' => [
+    //         'text_color'          => '#42ba96', // set a custom text color instead of the green
+    //         'text_color_duration' => 3000, // how long (in miliseconds) should the text stay that color (0 for infinite, aka until page refresh)
+    //     ],
+    //     'auto_update_row' => true, // update related columns in same row, after the AJAX call?
+    // ]);
+
+        // $this->crud->addColumn([
+        //     'name' =>  'current_chips',
+        //     'type' => 'text',
+        //     'label' => 'chips'
+        // ]);
+
+        CRUD::addColumn([
+            'name' => 'current_chips',
+            'type' => 'editable_text',
+            'label' => 'Chips',
+
+            // Optionals
+            'underlined' => true, // show a dotted line under the editable column for differentiation? default: true
+            'min_width' => '120px', // how wide should the column be?
+            'select_on_click' => false, // select the entire text on click? default: false
+            'save_on_focusout' => false, // if user clicks out, the value should be saved (instead of greyed out)
+            'on_error' => [
+                'text_color' => '#df4759', // set a custom text color instead of the red
+                'text_color_duration' => 0, // how long (in miliseconds) should the text stay that color (0 for infinite, aka until page refresh)
+                'text_value_undo' => false, // set text to the original value (user will lose the value that was recently input)
+            ],
+            'on_success' => [
+                'text_color' => '#42ba96', // set a custom text color instead of the green
+                'text_color_duration' => 3000, // how long (in miliseconds) should the text stay that color (0 for infinite, aka until page refresh)
+            ],
+            'auto_update_row' => true, // update related columns in same row, after the AJAX call?
+        ]);
+
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
@@ -62,9 +153,49 @@ class ChipCountCrudController extends CrudController
     {
         CRUD::setValidation(ChipCountRequest::class);
 
-        CRUD::field('id');
-        CRUD::field('created_at');
-        CRUD::field('updated_at');
+        // CRUD::field('id');
+
+
+
+        $this->crud->addField([
+            'name' =>  'name',
+            'type' => 'select2_from_array',
+            'options' => [
+                'whatsapp' => 'whatsapp',
+                'normal' => 'normal'
+            ],
+            'label' => 'Source'
+
+        ]);
+
+
+        $this->crud->addField([
+            'name' =>  'event_id',
+            'type' => 'hidden',
+            'label' => 'Player',
+            'value' => session()->get('event_id'),
+        ]);
+
+        $this->crud->addField([
+            'name' =>  'player',
+            'type' => 'relationship',
+            'label' => 'Player'
+        ]);
+
+        $this->crud->addField([
+            'name' =>  'current_chips',
+            'type' => 'text',
+            'label' => 'chips'
+        ]);
+
+        
+
+        // $this->crud->addField([
+        //     'name' =>  'current_chips',
+        //     'type' => 'text'
+        // ]);
+        // CRUD::field('created_at');
+        // CRUD::field('updated_at');
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:

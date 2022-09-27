@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\PokerTournament;
+use App\Models\Tournament;
 use Illuminate\Database\Seeder;
 
-class PokerTournamentSeeder extends Seeder
+class TournamentSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,11 +14,13 @@ class PokerTournamentSeeder extends Seeder
      */
     public function run()
     {
-        // PokerTournament::factory()->count(5)->create();
-        $tournaments = ['2020 Poker Tournament', '2020 Online Poker Tournament', 'Tours 2021'];
+    
+        $tournaments = ['2022 WSOP Online', '2022 RGPS Bay Area',
+            '2022 MSPT United States Poker Championship', '2022 Winamax Poker Open Bratislava',
+            '2022 Unibet Malta', ];
 
         foreach ($tournaments as $tournament) {
-            PokerTournament::factory()->create(['title' => $tournament]);
+            Tournament::factory()->create(['title' => $tournament]);
         }
     }
 }

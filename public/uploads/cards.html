@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Autocomplete</title>
+  <script src="https://cdn.ckeditor.com/4.19.1/standard-all/ckeditor.js"></script>
+</head>
+
+<body>
+  <textarea cols="80" id="editor1" name="editor1" rows="10">&lt;p&gt;This is some &lt;strong&gt;sample text&lt;/strong&gt;. You are using &lt;a href=&quot;https://ckeditor.com/&quot;&gt;CKEditor&lt;/a&gt;.&lt;/p&gt;</textarea>
+  <script>
+    var suits = ['s','c','h','d'];
+    var cards = ['2','3','4','5','6','7','8','9','10','a','j','q','k'];
+    var PLACEHOLDERS = [];
+    suits.forEach(function (suit, index) {
+      cards.forEach(function (card, indexs) {
+        PLACEHOLDERS.push({
+          id: (index+1)*20 + indexs, 
+          code: card + suit
+        });
+      });  
+    });    
+
+    CKEDITOR.addCss('span > .cke_placeholder { background-color: #ffeec2; }');
+    CKEDITOR.replace('editor1', {
+      plugins: 'autocomplete,textmatch,toolbar,wysiwygarea,basicstyles,link,undo,placeholder,image,sourcearea',
+      toolbar: [{
+          name: 'document',
+          items: ['Undo', 'Redo','Source']
+        },
+        {
+          name: 'basicstyles',
+          items: ['Bold', 'Italic']
+        },
+        {
+          name: 'links',
+          items: ['Link', 'Unlink','image']
+        },
+        {
+          name: 'insert',
+          items: ['Image']
+        }
+
+      ],
+      on: {
+        instanceReady: function(evt) {
+          var itemTemplate = '<li data-id="{id}">' +
+            '<img class="photo" src="cards/{code}.png" />' +
+            '</li>',
+          outputTemplate = '<img src="cards/{code}.png"/>';
+          var autocomplete = new CKEDITOR.plugins.autocomplete(evt.editor, {
+            textTestCallback: textTestCallback,
+            dataCallback: dataCallback,
+            itemTemplate: itemTemplate,
+            outputTemplate: outputTemplate
+          });
+
+          // Override default getHtmlToInsert to enable rich content output.
+          autocomplete.getHtmlToInsert = function(item) {
+            return this.outputTemplate.output(item);
+          }
+        }
+      },
+      removeButtons: 'PasteFromWord'
+    });
+
+    function textTestCallback(range) {
+      if (!range.collapsed) {
+        return null;
+      }
+      return CKEDITOR.plugins.textMatch.match(range, matchCallback);
+    }
+
+    function matchCallback(text, offset) {
+      var pattern = /\/{1}([a-z0-9])+$/i,
+        match = text.slice(0, offset)
+        .match(pattern);
+
+      if (!match) {
+        return null;
+      }
+
+      return {
+        start: match.index,
+        end: offset
+      };
+    }
+
+    function dataCallback(matchInfo, callback) {
+      var data = PLACEHOLDERS.filter(function(item) {
+        var itemName = '/' + item.code;
+        
+        return itemName.indexOf(matchInfo.query.toLowerCase()) == 0;
+      });
+
+      callback(data);
+    }
+  </script>
+</body>
+
+</html>

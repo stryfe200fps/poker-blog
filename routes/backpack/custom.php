@@ -17,14 +17,20 @@ Route::group([
     'namespace' => 'App\Http\Controllers\Admin',
 ], function () { // custom admin routes
 Route::crud('article', 'ArticleCrudController');
-    Route::crud('event-schedule', 'PokerEventCrudController');
-    Route::crud('live-report', 'LiveReportCrudController');
-    Route::crud('poker-tour', 'PokerTourCrudController');
-    Route::crud('poker-tournament', 'PokerTournamentCrudController');
-    Route::crud('poker-tournament', 'PokerTournamentCrudController');
+    Route::crud('events', 'EventCrudController');
+    Route::crud('report', 'EventReportCrudController');
+    Route::crud('all-reports', 'AllReportsCrudController');
+    Route::crud('poker-tour', 'TourCrudController');
+    Route::crud('poker-tournament', 'TournamentCrudController');
     Route::crud('article-category', 'ArticleCategoryCrudController');
-    Route::crud('live-report-player', 'LiveReportPlayerCrudController');
+    Route::crud('live-report-player', 'EventChipCrudController');
     Route::crud('country', 'CountryCrudController');
     Route::crud('player', 'PlayerCrudController');
     Route::crud('chip-count', 'ChipCountCrudController');
+    Route::crud('payout', 'PayoutCrudController');
+    Route::crud('live', 'LiveCrudController');
+    Route::crud('level', 'LevelCrudController');
+    Route::crud('article-author', 'ArticleAuthorCrudController');
+    Route::crud('image-theme', 'ImageThemeCrudController');
+    Route::crud('article-tag', 'ArticleTagCrudController');
 }); // this should be the absolute last line of this file

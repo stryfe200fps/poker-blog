@@ -18,6 +18,7 @@ class PlayerCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\InlineCreateOperation;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -26,6 +27,8 @@ class PlayerCrudController extends CrudController
      */
     public function setup()
     {
+
+        $this->crud->denyAccess('show');
         CRUD::setModel(\App\Models\Player::class);
         CRUD::setRoute(config('backpack.base.route_prefix').'/player');
         CRUD::setEntityNameStrings('player', 'players');
@@ -63,6 +66,13 @@ class PlayerCrudController extends CrudController
         CRUD::setValidation(PlayerRequest::class);
 
         CRUD::field('name');
+        $this->crud->addField([
+            'name' => 'avatar',
+            'label' => 'Image',
+            'type' => 'image',
+            'aspect_ratio' => 1,
+            'crop' => true,
+        ]);
         CRUD::field('pseudonym');
         CRUD::field('country_id');
 
