@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Spatie\Sluggable\HasSlug;
+use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\Sluggable\SlugOptions;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Article extends Model implements HasMedia
@@ -50,6 +51,19 @@ class Article extends Model implements HasMedia
     public function article_tags()
     {
         return $this->belongsToMany(ArticleTag::class);
+    }
+
+    public function getPublishedDateAttribute($value)
+    {
+        if ($this->attributes['id'])
+            return Carbon::parse($value)->diffForHumans();
+
+        return $value;
+    }
+
+    public function setPublishedDateAttribute($value) 
+    {
+        $this->attributes['published_date'] = Carbon::parse($value);
     }
 
     protected $guarded = ['id'];

@@ -22,6 +22,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::resource('article', ArticleController::class);
+Route::get('article/tag/{tag}', [ArticleController::class, 'tag' ]);
+
 Route::resource('live-report', LiveReportController::class);
 Route::resource('tournament', TournamentApiController::class);
 Route::resource('level', levelApiController::class);

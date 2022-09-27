@@ -62,12 +62,10 @@ onMounted(async() => {
     await  tournamentStore.getList()
     await eventStore.getLiveReport(props.id)
     
-    // selectDay.value[0].setAttribute("selected", true);
-
-    if (eventStore.eventData.data) {
-        days.value = Object.keys(eventData.value.available_days)[0]
-        fetchLiveReports()
-    } 
+    // if (eventStore.eventData.data) {
+    //     days.value = Object.keys(eventData.value.available_days)[Object.keys(eventData.value.available_days).length - 1]
+    //     fetchLiveReports()
+    // } 
 });
 
 const fetchLiveReports = async () => {
@@ -79,9 +77,9 @@ const fetchLiveReports = async () => {
     }, 30000);
 }
 
-const fetchPage = async () => {
-    await eventStore.fetchWithPaginate(props.id,days.value)
-}
+// const fetchPage = async () => {
+//     await eventStore.fetchWithPaginate(props.id,days.value)
+// }
 
 watch(() => eventStore.eventData.data, function () {
     eventData.value = eventStore.eventData.data;

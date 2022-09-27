@@ -14,6 +14,9 @@ class EventChipsResource extends JsonResource
      */
     public function toArray($request)
     {
+
+        $report = $this->previousReport;
+
         return [
             'player' => $this->player,
             'country' => $this->player?->country,
@@ -21,11 +24,11 @@ class EventChipsResource extends JsonResource
             'payout' => $this->payout,
             'current_chips' => $this->current_chips,
             'report_id' => $this->event_report_id,
-            'previous' => $this->previousReport,
-            'changes' => $changes = $this->current_chips >= $this->previousReport ?
-            $this->current_chips - $this->previousReport :
-            $this->previousReport - $this->current_chips,
-            'symbol' => ($this->current_chips - $changes) >= $this->previousReport ? 'up' : 'down',
+            'previous' => $report,
+            'changes' => $changes = $this->current_chips >= $report ?
+            $this->current_chips - $report :
+            $report - $this->current_chips,
+            'symbol' => ($this->current_chips - $changes) >= $report ? 'up' : 'down',
             'id' => $this->id,
             'created_at' => $this->created_at
         ];

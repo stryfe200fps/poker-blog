@@ -23,19 +23,19 @@
                 <a href="#more-autor" data-toggle="tab">#WHATSAPP</a>
             </li>
         </ul>
-
         <div class="tab-content">
-            <div v-show="tab == 0 && reports.length"  id="liveReport">
-                
+            repo
+            {{ reports }}
+            <!-- <div v-show="tab == 0 && reports.length"  id="liveReport">
                 <div v-for="(reports, level, index) in groupedReports" :key="index" class="single-post-box round">
                     <EachReport v-for="(item, index) in reports" :key="index" :item="item"/>
 
                     <div class="day-divider" style="border-bottom: 1px solid #d3d3d3; margin-top: 20px;">
                         <span>{{ level }}</span><br />
                     </div>
+                    <EachReport v-for="(item, index) in reports" :key="index" :item="item"/>
                 </div>
-            </div>
-
+            </div> -->
             <div v-show="tab == 1">
                 <div class="margin-top">
                     <CustomeTable v-if="event?.chip_stacks?.length">
@@ -49,18 +49,14 @@
                             </tr>
                         </template>
                         <template v-slot:table-body>
-                            <tr v-for="(stack, index ) in event.chip_stacks" :key="stack.player.id">
-
+                            <tr v-for="(stack, index ) in event.chip_stacks" :key="stack?.player?.id">
                                 <td class="text-center">{{ index+1 }}</td>
-
-
                                 <td>
-
-                                    <img class="hide-on-tablet" v-if="stack.player.avatar" :src="stack.player.avatar" />
+                                    <img class="hide-on-tablet" v-if="stack?.player?.avatar" :src="stack?.player?.avatar" />
                                     <img class="hide-on-tablet" v-else :src="defaultAvatar" />
-                                    <span style="white-space: nowrap;">{{stack.player.name}}</span>
+                                    <span style="white-space: nowrap;">{{stack?.player?.name}}</span>
                                 </td>
-                                <td class="text-center hide-on-tablet" v-if="stack.player.country"><CountryFlag :title="stack.player.country.name" :iso="stack.player.country.iso_3166_2" /></td>
+                                <td class="text-center hide-on-tablet" v-if="stack?.player?.country"><CountryFlag :title="stack?.player?.country?.name" :iso="stack?.player?.country?.iso_3166_2" /></td>
                                 <td class="text-center hide-on-tablet" v-else >?</td>
                                 <td v-if="stack.report_id == null" class="text-right">{{ stack.current_chips.toLocaleString() }} </td>
                                 <td v-else class="text-right">{{ stack.current_chips === 0 ? 'BUSTED': stack.current_chips.toLocaleString()}}</td>
@@ -74,13 +70,11 @@
                     </CustomeTable>
                 </div>
             </div>
-            
             <div v-show="tab == 2">
                 <div class="margin-top">
                     <vue-picture-swipe :items="items" style="position: relative; padding-bottom: 100%; display: flex; flex-wrap: wrap; gap: 10px;"></vue-picture-swipe>
                 </div>
             </div>
-
             <div v-show="tab == 3">
                 <div class="margin-top">
                     <CustomeTable v-if="event?.payouts?.length">
@@ -96,23 +90,19 @@
                             <tr v-for="payout in event.payouts" :key="payout.player">
                                 <td class="text-center">{{payout.position}}</td>
                                 <td> <span style="white-space: nowrap;">{{payout.player?.name}} </span> </td>
-
                                 <td class="text-center hide-on-mobile"><CountryFlag :title="payout.player?.country?.full_name" :iso="payout.player?.country?.iso_3166_2" /></td>
-
                                 <td class="text-right"> <span v-html="event.currency.prefix"> </span> {{Number(payout.prize).toLocaleString() }}</td>
                             </tr>
                         </template>
                     </CustomeTable>
                 </div>
             </div>
-
             <div v-show="tab == 4">
                 <div class="margin-top">
                     {{event.whatsapp}}
                     <p>Whatsapp</p>
                 </div>
             </div>
-
         </div>
     </div>
 
@@ -149,15 +139,15 @@ const props = defineProps({
     }
 });
 
-    const groupedReports = computed(() => {
-        const levels = [... new Set(props.reports.map(report => report.level.name))];
-        const testObj = {}
-        const levelObj = levels.map(level => testObj[level] = []);
-        const groupedLevels = props.reports.map(report => {
-            testObj[report.level.name].push(report);
-        })
-        return testObj;
-    });
+    // const groupedReports = computed(() => {
+    //     const levels = [... new Set(props.reports.map(report => report.level.name))];
+    //     const testObj = {}
+    //     const levelObj = levels.map(level => testObj[level] = []);
+    //     const groupedLevels = props.reports.map(report => {
+    //         testObj[report.level.name].push(report);
+    //     })
+    //     return testObj;
+    // });
 
     const items = ref([]);
 
@@ -166,7 +156,6 @@ const props = defineProps({
     onMounted( async () => {
         items.value = [];
         lastLevel.value = ''
-    
     })
     watch(()=> props.event, ()=> {
         if(props.event) {

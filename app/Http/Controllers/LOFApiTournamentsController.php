@@ -18,7 +18,7 @@ class LOFApiTournamentsController extends Controller
 
     public function show($id)
     {
-        return new LOFApiTournamentResource(Tournament::where('id', $id)->first());
+        return new LOFApiTournamentResource(Tournament::with('media')->where('id', $id)->first());
 
     }
 }

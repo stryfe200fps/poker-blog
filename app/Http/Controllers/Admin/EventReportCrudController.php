@@ -126,6 +126,8 @@ class EventReportCrudController extends CrudController
 
         ]);
 
+        
+
         $this->crud->addField(
             [
                 'name' => 'event_id',
@@ -136,6 +138,8 @@ class EventReportCrudController extends CrudController
                 ],
             ]);
 
+ 
+
         // $lastLevelId = DB::table('event_reports')
         // ->join('levels', function ($join) {
         //     $join->on('levels.id', '=', 'event_reports.level_id');
@@ -143,6 +147,11 @@ class EventReportCrudController extends CrudController
         // ->get(['level_id'])->first()->level_id ?? 1;
 
         CRUD::field('title');
+
+        $this->crud->addField([
+            'name' => 'slug',
+            'type' => 'text'
+        ]);
         $author = ArticleAuthor::where('user_id', backpack_user()->id)->first();
 
         $this->crud->addFields([

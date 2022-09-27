@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class PlayerRequest extends FormRequest
@@ -25,7 +26,11 @@ class PlayerRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|min:5|max:255',
+
+             'name' => [
+                    'required',
+                Rule::unique('players')->ignore(request()->get('id')), ],
+
         ];
     }
 

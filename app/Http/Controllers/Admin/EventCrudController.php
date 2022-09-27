@@ -34,6 +34,7 @@ class EventCrudController extends CrudController
         CRUD::setModel(\App\Models\Event::class);
         CRUD::setRoute(config('backpack.base.route_prefix').'/events');
         CRUD::setEntityNameStrings('events', 'events');
+
     }
 
     /**
@@ -79,6 +80,12 @@ class EventCrudController extends CrudController
     {
         CRUD::setValidation(EventRequest::class);
         CRUD::field('title');
+
+        $this->crud->addField([
+                'name' => 'slug',
+                'type' => 'text'
+        ]);
+
         CRUD::field('description');
         $this->crud->addField([
 
@@ -109,6 +116,8 @@ class EventCrudController extends CrudController
                 ],
             ],
         ]);
+
+  
 
         $this->crud->addField([   // select2_from_array
             'name' => 'tournament_id',
