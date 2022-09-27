@@ -61,6 +61,14 @@ class ArticleCrudController extends CrudController
                 'type' => 'select',
             ],
         ]);
+
+            $this->crud->addColumns([
+            [
+                'name' => 'published_date', // the column that contains the ID of that connected entity;
+                'label' => 'Date', // Table column heading
+                'type' => 'text',
+            ],
+        ]);
         /**
          * Columns can be defined using the fluent syntax or array syntax:
          * - CRUD::column('price')->type('number');

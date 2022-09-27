@@ -24,7 +24,6 @@ return new class extends Migration
             $table->foreignId('article_author_id');
             $table->dateTime('date_added');
             $table->text('players');
-
             $table->string('image')->nullable();
             $table->string('image_caption')->nullable();
             $table->string('image_theme')->nullable();

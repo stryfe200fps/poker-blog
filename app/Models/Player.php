@@ -43,17 +43,29 @@ class Player extends Model implements HasMedia
         return $this->belongsTo(Country::class);
     }
 
+    public function openHistory()
+    {
+
+        return '<a class="btn btn-sm btn-link"  href="player_history/'.urlencode($this->attributes['id']).'" data-toggle="tooltip" title="Chip  Count"><i class="fa fa-search"></i> history  </a>';
+    }
+
 
 
     protected static function booted()
     {
-
         static::deleting(function ($deletePlayer) {
 
-            // $deletePlayer->id;
 
-            // $deletedReport->event_chips()->delete();
+           $eventChip = EventChip::where('player_id', $deletePlayer->id)->get();
 
+            if ($eventChip->count()) {
+                \Alert::success(trans('backpack::crud.update_success'))->flash();
+                return false;
+            }
+
+           foreach ($eventChip as $chip) {
+                $chip->delete();
+           }
         });
     }
 }

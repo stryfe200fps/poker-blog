@@ -14,7 +14,7 @@ class Level extends Model
     use CrudTrait;
     use HasFactory;
 
-    public function live_reports()
+    public function event_reports()
     {
         return $this->hasMany(EventReport::class);
     }
