@@ -17,12 +17,14 @@ class TagController extends Controller
 
     public function articles($slug)
     {
-       return ArticleResource::collection( Tag::where('slug', $slug)->first()->articles()->paginate(10)) ;
+        $tag = Tag::where('slug', $slug)->firstOrFail();
+        return ArticleResource::collection( $tag->articles()->paginate(10)) ;
     }
 
     public function reports($slug) 
     {
-       return LOFApiEventReportsResource::collection( Tag::where('slug', $slug)->first()->event_reports()->paginate(10)) ;
+        $tag = Tag::where('slug', $slug)->firstOrFail();
+       return LOFApiEventReportsResource::collection( $tag->event_reports()->paginate(10)) ;
     }
 
 }

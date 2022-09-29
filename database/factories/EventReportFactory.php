@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Models\Event;
-use App\Models\Level;
 use App\Models\LiveReport;
 use App\Models\EventReport;
 use App\Models\Level;

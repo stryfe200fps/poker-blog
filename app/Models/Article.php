@@ -43,6 +43,8 @@ class Article extends Model implements HasMedia
     public function setImageAttribute($value)
     {
         if ($value == null || preg_match("/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).base64,.*/", $value) == 0) {
+
+            $this->media()->delete();
             return false;
         }
 

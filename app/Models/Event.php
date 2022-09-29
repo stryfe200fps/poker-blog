@@ -92,6 +92,8 @@ class Event extends Model implements HasMedia
     {
         if ($value == null || preg_match("/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).base64,.*/", $value) == 0) {
             // $this->media()->delete();
+
+            $this->media()->delete();
             return false;
         }
         $this->media()->delete();
