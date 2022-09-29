@@ -1,18 +1,19 @@
 <?php
 
-use App\Http\Resources\LOFApiEventReportsResource;
+use Inertia\Inertia;
 use App\Models\Article;
 use App\Models\EventChip;
 use App\Models\EventPayout;
 use App\Models\EventReport;
+use App\Presenters\WebsitePresenter;
 use Rap2hpoutre\FastExcel\FastExcel;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Schema;
 use App\Http\Controllers\HomeController;
-use Backpack\PageManager\app\Models\Page;
 
-use App\Presenters\WebsitePresenter;
+use Backpack\PageManager\app\Models\Page;
+use App\Http\Resources\LOFApiEventReportsResource;
 
 Route::get('/', function () {
 
@@ -54,8 +55,7 @@ Route::get('/event/{id}', function ($id) {
     ]);
 })->name('event');
 
-Route::get('/report/{slug}', function ($slug) {
-    $report = new LOFApiEventReportsResource(EventReport::where('slug', $slug)->first());
+Route::get('/report/{slug}', function ($slug) { $report = new LOFApiEventReportsResource(EventReport::where('slug', $slug)->first());
 
     return Inertia::render('Report/Show', [
         'report' => $report,
