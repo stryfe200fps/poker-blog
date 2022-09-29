@@ -24,18 +24,30 @@
             </li>
         </ul>
         <div class="tab-content">
-            repo
-            {{ reports }}
-            <!-- <div v-show="tab == 0 && reports.length"  id="liveReport">
-                <div v-for="(reports, level, index) in groupedReports" :key="index" class="single-post-box round">
-                    <EachReport v-for="(item, index) in reports" :key="index" :item="item"/>
+            <div v-show="tab == 0 && reports.length" id="liveReport">
+                <div
+                    v-for="(report, index) in reports"
+                    :key="index"
+                    class="single-post-box round"
+                >
+                    <EachReport
+                        v-for="(item, index) in report.collection"
+                        :key="index"
+                        :item="item"
+                    />
 
-                    <div class="day-divider" style="border-bottom: 1px solid #d3d3d3; margin-top: 20px;">
-                        <span>{{ level }}</span><br />
+                    <div
+                        class="day-divider"
+                        style="
+                            border-bottom: 1px solid #d3d3d3;
+                            margin-top: 20px;
+                        "
+                    >
+                        <span>{{ report.level }}</span
+                        ><br />
                     </div>
-                    <EachReport v-for="(item, index) in reports" :key="index" :item="item"/>
                 </div>
-            </div> -->
+            </div>
             <div v-show="tab == 1">
                 <div class="margin-top">
                     <CustomeTable v-if="event?.chip_stacks?.length">
@@ -168,23 +180,31 @@
                                 v-for="payout in event.payouts"
                                 :key="payout.player"
                             >
+                                <div v-if="payout.player"></div>
                                 <td class="text-center">
                                     {{ payout.position }}
                                 </td>
                                 <td>
-                                    <span style="white-space: nowrap"
+                                    <span
+                                        v-if="payout.player?.name"
+                                        style="white-space: nowrap"
                                         >{{ payout.player?.name }}
                                     </span>
+                                    <span v-else>N/A</span>
                                 </td>
                                 <td class="text-center hide-on-mobile">
-                                    <CountryFlag
-                                        :title="
-                                            payout.player?.country?.full_name
-                                        "
-                                        :iso="
-                                            payout.player?.country?.iso_3166_2
-                                        "
-                                    />
+                                    <span v-if="payout.player?.country">
+                                        <CountryFlag
+                                            :title="
+                                                payout.player?.country
+                                                    ?.full_name
+                                            "
+                                            :iso="
+                                                payout.player?.country
+                                                    ?.iso_3166_2
+                                            "
+                                    /></span>
+                                    <span v-else>N/A</span>
                                 </td>
                                 <td class="text-right">
                                     <span v-html="event.currency.prefix">
@@ -241,20 +261,6 @@ const props = defineProps({
     },
 });
 
-// const groupedReports = computed(() => {
-//     const levels = [... new Set(props.reports.map(report => report.level.name))];
-//     const testObj = {}
-//     const levelObj = levels.map(level => testObj[level] = []);
-//     const groupedLevels = props.reports.map(report => {
-//         testObj[report.level.name].push(report);
-//     })
-//     return testObj;
-// });
-
-const items = ref([]);
-
-const newReport = ref(null);
-
 function stickyScroll() {
     const tabs = document.querySelector(".custom-tabs");
     const { top } = tabs.getBoundingClientRect();
@@ -278,8 +284,6 @@ onBeforeUnmount(() => {
 });
 
 onMounted(async () => {
-    items.value = [];
-    lastLevel.value = "";
     window.addEventListener("scroll", stickyScroll);
 });
 watch(

@@ -213,7 +213,7 @@ class EventReportCrudController extends CrudController
                 'ajax' => true,
                    'minimum_input_length' => 0,
                 'allows_null' => true,
-                'value' => $this->crud->getCurrentOperation() === 'create' ? EventReport::lastLevel()->id  : $this->crud->getCurrentEntry()->level->id,
+                'value' => $this->crud->getCurrentOperation() === 'create' ? EventReport::lastLevel()->id ?? 0  : $this->crud->getCurrentEntry()->level->id,
                 'wrapper' => [
                     'class' => 'form-group col-md-4',
                 ],
