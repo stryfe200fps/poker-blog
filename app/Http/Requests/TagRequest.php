@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class ArticleTagRequest extends FormRequest
+class TagRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +26,9 @@ class ArticleTagRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required'
+             'title' => [
+                    'required',
+                Rule::unique('tags')->ignore(request()->get('id')), ],
         ];
     }
 
@@ -49,7 +52,7 @@ class ArticleTagRequest extends FormRequest
     public function messages()
     {
         return [
-            'title' => 'title is required',
+            'title' => 'title is required and should be unique',
         ];
     }
 }

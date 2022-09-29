@@ -32,6 +32,11 @@ class Article extends Model implements HasMedia
             ;
     }
 
+    public function tags()
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
+    }
+
     public function getImageAttribute($value)
     {
         return $this->getFirstMediaUrl('article', 'main-image');
@@ -48,23 +53,12 @@ class Article extends Model implements HasMedia
             ->toMediaCollection('article');
     }
 
-    public function article_tags()
+
+    public function getDiffAttribute($value)
     {
-        return $this->belongsToMany(ArticleTag::class);
+        return Carbon::parse($this->attributes['published_date'])->diffForHumans();
     }
 
-    public function getPublishedDateAttribute($value)
-    {
-        if ($this->attributes['id'])
-            return Carbon::parse($value)->diffForHumans();
-
-        return $value;
-    }
-
-    public function setPublishedDateAttribute($value) 
-    {
-        $this->attributes['published_date'] = Carbon::parse($value);
-    }
 
     protected $guarded = ['id'];
 

@@ -48,7 +48,8 @@ class LevelCrudController extends CrudController
             'type' => 'number'
             
         ]);
-        CRUD::column('name');
+        CRUD::column('blinds');
+        CRUD::column('ante');
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
@@ -67,18 +68,40 @@ class LevelCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(LevelRequest::class);
- $this->crud->addField([
+
+        $this->crud->addField([
+            'name' => 'event_id',
+            'type' => 'hidden',
+            'value' => session()->get('event_id')
+        ]);
+
+        $this->crud->addField([
+            'label' => 'Level',
             'name' => 'level',
-            'description' => 'enter level number',
+            'description' => 'level',
             'type' => 'number'
         ]);
 
+        $this->crud->addField([
+            'label' => 'Blinds',
+            'name' => 'blinds',
+            'description' => 'blinds',
+            'type' => 'number'
 
- $this->crud->addField([
-            'label' => '000 / 000 label',
-            'name' => 'name',
-            'type' => 'text'
         ]);
+
+        $this->crud->addField([
+            'label' => 'Ante',
+            'name' => 'ante',
+            'description' => 'ante',
+            'type' => 'number'
+        ]);
+
+        // $this->crud->addField([
+        //     'label' => '000 / 000 label',
+        //     'name' => 'name',
+        //     'type' => 'text'
+        // ]);
        
 
         /**

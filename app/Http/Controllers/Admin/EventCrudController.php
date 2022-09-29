@@ -97,7 +97,7 @@ class EventCrudController extends CrudController
         ]);
 
         $start = Carbon::now()->toDateTimeString();
-        $end = Carbon::now()->addDays(2)->toDateTimeString();
+        $end = Carbon::now()->addDays(1)->toDateTimeString();
         $pokerTours = Tour::all();
 
         $this->crud->addFields([
@@ -112,6 +112,7 @@ class EventCrudController extends CrudController
                 'date_range_options' => [
                     'drops' => 'down', // can be one of [down/up/auto]
                     'timePicker' => true,
+                    'maxDate'  => $end,
                     'locale' => ['format' => 'DD/MM/YYYY HH:mm'],
                 ],
             ],
@@ -132,6 +133,49 @@ class EventCrudController extends CrudController
 
             // 'allows_multiple' => true, // OPTIONAL; needs you to cast this to array in your model;
         ]);
+
+
+        $this->crud->addField([
+        'name' => 'schedule',
+        'label' => 'Schedule',
+        'type' => 'repeatable',
+        'new_item_label' => 'add day',
+        'tab' => 'Days',
+        'subfields' => [
+            
+            [
+                'label' => 'Day',
+                'tooltip' => 'example: 1A',
+                'name' => 'title',
+                'type' => 'text',
+                'wrapper' => [
+                'class' => 'form-group col-md-6',
+            ],
+            ],
+
+            [   // date_range
+                'name' => ['date_start', 'date_end'], // db columns for start_date & end_date
+                'label' => 'Day Duration',
+                'type' => 'date_range',
+        'wrapper' => [
+                'class' => 'form-group col-md-6',
+            ],
+                'default' => [$start, $end],
+                // options sent to daterangepicker.js
+                'date_range_options' => [
+                    'drops' => 'down', // can be one of [down/up/auto]
+                    'timePicker' => true,
+                    'locale' => ['format' => 'DD/MM/YYYY HH:mm'],
+                ],
+            ],
+
+            
+        ],
+        'init_rows' => 0,
+    ],
+);
+
+
     }
 
     /**

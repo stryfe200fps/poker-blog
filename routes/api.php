@@ -1,28 +1,32 @@
 <?php
 
+use Illuminate\Http\Request;
+use App\Http\Controllers\PageManager;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TagController;
 use App\Http\Controllers\Api\ArticleController;
-use App\Http\Controllers\Api\EventApiController as ApiEventApiController;
+use App\Http\Controllers\PageManagerController;
 use App\Http\Controllers\Api\levelApiController;
-use App\Http\Controllers\Api\LiveReportController;
-use App\Http\Controllers\Api\TournamentApiController;
-use App\Http\Controllers\Api\ReportsApiController;
 use App\Http\Controllers\EventReportsController;
-use App\Http\Controllers\LOFApiEventIndexController;
 use App\Http\Controllers\LOFApiEventsController;
+use App\Http\Controllers\Api\LiveReportController;
+use App\Http\Controllers\Api\ReportsApiController;
+use App\Http\Resources\LOFPokerTournamentResource;
+use App\Http\Controllers\LOFApiEventIndexController;
+use App\Http\Controllers\Api\TournamentApiController;
 use App\Http\Controllers\LOFApiLiveReportsController;
 use App\Http\Controllers\LOFApiTournamentsController;
-use App\Http\Controllers\PageManager;
-use App\Http\Controllers\PageManagerController;
-use App\Http\Resources\LOFPokerTournamentResource;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\EventApiController as ApiEventApiController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
 Route::resource('article', ArticleController::class);
-Route::get('article/tag/{tag}', [ArticleController::class, 'tag' ]);
+// Route::get('article/tag/{tag}', [ArticleController::class, 'tag' ]);
+
+Route::get('tag/articles/{slug}', [TagController::class, 'articles' ]);
+Route::get('tag/reports/{slug}', [TagController::class, 'reports' ]);
 
 Route::resource('live-report', LiveReportController::class);
 Route::resource('tournament', TournamentApiController::class);

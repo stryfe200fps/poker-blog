@@ -17,12 +17,14 @@ class ArticleResource extends JsonResource
             'categories' => $this->article_categories,
             'body' => $this->body,
             'slug' => $this->slug,
-            'tags' => $this->article_tags,
+            'tags' => $this->tags,
             'date' => Carbon::parse($this->published_date)->toFormattedDateString(),
             'formattedDate' => Carbon::parse($this->date_added)->diffForHumans(),
             'main_image' => $this->getFirstMediaUrl('article', 'main-image'),
             'thumb_image' => $this->getFirstMediaUrl('article', 'main-thumb'),
-            'author' => $this->article_author->first_name.' '.$this->article_author->last_name,
+            $this->mergeWhen($this->article_author !== null,[
+                'author' => new AuthorResource($this->article_author) 
+            ])
         ];
     }
 }

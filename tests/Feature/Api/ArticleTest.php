@@ -3,16 +3,19 @@
 use App\Models\Article;
 use App\Models\ArticleAuthor;
 use App\Models\ArticleCategory;
+use App\Models\ArticleTag;
+use App\Models\Tag;
 use App\Models\User;
+use Illuminate\Database\Query\Expression;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Role;
 
 uses(RefreshDatabase::class);
 
-test('article is working', function () {
-    $response = $this->get('api/articles');
-    $response->assertStatus(200);
-});
+// test('article is working', function () {
+//     $response = $this->get('api/articles');
+//     $response->assertStatus(200);
+// });
 
 it('cannot create articles if unauthenticated', function () {
     $this->post('admin/article/', [
@@ -92,3 +95,7 @@ it('can delete article if authenticated', function () {
     $this->get('admin/article')->assertStatus(200);
     $datas = $this->delete('admin/article/1');
 });
+
+
+
+
