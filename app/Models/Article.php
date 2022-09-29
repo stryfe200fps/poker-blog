@@ -3,14 +3,13 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Spatie\Sluggable\HasSlug;
-use Spatie\Image\Manipulations;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\Sluggable\SlugOptions;
-use Illuminate\Database\Eloquent\Model;
-use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 class Article extends Model implements HasMedia
 {
@@ -23,8 +22,7 @@ class Article extends Model implements HasMedia
     {
         $this->addMediaConversion('main-image')
             ->width(424)
-            ->height(285)
-            ;
+            ->height(285);
 
         $this->addMediaConversion('main-thumb')
             ->width(337)
@@ -53,6 +51,10 @@ class Article extends Model implements HasMedia
             ->toMediaCollection('article');
     }
 
+    public function article_tags()
+    {
+        return $this->belongsToMany(ArticleTag::class);
+    }
 
     public function getDiffAttribute($value)
     {

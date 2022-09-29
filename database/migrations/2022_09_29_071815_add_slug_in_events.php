@@ -13,8 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('levels', function (Blueprint $table) {
-            $table->foreignId('event_id');
+        Schema::table('events', function (Blueprint $table) {
+            //
         });
     }
 
@@ -25,7 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('levels', function (Blueprint $table) {
+        Schema::table('events', function (Blueprint $table) {
+            //
         });
     }
 };

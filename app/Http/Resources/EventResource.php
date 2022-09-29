@@ -52,6 +52,7 @@ class EventResource extends JsonResource
                 'main' => $media->getUrl(),
             ];
         }
+
         return [
             'id' => $this->id,
             'title' => $this->title,
@@ -64,7 +65,7 @@ class EventResource extends JsonResource
             'image' => $this->getFirstMediaUrl('event_banner', 'banner'),
             'status' => $status,
             'gallery' => $imgResource,
-            'chip_stacks' => EventChipsResource::collection($this->latest_live_report_players->unique('player_id')) ,
+            'chip_stacks' => EventChipsResource::collection($this->latest_live_report_players->unique('player_id')),
             'videos' => [],
             'whatsapp' => [],
             'date_start' => Carbon::parse($this->date_start)->toFormattedDateString(),

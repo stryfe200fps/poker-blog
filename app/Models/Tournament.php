@@ -25,7 +25,6 @@ class Tournament extends Model implements HasMedia
             ->height(225);
     }
 
-
     public function getImageAttribute($value)
     {
         return $this->getFirstMediaUrl('tournament', 'main-image');
@@ -37,7 +36,7 @@ class Tournament extends Model implements HasMedia
             return;
         }
 
-          $this->media()->delete();
+        $this->media()->delete();
         $this->addMediaFromBase64($value)
             ->toMediaCollection('tournament');
     }

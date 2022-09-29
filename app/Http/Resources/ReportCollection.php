@@ -33,8 +33,8 @@ class ReportCollection extends ResourceCollection
         return [
             'data' => $reducedCollection,
             'meta' => [
-                'total' => $this->collection->count()
-            ]
+                'total' => $this->collection->count(),
+            ],
         ];
     }
 }

@@ -1,8 +1,6 @@
 <?php
 
-use Inertia\Inertia;
-use App\Models\Payout;
-use App\Models\Player;
+use App\Http\Resources\LOFApiEventReportsResource;
 use App\Models\Article;
 use App\Models\EventChip;
 use App\Models\EventPayout;
@@ -13,7 +11,6 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Schema;
 use App\Http\Controllers\HomeController;
 use Backpack\PageManager\app\Models\Page;
-use App\Http\Resources\LOFApiEventReportsResource;
 
 use App\Presenters\WebsitePresenter;
 
@@ -47,30 +44,27 @@ Route::get('/', function () {
 
     return Inertia::render('Index',[  
         'title' => 'Life of poker',
-        'description' =>'life of poker',
-        'json-ld-webpage' => $webPage,
-        // 'json-ld-website' => $webSite
+        'description' =>'life of poker' 
     ]);
 });
 
 Route::get('/event/{id}', function ($id) {
     return Inertia::render('Event/Index', [
-        'id' => $id
+        'id' => $id,
     ]);
 })->name('event');
 
 Route::get('/report/{slug}', function ($slug) {
     $report = new LOFApiEventReportsResource(EventReport::where('slug', $slug)->first());
-      return Inertia::render('Report/Show', [
+
+    return Inertia::render('Report/Show', [
         'report' => $report,
         'title' => $report->title,
         'slug' => $slug,
-         'image' => $report->getFirstMediaUrl('event-report', 'main-image'),
-        'description' => \Illuminate\Support\Str::limit($report->title, 100, $end='...') 
+        'image' => $report->getFirstMediaUrl('event-report', 'main-image'),
+        'description' => \Illuminate\Support\Str::limit($report->title, 100, $end = '...'),
     ]);
 })->name('event');
-
-
 
 Route::get('/tournament', function () {
     return Inertia::render('Tournament/Index');
@@ -81,9 +75,8 @@ Route::get('/article', function () {
     return Inertia::render('Article/Index');
 })->name('article');
 
-
 Route::get('/article/show/{slug}', function ($slug) {
-$article = Article::where('slug', $slug)->first();
+    $article = Article::where('slug', $slug)->first();
 
     $context = \JsonLd\Context::create('news_article', [
         'headline' => $article->title,
@@ -132,7 +125,6 @@ Route::middleware([
     })->name('dashboard');
 });
 
-
 Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
 Route::get('admin/live_events', function () {
     return view('vendor.backpack.page.live_events');
@@ -140,7 +132,7 @@ Route::get('admin/live_events', function () {
 
 Route::get('admin/player_history/{id}', function ($id) {
     return view('vendor.backpack.page.player_chips_history', [
-        'chips' => EventChip::with('event')->orderByDesc('updated_at')->where('player_id', $id)->limit(10)->get()
+        'chips' => EventChip::with('event')->orderByDesc('updated_at')->where('player_id', $id)->limit(10)->get(),
     ]);
 });
 
@@ -166,8 +158,7 @@ Route::post('prepare', function () {
 });
 
 Route::post('upload_excel', function () {
-
-    if (!request()->all()['checkbox_overwrite']) {
+    if (! request()->all()['checkbox_overwrite']) {
         EventPayout::where('event_id', request()->all()['event_id'])->delete();
     }
 
@@ -203,11 +194,10 @@ Route::get('/{page}', function ($page) {
     if ($page = Page::findBySlug($page)) {
         return Inertia::render('Template/Index', [
             'title' => $page->name,
-            'description' => \Illuminate\Support\Str::limit($page->name, 100, $end='...') ,
-            'page' => $page
+            'description' => \Illuminate\Support\Str::limit($page->name, 100, $end = '...'),
+            'page' => $page,
         ]);
     } else {
-            return Inertia::render('Error/404');    
+        return Inertia::render('Error/404');
     }
 });
-

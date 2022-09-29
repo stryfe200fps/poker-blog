@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use Spatie\MediaLibrary\HasMedia;
-use Illuminate\Database\Eloquent\Model;
-use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class ImageTheme extends Model implements HasMedia
@@ -22,7 +22,6 @@ class ImageTheme extends Model implements HasMedia
 
     public function registerMediaConversions(?Media $media = null): void
     {
-      
     }
 
     public function getImageAttribute($value)
@@ -40,10 +39,8 @@ class ImageTheme extends Model implements HasMedia
             ->toMediaCollection('image-theme');
     }
 
-    public function live_report() {
+    public function live_report()
+    {
         return $this->belongsTo(EventReport::class);
     }
 }
-
-
-

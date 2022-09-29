@@ -3,9 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class ArticleCategoryRequest extends FormRequest
+class EventScheduleRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,9 +25,7 @@ class ArticleCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => [
-                'required',
-                Rule::unique('article_categories')->ignore(request()->get('id')), ],
+            // 'name' => 'required|min:5|max:255'
         ];
     }
 
@@ -53,7 +50,6 @@ class ArticleCategoryRequest extends FormRequest
     {
         return [
             //
-            'title.required' => 'Title is required',
         ];
     }
 }

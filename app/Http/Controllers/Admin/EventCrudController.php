@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\Validators;
 use Carbon\Carbon;
 use App\Models\Tour;
 use Illuminate\Http\Request;
 use App\Http\Requests\EventRequest;
 use Backpack\CRUD\app\Library\Widget;
+use Illuminate\Support\Facades\Validator;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
- * Class 
+ * Class
  *
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
@@ -34,7 +36,6 @@ class EventCrudController extends CrudController
         CRUD::setModel(\App\Models\Event::class);
         CRUD::setRoute(config('backpack.base.route_prefix').'/events');
         CRUD::setEntityNameStrings('events', 'events');
-
     }
 
     /**
@@ -82,11 +83,13 @@ class EventCrudController extends CrudController
         CRUD::field('title');
 
         $this->crud->addField([
-                'name' => 'slug',
-                'type' => 'text'
+            'name' => 'slug',
+            'type' => 'text',
         ]);
 
         CRUD::field('description');
+
+
         $this->crud->addField([
 
             'name' => 'image',
@@ -118,8 +121,6 @@ class EventCrudController extends CrudController
             ],
         ]);
 
-  
-
         $this->crud->addField([   // select2_from_array
             'name' => 'tournament_id',
             'label' => 'Tournament',
@@ -127,7 +128,7 @@ class EventCrudController extends CrudController
             'entity' => 'tournament',
             'attribute' => 'parent',
             'allows_null' => false,
-            'options'   => (function ($query) {
+            'options' => (function ($query) {
                 return $query->orderBy('title', 'ASC')->get();
             }),
 
@@ -146,7 +147,7 @@ class EventCrudController extends CrudController
             [
                 'label' => 'Day',
                 'tooltip' => 'example: 1A',
-                'name' => 'title',
+                'name' => 'day',
                 'type' => 'text',
                 'wrapper' => [
                 'class' => 'form-group col-md-6',
@@ -202,17 +203,55 @@ class EventCrudController extends CrudController
     {
         $this->crud->hasAccessOrFail('create');
 
-        // execute the FormRequest authorization and validation, if one is required
+        $schedules = request()->get('schedule');
+
+        if ($schedules !== null) {
+
+            // (new Validators)->checkDateOverlap();
+            $lastDate = null;
+            foreach ($schedules as $day) {
+
+            if ($lastDate != null && Carbon::parse($lastDate) >= Carbon::parse($day['date_end']) && Carbon::parse($lastDate) >= Carbon::parse($day['date_start']) ) {
+                    \Alert::error('Dates is incorrect')->flash();
+                    $schedules = null;
+                    break;
+                }
+
+                $lastDate = $day['date_end'];
+
+                Validator::make($day,
+                    ['date_start' => 'required',
+                    'date_end' => 'required',
+                        'day' => 'required'
+                    ],
+                    [
+                        'date_start' => 'date start is required',
+                        'date_end' => 'date end is required',
+                        'day' => 'Day is required'
+                    ])->validate();
+            }
+        } else {
+            $request['schedule'] = '';
+        }
+ 
+        if ($schedules === null) {
+            Validator::make($schedules ?? [], 
+            [
+                'schedule' => 'required'
+            ], [
+                'schedule' => 'please check the schedule'
+            ])->validate();
+        }
+
         $request = $this->crud->validateRequest();
 
-        // register any Model Events defined on fields
         $this->crud->registerFieldEvents();
 
         $item = $this->crud->create($this->crud->getStrippedSaveRequest($request));
+
         $this->data['entry'] = $this->crud->entry = $item;
 
-        // dd(request()->all());
-        // session()->flash('new_reports', $item->id);
+        session()->flash('new_reports', $item->id);
 
         \Alert::success(trans('backpack::crud.insert_success'))->flash();
 
@@ -220,11 +259,72 @@ class EventCrudController extends CrudController
         $this->crud->setSaveAction();
 
         return $this->crud->performSaveAction($item->getKey());
-
-        //  return redirect()->route('mymodel.picture.index',
-    //     [
-    //         'id' => 20
-    //     ]);
-        // return $response;
     }
+
+    public function update()
+    {
+        
+        $schedules = request()->get('schedule');
+
+        if ($schedules !== null) {
+            // (new Validators)->checkDateOverlap();
+            $lastDate = null;
+            foreach ($schedules as $day) {
+
+            if ($lastDate != null && Carbon::parse($lastDate) >= Carbon::parse($day['date_end']) && Carbon::parse($lastDate) >= Carbon::parse($day['date_start']) ) {
+                    \Alert::error('Dates is incorrect')->flash();
+                    $schedules = null;
+                    break;
+                }
+
+                $lastDate = $day['date_end'];
+
+                Validator::make($day,
+                    ['date_start' => 'required',
+                    'date_end' => 'required',
+                        'day' => 'required'
+                    ],
+                    [
+                        'date_start' => 'date start is required',
+                        'date_end' => 'date end is required',
+                        'day' => 'Day is required'
+                    ])->validate();
+            }
+        } else {
+            $request['schedule'] = '';
+        }
+ 
+        if ($schedules === null) {
+            Validator::make($schedules ?? [], 
+            [
+                'schedule' => 'required'
+            ], [
+                'schedule' => 'please check the schedule'
+            ])->validate();
+        }
+
+
+        $this->crud->hasAccessOrFail('update');
+
+        // execute the FormRequest authorization and validation, if one is required
+        $request = $this->crud->validateRequest();
+
+        // register any Model Events defined on fields
+        $this->crud->registerFieldEvents();
+
+        // update the row in the db
+        $item = $this->crud->update(
+            $request->get($this->crud->model->getKeyName()),
+            $this->crud->getStrippedSaveRequest($request)
+        );
+        $this->data['entry'] = $this->crud->entry = $item;
+
+        \Alert::success(trans('backpack::crud.update_success'))->flash();
+
+        // save the redirect choice for next time
+        $this->crud->setSaveAction();
+
+        return $this->crud->performSaveAction($item->getKey());
+    }
+
 }
