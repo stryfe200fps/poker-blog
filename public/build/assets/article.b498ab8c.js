@@ -1,1 +1,0 @@
-import{K as i,M as a}from"./app.6e257988.js";const l=i("article",{state:()=>({list:[],singleArticle:{},slugs:[]}),getters:{getArticleBySlug:t=>e=>t.list.data.find(s=>s.slug===e)},actions:{async getList(){await a.get("/api/article").then(t=>{this.list=t.data})}}});export{l as u};
