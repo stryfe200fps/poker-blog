@@ -1,25 +1,25 @@
 <template>
     <div class="about-more-autor">
-        <ul class="nav nav-tabs">
-            <li @click.prevent="changeTab(0)" :class="tab == 0 ? 'active': '' ">
+        <ul class="nav nav-tabs custom-tabs">
+            <li @click.prevent="changeTab(0)" :class="tab == 0 ? 'active' : ''">
                 <a href="#about-autor" data-toggle="tab">
                     <span class="hide-on-mobile">LIVE UPDATES</span>
                     <span class="show-on-mobile">UPDATES</span>
                 </a>
             </li>
-            <li @click.prevent="changeTab(1)" :class="tab == 1 ? 'active': '' ">
+            <li @click.prevent="changeTab(1)" :class="tab == 1 ? 'active' : ''">
                 <a href="#more-autor" data-toggle="tab">
                     <span class="hide-on-mobile">CHIP COUNTS</span>
                     <span class="show-on-mobile">CHIPS</span>
                 </a>
             </li>
-            <li @click.prevent="changeTab(2)" :class="tab == 2 ? 'active': '' ">
+            <li @click.prevent="changeTab(2)" :class="tab == 2 ? 'active' : ''">
                 <a href="#more-autor" data-toggle="tab">GALLERY</a>
             </li>
-             <li @click.prevent="changeTab(3)" :class="tab == 3 ? 'active': '' ">
+            <li @click.prevent="changeTab(3)" :class="tab == 3 ? 'active' : ''">
                 <a href="#more-autor" data-toggle="tab">PAYOUT</a>
             </li>
-            <li @click.prevent="changeTab(4)" :class="tab == 4 ? 'active': '' ">
+            <li @click.prevent="changeTab(4)" :class="tab == 4 ? 'active' : ''">
                 <a href="#more-autor" data-toggle="tab">#WHATSAPP</a>
             </li>
         </ul>
@@ -43,27 +43,89 @@
                             <tr class="text-primary">
                                 <th class="text-center">Rank</th>
                                 <th>Player</th>
-                                <th class="text-center hide-on-tablet">Country</th>
+                                <th class="text-center hide-on-tablet">
+                                    Country
+                                </th>
                                 <th class="text-right">Chips</th>
-                                <th class="text-right hide-on-mobile">Progress</th>
+                                <th class="text-right hide-on-mobile">
+                                    Progress
+                                </th>
                             </tr>
                         </template>
                         <template v-slot:table-body>
-                            <tr v-for="(stack, index ) in event.chip_stacks" :key="stack?.player?.id">
-                                <td class="text-center">{{ index+1 }}</td>
+                            <tr
+                                v-for="(stack, index) in event.chip_stacks"
+                                :key="stack?.player?.id"
+                            >
+                                <td class="text-center">{{ index + 1 }}</td>
                                 <td>
-                                    <img class="hide-on-tablet" v-if="stack?.player?.avatar" :src="stack?.player?.avatar" />
-                                    <img class="hide-on-tablet" v-else :src="defaultAvatar" />
-                                    <span style="white-space: nowrap;">{{stack?.player?.name}}</span>
+                                    <img
+                                        class="hide-on-tablet"
+                                        v-if="stack?.player?.avatar"
+                                        :src="stack?.player?.avatar"
+                                    />
+                                    <img
+                                        class="hide-on-tablet"
+                                        v-else
+                                        :src="defaultAvatar"
+                                    />
+                                    <span style="white-space: nowrap">{{
+                                        stack?.player?.name
+                                    }}</span>
                                 </td>
-                                <td class="text-center hide-on-tablet" v-if="stack?.player?.country"><CountryFlag :title="stack?.player?.country?.name" :iso="stack?.player?.country?.iso_3166_2" /></td>
-                                <td class="text-center hide-on-tablet" v-else >?</td>
-                                <td v-if="stack.report_id == null" class="text-right">{{ stack.current_chips.toLocaleString() }} </td>
-                                <td v-else class="text-right">{{ stack.current_chips === 0 ? 'BUSTED': stack.current_chips.toLocaleString()}}</td>
-                                <td v-if="stack.report_id == null" class="text-right"><i class="fa fa-whatsapp"> </i> whatsapp </td>
-                                <td v-else class="text-right hide-on-mobile" >{{ stack.current_chips === 0 ? '':stack.changes.toLocaleString() }} 
-                                    <span v-if="stack.symbol === 'up'" style="margin-left: 10px;"><i v-if="stack.current_chips != 0" class="fa-sharp fa-solid fa-caret-up text-green"></i></span>
-                                    <span v-else style="margin-left: 10px;" ><i v-if="stack.current_chips != 0" class="fa-sharp fa-solid fa-caret-down text-red"></i></span>
+                                <td
+                                    class="text-center hide-on-tablet"
+                                    v-if="stack?.player?.country"
+                                >
+                                    <CountryFlag
+                                        :title="stack?.player?.country?.name"
+                                        :iso="
+                                            stack?.player?.country?.iso_3166_2
+                                        "
+                                    />
+                                </td>
+                                <td class="text-center hide-on-tablet" v-else>
+                                    ?
+                                </td>
+                                <td
+                                    v-if="stack.report_id == null"
+                                    class="text-right"
+                                >
+                                    {{ stack.current_chips.toLocaleString() }}
+                                </td>
+                                <td v-else class="text-right">
+                                    {{
+                                        stack.current_chips === 0
+                                            ? "BUSTED"
+                                            : stack.current_chips.toLocaleString()
+                                    }}
+                                </td>
+                                <td
+                                    v-if="stack.report_id == null"
+                                    class="text-right"
+                                >
+                                    <i class="fa fa-whatsapp"> </i> whatsapp
+                                </td>
+                                <td v-else class="text-right hide-on-mobile">
+                                    {{
+                                        stack.current_chips === 0
+                                            ? ""
+                                            : stack.changes.toLocaleString()
+                                    }}
+                                    <span
+                                        v-if="stack.symbol === 'up'"
+                                        style="margin-left: 10px"
+                                        ><i
+                                            v-if="stack.current_chips != 0"
+                                            class="fa-sharp fa-solid fa-caret-up text-green"
+                                        ></i
+                                    ></span>
+                                    <span v-else style="margin-left: 10px"
+                                        ><i
+                                            v-if="stack.current_chips != 0"
+                                            class="fa-sharp fa-solid fa-caret-down text-red"
+                                        ></i
+                                    ></span>
                                 </td>
                             </tr>
                         </template>
@@ -72,7 +134,16 @@
             </div>
             <div v-show="tab == 2">
                 <div class="margin-top">
-                    <vue-picture-swipe :items="items" style="position: relative; padding-bottom: 100%; display: flex; flex-wrap: wrap; gap: 10px;"></vue-picture-swipe>
+                    <vue-picture-swipe
+                        :items="items"
+                        style="
+                            position: relative;
+                            padding-bottom: 100%;
+                            display: flex;
+                            flex-wrap: wrap;
+                            gap: 10px;
+                        "
+                    ></vue-picture-swipe>
                 </div>
             </div>
             <div v-show="tab == 3">
@@ -82,16 +153,44 @@
                             <tr class="text-primary">
                                 <th class="text-center">Place</th>
                                 <th>Name</th>
-                                <th class="text-center hide-on-mobile">Country</th>
-                                <th class="text-right">Prize (<span v-html="event.currency.prefix"> </span>)</th>
+                                <th class="text-center hide-on-mobile">
+                                    Country
+                                </th>
+                                <th class="text-right">
+                                    Prize (<span v-html="event.currency.prefix">
+                                    </span
+                                    >)
+                                </th>
                             </tr>
                         </template>
                         <template v-slot:table-body>
-                            <tr v-for="payout in event.payouts" :key="payout.player">
-                                <td class="text-center">{{payout.position}}</td>
-                                <td> <span style="white-space: nowrap;">{{payout.player?.name}} </span> </td>
-                                <td class="text-center hide-on-mobile"><CountryFlag :title="payout.player?.country?.full_name" :iso="payout.player?.country?.iso_3166_2" /></td>
-                                <td class="text-right"> <span v-html="event.currency.prefix"> </span> {{Number(payout.prize).toLocaleString() }}</td>
+                            <tr
+                                v-for="payout in event.payouts"
+                                :key="payout.player"
+                            >
+                                <td class="text-center">
+                                    {{ payout.position }}
+                                </td>
+                                <td>
+                                    <span style="white-space: nowrap"
+                                        >{{ payout.player?.name }}
+                                    </span>
+                                </td>
+                                <td class="text-center hide-on-mobile">
+                                    <CountryFlag
+                                        :title="
+                                            payout.player?.country?.full_name
+                                        "
+                                        :iso="
+                                            payout.player?.country?.iso_3166_2
+                                        "
+                                    />
+                                </td>
+                                <td class="text-right">
+                                    <span v-html="event.currency.prefix">
+                                    </span>
+                                    {{ Number(payout.prize).toLocaleString() }}
+                                </td>
                             </tr>
                         </template>
                     </CustomeTable>
@@ -99,67 +198,95 @@
             </div>
             <div v-show="tab == 4">
                 <div class="margin-top">
-                    {{event.whatsapp}}
+                    {{ event.whatsapp }}
                     <p>Whatsapp</p>
                 </div>
             </div>
         </div>
     </div>
-
+    <div class="scroll-top">
+        <button @click="scrollToTop" class="btn btn-primary scroll-top-btn">
+            <i class="fa-sharp fa-solid fa-chevron-up"></i>
+        </button>
+    </div>
 </template>
 
 <script setup>
 import { ref, computed } from "@vue/reactivity";
-import { onMounted, watch } from "@vue/runtime-core";
-import CustomeTable from '../CustomeTable.vue'
-import CountryFlag from 'vue3-country-flag-icon'
-import VuePictureSwipe from 'vue3-picture-swipe'
-import defaultAvatar from '@/default-avatar.png'
+import { onMounted, onBeforeUnmount, watch } from "@vue/runtime-core";
+import CustomeTable from "../CustomeTable.vue";
+import CountryFlag from "vue3-country-flag-icon";
+import VuePictureSwipe from "vue3-picture-swipe";
+import defaultAvatar from "@/default-avatar.png";
 
-
-import brokenMirror from '@/photo_templates/brokenmirror.png'
-import bulletHole from '@/photo_templates/bullethole.png'
-import flames from '@/photo_templates/flames.png'
-import happyBirthday from '@/photo_templates/happybirthday.png'
-import iceCubes from '@/photo_templates/icecubes.png'
-import pocketAces from '@/photo_templates/pocketaces.png'
-import sunRays from '@/photo_templates/sunrays.png'
-import waterLeaves from '@/photo_templates/water-leaves.png'
-import waterWaves from '@/photo_templates/water-waves.png'
+import brokenMirror from "@/photo_templates/brokenmirror.png";
+import bulletHole from "@/photo_templates/bullethole.png";
+import flames from "@/photo_templates/flames.png";
+import happyBirthday from "@/photo_templates/happybirthday.png";
+import iceCubes from "@/photo_templates/icecubes.png";
+import pocketAces from "@/photo_templates/pocketaces.png";
+import sunRays from "@/photo_templates/sunrays.png";
+import waterLeaves from "@/photo_templates/water-leaves.png";
+import waterWaves from "@/photo_templates/water-waves.png";
 
 // components
-import EachReport from './EachReport.vue'
+import EachReport from "./EachReport.vue";
 
 const props = defineProps({
-    reports : {
-      type: Object,
+    reports: {
+        type: Object,
     },
     event: {
-        type: Object
-    }
+        type: Object,
+    },
 });
 
-    // const groupedReports = computed(() => {
-    //     const levels = [... new Set(props.reports.map(report => report.level.name))];
-    //     const testObj = {}
-    //     const levelObj = levels.map(level => testObj[level] = []);
-    //     const groupedLevels = props.reports.map(report => {
-    //         testObj[report.level.name].push(report);
-    //     })
-    //     return testObj;
-    // });
+// const groupedReports = computed(() => {
+//     const levels = [... new Set(props.reports.map(report => report.level.name))];
+//     const testObj = {}
+//     const levelObj = levels.map(level => testObj[level] = []);
+//     const groupedLevels = props.reports.map(report => {
+//         testObj[report.level.name].push(report);
+//     })
+//     return testObj;
+// });
 
-    const items = ref([]);
+const items = ref([]);
 
-    const newReport = ref(null)
+const newReport = ref(null);
 
-    onMounted( async () => {
-        items.value = [];
-        lastLevel.value = ''
-    })
-    watch(()=> props.event, ()=> {
-        if(props.event) {
-            props.event.gallery.forEach(element => {
+function stickyScroll() {
+    const tabs = document.querySelector(".custom-tabs");
+    const { top } = tabs.getBoundingClientRect();
+    const scrollTopBtn = document.querySelector(".scroll-top");
+
+    if (top <= 0) {
+        tabs.style.borderBottomColor = "transparent";
+        scrollTopBtn.style.display = "block";
+        return;
+    }
+    scrollTopBtn.style.display = "none";
+    tabs.style.borderBottomColor = "#f44336";
+}
+
+function scrollToTop() {
+    window.scroll({ top: 0, behavior: "smooth" });
+}
+
+onBeforeUnmount(() => {
+    window.removeEventListener("scroll", stickyScroll);
+});
+
+onMounted(async () => {
+    items.value = [];
+    lastLevel.value = "";
+    window.addEventListener("scroll", stickyScroll);
+});
+watch(
+    () => props.event,
+    () => {
+        if (props.event) {
+            props.event.gallery.forEach((element) => {
                 items.value.push({
                     thumbnail: element.thumbnail,
                     src: element.main,
@@ -168,42 +295,63 @@ const props = defineProps({
                 });
             });
         }
-    })
+    }
+);
 
 const tab = ref(0);
 
-const lastLevel = ref('')
+const lastLevel = ref("");
 
 const changeTab = (currentTab) => {
-    tab.value = currentTab
-}
+    tab.value = currentTab;
+};
 
 /* FRAMES */
 function getFrame(theme) {
     switch (theme) {
-        case 'brokenMirror':
+        case "brokenMirror":
             return brokenMirror;
-        case 'bulletHole':
+        case "bulletHole":
             return bulletHole;
-        case 'flames':
+        case "flames":
             return flames;
-        case 'happyBirthday':
+        case "happyBirthday":
             return happyBirthday;
-        case 'iceCubes':
+        case "iceCubes":
             return iceCubes;
-        case 'pocketAces':
+        case "pocketAces":
             return pocketAces;
-        case 'sunRays':
+        case "sunRays":
             return sunRays;
-        case 'waterLeaves':
+        case "waterLeaves":
             return waterLeaves;
-        case 'waterWaves':
+        case "waterWaves":
             return waterWaves;
     }
 }
 </script>
 
 <style scoped>
+.custom-tabs {
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    z-index: 999;
+}
+
+.scroll-top {
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+    z-index: 999;
+    display: none;
+    transition: all 0.5s ease;
+}
+
+.scroll-top-btn {
+    box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.5);
+}
+
 :deep(.gallery-thumbnail a img) {
     margin-bottom: 10px;
 }
@@ -221,7 +369,7 @@ function getFrame(theme) {
 }
 
 .single-post-box .about-more-autor ul.nav-tabs {
-    margin-bottom:20px; 
+    margin-bottom: 20px;
 }
 
 .single-post-box .post-tags-box ul.tags-box li a {
@@ -244,7 +392,7 @@ function getFrame(theme) {
     border-bottom: 1px solid #d3d3d3;
 }
 
-.margin-bottom{
+.margin-bottom {
     margin-bottom: 20px;
 }
 
@@ -277,30 +425,28 @@ ul.post-tags li .twitter {
 }
 
 .single-post-box .post-tags-box {
-    padding: unset  ;
+    padding: unset;
 }
 
-@media(min-width:768px) {
+@media (min-width: 768px) {
     .post-content-min-height {
         min-height: 200px;
     }
 
-     .show-on-mobile {
+    .show-on-mobile {
         display: none;
     }
 }
 
-
-@media(min-width:992px) {
+@media (min-width: 992px) {
     .post-content-min-height {
         min-height: 270px;
     }
 }
 
-@media(min-width:1200px) {
+@media (min-width: 1200px) {
     .post-content-min-height {
         min-height: 320px;
     }
 }
-
 </style>
