@@ -13,12 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('levels', function (Blueprint $table) {
-            $table->id();
-            // $table->string('name');
-            $table->integer('level');
-            // $table->integer('level_value')->nullable();
-            $table->timestamps();
+        Schema::table('levels', function (Blueprint $table) {
+            $table->integer('blinds');
+            $table->integer('ante');
         });
     }
 
@@ -29,6 +26,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('levels');
+        Schema::table('levels', function (Blueprint $table) {
+            //
+        });
     }
 };

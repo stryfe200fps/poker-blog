@@ -15,12 +15,41 @@ use App\Http\Controllers\HomeController;
 use Backpack\PageManager\app\Models\Page;
 use App\Http\Resources\LOFApiEventReportsResource;
 
+use App\Presenters\WebsitePresenter;
 
 Route::get('/', function () {
 
+
+    // "@context": "http://schema.org",
+    // "@type": "WebPage",
+    // "name": "About Patrick",
+    // "description": "In addition to Patrick's work in the SEO field, he also enjoys classical jazz dancing and organic farming ",
+    // "publisher": {
+    //     "@type": "ProfilePage",
+    //     "name": "Patrick's Website"
+
+
+    $webPage = \JsonLd\Context::create('web_page', [
+        'name' => 'Home Page',
+        'description' => 'Home page',
+        'url' => 'http://life-of-poker.test'
+    ]);
+
+    $webSite = \JsonLd\Context::create('web_site', [
+        'headline' => 'Life Of Poker',
+        'description' => 'Bringing the action to your doorstep',
+        'mainEntityOfPage' => [
+            'url' => 'https://google.com/article',
+        ]
+    ]);
+
+
+
     return Inertia::render('Index',[  
         'title' => 'Life of poker',
-        'description' =>'life of poker' 
+        'description' =>'life of poker',
+        'json-ld-webpage' => $webPage,
+        // 'json-ld-website' => $webSite
     ]);
 });
 
@@ -48,6 +77,7 @@ Route::get('/tournament', function () {
 })->name('tournament');
 
 Route::get('/article', function () {
+
     return Inertia::render('Article/Index');
 })->name('article');
 
@@ -55,11 +85,39 @@ Route::get('/article', function () {
 Route::get('/article/show/{slug}', function ($slug) {
 $article = Article::where('slug', $slug)->first();
 
+    $context = \JsonLd\Context::create('news_article', [
+        'headline' => $article->title,
+        'description' => $article->description,
+        'mainEntityOfPage' => [
+            'url' =>  config('app.url') . '/article',
+          
+        ],
+        'image' => [
+            'url' =>  $article->getFirstMediaUrl('article'),
+            'height' => 800,
+            'width' => 800,
+        ],
+        'datePublished' => $article->published_date,
+        'dateModified' => $article->updated_at,
+        'author' => [
+            'name' => $article->article_author->first_name,
+        ],
+        'publisher' => [
+            'name' => 'Life of poker',
+            'logo' => [
+                'url' =>  config('app.url') . '/lop_logo_small.png',
+              'width' => 600,
+              'height' => 60,
+            ]
+        ],
+    ]);
+
     return Inertia::render('Article/Show', 
     [
         'title' => $article->title,
         'slug' => $slug,
         'image' => $article->image,
+        'json-ld-article' => $context,
         'description' => \Illuminate\Support\Str::limit($article->description, 100, $end='...') 
     ]);
 })->name('article-show');

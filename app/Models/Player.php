@@ -45,11 +45,13 @@ class Player extends Model implements HasMedia
 
     public function openHistory()
     {
-
         return '<a class="btn btn-sm btn-link"  href="player_history/'.urlencode($this->attributes['id']).'" data-toggle="tooltip" title="Chip  Count"><i class="fa fa-search"></i> history  </a>';
     }
 
-
+    public function getNameAttribute($value) 
+    {
+        return ucwords($value);
+    }
 
     protected static function booted()
     {
@@ -66,6 +68,12 @@ class Player extends Model implements HasMedia
            foreach ($eventChip as $chip) {
                 $chip->delete();
            }
+        });
+
+        static::created(function ($player) {
+            Tag::create([
+                'title' => ucwords($player->name)
+            ]);
         });
     }
 }

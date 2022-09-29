@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\ArticleTagRequest;
+use App\Http\Requests\TagRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -11,13 +11,14 @@ use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class ArticleTagCrudController extends CrudController
+class TagCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\InlineCreateOperation;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -26,9 +27,9 @@ class ArticleTagCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\ArticleTag::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/article-tag');
-        CRUD::setEntityNameStrings('article tag', 'article tags');
+        CRUD::setModel(\App\Models\Tag::class);
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/tag');
+        CRUD::setEntityNameStrings('tag', 'tags');
     }
 
     /**
@@ -57,7 +58,7 @@ class ArticleTagCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(ArticleTagRequest::class);
+        CRUD::setValidation(TagRequest::class);
 
         CRUD::field('title');
 

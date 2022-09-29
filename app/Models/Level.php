@@ -19,9 +19,9 @@ class Level extends Model
         return $this->hasMany(EventReport::class);
     }
 
-    public function getNameAttribute()
+    public function getLevelAttribute()
     {
-        return 'Level '. $this->attributes['level'] . ' - '.  $this->attributes['name']  ;
+        return 'Level '. $this->attributes['level'] . ' - Blinds '.  $this->attributes['blinds'] . '/'. $this->attributes['ante'] . ' ante '. $this->attributes['ante']   ;
     }
 
     // public function getNameAttribute()

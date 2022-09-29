@@ -13,12 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('levels', function (Blueprint $table) {
-            $table->id();
-            // $table->string('name');
-            $table->integer('level');
-            // $table->integer('level_value')->nullable();
-            $table->timestamps();
+        Schema::table('events', function (Blueprint $table) {
+            $table->text('schedule');
         });
     }
 
@@ -29,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('levels');
+        Schema::table('events', function (Blueprint $table) {
+            //
+        });
     }
 };

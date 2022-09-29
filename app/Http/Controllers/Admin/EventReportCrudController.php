@@ -202,19 +202,18 @@ class EventReportCrudController extends CrudController
                 ],
 
             ],
-
             [
                 'label' => 'Levels',
                 'type' => 'relationship',
                 'name' => 'level', // the method that defines the relationship in your Model
                 'entity' => 'level', // the method that defines the relationship in your Model
-                'attribute' => 'name', // foreign key attribute that is shown to user
+                'attribute' => 'level', // foreign key attribute that is shown to user
                 'pivot' => true, // on create&update, do you need to add/delete pivot table entries?
                 'inline_create' => ['entity' => 'level'],
                 'ajax' => true,
                    'minimum_input_length' => 0,
-        'allows_null' => true,
-                // 'value' => $this->crud->getCurrentOperation() === 'update' ? $this->crud->getCurrentEntry()->level->id : $lastLevelId,
+                'allows_null' => true,
+                'value' => $this->crud->getCurrentOperation() === 'create' ? EventReport::lastLevel()->id  : $this->crud->getCurrentEntry()->level->id,
                 'wrapper' => [
                     'class' => 'form-group col-md-4',
                 ],
@@ -271,6 +270,22 @@ class EventReportCrudController extends CrudController
                 ],
             ],
             [
+                'label' => 'Tags',
+                'type' => 'relationship',
+                'name' => 'tags', // the method that defines the relationship in your Model
+                'entity' => 'tags', // the method that defines the relationship in your Model
+                'attribute' => 'title', // foreign key attribute that is shown to user
+                'pivot' => true, // on create&update, do you need to add/delete pivot table entries?
+                'inline_create' => ['entity' => 'tag'],
+                'ajax' => true,
+                   'minimum_input_length' => 0,
+                'allows_null' => true,
+                // 'value' => $this->crud->getCurrentOperation() === 'update' ? $this->crud->getCurrentEntry()->level->id : $lastLevelId,
+                'wrapper' => [
+                    'class' => 'form-group col-md-12',
+                ],
+            ],
+            [
                 'name' => 'players',
                 //chip stack
                 'label' => 'Chip Counts',
@@ -323,6 +338,11 @@ class EventReportCrudController extends CrudController
         // }
     }
 
+public function fetchTags()
+{
+    return $this->fetch(\App\Models\Tag::class);
+}
+
     /**
      * Define what happens when the Update operation is loaded.
      *
@@ -338,7 +358,19 @@ class EventReportCrudController extends CrudController
 
     public function fetchLevel()
     {
-        return $this->fetch(\App\Models\Level::class);
+        return $this->fetch(
+
+            [
+          'model' =>  \App\Models\Level::class,
+          'paginate' => 10,
+          'searchOperator' => 'LIKE',
+          'query' => function ($model) {
+            return $model->where('event_id', session()->get('event_id'));
+          }
+            ]
+            
+        
+        );
     }
 
     public function fetchPlayer()
