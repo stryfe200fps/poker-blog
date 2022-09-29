@@ -6,13 +6,11 @@ use App\Events\EventReportCreated;
 use Exception;
 use Spatie\Sluggable\HasSlug;
 use Spatie\MediaLibrary\HasMedia;
-use Spatie\Sluggable\SlugOptions;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
-use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
 class EventReport extends Model implements HasMedia
