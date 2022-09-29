@@ -282,12 +282,16 @@ function stickyScroll() {
     const scrollTopBtn = document.querySelector(".scroll-top");
 
     if (top <= 0) {
-        tabs.style.borderBottomColor = "transparent";
+        tabs.style.border = "none";
+        tabs.style.backgroundColor = "white";
+        tabs.style.boxShadow = "0px 8px 40px rgba(0, 0, 0, 0.20)";
         scrollTopBtn.style.display = "block";
         return;
     }
+    tabs.style.backgroundColor = "none";
+    tabs.style.boxShadow = "none";
     scrollTopBtn.style.display = "none";
-    tabs.style.borderBottomColor = "#f44336";
+    tabs.style.borderBottom = "2px solid #f44336";
 }
 
 function scrollToTop() {
