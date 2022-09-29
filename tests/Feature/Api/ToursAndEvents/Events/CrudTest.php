@@ -37,7 +37,7 @@ it('can insert event if authenticated', function () {
         'title' => 'Things I do',
         'description' => 'description',
         'date_end' => '2021-02-02 00:00:00',
-        'date_start'=> '2021-02-02 00:00:00',
+        'date_start' => '2021-02-02 00:00:00',
         'poker_tournament' => Tournament::factory()->create(),
         'poker_tournament_id' => Tournament::factory()->create()->id,
     ];

@@ -27,7 +27,6 @@ class PlayerCrudController extends CrudController
      */
     public function setup()
     {
-
         $this->crud->denyAccess('show');
         CRUD::setModel(\App\Models\Player::class);
         CRUD::setRoute(config('backpack.base.route_prefix').'/player');

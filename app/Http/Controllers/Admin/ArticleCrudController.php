@@ -64,7 +64,7 @@ class ArticleCrudController extends CrudController
             ],
         ]);
 
-            $this->crud->addColumns([
+        $this->crud->addColumns([
             [
                 'name' => 'diff', // the column that contains the ID of that connected entity;
                 'label' => 'Date', // Table column heading
@@ -214,9 +214,8 @@ class ArticleCrudController extends CrudController
             ]
         );
 
- 
         $author = ArticleAuthor::where('user_id', backpack_user()->id)->first();
-      
+
         if ($author !== null) {
             $this->crud->addField([
                 'name' => 'article_author_id',

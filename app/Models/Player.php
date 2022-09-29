@@ -56,18 +56,16 @@ class Player extends Model implements HasMedia
     protected static function booted()
     {
         static::deleting(function ($deletePlayer) {
-
-
-           $eventChip = EventChip::where('player_id', $deletePlayer->id)->get();
+            $eventChip = EventChip::where('player_id', $deletePlayer->id)->get();
 
             if ($eventChip->count()) {
-                \Alert::success(trans('backpack::crud.update_success'))->flash();
-                return false;
+                \Alert::add('error', 'This is a red bubble.');
+                return back();
             }
 
-           foreach ($eventChip as $chip) {
+            foreach ($eventChip as $chip) {
                 $chip->delete();
-           }
+            }
         });
 
         static::created(function ($player) {

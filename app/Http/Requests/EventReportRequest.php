@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Support\Str;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
 
 class EventReportRequest extends FormRequest
 {
@@ -23,7 +23,6 @@ class EventReportRequest extends FormRequest
      *
      * @return array
      */
-
     public function rules()
     {
         return [
@@ -39,8 +38,9 @@ class EventReportRequest extends FormRequest
 
     protected function prepareForValidation()
     {
-        if ($this->slug === null)
-        return;
+        if ($this->slug === null) {
+            return;
+        }
 
         // dd($this->slug);
         $this->merge([
@@ -53,7 +53,6 @@ class EventReportRequest extends FormRequest
      *
      * @return array
      */
-
     public function attributes()
     {
         return [

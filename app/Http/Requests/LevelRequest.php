@@ -40,7 +40,7 @@ class LevelRequest extends FormRequest
     {
         return [
             'name' => 'name is required',
-            'level' => 'level is required'
+            'level' => 'level is required',
         ];
     }
 

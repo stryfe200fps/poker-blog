@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\ImageThemeRequest;
+use App\Http\Requests\EventScheduleRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use Backpack\CRUD\app\Library\Widget;
 
 /**
- * Class ImageThemeCrudController
+ * Class EventScheduleCrudController
  *
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class ImageThemeCrudController extends CrudController
+class EventScheduleCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -26,10 +27,9 @@ class ImageThemeCrudController extends CrudController
      */
     public function setup()
     {
-        $this->crud->denyAccess('show');
-        CRUD::setModel(\App\Models\ImageTheme::class);
-        CRUD::setRoute(config('backpack.base.route_prefix').'/image-theme');
-        CRUD::setEntityNameStrings('image theme', 'image themes');
+        CRUD::setModel(\App\Models\EventSchedule::class);
+        CRUD::setRoute(config('backpack.base.route_prefix').'/event-schedule');
+        CRUD::setEntityNameStrings('event schedule', 'event schedules');
     }
 
     /**
@@ -41,8 +41,12 @@ class ImageThemeCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::column('name');
-        CRUD::column('image')->type('image');
+        // Widget::add()->to('before_content')->type('view')->view('vendor.backpack.custom.calendar')->liveReportId(1); // widgets to show the ordering cardJKhhhhh
+        CRUD::column('title');
+        CRUD::column('date_start');
+        CRUD::column('date_end');
+        CRUD::column('created_at');
+        CRUD::column('updated_at');
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
@@ -60,10 +64,13 @@ class ImageThemeCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(ImageThemeRequest::class);
+        CRUD::setValidation(EventScheduleRequest::class);
 
-        CRUD::field('name');
-        CRUD::field('image')->type('image');
+        CRUD::field('title');
+        CRUD::field('date_start');
+        CRUD::field('date_end');
+
+        CRUD::field('event_id');
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:
