@@ -22,7 +22,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::resource('article', ArticleController::class);
-Route::get('article/tag/{tag}', [ArticleController::class, 'tag' ]);
+// Route::get('article/tag/{tag}', [ArticleController::class, 'tag' ]);
+
+Route::get('tag/articles/{slug}', [TagController::class, 'articles']);
+Route::get('tag/reports/{slug}', [TagController::class, 'reports']);
 
 Route::resource('live-report', LiveReportController::class);
 Route::resource('tournament', TournamentApiController::class);
