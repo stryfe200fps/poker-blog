@@ -146,6 +146,7 @@ class EventReportCrudController extends CrudController
             'name' => 'slug',
             'type' => 'text',
         ]);
+
         $author = ArticleAuthor::where('user_id', backpack_user()->id)->first();
 
         $this->crud->addFields([
@@ -161,20 +162,35 @@ class EventReportCrudController extends CrudController
                     'autoGrow_bottomSpace' => 50,
                     'removePlugins' => 'resize,maximize',
                 ],
-            ],
+            ]]);
 
+            if ($this->crud->getCurrentOperation() == 'create') { 
+            $this->crud->addField(
             [
                 'name' => 'article_author_id',
                 'type' => 'select2',
                 'attribute' => 'fullname',
-                'value' => $author->id ?? 0,
+                'value' => $author->id ,
                 'label' => 'Author',
-
                 'wrapper' => [
                     'class' => 'form-group col-md-12',
                 ],
+            ]);
+             } else {
+            $this->crud->addField(
+            [
+                'name' => 'article_author_id',
+                'type' => 'select2',
+                'attribute' => 'fullname',
+                'label' => 'Author',
+                'wrapper' => [
+                    'class' => 'form-group col-md-12',
+                ],
+            ]);
 
-            ],
+             }
+
+        $this->crud->addFields([
 
             [   // DateTime
                 'name' => 'date_added',
