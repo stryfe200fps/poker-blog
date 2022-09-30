@@ -2,14 +2,22 @@
     <div class="about-more-autor">
         <ul class="nav nav-tabs custom-tabs">
             <li @click.prevent="changeTab(0)" :class="tab == 0 ? 'active' : ''">
-                <a href="#about-autor" data-toggle="tab">live events</a>
+                <a href="#about-autor" data-toggle="tab"
+                    ><span class="hidden-xs">latest events</span
+                    ><span class="visible-xs">latest</span></a
+                >
             </li>
-
             <li @click.prevent="changeTab(1)" :class="tab == 1 ? 'active' : ''">
-                <a href="#more-autor" data-toggle="tab">past events</a>
+                <a href="#more-autor" data-toggle="tab"
+                    ><span class="hidden-xs">past events</span
+                    ><span class="visible-xs">past</span>
+                </a>
             </li>
             <li @click.prevent="changeTab(2)" :class="tab == 2 ? 'active' : ''">
-                <a href="#more-autor" data-toggle="tab">upcoming events</a>
+                <a href="#more-autor" data-toggle="tab"
+                    ><span class="hidden-xs">upcoming events</span
+                    ><span class="visible-xs">upcoming</span>
+                </a>
             </li>
         </ul>
         <div class="tab-content">
@@ -57,7 +65,12 @@
                                             >{{ main.date_start }} -
                                             {{ main.date_end }}
                                         </li>
-                                        <!-- <li><i class="fa fa-map-marker"></i>Location City, Country 1602</li>                                                                   -->
+                                        <li>
+                                            <i class="fa fa-map-marker"></i
+                                            >{{ main.country?.capital }},
+                                            {{ main.country?.name }}
+                                            {{ main.country?.country_code }}
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -72,13 +85,23 @@
                                 <p>
                                     <Link
                                         :href="`/event/${event.slug}`"
-                                        class="text-primary"
-                                        >{{ event.title }}</Link
+                                        class="text-secondary"
+                                        >{{ event.title }}
+                                        {{ event.status }}</Link
+                                    >
+                                </p>
+                                <p v-if="event.status == 'live'">
+                                    <a
+                                        :href="`/event/${event.slug}`"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="btn btn-sm btn-danger text-uppercase"
+                                        >live now</a
                                     >
                                 </p>
                             </div>
                             <div class="col-sm-6 post-content">
-                                <p class="text-right">
+                                <p class="text-right text-muted">
                                     <i class="fa fa-clock-o"></i>
                                     {{
                                         moment(event.date_start).format(
@@ -139,7 +162,12 @@
                                             >{{ main.date_start }} -
                                             {{ main.date_end }}
                                         </li>
-                                        <!-- <li><i class="fa fa-map-marker"></i>Location City, Country 1602</li>                                    -->
+                                        <li>
+                                            <i class="fa fa-map-marker"></i
+                                            >{{ main.country?.capital }},
+                                            {{ main.country?.name }}
+                                            {{ main.country?.country_code }}
+                                        </li>
                                         <li></li>
                                     </ul>
                                 </div>
@@ -216,7 +244,12 @@
                                             >{{ main.date_start }} -
                                             {{ main.date_end }}
                                         </li>
-                                        <!-- <li><i class="fa fa-map-marker"></i>Location City, Country 1602</li>                                                                      -->
+                                        <li>
+                                            <i class="fa fa-map-marker"></i
+                                            >{{ main.country?.capital }},
+                                            {{ main.country?.name }}
+                                            {{ main.country?.country_code }}
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
