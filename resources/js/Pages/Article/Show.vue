@@ -10,7 +10,7 @@
         <!-- {{ getArticle(slug) }} -->
         <div class="block-content">
             <div class="title-section">
-                <Link onclick="history.back();return false;"
+                <Link href="/"
                     ><h1 class="text-primary">
                         <span
                             ><i
@@ -48,62 +48,6 @@
                                     </li>
                                 </ul>
                             </div>
-
-                            <!-- <div>
-                                <ul class="post-tags share-post-links">
-                                    <li style="margin-left: 2px">
-                                        <i
-                                            class="fa fa-share-alt text-secondary"
-                                        ></i
-                                        ><span class="text-secondary"
-                                            >Share
-                                            <span class="hide-on-smallest"
-                                                >Post</span
-                                            ></span
-                                        >
-                                    </li>
-                                    <li>
-                                        <a
-                                            target="_blank"
-                                            :href="
-                                                'https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Flifeofpoker.com%2Farticle%2Fshow%2F' +
-                                                article.slug +
-                                                '&amp;src=sdkpreparse'
-                                            "
-                                            class="facebook"
-                                            ><i
-                                                class="fa fa-facebook text-secondary"
-                                            ></i
-                                        ></a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            target="_blank"
-                                            :href="
-                                                'https://twitter.com/intent/tweet?text=https%3A//lifeofpoker.com/article/show/' +
-                                                article.slug
-                                            "
-                                            class="twitter"
-                                            ><i
-                                                class="fa fa-twitter text-secondary"
-                                            ></i
-                                        ></a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            target="_blank"
-                                            :href="
-                                                'https://api.whatsapp.com/send?text=%0ahttps://lifeofpoker.com/article/show/' +
-                                                article.slug
-                                            "
-                                            class="whatsapp"
-                                            ><i
-                                                class="fa fa-whatsapp text-secondary"
-                                            ></i
-                                        ></a>
-                                    </li>
-                                </ul>
-                            </div> -->
                             <div>
                                 <ul class="post-tags share-post-links">
                                     <div
@@ -264,17 +208,52 @@
                         </div>
                         <div class="remove-padding" v-html="article.body"></div>
                     </div>
-
-                    <div class="post-tags-box">
+                    <div class="post-tags-box" v-if="article.tags?.length">
                         <ul class="tags-box">
                             <li>
                                 <i class="fa fa-tags"></i><span>Tags:</span>
                             </li>
-                            <li><a href="#">News</a></li>
-                            <li><a href="#">Fashion</a></li>
-                            <li><a href="#">Politics</a></li>
-                            <li><a href="#">Sport</a></li>
+                            <li v-for="tags in article.tags" :key="tags.id">
+                                <a :href="tags.slug">{{ tags.title }}</a>
+                            </li>
                         </ul>
+                    </div>
+                </div>
+                <div
+                    class="title-section"
+                    style="margin-top: 50px"
+                    v-if="related?.length"
+                >
+                    <h1><span>Related news</span></h1>
+                </div>
+                <div class="row">
+                    <div
+                        class="col-xs-12 col-md-4"
+                        style="margin-bottom: 30px"
+                        v-for="relate in related"
+                        :key="relate.id"
+                    >
+                        <div class="item news-post image-post3">
+                            <img
+                                :src="relate.main_image"
+                                alt=""
+                                v-if="relate.main_image.length"
+                            />
+                            <img v-else :src="defaultImg" alt="" />
+                            <div class="hover-box">
+                                <h2>
+                                    <a :href="'/article/show/' + relate.slug">{{
+                                        relate.title
+                                    }}</a>
+                                </h2>
+                                <ul class="post-tags">
+                                    <li>
+                                        <i class="fa fa-clock-o"></i
+                                        >{{ relate.date }}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -283,7 +262,7 @@
 </template>
 
 <script setup>
-import { Head, Link, usePage } from "@inertiajs/inertia-vue3";
+import { Head, Link } from "@inertiajs/inertia-vue3";
 import FrontLayout from "@/Layouts/FrontLayout.vue";
 import ReportList from "../../Components/Frontend/Report/ReportList.vue";
 import SideBar from "../../Components/Frontend/MainContent/SideBar.vue";
@@ -291,7 +270,7 @@ import TournamentList from "../../Components/Frontend/Tournament/List.vue";
 
 import { useArticleStore } from "@/stores/article.js";
 import { onMounted, ref, watch } from "@vue/runtime-core";
-
+import defaultImg from "/public/default-img.png";
 const articleStore = useArticleStore();
 
 const props = defineProps({
@@ -302,6 +281,7 @@ const props = defineProps({
 });
 
 const article = ref([]);
+const related = ref(null);
 
 const isOpen = ref(false);
 
@@ -311,13 +291,19 @@ const showShare = () => {
 
 onMounted(async () => {
     await articleStore.getList();
-    usePage().props.value = "20";
+    await articleStore.getRelatedNews(props.slug);
 });
 
 watch(
     () => articleStore.list,
     function () {
         article.value = articleStore.getArticleBySlug(props.slug);
+    }
+);
+watch(
+    () => articleStore.related,
+    function () {
+        related.value = articleStore.related.data;
     }
 );
 </script>
