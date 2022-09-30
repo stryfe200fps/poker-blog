@@ -146,4 +146,16 @@ class TournamentCrudController extends CrudController
     {
         $this->setupCreateOperation();
     }
+
+    public function destroy($id)
+    {
+
+        if ($this->crud->getCurrentEntry()->events->count()) {
+            return \Alert::error('This tournament has events inside')->flash();
+        }
+
+        $this->crud->hasAccessOrFail('delete');
+        $id = $this->crud->getCurrentEntryId() ?? $id;
+        return $this->crud->delete($id);
+    }
 }

@@ -32,20 +32,27 @@ class EventReportRequest extends FormRequest
             'slug' => 'unique:event_reports,slug,'.\Request::get('id'),
             'content' => 'required',
             'day' => 'required',
+
             'level' => 'required',
         ];
     }
 
+
+
     protected function prepareForValidation()
     {
-        if ($this->slug === null) {
-            return;
+
+
+        
+        if ($this->slug !== null) {
+            $this->merge([
+                'slug' => Str::slug($this->slug),
+            ]);
         }
 
         // dd($this->slug);
-        $this->merge([
-            'slug' => Str::slug($this->slug),
-        ]);
+       
+
     }
 
     /**
