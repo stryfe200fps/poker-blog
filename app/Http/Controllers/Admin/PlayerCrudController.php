@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\PlayerRequest;
+use App\Models\EventChip;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -94,4 +95,20 @@ class PlayerCrudController extends CrudController
     {
         $this->setupCreateOperation();
     }
+
+    public function destroy($id)
+    {
+
+        $getChips = EventChip::where('player_id', $id)->count();
+
+        if ($getChips) {
+            return \Alert::error('This payer has event chips inside')->flash();
+        }
+
+        $this->crud->hasAccessOrFail('delete');
+        $id = $this->crud->getCurrentEntryId() ?? $id;
+        return $this->crud->delete($id);
+    }
+
+
 }

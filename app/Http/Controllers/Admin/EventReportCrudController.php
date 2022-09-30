@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\EventReportRequest;
-use App\Models\ArticleAuthor;
+use DateTime;
+use Carbon\Carbon;
 use App\Models\Event;
 use App\Models\EventReport;
+use Illuminate\Http\Request;
+use App\Models\ArticleAuthor;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
+use Backpack\CRUD\app\Library\Widget;
+use App\Http\Requests\EventReportRequest;
+use Illuminate\Support\Facades\Validator;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
-use Backpack\CRUD\app\Library\Widget;
-use Carbon\Carbon;
-use DateTime;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
 
 /**
  * Class LiveReportCrudController
@@ -238,7 +239,7 @@ class EventReportCrudController extends CrudController
                 'type' => 'text',
                 'value' => $event?->currentDateSchedule(),
                 'wrapper' => [
-                    'class' => 'form-group col-md-6',
+                    'class' => 'form-group col-md-10',
                 ],
 
             ],
@@ -246,12 +247,12 @@ class EventReportCrudController extends CrudController
                 'label' => 'Day',
                 'name' => 'day',
                 'type' => 'text',
-                'value' => $event?->currentDay() ?? 0,
+                'value' => $event?->currentDay() ?? '',
                 'attributes' => [
                     'readonly' => 'readonly',
                   ],
                 'wrapper' => [
-                    'class' => 'form-group col-md-6',
+                    'class' => 'form-group col-md-2',
                 ],
             ],
 
@@ -396,8 +397,6 @@ public function fetchTags()
             return $model->where('event_id', session()->get('event_id'));
           }
             ]
-            
-        
         );
     }
 
@@ -409,6 +408,11 @@ public function fetchTags()
     public function store(Request $request)
     {
         $this->crud->hasAccessOrFail('create');
+
+        if (request()->get('day') == 0 ) {
+            \Alert::add('error', 'This event hasn\'t started yet' )->flash();
+            return back(); 
+        }
 
         $players = request()->get('players');
 
@@ -441,7 +445,6 @@ public function fetchTags()
         }
 
         $request = $this->crud->validateRequest();
-
         $this->crud->registerFieldEvents();
 
         $item = $this->crud->create($this->crud->getStrippedSaveRequest($request));
@@ -452,7 +455,6 @@ public function fetchTags()
 
         \Alert::success(trans('backpack::crud.insert_success'))->flash();
 
-        // save the redirect choice for next time
         $this->crud->setSaveAction();
 
         return $this->crud->performSaveAction($item->getKey());

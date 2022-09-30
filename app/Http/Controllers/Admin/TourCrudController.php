@@ -95,4 +95,16 @@ class TourCrudController extends CrudController
     {
         $this->setupCreateOperation();
     }
+
+    public function destroy($id)
+    {
+
+        if ($this->crud->getCurrentEntry()->tournaments->count()) {
+            return \Alert::error('This tour has tournaments inside')->flash();
+        }
+
+        $this->crud->hasAccessOrFail('delete');
+        $id = $this->crud->getCurrentEntryId() ?? $id;
+        return $this->crud->delete($id);
+    }
 }

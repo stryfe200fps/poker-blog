@@ -327,4 +327,19 @@ class EventCrudController extends CrudController
         return $this->crud->performSaveAction($item->getKey());
     }
 
+    public function destroy($id)
+    {
+
+        if ($this->crud->getCurrentEntry()->event_reports->count()) {
+            return \Alert::error('This event has live reporting inside')->flash();
+
+        }
+        $this->crud->hasAccessOrFail('delete');
+        
+        $id = $this->crud->getCurrentEntryId() ?? $id;
+
+        return $this->crud->delete($id);
+    }
+
+
 }

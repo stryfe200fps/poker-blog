@@ -27,6 +27,11 @@ class Tour extends Model implements HasMedia
             ->height(225);
     }
 
+    public function tournaments()
+    {
+        return $this->hasMany(Tournament::class);
+    }
+
     public function getImageAttribute($value)
     {
         return $this->getFirstMediaUrl('tour', 'main-image');

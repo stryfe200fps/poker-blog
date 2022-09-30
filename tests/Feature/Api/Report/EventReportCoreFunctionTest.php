@@ -70,7 +70,6 @@ test('if ', function () {
 
     $json = $this->get('api/lof-live-report/'.'?event='.$report1->event_id.'&filterDay=1');
 
-    // reports ordering, should be by level descending.. 
     $json
     ->assertJsonPath(
         'data.0.collection.0.slug' , 'third'
