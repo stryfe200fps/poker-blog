@@ -39,11 +39,13 @@ class Tour extends Model implements HasMedia
 
     public function setImageAttribute($value)
     {
-        if ($value == null || preg_match("/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).base64,.*/", $value) == 0) {
-
+       if ($value == null) 
             $this->media()->delete();
-            return;
-        }
+
+        if (preg_match("/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).base64,.*/", $value) == 0) 
+            return false;
+
+
 
         $this->addMediaFromBase64($value)
             ->toMediaCollection('tour');
