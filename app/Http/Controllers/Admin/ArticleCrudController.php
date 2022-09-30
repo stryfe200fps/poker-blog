@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Carbon\Carbon;
+use App\Http\Requests\ArticleRequest;
 use App\Models\Article;
-use Illuminate\Http\Request;
 use App\Models\ArticleAuthor;
 use App\Models\ArticleCategory;
-use App\Http\Requests\ArticleRequest;
-use Backpack\CRUD\app\Library\Widget;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use Backpack\CRUD\app\Library\Widget;
+use Illuminate\Http\Request;
 
 /**
  * Class ArticleCrudController
@@ -24,7 +23,6 @@ class ArticleCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -64,9 +62,9 @@ class ArticleCrudController extends CrudController
             ],
         ]);
 
-        $this->crud->addColumns([
+            $this->crud->addColumns([
             [
-                'name' => 'diff', // the column that contains the ID of that connected entity;
+                'name' => 'published_date', // the column that contains the ID of that connected entity;
                 'label' => 'Date', // Table column heading
                 'type' => 'text',
             ],
@@ -110,14 +108,9 @@ class ArticleCrudController extends CrudController
                     'label' => 'Title',
                     'tab' => 'Basic',
                     'wrapper' => [
-                        'class' => 'form-group col-md-12',
+                        'class' => 'form-group col-md-6',
                     ],
                 ],
-            [
-                        'name' => 'slug',
-                        'type' => 'text',
-                        'tab' => 'Basic'
-            ],
                 [
                     'name' => 'description',
                     'body' => 'ckeditor',
@@ -132,22 +125,16 @@ class ArticleCrudController extends CrudController
                     'wrapper' => [
                         'class' => 'form-group col-md-12',
                     ],
-                ] ,
-                // [
-                //     'name' => 'tags',
-                //     'type' => 'relationship',
-                //     'attribute' => 'title',
-                //     'label' => 'Tags',
-                //     'tab' => 'Basic',
-                //     'wrapper' => [
-                //         'class' => 'form-group col-md-12',
-                //     ],
-                // ],
-            
-
-
-
-
+                ] ,[
+                    'name' => 'article_tags',
+                    'type' => 'relationship',
+                    'attribute' => 'title',
+                    'label' => 'Tags',
+                    'tab' => 'Basic',
+                    'wrapper' => [
+                        'class' => 'form-group col-md-12',
+                    ],
+                ],
 
                 [
 
@@ -184,27 +171,7 @@ class ArticleCrudController extends CrudController
                         'todayBtn' => 'linked',
                         'format' => 'yyyy-mm-dd',
                     ],
-
-                    'default' => Carbon::now()->toDateTimeString()
                 ],
-                [
-                'label' => 'Tags',
-                'type' => 'relationship',
-                'name' => 'tags', // the method that defines the relationship in your Model
-                'entity' => 'tags', // the method that defines the relationship in your Model
-                'attribute' => 'title', // foreign key attribute that is shown to user
-                'pivot' => true, // on create&update, do you need to add/delete pivot table entries?
-                'inline_create' => ['entity' => 'tag'],
-                'ajax' => true,
-                   'minimum_input_length' => 0,
-                'allows_null' => true,
-                'tab' => 'Basic',
-                // 'value' => $this->crud->getCurrentOperation() === 'update' ? $this->crud->getCurrentEntry()->level->id : $lastLevelId,
-                'wrapper' => [
-                    'class' => 'form-group col-md-12',
-                ],
-                ],
-                
                 [
                     'name' => 'image',
                     'type' => 'image',
@@ -219,8 +186,9 @@ class ArticleCrudController extends CrudController
             ]
         );
 
+ 
         $author = ArticleAuthor::where('user_id', backpack_user()->id)->first();
-
+      
         if ($author !== null) {
             $this->crud->addField([
                 'name' => 'article_author_id',
@@ -238,7 +206,7 @@ class ArticleCrudController extends CrudController
                 'name' => 'article_author_id',
                 'type' => 'select2',
                 'attribute' => 'fullname',
-                'label' => 'Author',
+                'label' => 'author',
                 'tab' => 'Basic',
                 'wrapper' => [
                     'class' => 'form-group col-md-12',
@@ -246,13 +214,6 @@ class ArticleCrudController extends CrudController
             ]);
         }
     }
-
-
-public function fetchTags()
-{
-    return $this->fetch(\App\Models\Tag::class);
-}
-
 
 public function store(Request $request)
 {

@@ -52,10 +52,8 @@ class EventResource extends JsonResource
                 'main' => $media->getUrl(),
             ];
         }
-
         return [
             'id' => $this->id,
-            'slug' => $this->slug,
             'title' => $this->title,
             'poker_tour' => $this->poker_tournament->poker_tour->title,
             'poker_tournament' => $this->poker_tournament->title,
@@ -66,7 +64,7 @@ class EventResource extends JsonResource
             'image' => $this->getFirstMediaUrl('event_banner', 'banner'),
             'status' => $status,
             'gallery' => $imgResource,
-            'chip_stacks' => EventChipsResource::collection($this->latest_live_report_players->unique('player_id')),
+            'chip_stacks' => EventChipsResource::collection($this->latest_live_report_players->unique('player_id')) ,
             'videos' => [],
             'whatsapp' => [],
             'date_start' => Carbon::parse($this->date_start)->toFormattedDateString(),

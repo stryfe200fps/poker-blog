@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Cocur\Slugify\Slugify;
 use Spatie\Sluggable\HasSlug;
+use Spatie\MediaLibrary\HasMedia;
 use Spatie\Sluggable\SlugOptions;
+use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Event extends Model implements HasMedia
 {
@@ -20,32 +20,11 @@ class Event extends Model implements HasMedia
 
     protected $guarded = ['id'];
 
-    protected $casts = [
-        'schedule' => 'json'
-    ];
-
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
             ->generateSlugsFrom('title')
             ->saveSlugsTo('slug');
-    }
-
-    public function currentDay() {
-        $dateNow = Carbon::now();
-        foreach ( json_decode($this->attributes['schedule'], true) ?? [] as $sched) {
-            if ( $dateNow >= Carbon::parse($sched['date_start'])  && $dateNow <= Carbon::parse($sched['date_end'])) {
-                // dd(Carbon::parse($sched['date_start']));
-                return $sched['day'];
-            }
-        }
-
-        return 0;
-    }
-
-    public function eventSchedules() {
-
-        return collect()->pluck('day', 'day');
     }
 
     public function getSlugAttribute($value)
@@ -55,7 +34,8 @@ class Event extends Model implements HasMedia
 
     public function setSlugAttribute($value)
     {
-        if ($value !== null) {
+        if ($value !== null) 
+        {
             $this->attributes['slug'] = $value;
         }
     }
@@ -68,6 +48,8 @@ class Event extends Model implements HasMedia
     //         ->saveSlugsTo('slug');
     // }
 
+  
+
     public function registerMediaConversions(?Media $media = null): void
     {
         $this->addMediaConversion('main-image')
@@ -78,9 +60,10 @@ class Event extends Model implements HasMedia
             ->width(337)
             ->height(225);
 
-        $this->addMediaConversion('main-gallery-thumb')
-                ->width(130)
-                ->height(86);
+    $this->addMediaConversion('main-gallery-thumb')
+            ->width(130)
+            ->height(86);
+
     }
 
     public function getImageAttribute($value)
@@ -90,9 +73,9 @@ class Event extends Model implements HasMedia
 
     public function setImageAttribute($value)
     {
+
         if ($value == null || preg_match("/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).base64,.*/", $value) == 0) {
             // $this->media()->delete();
-            $this->media()->delete();
             return false;
         }
         $this->media()->delete();
@@ -153,4 +136,6 @@ class Event extends Model implements HasMedia
     {
         return '<a class="btn btn-sm btn-link"  href="chip-count?event='.urlencode($this->attributes['id']).'" data-toggle="tooltip" title="Chip  Count"><i class="fa fa-search"></i> Chip Counts  </a>';
     }
+
+
 }

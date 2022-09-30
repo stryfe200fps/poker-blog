@@ -13,6 +13,8 @@ class LOFApiEventIndexResource extends JsonResource
      * @param  \Illuminate\Http\Request  $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
+
+
     public function toArray($request)
     {
         $imgResource = [];
@@ -48,7 +50,7 @@ class LOFApiEventIndexResource extends JsonResource
             'available_days' => $this->getAvailableDays(),
             'tour' => $this->tournament->tour->title,
             'payouts' => collect($this->event_payouts->load(['player', 'player.country']))->sortBy('position')->values()->all(),
-            'chip_stacks' => collect(EventChipsResource::collection($this->latest_event_chips->sortByDesc('created_at')->unique('player_id')))->sortByDesc('current_chips')->values()->all(),
-        ];
+            'chip_stacks' => collect(EventChipsResource::collection($this->latest_event_chips->sortByDesc('created_at')->unique('player_id')))->sortByDesc('current_chips')->values()->all() ,
+        ] ;
     }
 }

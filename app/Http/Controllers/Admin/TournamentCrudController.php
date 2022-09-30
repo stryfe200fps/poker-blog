@@ -8,7 +8,7 @@ use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use Carbon\Carbon;
 
 /**
- * Class
+ * Class 
  *
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
@@ -27,6 +27,7 @@ class TournamentCrudController extends CrudController
      */
     public function setup()
     {
+
         $this->crud->denyAccess('show');
         CRUD::setModel(\App\Models\Tournament::class);
         CRUD::setRoute(config('backpack.base.route_prefix').'/poker-tournament');
@@ -69,9 +70,9 @@ class TournamentCrudController extends CrudController
         $end = Carbon::now()->addDays(2)->toDateTimeString();
 
         CRUD::field('tour_id')->options(function ($query) {
-            return $query->orderBy('title', 'ASC')->get();
+                return $query->orderBy('title', 'ASC')->get();
         });
-
+         
         CRUD::field('title');
         CRUD::field('description');
 
@@ -107,7 +108,7 @@ class TournamentCrudController extends CrudController
                 'name' => 'image',
                 'label' => 'image',
                 'type' => 'image',
-                'aspect_ratio' => 3 / 2,
+                'aspect_ratio' => 3/2,
                 'crop' => true,
             ],
             [   // date_range

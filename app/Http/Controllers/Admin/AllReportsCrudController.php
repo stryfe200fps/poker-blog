@@ -4,10 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\EventReportRequest;
 use App\Models\ArticleAuthor;
-use App\Models\Event;
-use App\Models\EventChip;
 use App\Models\EventReport;
+use App\Models\EventChip;
 use App\Models\Player;
+use App\Models\Event;
+use App\Models\Tour;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use Backpack\CRUD\app\Library\Widget;
@@ -124,6 +125,7 @@ class AllReportsCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(EventReportRequest::class);
+
 
         $this->crud->addField([
 

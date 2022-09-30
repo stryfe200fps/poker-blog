@@ -14,6 +14,7 @@ class CreateEvent2ChipsTable extends Migration
     public function up()
     {
         Schema::create('event_chips', function (Blueprint $table) {
+
             $table->id();
             $table->string('name');
             $table->foreignId('player_id');

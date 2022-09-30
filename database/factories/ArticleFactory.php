@@ -3,8 +3,6 @@
 namespace Database\Factories;
 
 use App\Models\Article;
-use App\Models\ArticleCategory;
-use App\Models\ArticleTag;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ArticleFactory extends Factory

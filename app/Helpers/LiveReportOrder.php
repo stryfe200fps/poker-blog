@@ -5,14 +5,15 @@ namespace App\Helpers;
 use App\Models\Level;
 use Illuminate\Database\Eloquent\Builder;
 
-class LiveReportOrder
-{
+class LiveReportOrder {
+
+
     public function handle(Builder $builder, $next)
     {
         $builder->orderByDesc(Level::select('level')
             ->whereColumn('levels.id', 'event_reports.level_id')
-        )->orderByDesc('date_added');
-
+        )->orderByDesc('created_at');
         return $next($builder);
     }
+
 }

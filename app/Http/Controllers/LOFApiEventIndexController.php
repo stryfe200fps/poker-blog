@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\LOFApiEventIndexResource;
 use App\Models\Event;
 use Illuminate\Http\Request;
+use App\Http\Resources\LOFApiEventIndexResource;
 
 class LOFApiEventIndexController extends Controller
 {
@@ -36,6 +36,7 @@ class LOFApiEventIndexController extends Controller
      */
     public function store(Request $request)
     {
+
     }
 
     /**

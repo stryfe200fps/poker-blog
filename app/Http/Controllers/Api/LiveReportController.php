@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\LiveReport;
+use App\Models\EventReport;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\LiveReport\LiveReportResource;
-use App\Models\EventReport;
 
 class LiveReportController extends Controller
 {

@@ -1,10 +1,7 @@
 <?php
 
-use Tests\TestCase;
-use App\Models\User;
-
-use Spatie\Permission\Models\Role;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,17 +45,4 @@ expect()->extend('toBeOne', function () {
 function something()
 {
     // ..
-}
-
-function superAdminAuthenticate() {
-
-    $u = User::factory()->create();
-    $role = Role::create([
-        'name' => 'super-admin',
-    ]);
-
-    $user = test()->actingAs(User::factory()->create(), 'web');
-    backpack_user()->assignRole('super-admin');
-
-    return $u;
 }

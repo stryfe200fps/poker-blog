@@ -1,14 +1,14 @@
 <?php
 
-use App\Http\Controllers\TagController;
 use App\Http\Controllers\Api\ArticleController;
+use App\Http\Controllers\Api\EventApiController as ApiEventApiController;
 use App\Http\Controllers\Api\levelApiController;
-use App\Http\Controllers\LOFApiEventsController;
 use App\Http\Controllers\Api\LiveReportController;
+use App\Http\Controllers\Api\TournamentApiController;
 use App\Http\Controllers\Api\ReportsApiController;
 use App\Http\Controllers\EventReportsController;
 use App\Http\Controllers\LOFApiEventIndexController;
-use App\Http\Controllers\Api\TournamentApiController;
+use App\Http\Controllers\LOFApiEventsController;
 use App\Http\Controllers\LOFApiLiveReportsController;
 use App\Http\Controllers\LOFApiTournamentsController;
 use App\Http\Controllers\PageManager;
@@ -22,12 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::resource('article', ArticleController::class);
-Route::get('article/{slug}/related', [ArticleController::class, 'related' ]);
-
-// Route::get('article/tag/{tag}', [ArticleController::class, 'tag' ]);
-
-Route::get('tag/articles/{slug}', [TagController::class, 'articles']);
-Route::get('tag/reports/{slug}', [TagController::class, 'reports']);
+Route::get('article/tag/{tag}', [ArticleController::class, 'tag' ]);
 
 Route::resource('live-report', LiveReportController::class);
 Route::resource('tournament', TournamentApiController::class);
@@ -51,3 +46,4 @@ Route::resource('lof-event-index', LOFApiEventIndexController::class);
 Route::resource('lof-live-report', EventReportsController::class);
 
 Route::resource('page', PageManagerController::class);
+// Route::get('pagemanager/show/{slug}', [PageManagerController::class, 'show']);

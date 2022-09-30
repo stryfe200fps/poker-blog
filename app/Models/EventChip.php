@@ -24,7 +24,7 @@ class EventChip extends Model
         'event_report_id',
         'chips_before',
         'rank',
-        'event_payout_id',
+        'event_payout_id'
     ];
 
     /**
@@ -46,18 +46,19 @@ class EventChip extends Model
         return $this->belongsTo(Player::class);
     }
 
-    public function event()
+    public function event() 
     {
         return $this->belongsTo(Event::class);
+
     }
 
     public function getPreviousReportAttribute($value)
     {
-        if ($this->attributes['event_report_id'] === null) {
-            return;
-        }
 
-        $q = $this->
+        if ($this->attributes['event_report_id'] === null)
+            return;
+
+        $q = $this-> 
         where('event_id', $this->event_id)
         ->whereNotNull('event_report_id');
 
@@ -69,28 +70,35 @@ class EventChip extends Model
     protected static function booted()
     {
         static::deleting(function ($deletedEventChip) {
+
             $reportId = $deletedEventChip->event_report_id;
 
             $reports = EventReport::where('id', $reportId)->get();
 
             foreach ($reports as $report) {
+
                 $players = $report->players;
                 foreach ($report->players as $key => $player) {
+                    
                     // dd($player['player_id'], $deletedEventChip->player_id, $player['player_id'] == $deletedEventChip->player_id);
                     if ($player['player_id'] == $deletedEventChip->player_id) {
-                        //  $whoami =   Player::where( 'id', $player['player_id'])->first();
-                        //  dump($whoami);
+                    //  $whoami =   Player::where( 'id', $player['player_id'])->first();
+                    //  dump($whoami);
                         // dump($players);
                         unset($players[$key]);
                         // $report->players->unset($key);
                         // dump('----');
                         // dd($players);
                     }
+                    
                 }
                 $reportModel = EventReport::where('id', $report->id)->first();
                 $reportModel->players = $players;
                 $reportModel->save();
+
             }
+
         });
     }
+
 }

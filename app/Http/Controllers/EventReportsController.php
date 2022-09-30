@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\LiveReportFilterByDays;
-use App\Helpers\LiveReportOrder;
-use App\Http\Resources\LOFApiEventReportsResource;
-use App\Http\Resources\ReportCollection;
 use App\Models\EventReport;
 use Illuminate\Http\Request;
 use Illuminate\Pipeline\Pipeline;
+use App\Helpers\LiveReportOrder;
+use App\Helpers\LiveReportFilterByDays;
+use App\Http\Resources\LOFApiLiveReportsResource;
+use App\Http\Resources\LOFApiEventReportsResource;
+use App\Http\Resources\ReportCollection;
 
 class EventReportsController extends Controller
 {
@@ -25,25 +26,29 @@ class EventReportsController extends Controller
     //     return LOFApiEventReportsResource::collection(EventReport::with(['player', 'article_author', 'level', 'event_chips', 'event_chips.player', 'event_chips.player.country'])->latest()->where('event_id', request()->all()['event'])->paginate(10));
     // }
 
+
     public function index()
     {
+   
         // return LOFApiEventReportsResource::collection(EventReport::with(['player', 'article_author', 'level', 'event_chips', 'event_chips.player', 'event_chips.player.country'])->where('event_id', request()->all()['event'])->paginate(10));
         $liveReport = EventReport::with(
-            ['player', 'article_author', 'level' => function ($q) {
+            [ 'player', 'article_author', 'level' => function ($q){ 
                 $q->orderByDesc('level');
-            }, 'event_chips',
-                'event_chips', 'event_chips.player', 'event_chips.player.country', 'event', 'media', ])
-             ->where('event_id', request()->all()['event']);
+            }, 'event_chips', 
+            'event_chips' , 'event_chips.player', 'event_chips.player.country', 'event', 'media'])
+             ->where('event_id', request()->all()['event'])
+             ;
+
 
         $pipe = app(Pipeline::class)
         ->send($liveReport)
             ->through([
-                LiveReportOrder::class,
-                LiveReportFilterByDays::class,
+            LiveReportOrder::class,
+            LiveReportFilterByDays::class
             ])
            ->thenReturn();
 
-        return new ReportCollection($pipe->paginate(10));
+           return new ReportCollection($pipe->paginate(10));
 
         // $reports = LOFApiEventReportsResource::collection($pipe->paginate(10));
 
@@ -52,10 +57,11 @@ class EventReportsController extends Controller
         // $reports->setCollection( LOFApiEventReportsResource::collection($reports) );
 
         // return $reports;
-
+       
         return LOFApiEventReportsResource::collection($pipe->paginate(10))->groupBy('level.name');
         // return LOFApiEventReportsResource::collection($pipe->paginate(10));
     }
+
 
     public function create()
     {
@@ -81,7 +87,7 @@ class EventReportsController extends Controller
      */
     public function show($slug)
     {
-        return  new LOFApiEventReportsResource(EventReport::where('slug', $slug)->first());
+     return  new LOFApiEventReportsResource(EventReport::where('slug', $slug)->first());
     }
 
     /**

@@ -9,6 +9,7 @@ class ArticleResource extends JsonResource
 {
     public function toArray($request)
     {
+
         // dd($this->getFirstMedia('article', 'feature_image')->getUrl());
         return [
             'title' => $this->title,
@@ -16,14 +17,12 @@ class ArticleResource extends JsonResource
             'categories' => $this->article_categories,
             'body' => $this->body,
             'slug' => $this->slug,
-            'tags' => $this->tags,
+            'tags' => $this->article_tags,
             'date' => Carbon::parse($this->published_date)->toFormattedDateString(),
             'formattedDate' => Carbon::parse($this->date_added)->diffForHumans(),
             'main_image' => $this->getFirstMediaUrl('article', 'main-image'),
             'thumb_image' => $this->getFirstMediaUrl('article', 'main-thumb'),
-            $this->mergeWhen($this->article_author !== null,[
-                'author' => new AuthorResource($this->article_author) 
-            ])
+            'author' => $this->article_author->first_name.' '.$this->article_author->last_name,
         ];
     }
 }

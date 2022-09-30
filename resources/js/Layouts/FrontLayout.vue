@@ -27,7 +27,7 @@ defineProps({
             <slot />
    </div>
         <div class="col-md-3 col-sm-4" style="overflow: none;">  
-           <SideBar  />
+            <SideBar  />
         </div>
   </div>
             </div>
