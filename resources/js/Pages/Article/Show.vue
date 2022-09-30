@@ -404,7 +404,7 @@ ul.post-tags {
     left: 50%;
     height: 8px;
     width: 8px;
-    background-color: #999;
+    background-color: #25d366;
     transform: translate(-50%) rotate(45deg);
 }
 
