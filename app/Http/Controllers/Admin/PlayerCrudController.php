@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Player;
+use App\Models\EventChip;
 use App\Http\Requests\PlayerRequest;
 use App\Models\EventChip;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
@@ -21,6 +23,8 @@ class PlayerCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\InlineCreateOperation;
 
+
+
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
      *
@@ -32,6 +36,8 @@ class PlayerCrudController extends CrudController
         CRUD::setModel(\App\Models\Player::class);
         CRUD::setRoute(config('backpack.base.route_prefix').'/player');
         CRUD::setEntityNameStrings('player', 'players');
+    
+         $this->crud->orderBy('name');
     }
 
     /**
@@ -43,10 +49,27 @@ class PlayerCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+
+
+         $this->crud->orderBy('name');
         CRUD::column('name');
         CRUD::column('pseudonym');
         CRUD::column('country_id');
         $this->crud->addButtonFromModelFunction('line', 'open_history', 'openHistory', 'beginning');
+
+        $this->crud->addFilter([
+            'type' => 'select2',
+            'name' => 'player',
+            'label' => 'Players',
+        ],
+
+            function () {
+                return Player::all()->pluck('country.name', 'country.id')->toArray();
+            },
+            function ($values) {
+                $this->crud->query = $this->crud->query->where('country_id', $values);
+            }
+        );
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
