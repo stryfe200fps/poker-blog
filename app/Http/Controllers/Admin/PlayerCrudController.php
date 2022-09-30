@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Player;
 use App\Models\EventChip;
 use App\Http\Requests\PlayerRequest;
-use App\Models\EventChip;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
