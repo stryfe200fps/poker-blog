@@ -11,9 +11,22 @@
                     >{{ item.title }}</Link
                 >
             </h1>
-            <div style="display: flex; justify-content: space-between">
-                <div>
+            <div
+                style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                "
+            >
+                <div style="flex-grow: 1">
                     <ul class="post-tags">
+                        <li>
+                            <i class="fa fa-user"></i>by
+                            <a href="#"
+                                >{{ item.author?.first_name }}
+                                {{ item.author?.last_name }}</a
+                            >
+                        </li>
                         <li>
                             <i class="fa fa-clock-o"></i
                             >{{
@@ -23,55 +36,128 @@
                             }}
                         </li>
                         <li>
-                            <i class="fa fa-user"></i>by
-                            <a href="#"
-                                >{{ item.author?.first_name }}
-                                {{ item.author?.last_name }}</a
-                            >
-                            - {{ item.level.name }}
+                            <i class="fa fa-bookmark"></i>{{ item.level.level }}
                         </li>
                     </ul>
                 </div>
                 <div>
                     <ul class="post-tags share-post-links">
-                        <li class="text-secondary">
-                            <i class="fa fa-share-alt text-secondary"></i
-                            ><span>Share Post</span>
-                        </li>
-                        <li>
-                            <a
-                                target="_blank"
-                                :href="
-                                    'https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Flifeofpoker.com%2Freport%2F' +
-                                    item.slug +
-                                    '&amp;src=sdkpreparse'
-                                "
-                                class="facebook"
-                                ><i class="fa fa-facebook text-secondary"></i
-                            ></a>
-                        </li>
-                        <li>
-                            <a
-                                target="_blank"
-                                :href="
-                                    'https://twitter.com/intent/tweet?text=https%3A//lifeofpoker.com/report/' +
-                                    item.slug
-                                "
-                                class="twitter"
-                                ><i class="fa fa-twitter text-secondary"></i
-                            ></a>
-                        </li>
-                        <li>
-                            <a
-                                target="_blank"
-                                :href="
-                                    'https://api.whatsapp.com/send?text=%0ahttps://lifeofpoker.com/report/' +
-                                    item.slug
-                                "
-                                class="whatsapp"
-                                ><i class="fa fa-whatsapp text-secondary"></i
-                            ></a>
-                        </li>
+                        <div
+                            class="share-post-mobile"
+                            style="position: relative"
+                        >
+                            <div
+                                class="btn-group-vertical social-links-group"
+                                :class="{ show: isOpen }"
+                            >
+                                <li
+                                    class="btn"
+                                    style="
+                                        margin-right: 0;
+                                        background-color: #1854dd;
+                                    "
+                                >
+                                    <a
+                                        target="_blank"
+                                        :href="
+                                            'https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Flifeofpoker.com%2Freport%2F' +
+                                            item.slug +
+                                            '&amp;src=sdkpreparse'
+                                        "
+                                        ><i
+                                            class="fa-brands fa-facebook-f"
+                                            style="margin-right: 0; color: #fff"
+                                        ></i>
+                                    </a>
+                                </li>
+                                <li
+                                    class="btn"
+                                    style="
+                                        margin-right: 0;
+                                        background-color: #18a3dd;
+                                    "
+                                >
+                                    <a
+                                        target="_blank"
+                                        :href="
+                                            'https://twitter.com/intent/tweet?text=https%3A//lifeofpoker.com/report/' +
+                                            item.slug
+                                        "
+                                        ><i
+                                            class="fa fa-twitter"
+                                            style="margin-right: 0; color: #fff"
+                                        ></i
+                                    ></a>
+                                </li>
+                                <li
+                                    class="btn"
+                                    style="background-color: #25d366"
+                                >
+                                    <a
+                                        target="_blank"
+                                        :href="
+                                            'https://api.whatsapp.com/send?text=%0ahttps://lifeofpoker.com/report/' +
+                                            item.slug
+                                        "
+                                        ><i
+                                            class="fa fa-whatsapp"
+                                            style="margin-right: 0; color: #fff"
+                                        ></i
+                                    ></a>
+                                </li>
+                            </div>
+                            <li
+                                @click="showShare"
+                                class="btn btn-default share-btn-mobile"
+                            >
+                                <i class="fa fa-share-alt"></i
+                                ><span class="text-uppercase">Share</span>
+                            </li>
+                        </div>
+                        <div class="share-post-desktop">
+                            <li class="text-secondary">
+                                <i class="fa fa-share-alt text-secondary"></i
+                                ><span class="text-secondary">Share Post</span>
+                            </li>
+                            <li>
+                                <a
+                                    target="_blank"
+                                    :href="
+                                        'https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Flifeofpoker.com%2Freport%2F' +
+                                        item.slug +
+                                        '&amp;src=sdkpreparse'
+                                    "
+                                    class="facebook"
+                                    ><i
+                                        class="fa fa-facebook text-secondary"
+                                    ></i
+                                ></a>
+                            </li>
+                            <li>
+                                <a
+                                    target="_blank"
+                                    :href="
+                                        'https://twitter.com/intent/tweet?text=https%3A//lifeofpoker.com/report/' +
+                                        item.slug
+                                    "
+                                    class="twitter"
+                                    ><i class="fa fa-twitter text-secondary"></i
+                                ></a>
+                            </li>
+                            <li>
+                                <a
+                                    target="_blank"
+                                    :href="
+                                        'https://api.whatsapp.com/send?text=%0ahttps://lifeofpoker.com/report/' +
+                                        item.slug
+                                    "
+                                    class="whatsapp"
+                                    ><i
+                                        class="fa fa-whatsapp text-secondary"
+                                    ></i
+                                ></a>
+                            </li>
+                        </div>
                     </ul>
                 </div>
             </div>
@@ -234,11 +320,15 @@ const getDate = (date) => {
 //     lastLevel.value = "";
 // });
 const tab = ref(0);
-
+const isOpen = ref(false);
 //const lastLevel = ref("");
 
 const changeTab = (currentTab) => {
     tab.value = currentTab;
+};
+
+const showShare = () => {
+    isOpen.value = !isOpen.value;
 };
 
 /* FRAMES */
@@ -344,6 +434,38 @@ ul.post-tags li .twitter {
     padding: unset;
 }
 
+.share-post-desktop {
+    display: none;
+}
+
+.share-btn-mobile {
+    margin: 0;
+}
+
+.social-links-group {
+    position: absolute;
+    top: 0;
+    left: 25%;
+    display: none;
+    transform: translateY(-100px);
+    transition: all 0.5s ease-in-out;
+}
+
+.social-links-group.show {
+    display: block;
+}
+
+.social-links-group::before {
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    left: 50%;
+    height: 8px;
+    width: 8px;
+    background-color: #999;
+    transform: translate(-50%) rotate(45deg);
+}
+
 @media (min-width: 768px) {
     .post-content-min-height {
         min-height: 200px;
@@ -357,6 +479,14 @@ ul.post-tags li .twitter {
 @media (min-width: 992px) {
     .post-content-min-height {
         min-height: 270px;
+    }
+
+    .share-post-mobile {
+        display: none;
+    }
+
+    .share-post-desktop {
+        display: block;
     }
 }
 
