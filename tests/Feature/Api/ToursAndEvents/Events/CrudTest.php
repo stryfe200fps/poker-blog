@@ -3,6 +3,7 @@
 use App\Models\Article;
 use App\Models\ArticleAuthor;
 use App\Models\ArticleCategory;
+use App\Models\Event;
 use App\Models\Tournament;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -10,10 +11,6 @@ use Spatie\Permission\Models\Role;
 
 uses(RefreshDatabase::class);
 
-test('events is working', function () {
-    $response = $this->get('/api/events');
-    $response->assertStatus(200);
-});
 
 it('cannot create events if unauthenticated', function () {
     $this->post('admin/events/', [
@@ -22,81 +19,82 @@ it('cannot create events if unauthenticated', function () {
 });
 
 it('can insert event if authenticated', function () {
-    $u = User::factory()->create();
-    $role = Role::create([
-        'name' => 'super-admin',
-    ]);
-
-    $user = $this->actingAs(User::factory()->create(), 'web');
-
-    backpack_user()->assignRole('super-admin');
+    superAdminAuthenticate();
 
     $this->get('admin/events/create')->assertStatus(200);
+
+    $sheduleFormat = 
+    '[
+        {"day":"1",
+        "date_start":"2022-09-29 06:53:00",
+        "date_end":"2022-09-29 17:53:00"
+        },
+        
+        {"day":"2",
+        "date_start":"2022-09-30 8:53:00",
+        "date_end":"2022-09-30 14:53:00"
+        }
+    ]';
 
     $data = [
         'title' => 'Things I do',
         'description' => 'description',
         'date_end' => '2021-02-02 00:00:00',
-        'date_start'=> '2021-02-02 00:00:00',
-        'poker_tournament' => Tournament::factory()->create(),
-        'poker_tournament_id' => Tournament::factory()->create()->id,
+        'schedule' => json_decode($sheduleFormat, true),
+        'date_start' => '2021-02-02 00:00:00',
+        'tournament' => Tournament::factory()->create(),
+        'tournament_id' => Tournament::factory()->create()->id,
     ];
 
-    $datas = $this->post('/admin/events', $data);
+    $this->post('/admin/events', $data);
 
-    // dd($datas);
+    $this->assertDatabaseHas('events', ['title' => 'Things I do' ]);
 
-    $this->assertDatabaseHas('poker_events', ['title' => 'Things I do',
-    ]);
-
-    // $datas->assertSessionHasErrors('date_start');
-    // $datas->assertSessionHasErrors('end_date');
 });
 
-// it('can update article if authenticated', function () {
+it('can update event if authenticated', function () {
 
-//       $u = User::factory()->create();
-//         $role = Role::create([
-//         'name' => 'super-admin',
-//     ]);
+    superAdminAuthenticate();
+    $event = Event::factory()->create();
 
-//     $user = $this->actingAs(User::factory()->create(), 'web');
+    $this->get('admin/events/'. $event->id . '/edit')->assertStatus(200);
 
-//     backpack_user()->assignRole('super-admin');
+     $sheduleFormat = 
+    '[
+        {"day":"1",
+        "date_start":"2022-09-29 06:53:00",
+        "date_end":"2022-09-29 17:53:00"
+        },
+        
+        {"day":"2",
+        "date_start":"2022-09-30 8:53:00",
+        "date_end":"2022-09-30 14:53:00"
+        }
+    ]';
 
-//     $article = Article::factory()->create();
+    $data = [
+        'id' => $event->id,
+        'title' => 'Things I do',
+        'description' => 'description',
+        'date_end' => '2021-02-02 00:00:00',
+        'schedule' => json_decode($sheduleFormat, true),
+        'date_start' => '2021-02-02 00:00:00',
+    ];
 
-//     $this->get('admin/article/'. $article->id . '/edit')->assertStatus(200);
+    $this->put('/admin/events/update', $data);
 
-//     $data = [
-//         'id' => $article->id,
-//         'title' => 'things I hate',
-//         'description' => 'description',
-//         'body' => 'body',
-//         'published_date' => '2020-04-17',
-//         'article_author_id' => ArticleAuthor::factory()->create()->id,
-//         'article_categories' => collect(ArticleCategory::factory()->times(2)->create()) ->pluck('id')->toArray()
-//     ];
+    $this->assertDatabaseHas('events', ['title' => 'Things I do',
+    ]);
+ 
+    $this->assertDatabaseCount('events', 1);
 
-//     $datas = $this->put('admin/article/update', $data);
-//     $this->assertDatabaseHas('articles', ['title' => 'things I hate',
-//         'description' => 'description',
-//         'body' => 'body'
-//         ] );
-//     $this->assertDatabaseCount('articles', 1);
+});
 
-// });
+it('can delete events if authenticated', function () {
 
-// it('can delete article if authenticated', function () {
+    superAdminAuthenticate();
 
-//     $u = User::factory()->create();
-//         $role = Role::create([
-//         'name' => 'super-admin',
-//     ]);
-
-//     $user = $this->actingAs(User::factory()->create(), 'web');
-//     backpack_user()->assignRole('super-admin');
-//     $article = Article::factory()->create();
-//     $this->get('admin/article')->assertStatus(200);
-//     $datas = $this->delete('admin/article/1');
-// });
+    $event = Event::factory()->create();
+    $this->get('admin/events')->assertStatus(200);
+    $this->delete('admin/events/1');
+});

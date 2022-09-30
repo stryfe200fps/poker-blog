@@ -2,10 +2,9 @@
 
 namespace App\Models;
 
-
-use Illuminate\Database\Eloquent\Model;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Level extends Model
 {
@@ -19,9 +18,9 @@ class Level extends Model
         return $this->hasMany(EventReport::class);
     }
 
-    public function getNameAttribute()
+    public function getLevelAttribute()
     {
-        return 'Level '. $this->attributes['level'] . ' - '.  $this->attributes['name']  ;
+        return 'Level '. $this->attributes['level'] . ' - Blinds '.  $this->attributes['blinds'] . '/'. $this->attributes['ante'] . ' ante '. $this->attributes['ante']   ;
     }
 
     // public function getNameAttribute()

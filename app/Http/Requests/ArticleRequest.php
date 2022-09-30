@@ -31,7 +31,7 @@ class ArticleRequest extends FormRequest
             ],
             'article_categories' => 'required',
             'body' => 'required',
-            'published_date' => 'required'
+            'published_date' => 'required',
         ];
     }
 

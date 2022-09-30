@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Event;
 use App\Http\Requests\ChipCountRequest;
-use App\Models\EventChip;
+use App\Models\Event;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -41,7 +40,6 @@ class ChipCountCrudController extends CrudController
 
             $getEvent = Event::where('id', session()->get('event_id'))->first();
             CRUD::setEntityNameStrings('chips', $getEvent->title);
-
         } else {
             $this->crud->denyAccess('create');
         }
@@ -56,13 +54,9 @@ class ChipCountCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-
-       
         $this->crud->addClause('where', 'event_id', session()->get('event_id'));
 
         $this->crud->addClause('where', 'event_report_id', '=', null);
-
-
 
         // 'chip_stacks' => collect(EventChipsResource::collection
         // ($this->latest_event_chips->sortByDesc('created_at')->unique('player_id')))->
@@ -83,7 +77,7 @@ class ChipCountCrudController extends CrudController
     //     'label'   => 'Source',
     //     'type'    => 'editable_select',
     //     'options' => [ 'normal' => 'normal', 'whatsapp' => 'whatsapp' ],
-    //     // or 
+    //     // or
     //     // 'options' => [
     //     //     '1' => 'One',
     //     //     '2' => 'Two',
@@ -104,7 +98,7 @@ class ChipCountCrudController extends CrudController
     //         'text_color_duration' => 3000, // how long (in miliseconds) should the text stay that color (0 for infinite, aka until page refresh)
     //     ],
     //     'auto_update_row' => true, // update related columns in same row, after the AJAX call?
-    // ]);
+        // ]);
 
         // $this->crud->addColumn([
         //     'name' =>  'current_chips',
@@ -134,7 +128,6 @@ class ChipCountCrudController extends CrudController
             'auto_update_row' => true, // update related columns in same row, after the AJAX call?
         ]);
 
-
         /**
          * Columns can be defined using the fluent syntax or array syntax:
          * - CRUD::column('price')->type('number');
@@ -155,40 +148,35 @@ class ChipCountCrudController extends CrudController
 
         // CRUD::field('id');
 
-
-
         $this->crud->addField([
-            'name' =>  'name',
+            'name' => 'name',
             'type' => 'select2_from_array',
             'options' => [
                 'whatsapp' => 'whatsapp',
-                'normal' => 'normal'
+                'normal' => 'normal',
             ],
-            'label' => 'Source'
+            'label' => 'Source',
 
         ]);
 
-
         $this->crud->addField([
-            'name' =>  'event_id',
+            'name' => 'event_id',
             'type' => 'hidden',
             'label' => 'Player',
             'value' => session()->get('event_id'),
         ]);
 
         $this->crud->addField([
-            'name' =>  'player',
+            'name' => 'player',
             'type' => 'relationship',
-            'label' => 'Player'
+            'label' => 'Player',
         ]);
 
         $this->crud->addField([
-            'name' =>  'current_chips',
+            'name' => 'current_chips',
             'type' => 'text',
-            'label' => 'chips'
+            'label' => 'chips',
         ]);
-
-        
 
         // $this->crud->addField([
         //     'name' =>  'current_chips',

@@ -17,7 +17,6 @@ class LOFApiEventsResource extends JsonResource
     //     return parent::toArray($request);
     // }
 
-
     public function toArray($request)
     {
         return [
@@ -26,9 +25,7 @@ class LOFApiEventsResource extends JsonResource
             'description' => $this->description,
             'image' => $this->image,
             'date_start' => $this->date_start,
-            'date_end' => $this->date_end
+            'date_end' => $this->date_end,
         ];
     }
-
-
 }

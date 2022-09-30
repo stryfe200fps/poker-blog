@@ -7,10 +7,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class LOFApiEventReportsResource extends JsonResource
 {
-
-        public function toArray($request)
+    public function toArray($request)
     {
-
         return [
             'slug' => $this->slug,
             'id' => $this->id,

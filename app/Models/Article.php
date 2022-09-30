@@ -3,14 +3,13 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Spatie\Sluggable\HasSlug;
-use Spatie\Image\Manipulations;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\Sluggable\SlugOptions;
-use Illuminate\Database\Eloquent\Model;
-use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 class Article extends Model implements HasMedia
 {
@@ -23,13 +22,25 @@ class Article extends Model implements HasMedia
     {
         $this->addMediaConversion('main-image')
             ->width(424)
-            ->height(285)
-            ;
+            ->height(285);
 
         $this->addMediaConversion('main-thumb')
             ->width(337)
             ->height(225)
             ;
+    }
+
+    public function tags()
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
+    }
+
+    public function relatedArticles($number = 5) 
+    {
+        return  Article::where('id', '!=', $this->id )->whereHas('tags', function ($query)  {
+            $query->whereIn('slug', $this->tags()->get()->pluck('slug')->toArray());
+        })
+        ->get();
     }
 
     public function getImageAttribute($value)
@@ -40,6 +51,8 @@ class Article extends Model implements HasMedia
     public function setImageAttribute($value)
     {
         if ($value == null || preg_match("/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).base64,.*/", $value) == 0) {
+
+            $this->media()->delete();
             return false;
         }
 
@@ -53,18 +66,11 @@ class Article extends Model implements HasMedia
         return $this->belongsToMany(ArticleTag::class);
     }
 
-    public function getPublishedDateAttribute($value)
+    public function getDiffAttribute($value)
     {
-        if ($this->attributes['id'])
-            return Carbon::parse($value)->diffForHumans();
-
-        return $value;
+        return Carbon::parse($this->attributes['published_date'])->diffForHumans();
     }
 
-    public function setPublishedDateAttribute($value) 
-    {
-        $this->attributes['published_date'] = Carbon::parse($value);
-    }
 
     protected $guarded = ['id'];
 
