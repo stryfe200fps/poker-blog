@@ -109,6 +109,10 @@ class EventReportCrudController extends CrudController
     protected function setupCreateOperation()
     {
 
+        if (!session()->get('event_id')) {
+            $this->crud->denyAccess('create');
+        }
+
         $event = Event::where('id', session()->get('event_id'))->first();
 
         CRUD::setValidation(EventReportRequest::class);
@@ -170,7 +174,7 @@ class EventReportCrudController extends CrudController
                 'name' => 'article_author_id',
                 'type' => 'select2',
                 'attribute' => 'fullname',
-                'value' => $author->id ,
+                'value' => $author?->id ,
                 'label' => 'Author',
                 'wrapper' => [
                     'class' => 'form-group col-md-12',
@@ -232,7 +236,7 @@ class EventReportCrudController extends CrudController
                 'label' => 'Day',
                 'name' => 'day',
                 'type' => 'text',
-                'value' => $event->currentDay(),
+                'value' => $event?->currentDay() ?? 0,
                 'attributes' => [
                     'readonly' => 'readonly',
                   ],

@@ -41,17 +41,15 @@ Route::get('/', function () {
         ]
     ]);
 
-
-
     return Inertia::render('Index',[  
         'title' => 'Life of poker',
         'description' =>'life of poker' 
     ]);
 });
 
-Route::get('/event/{id}', function ($id) {
+Route::get('/event/{slug}', function ($slug) {
     return Inertia::render('Event/Index', [
-        'id' => $id,
+        'slug' => $slug,
     ]);
 })->name('event');
 

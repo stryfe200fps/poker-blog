@@ -24,27 +24,14 @@ it('cannot create reports if unauthenticated', function () {
 });
 
 it('cannot enter the site if there is no event session', function () {
-    $u = User::factory()->create();
-    $role = Role::create([
-        'name' => 'super-admin',
-    ]);
-    $u->assignRole($role);
-
-    $user = $this->actingAs($u);
-
+    superAdminAuthenticate();
     $this->get('admin/report/create')->assertStatus(403);
 });
 
 it('can enter the site if there is event session', function () {
-    $u = User::factory()->create();
-    $role = Role::create([
-        'name' => 'super-admin',
-    ]);
-    $u->assignRole($role);
-    $user = $this->actingAs($u);
+    superAdminAuthenticate();
 
     $event = Event::factory()->create();
-
     $page = $this->get('admin/report?event='.$event->id);
 
     $page->assertStatus(200);
@@ -53,16 +40,7 @@ it('can enter the site if there is event session', function () {
 
 it('can insert reports if authenticated', function () {
     $this->withoutExceptionHandling();
-    $u = User::factory()->create();
-
-    $role = Role::create([
-        'name' => 'super-admin',
-    ]);
-
-    $u->assignRole($role);
-
-    $user = $this->actingAs($u);
-
+    superAdminAuthenticate();
     $event = Event::factory()->create();
 
     $page = $this->get('admin/report/create?event='.$event->id)->assertStatus(200);
@@ -88,16 +66,7 @@ it('can insert reports if authenticated', function () {
 
 it('can insert reports with event chips players', function () {
     $this->withoutExceptionHandling();
-    $u = User::factory()->create();
-
-    $role = Role::create([
-        'name' => 'super-admin',
-    ]);
-
-    $u->assignRole($role);
-
-    $user = $this->actingAs($u);
-
+    superAdminAuthenticate();
     $event = Event::factory()->create();
 
     $page = $this->get('admin/report/create?event='.$event->id)->assertStatus(200);
@@ -128,16 +97,9 @@ it('can insert reports with event chips players', function () {
 });
 
 it('can update reports if authenticated', function () {
+
     $this->withoutExceptionHandling();
-    $u = User::factory()->create();
-
-    $role = Role::create([
-        'name' => 'super-admin',
-    ]);
-
-    $u->assignRole($role);
-
-    $user = $this->actingAs($u);
+    superAdminAuthenticate();
 
     $playerId = Player::factory()->create();
     $eventChip = EventChip::factory()->create([
@@ -185,20 +147,11 @@ it('can update reports if authenticated', function () {
 
 it('can delete report if authenticated', function () {
     $this->withoutExceptionHandling();
-    $u = User::factory()->create();
-
-    $role = Role::create([
-        'name' => 'super-admin',
-    ]);
-
-    $u->assignRole($role);
-
-    $user = $this->actingAs($u);
-
-    //end auth
+    superAdminAuthenticate();
 
     $article = EventReport::factory()->create();
     expect(EventReport::all()->count())->toBe(1);
+
     $this->get('admin/report')->assertStatus(200);
     $datas = $this->delete('admin/report/'.$article->id);
     expect(EventReport::all()->count())->toBe(0);

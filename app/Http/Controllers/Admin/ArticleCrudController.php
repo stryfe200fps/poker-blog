@@ -113,6 +113,11 @@ class ArticleCrudController extends CrudController
                         'class' => 'form-group col-md-12',
                     ],
                 ],
+            [
+                        'name' => 'slug',
+                        'type' => 'text',
+                        'tab' => 'Basic'
+            ],
                 [
                     'name' => 'description',
                     'body' => 'ckeditor',

@@ -24,14 +24,8 @@ it('cannot create articles if unauthenticated', function () {
 });
 
 it('can insert article if authenticated', function () {
-    $u = User::factory()->create();
-    $role = Role::create([
-        'name' => 'super-admin',
-    ]);
 
-    $user = $this->actingAs(User::factory()->create(), 'web');
-
-    backpack_user()->assignRole('super-admin');
+    superAdminAuthenticate();
 
     $this->get('admin/article/create')->assertStatus(200);
 
@@ -52,14 +46,8 @@ it('can insert article if authenticated', function () {
 });
 
 it('can update article if authenticated', function () {
-    $u = User::factory()->create();
-    $role = Role::create([
-        'name' => 'super-admin',
-    ]);
-
-    $user = $this->actingAs(User::factory()->create(), 'web');
-
-    backpack_user()->assignRole('super-admin');
+   
+    superAdminAuthenticate();
 
     $article = Article::factory()->create();
 
@@ -94,6 +82,13 @@ it('can delete article if authenticated', function () {
     $article = Article::factory()->create();
     $this->get('admin/article')->assertStatus(200);
     $datas = $this->delete('admin/article/1');
+});
+
+it('can fetch related related articles', function () {
+
+    // dd(superAdminAuthenticate());
+
+    // dd($u);
 });
 
 

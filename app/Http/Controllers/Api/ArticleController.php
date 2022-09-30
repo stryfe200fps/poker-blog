@@ -19,9 +19,14 @@ class ArticleController extends Controller
         return new ArticleResource(Article::where('slug', $slug)->first());
     }
 
+    public function related($slug) 
+    {
+        return ArticleResource::collection(Article::where('slug', $slug)->first()->relatedArticles());
+    }
+
     public function tag($tag)
     {
-        dd(ArticleTag::where('title', $tag)->first()->articles);
+        // dd(ArticleTag::where('title', $tag)->first()->articles);
 
         return ArticleResource::collection(ArticleTag::where('title', $tag)->first()->articles->paginate(10));
     }
