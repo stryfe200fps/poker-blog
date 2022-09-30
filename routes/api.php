@@ -22,6 +22,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::resource('article', ArticleController::class);
+Route::get('article/{slug}/related', [ArticleController::class, 'related' ]);
+
 // Route::get('article/tag/{tag}', [ArticleController::class, 'tag' ]);
 
 Route::get('tag/articles/{slug}', [TagController::class, 'articles']);
@@ -49,4 +51,3 @@ Route::resource('lof-event-index', LOFApiEventIndexController::class);
 Route::resource('lof-live-report', EventReportsController::class);
 
 Route::resource('page', PageManagerController::class);
-// Route::get('pagemanager/show/{slug}', [PageManagerController::class, 'show']);

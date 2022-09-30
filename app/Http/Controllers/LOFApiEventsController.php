@@ -52,10 +52,9 @@ class LOFApiEventsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        // return LOFApiEventsResource::collection(PokerEvent::where('poker_tournament_id', $id)->paginate(10));
-        return new LOFApiEventIndexResource(Event::with(['event_reports'])->where('id', $id)->first());
+        return new LOFApiEventIndexResource(Event::with(['event_reports'])->where('slug', $slug)->first());
     }
 
     /**

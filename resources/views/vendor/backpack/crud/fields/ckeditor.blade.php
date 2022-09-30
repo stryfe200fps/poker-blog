@@ -41,7 +41,7 @@
         <script>
 
    var suits = ['s','c','h','d'];
-                var cards = ['2','3','4','5','6','7','8','9','10','a','j','q','k'];
+                var cards = ['2','3','4','5','6','7','8','9','t','a','j','q','k'];
                 var PLACEHOLDERS = [];
                 suits.forEach(function (suit, index) {
                 cards.forEach(function (card, indexs) {

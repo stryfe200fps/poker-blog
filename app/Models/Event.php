@@ -33,14 +33,14 @@ class Event extends Model implements HasMedia
 
     public function currentDay() {
         $dateNow = Carbon::now();
-        foreach ( json_decode($this->attributes['schedule'], true) as $sched) {
+        foreach ( json_decode($this->attributes['schedule'], true) ?? [] as $sched) {
             if ( $dateNow >= Carbon::parse($sched['date_start'])  && $dateNow <= Carbon::parse($sched['date_end'])) {
                 // dd(Carbon::parse($sched['date_start']));
                 return $sched['day'];
             }
         }
 
-        return Carbon::parse(json_decode($this->attributes['schedule'], true)[0]['date_start'])->diffForHumans();
+        return 0;
     }
 
     public function eventSchedules() {
@@ -92,7 +92,6 @@ class Event extends Model implements HasMedia
     {
         if ($value == null || preg_match("/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).base64,.*/", $value) == 0) {
             // $this->media()->delete();
-
             $this->media()->delete();
             return false;
         }

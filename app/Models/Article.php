@@ -35,6 +35,14 @@ class Article extends Model implements HasMedia
         return $this->morphToMany(Tag::class, 'taggable');
     }
 
+    public function relatedArticles($number = 5) 
+    {
+        return  Article::where('id', '!=', $this->id )->whereHas('tags', function ($query)  {
+            $query->whereIn('slug', $this->tags()->get()->pluck('slug')->toArray());
+        })
+        ->get();
+    }
+
     public function getImageAttribute($value)
     {
         return $this->getFirstMediaUrl('article', 'main-image');

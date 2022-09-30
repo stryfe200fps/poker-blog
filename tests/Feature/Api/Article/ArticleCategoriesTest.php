@@ -7,11 +7,6 @@ use Spatie\Permission\Models\Role;
 
 uses(RefreshDatabase::class);
 
-test('article is working', function () {
-    $response = $this->get('api/articles');
-    $response->assertStatus(200);
-});
-
 it('cannot create articles if unauthenticated', function () {
     $this->post('admin/article-category/', [
         'name' => 'adrian',
@@ -19,14 +14,8 @@ it('cannot create articles if unauthenticated', function () {
 });
 
 it('can insert article if authenticated', function () {
-    $u = User::factory()->create();
-    $role = Role::create([
-        'name' => 'super-admin',
-    ]);
 
-    $user = $this->actingAs(User::factory()->create(), 'web');
-
-    backpack_user()->assignRole('super-admin');
+    superAdminAuthenticate();
 
     $this->get('admin/article-category/create')->assertStatus(200);
 
@@ -39,15 +28,9 @@ it('can insert article if authenticated', function () {
     ]);
 });
 
-it('can update article if authenticated', function () {
-    $u = User::factory()->create();
-    $role = Role::create([
-        'name' => 'super-admin',
-    ]);
+it('can update article category if authenticated', function () {
 
-    $user = $this->actingAs(User::factory()->create(), 'web');
-
-    backpack_user()->assignRole('super-admin');
+    superAdminAuthenticate();
 
     $category = ArticleCategory::factory()->create();
 
@@ -62,16 +45,11 @@ it('can update article if authenticated', function () {
     $this->assertDatabaseHas('article_categories', ['title' => 'things I hate',
     ]);
     $this->assertDatabaseCount('article_categories', 1);
-});
+    });
 
-it('can delete article if authenticated', function () {
-    $u = User::factory()->create();
-    $role = Role::create([
-        'name' => 'super-admin',
-    ]);
-
-    $user = $this->actingAs(User::factory()->create(), 'web');
-    backpack_user()->assignRole('super-admin');
+    it('can delete article if authenticated', function () {
+    superAdminAuthenticate();
+    
     $article = ArticleCategory::factory()->create();
     $this->get('admin/article-category')->assertStatus(200);
     $datas = $this->delete('admin/article-category/1');
