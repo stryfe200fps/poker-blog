@@ -233,6 +233,16 @@ class EventReportCrudController extends CrudController
                 ],
             ],
             [
+                'label' => 'Schedule',
+                'name' => 'labelSchedule',
+                'type' => 'text',
+                'value' => $event?->currentDateSchedule(),
+                'wrapper' => [
+                    'class' => 'form-group col-md-6',
+                ],
+
+            ],
+            [
                 'label' => 'Day',
                 'name' => 'day',
                 'type' => 'text',

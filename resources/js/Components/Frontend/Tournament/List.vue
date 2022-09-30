@@ -71,7 +71,7 @@
                             <div class="col-sm-6 post-content">
                                 <p>
                                     <Link
-                                        :href="`/event/${event.id}`"
+                                        :href="`/event/${event.slug}`"
                                         class="text-primary"
                                         >{{ event.title }}</Link
                                     >
@@ -154,7 +154,7 @@
                             <div class="col-sm-6 post-content">
                                 <p>
                                     <Link
-                                        :href="`/event/${event.id}`"
+                                        :href="`/event/${event.slug}`"
                                         class="text-primary"
                                         >{{ event.title }}</Link
                                     >

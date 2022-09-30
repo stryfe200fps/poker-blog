@@ -31,7 +31,8 @@ class Event extends Model implements HasMedia
             ->saveSlugsTo('slug');
     }
 
-    public function currentDay() {
+    public function currentDay() 
+    {
         $dateNow = Carbon::now();
         foreach ( json_decode($this->attributes['schedule'], true) ?? [] as $sched) {
             if ( $dateNow >= Carbon::parse($sched['date_start'])  && $dateNow <= Carbon::parse($sched['date_end'])) {
@@ -39,6 +40,23 @@ class Event extends Model implements HasMedia
                 return $sched['day'];
             }
         }
+        return 0;
+    }
+
+    public function currentDateSchedule()
+    {
+        $dateNow = Carbon::now();
+        $schedules = json_decode($this->attributes['schedule'], true) ?? [];
+        foreach ( $schedules as $sched) {
+            if ( $dateNow >= Carbon::parse($sched['date_start'])  && $dateNow <= Carbon::parse($sched['date_end'])) {
+                return Carbon::parse( $sched['date_start'] )->diffForHumans() . ' - ' . Carbon::parse( $sched['date_end'] )->diffForHumans();
+            }
+        }
+
+        if (is_countable($schedules)) { 
+            return Carbon::parse($schedules[0]['date_start']) . ' - ' . Carbon::parse($schedules[0]['date_end']);
+        }
+        
 
         return 0;
     }

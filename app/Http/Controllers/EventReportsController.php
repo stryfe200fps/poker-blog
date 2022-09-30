@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\LiveReportFilterByDays;
-use App\Helpers\LiveReportOrder;
-use App\Http\Resources\LOFApiEventReportsResource;
-use App\Http\Resources\ReportCollection;
+use App\Models\Event;
 use App\Models\EventReport;
 use Illuminate\Http\Request;
+use App\Helpers\LiveReportOrder;
 use Illuminate\Pipeline\Pipeline;
+use App\Helpers\LiveReportFilterByDays;
+use App\Http\Resources\ReportCollection;
+use App\Http\Resources\LOFApiEventReportsResource;
 
 class EventReportsController extends Controller
 {
@@ -33,7 +34,7 @@ class EventReportsController extends Controller
                 $q->orderByDesc('level');
             }, 'event_chips',
                 'event_chips', 'event_chips.player', 'event_chips.player.country', 'event', 'media', ])
-             ->where('event_id', request()->all()['event']);
+             ->where('event_id', Event::where('slug', request()->all()['event'])->firstOrFail()->id );
 
         $pipe = app(Pipeline::class)
         ->send($liveReport)

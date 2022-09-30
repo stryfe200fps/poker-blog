@@ -11,14 +11,12 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 uses(RefreshDatabase::class);
 
 test('if ', function () {
-    $event = Event::factory()->create([
-        'id' => 54,
-    ]);
+    $event = Event::factory()->create();
+
 
     $playerId = Player::factory()->create([
         'id' => 33,
     ]);
-
 
     $report1 = EventReport::factory()->create([
         'event_id' => $event->id,
@@ -28,7 +26,7 @@ test('if ', function () {
             'level' =>  3 
         ])->id,
         'players' => EventChip::factory()->create([
-            'event_id' => 54,
+        'event_id' => $event->id,
             'player_id' => 33,
             'event_report_id' => 20,
             'current_chips' => 1000,
@@ -45,7 +43,7 @@ test('if ', function () {
         ])->id,
         'players' => EventChip::factory()->create([
             'player_id' => 33,
-            'event_id' => 54,
+        'event_id' => $event->id,
             'event_report_id' => 25,
             'current_chips' => 5000,
         ]),
@@ -61,8 +59,8 @@ test('if ', function () {
             'level' => 5 
             ])->id,
         'players' => EventChip::factory()->create([
-            'event_id' => 54,
            
+            'event_id' => $event->id,
             'player_id' => 33,
             'event_report_id' => 30,
             'current_chips' => 9000,
