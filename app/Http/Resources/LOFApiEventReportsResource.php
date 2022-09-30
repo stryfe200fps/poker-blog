@@ -11,7 +11,6 @@ class LOFApiEventReportsResource extends JsonResource
     {
         return [
             'slug' => $this->slug,
-            'status' => $this->status(),
             'id' => $this->id,
             'date_added' => $this->date_added,
             'title' => $this->title,
