@@ -61,7 +61,7 @@ const eventStore = useEventStore();
 const tournamentStore = useTournamentStore();
 
 const props = defineProps({
-    id: {
+    slug: {
         type: String,
     },
 });
@@ -77,14 +77,14 @@ const highestDay = () => {
 };
 
 onMounted(async () => {
-    await eventStore.getEventData(props.id);
+    await eventStore.getEventData(props.slug);
     await tournamentStore.getList();
-    await eventStore.getLiveReport(props.id, highestDay());
+    await eventStore.getLiveReport(props.slug, highestDay());
     selectDay.value = highestDay();
 });
 
 const fetchLiveReports = async () => {
-    await eventStore.getLiveReport(props.id, selectDay.value);
+    await eventStore.getLiveReport(props.slug, selectDay.value);
 };
 
 // const fetchPage = async () => {

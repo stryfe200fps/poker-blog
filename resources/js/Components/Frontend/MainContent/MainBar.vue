@@ -42,7 +42,7 @@ defineProps({
                 <div class="image-post-slider">
                     <div class="news-post image-post2">
                         <div class="post-gallery">
-                            <Link :href="'/event/' + report.id">
+                            <Link :href="'/event/' + report.slug">
                                 <img
                                     v-if="report.main_thumb"
                                     style="
@@ -58,7 +58,7 @@ defineProps({
                                     :src="defaultImg"
                                 />
                             </Link>
-                            <Link :href="'/event/' + report.id">
+                            <Link :href="'/event/' + report.slug">
                                 <h4
                                     style="
                                         position: absolute;
