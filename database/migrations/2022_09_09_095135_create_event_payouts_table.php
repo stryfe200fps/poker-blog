@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('source')->nullable();
             $table->integer('position')->nullable();
             $table->integer('prize')->nullable();
-            
+
             $table->timestamps();
         });
     }

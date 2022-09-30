@@ -1,0 +1,95 @@
+
+
+  [37;41;1m FAIL [39;49;22m[39m Tests\Feature\Api\Report\EventReportCoreFunctionTest[39m
+  [31;1m⨯[39;22m[39m [2mif [22m[39m
+
+  [30;43;1m WARN [39;49;22m[39m Tests\Feature\Api\Report\EventReportCrudTest[39m
+  [32;1m✓[39;22m[39m [2mit cannot create reports if unauthenticated[22m[39m
+  [32;1m✓[39;22m[39m [2mit cannot enter the site if there is no event session[22m[39m
+  [32;1m✓[39;22m[39m [2mit can enter the site if there is event session[22m[39m
+  [32;1m✓[39;22m[39m [2mit can insert reports if authenticated[22m[39m
+  [32;1m✓[39;22m[39m [2mit can insert reports with event chips players[22m[39m
+  [33;1m-[39;22m[39m [2mit can update reports if authenticated[22m[39m
+  [32;1m✓[39;22m[39m [2mit can delete report if authenticated[22m[39m
+
+  [30;42;1m PASS [39;49;22m[39m Tests\Feature\Api\Tag\TagApiTest[39m
+  [32;1m✓[39;22m[39m [2mlive report with tags [22m[39m
+
+  [2m---[22m
+
+  [31;1m• Tests\Feature\Api\Report\EventReportCoreFunctionTest [39;22m> [31;1mif [39;22m
+[39;1m  Failed asserting that Array &0 (
+      0 => Array &1 (
+          'slug' => 'first'
+          'id' => 2
+          'date_added' => '2010-08-08'
+          'title' => 'first'
+          'content' => 'Explicabo placeat quas asperiores. Voluptas natus quis harum accusamus. Voluptatem adipisci beatae minima iste.'
+          'event' => Array &2 (
+              'id' => 54
+              'tournament_id' => 1
+              'title' => 'Petra Beahan'
+              'description' => 'Qui sequi veritatis dolorum sed est. Ut voluptatum provident quis quia. Inventore ut natus consequatur est eos. Odio nisi sunt fugiat ut occaecati.'
+              'image' => ''
+              'date_start' => '2005-03-19 16:37:55'
+              'date_end' => '1974-10-16 08:00:01'
+              'created_at' => '2022-09-30T03:19:06.000000Z'
+              'updated_at' => '2022-09-30T03:19:06.000000Z'
+              'schedule' => null
+              'slug' => 'petra-beahan'
+              'media' => Array &3 ()
+              'tournament' => Array &4 (
+                  'id' => 1
+                  'title' => 'Darwin Nikolaus'
+                  'description' => 'Rem voluptatem porro omnis pariatur voluptate maiores est. Ratione illo qui sit fugit recusandae quo sit. Et error qui voluptas provident possimus. Unde quia et id quia.'
+                  'image' => ''
+                  'country_id' => '1'
+                  'timezone' => 'timezone'
+                  'date_start' => '1942-10-25 01:53:15'
+                  'date_end' => '1954-09-30 17:24:15'
+                  'tour_id' => 1
+                  'currency_id' => 3
+                  'created_at' => '2022-09-30T03:19:06.000000Z'
+                  'updated_at' => '2022-09-30T03:19:06.000000Z'
+                  'media' => Array &5 ()
+              )
+          )
+          'author' => null
+          'date' => 'Aug 8, 2010'
+          'isFinished' => true
+          'formattedDate' => '12 years ago'
+          'main_image' => ''
+          'main_thumb' => ''
+          'caption' => 'Hermann Gerhold'
+          'theme' => null
+          'day' => '1'
+          'article_author' => null
+          'level' => Array &6 (
+              'id' => 1
+              'level' => 'Level 1 - Blinds 731/3848 ante 3848'
+              'created_at' => '2022-09-30T03:19:06.000000Z'
+              'updated_at' => '2022-09-30T03:19:06.000000Z'
+              'event_id' => 54
+              'blinds' => 731
+              'ante' => 3848
+          )
+          'event_chips' => Array &7 ()
+      )
+  ) is identical to 'first'.[39;22m
+
+  at [32mtests/Feature/Api/Report/EventReportCoreFunctionTest.php[39m:[32m86[39m
+     82▕     );
+     83▕ 
+     84▕     $json
+     85▕     ->assertJsonPath(
+  ➜  86▕         'data.1.collection' , 'first'
+     87▕     );
+     88▕ 
+     89▕     // dd($jsonDec);
+     90▕
+
+
+
+  [37;1mTests:  [39;22m[31;1m1 failed[39;22m[39m, [39m[33;1m1 skipped[39;22m[39m, [39m[32;1m7 passed[39;22m
+  [37;1mTime:   [39;22m[39m7.13s[39m
+

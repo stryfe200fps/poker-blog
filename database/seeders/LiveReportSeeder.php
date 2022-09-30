@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\LiveReport;
 use Illuminate\Database\Seeder;
 
 class LiveReportSeeder extends Seeder

@@ -23,8 +23,6 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('admin'),
         ]);
 
-
-
         $role = Role::create([
             'name' => 'super-admin',
         ]);
@@ -45,7 +43,7 @@ class DatabaseSeeder extends Seeder
             // ArticleSeeder::class,
             CountrySeeder::class,
             // PlayerSeeder::class,
-         
+
             // LiveReportSeeder::class,
 
         ]);

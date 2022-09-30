@@ -2,13 +2,16 @@
 
 namespace App\Models;
 
+use App\Events\EventReportCreated;
+use Exception;
 use Spatie\Sluggable\HasSlug;
 use Spatie\MediaLibrary\HasMedia;
-use Spatie\Sluggable\SlugOptions;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Spatie\Sluggable\SlugOptions;
 
 class EventReport extends Model implements HasMedia
 {
@@ -28,6 +31,8 @@ class EventReport extends Model implements HasMedia
             ->height(285);
     }
 
+
+
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
@@ -37,20 +42,19 @@ class EventReport extends Model implements HasMedia
 
     protected $guarded = ['id'];
 
-
     public function getImageAttribute($value)
     {
+
         return $this->getFirstMediaUrl('event-report', 'main-image');
     }
 
     public function setImageAttribute($value)
     {
         if ($value == null || preg_match("/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).base64,.*/", $value) == 0) {
-
-            // $this->media('event-report')->delete();
+            $this->media()->delete();
             return false;
         }
-          $this->media()->delete();
+        $this->media()->delete();
         $this->addMediaFromBase64($value)
             ->toMediaCollection('event-report');
     }
@@ -90,28 +94,33 @@ class EventReport extends Model implements HasMedia
         return $this->belongsTo(Player::class);
     }
 
+    public function tags()
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
+    }
+
+    public static function lastLevel()
+    {
+        return Level::where('event_id', session()->get('event_id') )->orderByDesc('created_at')->first();
+    }
+
     public function shareToSocialMedia()
     {
         return '<a class="btn btn-sm btn-link"  href="https://facebook.com" data-toggle="tooltip" title="Share to facebook"><i class="la la-facebook"></i>    </a>';
     }
 
-
     protected $casts = [
-    'players' => 'json',
+        'players' => 'json',
     ];
 
     public function setPlayersAttribute($value)
     {
-
         if (isset($this->attributes['id'])) {
             if (is_array($value) && count($value) > 0) {
-
-
                 $this->event_chips()->delete();
                 $jsonObj = [];
                 foreach ($value as $eventChipPlayer) {
-
-                      $savedEventChip = EventChip::create([
+                    $savedEventChip = EventChip::create([
                         'name' => '',
                         'event_report_id' => $this->attributes['id'],
                         'event_id' => $this->attributes['event_id'],
@@ -147,7 +156,6 @@ class EventReport extends Model implements HasMedia
                 }
 
                 $this->attributes['players'] = json_encode($jsonObj);
-
             } else {
                 $this->event_chips()->delete();
                 $this->attributes['players'] = json_encode([]);
@@ -156,7 +164,6 @@ class EventReport extends Model implements HasMedia
             $this->attributes['players'] = json_encode($value);
         }
     }
-
 
     // public function getPlayersAttribute($value)
     // {
@@ -173,19 +180,20 @@ class EventReport extends Model implements HasMedia
     //     // }
     // }
 
-
     protected static function booted()
     {
-
         static::deleting(function ($deletedReport) {
-
             $deletedReport->event_chips()->delete();
+        });
+
+        static::updated(function ($updatedEvent) {
+
+            // dd($updatedEvent);
 
         });
 
         static::created(function ($createdEventReport) {
-
-            $eventChipsPlayer = $createdEventReport->players ;
+            $eventChipsPlayer = $createdEventReport->players;
 
             if (is_countable($eventChipsPlayer)) {
                 foreach ($eventChipsPlayer as $eventChipPlayer) {
@@ -199,8 +207,6 @@ class EventReport extends Model implements HasMedia
                         'event_id' => $createdEventReport->event_id,
                         'player_id' => $eventChipPlayer['player_id'],
                         'current_chips' => $eventChipPlayer['current_chips'],
-                        // 'payout' => $eventChipPlayer->payout,
-                        // 'rank' => $eventChipPlayer->rank
                     ]);
 
                     // $checkIfHasPayout = EventPayout::

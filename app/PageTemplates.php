@@ -4,7 +4,6 @@ namespace App;
 
 trait PageTemplates
 {
-
     // private function services()
     // {
     //     $this->crud->addField([   // CustomHTML
@@ -49,8 +48,8 @@ trait PageTemplates
         $this->crud->addField([
             'name' => 'content',
             'label' => trans('backpack::pagemanager.content'),
-                  'type' => 'ckeditor',
-                    'extra_plugins' => ['widget', 'autocomplete', 'textmatch', 'toolbar', 'wysiwygarea', 'image', 'sourcearea'],
+            'type' => 'ckeditor',
+            'extra_plugins' => ['widget', 'autocomplete', 'textmatch', 'toolbar', 'wysiwygarea', 'image', 'sourcearea'],
         ]);
     }
 }
