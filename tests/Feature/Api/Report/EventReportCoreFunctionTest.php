@@ -10,7 +10,8 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-test('if ', function () {
+test('if the "stacks before" is updating on next report ', function () {
+    $this->withExceptionHandling();
     $event = Event::factory()->create();
 
 
@@ -68,7 +69,7 @@ test('if ', function () {
         'day' => 1,
     ]);
 
-    $json = $this->get('api/lof-live-report/'.'?event='.$report1->event_id.'&filterDay=1');
+    $json = $this->get('api/lof-live-report'.'?event='.$event->slug.'&filterDay=1');
 
     $json
     ->assertJsonPath(
