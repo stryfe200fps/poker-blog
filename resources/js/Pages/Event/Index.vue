@@ -4,11 +4,13 @@
             <div v-if="liveReport"></div>
             <div class="block-content" v-if="1">
                 <!-- <div class="block-content" v-if="list.data"> -->
-                <div class="title-section hide-underline">
-                    <!-- <h1 class="text-primary"><span>{{list.data.poker_tournament}}</span></h1> -->
-                    <h1 class="text-primary">
+                <div class="title-section">
+                    <h1>
                         <span>{{ eventData.tournament }}</span>
                     </h1>
+                </div>
+                <div class="title-section hide-underline">
+                    <!-- <h1 class="text-primary"><span>{{list.data.poker_tournament}}</span></h1> -->
                     <div
                         style="
                             display: flex;
@@ -17,16 +19,20 @@
                         "
                     >
                         <h1>
-                            <span>{{ eventData.title }}</span>
+                            <span class="text-capitalize">{{
+                                eventData.title
+                            }}</span>
                         </h1>
                         <!-- <h1><span>{{list.data.title}}</span></h1> -->
                         <p>
                             <select
+                                class="btn btn-default"
                                 v-model="selectDay"
                                 @change="fetchLiveReports"
-                                style="padding: 4px 8px; outline: none"
+                                style="outline: none"
                             >
                                 <option
+                                    class="text-center"
                                     v-for="data in eventData.available_days"
                                     :key="data.id"
                                     :value="data"

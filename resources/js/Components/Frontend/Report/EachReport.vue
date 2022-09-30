@@ -1,9 +1,6 @@
 <template>
     <div class="single-post-box">
-        <div
-            class="title-post"
-            style="border-top: 1px solid #d3d3d3; padding-top: 20px"
-        >
+        <div class="title-post">
             <h1>
                 <Link
                     class="default-text-color"
@@ -446,6 +443,7 @@ ul.post-tags li .twitter {
     position: absolute;
     top: 0;
     left: 25%;
+    z-index: 999;
     display: none;
     transform: translateY(-100px);
     transition: all 0.5s ease-in-out;
@@ -462,7 +460,7 @@ ul.post-tags li .twitter {
     left: 50%;
     height: 8px;
     width: 8px;
-    background-color: #999;
+    background-color: #25d366;
     transform: translate(-50%) rotate(45deg);
 }
 
