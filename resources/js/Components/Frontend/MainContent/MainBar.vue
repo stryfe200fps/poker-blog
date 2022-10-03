@@ -30,10 +30,83 @@ defineProps({
         v-if="eventStore.mainEvents.data?.length"
     >
         <div class="title-section">
-            <h1><span>Live reporting </span></h1>
+            <h1><span>Live reporting</span></h1>
         </div>
-        <div class="row">
-            <!-- <div class="col-lg-6 unset-padding-right" v-for="(report, index) in liveReporting.slice(0, 2)" :key="index"> -->
+        <div class="row" style="margin-right: 0">
+            <div
+                class="col-lg-6 unset-padding-right"
+                v-for="(report, index) in eventStore.mainEvents.data"
+                :key="index"
+            >
+                <div class="news-post image-post" style="margin-bottom: 30px">
+                    <span
+                        v-if="report.status === 'live'"
+                        style="
+                            position: absolute;
+                            top: 20px;
+                            right: 20px;
+                            background-color: #f44336;
+                            color: #fff;
+                            font-weight: bolder;
+                            padding: 8px 16px;
+                        "
+                        >LIVE NOW</span
+                    >
+                    <span
+                        v-else
+                        style="
+                            position: absolute;
+                            top: 20px;
+                            right: 20px;
+                            background-color: #f44336;
+                            color: #fff;
+                            font-weight: bolder;
+                            padding: 8px 16px;
+                        "
+                        >UPCOMING</span
+                    >
+                    <img
+                        v-if="report.main_thumb"
+                        :src="report.main_thumb"
+                        :alt="report.main_thumb"
+                    />
+                    <img v-else :src="defaultImg" alt="" />
+                    <Link :href="'/event/' + report.slug">
+                        <div class="hover-box" style="inset: 0">
+                            <div class="inner-hover">
+                                <!-- <Link
+                                class="category-post food"
+                                :href="'/event/' + report.slug"
+                                >{{ report.title }}</Link
+                            > -->
+                                <h2>
+                                    <Link :href="'/event/' + report.slug">{{
+                                        report.title
+                                    }}</Link>
+                                </h2>
+                                <!-- <ul class="post-tags">
+                                <li>
+                                    <i class="fa fa-clock-o"></i
+                                    ><span>27 may 2013</span>
+                                </li>
+                                <li>
+                                    <a href="#"
+                                        ><i class="fa fa-comments-o"></i
+                                        ><span>20</span></a
+                                    >
+                                </li>
+                            </ul> -->
+                                <p>
+                                    {{ report.tournament }}
+                                </p>
+                            </div>
+                        </div>
+                    </Link>
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="row">
             <div
                 class="col-lg-6 unset-padding-right"
                 v-for="(report, index) in eventStore.mainEvents.data"
@@ -76,7 +149,8 @@ defineProps({
                                     position: absolute;
                                     top: 20px;
                                     right: 20px;
-                                    background-color: white;
+                                    background-color: #f44336;
+                                    color: #fff;
                                     font-weight: bolder;
                                     padding: 8px 16px;
                                 "
@@ -88,7 +162,8 @@ defineProps({
                                     position: absolute;
                                     top: 20px;
                                     right: 20px;
-                                    background-color: white;
+                                    background-color: #f44336;
+                                    color: #fff;
                                     font-weight: bolder;
                                     padding: 8px 16px;
                                 "
@@ -98,7 +173,7 @@ defineProps({
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 
     <!-- <div class="article-box block-content" v-if="articleStore.list.data" style="margin-top: 30px;"> -->
