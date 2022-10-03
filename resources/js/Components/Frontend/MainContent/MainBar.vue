@@ -105,75 +105,6 @@ defineProps({
                 </div>
             </div>
         </div>
-
-        <!-- <div class="row">
-            <div
-                class="col-lg-6 unset-padding-right"
-                v-for="(report, index) in eventStore.mainEvents.data"
-                :key="index"
-            >
-                <div class="image-post-slider">
-                    <div class="news-post image-post2">
-                        <div class="post-gallery">
-                            <Link :href="'/event/' + report.slug">
-                                <img
-                                    v-if="report.main_thumb"
-                                    style="
-                                        position: relative;
-                                        filter: brightness(50%);
-                                    "
-                                    :src="report.main_thumb"
-                                    alt=""
-                                />
-                                <img
-                                    v-else
-                                    style="background: #b9b9b9"
-                                    :src="defaultImg"
-                                />
-                            </Link>
-                            <Link :href="'/event/' + report.slug">
-                                <h4
-                                    style="
-                                        position: absolute;
-                                        left: 10px;
-                                        bottom: 10px;
-                                        color: white;
-                                    "
-                                >
-                                    {{ report.title }}
-                                </h4>
-                            </Link>
-                            <span
-                                v-if="report.status === 'live'"
-                                style="
-                                    position: absolute;
-                                    top: 20px;
-                                    right: 20px;
-                                    background-color: #f44336;
-                                    color: #fff;
-                                    font-weight: bolder;
-                                    padding: 8px 16px;
-                                "
-                                >LIVE NOW</span
-                            >
-                            <span
-                                v-else
-                                style="
-                                    position: absolute;
-                                    top: 20px;
-                                    right: 20px;
-                                    background-color: #f44336;
-                                    color: #fff;
-                                    font-weight: bolder;
-                                    padding: 8px 16px;
-                                "
-                                >UPCOMING</span
-                            >
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> -->
     </div>
 
     <!-- <div class="article-box block-content" v-if="articleStore.list.data" style="margin-top: 30px;"> -->
@@ -181,8 +112,6 @@ defineProps({
         <div class="title-section">
             <h1><span>Latest News</span></h1>
         </div>
-
-        <!-- <div class="news-post article-post" v-for="(news) in articleList.list.data" :key="news.id"> -->
         <div
             class="news-post article-post"
             v-for="news in articleList.data"
@@ -194,51 +123,27 @@ defineProps({
                 :href="'/article/show/' + news.slug"
             >
                 <div class="row">
-                    <div class="col-sm-5">
+                    <div class="col-sm-6">
                         <div class="post-gallery">
-                            <Link
-                                class="default-text-color"
-                                @click.prevent="showArticle(news.slug)"
-                                @mouseover="showArticle(news.slug)"
-                                :href="'/article/show/' + news.slug"
-                            >
-                                <img
-                                    alt=""
-                                    v-if="news.main_image.length"
-                                    :src="news.main_image"
-                                />
-                                <div
-                                    v-else
-                                    :style="{
-                                        backgroundImage:
-                                            'url(' + defaultImg + ')',
-                                    }"
-                                    style="
-                                        aspect-ratio: 3/2;
-                                        background-position: center;
-                                        background-size: contain;
-                                        background-repeat: no-repeat;
-                                    "
-                                ></div>
-                            </Link>
+                            <img
+                                v-if="news.main_image.length"
+                                :src="news.main_image"
+                                :alt="news.main_image"
+                            />
+                            <img v-else :src="defaultImg" :alt="defaultImg" />
+                            <Link class="category-post food" href="/">{{
+                                news.categories[0].title
+                            }}</Link>
                         </div>
                     </div>
-                    <div class="col-sm-7">
+                    <div class="col-sm-6">
                         <div class="post-content">
                             <h2>
-                                <Link
-                                    :href="'/article/show/' + news.slug"
-                                    class="default-text-color"
-                                    >{{ news.title }}</Link
-                                >
+                                <Link :href="'/article/show/' + news.slug"
+                                    >{{ news.title }}
+                                </Link>
                             </h2>
-                            <!-- <ul class="post-tags">
-                            <li>
-                                <i class="fa fa-clock-o"></i>{{ news.date }}
-                            </li>
-                        </ul> -->
                             <p>{{ news.description }}</p>
-                            <!-- <Link :href="'/article/show/'+ news.slug" class="read-more-button"><i class="fa fa-arrow-circle-right"></i>Read More</Link> -->
                         </div>
                     </div>
                 </div>
@@ -250,7 +155,6 @@ defineProps({
         <div class="title-section">
             <h1><span class="">Video</span></h1>
         </div>
-
         <div class="row">
             <div
                 class="col-md-4 news-post article-post"
