@@ -45,10 +45,11 @@ defineProps({
                             position: absolute;
                             top: 20px;
                             right: 20px;
+                            z-index: 1;
+                            padding: 8px 16px;
+                            font-weight: bolder;
                             background-color: #f44336;
                             color: #fff;
-                            font-weight: bolder;
-                            padding: 8px 16px;
                         "
                         >LIVE NOW</span
                     >
@@ -58,10 +59,11 @@ defineProps({
                             position: absolute;
                             top: 20px;
                             right: 20px;
+                            z-index: 1;
+                            padding: 8px 16px;
+                            font-weight: bolder;
                             background-color: #f44336;
                             color: #fff;
-                            font-weight: bolder;
-                            padding: 8px 16px;
                         "
                         >UPCOMING</span
                     >
@@ -96,7 +98,7 @@ defineProps({
                                     >
                                 </li>
                             </ul> -->
-                                <p>
+                                <p class="text-white">
                                     {{ report.tournament }}
                                 </p>
                             </div>
@@ -226,6 +228,14 @@ defineProps({
     margin-right: unset !important;
     margin-left: unset !important;
     background: #e7e7e7;
+}
+
+.image-post:hover .hover-box {
+    background: rgb(51 51 51 / 55%) !important;
+}
+
+.image-post:hover .hover-box .inner-hover h2 a {
+    color: #fff !important;
 }
 
 /* @media (max-width: 992px) { 
