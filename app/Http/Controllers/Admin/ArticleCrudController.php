@@ -66,9 +66,10 @@ class ArticleCrudController extends CrudController
 
         $this->crud->addColumns([
             [
-                'name' => 'diff', // the column that contains the ID of that connected entity;
+                'name' => 'published_date', // the column that contains the ID of that connected entity;
                 'label' => 'Date', // Table column heading
-                'type' => 'text',
+                'type' => 'datetime',
+                'format' => config('app.date_format')
             ],
         ]);
         /**

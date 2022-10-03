@@ -21,6 +21,8 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    'date_format' => 'MMM OM, OY,  h:mm a, ddd',
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment

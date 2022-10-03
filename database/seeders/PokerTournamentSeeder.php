@@ -14,6 +14,7 @@ class TournamentSeeder extends Seeder
      */
     public function run()
     {
+    
         $tournaments = ['2022 WSOP Online', '2022 RGPS Bay Area',
             '2022 MSPT United States Poker Championship', '2022 Winamax Poker Open Bratislava',
             '2022 Unibet Malta', ];

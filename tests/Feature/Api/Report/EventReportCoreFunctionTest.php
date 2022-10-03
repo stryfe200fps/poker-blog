@@ -11,13 +11,19 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 uses(RefreshDatabase::class);
 
 test('if the "stacks before" is updating on next report ', function () {
-    $this->withExceptionHandling();
+    $this->withoutExceptionHandling();
     $event = Event::factory()->create();
 
 
     $playerId = Player::factory()->create([
         'id' => 33,
     ]);
+
+    $chip =  EventChip::factory()->create([
+            'player_id' => 33,
+            'current_chips' => 1000,
+    ]);
+
 
     $report1 = EventReport::factory()->create([
         'event_id' => $event->id,
@@ -26,46 +32,46 @@ test('if the "stacks before" is updating on next report ', function () {
             'event_id' => $event->id,
             'level' =>  3 
         ])->id,
-        'players' => EventChip::factory()->create([
-        'event_id' => $event->id,
-            'player_id' => 33,
-            'event_report_id' => 20,
-            'current_chips' => 1000,
-        ]),
+        'players' => $chip,
         'day' => 1,
     ]);
 
+
+    // dd($report1);
+
+    $chip1 = EventChip::factory()->create([
+            'player_id' => 33,
+            'current_chips' => 5000,
+    ]);
+
     $report2 = EventReport::factory()->create([
+
+        'id' => 25,
         'event_id' => $event->id,
         'title' => 'second',
         'level_id' => Level::factory()->create([
             'event_id' => $event->id,
             'level' => 1 
         ])->id,
-        'players' => EventChip::factory()->create([
-            'player_id' => 33,
-        'event_id' => $event->id,
-            'event_report_id' => 25,
-            'current_chips' => 5000,
-        ]),
+        'players' => $chip1,
         'day' => 1,
     ]);
 
+$chip2 = EventChip::factory()->create([
+            'player_id' => 33,
+            'current_chips' => 5000,
+    ]);
 
     $report3 = EventReport::factory()->create([
+
+        'id' => 30,
         'event_id' => $event->id,
         'title' => 'third',
         'level_id' => Level::factory()->create([
             'event_id' => $event->id,
             'level' => 5 
             ])->id,
-        'players' => EventChip::factory()->create([
-           
-            'event_id' => $event->id,
-            'player_id' => 33,
-            'event_report_id' => 30,
-            'current_chips' => 9000,
-        ]),
+        'players' => $chip2,
         'day' => 1,
     ]);
 

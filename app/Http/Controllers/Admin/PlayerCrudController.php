@@ -59,7 +59,7 @@ class PlayerCrudController extends CrudController
         $this->crud->addFilter([
             'type' => 'select2',
             'name' => 'player',
-            'label' => 'Players',
+            'label' => 'Country',
         ],
 
             function () {
