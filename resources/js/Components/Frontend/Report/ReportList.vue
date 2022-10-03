@@ -225,7 +225,7 @@
         </div>
     </div>
     <div class="scroll-top">
-        <button @click="scrollToTop" class="btn btn-primary scroll-top-btn">
+        <button @click="scrollToTop" class="btn btn-danger scroll-top-btn">
             <i class="fa-sharp fa-solid fa-chevron-up"></i>
         </button>
     </div>
@@ -360,7 +360,7 @@ function getFrame(theme) {
 }
 
 .scroll-top-btn {
-    box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.15);
 }
 
 :deep(.gallery-thumbnail a img) {
