@@ -11,7 +11,8 @@ class ArticleController extends Controller
 {
     public function index()
     {
-        return  ArticleResource::collection(Article::with(['article_author', 'media', 'article_categories'])->latest()->limit(6));
+ 
+        return  ArticleResource::collection(Article::with(['article_author', 'media', 'article_categories'])->latest()->limit(6)->get());
     }
 
     public function show($slug)
