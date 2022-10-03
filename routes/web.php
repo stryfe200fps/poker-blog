@@ -68,6 +68,13 @@ Route::get('/tournament', function () {
     return Inertia::render('Tournament/Index');
 })->name('tournament');
 
+Route::get('/tag/articles/{slug}', function ($slug) {
+ return Inertia::render('Tag/TagArticle', [
+    'slug' => $slug
+ ]);
+})->name('article');
+
+
 Route::get('/article', function () {
 
     return Inertia::render('Article/Index');
