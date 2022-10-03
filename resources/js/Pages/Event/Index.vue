@@ -26,10 +26,9 @@
                         <!-- <h1><span>{{list.data.title}}</span></h1> -->
                         <p>
                             <select
-                                class="btn btn-default"
+                                class="form-control"
                                 v-model="selectDay"
                                 @change="fetchLiveReports"
-                                style="outline: none"
                             >
                                 <option
                                     class="text-center"
