@@ -8,7 +8,9 @@
         <div class="block-content">
             <div class="contact-info-box">
                 <div class="title-section">
-                    <h1><span>Contact Us</span></h1>
+                    <h1>
+                        <span>{{ page.title }}</span>
+                    </h1>
                 </div>
                 <div class="single-post-box">
                     <div
@@ -18,7 +20,7 @@
                     ></div>
                 </div>
             </div>
-            <div class="contact-form-box">
+            <div class="contact-form-box" v-if="page.slug === 'contact'">
                 <div class="title-section">
                     <h1><span>Talk to us</span></h1>
                 </div>
