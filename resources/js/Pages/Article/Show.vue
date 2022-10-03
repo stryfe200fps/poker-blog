@@ -214,7 +214,9 @@
                                 <i class="fa fa-tags"></i><span>Tags:</span>
                             </li>
                             <li v-for="tags in article.tags" :key="tags.id">
-                                <a :href="tags.slug">{{ tags.title }}</a>
+                                <Link :href="'/tag/articles/' + tags.slug">{{
+                                    tags.title
+                                }}</Link>
                             </li>
                         </ul>
                     </div>
