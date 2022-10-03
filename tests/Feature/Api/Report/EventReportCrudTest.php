@@ -65,7 +65,7 @@ it('can insert reports if authenticated', function () {
 });
 
 it('can insert reports with event chips players', function () {
-    $this->withoutExceptionHandling();
+    $this->withExceptionHandling();
     superAdminAuthenticate();
     $event = Event::factory()->create();
 

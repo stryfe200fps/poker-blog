@@ -11,7 +11,7 @@ class ArticleController extends Controller
 {
     public function index()
     {
-        return  ArticleResource::collection(Article::with(['article_author', 'media', 'article_categories'])->latest()->paginate(10));
+        return  ArticleResource::collection(Article::with(['article_author', 'media', 'article_categories'])->latest()->limit(6));
     }
 
     public function show($slug)
@@ -26,8 +26,6 @@ class ArticleController extends Controller
 
     public function tag($tag)
     {
-        // dd(ArticleTag::where('title', $tag)->first()->articles);
-
         return ArticleResource::collection(ArticleTag::where('title', $tag)->first()->articles->paginate(10));
     }
 }

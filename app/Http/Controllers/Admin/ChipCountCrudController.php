@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\ChipCountRequest;
 use App\Models\Event;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Requests\ChipCountRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -39,7 +41,19 @@ class ChipCountCrudController extends CrudController
             }
 
             $getEvent = Event::where('id', session()->get('event_id'))->first();
+
+            if ($getEvent === null) {
+                \Alert::error('Dates is incorrect')->flash();
+                return back();
+            }
+            $test = $this->crud->query
+            ->whereNull('event_report_id')
+            ->lastPerGroup(['player_id'])
+                ;
+
+
             CRUD::setEntityNameStrings('chips', $getEvent->title);
+
         } else {
             $this->crud->denyAccess('create');
         }
@@ -54,9 +68,12 @@ class ChipCountCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        $this->crud->addClause('where', 'event_id', session()->get('event_id'));
 
-        $this->crud->addClause('where', 'event_report_id', '=', null);
+        // $this->crud->addClause('join', 'event_reports', 'event_reports.id','=','event_chips.event_report_id' )
+            // ->where('event_reports.id', session()->get('event_id'));
+        // $this->crud->addClause('where', 'event_id', session()->get('event_id'));
+
+        // $this->crud->addClause('where', 'event_report_id', '=', null);
 
         // 'chip_stacks' => collect(EventChipsResource::collection
         // ($this->latest_event_chips->sortByDesc('created_at')->unique('player_id')))->
@@ -71,6 +88,8 @@ class ChipCountCrudController extends CrudController
                 });
             },
         ]);
+    // editable_switch
+
 
     //     CRUD::addColumn([
     //     'name'    => 'name',
@@ -128,6 +147,16 @@ class ChipCountCrudController extends CrudController
             'auto_update_row' => true, // update related columns in same row, after the AJAX call?
         ]);
 
+
+    CRUD::addColumn([
+        'name'  => 'is_whatsapp',
+        'label' => 'Whatsapp',
+        'type'  => 'editable_switch',
+        'color'   => 'success',
+        'onLabel' => '✓',
+        'offLabel' => '✕',
+    ]);
+
         /**
          * Columns can be defined using the fluent syntax or array syntax:
          * - CRUD::column('price')->type('number');
@@ -146,16 +175,11 @@ class ChipCountCrudController extends CrudController
     {
         CRUD::setValidation(ChipCountRequest::class);
 
-        // CRUD::field('id');
 
         $this->crud->addField([
-            'name' => 'name',
-            'type' => 'select2_from_array',
-            'options' => [
-                'whatsapp' => 'whatsapp',
-                'normal' => 'normal',
-            ],
-            'label' => 'Source',
+            'type' => 'switch',
+            'name' => 'is_whatsapp',
+            'label' => 'Whatsapp source?'
 
         ]);
 
@@ -203,4 +227,30 @@ class ChipCountCrudController extends CrudController
     {
         $this->setupCreateOperation();
     }
+
+    public function store(Request $request)
+    {
+        $this->crud->hasAccessOrFail('create');
+
+        $request = $this->crud->validateRequest();
+
+        $this->crud->registerFieldEvents();
+
+        $item = $this->crud->create($this->crud->getStrippedSaveRequest($request));
+
+        $this->data['entry'] = $this->crud->entry = $item;
+
+        session()->flash('new_reports', $item->id);
+
+        // \Alert::success('')->flash();
+
+        \Alert::flash();
+
+        $this->crud->setSaveAction();
+
+        return $this->crud->performSaveAction($item->getKey());
+    }
+
+
+
 }

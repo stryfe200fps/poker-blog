@@ -1,12 +1,14 @@
 <?php
 
+use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Article;
+use App\Models\Tournament;
 use App\Models\ArticleAuthor;
 use App\Models\ArticleCategory;
-use App\Models\Tournament;
-use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Role;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use function Pest\Faker\faker;
 
 uses(RefreshDatabase::class);
 
@@ -27,9 +29,13 @@ it('can insert tournament if authenticated', function () {
     superAdminAuthenticate();
 
     $this->get('admin/poker-tournament/create')->assertStatus(200);
+    // dd(faker()->dateTimeThisCentury());
 
     $tournamentFactory = Tournament::factory()->make([
-        'title' => 'my tournament'
+        'title' => 'my tournament',
+  'date_start' => Carbon::parse(faker()->dateTimeThisCentury())->toString() ,
+            'date_end' => Carbon::parse(faker()->dateTimeThisCentury())->toString()
+
     ]);
 
     $this->post('admin/poker-tournament', $tournamentFactory->attributesToArray());
@@ -45,7 +51,10 @@ it('can update article if authenticated', function () {
 
     $alteredTournament = Tournament::factory()->make([
         'title' => 'altered tournament',
-        'id' => $tournament->id
+        'id' => $tournament->id,
+  'date_start' => Carbon::parse(faker()->dateTimeThisCentury())->toString() ,
+            'date_end' => Carbon::parse(faker()->dateTimeThisCentury())->toString()
+
     ]);
 
     $this->get('admin/poker-tournament/'.$tournament->id.'/edit')->assertStatus(200);

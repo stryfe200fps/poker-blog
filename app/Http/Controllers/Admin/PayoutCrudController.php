@@ -127,14 +127,7 @@ class PayoutCrudController extends CrudController
             'label' => 'Source',
             'type' => 'editable_select',
             'options' => ['normal' => 'normal', 'whatsapp' => 'whatsapp'],
-            // or
-            // 'options' => [
-            //     '1' => 'One',
-            //     '2' => 'Two',
-            //     '3' => 'Three',
-            // ],
 
-            // Optionals
             'underlined' => true, // show a dotted line under the editable column for differentiation? default: true
             'save_on_focusout' => true, // if user clicks out, the value should be saved (instead of greyed out)
             'save_on_change' => true,

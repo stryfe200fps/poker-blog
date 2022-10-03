@@ -10,4 +10,11 @@ class ChipCount extends Model
 {
     use CrudTrait;
     use HasFactory;
+
+
+    protected static function booted()
+    {
+   
+    }
+
 }

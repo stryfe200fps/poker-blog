@@ -49,10 +49,28 @@ class EventCrudController extends CrudController
     {
         CRUD::column('title');
         CRUD::column('tournament');
-        CRUD::column('date_start');
-        CRUD::column('date_end');
+
+
+        $this->crud->addColumns([
+            [
+                'name' => 'date_start', // the column that contains the ID of that connected entity;
+                'label' => 'Date Start', // Table column heading
+                'type' => 'datetime',
+                'format' => config('app.date_format')
+            ],
+        ]);
+
+        $this->crud->addColumns([
+            [
+                'name' => 'date_end', // the column that contains the ID of that connected entity;
+                'label' => 'Date End', // Table column heading
+                'type' => 'datetime',
+                'format' => config('app.date_format')
+            ],
+        ]);
+
         $this->crud->addButtonFromModelFunction('line', 'open_payout', 'openPayout', 'beginning');
-        // $this->crud->addButtonFromModelFunction('line', 'open_chip_count', 'openChipCount', 'beginning');
+        $this->crud->addButtonFromModelFunction('line', 'open_chip_count', 'openChipCount', 'beginning');
         $this->crud->addButtonFromModelFunction('line', 'open_google', 'openLiveReporting', 'beginning');
     }
 

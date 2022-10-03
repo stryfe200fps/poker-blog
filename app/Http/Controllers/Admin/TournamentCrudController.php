@@ -45,8 +45,26 @@ class TournamentCrudController extends CrudController
         CRUD::column('title');
         CRUD::column('description');
         CRUD::column('tour_id');
-        CRUD::column('date_start');
-        CRUD::column('date_end');
+
+ $this->crud->addColumns([
+            [
+                'name' => 'date_start', // the column that contains the ID of that connected entity;
+                'label' => 'Date End', // Table column heading
+                'type' => 'datetime',
+                'format' => config('app.date_format')
+            ],
+        ]);
+
+ $this->crud->addColumns([
+            [
+                'name' => 'date_end', // the column that contains the ID of that connected entity;
+                'label' => 'Date End', // Table column heading
+                'type' => 'datetime',
+                'format' => config('app.date_format')
+            ],
+        ]);
+
+
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
