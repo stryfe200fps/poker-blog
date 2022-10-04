@@ -1,26 +1,26 @@
 <template>
     <div class="about-more-autor">
         <ul class="nav nav-tabs custom-tabs">
-            <li @click.prevent="changeTab(0)" :class="tab == 0 ? 'active' : ''">
-                <a href="#about-autor" data-toggle="tab">
+            <li @click.prevent="changeTab(0)" :class="{ active: tab == 0 }">
+                <a href="#" data-toggle="tab">
                     <span class="hide-on-mobile">LIVE UPDATES</span>
                     <span class="show-on-mobile">UPDATES</span>
                 </a>
             </li>
-            <li @click.prevent="changeTab(1)" :class="tab == 1 ? 'active' : ''">
-                <a href="#more-autor" data-toggle="tab">
+            <li @click.prevent="changeTab(1)" :class="{ active: tab == 1 }">
+                <a href="#" data-toggle="tab">
                     <span class="hide-on-mobile">CHIP COUNTS</span>
                     <span class="show-on-mobile">CHIPS</span>
                 </a>
             </li>
-            <li @click.prevent="changeTab(2)" :class="tab == 2 ? 'active' : ''">
-                <a href="#more-autor" data-toggle="tab">GALLERY</a>
+            <li @click.prevent="changeTab(2)" :class="{ active: tab == 2 }">
+                <a href="#" data-toggle="tab">GALLERY</a>
             </li>
-            <li @click.prevent="changeTab(3)" :class="tab == 3 ? 'active' : ''">
-                <a href="#more-autor" data-toggle="tab">PAYOUT</a>
+            <li @click.prevent="changeTab(3)" :class="{ active: tab == 3 }">
+                <a href="#" data-toggle="tab">PAYOUT</a>
             </li>
-            <li @click.prevent="changeTab(4)" :class="tab == 4 ? 'active' : ''">
-                <a href="#more-autor" data-toggle="tab">#WHATSAPP</a>
+            <li @click.prevent="changeTab(4)" :class="{ active: tab == 4 }">
+                <a href="#" data-toggle="tab">#WHATSAPP</a>
             </li>
         </ul>
         <div class="tab-content">
@@ -145,17 +145,33 @@
                 </div>
             </div>
             <div v-show="tab == 2">
-                <div class="margin-top">
-                    <vue-picture-swipe
-                        :items="items"
-                        style="
-                            position: relative;
-                            padding-bottom: 100%;
-                            display: flex;
-                            flex-wrap: wrap;
-                            gap: 10px;
-                        "
-                    ></vue-picture-swipe>
+                <div class="grid-box">
+                    <div id="my-gallery" class="row">
+                        <div class="col-xs-12">
+                            <a
+                                v-for="(image, index) in event.gallery"
+                                :key="index"
+                                :href="image.main"
+                                :data-pswp-width="900"
+                                :data-pswp-height="640"
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                <img
+                                    style="
+                                        width: 120px;
+                                        max-width: 100%;
+                                        height: auto;
+                                        object-fit: cover;
+                                        margin-right: 10px;
+                                        margin-bottom: 10px;
+                                    "
+                                    :src="image.thumbnail"
+                                    :alt="image.thumbnail"
+                                />
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div v-show="tab == 3">
@@ -238,6 +254,8 @@ import CustomeTable from "../CustomeTable.vue";
 import CountryFlag from "vue3-country-flag-icon";
 import VuePictureSwipe from "vue3-picture-swipe";
 import defaultAvatar from "@/default-avatar.png";
+import PhotoSwipeLightbox from "photoswipe/lightbox";
+import "photoswipe/style.css";
 
 import brokenMirror from "@/photo_templates/brokenmirror.png";
 import bulletHole from "@/photo_templates/bullethole.png";
@@ -261,7 +279,7 @@ const props = defineProps({
     },
 });
 
-const items = ref([]);
+const tab = ref(0);
 
 function stickyScroll() {
     const tabs = document.querySelector(".custom-tabs");
@@ -285,37 +303,15 @@ function scrollToTop() {
     window.scroll({ top: 0, behavior: "smooth" });
 }
 
-onBeforeUnmount(() => {
-    window.removeEventListener("scroll", stickyScroll);
-});
-
-onMounted(async () => {
-    items.value = [];
-    window.addEventListener("scroll", stickyScroll);
-});
-watch(
-    () => props.event,
-    () => {
-        if (props.event) {
-            props.event.gallery.forEach((element) => {
-                items.value.push({
-                    thumbnail: element.thumbnail,
-                    src: element.main,
-                    w: 600,
-                    h: 400,
-                });
-            });
-        }
-    }
-);
-
-const tab = ref(0);
-
-const lastLevel = ref("");
-
 const changeTab = (currentTab) => {
     tab.value = currentTab;
 };
+
+const lightbox = new PhotoSwipeLightbox({
+    gallery: "#my-gallery",
+    children: "a",
+    pswpModule: () => import("photoswipe"),
+});
 
 /* FRAMES */
 function getFrame(theme) {
@@ -340,6 +336,16 @@ function getFrame(theme) {
             return waterWaves;
     }
 }
+
+onBeforeUnmount(() => {
+    window.removeEventListener("scroll", stickyScroll);
+    lightbox.destroy();
+});
+
+onMounted(async () => {
+    window.addEventListener("scroll", stickyScroll);
+    lightbox.init();
+});
 </script>
 
 <style scoped>
