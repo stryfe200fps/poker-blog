@@ -1,20 +1,20 @@
 <template>
     <div class="about-more-autor">
         <ul class="nav nav-tabs custom-tabs">
-            <li @click.prevent="changeTab(0)" :class="tab == 0 ? 'active' : ''">
-                <a href="#about-autor" data-toggle="tab"
+            <li @click.prevent="changeTab(0)" :class="{ active: tab == 0 }">
+                <a href="#" data-toggle="tab"
                     ><span class="hidden-xs">latest events</span
                     ><span class="visible-xs">latest</span></a
                 >
             </li>
-            <li @click.prevent="changeTab(1)" :class="tab == 1 ? 'active' : ''">
-                <a href="#more-autor" data-toggle="tab"
+            <li @click.prevent="changeTab(1)" :class="{ active: tab == 1 }">
+                <a href="#" data-toggle="tab"
                     ><span class="hidden-xs">past events</span
                     ><span class="visible-xs">past</span>
                 </a>
             </li>
-            <li @click.prevent="changeTab(2)" :class="tab == 2 ? 'active' : ''">
-                <a href="#more-autor" data-toggle="tab"
+            <li @click.prevent="changeTab(2)" :class="{ active: tab == 2 }">
+                <a href="#" data-toggle="tab"
                     ><span class="hidden-xs">upcoming events</span
                     ><span class="visible-xs">upcoming</span>
                 </a>
