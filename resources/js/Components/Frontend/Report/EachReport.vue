@@ -282,7 +282,6 @@ import { ref } from "@vue/reactivity";
 import { onMounted } from "@vue/runtime-core";
 import CustomeTable from "../CustomeTable.vue";
 import CountryFlag from "vue3-country-flag-icon";
-import VuePictureSwipe from "vue3-picture-swipe";
 import defaultAvatar from "@/default-avatar.png";
 import moment from "moment";
 
