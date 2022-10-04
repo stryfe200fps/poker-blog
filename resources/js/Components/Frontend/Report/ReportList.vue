@@ -252,7 +252,6 @@ import { ref, computed } from "@vue/reactivity";
 import { onMounted, onBeforeUnmount, watch } from "@vue/runtime-core";
 import CustomeTable from "../CustomeTable.vue";
 import CountryFlag from "vue3-country-flag-icon";
-import VuePictureSwipe from "vue3-picture-swipe";
 import defaultAvatar from "@/default-avatar.png";
 import PhotoSwipeLightbox from "photoswipe/lightbox";
 import "photoswipe/style.css";
