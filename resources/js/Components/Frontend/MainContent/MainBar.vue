@@ -134,7 +134,7 @@ defineProps({
                             />
                             <img v-else :src="defaultImg" :alt="defaultImg" />
                             <Link class="category-post food" href="/">{{
-                                news.categories[0].title
+                                news.categories[0]?.title
                             }}</Link>
                         </div>
                     </div>

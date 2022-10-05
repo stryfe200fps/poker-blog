@@ -33,6 +33,8 @@ it('can insert tournament if authenticated', function () {
 
     $tournamentFactory = Tournament::factory()->make([
         'title' => 'my tournament',
+
+        'timezone' => 'Asia/Manila',
   'date_start' => Carbon::parse(faker()->dateTimeThisCentury())->toString() ,
             'date_end' => Carbon::parse(faker()->dateTimeThisCentury())->toString()
 
@@ -51,6 +53,7 @@ it('can update article if authenticated', function () {
 
     $alteredTournament = Tournament::factory()->make([
         'title' => 'altered tournament',
+        'timezone' => 'Asia/Manila',
         'id' => $tournament->id,
   'date_start' => Carbon::parse(faker()->dateTimeThisCentury())->toString() ,
             'date_end' => Carbon::parse(faker()->dateTimeThisCentury())->toString()

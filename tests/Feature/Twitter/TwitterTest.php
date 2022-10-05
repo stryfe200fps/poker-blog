@@ -14,5 +14,4 @@ test('twitter has local endpoints', function () {
   expect(count($twitterApi['data']))->toBe(2);
   $twitterApi->assertStatus(200);
 
-
 });

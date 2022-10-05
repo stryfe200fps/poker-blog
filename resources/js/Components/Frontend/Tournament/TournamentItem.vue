@@ -37,7 +37,7 @@
             </div>
         </div>
         <EventItem
-            v-for="event in tournament.events"
+            v-for="event in tournament.events.data"
             :key="event.id"
             :event="event"
         />

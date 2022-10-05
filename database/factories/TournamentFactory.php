@@ -37,7 +37,7 @@ class TournamentFactory extends Factory
             'description' => $this->faker->text,
             'date_start' => $dateStart ,
             'date_end' => $dateEnd,
-            'timezone' => $country->timezone ?? '',
+            'timezone' => $country?->timezone ?? '',
             'country_id' => $country->id,
             'tour_id' => Tour::factory()->create()->id,
             'currency_id' => $this->faker->numberBetween(1, 3),

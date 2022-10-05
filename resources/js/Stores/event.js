@@ -20,6 +20,7 @@ export const useEventStore = defineStore("event", {
     actions: {
         async getMainEvents() {
             const { data } = await axios.get("/api/lof-event/");
+            
             this.mainEvents = data;
         },
         async getEventData(id) {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\LOFApiTournamentCollection;
 use App\Http\Resources\LOFApiTournamentResource;
 use App\Models\Tournament;
 
@@ -9,7 +10,9 @@ class LOFApiTournamentsController extends Controller
 {
     public function index()
     {
-        return  LOFApiTournamentResource::collection(Tournament::latest()->paginate(10));
+        // return  LOFApiTournamentResource::collection(Tournament::latest()->latest()->paginate(10));
+
+        return  new LOFApiTournamentCollection(Tournament::latest()->get());
     }
 
     public function show($id)

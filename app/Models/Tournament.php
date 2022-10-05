@@ -50,7 +50,7 @@ class Tournament extends Model implements HasMedia
                 return 'live';
         }
 
-        return 'tba';
+        return 'past';
     }
 
     protected $guarded = [
