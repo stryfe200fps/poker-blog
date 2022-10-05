@@ -1,0 +1,31 @@
+<?php
+
+namespace App\Http\Resources;
+
+use Illuminate\Http\Resources\Json\ResourceCollection;
+
+class LOFApiTournamentCollection extends ResourceCollection
+{
+    /**
+     * Transform the resource collection into an array.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
+     */
+    public function toArray($request)
+    {
+        $collection =collect(LOFApiTournamentResource::collection( $this->collection )) ;
+
+
+        $statusPriorities = ['live', 'tba', 'upcoming', 'past'];
+        
+      $collection =  $collection->sortBy(function($order) use($statusPriorities){
+           return array_search($order['status'], $statusPriorities);
+        })->values()->all();
+
+
+        return [
+            'data' => collect($collection)->toArray()
+        ];
+    }
+}

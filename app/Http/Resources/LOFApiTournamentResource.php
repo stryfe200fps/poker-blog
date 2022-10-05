@@ -35,7 +35,7 @@ class LOFApiTournamentResource extends JsonResource
             'date_start' => Carbon::parse($this->date_start)->toFormattedDateString(),
             'date_end' => Carbon::parse($this->date_end)->toFormattedDateString(),
             'status' => $this->hasLiveEvents(),
-            'events' => LOFApiEventsResource::collection($this->events),
+            'events' => new LOFApiEventsCollection($this->events),
         ];
     }
 }

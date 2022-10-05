@@ -42,6 +42,7 @@ onMounted(async() => {
 
 watch(() => tournamentStore.list.data, function () {
     list.value = tournamentStore.list;
+    console.log(tournamentStore.list);
   }
 );
 
