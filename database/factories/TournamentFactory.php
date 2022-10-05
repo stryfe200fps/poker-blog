@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Carbon\Carbon;
 use App\Models\Tour;
 use App\Models\Tournament;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -25,7 +26,7 @@ class TournamentFactory extends Factory
         return [
             'title' => $this->faker->name,
             'description' => $this->faker->text,
-            'date_start' => $this->faker->dateTimeThisCentury(),
+            'date_start' => $this->faker->dateTimeThisCentury() ,
             'date_end' => $this->faker->dateTimeThisCentury(),
             'timezone' => 'timezone',
             'country_id' => 1,

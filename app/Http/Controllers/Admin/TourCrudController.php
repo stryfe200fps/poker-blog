@@ -7,7 +7,7 @@ use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
- * Class 
+ * Class
  *
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
@@ -70,6 +70,7 @@ class TourCrudController extends CrudController
             'name' => 'image',
             'type' => 'image',
             'crop' => true, // set to true to allow cropping, false to disable
+            'aspect_ratio' => 3/2,
             'wrapper' => [
                 'class' => 'form-group col-md-12',
             ],
@@ -93,5 +94,17 @@ class TourCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
+    }
+
+    public function destroy($id)
+    {
+
+        if ($this->crud->getCurrentEntry()->tournaments->count()) {
+            return \Alert::error('This tour has tournaments inside')->flash();
+        }
+
+        $this->crud->hasAccessOrFail('delete');
+        $id = $this->crud->getCurrentEntryId() ?? $id;
+        return $this->crud->delete($id);
     }
 }

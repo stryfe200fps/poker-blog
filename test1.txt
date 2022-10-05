@@ -1,0 +1,96 @@
+
+
+  [30;42;1m PASS [39;49;22m[39m Tests\Feature\Api\Article\ArticleCategoriesTest[39m
+  [32;1m✓[39;22m[39m [2mit cannot create articles if unauthenticated[22m[39m
+  [32;1m✓[39;22m[39m [2mit can insert article if authenticated[22m[39m
+  [32;1m✓[39;22m[39m [2mit can update article category if authenticated[22m[39m
+  [32;1m✓[39;22m[39m [2mit can delete article if authenticated[22m[39m
+
+  [30;43;1m WARN [39;49;22m[39m Tests\Feature\Api\Article\ArticleTest[39m
+  [32;1m✓[39;22m[39m [2mit cannot create articles if unauthenticated[22m[39m
+  [32;1m✓[39;22m[39m [2mit can insert article if authenticated[22m[39m
+  [32;1m✓[39;22m[39m [2mit can update article if authenticated[22m[39m
+  [32;1m✓[39;22m[39m [2mit can delete article if authenticated[22m[39m
+  [33;1m![39;22m[39m [2mit can fetch related related articles[22m[39m[33m → This test did not perform any assertions  /Users/adichan/prog/life-of-poker/vendor/pestphp/pest/src/Factories/TestCaseFactory.php(223) : eval()'d code:5[39m
+App\Models\Event {#9890 // vendor/pestphp/pest/src/Factories/TestCaseFactory.php:151
+  #connection: "sqlite"
+  #table: null
+  #primaryKey: "id"
+  #keyType: "int"
+  +incrementing: true
+  #with: []
+  #withCount: []
+  +preventsLazyLoading: false
+  #perPage: 15
+  +exists: true
+  +wasRecentlyCreated: true
+  #escapeWhenCastingToString: false
+  #attributes: array:10 [
+    "tournament_id" => 1
+    "title" => "Sadye Wiegand"
+    "description" => "Voluptatem quaerat nesciunt et temporibus. Quo possimus distinctio et vel quos. Adipisci sapiente hic ut perferendis autem sit quia."
+    "schedule" => "[{"day":"1","date_start":"2022-09-29 06:53:00","date_end":"2022-09-29 17:53:00"},{"day":"2","date_start":"2022-09-30 8:53:00","date_end":"2022-09-30 14:53:00"}]"
+    "date_start" => DateTime @433070851 {#9850
+      date: 1983-09-22 09:27:31.0 UTC (+00:00)
+    }
+    "date_end" => DateTime @1282217647 {#9872
+      date: 2010-08-19 11:34:07.0 UTC (+00:00)
+    }
+    "slug" => "sadye-wiegand"
+    "updated_at" => "2022-09-30 09:39:28"
+    "created_at" => "2022-09-30 09:39:28"
+    "id" => 1
+  ]
+  #original: array:10 [
+    "tournament_id" => 1
+    "title" => "Sadye Wiegand"
+    "description" => "Voluptatem quaerat nesciunt et temporibus. Quo possimus distinctio et vel quos. Adipisci sapiente hic ut perferendis autem sit quia."
+    "schedule" => "[{"day":"1","date_start":"2022-09-29 06:53:00","date_end":"2022-09-29 17:53:00"},{"day":"2","date_start":"2022-09-30 8:53:00","date_end":"2022-09-30 14:53:00"}]"
+    "date_start" => DateTime @433070851 {#9850}
+    "date_end" => DateTime @1282217647 {#9872}
+    "slug" => "sadye-wiegand"
+    "updated_at" => "2022-09-30 09:39:28"
+    "created_at" => "2022-09-30 09:39:28"
+    "id" => 1
+  ]
+  #changes: []
+  #casts: array:1 [
+    "schedule" => "json"
+  ]
+  #classCastCache: []
+  #attributeCastCache: []
+  #dates: []
+  #dateFormat: null
+  #appends: []
+  #dispatchesEvents: []
+  #observables: []
+  #relations: []
+  #touches: []
+  +timestamps: true
+  #hidden: []
+  #visible: []
+  #fillable: []
+  #guarded: array:1 [
+    0 => "id"
+  ]
+  +mediaConversions: []
+  +mediaCollections: []
+  #deletePreservingMedia: false
+  #unAttachedMediaLibraryItems: []
+  #slugOptions: Spatie\Sluggable\SlugOptions {#9875
+    +generateSlugFrom: array:1 [
+      0 => "title"
+    ]
+    +extraScopeCallback: null
+    +slugField: "slug"
+    +generateUniqueSlugs: true
+    +maximumLength: 250
+    +skipGenerate: false
+    +generateSlugsOnCreate: true
+    +generateSlugsOnUpdate: true
+    +preventOverwrite: false
+    +slugSeparator: "-"
+    +slugLanguage: "en"
+    +translatableLocales: []
+  }
+}

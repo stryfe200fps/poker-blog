@@ -25,8 +25,9 @@ class LevelRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
-            'level' => 'required'
+            'level' => 'required',
+            'blinds' => 'required',
+            'ante' => 'required'
         ];
     }
 
@@ -39,7 +40,7 @@ class LevelRequest extends FormRequest
     {
         return [
             'name' => 'name is required',
-            'level' => 'level is required'
+            'level' => 'level is required',
         ];
     }
 

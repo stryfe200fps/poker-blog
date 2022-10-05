@@ -1,94 +1,76 @@
 <?php
 
+use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Article;
+use App\Models\Tournament;
 use App\Models\ArticleAuthor;
 use App\Models\ArticleCategory;
-use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Role;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use function Pest\Faker\faker;
 
 uses(RefreshDatabase::class);
 
-test('article is working', function () {
-    $response = $this->get('api/articles');
-    $response->assertStatus(200);
-});
+// test('article is working', function () {
+//     $response = $this->get('api/articles');
+//     $response->assertStatus(200);
+// });
 
-it('cannot create articles if unauthenticated', function () {
-    $this->post('admin/article/', [
+it('cannot create tournament if unauthenticated', function () {
+    $this->post('admin/poker-tournament/', [
         'name' => 'adrian',
     ])->assertStatus(302);
 });
 
-it('can insert article if authenticated', function () {
-    $u = User::factory()->create();
-    $role = Role::create([
-        'name' => 'super-admin',
+it('can insert tournament if authenticated', function () {
+
+
+    superAdminAuthenticate();
+
+    $this->get('admin/poker-tournament/create')->assertStatus(200);
+    // dd(faker()->dateTimeThisCentury());
+
+    $tournamentFactory = Tournament::factory()->make([
+        'title' => 'my tournament',
+  'date_start' => Carbon::parse(faker()->dateTimeThisCentury())->toString() ,
+            'date_end' => Carbon::parse(faker()->dateTimeThisCentury())->toString()
+
     ]);
 
-    $user = $this->actingAs(User::factory()->create(), 'web');
-
-    backpack_user()->assignRole('super-admin');
-
-    $this->get('admin/article/create')->assertStatus(200);
-
-    $data = [
-        'title' => 'Things I do',
-        'description' => 'description',
-        'body' => 'body',
-        'published_date' => '2020-04-17',
-        'article_author_id' => ArticleAuthor::factory()->create()->id,
-        'article_categories' => collect(ArticleCategory::factory()->times(2)->create())->pluck('id')->toArray(),
-    ];
-
-    $datas = $this->post('admin/article', $data);
-    $this->assertDatabaseHas('articles', ['title' => 'Things I do',
-        'description' => 'description',
-        'body' => 'body',
-    ]);
+    $this->post('admin/poker-tournament', $tournamentFactory->attributesToArray());
+    $this->assertDatabaseHas('tournaments', ['title' => 'my tournament']);
 });
 
 it('can update article if authenticated', function () {
-    $u = User::factory()->create();
-    $role = Role::create([
-        'name' => 'super-admin',
+
+    superAdminAuthenticate();
+
+    $tournament = Tournament::factory()->create();
+
+
+    $alteredTournament = Tournament::factory()->make([
+        'title' => 'altered tournament',
+        'id' => $tournament->id,
+  'date_start' => Carbon::parse(faker()->dateTimeThisCentury())->toString() ,
+            'date_end' => Carbon::parse(faker()->dateTimeThisCentury())->toString()
+
     ]);
 
-    $user = $this->actingAs(User::factory()->create(), 'web');
+    $this->get('admin/poker-tournament/'.$tournament->id.'/edit')->assertStatus(200);
 
-    backpack_user()->assignRole('super-admin');
+    $this->put('admin/poker-tournament/update', $alteredTournament->attributesToArray());
 
-    $article = Article::factory()->create();
-
-    $this->get('admin/article/'.$article->id.'/edit')->assertStatus(200);
-
-    $data = [
-        'id' => $article->id,
-        'title' => 'things I hate',
-        'description' => 'description',
-        'body' => 'body',
-        'published_date' => '2020-04-17',
-        'article_author_id' => ArticleAuthor::factory()->create()->id,
-        'article_categories' => collect(ArticleCategory::factory()->times(2)->create())->pluck('id')->toArray(),
-    ];
-
-    $datas = $this->put('admin/article/update', $data);
-    $this->assertDatabaseHas('articles', ['title' => 'things I hate',
-        'description' => 'description',
-        'body' => 'body',
-    ]);
-    $this->assertDatabaseCount('articles', 1);
+    $this->assertDatabaseHas('tournaments', ['title' => 'altered tournament']);
+    $this->assertDatabaseCount('tournaments', 1);
 });
 
-it('can delete article if authenticated', function () {
-    $u = User::factory()->create();
-    $role = Role::create([
-        'name' => 'super-admin',
-    ]);
+it('can delete tournament if authenticated', function () {
 
-    $user = $this->actingAs(User::factory()->create(), 'web');
-    backpack_user()->assignRole('super-admin');
-    $article = Article::factory()->create();
-    $this->get('admin/article')->assertStatus(200);
-    $datas = $this->delete('admin/article/1');
+    superAdminAuthenticate();
+
+    Tournament::factory()->create();
+
+    $this->get('admin/poker-tournament')->assertStatus(200);
+    $this->delete('admin/poker-tournament/1');
 });

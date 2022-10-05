@@ -1,0 +1,1 @@
+import{M as e,N as a}from"./app.b4130c52.js";const n=e("tournament",{state:()=>({list:[]}),getters:{},actions:{async getList(){await a.get("/api/lof-tournament").then(t=>{this.list=t.data})}}});export{n as u};
