@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\Event;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\EventResource;
+use App\Models\Event;
+use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class EventApiController extends Controller
@@ -21,9 +21,9 @@ class EventApiController extends Controller
     {
         return new EventResource(Event::with(
             [
-              'live_reports',  'live_reports.media', 'live_report_players', 
+                'live_reports',  'live_reports.media', 'live_report_players',
                 'live_report_players.player', 'live_report_players.player.country',
-                  'payouts.player', 'payouts' , 'live_reports.article_author'])->where('id', $id)->first());
+                'payouts.player', 'payouts', 'live_reports.article_author', ])->where('id', $id)->first());
     }
 
     public function upload(Request $request)
@@ -34,6 +34,7 @@ class EventApiController extends Controller
             $things = $event->addMediaFromRequest('image')
                     ->toMediaCollection('event_gallery');
         }
+
         return 200;
     }
 
@@ -47,9 +48,10 @@ class EventApiController extends Controller
             $imgResource[] = [
                 'id' => $media->id,
                 'thumbnail' => $media->getUrl('main-thumb'),
-                'main' =>  $media->getUrl('main-image'),
+                'main' => $media->getUrl('main-image'),
             ];
         }
+
         return $imgResource;
     }
 

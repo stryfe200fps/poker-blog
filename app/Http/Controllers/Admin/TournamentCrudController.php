@@ -8,7 +8,7 @@ use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use Carbon\Carbon;
 
 /**
- * Class 
+ * Class
  *
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
@@ -27,7 +27,6 @@ class TournamentCrudController extends CrudController
      */
     public function setup()
     {
-
         $this->crud->denyAccess('show');
         CRUD::setModel(\App\Models\Tournament::class);
         CRUD::setRoute(config('backpack.base.route_prefix').'/poker-tournament');
@@ -46,8 +45,26 @@ class TournamentCrudController extends CrudController
         CRUD::column('title');
         CRUD::column('description');
         CRUD::column('tour_id');
-        CRUD::column('date_start');
-        CRUD::column('date_end');
+
+ $this->crud->addColumns([
+            [
+                'name' => 'date_start', // the column that contains the ID of that connected entity;
+                'label' => 'Date End', // Table column heading
+                'type' => 'datetime',
+                'format' => config('app.date_format')
+            ],
+        ]);
+
+ $this->crud->addColumns([
+            [
+                'name' => 'date_end', // the column that contains the ID of that connected entity;
+                'label' => 'Date End', // Table column heading
+                'type' => 'datetime',
+                'format' => config('app.date_format')
+            ],
+        ]);
+
+
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
@@ -70,9 +87,9 @@ class TournamentCrudController extends CrudController
         $end = Carbon::now()->addDays(2)->toDateTimeString();
 
         CRUD::field('tour_id')->options(function ($query) {
-                return $query->orderBy('title', 'ASC')->get();
+            return $query->orderBy('title', 'ASC')->get();
         });
-         
+
         CRUD::field('title');
         CRUD::field('description');
 
@@ -108,7 +125,7 @@ class TournamentCrudController extends CrudController
                 'name' => 'image',
                 'label' => 'image',
                 'type' => 'image',
-                'aspect_ratio' => 3/2,
+                'aspect_ratio' => 3 / 2,
                 'crop' => true,
             ],
             [   // date_range
@@ -146,5 +163,17 @@ class TournamentCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
+    }
+
+    public function destroy($id)
+    {
+
+        if ($this->crud->getCurrentEntry()->events->count()) {
+            return \Alert::error('This tournament has events inside')->flash();
+        }
+
+        $this->crud->hasAccessOrFail('delete');
+        $id = $this->crud->getCurrentEntryId() ?? $id;
+        return $this->crud->delete($id);
     }
 }

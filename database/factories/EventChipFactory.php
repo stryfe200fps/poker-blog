@@ -6,6 +6,7 @@ use App\Models\Event;
 use App\Models\EventChip;
 use App\Models\EventReport;
 use App\Models\Player;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class EventChipFactory extends Factory
@@ -24,8 +25,7 @@ class EventChipFactory extends Factory
      */
     public function definition()
     {
-
-//  $table->id(); 
+        //  $table->id();
 //             $table->string('name');
 //             $table->foreignId('player_id');
 //             $table->foreignId('event_id')->nullable();
@@ -42,8 +42,8 @@ class EventChipFactory extends Factory
             'rank' => 1,
             'player_id' => Player::factory()->create()->id,
             'event_report_id' => EventReport::factory()->create()->id,
-            'event_id' => Event::factory()->create()->id
-
+            'event_id' => Event::factory()->create()->id,
+            'date_published' => Carbon::now()->toString()
         ];
     }
 }

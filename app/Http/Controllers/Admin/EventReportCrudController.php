@@ -2,21 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\EventReportRequest;
-use App\Models\ArticleAuthor;
-use App\Models\Report;
-use App\Models\EventChip;
-use App\Models\Player;
+use DateTime;
+use Carbon\Carbon;
 use App\Models\Event;
 use App\Models\EventReport;
+use Illuminate\Http\Request;
+use App\Models\ArticleAuthor;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
+use Backpack\CRUD\app\Library\Widget;
+use App\Http\Requests\EventReportRequest;
+use Illuminate\Support\Facades\Validator;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
-use Backpack\CRUD\app\Library\Widget;
-use Carbon\Carbon;
-use DateTime;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
 
 /**
  * Class LiveReportCrudController
@@ -47,7 +45,6 @@ class EventReportCrudController extends CrudController
         if (request()->get('event') || session()->get('event_id')) {
             if (request()->get('event') !== null) {
                 session()->put('event_id', request()->get('event'));
-
             }
 
             $getEvent = Event::where('id', session()->get('event_id'))->first();
@@ -113,6 +110,12 @@ class EventReportCrudController extends CrudController
     protected function setupCreateOperation()
     {
 
+        if (!session()->get('event_id')) {
+            $this->crud->denyAccess('create');
+        }
+
+        $event = Event::where('id', session()->get('event_id'))->first();
+
         CRUD::setValidation(EventReportRequest::class);
         $this->crud->addField([
 
@@ -126,8 +129,6 @@ class EventReportCrudController extends CrudController
 
         ]);
 
-        
-
         $this->crud->addField(
             [
                 'name' => 'event_id',
@@ -137,8 +138,6 @@ class EventReportCrudController extends CrudController
                     'class' => 'form-group col-md-12',
                 ],
             ]);
-
- 
 
         // $lastLevelId = DB::table('event_reports')
         // ->join('levels', function ($join) {
@@ -150,8 +149,9 @@ class EventReportCrudController extends CrudController
 
         $this->crud->addField([
             'name' => 'slug',
-            'type' => 'text'
+            'type' => 'text',
         ]);
+
         $author = ArticleAuthor::where('user_id', backpack_user()->id)->first();
 
         $this->crud->addFields([
@@ -167,20 +167,35 @@ class EventReportCrudController extends CrudController
                     'autoGrow_bottomSpace' => 50,
                     'removePlugins' => 'resize,maximize',
                 ],
-            ],
+            ]]);
 
+            if ($this->crud->getCurrentOperation() == 'create') { 
+            $this->crud->addField(
             [
                 'name' => 'article_author_id',
                 'type' => 'select2',
                 'attribute' => 'fullname',
-                'value' => $author->id ?? 0,
+                'value' => $author?->id ,
                 'label' => 'Author',
-
                 'wrapper' => [
                     'class' => 'form-group col-md-12',
-                ]
-               
-            ],
+                ],
+            ]);
+             } else {
+            $this->crud->addField(
+            [
+                'name' => 'article_author_id',
+                'type' => 'select2',
+                'attribute' => 'fullname',
+                'label' => 'Author',
+                'wrapper' => [
+                    'class' => 'form-group col-md-12',
+                ],
+            ]);
+
+             }
+
+        $this->crud->addFields([
 
             [   // DateTime
                 'name' => 'date_added',
@@ -202,29 +217,42 @@ class EventReportCrudController extends CrudController
                 ],
 
             ],
-
             [
                 'label' => 'Levels',
                 'type' => 'relationship',
                 'name' => 'level', // the method that defines the relationship in your Model
                 'entity' => 'level', // the method that defines the relationship in your Model
-                'attribute' => 'name', // foreign key attribute that is shown to user
+                'attribute' => 'level', // foreign key attribute that is shown to user
                 'pivot' => true, // on create&update, do you need to add/delete pivot table entries?
                 'inline_create' => ['entity' => 'level'],
                 'ajax' => true,
                    'minimum_input_length' => 0,
-        'allows_null' => true,
-                // 'value' => $this->crud->getCurrentOperation() === 'update' ? $this->crud->getCurrentEntry()->level->id : $lastLevelId,
+                'allows_null' => true,
+                'value' => $this->crud->getCurrentOperation() === 'create' ? EventReport::lastLevel()->id ?? 0  : $this->crud->getCurrentEntry()->level->id,
                 'wrapper' => [
                     'class' => 'form-group col-md-4',
                 ],
             ],
             [
+                'label' => 'Schedule',
+                'name' => 'labelSchedule',
+                'type' => 'hidden',
+                'value' => $event?->currentDateSchedule(),
+                'wrapper' => [
+                    'class' => 'form-group col-md-10',
+                ],
+
+            ],
+            [
                 'label' => 'Day',
                 'name' => 'day',
-                'type' => 'text',
+                'type' => 'hidden',
+                'value' => $event?->currentDay() ?? '',
+                'attributes' => [
+                    'readonly' => 'readonly',
+                  ],
                 'wrapper' => [
-                    'class' => 'form-group col-md-6',
+                    'class' => 'form-group col-md-2',
                 ],
             ],
 
@@ -271,6 +299,22 @@ class EventReportCrudController extends CrudController
                 ],
             ],
             [
+                'label' => 'Tags',
+                'type' => 'relationship',
+                'name' => 'tags', // the method that defines the relationship in your Model
+                'entity' => 'tags', // the method that defines the relationship in your Model
+                'attribute' => 'title', // foreign key attribute that is shown to user
+                'pivot' => true, // on create&update, do you need to add/delete pivot table entries?
+                'inline_create' => ['entity' => 'tag'],
+                'ajax' => true,
+                   'minimum_input_length' => 0,
+                'allows_null' => true,
+                // 'value' => $this->crud->getCurrentOperation() === 'update' ? $this->crud->getCurrentEntry()->level->id : $lastLevelId,
+                'wrapper' => [
+                    'class' => 'form-group col-md-12',
+                ],
+            ],
+            [
                 'name' => 'players',
                 //chip stack
                 'label' => 'Chip Counts',
@@ -302,7 +346,7 @@ class EventReportCrudController extends CrudController
                         'type' => 'hidden',
                         'value' => '',
                     ],
-                   
+
                     [   //image
                         'label' => 'Payout',
 
@@ -323,6 +367,11 @@ class EventReportCrudController extends CrudController
         // }
     }
 
+public function fetchTags()
+{
+    return $this->fetch(\App\Models\Tag::class);
+}
+
     /**
      * Define what happens when the Update operation is loaded.
      *
@@ -332,13 +381,23 @@ class EventReportCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        $this->setupCreateOperation();
         Widget::add()->type('script')->content('assets/js/admin/forms/image_condition.js');
+        $this->setupCreateOperation();
     }
 
     public function fetchLevel()
     {
-        return $this->fetch(\App\Models\Level::class);
+        return $this->fetch(
+
+            [
+          'model' =>  \App\Models\Level::class,
+          'paginate' => 10,
+          'searchOperator' => 'LIKE',
+          'query' => function ($model) {
+            return $model->where('event_id', session()->get('event_id'));
+          }
+            ]
+        );
     }
 
     public function fetchPlayer()
@@ -346,99 +405,92 @@ class EventReportCrudController extends CrudController
         return $this->fetch(\App\Models\Player::class);
     }
 
-        public function store(Request $request)
-        {
-            $this->crud->hasAccessOrFail('create');
+    public function store(Request $request)
+    {
+        $this->crud->hasAccessOrFail('create');
 
-            $players = request()->get('players');
-
-            if ($players !== null) {
-                foreach ($players as $user) {
-                    Validator::make($user,
-                        ['player_id' => 'required',
-                            'current_chips' => 'required',
-                        ],
-                        [
-                            'player_id' => 'Player field is required',
-                            'current_chips' => 'Chip field is required',
-                        ])->validate();
-                }
-            } else {
-                $request['players'] = '';
-            }
-
-            $request = $this->crud->validateRequest();
-
-            // execute the FormRequest authorization and validation, if one is required
-
-            // register any Model Events defined on fields
-            $this->crud->registerFieldEvents();
-
-            // dd($request->all());
-
-            $item = $this->crud->create($this->crud->getStrippedSaveRequest($request));
-
-            $this->data['entry'] = $this->crud->entry = $item;
-
-            // if ($request->get('players')[0]['player_name'] !== null) {
-        //     foreach ($request->get('players') as $player) {
-        //         $liveReportPlayer = new LiveReportPlayer();
-        //         $player_id = Player::find($player['player_name']);
-        //         $liveReportPlayer->name = $player_id->name;
-        //         $liveReportPlayer->player_id = $player['player_name'];
-        //         $liveReportPlayer->current_chips = $player['chips'];
-        //         $liveReportPlayer->chips_before = 0;
-        //         $liveReportPlayer->save();
-        //         $item->liveReportPlayers()->attach($liveReportPlayer);
-        //     }
-            // }
-
-            // collect($request->get('gallery'))
-    //     ->filter(fn ($image) => $image['gallery'] != null && $image != '')
-    //     ->map(fn ($image) => $item->addMediaFromBase64($image['gallery'])
-    //     ->usingFileName(uniqid().'.jpg')
-    //     ->toMediaCollection('media'));
-
-            // $extracted = collect($request->all())->filter(fn ($item, $val) => str_contains($val, 'category'));
-            // $item->categories()->attach($extracted);
-
-            // show a success message
-
-            session()->flash('new_reports', $item->id);
-
-            \Alert::success(trans('backpack::crud.insert_success'))->flash();
-
-            // save the redirect choice for next time
-            $this->crud->setSaveAction();
-
-            return $this->crud->performSaveAction($item->getKey());
-
-            //  return redirect()->route('mymodel.picture.index',
-    //     [
-    //         'id' => 20
-    //     ]);
-            // return $response;
+        if (request()->get('day') == 0 ) {
+            \Alert::add('error', 'This event hasn\'t started yet' )->flash();
+            return back(); 
         }
+
+        $players = request()->get('players');
+
+        $lastPlayerId = 0;
+        if ($players !== null) {
+            foreach ($players as $user) {
+
+                if ($user['player_id'] == $lastPlayerId ) {
+                    Validator::make([],
+                    ['player_id' => 'required',
+                    ],
+                    [
+                    'player_id' => 'There is a duplicate player in Chip Stacks',
+                    ])->validate();
+                }
+
+                $lastPlayerId = $user['player_id'];
+
+                Validator::make($user,
+                    ['player_id' => 'required',
+                        'current_chips' => 'required',
+                    ],
+                    [
+                        'player_id' => 'Player field is required',
+                        'current_chips' => 'Chip field is required',
+                    ])->validate();
+            }
+        } else {
+            $request['players'] = '';
+        }
+
+        $request = $this->crud->validateRequest();
+        $this->crud->registerFieldEvents();
+
+        $item = $this->crud->create($this->crud->getStrippedSaveRequest($request));
+
+        $this->data['entry'] = $this->crud->entry = $item;
+
+        session()->flash('new_reports', $item->id);
+
+        \Alert::success(trans('backpack::crud.insert_success'))->flash();
+
+        $this->crud->setSaveAction();
+
+        return $this->crud->performSaveAction($item->getKey());
+    }
 
     public function update()
     {
         $players = request()->get('players');
         if ($players !== null) {
+            $lastPlayerId = 0;
             foreach ($players as $user) {
+
+
+                if ($user['player_id'] == $lastPlayerId ) {
+                    Validator::make([],
+                    ['player_id' => 'required',
+                    ],
+                    [
+                    'player_id' => 'There is a duplicate player in Chip Stacks',
+                    ])->validate();
+                }
+
+                $lastPlayerId = $user['player_id'];
+
                 Validator::make($user,
                     ['player_id' => 'required',
                         'current_chips' => 'required',
-             
+
                     ],
                     [
                         'player_id' => 'Player field is required',
                         'current_chips' => 'Chip field is required',
-               
+
                     ])->validate();
             }
         }
-
-        // dd(request());
 
         $this->crud->hasAccessOrFail('update');
 
@@ -455,22 +507,6 @@ class EventReportCrudController extends CrudController
         );
         $this->data['entry'] = $this->crud->entry = $item;
 
-        // $item->liveReportPlayers()->detach();
-
-        // if ($request->get('players')[0]['player_name'] !== null) {
-        //     foreach ($request->get('players') as $player) {
-        //         $liveReportPlayer = new LiveReportPlayer();
-        //         $player_id = Player::find($player['player_name']);
-        //         $liveReportPlayer->name = $player_id->name;
-        //         $liveReportPlayer->player_id = $player['player_name'];
-        //         $liveReportPlayer->current_chips = $player['chips'];
-        //         $liveReportPlayer->chips_before = 0;
-        //         $liveReportPlayer->save();
-        //         $item->liveReportPlayers()->attach($liveReportPlayer);
-        //     }
-        // }
-
-        // show a success message
         \Alert::success(trans('backpack::crud.update_success'))->flash();
 
         // save the redirect choice for next time
@@ -479,3 +515,6 @@ class EventReportCrudController extends CrudController
         return $this->crud->performSaveAction($item->getKey());
     }
 }
+
+
+  

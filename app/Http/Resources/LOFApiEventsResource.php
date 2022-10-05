@@ -17,18 +17,17 @@ class LOFApiEventsResource extends JsonResource
     //     return parent::toArray($request);
     // }
 
-
     public function toArray($request)
     {
         return [
+            'status' => $this->status(),
             'id' => $this->id,
+            'slug' => $this->slug,
             'title' => $this->title,
             'description' => $this->description,
             'image' => $this->image,
             'date_start' => $this->date_start,
-            'date_end' => $this->date_end
+            'date_end' => $this->date_end,
         ];
     }
-
-
 }
