@@ -226,6 +226,7 @@ return [
         'Countries' => CountriesFacade::class,
         'Share' => Jorenvh\Share\ShareFacade::class,
         'Timezone' => Timezone::class,
+        'Twitter'   => Atymic\Twitter\Facade\Twitter::class,
     ])->toArray(),
 
 ];

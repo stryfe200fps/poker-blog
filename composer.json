@@ -11,6 +11,8 @@
         }],
     "require": {
         "php": "^8.0.2",
+        "abraham/twitteroauth": "^4.0",
+        "atymic/twitter": "^3.1",
         "backpack/crud": "^5.3",
         "backpack/devtools": "^1.0",
         "backpack/editable-columns": "^2.0",
