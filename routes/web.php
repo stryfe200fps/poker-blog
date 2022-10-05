@@ -14,6 +14,8 @@ use App\Http\Controllers\HomeController;
 
 use Backpack\PageManager\app\Models\Page;
 use App\Http\Resources\LOFApiEventReportsResource;
+use App\Models\MenuItem;
+use Backpack\Settings\app\Models\Setting;
 
 Route::get('/', function () {
 
@@ -27,23 +29,17 @@ Route::get('/', function () {
     //     "name": "Patrick's Website"
 
 
-    $webPage = \JsonLd\Context::create('web_page', [
-        'name' => 'Home Page',
+
+    $webPage =  \JsonLd\Context::create('web_page', [
         'description' => 'Home page',
-        'url' => 'http://life-of-poker.test'
+        'url' => config('app.url'),
     ]);
 
-    $webSite = \JsonLd\Context::create('web_site', [
-        'headline' => 'Life Of Poker',
-        'description' => 'Bringing the action to your doorstep',
-        'mainEntityOfPage' => [
-            'url' => 'https://google.com/article',
-        ]
-    ]);
 
     return Inertia::render('Index',[  
         'title' => 'Life of poker',
-        'description' =>'life of poker' 
+        'description' =>'life of poker',
+        'json-ld-webpage' => $webPage
     ]);
 });
 
@@ -54,7 +50,6 @@ Route::get('/event/{slug}', function ($slug) {
 })->name('event');
 
 Route::get('/report/{slug}', function ($slug) { $report = new LOFApiEventReportsResource(EventReport::where('slug', $slug)->first());
-
     return Inertia::render('Report/Show', [
         'report' => $report,
         'title' => $report->title,
@@ -77,11 +72,21 @@ Route::get('/tag/articles/{slug}', function ($slug) {
 
 Route::get('/article', function () {
 
+    $webPage =  \JsonLd\Context::create('web_page', [
+        'description' => 'Article',
+        'url' => config('app.url'). '/article'
+    ]);
+
     return Inertia::render('Article/Index');
 })->name('article');
 
 Route::get('/article/show/{slug}', function ($slug) {
     $article = Article::where('slug', $slug)->first();
+
+    $webPage =  \JsonLd\Context::create('web_page', [
+        'description' => 'Home page',
+        'url' => config('app.url'). '/article/show/'. $slug,
+    ]);
 
     $context = \JsonLd\Context::create('news_article', [
         'headline' => $article->title,
@@ -116,6 +121,7 @@ Route::get('/article/show/{slug}', function ($slug) {
         'slug' => $slug,
         'image' => $article->image,
         'json-ld-article' => $context,
+        'json-ld-webpage' => $webPage,
         'description' => \Illuminate\Support\Str::limit($article->description, 100, $end='...') 
     ]);
 })->name('article-show');
@@ -195,14 +201,27 @@ Route::post('upload_excel', function () {
     }
 });
 
-Route::get('/{page}', function ($page) {
+
+
+Route::get('/{page}/{other?}', function ($page, $other = null) {
+
+//     @foreach (\App\MenuItem::getTree(); as $item)
+//   <a class="no-underline hover:underline p-3"
+//      href="{{$item->url()}}">
+//      {{ $item->name }}
+//   </a> 
+// @endforeach 
+
     if ($page = Page::findBySlug($page)) {
         return Inertia::render('Template/Index', [
             'title' => $page->name,
             'description' => \Illuminate\Support\Str::limit($page->name, 100, $end = '...'),
             'page' => $page,
+
         ]);
     } else {
         return Inertia::render('Error/404');
     }
+
+
 });

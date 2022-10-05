@@ -42,10 +42,10 @@
 <script defer src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 <script defer src="https://www.instagram.com/embed.js"></script>
 
-{!! (new \App\Presenters\WebsitePresenter)->webpage() !!}
 {!! (new \App\Presenters\WebsitePresenter)->website() !!}
 {!! (new \App\Presenters\WebsitePresenter)->organization() !!}
 {!! $page['props']['json-ld-article'] ?? '' !!}
+{!! $page['props']['json-ld-webpage'] ?? '' !!}
     </head>
     <body class="font-sans antialiased">
 

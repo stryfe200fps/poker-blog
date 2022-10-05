@@ -1,11 +1,12 @@
 <?php
 
-use App\Models\Article;
+use Carbon\Carbon;
 use App\Models\Event;
-use App\Models\EventChip;
-use App\Models\EventReport;
 use App\Models\Level;
 use App\Models\Player;
+use App\Models\Article;
+use App\Models\EventChip;
+use App\Models\EventReport;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
@@ -28,6 +29,7 @@ test('if the "stacks before" is updating on next report ', function () {
     $report1 = EventReport::factory()->create([
         'event_id' => $event->id,
         'title' => 'first',
+        'date_added' => Carbon::parse($event->schedule[0]['date_start'])->addHours(2),
         'level_id' => Level::factory()->create([
             'event_id' => $event->id,
             'level' =>  3 
@@ -49,6 +51,8 @@ test('if the "stacks before" is updating on next report ', function () {
         'id' => 25,
         'event_id' => $event->id,
         'title' => 'second',
+
+        'date_added' => Carbon::parse($event->schedule[0]['date_start'])->addHours(3),
         'level_id' => Level::factory()->create([
             'event_id' => $event->id,
             'level' => 1 
@@ -67,6 +71,8 @@ $chip2 = EventChip::factory()->create([
         'id' => 30,
         'event_id' => $event->id,
         'title' => 'third',
+
+        'date_added' => Carbon::parse($event->schedule[0]['date_start'])->addHours(4),
         'level_id' => Level::factory()->create([
             'event_id' => $event->id,
             'level' => 5 
@@ -75,7 +81,9 @@ $chip2 = EventChip::factory()->create([
         'day' => 1,
     ]);
 
-    $json = $this->get('api/lof-live-report'.'?event='.$event->slug.'&filterDay=1');
+    $day = $event->schedule[0]['day'];
+
+    $json = $this->get('api/lof-live-report'.'?event='.$event->slug.'&filterDay='.$day.'');
 
     $json
     ->assertJsonPath(

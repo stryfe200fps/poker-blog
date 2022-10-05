@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use App\Models\Tour;
 use Illuminate\Http\Request;
 use App\Http\Requests\EventRequest;
+use App\Models\Tournament;
 use Backpack\CRUD\app\Library\Widget;
 use Illuminate\Support\Facades\Validator;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
@@ -57,6 +58,7 @@ class EventCrudController extends CrudController
                 'label' => 'Date Start', // Table column heading
                 'type' => 'datetime',
                 'format' => config('app.date_format')
+
             ],
         ]);
 
@@ -100,6 +102,9 @@ class EventCrudController extends CrudController
         CRUD::setValidation(EventRequest::class);
         CRUD::field('title');
 
+
+        // Tournament::where('event_id',  );
+
         $this->crud->addField([
             'name' => 'slug',
             'type' => 'text',
@@ -121,19 +126,21 @@ class EventCrudController extends CrudController
         $end = Carbon::now()->addDays(1)->toDateTimeString();
         $pokerTours = Tour::all();
 
+        // dd(Carbon::now());
+
         $this->crud->addFields([
 
             [   // date_range
                 'name' => ['date_start', 'date_end'], // db columns for start_date & end_date
                 'label' => 'Event Duration',
                 'type' => 'date_range',
+                'minDate' => $start,
 
                 'default' => [$start, $end],
                 // options sent to daterangepicker.js
                 'date_range_options' => [
                     'drops' => 'down', // can be one of [down/up/auto]
                     'timePicker' => true,
-                    'maxDate'  => $end,
                     'locale' => ['format' => 'DD/MM/YYYY HH:mm'],
                 ],
             ],
@@ -194,6 +201,12 @@ class EventCrudController extends CrudController
     ],
 );
 
+   $this->crud->addField([
+            'name' => 'custom-ajax-button',
+            'type' => 'view',
+            'view' => 'partials/custom-ajax-button'
+        ]);
+
 
     }
 
@@ -225,7 +238,6 @@ class EventCrudController extends CrudController
 
         if ($schedules !== null) {
 
-            // (new Validators)->checkDateOverlap();
             $lastDate = null;
             foreach ($schedules as $day) {
 
@@ -262,9 +274,6 @@ class EventCrudController extends CrudController
         }
 
         $request = $this->crud->validateRequest();
-
-        $this->crud->registerFieldEvents();
-
         $item = $this->crud->create($this->crud->getStrippedSaveRequest($request));
 
         $this->data['entry'] = $this->crud->entry = $item;
@@ -326,6 +335,19 @@ class EventCrudController extends CrudController
 
         // execute the FormRequest authorization and validation, if one is required
         $request = $this->crud->validateRequest();
+
+        // $tournament = Tournament::find($request->tournament_id);
+        // $timezone_offset_minutes = $request->user_timezone;  // $_GET['timezone_offset_minutes']
+
+        // $timezone_name = timezone_name_from_abbr("", $timezone_offset_minutes*60, false);
+        // // $convertedDateEnd = Carbon::createFromFormat('Y-m-d H:i:s',Carbon::parse($request->date_end), $timezone_name);
+
+        // $request->date_start = Carbon::parse($request->date_start, $timezone_name)->setTimezone('UTC');
+        // $request->date_end = Carbon::parse($request->date_end, $timezone_name)->setTimezone('UTC');
+
+        // dd($request);
+
+
 
         // register any Model Events defined on fields
         $this->crud->registerFieldEvents();

@@ -127,6 +127,7 @@ class EventReport extends Model implements HasMedia
                         'name' => '',
                         'event_report_id' => $this->attributes['id'],
                         'event_id' => $this->attributes['event_id'],
+                        'date_published' => $this->attributes['date_added'],
                         'player_id' => $eventChipPlayer['player_id'],
                         'current_chips' => $eventChipPlayer['current_chips'],
                     ]);
@@ -204,9 +205,11 @@ class EventReport extends Model implements HasMedia
                     if ($eventChipPlayer['player_id'] === null)
                         continue;
 
+
                     EventChip::create([
                         'name' => 'name',
                         'event_report_id' => $createdEventReport->id,
+                        'date_published' => $createdEventReport->date_added,
                         'event_id' => $createdEventReport->event_id,
                         'player_id' => $eventChipPlayer['player_id'],
                         'current_chips' => $eventChipPlayer['current_chips'],

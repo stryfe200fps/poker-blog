@@ -45,6 +45,17 @@ class Article extends Model implements HasMedia
         ->get();
     }
 
+    public function categoryArticles($number = 5) 
+    {
+        // dd('asd');
+        // return  Article::where('id', '!=', $this->id )->whereHas('article_categories', function ($query)  {
+        //     $query->whereIn('slug', $this->article_categories()->get()->pluck('slug')->toArray());
+        // })
+        // ->inRandomOrder()
+        // ->limit(3) 
+        // ->get();
+    }
+
     public function getImageAttribute($value)
     {
         return $this->getFirstMediaUrl('article', 'main-image');

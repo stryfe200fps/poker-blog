@@ -11,6 +11,8 @@ class Country extends Model
     use CrudTrait;
     use HasFactory;
 
+    public $timestamps = false;
+
     protected $guarded = [
         'id',
     ];
