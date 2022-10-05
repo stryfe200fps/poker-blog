@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Player;
-use App\Models\EventChip;
 use App\Http\Requests\PlayerRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
@@ -22,8 +20,6 @@ class PlayerCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\InlineCreateOperation;
 
-
-
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
      *
@@ -31,12 +27,11 @@ class PlayerCrudController extends CrudController
      */
     public function setup()
     {
+
         $this->crud->denyAccess('show');
         CRUD::setModel(\App\Models\Player::class);
         CRUD::setRoute(config('backpack.base.route_prefix').'/player');
         CRUD::setEntityNameStrings('player', 'players');
-    
-         $this->crud->orderBy('name');
     }
 
     /**
@@ -48,27 +43,10 @@ class PlayerCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-
-
-         $this->crud->orderBy('name');
         CRUD::column('name');
         CRUD::column('pseudonym');
         CRUD::column('country_id');
         $this->crud->addButtonFromModelFunction('line', 'open_history', 'openHistory', 'beginning');
-
-        $this->crud->addFilter([
-            'type' => 'select2',
-            'name' => 'player',
-            'label' => 'Country',
-        ],
-
-            function () {
-                return Player::all()->pluck('country.name', 'country.id')->toArray();
-            },
-            function ($values) {
-                $this->crud->query = $this->crud->query->where('country_id', $values);
-            }
-        );
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
@@ -117,20 +95,4 @@ class PlayerCrudController extends CrudController
     {
         $this->setupCreateOperation();
     }
-
-    public function destroy($id)
-    {
-
-        $getChips = EventChip::where('player_id', $id)->count();
-
-        if ($getChips) {
-            return \Alert::error('This payer has event chips inside')->flash();
-        }
-
-        $this->crud->hasAccessOrFail('delete');
-        $id = $this->crud->getCurrentEntryId() ?? $id;
-        return $this->crud->delete($id);
-    }
-
-
 }

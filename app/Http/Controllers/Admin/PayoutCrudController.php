@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\PayoutRequest;
 use App\Models\Event;
-use App\Models\EventPayout;
 use App\Models\Payout;
 use App\Models\Player;
+use App\Models\EventPayout;
+use Illuminate\Http\Request;
+use App\Http\Requests\PayoutRequest;
+use Backpack\CRUD\app\Library\Widget;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
-use Backpack\CRUD\app\Library\Widget;
-use Illuminate\Http\Request;
 
 /**
  * Class PayoutCrudController
@@ -33,6 +33,7 @@ class PayoutCrudController extends CrudController
      */
     public function setup()
     {
+
         $this->crud->denyAccess('show');
         CRUD::setModel(\App\Models\EventPayout::class);
         CRUD::setRoute(config('backpack.base.route_prefix').'/payout');
@@ -44,9 +45,8 @@ class PayoutCrudController extends CrudController
 
             $getEvent = Event::where('id', session()->get('payout_event_id'))->first();
 
-            if ($getEvent?->title !== null) {
-                CRUD::setEntityNameStrings('payouts', $getEvent->title);
-            }
+            if ($getEvent?->title !== null)
+            CRUD::setEntityNameStrings('payouts', $getEvent->title);
 
         // $this->crud->addFilter($options, $values, $filter_logic);
         } else {
@@ -100,7 +100,7 @@ class PayoutCrudController extends CrudController
             'auto_update_row' => true, // update related columns in same row, after the AJAX call?
         ]);
 
-        CRUD::addColumn([
+           CRUD::addColumn([
             'name' => 'position',
             'type' => 'editable_text',
             'label' => 'position',
@@ -122,26 +122,34 @@ class PayoutCrudController extends CrudController
             'auto_update_row' => true, // update related columns in same row, after the AJAX call?
         ]);
 
-        CRUD::addColumn([
-            'name' => 'source',
-            'label' => 'Source',
-            'type' => 'editable_select',
-            'options' => ['normal' => 'normal', 'whatsapp' => 'whatsapp'],
 
-            'underlined' => true, // show a dotted line under the editable column for differentiation? default: true
-            'save_on_focusout' => true, // if user clicks out, the value should be saved (instead of greyed out)
-            'save_on_change' => true,
-            'on_error' => [
-                'text_color' => '#df4759', // set a custom text color instead of the red
-                'text_color_duration' => 0, // how long (in miliseconds) should the text stay that color (0 for infinite, aka until page refresh)
-                'text_value_undo' => false, // set text to the original value (user will lose the value that was recently input)
-            ],
-            'on_success' => [
-                'text_color' => '#42ba96', // set a custom text color instead of the green
-                'text_color_duration' => 3000, // how long (in miliseconds) should the text stay that color (0 for infinite, aka until page refresh)
-            ],
-            'auto_update_row' => true, // update related columns in same row, after the AJAX call?
-        ]);
+            CRUD::addColumn([
+        'name'    => 'source',
+        'label'   => 'Source',
+        'type'    => 'editable_select',
+        'options' => [ 'normal' => 'normal', 'whatsapp' => 'whatsapp' ],
+        // or 
+        // 'options' => [
+        //     '1' => 'One',
+        //     '2' => 'Two',
+        //     '3' => 'Three',
+        // ],
+
+        // Optionals
+        'underlined'       => true, // show a dotted line under the editable column for differentiation? default: true
+        'save_on_focusout' => true, // if user clicks out, the value should be saved (instead of greyed out)
+        'save_on_change'   => true,
+        'on_error' => [
+            'text_color'          => '#df4759', // set a custom text color instead of the red
+            'text_color_duration' => 0, // how long (in miliseconds) should the text stay that color (0 for infinite, aka until page refresh)
+            'text_value_undo'     => false, // set text to the original value (user will lose the value that was recently input)
+        ],
+        'on_success' => [
+            'text_color'          => '#42ba96', // set a custom text color instead of the green
+            'text_color_duration' => 3000, // how long (in miliseconds) should the text stay that color (0 for infinite, aka until page refresh)
+        ],
+        'auto_update_row' => true, // update related columns in same row, after the AJAX call?
+    ]);
 
         Widget::add()->to('after_content')->type('view')->view('vendor.backpack.helper.payout')->eventId(session()->get('payout_event_id')); // widgets to show the ordering card
 
@@ -182,13 +190,16 @@ class PayoutCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'name' => 'player',
-            'label' => 'Player',
-            'type' => 'relationship',
-            'options' => (function ($query) {
+            'name'      => 'player',
+            'label'     => 'Player',
+            'type'      => "relationship",
+            'options'   => (function ($query) {
                 return $query->orderBy('name', 'ASC')->get();
             }),
-        ]);
+        ]); 
+
+
+
 
         $this->crud->addField([
             'name' => 'prize',
@@ -196,15 +207,16 @@ class PayoutCrudController extends CrudController
             'type' => 'number',
         ]);
 
+
         $this->crud->addField([
-            'name' => 'source',
-            'label' => 'Source',
-            'type' => 'select2_from_array',
+            'name'      => 'source',
+            'label'     => 'Source',
+            'type'      => "select2_from_array",
             'value' => 'normal',
             'options' => [
                 'normal' => 'normal',
-                'whatsapp' => 'whatsapp',
-            ],
+                'whatsapp' => 'whatsapp'
+            ]
         ]);
 
         $this->crud->addField([
@@ -233,7 +245,8 @@ class PayoutCrudController extends CrudController
         // dd($currentId);
         $currentRequest = $this->crud->getStrippedSaveRequest($request);
 
-        $payout = EventPayout::where('player_id', $currentRequest['player'] ?? 0)
+
+         $payout = EventPayout::where('player_id', $currentRequest['player']?? 0)
         ->where('event_id', $currentId);
 
         if ($payout->count()) {

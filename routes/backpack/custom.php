@@ -32,7 +32,5 @@ Route::crud('article', 'ArticleCrudController');
     Route::crud('level', 'LevelCrudController');
     Route::crud('article-author', 'ArticleAuthorCrudController');
     Route::crud('image-theme', 'ImageThemeCrudController');
-    Route::crud('tag', 'TagCrudController');
-    Route::crud('event-schedule', 'EventScheduleCrudController');
-
+    Route::crud('article-tag', 'ArticleTagCrudController');
 }); // this should be the absolute last line of this file

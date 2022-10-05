@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\LOFApiEventIndexResource;
-use App\Http\Resources\LOFApiEventsResource;
-use App\Models\Event;
 use Carbon\Carbon;
+use App\Models\Event;
 use Illuminate\Http\Request;
+use App\Http\Resources\LOFApiEventsResource;
+use App\Http\Resources\LOFApiEventIndexResource;
+use App\Http\Resources\LOFApiEventReportsResource;
+
 
 class LOFApiEventsController extends Controller
 {
@@ -17,9 +19,10 @@ class LOFApiEventsController extends Controller
      */
     public function index()
     {
-        $dateNow = Carbon::now();
 
-        return  LOFApiEventIndexResource::collection(Event::latest()->where('date_start', '<=', $dateNow)
+
+        $dateNow = Carbon::now();
+        return  LOFApiEventIndexResource::collection(Event::latest()->where('date_start','<=' ,$dateNow)
         ->where('date_end', '>=', $dateNow)
         ->paginate(2));
         //
@@ -52,9 +55,10 @@ class LOFApiEventsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($slug)
+    public function show($id)
     {
-        return new LOFApiEventIndexResource(Event::with(['event_reports'])->where('slug', $slug)->first());
+        // return LOFApiEventsResource::collection(PokerEvent::where('poker_tournament_id', $id)->paginate(10));
+        return new LOFApiEventIndexResource (Event::with(['event_reports'])->where('id', $id)->first());
     }
 
     /**

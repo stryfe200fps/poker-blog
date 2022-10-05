@@ -12,6 +12,7 @@ return [
         'max_length' => 255,
     ],
 
+
     /*
      * Meta description section
      */
@@ -20,12 +21,13 @@ return [
         'max_length' => 255,
     ],
 
+
     /*
      * Meta keywords section
      */
     'keywords' => [
         'default' => null,
-        'max_length' => 255,
+        'max_length' => 255
     ],
 
     /*

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\LiveRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use Carbon\Carbon;
@@ -49,7 +50,9 @@ class LiveCrudController extends CrudController
     {
         CRUD::column('title');
         $this->crud->addButtonFromModelFunction('line', 'open_google', 'openLiveReporting', 'beginning');
+   
     }
+
 
     protected function setupCreateOperation()
     {

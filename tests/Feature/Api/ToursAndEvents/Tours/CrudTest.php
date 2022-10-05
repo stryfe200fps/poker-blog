@@ -9,10 +9,10 @@ use Spatie\Permission\Models\Role;
 
 uses(RefreshDatabase::class);
 
-// test('article is working', function () {
-//     $response = $this->get('api/articles');
-//     $response->assertStatus(200);
-// });
+test('article is working', function () {
+    $response = $this->get('api/articles');
+    $response->assertStatus(200);
+});
 
 it('cannot create articles if unauthenticated', function () {
     $this->post('admin/article/', [

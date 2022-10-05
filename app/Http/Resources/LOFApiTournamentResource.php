@@ -1,12 +1,12 @@
 <?php
-
 namespace App\Http\Resources;
 
 use Carbon\Carbon;
+use App\Http\Resources\LOFApiEventsResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class LOFApiTournamentResource extends JsonResource
-{
+{ 
     public function toArray($request)
     {
         $dateNow = Carbon::now();
@@ -35,7 +35,7 @@ class LOFApiTournamentResource extends JsonResource
             'date_start' => Carbon::parse($this->date_start)->toFormattedDateString(),
             'date_end' => Carbon::parse($this->date_end)->toFormattedDateString(),
             'status' => $status,
-            'events' => LOFApiEventsResource::collection($this->events),
+            'events' => LOFApiEventsResource::collection($this->events)
         ];
     }
 }

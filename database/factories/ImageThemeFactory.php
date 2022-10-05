@@ -2,8 +2,9 @@
 
 namespace Database\Factories;
 
-use App\Models\ImageTheme;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
+use App\Models\ImageTheme;
 
 class ImageThemeFactory extends Factory
 {

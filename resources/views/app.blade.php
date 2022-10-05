@@ -41,14 +41,8 @@
 <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-L913NS2HT0'); </script>
 <script defer src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 <script defer src="https://www.instagram.com/embed.js"></script>
-
-{!! (new \App\Presenters\WebsitePresenter)->webpage() !!}
-{!! (new \App\Presenters\WebsitePresenter)->website() !!}
-{!! (new \App\Presenters\WebsitePresenter)->organization() !!}
-{!! $page['props']['json-ld-article'] ?? '' !!}
     </head>
     <body class="font-sans antialiased">
-
 
     <div id="fb-root"></div>
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v15.0&appId=671463846988197&autoLogAppEvents=1" nonce="5ZNysrfX"></script>

@@ -16,7 +16,7 @@ class Tour extends Model implements HasMedia
 
     protected $guarded = ['id'];
 
-    public function registerMediaConversions(?Media $media = null): void
+        public function registerMediaConversions(?Media $media = null): void
     {
         $this->addMediaConversion('main-image')
             ->width(424)
@@ -26,11 +26,7 @@ class Tour extends Model implements HasMedia
             ->width(337)
             ->height(225);
     }
-
-    public function tournaments()
-    {
-        return $this->hasMany(Tournament::class);
-    }
+   
 
     public function getImageAttribute($value)
     {
@@ -39,13 +35,9 @@ class Tour extends Model implements HasMedia
 
     public function setImageAttribute($value)
     {
-       if ($value == null) 
-            $this->media()->delete();
-
-        if (preg_match("/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).base64,.*/", $value) == 0) 
-            return false;
-
-
+        if ($value == null || preg_match("/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).base64,.*/", $value) == 0) {
+            return;
+        }
 
         $this->addMediaFromBase64($value)
             ->toMediaCollection('tour');
