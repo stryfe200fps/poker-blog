@@ -12,10 +12,6 @@ class ArticleController extends Controller
 {
     public function index()
     {
-<<<<<<< HEAD
- 
-=======
->>>>>>> 66af926 (fixed apis)
         return  ArticleResource::collection(Article::with(['article_author', 'media', 'article_categories'])->latest()->limit(6)->get());
     }
 
