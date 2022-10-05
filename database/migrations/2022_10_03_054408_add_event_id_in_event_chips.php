@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('event_chips', function (Blueprint $table) {
-            $table->foreignId('event_id')->constrained()->cascadeOnDelete();
+            // $table->foreignId('event_id')->constrained()->cascadeOnDelete();
         });
     }
 
