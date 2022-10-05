@@ -17,6 +17,7 @@ use App\Http\Controllers\LOFApiEventIndexController;
 use App\Http\Controllers\Api\TournamentApiController;
 use App\Http\Controllers\LOFApiLiveReportsController;
 use App\Http\Controllers\LOFApiTournamentsController;
+use App\Http\Controllers\SocialMediaController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -52,3 +53,5 @@ Route::resource('lof-event-index', LOFApiEventIndexController::class);
 Route::resource('lof-live-report', EventReportsController::class);
 
 Route::resource('page', PageManagerController::class);
+
+Route::get('twitter', [SocialMediaController::class, 'fetchTwitter' ]);
