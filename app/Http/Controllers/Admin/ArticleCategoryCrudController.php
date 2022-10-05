@@ -42,12 +42,8 @@ class ArticleCategoryCrudController extends CrudController
     protected function setupListOperation()
     {
         CRUD::column('title');
+        CRUD::column('slug');
 
-        /**
-         * Columns can be defined using the fluent syntax or array syntax:
-         * - CRUD::column('price')->type('number');
-         * - CRUD::addColumn(['name' => 'price', 'type' => 'number']);
-         */
     }
 
     /**
@@ -62,6 +58,8 @@ class ArticleCategoryCrudController extends CrudController
         CRUD::setValidation(ArticleCategoryRequest::class);
 
         CRUD::field('title');
+
+        CRUD::field('slug');
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:

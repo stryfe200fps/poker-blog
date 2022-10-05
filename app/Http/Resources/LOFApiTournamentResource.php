@@ -34,7 +34,7 @@ class LOFApiTournamentResource extends JsonResource
             'country' => $this->country,
             'date_start' => Carbon::parse($this->date_start)->toFormattedDateString(),
             'date_end' => Carbon::parse($this->date_end)->toFormattedDateString(),
-            'status' => $status,
+            'status' => $this->hasLiveEvents(),
             'events' => LOFApiEventsResource::collection($this->events),
         ];
     }

@@ -2,6 +2,8 @@
 
 namespace App\Helpers;
 
+use Carbon\Carbon;
+use App\Models\Event;
 use Illuminate\Database\Eloquent\Builder;
 
 class LiveReportFilterByDays
@@ -11,12 +13,22 @@ class LiveReportFilterByDays
         if (! request()->has('filterDay')) {
             return $next($builder);
         }
+        // dd(request()->get('event'));
 
-        $builder->where('day', request()->get('filterDay'));
+        $event = Event::where('slug', request()->get('event'));
 
-        // $builder->orderBy('id');
+        $dateStart = '';
+        $dateEnd = '';
 
-        // dd($builder->get());
+        foreach ($event->first()->schedule as $sched) {
+           if (request()->get('filterDay') == $sched['day']) {
+                $dateStart = Carbon::parse($sched['date_start']);
+                $dateEnd = Carbon::parse($sched['date_end']);
+           }
+        }
+
+        $c = $builder->whereBetween('date_added', [$dateStart, $dateEnd]);
+
         return $next($builder);
     }
 }

@@ -26,6 +26,7 @@ class EventChip extends Model
         'chips_before',
         'is_whatsapp',
         'rank',
+        'date_published',
         'event_payout_id',
         'event_id'
     ];

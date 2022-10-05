@@ -30,8 +30,6 @@ class EventResource extends JsonResource
 
         $dateNow = Carbon::now();
 
-        // $start1 = Carbon::parse("2022-09-18");
-        // $end1 = Carbon::parse("2022-09-13");
 
         $dateStart = Carbon::parse($this->date_start);
         $dateEnd = Carbon::parse($this->date_end);

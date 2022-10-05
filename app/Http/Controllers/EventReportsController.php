@@ -36,6 +36,7 @@ class EventReportsController extends Controller
                 'event_chips', 'event_chips.player', 'event_chips.player.country', 'event', 'media', ])
              ->where('event_id', Event::where('slug', request()->all()['event'])->firstOrFail()->id );
 
+
         $pipe = app(Pipeline::class)
         ->send($liveReport)
             ->through([

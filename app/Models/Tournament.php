@@ -43,6 +43,16 @@ class Tournament extends Model implements HasMedia
             ->toMediaCollection('tournament');
     }
 
+    public function hasLiveEvents() 
+    {
+        foreach ($this->events()->get() as $event) {
+            if ($event->status() === 'live')
+                return 'live';
+        }
+
+        return 'tba';
+    }
+
     protected $guarded = [
         'id',
     ];

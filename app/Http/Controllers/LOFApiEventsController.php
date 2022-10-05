@@ -19,8 +19,12 @@ class LOFApiEventsController extends Controller
     {
         $dateNow = Carbon::now();
 
-        return  LOFApiEventIndexResource::collection(Event::latest()->where('date_start', '<=', $dateNow)
-        ->where('date_end', '>=', $dateNow)
+        // dd(Event::eventDuration()->get() );
+
+        // dd(Event::latest()->where('date_start', '<=', $dateNow)
+        // ->where('date_end', '>=', $dateNow)->get());
+
+        return  LOFApiEventIndexResource::collection(Event::latest()
         ->paginate(2));
         //
     }

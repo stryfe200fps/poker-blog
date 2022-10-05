@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -180,9 +182,18 @@ class Event extends Model implements HasMedia
 
     public function getAvailableDays()
     {
-        $days = collect(EventReport::where('event_id', $this->id)->get()->groupBy('day')->toArray())->map(function ($item) {
-            return $item[0]['day'];
+
+        $schedule = $this->attributes['schedule'];
+
+        $days = collect(json_decode($schedule, true ))->map(function ($item) {
+            return $item['day'];
         });
+
+        // dd($mapped);
+
+        // $days = collect(EventReport::where('event_id', $this->id)->get()->groupBy('day')->toArray())->map(function ($item) {
+        //     return $item[0]['day'];
+        // });
 
         return $days;
     }
@@ -202,12 +213,28 @@ class Event extends Model implements HasMedia
         return '<a class="btn btn-sm btn-link"  href="chip-count?event='.urlencode($this->attributes['id']).'" data-toggle="tooltip" title="Chip  Count"><i class="fa fa-search"></i> Chip Counts  </a>';
     }
 
-    // protected static function booted()
-    // {
-    //     static::deleting(function ($model) {
-    //         return \Alert::error('This event has live reporting inside')->flash();
-    //     //    \Alert::error('Dates is incorrect')->flash();
-    //     //    return back();
-    //     });
-    // }
+
+    protected static function booted()
+    {
+        static::created(function ($model) {
+
+        // $timezone_offset_minutes = $model->user_timezone;  // $_GET['timezone_offset_minutes']
+        // $timezone_name = timezone_name_from_abbr("", $timezone_offset_minutes*60, false);
+        // $tumiro = Carbon::parse($model->date_start, $timezone_name);
+        // $model->date_end = Carbon::parse($model->date_end, $timezone_name);
+
+        // $event = Event::find($model->id);
+
+        // $event->date_start = $tumiro;
+
+        // $event->save();
+
+        // $model->save();
+
+        // dd($model->date_start);
+
+        });
+    }
+
+
 }

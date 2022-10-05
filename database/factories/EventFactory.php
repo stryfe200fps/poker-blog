@@ -33,12 +33,12 @@ class EventFactory extends Factory
 
     $sheduleFormat = [
     [
-        'day' => 1,
+        'day' => '1B',
         'date_start' =>  $day1DateStart->toString(),
         'date_end' => $day1DateStart->addHours(12)->toString()
     ],
     [
-        'day' => 2,
+        'day' => '2C',
         'date_start' =>  $day1DateStart->addDay(1)->toString(),
         'date_end' => $day1DateStart->addHours(36)->toString()
     ]

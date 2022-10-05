@@ -11,12 +11,12 @@ class WebsitePresenter
      *
      * @return \JsonLd\Context
      */
-    public function webpage()
+    public function webpage($page = 'Home', $url = '/')
     {
       return \JsonLd\Context::create('web_page', [
-        'headline' => 'Home',
-        'description' => 'Home page',
-        'url' => 'https://lifeofpoker.com',
+        'headline' => $page,
+        'description' => $page.' page',
+        'url' => config('app.url') . $url,
     ]);
     }
 
@@ -25,7 +25,7 @@ class WebsitePresenter
       return \JsonLd\Context::create('web_site', [
         'headline' => 'Life of poker',
         'description' => 'Bringing actions to your doorstep',
-        'url' => 'https://lifeofpoker.com',
+        'url' => config('app.url'),
     ]);
     }
 
@@ -35,7 +35,7 @@ class WebsitePresenter
         'headline' => 'Life of poker',
         'description' => 'Poker',
         'mainEntityOfPage' => [
-            'url' => 'https://lifeofpoker.com',
+          'url' => config('app.url'),
         ]
     ]);
     }
