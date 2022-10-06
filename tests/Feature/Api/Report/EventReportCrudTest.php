@@ -17,27 +17,32 @@ uses(RefreshDatabase::class);
 
 it('chip counts update with isolated payout', function () {
 
+
     $this->withoutExceptionHandling();
     superAdminAuthenticate();
 
     $playerId = Player::factory()->create();
-    $eventChip = EventChip::factory()->create([
-        'player_id' => $playerId->id,
+
+    $event = Event::factory()->create();
+
+    $level = Level::factory()->create([
+        'event_id' => $event->id
     ]);
 
-    $event = Event::factory()->create(
-        [ 'id' => 200 ]
-    );
+    $eventChip = EventChip::factory()->create([
+        'event_id' =>$event->id,
+        'player_id' => $playerId->id
+    ]);
+
     $page = $this->get('admin/report/create?event='.$event->id)->assertStatus(200);
 
     $data = [
-        'title' => 'A report',
+        'title' => 'A report unique',
         'content' => 'this a content',
         'day' => '1A',
-        'level_id' => Level::factory()->create()->id,
-        'level' => Level::factory()->create(),
+        'level_id' => $level->id,
+        'level' => $level,
         'event_id' => $event->id,
-        'poker_event_id' => Event::factory()->create()->id,
         'date_added' => '2021-02-02 00:00:00',
         'user_id' => User::factory()->create()->id,
         'article_author_id' => ArticleAuthor::factory()->create()->id,
@@ -45,19 +50,23 @@ it('chip counts update with isolated payout', function () {
 
     $datas = $this->post('/admin/report', $data);
 
-    $this->assertDatabaseHas('event_reports', ['title' => 'A report', 
-    ]);
+   $dd = $datas->getRequest()->request->get('title');
 
-    $this->get('admin/report/'.EventReport::latest()->first()->id.'/edit')->assertStatus(200);
+
+   $eventReport = EventReport::where('title', $dd)->first();
+
+
+    $this->get('admin/report/'.$eventReport->id.'/edit')->assertStatus(200);
 
     $data = [
-        'id' => EventReport::latest()->first()->id,
+        'id' => $eventReport->id,
         'title' => 'testreport',
-        'content' => EventReport::latest()->first()->content,
-        'day' => EventReport::latest()->first()->day,
-        'level' => Level::factory()->create()->id,
+        'content' => $eventReport->content,
+        'level' => $level->id,
+        'day' => 5,
         'players' => [ array_merge( $eventChip->get()->toArray()[0], ['payout' => 50000] )],
     ];
+
 
     $datas = $this->put('admin/report/update', $data);
 
@@ -66,11 +75,14 @@ it('chip counts update with isolated payout', function () {
     $this->assertDatabaseHas('event_payouts', ['event_id' => $event->id,
     ]);
 
+
+
 });
 
 
 test('chip counts is working with isolated payout field', function () {
         
+
  $this->withExceptionHandling();
     superAdminAuthenticate();
     $event = Event::factory()->create();
