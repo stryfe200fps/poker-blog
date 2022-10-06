@@ -53,6 +53,11 @@ const props = defineProps({
 </script>
 
 <style scoped>
+.post-gallery {
+    float: unset !important;
+    margin-right: unset !important;
+    margin-left: unset !important;
+}
 .post-tags--custom {
     display: flex;
     justify-content: center;

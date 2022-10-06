@@ -32,8 +32,10 @@
                             >
                                 <option
                                     class="text-center"
-                                    v-for="data in eventData.available_days"
-                                    :key="data.id"
+                                    v-for="(
+                                        data, index
+                                    ) in eventData.available_days"
+                                    :key="index"
                                     :value="data"
                                     :checked="data == selectDay"
                                 >
@@ -78,7 +80,7 @@ const liveReport = ref([]);
 const highestDay = () => {
     let { available_days } = eventStore.eventData.data;
     let days = Object.values(available_days);
-    return Math.max(...days);
+    return days.toString();
 };
 
 onMounted(async () => {

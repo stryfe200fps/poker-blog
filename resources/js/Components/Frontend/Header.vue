@@ -63,12 +63,12 @@
                 </div>
             </div>
 
-             <div v-for="menu in $page['props']['menu']" :key="menu.id">
+            <!-- <div v-for="menu in $page['props']['menu']" :key="menu.id">
                 <Link :href="menu.link"> {{ menu.name }} </Link> <br> <br>
                 <div style="margin-left:40px;" v-for="children in menu.children" :key="children.id">
                 <Link :href="children.link"> {{ children.name }} </Link>
                  </div>
-            </div>
+            </div> -->
 
             <!-- navbar list container -->
             <div class="nav-list-container navbar navbar-default">

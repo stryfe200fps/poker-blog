@@ -30,7 +30,7 @@
                     />
                 </div>
                 <div v-else>
-                    <h4>No live event...</h4>
+                    <h4>Coming soon...</h4>
                 </div>
             </div>
             <div class="block-content" v-show="tab == 1">
