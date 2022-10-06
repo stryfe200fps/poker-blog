@@ -2,9 +2,10 @@
 
 namespace App\Http\Middleware;
 
-use Butschster\Head\Contracts\MetaTags\MetaInterface;
-use Illuminate\Http\Request;
 use Inertia\Middleware;
+use App\Models\MenuItem;
+use Illuminate\Http\Request;
+use Butschster\Head\Contracts\MetaTags\MetaInterface;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -42,6 +43,7 @@ class HandleInertiaRequests extends Middleware
     {
         return array_merge(parent::share($request), [
             'title' => fn (MetaInterface $meta) => ($meta->toArray()['head'][0]['content']),
+            'menu' => MenuItem::getTree()
         ]);
     }
 }
