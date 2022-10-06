@@ -3,13 +3,14 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Illuminate\Support\Str;
 use Spatie\Sluggable\HasSlug;
+use Spatie\MediaLibrary\HasMedia;
 use Spatie\Sluggable\SlugOptions;
+use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Article extends Model implements HasMedia
 {
@@ -56,6 +57,17 @@ class Article extends Model implements HasMedia
         // ->get();
     }
 
+    public function setPublishedDateAttribute($value) 
+    {
+        $this->attributes['published_date'] = Carbon::parse($value, session()->get('timezone') ?? 'UTC')->setTimezone('UTC');
+    }
+
+    public function getPublishedDateAttribute($value)
+    {
+        return Carbon::parse($value)->setTimezone(session()->get('timezone') ?? 'UTC');
+    }
+
+
     public function getImageAttribute($value)
     {
         return $this->getFirstMediaUrl('article', 'main-image');
@@ -78,6 +90,7 @@ class Article extends Model implements HasMedia
     {
         return $this->belongsToMany(ArticleTag::class);
     }
+    
 
     public function getDiffAttribute($value)
     {
@@ -108,4 +121,21 @@ class Article extends Model implements HasMedia
     {
         return $this->belongsTo(ArticleAuthor::class);
     }
+
+    protected static function booted()
+    {
+        static::created(function ($model) {
+
+        if ($model->slug == '')
+            return;
+
+        $model->slug = Str::slug($model->slug);
+        $model->save();
+        });
+
+        static::updating(function ($model) {
+        $model->slug = Str::slug($model->slug);
+        });
+    }
+
 }

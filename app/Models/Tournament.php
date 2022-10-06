@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 use Spatie\MediaLibrary\HasMedia;
+use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Tournament extends Model implements HasMedia
@@ -42,6 +43,29 @@ class Tournament extends Model implements HasMedia
         $this->addMediaFromBase64($value)
             ->toMediaCollection('tournament');
     }
+
+    public function setDateStartAttribute($value) 
+    {
+        $this->attributes['date_start'] = Carbon::parse($value, session()->get('timezone') ?? 'UTC')->setTimezone('UTC');
+    }
+
+    public function getDateStartAttribute($value)
+    {
+        return Carbon::parse($value)->setTimezone(session()->get('timezone') ?? 'UTC');
+    }
+
+    public function setDateEndAttribute($value) 
+    {
+
+        $this->attributes['date_end'] = Carbon::parse($value, session()->get('timezone') ?? 'UTC')->setTimezone('UTC');
+    }
+    
+    public function getDateEndAttribute($value)
+    {
+        return Carbon::parse($value)->setTimezone(session()->get('timezone') ?? 'UTC');
+    }
+
+    
 
     public function hasLiveEvents() 
     {
@@ -87,5 +111,20 @@ class Tournament extends Model implements HasMedia
     public function events()
     {
         return $this->hasMany(Event::class);
+    }
+
+    protected static function booted()
+    {
+
+        static::updating(function ($model) {
+
+            // dd($model->date_start);
+            // $model->date_start  = \Carbon\Carbon::parse($model->date_start, session()->get('timezone') ?? 'UTC')->setTimezone('UTC') ;
+            // $model->date_end  = \Carbon\Carbon::parse($model->date_end, session()->get('timezone') ?? 'UTC')->setTimezone('UTC') ;
+
+
+            // $request['date_end'] = $date2->setTimezone('UTC');
+
+        });
     }
 }

@@ -3,15 +3,16 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Str;
 
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Sluggable\HasSlug;
+use Spatie\MediaLibrary\HasMedia;
 use Spatie\Sluggable\SlugOptions;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Event extends Model implements HasMedia
 {
@@ -25,6 +26,75 @@ class Event extends Model implements HasMedia
     protected $casts = [
         'schedule' => 'json'
     ];
+
+    protected $appends = [
+        'event_date_start',
+        'event_date_end'
+    ];
+
+    public function getEventDateStartAttribute()
+    {
+       $dateStart = $this->attributes['date_start'];
+       return \Carbon\Carbon::parse($dateStart)->setTimezone($this->tournament->timezone ?? 'UTC');
+    }
+
+    public function getEventDateEndAttribute()
+    {
+    $dateEnd = $this->attributes['date_end'];
+       return \Carbon\Carbon::parse($dateEnd)->setTimezone($this->tournament->timezone ?? 'UTC');
+    }
+
+    public function setScheduleAttribute($schedule)
+    {
+        $scheduledArray = collect($schedule)->map(function ($item) {
+           $item['date_start'] = Carbon::parse($item['date_start'], session()->get('timezone') ?? 'UTC')
+           ->setTimezone('UTC')
+           ->toDateTimeString();
+           
+            $item['date_end'] = Carbon::parse($item['date_end'], session()->get('timezone') ?? 'UTC')
+           ->setTimezone('UTC')
+           ->toDateTimeString();
+
+            return $item;
+        });
+        $this->attributes['schedule'] = $scheduledArray;
+    }
+
+    public function getScheduleAttribute($schedule) 
+    {
+        $sched = json_decode($schedule, true);
+
+        $scheduledArray = collect($sched)->map(function ($item) {
+           $item['date_start'] = Carbon::parse($item['date_start'])
+           ->setTimezone(session()->get('timezone') ?? 'UTC')
+           ->toDateTimeString();
+           
+            $item['date_end'] = Carbon::parse($item['date_end'])
+           ->setTimezone(session()->get('timezone') ?? 'UTC')
+           ->toDateTimeString();
+
+            return $item;
+        });
+
+       return $scheduledArray;
+    }
+
+    // public function getScheduleAttribute($schedule)
+    // {
+    //     $nice = collect($schedule)->map(function ($item) {
+    //        $item['date_start'] = Carbon::parse($item['date_start'], session()->get('timezone'))
+    //        ->setTimezone('UTC')
+    //        ->toDateTimeString();
+           
+    //         $item['date_end'] = Carbon::parse($item['date_end'], session()->get('timezone'))
+    //        ->setTimezone('UTC')
+    //        ->toDateTimeString();
+
+    //         return $item;
+    //     });
+    // }
+
+
 
     public function getSlugOptions(): SlugOptions
     {
@@ -213,28 +283,43 @@ class Event extends Model implements HasMedia
         return '<a class="btn btn-sm btn-link"  href="chip-count?event='.urlencode($this->attributes['id']).'" data-toggle="tooltip" title="Chip  Count"><i class="fa fa-search"></i> Chip Counts  </a>';
     }
 
+    public function setDateStartAttribute($value) 
+    {
+        $this->attributes['date_start'] = Carbon::parse($value, session()->get('timezone') ?? 'UTC')->setTimezone('UTC');
+    }
+
+    public function getDateStartAttribute($value)
+    {
+        return Carbon::parse($value)->setTimezone(session()->get('timezone') ?? 'UTC');
+    }
+
+    public function setDateEndAttribute($value) 
+    {
+
+        $this->attributes['date_end'] = Carbon::parse($value, session()->get('timezone') ?? 'UTC')->setTimezone('UTC');
+    }
+    
+    public function getDateEndAttribute($value)
+    {
+        return Carbon::parse($value)->setTimezone(session()->get('timezone') ?? 'UTC');
+    }
+
+
 
     protected static function booted()
     {
         static::created(function ($model) {
 
-        // $timezone_offset_minutes = $model->user_timezone;  // $_GET['timezone_offset_minutes']
-        // $timezone_name = timezone_name_from_abbr("", $timezone_offset_minutes*60, false);
-        // $tumiro = Carbon::parse($model->date_start, $timezone_name);
-        // $model->date_end = Carbon::parse($model->date_end, $timezone_name);
+        if ($model->slug == '')
+            return;
 
-        // $event = Event::find($model->id);
+        $model->slug = Str::slug($model->slug);
+        $model->save();
+        });
 
-        // $event->date_start = $tumiro;
-
-        // $event->save();
-
-        // $model->save();
-
-        // dd($model->date_start);
-
+        static::updating(function ($model) {
+        $model->slug = Str::slug($model->slug);
         });
     }
-
 
 }

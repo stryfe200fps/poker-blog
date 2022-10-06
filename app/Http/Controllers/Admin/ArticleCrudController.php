@@ -70,6 +70,7 @@ class ArticleCrudController extends CrudController
                 'label' => 'Date', // Table column heading
                 'type' => 'datetime',
                 'format' => config('app.date_format')
+
             ],
         ]);
         /**
@@ -104,6 +105,34 @@ class ArticleCrudController extends CrudController
         CRUD::setValidation(ArticleRequest::class);
 
         $userId = auth()->user()->id;
+
+        //working with cancelation
+
+// $this->crud->addField([
+//     'name' => 'datepicker',
+//     'type' => 'date_range',
+//     'label' => "Start Date",
+//     'wrapperAttributes'=>['class'=>'form-group col-md-6'],
+//     //'default' => [date("Y-m-d"), date("Y-m-d")],
+//     'date_range_options' => [
+//         'todayBtn' => 'linked',
+//         // options sent to daterangepicker.js
+//         'timePicker' => true,
+//         'startDate' => date("Y-m-d"),
+//         'endDate' => date("Y-m-d"),
+//         'minDate'=> date("Y-m-d"),
+//         'locale' => ['format' => 'YYYY-MM-DD']
+//     ],
+//     'allows_null' => true,
+// ]);
+
+        // $this->crud->addField([
+        //     'name' => 'timezone',
+        //     'attribute' => "timezone", 
+        //     'tab' => 'Basic',
+        //     'type' => 'text'
+        // ]);
+
         $this->crud->addFields(
             [
                 [
@@ -117,6 +146,9 @@ class ArticleCrudController extends CrudController
             [
                         'name' => 'slug',
                         'type' => 'text',
+        'attributes' => [
+                'placeholder'=> config('app.slug_placeholder'),
+            ],
                         'tab' => 'Basic'
             ],
                 [
@@ -144,11 +176,6 @@ class ArticleCrudController extends CrudController
                 //         'class' => 'form-group col-md-12',
                 //     ],
                 // ],
-            
-
-
-
-
 
                 [
 
@@ -174,20 +201,25 @@ class ArticleCrudController extends CrudController
                         'class' => 'form-group col-md-12',
                     ],
                 ],
-                [
-                    'name' => 'published_date',
-                    'type' => 'datetime_picker',
-                    'tab' => 'Basic',
-                    'wrapper' => [
-                        'class' => 'form-group col-md-12',
+                [   // DateTime
+                'name' => 'published_date',
+                'label' => 'Date',
+                'tab' => 'Basic',
+                'type' => 'datetime_picker',
+                'default' => 'now',
+                'datetime_picker_options' => [
+                    'format' => 'MMM D, YYYY hh:mm a',
+                    'tooltips' => [ //use this to translate the tooltips in the field
+                        'selectDate' => 'Selecione a data',
+                        // available tooltips: today, clear, close, selectMonth, prevMonth, nextMonth, selectYear, prevYear, nextYear, selectDecade, prevDecade, nextDecade, prevCentury, nextCentury, pickHour, incrementHour, decrementHour, pickMinute, incrementMinute, decrementMinute, pickSecond, incrementSecond, decrementSecond, togglePeriod, selectTime, selectDate
                     ],
-                    'date_picker_options' => [
-                        'todayBtn' => 'linked',
-                        'format' => 'yyyy-mm-dd',
-                    ],
-
-                    'default' => Carbon::now()->toDateTimeString()
                 ],
+                'allows_null' => false,
+                'wrapper' => [
+                    'class' => 'form-group col-md-12',
+                ],
+
+            ],
                 [
                 'label' => 'Tags',
                 'type' => 'relationship',
@@ -246,6 +278,7 @@ class ArticleCrudController extends CrudController
                 ],
             ]);
         }
+        // Widget::add()->type('script')->content('assets/js/admin/date/modify_datepicker.js');
     }
 
 
@@ -262,10 +295,19 @@ public function store(Request $request)
     // execute the FormRequest authorization and validation, if one is required
     $request = $this->crud->validateRequest();
 
+
+    // $date  = \Carbon\Carbon::parse($request->get('published_date'), $request->get('timezone')) ?? 'UTC' ;
+    // $request['published_date'] = $date->setTimezone('UTC');
+
     // register any Model Events defined on fields
     $this->crud->registerFieldEvents();
 
     $item = $this->crud->create($this->crud->getStrippedSaveRequest($request));
+
+    // dd($request->get('published_date'), $request->get('timezone'));
+    // $this->attributes['published_date'] = $date->setTimezone('UTC');
+    // $item->setAttribute('timezone', $request['timezone']);
+
     $this->data['entry'] = $this->crud->entry = $item;
 
     // session()->put('new_article', 'a new article');

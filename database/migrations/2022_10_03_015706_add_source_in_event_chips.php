@@ -13,9 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('event_chips', function (Blueprint $table) {
-            // $table->dateTime('date_published')->nullable();
+        try {
+
+       Schema::table('event_chips', function (Blueprint $table) {
+            $table->dateTime('date_published')->nullable();
         });
+        } catch(Exception $e) {
+
+        }
+        
     }
 
     /**

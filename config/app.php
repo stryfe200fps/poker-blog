@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use App\Helpers\Timezone;
 use App\Providers\TimezoneProvider;
 use Illuminate\Support\Facades\Facade;
@@ -21,7 +22,10 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
-    'date_format' => 'MMM OM, OY,  h:mm a, ddd',
+    'date_format' => 'MMM DD, OY,  h:mm a, ddd',
+
+    'slug_placeholder' => 'Slug will autogenerate if leave empty',
+
 
     /*
     |--------------------------------------------------------------------------

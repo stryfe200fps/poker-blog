@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Fortify\Fortify;
+use App\Http\Responses\LoginResponse;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -29,6 +30,7 @@ class FortifyServiceProvider extends ServiceProvider
      *
      * @return void
      */
+
     public function boot()
     {
         Fortify::createUsersUsing(CreateNewUser::class);
