@@ -29,23 +29,24 @@
                 <p class="text-uppercase" style="color: #333">
                     <strong>latest updates</strong>
                 </p>
-                <div class="post-content">
-                    <ul class="post-tags post-tags--custom">
+                <div class="post-content" v-if="event.events.length">
+                    <ul
+                        class="post-tags post-tags--custom"
+                        v-for="report in event.events"
+                        :key="report.id"
+                    >
                         <li>
-                            <a href=""
-                                ><i class="fa-solid fa-angle-right"></i>Lorem
-                                ipsum, dolor sit amet consectetur adipisicing
-                                elit. Nesciunt, fugit!</a
-                            >
-                        </li>
-                        <li>
-                            <a href=""
-                                ><i class="fa-solid fa-angle-right"></i>Lorem
-                                ipsum, dolor sit amet consectetur adipisicing
-                                elit. Nesciunt, fugit!</a
+                            <Link
+                                class="text-capitalize"
+                                :href="`/report/${report.slug}`"
+                                ><i class="fa-solid fa-angle-right"></i
+                                >{{ report.title }}</Link
                             >
                         </li>
                     </ul>
+                </div>
+                <div class="post-content" v-else>
+                    <p>No reports yet</p>
                 </div>
             </div>
         </div>
