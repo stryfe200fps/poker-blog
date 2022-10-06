@@ -40,6 +40,7 @@ class EventReportCrudController extends CrudController
         CRUD::setModel(\App\Models\EventReport::class);
         CRUD::setRoute(config('backpack.base.route_prefix').'/report');
 
+
         $this->crud->denyAccess('show');
 
         if (request()->get('event') || session()->get('event_id')) {
@@ -66,6 +67,8 @@ class EventReportCrudController extends CrudController
      */
     protected function setupShowOperation()
     {
+
+        Widget::add()->type('script')->content('assets/js/admin/forms/image_condition.js');
         $this->setupListOperation();
     }
 
@@ -110,6 +113,8 @@ class EventReportCrudController extends CrudController
     protected function setupCreateOperation()
     {
 
+
+        Widget::add()->type('script')->content('assets/js/admin/forms/image_condition.js');
         if (!session()->get('event_id')) {
             $this->crud->denyAccess('create');
         }
@@ -149,6 +154,9 @@ class EventReportCrudController extends CrudController
 
         $this->crud->addField([
             'name' => 'slug',
+            'attributes' => [
+                'placeholder'=> config('app.slug_placeholder'),
+            ],
             'type' => 'text',
         ]);
 
@@ -201,17 +209,16 @@ class EventReportCrudController extends CrudController
                 'name' => 'date_added',
                 'label' => 'Date',
                 'type' => 'datetime_picker',
-
+                'default' => 'now',
                 'datetime_picker_options' => [
-                    'format' => 'DD/MM/YYYY HH:mm',
+                    'format' => 'MMM D, YYYY hh:mm a',
                     'tooltips' => [ //use this to translate the tooltips in the field
                         'today' => 'Hoje',
                         'selectDate' => 'Selecione a data',
                         // available tooltips: today, clear, close, selectMonth, prevMonth, nextMonth, selectYear, prevYear, nextYear, selectDecade, prevDecade, nextDecade, prevCentury, nextCentury, pickHour, incrementHour, decrementHour, pickMinute, incrementMinute, decrementMinute, pickSecond, incrementSecond, decrementSecond, togglePeriod, selectTime, selectDate
                     ],
                 ],
-                'default' => Carbon::now()->toDateTimeString(),
-                'allows_null' => true,
+                'allows_null' => false,
                 'wrapper' => [
                     'class' => 'form-group col-md-6',
                 ],
@@ -359,7 +366,6 @@ class EventReportCrudController extends CrudController
             ],
         ]);
 
-        Widget::add()->type('script')->content('assets/js/admin/forms/image_condition.js');
 
         // if ($this->crud->getCurrentOperation() === 'update') {
         //     $liveReport = LiveReport::find($this->crud->getCurrentEntryId());
@@ -381,7 +387,6 @@ public function fetchTags()
      */
     protected function setupUpdateOperation()
     {
-        Widget::add()->type('script')->content('assets/js/admin/forms/image_condition.js');
         $this->setupCreateOperation();
     }
 
@@ -410,8 +415,8 @@ public function fetchTags()
         $this->crud->hasAccessOrFail('create');
 
         if (request()->get('day') == 0 ) {
-            \Alert::add('error', 'This event hasn\'t started yet' )->flash();
-            return back(); 
+            \Alert::add('error', 'This event schedule hasn\'t has not started yet,' )->flash();
+            // return back(); 
         }
 
         $players = request()->get('players');

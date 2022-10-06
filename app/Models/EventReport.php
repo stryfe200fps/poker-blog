@@ -2,16 +2,18 @@
 
 namespace App\Models;
 
-use App\Events\EventReportCreated;
 use Exception;
+use Carbon\Carbon;
+use Illuminate\Support\Str;
 use Spatie\Sluggable\HasSlug;
 use Spatie\MediaLibrary\HasMedia;
+use Spatie\Sluggable\SlugOptions;
+use App\Events\EventReportCreated;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
-use Spatie\Sluggable\SlugOptions;
 
 class EventReport extends Model implements HasMedia
 {
@@ -171,7 +173,6 @@ class EventReport extends Model implements HasMedia
 
     // public function getPlayersAttribute($value)
     // {
-
     //     return $value;
     //     // if ($this->event_chips()->count()) {
     //     //     $val = EventChip::with(['event_reports'])->whereHas('event_reports', function ($query) {
@@ -184,19 +185,43 @@ class EventReport extends Model implements HasMedia
     //     // }
     // }
 
+    public function setDateAddedAttribute($value) 
+    {
+        $this->attributes['date_added'] = Carbon::parse($value, session()->get('timezone') ?? 'UTC')->setTimezone('UTC');
+    }
+
+    public function getDateAddedAttribute($value)
+    {
+        return Carbon::parse($value)->setTimezone(session()->get('timezone') ?? 'UTC');
+    }
+
+
     protected static function booted()
     {
         static::deleting(function ($deletedReport) {
             $deletedReport->event_chips()->delete();
         });
 
+        static::creating(function ($model) {
+            $date  = \Carbon\Carbon::parse($model->date_added->toDateTimeString(), session()->get('timezone') ?? 'UTC') ;
+            $model->date_added = $date->setTimezone('UTC');
+        });
+
+        static::updating(function ($model) {
+        $model->slug = Str::slug($model->slug);
+        });
+
         static::updated(function ($updatedEvent) {
 
-            // dd($updatedEvent);
 
         });
 
         static::created(function ($createdEventReport) {
+
+
+        $createdEventReport->slug = Str::slug($createdEventReport->slug);
+        $createdEventReport->save();
+
             $eventChipsPlayer = $createdEventReport->players;
 
             if (is_countable($eventChipsPlayer)) {

@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 use App\Http\Requests\TournamentRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
-use Carbon\Carbon;
 
 /**
  * Class
@@ -120,7 +121,6 @@ class TournamentCrudController extends CrudController
         );
 
         $this->crud->addFields([
-
             [
                 'name' => 'image',
                 'label' => 'image',
@@ -135,16 +135,18 @@ class TournamentCrudController extends CrudController
 
                 // OPTIONALS
                 // default values for start_date & end_date
-                'default' => [$start, $end],
+                'default' => [Carbon::now()->setTimezone(session()->get('timezone') ?? 'UTC'), Carbon::now()->setTimezone(session()->get('timezone') ?? 'UTC')->addDays(2)],
                 // options sent to daterangepicker.js
                 'date_range_options' => [
                     'drops' => 'down', // can be one of [down/up/auto]
                     'timePicker' => true,
-                    'locale' => ['format' => 'DD/MM/YYYY HH:mm'],
+                    'locale' => ['format' => 'MMM D, YYYY hh:mm a'],
                 ],
             ],
 
         ]);
+
+
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:
@@ -164,6 +166,41 @@ class TournamentCrudController extends CrudController
     {
         $this->setupCreateOperation();
     }
+
+    public function store(Request $request)
+    {
+    $this->crud->hasAccessOrFail('create');
+
+    // execute the FormRequest authorization and validation, if one is required
+    $request = $this->crud->validateRequest();
+
+    // $date  = \Carbon\Carbon::parse($request->get('date_start'), session()->get('timezone') ?? 'UTC') ;
+    // $request['date_start'] = $date->setTimezone('UTC');
+
+    // $date2  = \Carbon\Carbon::parse($request->get('date_end'), session()->get('timezone') ?? 'UTC') ;
+    // $request['date_end'] = $date2->setTimezone('UTC');
+
+    // register any Model Events defined on fields
+    $this->crud->registerFieldEvents();
+
+    $item = $this->crud->create($this->crud->getStrippedSaveRequest($request));
+
+    // dd($request->get('published_date'), $request->get('timezone'));
+    // $this->attributes['published_date'] = $date->setTimezone('UTC');
+    // $item->setAttribute('timezone', $request['timezone']);
+
+    $this->data['entry'] = $this->crud->entry = $item;
+
+    // session()->put('new_article', 'a new article');
+
+    session()->flash('new_article', $item->id);
+
+    \Alert::success(trans('backpack::crud.insert_success'))->flash();
+
+    $this->crud->setSaveAction();
+
+    return $this->crud->performSaveAction($item->getKey());
+}
 
     public function destroy($id)
     {

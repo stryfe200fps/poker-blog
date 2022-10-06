@@ -69,7 +69,6 @@ class PlayerCrudController extends CrudController
                 $this->crud->query = $this->crud->query->where('country_id', $values);
             }
         );
-
         /**
          * Columns can be defined using the fluent syntax or array syntax:
          * - CRUD::column('price')->type('number');
