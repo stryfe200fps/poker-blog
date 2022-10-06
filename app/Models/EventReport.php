@@ -134,6 +134,23 @@ class EventReport extends Model implements HasMedia
                         'current_chips' => $eventChipPlayer['current_chips'],
                     ]);
 
+                    if ($eventChipPlayer['payout'] ?? null !== null) {
+                        if (EventPayout::where('event_id', $this->attributes['event_id'])->where('player_id', $eventChipPlayer['player_id'])->count() > 0) { 
+                            $eventPayout = EventPayout::where('event_id', $this->attributes['event_id'])->where('player_id', $eventChipPlayer['player_id'])->firstOrFail();
+                            $eventPayout->prize = $eventChipPlayer['payout'];
+                            $eventPayout->save();
+                        } else {
+                            // dd('hit');
+                            EventPayout::create([
+                                'player_id' =>  $eventChipPlayer['player_id'],
+                                'event_id' => $this->attributes['event_id'],
+                                'prize' => $eventChipPlayer['payout']
+                            ]);
+
+                            // dd($this->attributes['event_id']);
+                        }
+                    }
+
                     $jsonObj[] = $savedEventChip->toArray();
 
 
@@ -238,11 +255,11 @@ class EventReport extends Model implements HasMedia
                         'current_chips' => $eventChipPlayer['current_chips'],
                     ]);
 
-                    if ($eventChipPlayer !== null) {
+                    if ($eventChipPlayer['payout'] ?? null !== null) {
                         EventPayout::create([
                             'player_id' =>  $eventChipPlayer['player_id'],
                             'event_id' => $createdEventReport->event_id,
-                            'prize' => $eventChipPlayer['current_chips']
+                            'prize' => $eventChipPlayer['payout']
                         ]);
                     }
 

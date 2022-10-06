@@ -3,6 +3,7 @@
 use Carbon\Carbon;
 use App\Models\Event;
 use App\Models\Level;
+use function Spatie\PestPluginTestTime\testTime;
 use App\Models\EventReport;
 
 it('works', function () {
@@ -32,3 +33,51 @@ it('works', function () {
 
 });
 
+
+it('available days is showing', function () {
+  $this->withExceptionHandling();
+  $event = Event::factory()->create();
+  $level = Level::factory()->create([
+    'event_id' => $event->id
+  ]);
+
+
+ testTime()->freeze($event->schedule[0]['date_start']);
+
+  $report1 = EventReport::factory()->times(1)->create([
+    'event_id' => $event->id,
+    'level_id' => $level->id,
+    'title' => 'hugas plato',
+    'date_added' => Carbon::parse($event->schedule[0]['date_start'])->addHours(2)->toDateString()
+
+  ]);
+ 
+
+ $callApi =  $this->get('api/lof-event');
+
+ $callApi->assertStatus(200);
+
+
+ $callJson = $this->json('GET', 'api/lof-event');
+
+ $callJson->assertJsonFragment([
+  'available_days' => [
+    0 => "1B"
+  ]
+ ]);
+
+//  testTime()->freeze(); // the current time will not change anymore
+
+ 
+  // $contact = $this->json('POST', 'api/contact', [
+  //   'email' => 'kamlonboy@yhoo.com',
+  //   'name' => 'Adrian',
+  //   'message' => 'Adi radn',
+  //   'subject' => 'Subject'
+  // ])->assertJsonFragment([
+  //   'status' => 200
+  // ]);
+
+
+
+});
