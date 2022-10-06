@@ -353,13 +353,11 @@ class EventReportCrudController extends CrudController
                         'type' => 'hidden',
                         'value' => '',
                     ],
-
                     [   //image
                         'label' => 'Payout',
-
                         'name' => 'payout',
                         'value' => '',
-                        'type' => 'hidden',
+                        'type' => 'text',
                     ],
                 ],
                 'init_rows' => 0,

@@ -218,18 +218,16 @@ class EventReport extends Model implements HasMedia
 
         static::created(function ($createdEventReport) {
 
-
         $createdEventReport->slug = Str::slug($createdEventReport->slug);
         $createdEventReport->save();
 
-            $eventChipsPlayer = $createdEventReport->players;
+        $eventChipsPlayer = $createdEventReport->players;
 
             if (is_countable($eventChipsPlayer)) {
                 foreach ($eventChipsPlayer as $eventChipPlayer) {
 
                     if ($eventChipPlayer['player_id'] === null)
                         continue;
-
 
                     EventChip::create([
                         'name' => 'name',
@@ -240,91 +238,16 @@ class EventReport extends Model implements HasMedia
                         'current_chips' => $eventChipPlayer['current_chips'],
                     ]);
 
-                    // $checkIfHasPayout = EventPayout::
-                    // where('event_id', $createdEventReport->event_id)
-                    // ->where('player_id',$eventChipPlayer->player_id );
-
-                    // if ( $eventChipPlayer->payout === null) {
-                    //     continue;
-                    // }
-
-                    // if (!$checkIfHasPayout->count() ) {
-                    //  $createdEvent =   EventPayout::create([
-                    //         'name' =>  Player::find($eventChipPlayer->player_id)->name,
-                    //         'prize' => $eventChipPlayer->payout,
-                    //         'position' => $eventChipPlayer->rank,
-                    //         'player_id' => $eventChipPlayer->player_id,
-                    //         'event_id' => $createdEventReport->event_id,
-                    //         'event_report_id' => $createdEventReport->id,
-                    //     ]);
-
-                    // $savedEventChip->event_payout_id = $createdEvent->id;
-                    // $savedEventChip->save();
-                    // } else {
-                    //     $payout = $checkIfHasPayout->first();
-                    //     $payout->prize = $eventChipPlayer->payout;
-                    //     $payout->position = $eventChipPlayer->rank;
-                    //     $savedEventChip->event_payout_id = $payout->id;
-                    //     $payout->save();
-                    // }
+                    if ($eventChipPlayer !== null) {
+                        EventPayout::create([
+                            'player_id' =>  $eventChipPlayer['player_id'],
+                            'event_id' => $createdEventReport->event_id,
+                            'prize' => $eventChipPlayer['current_chips']
+                        ]);
+                    }
 
                 }
             }
         });
-
-        // static::updating(function ($updatedEventReport) {
-
-        //         $eventChipsPlayer = json_decode($updatedEventReport->players );
-
-        //     if (is_countable($eventChipsPlayer)) {
-        //         foreach ($eventChipsPlayer as $eventChipPlayer) {
-
-        //             if ($eventChipPlayer->player_id === null)
-        //                 continue;
-
-        //             EventChip::create([
-        //                 'name' => 'name',
-        //                 'event_report_id' => $updatedEventReport->id,
-        //                 'event_id' => $updatedEventReport->event_id,
-        //                 'player_id' => $eventChipPlayer->player_id,
-        //                 'current_chips' => $eventChipPlayer->current_chips,
-        //             ]);
-
-
-        //             // $checkIfHasPayout = EventPayout::
-        //             // where('event_id', $createdEventReport->event_id)
-        //             // ->where('player_id',$eventChipPlayer->player_id );
-
-        //             // if ( $eventChipPlayer->payout === null) {
-        //             //     continue;
-        //             // }
-
-        //             // if (!$checkIfHasPayout->count() ) {
-
-        //             //  $createdEvent =   EventPayout::create([
-        //             //         'name' =>  Player::find($eventChipPlayer->player_id)->name,
-        //             //         'prize' => $eventChipPlayer->payout,
-        //             //         'position' => $eventChipPlayer->rank,
-        //             //         'player_id' => $eventChipPlayer->player_id,
-        //             //         'event_id' => $createdEventReport->event_id,
-        //             //         'event_report_id' => $createdEventReport->id,
-        //             //     ]);
-
-        //             // $savedEventChip->event_payout_id = $createdEvent->id;
-        //             // $savedEventChip->save();
-        //             // } else {
-        //             //     $payout = $checkIfHasPayout->first();
-        //             //     $payout->prize = $eventChipPlayer->payout;
-        //             //     $payout->position = $eventChipPlayer->rank;
-
-        //             //     $savedEventChip->event_payout_id = $payout->id;
-        //             //     $payout->save();
-        //             // }
-
-
-        //         }
-        //     }
-
-        // });
     }
 }

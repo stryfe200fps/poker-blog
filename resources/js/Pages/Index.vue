@@ -18,7 +18,7 @@ onMounted(async () => {
 </script>
 
 <template>
-    <FrontLayout title="Kartok">
+    <FrontLayout >
         <MainBar :article-list="articleStore.list" />
     </FrontLayout>
 </template>

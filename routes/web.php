@@ -19,17 +19,6 @@ use Backpack\Settings\app\Models\Setting;
 
 Route::get('/', function () {
 
-
-    // "@context": "http://schema.org",
-    // "@type": "WebPage",
-    // "name": "About Patrick",
-    // "description": "In addition to Patrick's work in the SEO field, he also enjoys classical jazz dancing and organic farming ",
-    // "publisher": {
-    //     "@type": "ProfilePage",
-    //     "name": "Patrick's Website"
-
-
-
     $webPage =  \JsonLd\Context::create('web_page', [
         'description' => 'Home page',
         'url' => config('app.url'),
@@ -39,7 +28,7 @@ Route::get('/', function () {
     return Inertia::render('Index',[  
         'title' => 'Life of poker',
         'description' =>'life of poker',
-        'json-ld-webpage' => $webPage
+        'json-ld-webpage' => $webPage,
     ]);
 });
 

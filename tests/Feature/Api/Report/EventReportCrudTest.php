@@ -12,6 +12,50 @@ use Spatie\Permission\Models\Role;
 
 uses(RefreshDatabase::class);
 
+
+test('chip counts is working with isolated payout field', function () {
+        
+
+ $this->withExceptionHandling();
+    superAdminAuthenticate();
+    $event = Event::factory()->create();
+
+    $page = $this->get('admin/report/create?event='.$event->id)->assertStatus(200);
+
+    $playerId = Player::factory()->create();
+    $eventChip = EventChip::factory()->create([
+        'player_id' => $playerId->id,
+    ]);
+
+    $data = [
+        'title' => 'A report',
+        'content' => 'this a content',
+        'day' => '1A',
+        'level_id' => Level::factory()->create()->id,
+        'level' => Level::factory()->create(),
+        'event_id' => $event->id,
+        'poker_event_id' => Event::factory()->create()->id,
+        'date_added' => '2021-02-02 00:00:00',
+        'user_id' => User::factory()->create()->id,
+        'article_author_id' => ArticleAuthor::factory()->create()->id,
+        'players' => [ array_merge( $eventChip->get()->toArray()[0], ['payout' => 50000] )],
+
+    ];
+
+
+    $datas = $this->post('/admin/report', $data);
+
+    $this->assertDatabaseHas('event_reports', ['title' => 'A report',
+    ]);
+
+    $this->assertDatabaseHas('event_payouts', ['event_id' => 59,
+    ]);
+
+
+
+});
+
+
 // test('reports is working', function () {
 //     $response = $this->get('/api/report');
 //     $response->assertStatus(200);
@@ -156,3 +200,5 @@ it('can delete report if authenticated', function () {
     $datas = $this->delete('admin/report/'.$article->id);
     expect(EventReport::all()->count())->toBe(0);
 });
+
+
