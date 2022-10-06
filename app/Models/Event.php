@@ -264,7 +264,7 @@ class Event extends Model implements HasMedia
         $days = [];
         foreach ( collect(json_decode($schedule, true ))->toArray() as $sched ) {
             if ($dateNow >= Carbon::parse($sched['date_start']))
-                $days[] = $sched['day'];
+                $days[] = $sched['day']; 
 
         }
 

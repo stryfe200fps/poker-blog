@@ -49,7 +49,7 @@ class EventReportCrudController extends CrudController
             }
 
             $getEvent = Event::where('id', session()->get('event_id'))->first();
-            CRUD::setEntityNameStrings('reports', $getEvent->title);
+            CRUD::setEntityNameStrings('reports', $getEvent?->title);
 
         // $this->crud->addFilter($options, $values, $filter_logic);
         } else {
