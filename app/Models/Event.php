@@ -253,17 +253,20 @@ class Event extends Model implements HasMedia
     public function getAvailableDays()
     {
 
+        $dateNow = Carbon::now();
         $schedule = $this->attributes['schedule'];
+        // $days = collect(json_decode($schedule, true ))->map(function ($item) use ($dateNow) {
+        //     if ($dateNow >= Carbon::parse($item['date_start']))
+        //         return $item['day'];
 
-        $days = collect(json_decode($schedule, true ))->map(function ($item) {
-            return $item['day'];
-        });
-
-        // dd($mapped);
-
-        // $days = collect(EventReport::where('event_id', $this->id)->get()->groupBy('day')->toArray())->map(function ($item) {
-        //     return $item[0]['day'];
         // });
+
+        $days = [];
+        foreach ( collect(json_decode($schedule, true ))->toArray() as $sched ) {
+            if ($dateNow >= Carbon::parse($sched['date_start']))
+                $days[] = $sched['day'];
+
+        }
 
         return $days;
     }
