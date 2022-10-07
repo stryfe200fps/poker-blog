@@ -46,7 +46,15 @@
                     </ul>
                 </div>
                 <div class="post-content" v-else>
-                    <p>No reports yet</p>
+                    <h5>
+                        <small>
+                            <i
+                                class="fas fa-file-edit"
+                                style="margin-right: 5px"
+                            ></i
+                            >No reports yet</small
+                        >
+                    </h5>
                 </div>
             </div>
         </div>

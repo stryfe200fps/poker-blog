@@ -90,7 +90,6 @@ defineProps({
                                     v-if="news.main_image.length"
                                     :src="news.main_image"
                                     :alt="news.main_image"
-                                    style="width: 100% !important"
                                 />
                                 <img
                                     v-else
@@ -174,9 +173,9 @@ defineProps({
     margin-bottom: 30px;
 } */
 .post-gallery {
-    float: unset !important;
-    margin-right: unset !important;
-    margin-left: unset !important;
+    float: none !important;
+    margin-right: 0 !important;
+    margin-left: 0 !important;
 }
 
 .custom-label {

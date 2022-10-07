@@ -1,7 +1,7 @@
 <template>
     <div class="single-post-box">
         <div class="title-post">
-            <h1>
+            <h1 class="text-capitalize">
                 <Link
                     class="default-text-color"
                     :href="`/report/${item.slug}`"

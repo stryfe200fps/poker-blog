@@ -1,147 +1,137 @@
 <template>
     <header ref="sticky" class="clearfix">
-        <!-- Bootstrap navbar -->
-        <nav class="navbar navbar-default navbar-static-top" role="navigation">
-            <!-- Logo & advertisement -->
-            <div class="logo-advertisement">
+        <nav
+            class="navbar navbar-default navbar-static-top custom-header--bg"
+            role="navigation"
+        >
+            <div class="logo-advertisement custom-header--bg">
                 <div class="container">
-                    <div
-                        style="
-                            display: flex;
-                            justify-content: space-between;
-                            align-items: flex-start;
-                            padding: 3rem 0;
-                        "
-                    >
-                        <Link class="pull-left" href="/">
-                            <img
-                                src="/lop_logo_small.png"
-                                alt=""
-                                style="width: 150px"
-                            />
-                        </Link>
-                        <button
-                            @click="toggleBtn"
-                            type="button"
-                            class="navbar-toggle collapsed"
-                            data-toggle="collapse"
-                            data-target="#bs-example-navbar-collapse-1"
-                        >
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
+                    <div class="custom-header--flex">
+                        <div class="navbar-header">
+                            <Link
+                                class="navbar-brand"
+                                href="/"
+                                style="padding: 0"
+                            >
+                                <img
+                                    class="header-logo"
+                                    src="/lop_logo_small.png"
+                                    alt="Logo"
+                                />
+                            </Link>
+                        </div>
                         <div
                             class="advertisement"
                             style="align-self: center; padding: 0"
                         >
                             <div class="desktop-advert">
-                                <h4 style="color: white">
+                                <h4 class="text-uppercase" style="color: #fff">
                                     “BRINGING THE ACTION TO YOUR DOORSTEP”
                                 </h4>
                             </div>
                         </div>
                         <div
                             class="advertisement"
-                            style="padding: 0; font-size: 12px"
+                            style="overflow: visible; padding: 0; opacity: 0"
                         >
-                            <div class="desktop-advert" style="color: white">
-                                <!-- <i class="fa fa-search" style="margin-right: 0.5rem"></i>
-                                <span style="
-                                    display: inline-block;
-                                    margin-right: 0.5rem;
-                                    font-size: 12px;
-                                    color: white;
-                                ">|</span>
-                                <span style="display: inline-block; font-size: 12px; color: white">ENG<i
-                                        class="fa fa-angle-down"
-                                        style="margin-left: 1rem; font-size: 12px; color: #666"></i></span> -->
+                            <div class="desktop-advert">
+                                <div class="header-actions">
+                                    <i
+                                        class="fa fa-search header-actions__icon"
+                                    ></i>
+                                    <h6 class="header-actions__icon">|</h6>
+                                    <label class="dropdown">
+                                        <div class="dd-button">ENG</div>
+                                        <input
+                                            type="checkbox"
+                                            class="dd-input"
+                                            id="test"
+                                        />
+                                        <ul class="dd-menu">
+                                            <li>Action</li>
+                                            <li>Another action</li>
+                                            <li>Something else here</li>
+                                        </ul>
+                                    </label>
+                                </div>
                             </div>
                         </div>
+                        <button
+                            type="button"
+                            class="navbar-toggle collapsed"
+                            data-toggle="collapse"
+                            data-target="#bs-example-navbar-collapse-1"
+                            style="align-self: center; margin: 0 15px 0 0"
+                            @click="toggleBtn"
+                        >
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
                     </div>
                 </div>
             </div>
-
-            <!-- <div v-for="menu in $page['props']['menu']" :key="menu.id">
-                <Link :href="menu.link"> {{ menu.name }} </Link> <br> <br>
-                <div style="margin-left:40px;" v-for="children in menu.children" :key="children.id">
-                <Link :href="children.link"> {{ children.name }} </Link>
-                 </div>
-            </div> -->
-
-            <!-- navbar list container -->
-            <div class="nav-list-container navbar navbar-default">
+            <div class="nav-list-container" style="border: 0">
                 <div class="container">
-                    <!-- Collect the nav links, forms, and other content for toggling -->
                     <div
-                        class="collapse navbar-collapse"
+                        class="collapse navbar-collapse navbar-collapse--custom"
                         :class="{ in: toggleMenu }"
                         id="bs-example-navbar-collapse-1"
                     >
-                        <ul class="nav navbar-nav navbar-left custome-nav">
-                            <li class="drop">
-                                <a style="cursor: pointer" class="home"
-                                    >News & Info</a
+                        <ul
+                            class="nav navbar-nav navbar-left navbar-nav--custom"
+                        >
+                            <li
+                                class="drop"
+                                v-for="menu in $page['props']['menu']"
+                                :key="menu.id"
+                            >
+                                <Link
+                                    class="home home--custom"
+                                    :class="{
+                                        child: menu.children.length,
+                                        'router-link-active':
+                                            pathname == menu.link,
+                                    }"
+                                    :href="menu.link"
+                                    v-if="menu.link"
                                 >
-                                <ul class="dropdown">
-                                    <li>
+                                    {{ menu.name }}
+                                </Link>
+                                <Link
+                                    class="home home--custom"
+                                    :class="{
+                                        child: menu.children.length,
+                                    }"
+                                    v-else
+                                >
+                                    {{ menu.name }}
+                                </Link>
+                                <ul
+                                    class="dropdown"
+                                    v-if="menu.children.length"
+                                >
+                                    <li
+                                        v-for="children in menu.children"
+                                        :key="children.id"
+                                    >
                                         <Link
+                                            :href="children.link"
                                             style="
-                                                cursor: pointer;
-                                                background: #efefef;
+                                                background: rgb(239, 239, 239);
                                             "
-                                            href="/"
-                                            >News</Link
                                         >
+                                            {{ children.name }}
+                                        </Link>
                                     </li>
                                 </ul>
                             </li>
-
-                            <li>
-                                <Link
-                                    :class="{
-                                        'router-link-active':
-                                            route().current() === 'tournament',
-                                    }"
-                                    href="/tournament"
-                                    >Live reporting</Link
-                                >
-                            </li>
-                            <li>
-                                <Link
-                                    :class="{
-                                        'router-link-active':
-                                            calendar === '/event-calendar',
-                                    }"
-                                    href="/event-calendar"
-                                    >Event Calendar</Link
-                                >
-                            </li>
-                            <!-- <li><a class="tech" href="#">rankings & leaderboards</a></li>
-
-                            <li><a class="fashion" href="#">packages</a></li>
-
-                            <li><a class="video" href="#">store</a></li> -->
-
-                            <li>
-                                <Link
-                                    :class="{
-                                        'router-link-active':
-                                            contact === '/contact',
-                                    }"
-                                    href="/contact"
-                                    >contact</Link
-                                >
-                            </li>
                         </ul>
                     </div>
-                    <!-- /.navbar-collapse -->
                 </div>
             </div>
-            <!-- End navbar list container -->
         </nav>
-        <!-- End Bootstrap navbar -->
     </header>
 </template>
 
@@ -149,26 +139,15 @@
 import { onBeforeUnmount, onMounted, ref, watch } from "vue";
 import { Link, InertiaApp } from "@inertiajs/inertia-vue3";
 import logo from "/public/lop_logo_small.png";
+
 const toggleMenu = ref(false);
 const windowTop = ref(0);
+const sticky = ref(null);
+const pathname = ref(window.location.pathname.split("/")[1]);
 
 function toggleBtn() {
     toggleMenu.value = !toggleMenu.value;
 }
-
-const contact = ref("");
-const calendar = ref("");
-const sticky = ref(null);
-onMounted(() => {
-    contact.value = window.location.pathname;
-    calendar.value = window.location.pathname;
-    const pathname = window.location.pathname.split("/")[1];
-    if (pathname !== "tournament" && pathname !== "event")
-        window.addEventListener("scroll", onScroll);
-});
-onBeforeUnmount(() => {
-    window.removeEventListener("scroll", onScroll);
-});
 
 function onScroll(e) {
     windowTop.value = e.target.documentElement.scrollTop;
@@ -182,42 +161,155 @@ function onScroll(e) {
         sticky.value.classList.remove("active");
     }
 }
+
+onMounted(() => {
+    if (pathname.value !== "tournament" && pathname.value !== "event")
+        window.addEventListener("scroll", onScroll);
+});
+
+onBeforeUnmount(() => {
+    window.removeEventListener("scroll", onScroll);
+});
 </script>
 
 <style scoped>
-.navbar-nav > li:nth-child(2) > a:after,
-.navbar-nav > li:nth-child(3) > a:after,
-.navbar-nav > li:nth-child(4) > a:after {
+.custom-header--bg {
+    background-color: #2d3436;
+}
+
+.header-logo {
+    width: 150px;
+}
+
+.custom-header--flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 3rem 0;
+}
+
+.header-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 10px;
+    color: #fff;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: 400;
+    color: #fff;
+}
+
+.dd-button {
+    display: inline-block;
+    padding-right: 30px;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.dd-button:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #fff;
+    transform: translateY(-50%);
+}
+
+.dd-input {
     display: none;
 }
 
-.navbar-nav > li:nth-child(2) > a,
-.navbar-nav > li:nth-child(3) > a,
-.navbar-nav > li:nth-child(4) > a {
-    padding-left: 12px;
-    padding-right: 12px;
+.dd-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin: 2px 0 0 0;
+    padding: 0;
+    text-align: start;
+    list-style-type: none;
+    background-color: #ffffff;
+    color: #222;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.1);
+}
+
+.dd-input + .dd-menu {
+    display: none;
+}
+
+.dd-input:checked + .dd-menu {
+    display: block;
+}
+
+.dd-menu li {
+    padding: 10px 20px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.dd-menu li:hover {
+    background-color: #f6f6f6;
+}
+
+header.active .nav-list-container {
+    background-color: #2d3436 !important;
+}
+
+.navbar-collapse--custom {
+    overflow-y: scroll;
+    scrollbar-width: none;
+}
+
+.navbar-collapse--custom::-webkit-scrollbar {
+    display: none;
+}
+
+.navbar-nav--custom > li > a {
+    color: #fff !important;
+}
+
+.navbar-nav--custom > li > a:before {
+    display: none;
+}
+
+.navbar-nav > li:first-child > a {
+    padding-left: 0 !important;
+}
+
+.home--custom {
+    padding-right: 20px !important;
+}
+
+.home--custom.child {
+    padding-right: 30px !important;
+}
+
+.home--custom::after {
+    opacity: 0;
+}
+
+.home--custom.child::after {
+    opacity: 1;
+}
+
+.navbar-nav > li > a:hover,
+.navbar-nav > li > a:hover::after {
+    color: #f44336 !important;
 }
 
 .router-link-active,
 .router-link-exact-active {
     background-color: #f44336 !important;
     color: white;
-}
-header.active .nav-list-container {
-    border-radius: unset;
-}
-
-a.router-link-active:hover {
-    color: white !important;
-    background-color: #f44336 !important;
-}
-
-.navbar-nav > li > a.router-link-active:hover {
-    color: white !important;
-}
-
-.navbar-nav > li > a:hover,
-.navbar-nav > li > a:hover::after {
-    color: #f44336 !important;
 }
 </style>

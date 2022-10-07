@@ -1,47 +1,40 @@
 <script setup>
-import Header from '../Components/Frontend/Header.vue';
-import Footer from '../Components/Frontend/Footer.vue';
-import SideBar from '../Components/Frontend/MainContent/SideBar.vue';
+import Header from "../Components/Frontend/Header.vue";
+import Footer from "../Components/Frontend/Footer.vue";
+import SideBar from "../Components/Frontend/MainContent/SideBar.vue";
 
-
-import { Head, Link } from '@inertiajs/inertia-vue3';
+import { Head, Link } from "@inertiajs/inertia-vue3";
 
 defineProps({
     title: String,
 });
-
-
 </script>
 
 <template>
     <Head>
         <title>Home</title>
     </Head>
-    <Header />
-      <main>
-    <section class="block-wrapper">
-        <div class="container">
-  <div class="row">
-
-   <div class="col-md-9 col-sm-8">
-            <slot />
-   </div>
-        <div class="col-md-3 col-sm-4" style="overflow: none;">  
-           <SideBar  />
-        </div>
-  </div>
-            </div>
-        </section>
-      </main>
-
-  <Footer/>
+    <div id="container" class="active">
+        <Header />
+        <main>
+            <section class="block-wrapper">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-9 col-sm-8">
+                            <slot />
+                        </div>
+                        <div class="col-md-3 col-sm-4" style="overflow: none">
+                            <SideBar />
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <Footer />
+    </div>
 </template>
 
-
-
 <style>
-
-
 .reset-margin {
     margin: unset !important;
 }
@@ -55,25 +48,25 @@ div.block-content {
     padding: unset;
 }
 
-@media (max-width: 768px) { 
+@media (max-width: 768px) {
     .hide-on-mobile {
         display: none;
     }
 }
 
-@media (max-width: 992px) { 
+@media (max-width: 992px) {
     .hide-on-tablet {
         display: none;
     }
 }
 
-@media (max-width: 1200px) { 
+@media (max-width: 1200px) {
     .hide-on-desktop {
         display: none;
     }
 }
 
-@media (min-width: 1200px) { 
+@media (min-width: 1200px) {
     .hide-on-lg-desktop {
         display: none;
     }
@@ -100,7 +93,7 @@ div.block-content {
 }
 
 .text-green {
-    color: #2ecc71;   
+    color: #2ecc71;
 }
 
 .text-red {
@@ -116,7 +109,7 @@ div.block-content {
 }
 
 .bg-primary {
-    background-color: #2D3436 !important;
+    background-color: #2d3436 !important;
 }
 
 li {
@@ -134,7 +127,7 @@ li {
 
 .highlight-img {
     width: 100px;
-    height: 87px
+    height: 87px;
 }
 
 .play-btn {
@@ -183,10 +176,10 @@ li {
 .bx-wrapper .bx-pager.bx-default-pager a {
     width: 10px;
     height: 10px;
-    border-color: #2D3436;
+    border-color: #2d3436;
 }
 
-ul.list-posts>li img {
+ul.list-posts > li img {
     margin: 0;
 }
 
@@ -206,9 +199,30 @@ footer .footer-widgets-part {
 
 .instagram {
     background: #f09433;
-    background: -moz-linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-    background: -webkit-linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    background: -moz-linear-gradient(
+        45deg,
+        #f09433 0%,
+        #e6683c 25%,
+        #dc2743 50%,
+        #cc2366 75%,
+        #bc1888 100%
+    );
+    background: -webkit-linear-gradient(
+        45deg,
+        #f09433 0%,
+        #e6683c 25%,
+        #dc2743 50%,
+        #cc2366 75%,
+        #bc1888 100%
+    );
+    background: linear-gradient(
+        45deg,
+        #f09433 0%,
+        #e6683c 25%,
+        #dc2743 50%,
+        #cc2366 75%,
+        #bc1888 100%
+    );
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f09433', endColorstr='#bc1888', GradientType=1);
 }
 
@@ -254,7 +268,7 @@ button.social-btn {
     min-height: 117px;
 }
 
-.pswp { 
-    z-index: 999999!important;
+.pswp {
+    z-index: 999999 !important;
 }
 </style>
