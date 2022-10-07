@@ -27,9 +27,6 @@ Route::get('/attack', function () {
 });
 
 Route::get('/', function () {
-
-$feed = \Dymantic\InstagramFeed\InstagramFeed::for('adrianradores_');
-
     $webPage =  \JsonLd\Context::create('web_page', [
         'description' => 'Home page',
         'url' => config('app.url'),

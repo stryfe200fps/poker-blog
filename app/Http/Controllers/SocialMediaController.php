@@ -19,6 +19,6 @@ class SocialMediaController extends Controller
     public function fetchInstagram()
     {
         $profile = Profile::where('username', env('INSTAGRAM_USERNAME'))->first();
-        return InstagramResource::collection(collect($profile->feed(10)));
+        return InstagramResource::collection(collect($profile->feed(1)));
     }
 }
