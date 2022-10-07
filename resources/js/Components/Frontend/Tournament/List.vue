@@ -23,7 +23,7 @@
         <div class="tab-content">
             <div class="block-content" v-show="tab == 0">
                 <div class="article-box" v-if="liveEventCollection.length">
-                    <TournamentList
+                    <TournamentItem
                         v-for="main in liveEventCollection"
                         :key="main.id"
                         :tournament="main"
@@ -35,7 +35,7 @@
             </div>
             <div class="block-content" v-show="tab == 1">
                 <div class="article-box" v-if="pastEventCollection.length">
-                    <TournamentList
+                    <TournamentItem
                         v-for="main in pastEventCollection"
                         :key="main.id"
                         :tournament="main"
@@ -47,7 +47,7 @@
             </div>
             <div class="block-content" v-show="tab == 2">
                 <div class="article-box" v-if="upcomingEventCollection.length">
-                    <TournamentList
+                    <TournamentItem
                         v-for="main in upcomingEventCollection"
                         :key="main.id"
                         :tournament="main"
@@ -72,7 +72,7 @@ import defaultImg from "/public/default-img.png";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import moment from "moment";
 
-import TournamentList from "./TournamentItem.vue";
+import TournamentItem from "./TournamentItem.vue";
 
 const props = defineProps({
     tournamentList: Object,

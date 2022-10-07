@@ -272,17 +272,6 @@ watch(
     color: #fff !important;
 }
 
-.instagram {
-    background: linear-gradient(
-        45deg,
-        #f09433 0%,
-        #e6683c 25%,
-        #dc2743 50%,
-        #cc2366 75%,
-        #bc1888 100%
-    );
-}
-
 .youtube {
     background-color: #e74c3c;
 }
