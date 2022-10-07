@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\PayoutRequest;
+use App\Models\Country;
 use App\Models\Event;
 use App\Models\EventPayout;
 use App\Models\Payout;
@@ -67,7 +68,10 @@ class PayoutCrudController extends CrudController
     {
         // $this->crud->setModel( Payout::where('poker_event_id', session()->get('event_id'))->get() );
 
+
+
         $this->crud->addClause('where', 'event_id', session()->get('payout_event_id'));
+
         $this->crud->addColumn([
             'name' => 'player_id',
             'type' => 'relationship',
@@ -122,41 +126,23 @@ class PayoutCrudController extends CrudController
             'auto_update_row' => true, // update related columns in same row, after the AJAX call?
         ]);
 
-        CRUD::addColumn([
-            'name' => 'source',
-            'label' => 'Source',
-            'type' => 'editable_select',
-            'options' => ['normal' => 'normal', 'whatsapp' => 'whatsapp'],
-
-            'underlined' => true, // show a dotted line under the editable column for differentiation? default: true
-            'save_on_focusout' => true, // if user clicks out, the value should be saved (instead of greyed out)
-            'save_on_change' => true,
-            'on_error' => [
-                'text_color' => '#df4759', // set a custom text color instead of the red
-                'text_color_duration' => 0, // how long (in miliseconds) should the text stay that color (0 for infinite, aka until page refresh)
-                'text_value_undo' => false, // set text to the original value (user will lose the value that was recently input)
-            ],
-            'on_success' => [
-                'text_color' => '#42ba96', // set a custom text color instead of the green
-                'text_color_duration' => 3000, // how long (in miliseconds) should the text stay that color (0 for infinite, aka until page refresh)
-            ],
-            'auto_update_row' => true, // update related columns in same row, after the AJAX call?
-        ]);
-
         Widget::add()->to('after_content')->type('view')->view('vendor.backpack.helper.payout')->eventId(session()->get('payout_event_id')); // widgets to show the ordering card
 
         $this->crud->addFilter([
             'type' => 'select2',
             'name' => 'player',
-            'label' => 'Players',
+            'label' => 'Country',
         ],
 
             function () {
-                return Player::all()->pluck('name', 'id')->toArray();
+                return Country::all()->pluck('name', 'id')->toArray();
             },
             function ($values) {
                 $this->crud->query = $this->crud->query->where('event_id', session()->get('payout_event_id'))->whereHas('player', function ($query) use ($values) {
-                    $query->where('id', $values);
+                    $query->whereHas('country', function ($countryQuery) use ($values) {
+                        $countryQuery->where('id', $values);
+                    });
+                    // $query->where('id', $values);
                 });
             }
         );

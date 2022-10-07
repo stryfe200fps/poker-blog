@@ -22,6 +22,7 @@ class ImageTheme extends Model implements HasMedia
 
     public function registerMediaConversions(?Media $media = null): void
     {
+
     }
 
     public function getImageAttribute($value)

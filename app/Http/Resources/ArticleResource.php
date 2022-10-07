@@ -9,7 +9,6 @@ class ArticleResource extends JsonResource
 {
     public function toArray($request)
     {
-        // dd($this->getFirstMedia('article', 'feature_image')->getUrl());
         return [
             'title' => $this->title,
             'description' => $this->description,

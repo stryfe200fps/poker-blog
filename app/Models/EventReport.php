@@ -26,14 +26,15 @@ class EventReport extends Model implements HasMedia
     {
         $this->addMediaConversion('main-thumb')
             ->width(300)
-            ->height(300);
+            ->height(300)
+            ->nonQueued();
 
         $this->addMediaConversion('main-image')
             ->width(424)
-            ->height(285);
+            ->height(285)
+            ->nonQueued();
+            
     }
-
-
 
     public function getSlugOptions(): SlugOptions
     {
@@ -46,7 +47,6 @@ class EventReport extends Model implements HasMedia
 
     public function getImageAttribute($value)
     {
-
         return $this->getFirstMediaUrl('event-report', 'main-image');
     }
 
@@ -57,7 +57,6 @@ class EventReport extends Model implements HasMedia
 
         if (preg_match("/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).base64,.*/", $value) == 0) 
             return false;
-
 
         $this->media()->delete();
         $this->addMediaFromBase64($value)

@@ -20,11 +20,13 @@ class Tour extends Model implements HasMedia
     {
         $this->addMediaConversion('main-image')
             ->width(424)
-            ->height(285);
+            ->height(285)
+            ->nonQueued();
 
         $this->addMediaConversion('main-thumb')
             ->width(337)
-            ->height(225);
+            ->height(225)
+            ->nonQueued();
     }
 
     public function tournaments()

@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\PageManager;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TagController;
+use App\Http\Controllers\PayoutController;
 use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\Api\ArticleController;
 use App\Http\Controllers\PageManagerController;
@@ -57,7 +58,7 @@ Route::resource('lof-live-report', EventReportsController::class);
 Route::resource('page', PageManagerController::class);
 
 Route::get('twitter', [SocialMediaController::class, 'fetchTwitter' ]);
-
+Route::get('instagram', [SocialMediaController::class, 'fetchInstagram' ]);
 
 Route::post('contact', [ContactUsController::class , 'store']);
-
+Route::get('payout/{player_id}/{event}',[ PayoutController::class , 'player'] ) ;

@@ -19,6 +19,8 @@ use Backpack\Settings\app\Models\Setting;
 
 Route::get('/', function () {
 
+$feed = \Dymantic\InstagramFeed\InstagramFeed::for('adrianradores_');
+
     $webPage =  \JsonLd\Context::create('web_page', [
         'description' => 'Home page',
         'url' => config('app.url'),
@@ -190,6 +192,9 @@ Route::post('upload_excel', function () {
     }
 });
 
+// Route::get('instagram/auth/callback', function () {
+//     return redirect('/');
+// });
 
 
 Route::get('/{page}/{other?}', function ($page, $other = null) {

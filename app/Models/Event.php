@@ -176,28 +176,29 @@ class Event extends Model implements HasMedia
             $this->attributes['slug'] = $value;
         }
     }
-    // use HasSlug;
-
-    // public function getSlugOptions(): SlugOptions
-    // {
-    //     return SlugOptions::create()
-    //         ->generateSlugsFrom('title')
-    //         ->saveSlugsTo('slug');
-    // }
+   
 
     public function registerMediaConversions(?Media $media = null): void
     {
         $this->addMediaConversion('main-image')
             ->width(424)
-            ->height(285);
+            ->height(285)
+            ->nonQueued();
 
         $this->addMediaConversion('main-thumb')
             ->width(337)
-            ->height(225);
+            ->height(225)
+            ->nonQueued();
 
         $this->addMediaConversion('main-gallery-thumb')
-                ->width(130)
-                ->height(86);
+            ->width(130)
+            ->height(86)
+            ->nonQueued();
+
+        $this->addMediaConversion('main-gallery')
+            ->width(1600)
+            ->height(1000)
+            ->nonQueued();
     }
 
     public function getImageAttribute($value)
@@ -212,8 +213,6 @@ class Event extends Model implements HasMedia
 
         if (preg_match("/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).base64,.*/", $value) == 0) 
             return false;
-
-
 
         $this->media()->delete();
         $this->addMediaFromBase64($value)

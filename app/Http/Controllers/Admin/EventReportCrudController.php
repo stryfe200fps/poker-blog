@@ -326,6 +326,11 @@ class EventReportCrudController extends CrudController
                 //chip stack
                 'label' => 'Chip Counts',
                 'type' => 'repeatable',
+                
+
+            'attributes' => [
+            'id' => 'repeat'
+            ],
                 'new_item_label' => 'add stack',
                 'tab' => 'Chip Stack',
                 'subfields' => [
@@ -364,6 +369,10 @@ class EventReportCrudController extends CrudController
             ],
         ]);
 
+
+        
+
+        Widget::add()->type('script')->content('assets/js/admin/forms/repeatable_chips.js');
 
         // if ($this->crud->getCurrentOperation() === 'update') {
         //     $liveReport = LiveReport::find($this->crud->getCurrentEntryId());
