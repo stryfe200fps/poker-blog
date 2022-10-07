@@ -84,43 +84,56 @@
                 </Tweet>
             </div>
         </div>
-        <!-- <div class="widget social-widget">
-            <div class="title-section">
-                <h1>
-                    <span>Instagram</span>
-                </h1>
-            </div>
-            <div class="news-post article-post custom-article">
-                <iframe
-                    class="instagram-media instagram-media-rendered"
-                    id="instagram-embed-0"
-                    src="https://www.instagram.com/p/B00ceH7pcYY/embed/?cr=1&amp;v=14&amp;wp=261&amp;rd=https%3A%2F%2Fstaging.lifeofpoker.com&amp;rp=%2Fcontact#%7B%22ci%22%3A0%2C%22os%22%3A1047.2999999998137%2C%22ls%22%3A424.59999999962747%2C%22le%22%3A886%7D"
-                    allowtransparency="true"
-                    allowfullscreen="true"
-                    frameborder="0"
-                    height="466"
-                    data-instgrm-payload-id="instagram-media-payload-0"
-                    scrolling="no"
-                    style="
-                        background: white;
-                        max-width: 540px;
-                        width: calc(100% - 2px);
-                        border-radius: 3px;
-                        border: 1px solid rgb(219, 219, 219);
-                        box-shadow: none;
-                        display: block;
-                        margin: 0px 0px 12px;
-                        min-width: 326px;
-                        padding: 0px;
-                    "
-                ></iframe>
-            </div>
-        </div> -->
         <div class="widget social-widget">
             <div class="title-section">
                 <h1><span>instagram</span></h1>
             </div>
-            <div class="news-post video-post"></div>
+            <div class="news-post video-post">
+                <div v-if="igFeed">
+                    <!-- <iframe
+                        :src="`${igLink}embed`"
+                        width="320"
+                        height="466"
+                        allowtransparency="true"
+                        allowfullscreen="true"
+                        frameborder="0"
+                        scrolling="no"
+                        style="
+                            width: 100%;
+                            border: 0.05rem solid rgb(190, 190, 190);
+                            border-radius: 5px;
+                        "
+                    ></iframe> -->
+                    <iframe
+                        src="https://www.instagram.com/p/B00ceH7pcYY/embed"
+                        width="320"
+                        height="466"
+                        allowtransparency="true"
+                        allowfullscreen="true"
+                        frameborder="0"
+                        scrolling="no"
+                        style="
+                            width: 100%;
+                            border: 0.05rem solid rgb(190, 190, 190);
+                            border-radius: 5px;
+                        "
+                    ></iframe>
+                </div>
+                <div v-else class="tweets-skeleton">
+                    <div class="tweet-skeleton">
+                        <div class="img"></div>
+                        <div class="content-1">
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                        </div>
+                        <div class="content-2">
+                            <div class="line"></div>
+                            <div class="line"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <!-- <div class="sidebar">
@@ -232,19 +245,28 @@
 <script setup>
 import Tweet from "vue-tweet";
 import { useTwitterStore } from "@/stores/twitter.js";
-import { onMounted, ref, watch } from "@vue/runtime-core";
+import { useIGStore } from "@/stores/instagram.js";
+import { computed, onMounted, ref, watch } from "@vue/runtime-core";
 
 const twitterStore = useTwitterStore();
 const tweetIDs = ref(null);
+const igStore = useIGStore();
+const igFeed = ref(null);
+
+const igLink = computed(() => {
+    return igFeed.value?.find((ig) => ig.permalink).permalink;
+});
 
 onMounted(async () => {
     await twitterStore.getTweetID();
+    await igStore.getIGFeed();
 });
 
 watch(
-    () => twitterStore.tweetIDs,
+    () => [twitterStore.tweetIDs, igStore.igFeed],
     function () {
         tweetIDs.value = twitterStore.tweetIDs.data;
+        igFeed.value = igStore.igFeed.data;
     }
 );
 </script>
