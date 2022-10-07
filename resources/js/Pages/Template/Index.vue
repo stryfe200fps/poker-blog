@@ -24,22 +24,27 @@
                 <div class="title-section">
                     <h1><span>Talk to us</span></h1>
                 </div>
-                <form id="contact-form">
+                <form id="contact-form" @submit.prevent="submitMessage">
                     <div class="row">
                         <div class="col-md-4">
                             <label for="name">Name*</label>
-                            <input id="name" name="name" type="text" />
+                            <input type="text" v-model="name" required />
                         </div>
                         <div class="col-md-4">
                             <label for="mail">E-mail*</label>
-                            <input id="mail" name="mail" type="text" />
+                            <input
+                                type="email"
+                                class="contact-email"
+                                v-model="email"
+                                required
+                            />
                         </div>
                         <div class="col-md-4">
                             <label for="subject">Subject*</label>
                             <select
-                                name="subject"
-                                id="subject"
                                 class="contact-subject"
+                                v-model="subject"
+                                required
                             >
                                 <option selected disabled>
                                     Select Subject
@@ -64,8 +69,8 @@
                         </div>
                     </div>
                     <label for="comment">Your Message*</label>
-                    <textarea id="comment" name="comment"></textarea>
-                    <button type="submit" id="submit-contact">
+                    <textarea v-model="message" required></textarea>
+                    <button type="submit">
                         <i class="fa fa-paper-plane"></i> Send Message
                     </button>
                 </form>
@@ -84,10 +89,15 @@ import TournamentList from "../../Components/Frontend/Tournament/List.vue";
 
 import { useArticleStore } from "@/stores/article.js";
 import { onMounted, ref, watch } from "@vue/runtime-core";
+import axios from "axios";
 
 const articleStore = useArticleStore();
 
 const list = ref([]);
+const name = ref(null);
+const email = ref(null);
+const subject = ref(null);
+const message = ref(null);
 
 const props = defineProps({
     page: {
@@ -95,6 +105,24 @@ const props = defineProps({
         default: {},
     },
 });
+
+async function submitMessage() {
+    try {
+        const { data } = await axios.post("api/contact", {
+            name: name.value,
+            email: email.value,
+            subject: subject.value,
+            message: message.value,
+        });
+        name.value = null;
+        email.value = null;
+        subject.value = null;
+        message.value = null;
+        alert("Message has been sent.");
+    } catch (error) {
+        console.error(error.response.data.message);
+    }
+}
 </script>
 
 <style scoped>
@@ -102,6 +130,7 @@ const props = defineProps({
     padding: unset !important;
 }
 
+.contact-email,
 .contact-subject {
     display: block;
     width: 100%;
@@ -114,5 +143,10 @@ const props = defineProps({
     outline: none;
     border: 1px solid #e1e1e1;
     transition: all 0.2s ease-in-out;
+}
+
+.contact-form-box #contact-form input.contact-input--error {
+    border-width: 2px;
+    border-color: #f44336;
 }
 </style>
