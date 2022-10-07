@@ -23,12 +23,13 @@ class Article extends Model implements HasMedia
     {
         $this->addMediaConversion('main-image')
             ->width(424)
-            ->height(285);
+            ->height(285)
+            ->nonQueued();
 
         $this->addMediaConversion('main-thumb')
             ->width(337)
             ->height(225)
-            ;
+            ->nonQueued();
     }
 
     public function tags()
@@ -67,7 +68,6 @@ class Article extends Model implements HasMedia
         return Carbon::parse($value)->setTimezone(session()->get('timezone') ?? 'UTC');
     }
 
-
     public function getImageAttribute($value)
     {
         return $this->getFirstMediaUrl('article', 'main-image');
@@ -82,8 +82,12 @@ class Article extends Model implements HasMedia
             return false;
 
         $this->media()->delete();
+
         $this->addMediaFromBase64($value)
             ->toMediaCollection('article');
+
+        $this->media();
+
     }
 
     public function article_tags()

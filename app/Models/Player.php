@@ -18,7 +18,8 @@ class Player extends Model implements HasMedia
     {
         $this->addMediaConversion('avatar')
             ->width(800)
-            ->height(800);
+            ->height(800)
+            ->nonQueued();
     }
 
     protected $guarded = ['id'];

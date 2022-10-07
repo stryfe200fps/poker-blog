@@ -117,7 +117,6 @@ class EventCrudController extends CrudController
 
         CRUD::field('description');
 
-
         $this->crud->addField([
 
             'name' => 'image',
