@@ -218,8 +218,7 @@ class ArticleCrudController extends CrudController
                 'wrapper' => [
                     'class' => 'form-group col-md-12',
                 ],
-
-            ],
+                ],
                 [
                 'label' => 'Tags',
                 'type' => 'relationship',

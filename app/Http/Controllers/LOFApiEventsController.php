@@ -25,7 +25,7 @@ class LOFApiEventsController extends Controller
         // ->where('date_end', '>=', $dateNow)->get());
 
         return  LOFApiEventIndexResource::collection(Event::latest()
-        ->limit(2)->get());
+        ->paginate(2));
         //
     }
 

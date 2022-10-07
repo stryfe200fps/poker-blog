@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use App\Traits\GroupedLastScope;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class EventChip extends Model
 {
@@ -67,6 +68,16 @@ class EventChip extends Model
         $q->where('player_id', $this->player_id);
 
         return $q->where('event_report_id', '<', $this->event_report_id)->orderBy('id', 'desc')->first()->current_chips ?? 0;
+    }
+
+    public function setDatePublishedAttribute($value) 
+    {
+        $this->attributes['date_published'] = Carbon::parse($value, session()->get('timezone') ?? 'UTC')->setTimezone('UTC');
+    }
+
+    public function getDatePublishedAttribute($value)
+    {
+        return Carbon::parse($value)->setTimezone(session()->get('timezone') ?? 'UTC');
     }
 
     protected static function booted()
