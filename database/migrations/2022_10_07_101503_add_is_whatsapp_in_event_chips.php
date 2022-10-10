@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::table('event_chips', function (Blueprint $table) {
 
             try {
-                $table->boolean('is_whatsapp')->default(0);
+                // $table->boolean('is_whatsapp')->default(0);
             } catch ( Exception $e) {
 
             }
