@@ -5,9 +5,30 @@ import SideBar from "../Components/Frontend/MainContent/SideBar.vue";
 
 import { Head, Link } from "@inertiajs/inertia-vue3";
 
+import { onMounted } from "@vue/runtime-core";
+
+import Echo from 'laravel-echo'
+
 defineProps({
     title: String,
 });
+
+	window.Echo.channel('report')
+		.listen('NewReport', (e) => {
+			console.log(e)
+			alert('bugitong')
+	})
+
+onMounted(() => {
+
+})
+
+
+// window.Echo.channel("report").listen("NewReport", (e) => {
+// 		console.log(e);
+// });
+
+
 </script>
 
 <template>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\NewReport;
 use Carbon\Carbon;
 use App\Models\Article;
 use Illuminate\Http\Request;
@@ -312,6 +313,10 @@ public function store(Request $request)
     // session()->put('new_article', 'a new article');
 
     session()->flash('new_article', $item->id);
+
+		// dd('tubul');
+	NewReport::dispatch();
+		// dd('asd');
 
     \Alert::success(trans('backpack::crud.insert_success'))->flash();
 

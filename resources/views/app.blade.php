@@ -56,4 +56,12 @@
        
     </body>
 
+<script>
+
+	window.addEventListener('load', function () {
+		
+	});
+
+</script>
+
 </html>

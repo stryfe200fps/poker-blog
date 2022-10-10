@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\NewReport;
 use Inertia\Inertia;
 use App\Models\Article;
 use App\Models\EventChip;
@@ -16,6 +17,14 @@ use Backpack\PageManager\app\Models\Page;
 use App\Http\Resources\LOFApiEventReportsResource;
 use App\Models\MenuItem;
 use Backpack\Settings\app\Models\Setting;
+
+Route::get('/attack', function () {
+
+	NewReport::dispatch('love it ');
+
+	return 'attacked';
+
+});
 
 Route::get('/', function () {
 
