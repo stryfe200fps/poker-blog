@@ -20,7 +20,7 @@
                                 :src="tag.thumb_image"
                                 :alt="tag.thumb_image"
                             />
-                            <img v-else :src="defaultImg" alt="" />
+                            <img v-else :src="defaultImg" :alt="defaultImg" />
                             <div class="hover-box">
                                 <h2>
                                     <Link :href="'/article/show/' + tag.slug">{{

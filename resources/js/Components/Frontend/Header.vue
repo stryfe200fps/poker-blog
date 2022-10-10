@@ -94,8 +94,8 @@
                                         'router-link-active':
                                             pathname == menu.link,
                                     }"
-                                    :href="menu.link"
-                                    v-if="menu.link"
+                                    :href="'/' + menu.link"
+                                    v-if="!menu.children.length"
                                 >
                                     {{ menu.name }}
                                 </Link>
@@ -117,13 +117,17 @@
                                         :key="children.id"
                                     >
                                         <Link
-                                            :href="children.link"
+                                            :href="
+                                                '/' +
+                                                menu.link +
+                                                '/' +
+                                                children.link
+                                            "
                                             style="
                                                 background: rgb(239, 239, 239);
                                             "
+                                            >{{ children.name }}</Link
                                         >
-                                            {{ children.name }}
-                                        </Link>
                                     </li>
                                 </ul>
                             </li>
@@ -302,8 +306,8 @@ header.active .nav-list-container {
     opacity: 1;
 }
 
-.navbar-nav > li > a:hover,
-.navbar-nav > li > a:hover::after {
+.navbar-nav > li > a:not(.router-link-active):hover,
+.navbar-nav > li > a:not(.router-link-active):hover::after {
     color: #f44336 !important;
 }
 

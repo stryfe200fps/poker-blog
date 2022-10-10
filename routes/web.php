@@ -199,6 +199,29 @@ Route::post('upload_excel', function () {
 // });
 
 
+foreach (MenuItem::getTree() as $item) {
+
+    // if (!$item->parent_id == null && !$item->name == 'News & Info')
+    // return; 
+   
+
+
+    if ($item->link == null)
+    return ;
+
+    foreach ($item->children as $child) {
+       
+        Route::get($item->link. '/' .$child->link, function () use ($child) {
+            return Inertia::render('Categories/CategoryPage', [
+                'title' => $child->name,
+                'description' => $child->name,
+                'page' => $child->link
+            ]);
+        });
+    }
+    
+}
+
 Route::get('/{page}/{other?}', function ($page, $other = null) {
 
 //     @foreach (\App\MenuItem::getTree(); as $item)
@@ -221,3 +244,4 @@ Route::get('/{page}/{other?}', function ($page, $other = null) {
 
 
 });
+
