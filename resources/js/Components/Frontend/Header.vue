@@ -1,5 +1,5 @@
 <template>
-    <header ref="sticky" class="clearfix">
+    <header ref="sticky" class="clearfix" style="z-index: auto !important">
         <nav
             class="navbar navbar-default navbar-static-top custom-header--bg"
             role="navigation"
