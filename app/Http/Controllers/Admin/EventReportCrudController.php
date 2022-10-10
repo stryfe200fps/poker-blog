@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\NewReport;
 use DateTime;
 use Carbon\Carbon;
 use App\Models\Event;
@@ -401,14 +402,14 @@ public function fetchTags()
     {
         return $this->fetch(
 
-            [
+        [
           'model' =>  \App\Models\Level::class,
           'paginate' => 10,
           'searchOperator' => 'LIKE',
           'query' => function ($model) {
             return $model->where('event_id', session()->get('event_id'));
           }
-            ]
+        ]
         );
     }
 
@@ -466,6 +467,8 @@ public function fetchTags()
         session()->flash('new_reports', $item->id);
 
         \Alert::success(trans('backpack::crud.insert_success'))->flash();
+
+        NewReport::dispatch();
 
         $this->crud->setSaveAction();
 

@@ -21,7 +21,7 @@ class NewReport implements ShouldBroadcast
      */
     public function __construct(public string $message)
     {
-        //
+
     }
 
     /**

@@ -33,8 +33,8 @@ window.Echo = new Echo({
     enabledTransports: ['ws', 'wss'],
 });
 
-window.Echo.channel("report").listen("NewReport", (e) => {
-    console.log(e);
-	alert('pakyu')
-});
+// window.Echo.channel("report").listen("NewReport", (e) => {
+//     alert('new event baby boy')
+// });
+
 

@@ -19,9 +19,7 @@ use App\Models\MenuItem;
 use Backpack\Settings\app\Models\Setting;
 
 Route::get('/attack', function () {
-
 	NewReport::dispatch('love it ');
-
 	return 'attacked';
 
 });
@@ -31,7 +29,6 @@ Route::get('/', function () {
         'description' => 'Home page',
         'url' => config('app.url'),
     ]);
-
 
     return Inertia::render('Index',[  
         'title' => 'Life of poker',

@@ -37,6 +37,7 @@ onMounted(() => {
     </Head>
     <div id="container" class="active">
         <Header />
+       
         <main>
             <section class="block-wrapper">
                 <div class="container">
