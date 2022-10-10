@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\PayoutController;
 use App\Http\Controllers\ContactUsController;
+use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\Api\ArticleController;
 use App\Http\Controllers\PageManagerController;
 use App\Http\Controllers\SocialMediaController;
@@ -61,4 +62,6 @@ Route::get('twitter', [SocialMediaController::class, 'fetchTwitter' ]);
 Route::get('instagram', [SocialMediaController::class, 'fetchInstagram' ]);
 
 Route::post('contact', [ContactUsController::class , 'store']);
+Route::post('subscribe', [NewsletterController::class , 'store']);
+
 Route::get('payout/{player_id}/{event}',[ PayoutController::class , 'player'] ) ;
