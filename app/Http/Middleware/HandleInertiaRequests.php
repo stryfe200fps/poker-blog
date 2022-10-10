@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Inertia\Middleware;
 use App\Models\MenuItem;
+use App\Models\ArticleCategory;
 use Illuminate\Http\Request;
 use Butschster\Head\Contracts\MetaTags\MetaInterface;
 
@@ -43,7 +44,8 @@ class HandleInertiaRequests extends Middleware
     {
         return array_merge(parent::share($request), [
             'title' => fn (MetaInterface $meta) => ($meta->toArray()['head'][0]['content']),
-            'menu' => MenuItem::getTree()
+            'menu' => MenuItem::getTree(),
+            'category' => MenuItem::getTree()->where('link', 'news')->first()->children
         ]);
     }
 }
