@@ -468,7 +468,7 @@ public function fetchTags()
 
         \Alert::success(trans('backpack::crud.insert_success'))->flash();
 
-        NewReport::dispatch();
+        NewReport::dispatch('new report');
 
         $this->crud->setSaveAction();
 
