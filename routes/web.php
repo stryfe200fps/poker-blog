@@ -19,9 +19,8 @@ use App\Models\MenuItem;
 use Backpack\Settings\app\Models\Setting;
 
 Route::get('/attack', function () {
-	NewReport::dispatch('love it ');
+	NewReport::dispatch('new report sent');
 	return 'attacked';
-
 });
 
 Route::get('/', function () {
