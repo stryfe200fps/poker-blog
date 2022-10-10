@@ -46,11 +46,10 @@ class ChipCountCrudController extends CrudController
                 \Alert::error('Dates is incorrect')->flash();
                 return back();
             }
-            $test = $this->crud->query
-            ->whereNull('event_report_id')
-            ->lastPerGroup(['player_id'])
-                ;
-
+            $this->crud->query =  $this->crud->query
+            ->where('event_id', session()->get('event_id'))
+            ->orderByDesc('date_published')
+            ->lastPerGroup(['player_id']);
 
             CRUD::setEntityNameStrings('chips', $getEvent->title);
 
@@ -201,6 +200,25 @@ class ChipCountCrudController extends CrudController
             'type' => 'text',
             'label' => 'chips',
         ]);
+
+        CRUD::addField(
+            [   
+                'name' => 'date_published',
+                'label' => 'Date',
+                'type' => 'datetime_picker',
+                'default' => 'now',
+                'datetime_picker_options' => [
+                    'format' => 'MMM D, YYYY hh:mm a',
+                    'tooltips' => [ //use this to translate the tooltips in the field
+                        'selectDate' => 'Selecione a data',
+                    ],
+                ],
+                'allows_null' => false,
+                'wrapper' => [
+                    'class' => 'form-group col-md-12',
+                ],
+            ]
+        );
 
         // $this->crud->addField([
         //     'name' =>  'current_chips',

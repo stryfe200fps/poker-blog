@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\NewReport;
 use Inertia\Inertia;
 use App\Models\Article;
 use App\Models\EventChip;
@@ -17,12 +18,17 @@ use App\Http\Resources\LOFApiEventReportsResource;
 use App\Models\MenuItem;
 use Backpack\Settings\app\Models\Setting;
 
+Route::get('/attack', function () {
+	NewReport::dispatch('love it ');
+	return 'attacked';
+
+});
+
 Route::get('/', function () {
     $webPage =  \JsonLd\Context::create('web_page', [
         'description' => 'Home page',
         'url' => config('app.url'),
     ]);
-
 
     return Inertia::render('Index',[  
         'title' => 'Life of poker',

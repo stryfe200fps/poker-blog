@@ -66,6 +66,9 @@ class EventChipCrudController extends CrudController
         CRUD::field('name');
         CRUD::field('current_chips');
         CRUD::field('chips_before');
+        CRUD::field('date_published')->date;
+
+
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:

@@ -5,9 +5,30 @@ import SideBar from "../Components/Frontend/MainContent/SideBar.vue";
 
 import { Head, Link } from "@inertiajs/inertia-vue3";
 
+import { onMounted } from "@vue/runtime-core";
+
+import Echo from 'laravel-echo'
+
 defineProps({
     title: String,
 });
+
+	window.Echo.channel('report')
+		.listen('NewReport', (e) => {
+			console.log(e)
+			alert('Event added')
+	})
+
+onMounted(() => {
+
+})
+
+
+// window.Echo.channel("report").listen("NewReport", (e) => {
+// 		console.log(e);
+// });
+
+
 </script>
 
 <template>
@@ -16,6 +37,7 @@ defineProps({
     </Head>
     <div id="container" class="active">
         <Header />
+       
         <main>
             <section class="block-wrapper">
                 <div class="container">
