@@ -244,8 +244,8 @@
 
 <script setup>
 import Tweet from "vue-tweet";
-import { useTwitterStore } from "@/stores/twitter.js";
-import { useIGStore } from "@/stores/instagram.js";
+import { useTwitterStore } from "@/Stores/twitter.js";
+import { useIGStore } from "@/Stores/instagram.js";
 import { computed, onMounted, ref, watch } from "@vue/runtime-core";
 
 const twitterStore = useTwitterStore();

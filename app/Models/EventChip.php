@@ -58,16 +58,12 @@ class EventChip extends Model
 
     public function getPreviousReportAttribute($value)
     {
-        if ($this->attributes['event_report_id'] === null) {
-            return;
-        }
 
-        $q = $this
-        ->whereNotNull('event_report_id');
+        $q = $this->where('player_id', $this->player_id);
+        $q->where('event_id', $this->event_id);
 
-        $q->where('player_id', $this->player_id);
+        return $q->where('id', '!=', $this->id)->where('date_published', '<' , $this->date_published)->orderBy('date_published', 'desc')->first()->current_chips ?? 0;
 
-        return $q->where('event_report_id', '<', $this->event_report_id)->orderBy('id', 'desc')->first()->current_chips ?? 0;
     }
 
     public function setDatePublishedAttribute($value) 

@@ -3,6 +3,7 @@
 use App\Events\NewReport;
 use Inertia\Inertia;
 use App\Models\Article;
+use App\Models\Player;
 use App\Models\EventChip;
 use App\Models\EventPayout;
 use App\Models\EventReport;
@@ -148,7 +149,7 @@ Route::post('prepare', function () {
         $realName = request()->all()['file']->getClientOriginalName();
         request()->all()['file']->move('uploads', $realName);
         $collection = (new FastExcel)->import('uploads/'.$realName);
-        $header = array_values(collect(Schema::getColumnListing('event_payouts'))->filter(fn ($z) => $z == 'player_id' || $z == 'prize' || $z == 'country')->toArray());
+        $header = array_values(collect(Schema::getColumnListing('event_payouts'))->filter(fn ($z) => $z == 'player_id' || $z == 'prize' || $z == 'position')->toArray());
 
         return [
             'excel_header' => array_keys($collection[0]),
@@ -162,7 +163,8 @@ Route::post('prepare', function () {
 });
 
 Route::post('upload_excel', function () {
-    if (! request()->all()['checkbox_overwrite']) {
+
+    if (request()->all()['checkbox_overwrite'] === 'true') {
         EventPayout::where('event_id', request()->all()['event_id'])->delete();
     }
 
@@ -176,11 +178,12 @@ Route::post('upload_excel', function () {
 
             $playerArray = explode(' ', trim($player));
 
-            if (is_countable($playerArray) && count($playerArray) === 2) {
-                $player = Player::where('name', $playerArray[0].' '.$playerArray[1])->first();
+            if (is_countable($playerArray)) {
+                $player = Player::where('name', implode(" ", $playerArray))->first();
                 if ($player !== null) {
                     $save = EventPayout::create([
                         'prize' => $line[array_values(collect($currentHeader)->filter(fn ($a) => array_key_first($a) === 'prize')->toArray())[0]['prize']],
+                        'position' => $line[array_values(collect($currentHeader)->filter(fn ($a) => array_key_first($a) === 'position')->toArray())[0]['position']],
                         'event_id' => request()->all()['event_id'],
                         'player_id' => $player->id,
                     ]);
@@ -194,17 +197,14 @@ Route::post('upload_excel', function () {
     }
 });
 
-// Route::get('instagram/auth/callback', function () {
-//     return redirect('/');
-// });
 
+try { 
 
-foreach (MenuItem::getTree() as $item) {
+foreach (MenuItem::getTree()  as $item) {
+
 
     // if (!$item->parent_id == null && !$item->name == 'News & Info')
     // return; 
-   
-
 
     if ($item->link == null)
     return ;
@@ -221,6 +221,12 @@ foreach (MenuItem::getTree() as $item) {
     }
     
 }
+}
+catch (Exception $e) 
+{
+
+}
+
 
 Route::get('/{page}/{other?}', function ($page, $other = null) {
 

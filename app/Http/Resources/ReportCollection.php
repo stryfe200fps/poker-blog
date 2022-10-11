@@ -26,7 +26,6 @@ class ReportCollection extends ResourceCollection
                 }),
             ];
             return $result;
-
         }, collect([]))->toArray();
 
 

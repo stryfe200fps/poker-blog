@@ -6,7 +6,7 @@ import Footer from '../Components/Frontend/Footer.vue';
 import FrontLayout from '../Layouts/FrontLayout.vue';
 import SideBar from '../Components/Frontend/MainContent/SideBar.vue';
 import MainBar from '../Components/Frontend/MainContent/MainBar.vue';
-import { useArticleStore } from '../stores/article.js'
+import { useArticleStore } from '@/Stores/article.js'
 import { onMounted } from '@vue/runtime-core';
 
 const articleStore = useArticleStore()

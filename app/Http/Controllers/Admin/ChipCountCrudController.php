@@ -48,6 +48,7 @@ class ChipCountCrudController extends CrudController
             }
             $this->crud->query =  $this->crud->query
             ->where('event_id', session()->get('event_id'))
+            ->where('event_report_id', 0)
             ->orderByDesc('date_published')
             ->lastPerGroup(['player_id']);
 

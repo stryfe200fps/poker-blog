@@ -59,6 +59,8 @@
 
 
 <script defer src="https://unpkg.com/filepond-plugin-image-crop/dist/filepond-plugin-image-crop.js"></script>
+
+<script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
 <script defer src="https://unpkg.com/filepond-plugin-image-transform/dist/filepond-plugin-image-transform.js"></script>
 <script defer src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
 <script defer src="https://unpkg.com/filepond/dist/filepond.js"></script>
@@ -140,7 +142,7 @@
     mounted() {
     this.tab = 0
 
-  // FilePond.registerPlugin(FilePondPluginImagePreview)
+  FilePond.registerPlugin(FilePondPluginFileValidateType)
     // FilePond.registerPlugin(FilePondPluginImageCrop);
     // FilePond.registerPlugin(FilePondPluginImageTransform);
 
@@ -156,12 +158,11 @@
      
     this.filepond.setOptions({
       allowRevert: false,
+      acceptedFileTypes: ['image/png'],
 
         server: {
-        
           process: (fieldName, file, metadata, load, error, progress, abort, transfer, options) => {
 
-           
             const formData = new FormData();
 
             formData.append('event_id',  {{ $widget['eventId'] }} ) 
@@ -171,25 +172,45 @@
             const request = new XMLHttpRequest();
             request.open('POST', '/api/events/gallery/upload');
 
+            request.timeout = 3000
+
+
             request.upload.onprogress = (e) => {
               progress(e.lengthComputable, e.loaded, e.total);
-              
             };
+
+  
             request.onload =  () => {
               if (request.status >= 199 && request.status < 300) {
                 load(request.responseText);
                 this.fetchGallery()
-              } 
+              } else if (request.status >= 400)  {
+                error('wala tangina mo')
+              }
             };
+
+            // request.onerror = () => {
+            //   alert('error')
+            // }
+
+         
+
             request.send(formData);
             return {
               abort: () => {
+
+                alert('error')
+                console.log(request)
                 request.abort();
-                abort
+
+                // alert('wrong')
+                // abort
               }
             }
 
-          }
+          },
+
+          timeout: 6000
        
         } 
       });

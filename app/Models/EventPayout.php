@@ -11,7 +11,7 @@ class EventPayout extends Model
     use CrudTrait;
     use HasFactory;
 
-    protected $fillable = ['prize', 'event_id', 'player_id', 'poker_event_id', 'source', 'position'];
+    protected $fillable = ['prize', 'event_id', 'player_id', 'position'];
 
     public function event()
     {

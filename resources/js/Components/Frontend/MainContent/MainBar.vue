@@ -1,8 +1,8 @@
 <script setup>
 import defaultImg from "/public/default-img.png";
 import { Head, Link } from "@inertiajs/inertia-vue3";
-import { useArticleStore } from "@/stores/article.js";
-import { useEventStore } from "@/stores/event.js";
+import { useArticleStore } from "@/Stores/article.js";
+import { useEventStore } from "@/Stores/event.js";
 import { onMounted } from "@vue/runtime-core";
 
 const articleStore = useArticleStore();

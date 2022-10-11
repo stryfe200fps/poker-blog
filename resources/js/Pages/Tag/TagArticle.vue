@@ -46,7 +46,7 @@
 import FrontLayout from "@/Layouts/FrontLayout.vue";
 import defaultImg from "/public/default-img.png";
 import { Link } from "@inertiajs/inertia-vue3";
-import { useTagStore } from "@/stores/tag.js";
+import { useTagStore } from "@/Stores/tag.js";
 import { onMounted, ref, watch } from "@vue/runtime-core";
 
 const props = defineProps({

@@ -54,7 +54,8 @@ class PayoutCrudController extends CrudController
             $this->crud->denyAccess('create');
         }
 
-        $this->crud->orderBy('position', 'ASC');
+        // $this->crud->orderBy('position', 'ASC')->withCasts(['position' => 'integer']) ;
+
     }
 
     /**
@@ -66,12 +67,17 @@ class PayoutCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        // $this->crud->setModel( Payout::where('poker_event_id', session()->get('event_id'))->get() );
-
-
-
         $this->crud->addClause('where', 'event_id', session()->get('payout_event_id'));
 
+
+        // $this->crud->addColumn([
+        //     'name' => 'position',
+        //     'type' => 'number',
+        //     'orderable'  => true,
+        //     'orderLogic' => function ($query, $column, $columnDirection) {
+        //         return $query->withCasts(['positioned' => 'integer'])->orderBy('position', 'DESC')->select('event_payouts.*');
+        //     }
+        // ]);
         $this->crud->addColumn([
             'name' => 'player_id',
             'type' => 'relationship',
@@ -103,6 +109,7 @@ class PayoutCrudController extends CrudController
             ],
             'auto_update_row' => true, // update related columns in same row, after the AJAX call?
         ]);
+
 
         CRUD::addColumn([
             'name' => 'position',
@@ -182,16 +189,16 @@ class PayoutCrudController extends CrudController
             'type' => 'number',
         ]);
 
-        $this->crud->addField([
-            'name' => 'source',
-            'label' => 'Source',
-            'type' => 'select2_from_array',
-            'value' => 'normal',
-            'options' => [
-                'normal' => 'normal',
-                'whatsapp' => 'whatsapp',
-            ],
-        ]);
+        // $this->crud->addField([
+        //     'name' => 'source',
+        //     'label' => 'Source',
+        //     'type' => 'select2_from_array',
+        //     'value' => 'normal',
+        //     'options' => [
+        //         'normal' => 'normal',
+        //         'whatsapp' => 'whatsapp',
+        //     ],
+        // ]);
 
         $this->crud->addField([
             'name' => 'position',
@@ -225,6 +232,7 @@ class PayoutCrudController extends CrudController
         if ($payout->count()) {
             $payout = $payout->first();
             $payout->prize = $currentRequest['prize'];
+            $payout->position = $currentRequest['position'];
             $payout->save();
 
             \Alert::success(trans('backpack::crud.insert_success'))->flash();

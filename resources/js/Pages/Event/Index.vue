@@ -60,8 +60,8 @@ import ReportList from "../../Components/Frontend/Report/ReportList.vue";
 import SideBar from "../../Components/Frontend/MainContent/SideBar.vue";
 import TournamentList from "../../Components/Frontend/Tournament/List.vue";
 
-import { useEventStore } from "@/stores/event.js";
-import { useTournamentStore } from "@/stores/tournament.js";
+import { useEventStore } from "@/Stores/event.js";
+import { useTournamentStore } from "@/Stores/tournament.js";
 import { onMounted, ref, watch } from "@vue/runtime-core";
 
 const eventStore = useEventStore();

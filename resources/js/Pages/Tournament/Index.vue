@@ -26,7 +26,7 @@ import ReportList from "../../Components/Frontend/Report/ReportList.vue";
 import SideBar from "../../Components/Frontend/MainContent/SideBar.vue";
 import TournamentList from "../../Components/Frontend/Tournament/List.vue";
 
-import { useTournamentStore } from "@/stores/tournament.js";
+import { useTournamentStore } from "@/Stores/tournament.js";
 import { onMounted, ref, watch } from "@vue/runtime-core";
 
 const tournamentStore = useTournamentStore();

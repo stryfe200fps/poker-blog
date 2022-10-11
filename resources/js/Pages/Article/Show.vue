@@ -270,7 +270,7 @@ import ReportList from "../../Components/Frontend/Report/ReportList.vue";
 import SideBar from "../../Components/Frontend/MainContent/SideBar.vue";
 import TournamentList from "../../Components/Frontend/Tournament/List.vue";
 
-import { useArticleStore } from "@/stores/article.js";
+import { useArticleStore } from "@/Stores/article.js";
 import { onMounted, ref, watch } from "@vue/runtime-core";
 import defaultImg from "/public/default-img.png";
 const articleStore = useArticleStore();

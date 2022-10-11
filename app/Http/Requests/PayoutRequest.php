@@ -26,7 +26,7 @@ class PayoutRequest extends FormRequest
     {
         return [
             'prize' => 'required|integer',
-            'title' => 'title',
+            'position' => 'required|integer',
         ];
     }
 

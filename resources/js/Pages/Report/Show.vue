@@ -397,7 +397,7 @@ import sunRays from "@/photo_templates/sunrays.png";
 import waterLeaves from "@/photo_templates/water-leaves.png";
 import waterWaves from "@/photo_templates/water-waves.png";
 import moment from "moment";
-import { useEventStore } from "@/stores/event.js";
+import { useEventStore } from "@/Stores/event.js";
 import { onMounted, ref, watch } from "@vue/runtime-core";
 
 const eventStore = useEventStore();

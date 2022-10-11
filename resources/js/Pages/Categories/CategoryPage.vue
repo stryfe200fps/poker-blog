@@ -77,7 +77,7 @@
 import FrontLayout from "@/Layouts/FrontLayout.vue";
 import defaultImg from "/public/default-img.png";
 import { Link } from "@inertiajs/inertia-vue3";
-import { useCategoryStore } from "@/stores/category.js";
+import { useCategoryStore } from "@/Stores/category.js";
 import { onMounted, ref, watch, computed } from "@vue/runtime-core";
 
 const props = defineProps({
