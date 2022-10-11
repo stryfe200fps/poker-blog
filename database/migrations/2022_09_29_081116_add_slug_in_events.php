@@ -14,13 +14,10 @@ return new class extends Migration
     public function up()
     {
         try {
-
-        Schema::table('events', function (Blueprint $table) {
-            $table->string('slug')->nullable();
-        });
-
+            Schema::table('events', function (Blueprint $table) {
+                $table->string('slug')->nullable();
+            });
         } catch(Exception $e) {
-
         }
     }
 

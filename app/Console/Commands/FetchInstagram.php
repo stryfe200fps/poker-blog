@@ -2,8 +2,6 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Log\Logger;
-use App\Models\SocialMedia;
 use Dymantic\InstagramFeed\Profile;
 use Exception;
 use Illuminate\Console\Command;
@@ -32,15 +30,11 @@ class FetchInstagram extends Command
      */
     public function handle()
     {
-
-
-      try {
-
-        $profile = Profile::where('username', env('INSTAGRAM_USERNAME'))->firstOrFail()->refreshFeed(10);
-      } catch (Exception $e) {
-
-        Log::error('error in instagram in command');
-      }
+        try {
+            $profile = Profile::where('username', env('INSTAGRAM_USERNAME'))->firstOrFail()->refreshFeed(10);
+        } catch (Exception $e) {
+            Log::error('error in instagram in command');
+        }
 
     return Command::SUCCESS;
     }

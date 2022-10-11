@@ -3,13 +3,10 @@
 namespace App\Events;
 
 use App\Models\EventReport;
-use Illuminate\Broadcasting\Channel;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Broadcasting\PresenceChannel;
-use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Broadcasting\PrivateChannel;
+use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Queue\SerializesModels;
 
 class EventReportCreated
 {
@@ -20,21 +17,19 @@ class EventReportCreated
      *
      * @return void
      */
+    public string $tekila = 'tekila';
 
-     public string $tekila = 'tekila';
+    public EventReport $eventReport;
 
-     public EventReport $eventReport;
+    public int $tagId;
 
-     public int $tagId;
-
-     public int $reportId;
+    public int $reportId;
 
     public function __construct(EventReport $event, $tagId, $reportId)
     {
         $this->eventReport = $event;
         $this->tagId = $tagId;
         $this->reportId = $reportId;
-
     }
 
     /**

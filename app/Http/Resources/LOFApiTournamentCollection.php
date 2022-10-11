@@ -14,18 +14,16 @@ class LOFApiTournamentCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        $collection =collect(LOFApiTournamentResource::collection( $this->collection )) ;
-
+        $collection = collect(LOFApiTournamentResource::collection($this->collection));
 
         $statusPriorities = ['live', 'tba', 'upcoming', 'past'];
-        
-      $collection =  $collection->sortBy(function($order) use($statusPriorities){
-           return array_search($order['status'], $statusPriorities);
+
+        $collection = $collection->sortBy(function ($order) use ($statusPriorities) {
+            return array_search($order['status'], $statusPriorities);
         })->values()->all();
 
-
         return [
-            'data' => collect($collection)->toArray()
+            'data' => collect($collection)->toArray(),
         ];
     }
 }

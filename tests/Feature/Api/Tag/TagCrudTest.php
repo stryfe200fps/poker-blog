@@ -1,10 +1,6 @@
 <?php
 
-use App\Models\Article;
-use App\Models\ArticleAuthor;
-use App\Models\ArticleCategory;
 use App\Models\Tag;
-use App\Models\Tournament;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Role;
@@ -47,46 +43,45 @@ it('can insert tag if authenticated', function () {
     // $datas->assertSessionHasErrors('end_date');
 });
 
-
 it('can update tags if authenticated', function () {
-  $u = User::factory()->create();
-  $role = Role::create([
-      'name' => 'super-admin',
-  ]);
+    $u = User::factory()->create();
+    $role = Role::create([
+        'name' => 'super-admin',
+    ]);
 
-  $user = $this->actingAs(User::factory()->create(), 'web');
+    $user = $this->actingAs(User::factory()->create(), 'web');
 
-  backpack_user()->assignRole('super-admin');
+    backpack_user()->assignRole('super-admin');
 
-  $tagData = Tag::factory()->create([
-    'title' => 'news'
-  ]);
+    $tagData = Tag::factory()->create([
+        'title' => 'news',
+    ]);
 
-  $this->get('admin/tag/'.$tagData->id.'/edit')->assertStatus(200);
+    $this->get('admin/tag/'.$tagData->id.'/edit')->assertStatus(200);
 
-  $data = [
-      'id' => $tagData->id,
-      'title' => 'blog',
-  ];
+    $data = [
+        'id' => $tagData->id,
+        'title' => 'blog',
+    ];
 
-  $datas = $this->put('admin/tag/update', $data);
-  $this->assertDatabaseHas('tags', ['title' => 'blog',
-  ]);
+    $datas = $this->put('admin/tag/update', $data);
+    $this->assertDatabaseHas('tags', ['title' => 'blog',
+    ]);
 
-  expect($tagData->title === $data['title'])->toBeFalse();
-  $this->assertDatabaseCount('tags', 1);
+    expect($tagData->title === $data['title'])->toBeFalse();
+    $this->assertDatabaseCount('tags', 1);
 });
 
 it('can delete article if authenticated', function () {
-  $u = User::factory()->create();
-  $role = Role::create([
-      'name' => 'super-admin',
-  ]);
+    $u = User::factory()->create();
+    $role = Role::create([
+        'name' => 'super-admin',
+    ]);
 
-  $user = $this->actingAs(User::factory()->create(), 'web');
+    $user = $this->actingAs(User::factory()->create(), 'web');
 
-  backpack_user()->assignRole('super-admin');
-  Tag::factory()->create();
-  $this->get('admin/tag')->assertStatus(200);
-  $datas = $this->delete('admin/tag/1');
+    backpack_user()->assignRole('super-admin');
+    Tag::factory()->create();
+    $this->get('admin/tag')->assertStatus(200);
+    $datas = $this->delete('admin/tag/1');
 });

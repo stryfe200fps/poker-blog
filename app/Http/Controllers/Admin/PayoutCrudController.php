@@ -6,8 +6,6 @@ use App\Http\Requests\PayoutRequest;
 use App\Models\Country;
 use App\Models\Event;
 use App\Models\EventPayout;
-use App\Models\Payout;
-use App\Models\Player;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use Backpack\CRUD\app\Library\Widget;
@@ -55,7 +53,6 @@ class PayoutCrudController extends CrudController
         }
 
         // $this->crud->orderBy('position', 'ASC')->withCasts(['position' => 'integer']) ;
-
     }
 
     /**
@@ -68,7 +65,6 @@ class PayoutCrudController extends CrudController
     protected function setupListOperation()
     {
         $this->crud->addClause('where', 'event_id', session()->get('payout_event_id'));
-
 
         // $this->crud->addColumn([
         //     'name' => 'position',
@@ -109,7 +105,6 @@ class PayoutCrudController extends CrudController
             ],
             'auto_update_row' => true, // update related columns in same row, after the AJAX call?
         ]);
-
 
         CRUD::addColumn([
             'name' => 'position',

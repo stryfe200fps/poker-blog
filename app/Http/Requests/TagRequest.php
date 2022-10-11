@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class TagRequest extends FormRequest
 {
@@ -26,8 +26,8 @@ class TagRequest extends FormRequest
     public function rules()
     {
         return [
-             'title' => [
-                    'required',
+            'title' => [
+                'required',
                 Rule::unique('tags')->ignore(request()->get('id')), ],
         ];
     }

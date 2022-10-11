@@ -26,7 +26,7 @@ class LOFApiEventsResource extends JsonResource
             'title' => $this->title,
             'description' => $this->description,
             'image' => $this->image,
-            'schedule' => $this->schedule
+            'schedule' => $this->schedule,
         ];
     }
 }

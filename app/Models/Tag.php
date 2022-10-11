@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Tag extends Model
 {
@@ -20,7 +20,6 @@ class Tag extends Model
             ->saveSlugsTo('slug');
     }
 
-
     protected $guarded = [
         'id',
     ];
@@ -34,7 +33,6 @@ class Tag extends Model
     {
         return $this->morphedByMany(EventReport::class, 'taggable');
     }
-
 
     // public function tags()
     // {

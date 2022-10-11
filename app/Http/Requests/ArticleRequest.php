@@ -25,12 +25,8 @@ class ArticleRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => [
-                'required',
-                // Rule::unique('organizations')->ignore(request()->get('id')),
-            ],
+            'title' => 'required',
             'article_categories' => 'required',
-            'body' => 'required',
             'published_date' => 'required',
         ];
     }
@@ -57,7 +53,6 @@ class ArticleRequest extends FormRequest
         return [
             'title.required' => 'Title is required',
             'article_category.required' => 'Category is required',
-            'body.required' => 'Content is required',
             'published_date.required' => 'Published date is required',
         ];
     }

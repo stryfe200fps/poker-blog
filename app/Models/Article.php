@@ -3,14 +3,14 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Support\Str;
-use Spatie\Sluggable\HasSlug;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\Sluggable\SlugOptions;
-use Illuminate\Database\Eloquent\Model;
-use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 class Article extends Model implements HasMedia
 {
@@ -18,6 +18,10 @@ class Article extends Model implements HasMedia
     use \Backpack\CRUD\app\Models\Traits\CrudTrait;
     use HasFactory;
     use HasSlug;
+
+    protected $casts = [
+        'content' => 'json',
+    ];
 
     public function registerMediaConversions(?Media $media = null): void
     {
@@ -32,33 +36,43 @@ class Article extends Model implements HasMedia
             ->nonQueued();
     }
 
+    public function setContentAttribute($content)
+    {
+        $new = collect($content)->map(function ($item, $key) {
+            $item['body'] = '<div id="content'.$key.'">'.$item['body'].'</div>';
+
+            return $item;
+        });
+        $this->attributes['content'] = json_encode($new->toArray());
+    }
+
     public function tags()
     {
         return $this->morphToMany(Tag::class, 'taggable');
     }
 
-    public function relatedArticles($number = 5) 
+    public function relatedArticles($number = 5)
     {
-        return  Article::where('id', '!=', $this->id )->whereHas('tags', function ($query)  {
+        return  Article::where('id', '!=', $this->id)->whereHas('tags', function ($query) {
             $query->whereIn('slug', $this->tags()->get()->pluck('slug')->toArray());
         })
         ->inRandomOrder()
-        ->limit(3) 
+        ->limit(3)
         ->get();
     }
 
-    public function categoryArticles($number = 5) 
+    public function categoryArticles($number = 5)
     {
         // dd('asd');
         // return  Article::where('id', '!=', $this->id )->whereHas('article_categories', function ($query)  {
         //     $query->whereIn('slug', $this->article_categories()->get()->pluck('slug')->toArray());
         // })
         // ->inRandomOrder()
-        // ->limit(3) 
+        // ->limit(3)
         // ->get();
     }
 
-    public function setPublishedDateAttribute($value) 
+    public function setPublishedDateAttribute($value)
     {
         $this->attributes['published_date'] = Carbon::parse($value, session()->get('timezone') ?? 'UTC')->setTimezone('UTC');
     }
@@ -75,11 +89,13 @@ class Article extends Model implements HasMedia
 
     public function setImageAttribute($value)
     {
-        if ($value == null) 
+        if ($value == null) {
             $this->media()->delete();
+        }
 
-        if (preg_match("/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).base64,.*/", $value) == 0) 
+        if (preg_match("/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).base64,.*/", $value) == 0) {
             return false;
+        }
 
         $this->media()->delete();
 
@@ -87,20 +103,17 @@ class Article extends Model implements HasMedia
             ->toMediaCollection('article');
 
         $this->media();
-
     }
 
     public function article_tags()
     {
         return $this->belongsToMany(ArticleTag::class);
     }
-    
 
     public function getDiffAttribute($value)
     {
         return Carbon::parse($this->attributes['published_date'])->diffForHumans();
     }
-
 
     protected $guarded = ['id'];
 
@@ -129,17 +142,16 @@ class Article extends Model implements HasMedia
     protected static function booted()
     {
         static::created(function ($model) {
+            if ($model->slug == '') {
+                return;
+            }
 
-        if ($model->slug == '')
-            return;
-
-        $model->slug = Str::slug($model->slug);
-        $model->save();
+            $model->slug = Str::slug($model->slug);
+            $model->save();
         });
 
         static::updating(function ($model) {
-        $model->slug = Str::slug($model->slug);
+            $model->slug = Str::slug($model->slug);
         });
     }
-
 }

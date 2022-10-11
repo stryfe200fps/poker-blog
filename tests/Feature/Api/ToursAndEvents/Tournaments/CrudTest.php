@@ -1,12 +1,8 @@
 <?php
 
-use Carbon\Carbon;
-use App\Models\User;
 use App\Models\Article;
 use App\Models\Tournament;
-use App\Models\ArticleAuthor;
-use App\Models\ArticleCategory;
-use Spatie\Permission\Models\Role;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use function Pest\Faker\faker;
 
@@ -24,8 +20,6 @@ it('cannot create tournament if unauthenticated', function () {
 });
 
 it('can insert tournament if authenticated', function () {
-
-
     superAdminAuthenticate();
 
     $this->get('admin/poker-tournament/create')->assertStatus(200);
@@ -35,8 +29,8 @@ it('can insert tournament if authenticated', function () {
         'title' => 'my tournament',
 
         'timezone' => 'Asia/Manila',
-  'date_start' => Carbon::parse(faker()->dateTimeThisCentury())->toString() ,
-            'date_end' => Carbon::parse(faker()->dateTimeThisCentury())->toString()
+        'date_start' => Carbon::parse(faker()->dateTimeThisCentury())->toString(),
+        'date_end' => Carbon::parse(faker()->dateTimeThisCentury())->toString(),
 
     ]);
 
@@ -45,18 +39,16 @@ it('can insert tournament if authenticated', function () {
 });
 
 it('can update article if authenticated', function () {
-
     superAdminAuthenticate();
 
     $tournament = Tournament::factory()->create();
-
 
     $alteredTournament = Tournament::factory()->make([
         'title' => 'altered tournament',
         'timezone' => 'Asia/Manila',
         'id' => $tournament->id,
-  'date_start' => Carbon::parse(faker()->dateTimeThisCentury())->toString() ,
-            'date_end' => Carbon::parse(faker()->dateTimeThisCentury())->toString()
+        'date_start' => Carbon::parse(faker()->dateTimeThisCentury())->toString(),
+        'date_end' => Carbon::parse(faker()->dateTimeThisCentury())->toString(),
 
     ]);
 
@@ -69,7 +61,6 @@ it('can update article if authenticated', function () {
 });
 
 it('can delete tournament if authenticated', function () {
-
     superAdminAuthenticate();
 
     Tournament::factory()->create();

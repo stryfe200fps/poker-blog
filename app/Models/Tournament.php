@@ -3,10 +3,10 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Spatie\MediaLibrary\HasMedia;
-use Illuminate\Database\Eloquent\Model;
-use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Tournament extends Model implements HasMedia
@@ -35,18 +35,20 @@ class Tournament extends Model implements HasMedia
 
     public function setImageAttribute($value)
     {
-       if ($value == null) 
+        if ($value == null) {
             $this->media()->delete();
+        }
 
-        if (preg_match("/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).base64,.*/", $value) == 0) 
+        if (preg_match("/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).base64,.*/", $value) == 0) {
             return false;
+        }
 
         $this->media()->delete();
         $this->addMediaFromBase64($value)
             ->toMediaCollection('tournament');
     }
 
-    public function setDateStartAttribute($value) 
+    public function setDateStartAttribute($value)
     {
         $this->attributes['date_start'] = Carbon::parse($value, session()->get('timezone') ?? 'UTC')->setTimezone('UTC');
     }
@@ -56,24 +58,22 @@ class Tournament extends Model implements HasMedia
         return Carbon::parse($value)->setTimezone(session()->get('timezone') ?? 'UTC');
     }
 
-    public function setDateEndAttribute($value) 
+    public function setDateEndAttribute($value)
     {
-
         $this->attributes['date_end'] = Carbon::parse($value, session()->get('timezone') ?? 'UTC')->setTimezone('UTC');
     }
-    
+
     public function getDateEndAttribute($value)
     {
         return Carbon::parse($value)->setTimezone(session()->get('timezone') ?? 'UTC');
     }
 
-    
-
-    public function hasLiveEvents() 
+    public function hasLiveEvents()
     {
         foreach ($this->events()->get() as $event) {
-            if ($event->status() === 'live')
+            if ($event->status() === 'live') {
                 return 'live';
+            }
         }
 
         return 'past';
@@ -117,16 +117,12 @@ class Tournament extends Model implements HasMedia
 
     protected static function booted()
     {
-
         static::updating(function ($model) {
-
             // dd($model->date_start);
             // $model->date_start  = \Carbon\Carbon::parse($model->date_start, session()->get('timezone') ?? 'UTC')->setTimezone('UTC') ;
             // $model->date_end  = \Carbon\Carbon::parse($model->date_end, session()->get('timezone') ?? 'UTC')->setTimezone('UTC') ;
 
-
             // $request['date_end'] = $date2->setTimezone('UTC');
-
         });
     }
 }

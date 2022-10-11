@@ -3,19 +3,17 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Events\NewReport;
-use DateTime;
-use Carbon\Carbon;
+use App\Http\Requests\EventReportRequest;
+use App\Models\ArticleAuthor;
 use App\Models\Event;
 use App\Models\EventReport;
-use Illuminate\Http\Request;
-use App\Models\ArticleAuthor;
-use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\DB;
-use Backpack\CRUD\app\Library\Widget;
-use App\Http\Requests\EventReportRequest;
-use Illuminate\Support\Facades\Validator;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use Backpack\CRUD\app\Library\Widget;
+use DateTime;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 /**
  * Class LiveReportCrudController
@@ -40,7 +38,6 @@ class EventReportCrudController extends CrudController
     {
         CRUD::setModel(\App\Models\EventReport::class);
         CRUD::setRoute(config('backpack.base.route_prefix').'/report');
-
 
         $this->crud->denyAccess('show');
 
@@ -68,7 +65,6 @@ class EventReportCrudController extends CrudController
      */
     protected function setupShowOperation()
     {
-
         Widget::add()->type('script')->content('assets/js/admin/forms/image_condition.js');
         $this->setupListOperation();
     }
@@ -113,10 +109,8 @@ class EventReportCrudController extends CrudController
 
     protected function setupCreateOperation()
     {
-
-
         Widget::add()->type('script')->content('assets/js/admin/forms/image_condition.js');
-        if (!session()->get('event_id')) {
+        if (! session()->get('event_id')) {
             $this->crud->denyAccess('create');
         }
 
@@ -156,7 +150,7 @@ class EventReportCrudController extends CrudController
         $this->crud->addField([
             'name' => 'slug',
             'attributes' => [
-                'placeholder'=> config('app.slug_placeholder'),
+                'placeholder' => config('app.slug_placeholder'),
             ],
             'type' => 'text',
         ]);
@@ -176,33 +170,32 @@ class EventReportCrudController extends CrudController
                     'autoGrow_bottomSpace' => 50,
                     'removePlugins' => 'resize,maximize',
                 ],
-            ]]);
+            ], ]);
 
-            if ($this->crud->getCurrentOperation() == 'create') { 
+        if ($this->crud->getCurrentOperation() == 'create') {
             $this->crud->addField(
-            [
-                'name' => 'article_author_id',
-                'type' => 'select2',
-                'attribute' => 'fullname',
-                'value' => $author?->id ,
-                'label' => 'Author',
-                'wrapper' => [
-                    'class' => 'form-group col-md-12',
-                ],
-            ]);
-             } else {
+                [
+                    'name' => 'article_author_id',
+                    'type' => 'select2',
+                    'attribute' => 'fullname',
+                    'value' => $author?->id,
+                    'label' => 'Author',
+                    'wrapper' => [
+                        'class' => 'form-group col-md-12',
+                    ],
+                ]);
+        } else {
             $this->crud->addField(
-            [
-                'name' => 'article_author_id',
-                'type' => 'select2',
-                'attribute' => 'fullname',
-                'label' => 'Author',
-                'wrapper' => [
-                    'class' => 'form-group col-md-12',
-                ],
-            ]);
-
-             }
+                [
+                    'name' => 'article_author_id',
+                    'type' => 'select2',
+                    'attribute' => 'fullname',
+                    'label' => 'Author',
+                    'wrapper' => [
+                        'class' => 'form-group col-md-12',
+                    ],
+                ]);
+        }
 
         $this->crud->addFields([
 
@@ -234,9 +227,9 @@ class EventReportCrudController extends CrudController
                 'pivot' => true, // on create&update, do you need to add/delete pivot table entries?
                 'inline_create' => ['entity' => 'level'],
                 'ajax' => true,
-                   'minimum_input_length' => 0,
+                'minimum_input_length' => 0,
                 'allows_null' => true,
-                'value' => $this->crud->getCurrentOperation() === 'create' ? EventReport::lastLevel()->id ?? 0  : $this->crud->getCurrentEntry()->level->id,
+                'value' => $this->crud->getCurrentOperation() === 'create' ? EventReport::lastLevel()->id ?? 0 : $this->crud->getCurrentEntry()->level->id,
                 'wrapper' => [
                     'class' => 'form-group col-md-4',
                 ],
@@ -258,7 +251,7 @@ class EventReportCrudController extends CrudController
                 'value' => $event?->currentDay() ?? '',
                 'attributes' => [
                     'readonly' => 'readonly',
-                  ],
+                ],
                 'wrapper' => [
                     'class' => 'form-group col-md-2',
                 ],
@@ -315,7 +308,7 @@ class EventReportCrudController extends CrudController
                 'pivot' => true, // on create&update, do you need to add/delete pivot table entries?
                 'inline_create' => ['entity' => 'tag'],
                 'ajax' => true,
-                   'minimum_input_length' => 0,
+                'minimum_input_length' => 0,
                 'allows_null' => true,
                 // 'value' => $this->crud->getCurrentOperation() === 'update' ? $this->crud->getCurrentEntry()->level->id : $lastLevelId,
                 'wrapper' => [
@@ -327,11 +320,10 @@ class EventReportCrudController extends CrudController
                 //chip stack
                 'label' => 'Chip Counts',
                 'type' => 'repeatable',
-                
 
-            'attributes' => [
-            'id' => 'repeat'
-            ],
+                'attributes' => [
+                    'id' => 'repeat',
+                ],
                 'new_item_label' => 'add stack',
                 'tab' => 'Chip Stack',
                 'subfields' => [
@@ -370,9 +362,6 @@ class EventReportCrudController extends CrudController
             ],
         ]);
 
-
-        
-
         Widget::add()->type('script')->content('assets/js/admin/forms/repeatable_chips.js');
 
         // if ($this->crud->getCurrentOperation() === 'update') {
@@ -402,14 +391,14 @@ public function fetchTags()
     {
         return $this->fetch(
 
-        [
-          'model' =>  \App\Models\Level::class,
-          'paginate' => 10,
-          'searchOperator' => 'LIKE',
-          'query' => function ($model) {
-            return $model->where('event_id', session()->get('event_id'));
-          }
-        ]
+            [
+                'model' => \App\Models\Level::class,
+                'paginate' => 10,
+                'searchOperator' => 'LIKE',
+                'query' => function ($model) {
+                    return $model->where('event_id', session()->get('event_id'));
+                },
+            ]
         );
     }
 
@@ -422,9 +411,9 @@ public function fetchTags()
     {
         $this->crud->hasAccessOrFail('create');
 
-        if (request()->get('day') == 0 ) {
-            \Alert::add('error', 'This event schedule hasn\'t has not started yet,' )->flash();
-            // return back(); 
+        if (request()->get('day') == 0) {
+            \Alert::add('error', 'This event schedule hasn\'t has not started yet,')->flash();
+            // return back();
         }
 
         $players = request()->get('players');
@@ -432,14 +421,13 @@ public function fetchTags()
         $lastPlayerId = 0;
         if ($players !== null) {
             foreach ($players as $user) {
-
-                if ($user['player_id'] == $lastPlayerId ) {
+                if ($user['player_id'] == $lastPlayerId) {
                     Validator::make([],
-                    ['player_id' => 'required',
-                    ],
-                    [
-                    'player_id' => 'There is a duplicate player in Chip Stacks',
-                    ])->validate();
+                        ['player_id' => 'required',
+                        ],
+                        [
+                            'player_id' => 'There is a duplicate player in Chip Stacks',
+                        ])->validate();
                 }
 
                 $lastPlayerId = $user['player_id'];
@@ -481,15 +469,13 @@ public function fetchTags()
         if ($players !== null) {
             $lastPlayerId = 0;
             foreach ($players as $user) {
-
-
-                if ($user['player_id'] == $lastPlayerId ) {
+                if ($user['player_id'] == $lastPlayerId) {
                     Validator::make([],
-                    ['player_id' => 'required',
-                    ],
-                    [
-                    'player_id' => 'There is a duplicate player in Chip Stacks',
-                    ])->validate();
+                        ['player_id' => 'required',
+                        ],
+                        [
+                            'player_id' => 'There is a duplicate player in Chip Stacks',
+                        ])->validate();
                 }
 
                 $lastPlayerId = $user['player_id'];
@@ -530,6 +516,3 @@ public function fetchTags()
         return $this->crud->performSaveAction($item->getKey());
     }
 }
-
-
-  

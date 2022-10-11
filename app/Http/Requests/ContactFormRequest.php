@@ -20,9 +20,9 @@ class ContactFormRequest extends FormRequest
     {
         return [
             'email' => 'email|required',
-            'name' => 'required' ,
-            'message' => 'required' ,
-            'subject' => 'required'
+            'name' => 'required',
+            'message' => 'required',
+            'subject' => 'required',
         ];
     }
 }

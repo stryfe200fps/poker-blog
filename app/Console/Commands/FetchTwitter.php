@@ -2,10 +2,8 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Log\Logger;
 use App\Models\SocialMedia;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Log;
 
 class FetchTwitter extends Command
 {
@@ -30,29 +28,29 @@ class FetchTwitter extends Command
      */
     public function handle()
     {
+        $querier = \Atymic\Twitter\Facade\Twitter::forApiV2()
+         ->getQuerier();
 
-   $querier = \Atymic\Twitter\Facade\Twitter::forApiV2()
-    ->getQuerier();
+        $result = $querier
+        ->withOAuth2Client()
+        ->get('users/by/username/Life_of_Poker');
 
-    $result = $querier
-    ->withOAuth2Client()
-    ->get('users/by/username/Life_of_Poker');
+        $query = $querier
+        ->withOAuth2Client()
+        ->get('users/'.$result->data->id.'/tweets');
 
-    $query = $querier
-    ->withOAuth2Client()
-    ->get('users/'. $result->data->id.  '/tweets');
+        SocialMedia::where('type', 'twitter')->delete();
+        foreach ($query->data as $tweet) {
+            SocialMedia::create([
+                'content' => $tweet->text,
+                'type' => 'twitter',
+                'image' => '',
+                'social_media_id' => $tweet->id,
+            ]);
+        }
 
-    SocialMedia::where('type', 'twitter')->delete();
-    foreach ($query->data as $tweet) {
-        SocialMedia::create([
-            'content' => $tweet->text,
-            'type' => 'twitter',
-            'image' => '',
-            'social_media_id' => $tweet->id
-        ]);
-    }
+        Logger('Twitter Updated');
 
-    Logger('Twitter Updated');
-    return Command::SUCCESS;
+        return Command::SUCCESS;
     }
 }

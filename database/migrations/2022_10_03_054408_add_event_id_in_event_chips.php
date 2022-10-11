@@ -13,16 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-       
-    try {
-
-        Schema::table('event_chips', function (Blueprint $table) {
-            $table->foreignId('event_id')->constrained()->cascadeOnDelete();
-        });
+        try {
+            Schema::table('event_chips', function (Blueprint $table) {
+                $table->foreignId('event_id')->constrained()->cascadeOnDelete();
+            });
         } catch(Exception $e) {
-
         }
-
     }
 
     /**

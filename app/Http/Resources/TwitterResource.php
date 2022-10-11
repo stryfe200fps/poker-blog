@@ -15,7 +15,7 @@ class TwitterResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->social_media_id
+            'id' => $this->social_media_id,
         ];
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Console;
 
-use Atymic\Twitter\Facade\Twitter;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -14,14 +13,13 @@ class Kernel extends ConsoleKernel
      * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
      * @return void
      */
-    
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('update:tweets')->days(3);
         $schedule->command('update:instagram')->days(3);
         // $schedule->command('update:tweets')->everyMinute();
 
-        $schedule->command("instagram-feed:refresh-token")->monthly();
+        $schedule->command('instagram-feed:refresh-token')->monthly();
     }
 
     /**
@@ -35,5 +33,4 @@ class Kernel extends ConsoleKernel
 
         require base_path('routes/console.php');
     }
-
 }

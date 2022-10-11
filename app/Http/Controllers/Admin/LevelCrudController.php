@@ -67,24 +67,23 @@ class LevelCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(LevelRequest::class);
- $this->crud->addField([
+        $this->crud->addField([
             'name' => 'level',
             'description' => 'level',
-            'type' => 'number'
+            'type' => 'number',
         ]);
 
         $this->crud->addField([
             'name' => 'event_id',
             'type' => 'hidden',
-            'value' => session()->get('event_id')
+            'value' => session()->get('event_id'),
         ]);
-
 
         $this->crud->addField([
             'label' => 'Blinds',
             'name' => 'blinds',
             'description' => 'blinds',
-            'type' => 'number'
+            'type' => 'number',
 
         ]);
 
@@ -92,9 +91,8 @@ class LevelCrudController extends CrudController
             'label' => 'Ante',
             'name' => 'ante',
             'description' => 'ante',
-            'type' => 'number'
+            'type' => 'number',
         ]);
-       
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:

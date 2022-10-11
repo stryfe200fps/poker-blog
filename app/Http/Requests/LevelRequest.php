@@ -27,7 +27,7 @@ class LevelRequest extends FormRequest
         return [
             'level' => 'required',
             'blinds' => 'required',
-            'ante' => 'required'
+            'ante' => 'required',
         ];
     }
 

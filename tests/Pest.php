@@ -1,10 +1,9 @@
 <?php
 
-use Tests\TestCase;
 use App\Models\User;
-
-use Spatie\Permission\Models\Role;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Spatie\Permission\Models\Role;
+use Tests\TestCase;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,8 +49,8 @@ function something()
     // ..
 }
 
-function superAdminAuthenticate() {
-
+function superAdminAuthenticate()
+{
     $u = User::factory()->create();
     $role = Role::create([
         'name' => 'super-admin',

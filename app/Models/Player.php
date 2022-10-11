@@ -49,7 +49,7 @@ class Player extends Model implements HasMedia
         return '<a class="btn btn-sm btn-link"  href="player_history/'.urlencode($this->attributes['id']).'" data-toggle="tooltip" title="Chip  Count"><i class="fa fa-search"></i> history  </a>';
     }
 
-    public function getNameAttribute($value) 
+    public function getNameAttribute($value)
     {
         return ucwords($value);
     }
@@ -61,6 +61,7 @@ class Player extends Model implements HasMedia
 
             if ($eventChip->count()) {
                 \Alert::add('error', 'This is a red bubble.');
+
                 return back();
             }
 
@@ -71,7 +72,7 @@ class Player extends Model implements HasMedia
 
         static::created(function ($player) {
             Tag::create([
-                'title' => ucwords($player->name)
+                'title' => ucwords($player->name),
             ]);
         });
     }

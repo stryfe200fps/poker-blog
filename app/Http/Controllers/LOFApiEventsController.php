@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\LOFApiEventIndexResource;
-use App\Http\Resources\LOFApiEventsResource;
 use App\Models\Event;
 use Carbon\Carbon;
 use Illuminate\Http\Request;

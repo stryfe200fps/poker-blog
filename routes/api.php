@@ -1,34 +1,31 @@
 <?php
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\PageManager;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TagController;
-use App\Http\Controllers\PayoutController;
-use App\Http\Controllers\ContactUsController;
-use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\Api\ArticleController;
-use App\Http\Controllers\PageManagerController;
-use App\Http\Controllers\SocialMediaController;
 use App\Http\Controllers\Api\EventApiController;
 use App\Http\Controllers\Api\levelApiController;
-use App\Http\Controllers\EventReportsController;
-use App\Http\Controllers\LOFApiEventsController;
 use App\Http\Controllers\Api\LiveReportController;
 use App\Http\Controllers\Api\ReportsApiController;
-use App\Http\Resources\LOFPokerTournamentResource;
+use App\Http\Controllers\ContactUsController;
+use App\Http\Controllers\EventReportsController;
 use App\Http\Controllers\LOFApiEventIndexController;
-use App\Http\Controllers\LOFApiLiveReportsController;
+use App\Http\Controllers\LOFApiEventsController;
 use App\Http\Controllers\LOFApiTournamentsController;
+use App\Http\Controllers\NewsletterController;
+use App\Http\Controllers\PageManagerController;
+use App\Http\Controllers\PayoutController;
+use App\Http\Controllers\SocialMediaController;
+use App\Http\Controllers\TagController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
 Route::resource('article', ArticleController::class);
-Route::get('article/{slug}/related', [ArticleController::class, 'related' ]);
+Route::get('article/{slug}/related', [ArticleController::class, 'related']);
 
-Route::get('article/category/{slug}', [ArticleController::class, 'articleCategory' ]);
+Route::get('article/category/{slug}', [ArticleController::class, 'articleCategory']);
 
 // Route::get('article/tag/{tag}', [ArticleController::class, 'tag' ]);
 
@@ -58,10 +55,10 @@ Route::resource('lof-live-report', EventReportsController::class);
 
 Route::resource('page', PageManagerController::class);
 
-Route::get('twitter', [SocialMediaController::class, 'fetchTwitter' ]);
-Route::get('instagram', [SocialMediaController::class, 'fetchInstagram' ]);
+Route::get('twitter', [SocialMediaController::class, 'fetchTwitter']);
+Route::get('instagram', [SocialMediaController::class, 'fetchInstagram']);
 
-Route::post('contact', [ContactUsController::class , 'store']);
-Route::post('subscribe', [NewsletterController::class , 'store']);
+Route::post('contact', [ContactUsController::class, 'store']);
+Route::post('subscribe', [NewsletterController::class, 'store']);
 
-Route::get('payout/{player_id}/{event}',[ PayoutController::class , 'player'] ) ;
+Route::get('payout/{player_id}/{event}', [PayoutController::class, 'player']);

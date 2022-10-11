@@ -20,4 +20,3 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 Broadcast::channel('report', function ($count) {
     return $count;
 });
-

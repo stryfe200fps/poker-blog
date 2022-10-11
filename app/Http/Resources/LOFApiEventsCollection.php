@@ -14,21 +14,18 @@ class LOFApiEventsCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-
-
-        $mapped =  $this->collection->map(function ($result, $item) {
-            return array_merge(['status' => $result->status(), 'events' => collect($result->event_reports->take(2))->toArray() ],  collect(new LOFApiEventsResource($result))->toArray() );
+        $mapped = $this->collection->map(function ($result, $item) {
+            return array_merge(['status' => $result->status(), 'events' => collect($result->event_reports->take(2))->toArray()], collect(new LOFApiEventsResource($result))->toArray());
         })->sortByDesc('id');
-               
+
         $statusPriorities = ['live', 'upcoming', 'tba', 'past'];
-        
-       $newCollections = $mapped->sortBy(function($order) use($statusPriorities){
-           return array_search($order['status'], $statusPriorities);
+
+        $newCollections = $mapped->sortBy(function ($order) use ($statusPriorities) {
+            return array_search($order['status'], $statusPriorities);
         })->values()->all();
 
-
         return [
-            'data' => $newCollections 
+            'data' => $newCollections,
         ];
     }
 }

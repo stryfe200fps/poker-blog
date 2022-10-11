@@ -2,18 +2,15 @@
 
 namespace App\Models;
 
-use Exception;
 use Carbon\Carbon;
-use Illuminate\Support\Str;
-use Spatie\Sluggable\HasSlug;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\Sluggable\SlugOptions;
-use App\Events\EventReportCreated;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Eloquent\Model;
-use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 class EventReport extends Model implements HasMedia
 {
@@ -33,7 +30,6 @@ class EventReport extends Model implements HasMedia
             ->width(424)
             ->height(285)
             ->nonQueued();
-            
     }
 
     public function getSlugOptions(): SlugOptions
@@ -52,11 +48,13 @@ class EventReport extends Model implements HasMedia
 
     public function setImageAttribute($value)
     {
-        if ($value == null) 
+        if ($value == null) {
             $this->media()->delete();
+        }
 
-        if (preg_match("/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).base64,.*/", $value) == 0) 
+        if (preg_match("/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).base64,.*/", $value) == 0) {
             return false;
+        }
 
         $this->media()->delete();
         $this->addMediaFromBase64($value)
@@ -105,7 +103,7 @@ class EventReport extends Model implements HasMedia
 
     public static function lastLevel()
     {
-        return Level::where('event_id', session()->get('event_id') )->orderByDesc('created_at')->first();
+        return Level::where('event_id', session()->get('event_id'))->orderByDesc('created_at')->first();
     }
 
     public function shareToSocialMedia()
@@ -134,16 +132,16 @@ class EventReport extends Model implements HasMedia
                     ]);
 
                     if ($eventChipPlayer['payout'] ?? null !== null) {
-                        if (EventPayout::where('event_id', $this->attributes['event_id'])->where('player_id', $eventChipPlayer['player_id'])->count() > 0) { 
+                        if (EventPayout::where('event_id', $this->attributes['event_id'])->where('player_id', $eventChipPlayer['player_id'])->count() > 0) {
                             $eventPayout = EventPayout::where('event_id', $this->attributes['event_id'])->where('player_id', $eventChipPlayer['player_id'])->firstOrFail();
                             $eventPayout->prize = $eventChipPlayer['payout'];
                             $eventPayout->save();
                         } else {
                             // dd('hit');
                             EventPayout::create([
-                                'player_id' =>  $eventChipPlayer['player_id'],
+                                'player_id' => $eventChipPlayer['player_id'],
                                 'event_id' => $this->attributes['event_id'],
-                                'prize' => $eventChipPlayer['payout']
+                                'prize' => $eventChipPlayer['payout'],
                             ]);
 
                             // dd($this->attributes['event_id']);
@@ -151,7 +149,6 @@ class EventReport extends Model implements HasMedia
                     }
 
                     $jsonObj[] = $savedEventChip->toArray();
-
 
                     // if (!$checkIfHasPayout->count() ) {
 
@@ -201,7 +198,7 @@ class EventReport extends Model implements HasMedia
     //     // }
     // }
 
-    public function setDateAddedAttribute($value) 
+    public function setDateAddedAttribute($value)
     {
         $this->attributes['date_added'] = Carbon::parse($value, session()->get('timezone') ?? 'UTC')->setTimezone('UTC');
     }
@@ -211,7 +208,6 @@ class EventReport extends Model implements HasMedia
         return Carbon::parse($value)->setTimezone(session()->get('timezone') ?? 'UTC');
     }
 
-
     protected static function booted()
     {
         static::deleting(function ($deletedReport) {
@@ -219,31 +215,28 @@ class EventReport extends Model implements HasMedia
         });
 
         static::creating(function ($model) {
-            $date  = \Carbon\Carbon::parse($model->date_added->toDateTimeString(), session()->get('timezone') ?? 'UTC') ;
+            $date = \Carbon\Carbon::parse($model->date_added->toDateTimeString(), session()->get('timezone') ?? 'UTC');
             $model->date_added = $date->setTimezone('UTC');
         });
 
         static::updating(function ($model) {
-        $model->slug = Str::slug($model->slug);
+            $model->slug = Str::slug($model->slug);
         });
 
         static::updated(function ($updatedEvent) {
-
-
         });
 
         static::created(function ($createdEventReport) {
+            $createdEventReport->slug = Str::slug($createdEventReport->slug);
+            $createdEventReport->save();
 
-        $createdEventReport->slug = Str::slug($createdEventReport->slug);
-        $createdEventReport->save();
-
-        $eventChipsPlayer = $createdEventReport->players;
+            $eventChipsPlayer = $createdEventReport->players;
 
             if (is_countable($eventChipsPlayer)) {
                 foreach ($eventChipsPlayer as $eventChipPlayer) {
-
-                    if ($eventChipPlayer['player_id'] === null)
+                    if ($eventChipPlayer['player_id'] === null) {
                         continue;
+                    }
 
                     EventChip::create([
                         'name' => 'name',
@@ -254,27 +247,19 @@ class EventReport extends Model implements HasMedia
                         'current_chips' => $eventChipPlayer['current_chips'],
                     ]);
 
-
-
-
                     if ($eventChipPlayer['payout'] ?? null !== null) {
-                        if (EventPayout::where('event_id', $createdEventReport->event_id)->where('player_id', $eventChipPlayer['player_id'])->count() > 0) { 
+                        if (EventPayout::where('event_id', $createdEventReport->event_id)->where('player_id', $eventChipPlayer['player_id'])->count() > 0) {
                             $eventPayout = EventPayout::where('event_id', $createdEventReport->event_id)->where('player_id', $eventChipPlayer['player_id'])->firstOrFail();
                             $eventPayout->prize = $eventChipPlayer['payout'];
                             $eventPayout->save();
                         } else {
                             EventPayout::create([
-                            'player_id' =>  $eventChipPlayer['player_id'],
-                            'event_id' => $createdEventReport->event_id,
-                            'prize' => $eventChipPlayer['payout']
-                        ]);
-
+                                'player_id' => $eventChipPlayer['player_id'],
+                                'event_id' => $createdEventReport->event_id,
+                                'prize' => $eventChipPlayer['payout'],
+                            ]);
                         }
                     }
-
-
-
-
                 }
             }
         });

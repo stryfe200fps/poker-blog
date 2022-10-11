@@ -13,11 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('event_chips', function (Blueprint $table) {
-            try {
-                // $table->boolean('is_whatsapp')->default(0);
-            } catch (Exception $e) {
-            }
+        Schema::table('articles', function (Blueprint $table) {
+            try { 
+            // $table->dropColumn(['title', 'body']);
+}catch( Exception $e) {
+
+}
         });
     }
 
@@ -28,7 +29,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('event_chips', function (Blueprint $table) {
+        Schema::table('articles', function (Blueprint $table) {
             //
         });
     }

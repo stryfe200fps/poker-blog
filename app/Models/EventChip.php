@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use App\Traits\GroupedLastScope;
-use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class EventChip extends Model
 {
@@ -29,7 +29,7 @@ class EventChip extends Model
         'rank',
         'date_published',
         'event_payout_id',
-        'event_id'
+        'event_id',
     ];
 
     /**
@@ -58,15 +58,13 @@ class EventChip extends Model
 
     public function getPreviousReportAttribute($value)
     {
-
         $q = $this->where('player_id', $this->player_id);
         $q->where('event_id', $this->event_id);
 
-        return $q->where('id', '!=', $this->id)->where('date_published', '<' , $this->date_published)->orderBy('date_published', 'desc')->first()->current_chips ?? 0;
-
+        return $q->where('id', '!=', $this->id)->where('date_published', '<', $this->date_published)->orderBy('date_published', 'desc')->first()->current_chips ?? 0;
     }
 
-    public function setDatePublishedAttribute($value) 
+    public function setDatePublishedAttribute($value)
     {
         $this->attributes['date_published'] = Carbon::parse($value, session()->get('timezone') ?? 'UTC')->setTimezone('UTC');
     }
@@ -79,18 +77,18 @@ class EventChip extends Model
     protected static function booted()
     {
         static::creating(function ($createdChipCount) {
-
             if ($createdChipCount?->event_report_id !== null) {
                 \Alert::add('success', 'Player added');
             } else {
-               $eventChip = EventChip::where('player_id', $createdChipCount->player_id )->whereNull('event_report_id')->where('event_id', $createdChipCount->event_id);
-               if ($eventChip->count()) {
-                \Alert::add('error', 'Oops. This player is already added');
-                return false;
-            }
+                $eventChip = EventChip::where('player_id', $createdChipCount->player_id)->whereNull('event_report_id')->where('event_id', $createdChipCount->event_id);
+                if ($eventChip->count()) {
+                    \Alert::add('error', 'Oops. This player is already added');
+
+                    return false;
+                }
             }
 
-                \Alert::add('success', 'Success');
+            \Alert::add('success', 'Success');
         });
 
         static::deleting(function ($deletedEventChip) {
@@ -116,6 +114,4 @@ class EventChip extends Model
             }
         });
     }
-
- 
 }

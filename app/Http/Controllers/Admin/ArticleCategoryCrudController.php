@@ -43,7 +43,6 @@ class ArticleCategoryCrudController extends CrudController
     {
         CRUD::column('title');
         CRUD::column('slug');
-
     }
 
     /**

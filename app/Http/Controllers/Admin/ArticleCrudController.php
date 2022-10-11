@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Events\NewReport;
-use Carbon\Carbon;
-use App\Models\Article;
-use Illuminate\Http\Request;
-use App\Models\ArticleAuthor;
-use App\Models\ArticleCategory;
 use App\Http\Requests\ArticleRequest;
-use Backpack\CRUD\app\Library\Widget;
+use App\Models\Article;
+use App\Models\ArticleAuthor;
+
+use Illuminate\Support\Facades\Validator;
+use App\Models\ArticleCategory;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use Backpack\CRUD\app\Library\Widget;
+use Illuminate\Http\Request;
 
 /**
  * Class ArticleCrudController
@@ -70,7 +70,7 @@ class ArticleCrudController extends CrudController
                 'name' => 'published_date', // the column that contains the ID of that connected entity;
                 'label' => 'Date', // Table column heading
                 'type' => 'datetime',
-                'format' => config('app.date_format')
+                'format' => config('app.date_format'),
 
             ],
         ]);
@@ -109,7 +109,7 @@ class ArticleCrudController extends CrudController
 
         //working with cancelation
 
-// $this->crud->addField([
+        // $this->crud->addField([
 //     'name' => 'datepicker',
 //     'type' => 'date_range',
 //     'label' => "Start Date",
@@ -125,37 +125,67 @@ class ArticleCrudController extends CrudController
 //         'locale' => ['format' => 'YYYY-MM-DD']
 //     ],
 //     'allows_null' => true,
-// ]);
+        // ]);
 
         // $this->crud->addField([
         //     'name' => 'timezone',
-        //     'attribute' => "timezone", 
+        //     'attribute' => "timezone",
         //     'tab' => 'Basic',
         //     'type' => 'text'
         // ]);
 
+
         $this->crud->addFields(
             [
+
                 [
                     'name' => 'title',
-                    'label' => 'Title',
+                    'type' => 'text',
                     'tab' => 'Basic',
+                ],
+
+                [
+                    'name' => 'slug',
+                    'type' => 'text',
+                    'attributes' => [
+                        'placeholder' => config('app.slug_placeholder'),
+                    ],
+                    'tab' => 'Basic',
+                ],
+
+        [
+            'name' => 'content',
+            'label' => 'Content',
+            'type' => 'repeatable',
+            'new_item_label' => 'add page',
+            'tab' => 'Basic',
+            'subfields' => [
+                [
+                    'label' => 'Title',
+                    'name' => 'title',
+                    'type' => 'text',
                     'wrapper' => [
-                        'class' => 'form-group col-md-12',
+                        'class' => 'form-group col-md-6',
                     ],
                 ],
-            [
-                        'name' => 'slug',
-                        'type' => 'text',
-        'attributes' => [
-                'placeholder'=> config('app.slug_placeholder'),
-            ],
-                        'tab' => 'Basic'
-            ],
-                [
-                    'name' => 'description',
-                    'body' => 'ckeditor',
+
+                [   // CKEditor
+                'name' => 'body',
+                'label' => 'Content',
+                'type' => 'ckeditor',
+                'extra_plugins' => ['widget', 'autocomplete', 'textmatch', 'toolbar', 'wysiwygarea', 'image', 'sourcearea'],
+
+                'options' => [
+                    'autoGrow_minHeight' => 200,
+                    'autoGrow_bottomSpace' => 50,
+                    'removePlugins' => 'resize,maximize',
                 ],
+            ],
+
+            ],
+            'init_rows' => 1,
+        ],
+               
 
                 [
                     'name' => 'article_categories',
@@ -166,7 +196,7 @@ class ArticleCrudController extends CrudController
                     'wrapper' => [
                         'class' => 'form-group col-md-12',
                     ],
-                ] ,
+                ],
                 // [
                 //     'name' => 'tags',
                 //     'type' => 'relationship',
@@ -178,66 +208,44 @@ class ArticleCrudController extends CrudController
                 //     ],
                 // ],
 
-                [
+             
 
-                    'name' => 'description',
-                    'body' => 'select_multiple',
-                    'tab' => 'Basic',
-                    'wrapper' => [
-                        'class' => 'form-group col-md-12',
-                    ],
-                ],
-                [   // CKEditor
-                    'name' => 'body',
-                    'label' => 'Content',
-                    'type' => 'ckeditor',
-                    'extra_plugins' => ['widget', 'autocomplete', 'textmatch', 'toolbar', 'wysiwygarea', 'image', 'sourcearea'],
-                    'options' => [
-                        'autoGrow_minHeight' => 200,
-                        'autoGrow_bottomSpace' => 50,
-                        'removePlugins' => 'resize,maximize',
-                    ],
-                    'tab' => 'Basic',
-                    'wrapper' => [
-                        'class' => 'form-group col-md-12',
-                    ],
-                ],
                 [   // DateTime
-                'name' => 'published_date',
-                'label' => 'Date',
-                'tab' => 'Basic',
-                'type' => 'datetime_picker',
-                'default' => 'now',
-                'datetime_picker_options' => [
-                    'format' => 'MMM D, YYYY hh:mm a',
-                    'tooltips' => [ //use this to translate the tooltips in the field
-                        'selectDate' => 'Selecione a data',
-                        // available tooltips: today, clear, close, selectMonth, prevMonth, nextMonth, selectYear, prevYear, nextYear, selectDecade, prevDecade, nextDecade, prevCentury, nextCentury, pickHour, incrementHour, decrementHour, pickMinute, incrementMinute, decrementMinute, pickSecond, incrementSecond, decrementSecond, togglePeriod, selectTime, selectDate
+                    'name' => 'published_date',
+                    'label' => 'Date',
+                    'tab' => 'Basic',
+                    'type' => 'datetime_picker',
+                    'default' => 'now',
+                    'datetime_picker_options' => [
+                        'format' => 'MMM D, YYYY hh:mm a',
+                        'tooltips' => [ //use this to translate the tooltips in the field
+                            'selectDate' => 'Selecione a data',
+                            // available tooltips: today, clear, close, selectMonth, prevMonth, nextMonth, selectYear, prevYear, nextYear, selectDecade, prevDecade, nextDecade, prevCentury, nextCentury, pickHour, incrementHour, decrementHour, pickMinute, incrementMinute, decrementMinute, pickSecond, incrementSecond, decrementSecond, togglePeriod, selectTime, selectDate
+                        ],
                     ],
-                ],
-                'allows_null' => false,
-                'wrapper' => [
-                    'class' => 'form-group col-md-12',
-                ],
+                    'allows_null' => false,
+                    'wrapper' => [
+                        'class' => 'form-group col-md-12',
+                    ],
                 ],
                 [
-                'label' => 'Tags',
-                'type' => 'relationship',
-                'name' => 'tags', // the method that defines the relationship in your Model
-                'entity' => 'tags', // the method that defines the relationship in your Model
-                'attribute' => 'title', // foreign key attribute that is shown to user
-                'pivot' => true, // on create&update, do you need to add/delete pivot table entries?
-                'inline_create' => ['entity' => 'tag'],
-                'ajax' => true,
-                   'minimum_input_length' => 0,
-                'allows_null' => true,
-                'tab' => 'Basic',
-                // 'value' => $this->crud->getCurrentOperation() === 'update' ? $this->crud->getCurrentEntry()->level->id : $lastLevelId,
-                'wrapper' => [
-                    'class' => 'form-group col-md-12',
+                    'label' => 'Tags',
+                    'type' => 'relationship',
+                    'name' => 'tags', // the method that defines the relationship in your Model
+                    'entity' => 'tags', // the method that defines the relationship in your Model
+                    'attribute' => 'title', // foreign key attribute that is shown to user
+                    'pivot' => true, // on create&update, do you need to add/delete pivot table entries?
+                    'inline_create' => ['entity' => 'tag'],
+                    'ajax' => true,
+                    'minimum_input_length' => 0,
+                    'allows_null' => true,
+                    'tab' => 'Basic',
+                    // 'value' => $this->crud->getCurrentOperation() === 'update' ? $this->crud->getCurrentEntry()->level->id : $lastLevelId,
+                    'wrapper' => [
+                        'class' => 'form-group col-md-12',
+                    ],
                 ],
-                ],
-                
+
                 [
                     'name' => 'image',
                     'type' => 'image',
@@ -281,20 +289,32 @@ class ArticleCrudController extends CrudController
         // Widget::add()->type('script')->content('assets/js/admin/date/modify_datepicker.js');
     }
 
-
 public function fetchTags()
 {
     return $this->fetch(\App\Models\Tag::class);
 }
 
-
 public function store(Request $request)
 {
     $this->crud->hasAccessOrFail('create');
 
+    if ($request->get('content') != null ) { 
+    foreach ($request->get('content')  as $content) {
+
+        Validator::make($content,
+            ['title' => 'required',
+                'body' => 'required',
+            ],
+            [
+                'title' => 'title is required',
+                'body' => 'body is required',
+            ])->validate();
+    }
+    } else {
+
+    }
     // execute the FormRequest authorization and validation, if one is required
     $request = $this->crud->validateRequest();
-
 
     // $date  = \Carbon\Carbon::parse($request->get('published_date'), $request->get('timezone')) ?? 'UTC' ;
     // $request['published_date'] = $date->setTimezone('UTC');
@@ -314,9 +334,8 @@ public function store(Request $request)
 
     session()->flash('new_article', $item->id);
 
-		// dd('tubul');
-	NewReport::dispatch();
-		// dd('asd');
+    // dd('tubul');
+    // dd('asd');
 
     \Alert::success(trans('backpack::crud.insert_success'))->flash();
 

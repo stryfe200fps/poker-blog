@@ -20,7 +20,7 @@ class ContactFormFactory extends Factory
             'name' => $this->faker->name,
             'title' => $this->faker->title,
             'message' => $this->faker->paragraph(20),
-            'subject' => $this->faker->word
+            'subject' => $this->faker->word,
         ];
     }
 }

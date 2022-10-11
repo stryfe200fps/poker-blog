@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ArticleCategory extends Model
 {
@@ -29,7 +29,7 @@ class ArticleCategory extends Model
 
     protected $fillable = [
         'title',
-        'slug'
+        'slug',
     ];
 
     /**

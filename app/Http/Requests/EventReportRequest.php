@@ -37,13 +37,8 @@ class EventReportRequest extends FormRequest
         ];
     }
 
-
-
     protected function prepareForValidation()
     {
-
-
-        
         if ($this->slug !== null) {
             $this->merge([
                 'slug' => Str::slug($this->slug),
@@ -51,8 +46,6 @@ class EventReportRequest extends FormRequest
         }
 
         // dd($this->slug);
-       
-
     }
 
     /**

@@ -70,7 +70,7 @@ class TourCrudController extends CrudController
             'name' => 'image',
             'type' => 'image',
             'crop' => true, // set to true to allow cropping, false to disable
-            'aspect_ratio' => 3/2,
+            'aspect_ratio' => 3 / 2,
             'wrapper' => [
                 'class' => 'form-group col-md-12',
             ],
@@ -98,13 +98,13 @@ class TourCrudController extends CrudController
 
     public function destroy($id)
     {
-
         if ($this->crud->getCurrentEntry()->tournaments->count()) {
             return \Alert::error('This tour has tournaments inside')->flash();
         }
 
         $this->crud->hasAccessOrFail('delete');
         $id = $this->crud->getCurrentEntryId() ?? $id;
+
         return $this->crud->delete($id);
     }
 }

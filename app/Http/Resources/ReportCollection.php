@@ -16,18 +16,17 @@ class ReportCollection extends ResourceCollection
     {
         // dd($this->collection);
 
-        $reducedCollection =  $this->collection->groupBy('level')->reduce(function ($result, $item) {
-            
+        $reducedCollection = $this->collection->groupBy('level')->reduce(function ($result, $item) {
             $level = $item->first()->level;
             $result[] = [
-                'level' =>  $level->level ,
+                'level' => $level->level,
                 'collection' => collect($item)->map(function ($i) {
                     return new LOFApiEventReportsResource($i);
                 }),
             ];
+
             return $result;
         }, collect([]))->toArray();
-
 
         return [
             'data' => $reducedCollection,

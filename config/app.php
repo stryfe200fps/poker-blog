@@ -1,6 +1,5 @@
 <?php
 
-use Carbon\Carbon;
 use App\Helpers\Timezone;
 use App\Providers\TimezoneProvider;
 use Illuminate\Support\Facades\Facade;
@@ -25,7 +24,6 @@ return [
     'date_format' => 'MMM DD, OY,  h:mm a, ddd',
 
     'slug_placeholder' => 'Slug will autogenerate if leave empty',
-
 
     /*
     |--------------------------------------------------------------------------
@@ -232,7 +230,7 @@ return [
         'Share' => Jorenvh\Share\ShareFacade::class,
         'Timezone' => Timezone::class,
         // 'Newsletter' => Spatie\Newsletter\NewsletterFacade::class,
-        'Twitter'   => Atymic\Twitter\Facade\Twitter::class,
+        'Twitter' => Atymic\Twitter\Facade\Twitter::class,
     ])->toArray(),
 
 ];

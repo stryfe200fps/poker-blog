@@ -19,7 +19,7 @@ class SocialMediaFactory extends Factory
         return [
             'title' => $this->faker->name,
             'type' => 'twitter',
-            'image' => ''
+            'image' => '',
         ];
     }
 }

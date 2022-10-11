@@ -4,11 +4,11 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-use Carbon\Carbon;
-use App\Models\User;
 use App\Models\Event;
-use Illuminate\Database\Seeder;
+use App\Models\User;
 use Backpack\PermissionManager\app\Models\Role;
+use Carbon\Carbon;
+use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -25,8 +25,6 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('admin'),
         ]);
 
-
-
         $role = Role::create([
             'name' => 'super-admin',
         ]);
@@ -34,8 +32,6 @@ class DatabaseSeeder extends Seeder
         $author = Role::create([
             'name' => 'author',
         ]);
-
-
 
         // backpack_user()->assignRole('super-admin');
         $user->assignRole('super-admin');
@@ -49,7 +45,7 @@ class DatabaseSeeder extends Seeder
             // ArticleSeeder::class,
             CountrySeeder::class,
             // PlayerSeeder::class,
-         
+
             // LiveReportSeeder::class,
 
         ]);
@@ -66,24 +62,22 @@ class DatabaseSeeder extends Seeder
 
         // $day1DateStart = Carbon::now();
         // $day1DateEnd = $day1DateStart->addHours(12);
-    
+
         // $day2DateStart = $day1DateEnd->addDay(1);
         // $day2DateEnd = $day2DateStart->addHours(12);
 
-// $sheduleFormat = 
-// '[
+        // $sheduleFormat =
+        // '[
 //     {"day":"1",
 //     "date_start":'. $day1DateStart->toString() .',
 //     "date_end":'. $day1DateEnd->toString() .'
 //     },
-    
+
 //     {"day":"2",
 //     "date_start":'. $day2DateStart->toString() .',
 //     "date_end":'. $day2DateEnd->toString() .'
 //     }
-// ]';
-
-
+        // ]';
 
         Event::factory()->create([
             'title' => 'Adi poker event',

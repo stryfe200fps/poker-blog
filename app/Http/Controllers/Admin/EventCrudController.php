@@ -3,15 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Helpers\Validators;
-use Carbon\Carbon;
-use App\Models\Tour;
-use Illuminate\Http\Request;
 use App\Http\Requests\EventRequest;
+use App\Models\Tour;
 use App\Models\Tournament;
-use Backpack\CRUD\app\Library\Widget;
-use Illuminate\Support\Facades\Validator;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use Backpack\CRUD\app\Library\Widget;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 /**
  * Class
@@ -52,15 +52,14 @@ class EventCrudController extends CrudController
         CRUD::column('tournament');
         CRUD::column('tournament.timezone')->label('Tournament Timezone');
         CRUD::column('event_date_start')->type('date')->format(config('app.date_format'));
-        CRUD::column('event_date_end')->type('date')->format(config('app.date_format'));;
-
+        CRUD::column('event_date_end')->type('date')->format(config('app.date_format'));
 
         $this->crud->addColumns([
             [
                 'name' => 'date_start', // the column that contains the ID of that connected entity;
                 'label' => 'Date Start', // Table column heading
                 'type' => 'date',
-                'format' => config('app.date_format')
+                'format' => config('app.date_format'),
             ],
         ]);
 
@@ -69,7 +68,7 @@ class EventCrudController extends CrudController
                 'name' => 'date_end', // the column that contains the ID of that connected entity;
                 'label' => 'Date End', // Table column heading
                 'type' => 'date',
-                'format' => config('app.date_format')
+                'format' => config('app.date_format'),
             ],
         ]);
 
@@ -104,13 +103,12 @@ class EventCrudController extends CrudController
         CRUD::setValidation(EventRequest::class);
         CRUD::field('title');
 
-
         // Tournament::where('event_id',  );
 
         $this->crud->addField([
             'name' => 'slug',
             'attributes' => [
-                'placeholder'=> config('app.slug_placeholder'),
+                'placeholder' => config('app.slug_placeholder'),
             ],
             'type' => 'text',
         ]);
@@ -149,23 +147,21 @@ class EventCrudController extends CrudController
 
         // dd(session()->get('timezone'));
 
-
-
-$this->crud->addField([
-    'name' => ['date_start', 'date_end'], // db columns for start_date & end_date
-    'type' => 'date_range',
-    'label' => "Event Duration",
-    'default' => [Carbon::now()->setTimezone(session()->get('timezone') ?? 'UTC'), Carbon::now()->setTimezone(session()->get('timezone') ?? 'UTC')->addDays(2)],
-    'date_range_options' => [
-        'todayBtn' => 'linked',
-        // options sent to daterangepicker.js
-        'timePicker' => true,
-        // 'startDate' => Carbon::now()->setTimezone(session()->get('timezone')),
-        // 'endDate' => date("Y-m-d"),
-            'locale' => ['format' => 'MMM D, YYYY hh:mm a'],
-    ],
-    'allows_null' => true,
-]);
+        $this->crud->addField([
+            'name' => ['date_start', 'date_end'], // db columns for start_date & end_date
+            'type' => 'date_range',
+            'label' => 'Event Duration',
+            'default' => [Carbon::now()->setTimezone(session()->get('timezone') ?? 'UTC'), Carbon::now()->setTimezone(session()->get('timezone') ?? 'UTC')->addDays(2)],
+            'date_range_options' => [
+                'todayBtn' => 'linked',
+                // options sent to daterangepicker.js
+                'timePicker' => true,
+                // 'startDate' => Carbon::now()->setTimezone(session()->get('timezone')),
+                // 'endDate' => date("Y-m-d"),
+                'locale' => ['format' => 'MMM D, YYYY hh:mm a'],
+            ],
+            'allows_null' => true,
+        ]);
 
         $this->crud->addField([   // select2_from_array
             'name' => 'tournament_id',
@@ -181,54 +177,50 @@ $this->crud->addField([
             // 'allows_multiple' => true, // OPTIONAL; needs you to cast this to array in your model;
         ]);
 
+        $this->crud->addField([
+            'name' => 'schedule',
+            'label' => 'Schedule',
+            'type' => 'repeatable',
+            'new_item_label' => 'add day',
+            'tab' => 'Days',
+            'subfields' => [
+
+                [
+                    'label' => 'Day',
+                    'tooltip' => 'example: 1A',
+                    'name' => 'day',
+                    'type' => 'text',
+                    'wrapper' => [
+                        'class' => 'form-group col-md-6',
+                    ],
+                ],
+
+                [   // date_range
+                    'name' => ['date_start', 'date_end'], // db columns for start_date & end_date
+                    'label' => 'Day Duration',
+                    'type' => 'date_range',
+                    'wrapper' => [
+                        'class' => 'form-group col-md-6',
+                    ],
+                    'default' => [Carbon::now()->setTimezone(session()->get('timezone') ?? 'UTC'), Carbon::now()->setTimezone(session()->get('timezone') ?? 'UTC')->addDays(2)],
+                    // options sent to daterangepicker.js
+                    'date_range_options' => [
+                        'drops' => 'down', // can be one of [down/up/auto]
+                        'timePicker' => true,
+                        'locale' => ['format' => 'MMM D, YYYY hh:mm a'],
+                    ],
+                ],
+
+            ],
+            'init_rows' => 0,
+        ],
+        );
 
         $this->crud->addField([
-        'name' => 'schedule',
-        'label' => 'Schedule',
-        'type' => 'repeatable',
-        'new_item_label' => 'add day',
-        'tab' => 'Days',
-        'subfields' => [
-            
-            [
-                'label' => 'Day',
-                'tooltip' => 'example: 1A',
-                'name' => 'day',
-                'type' => 'text',
-                'wrapper' => [
-                'class' => 'form-group col-md-6',
-            ],
-            ],
-
-            [   // date_range
-                'name' => ['date_start', 'date_end'], // db columns for start_date & end_date
-                'label' => 'Day Duration',
-                'type' => 'date_range',
-        'wrapper' => [
-                'class' => 'form-group col-md-6',
-            ],
-        'default' => [Carbon::now()->setTimezone(session()->get('timezone') ?? 'UTC'), Carbon::now()->setTimezone(session()->get('timezone') ?? 'UTC')->addDays(2)],
-                // options sent to daterangepicker.js
-                'date_range_options' => [
-                    'drops' => 'down', // can be one of [down/up/auto]
-                    'timePicker' => true,
-                    'locale' => ['format' => 'MMM D, YYYY hh:mm a'],
-                ],
-            ],
-
-            
-        ],
-        'init_rows' => 0,
-    ],
-);
-
-   $this->crud->addField([
             'name' => 'custom-ajax-button',
             'type' => 'view',
-            'view' => 'partials/custom-ajax-button'
+            'view' => 'partials/custom-ajax-button',
         ]);
-
-
     }
 
     /**
@@ -258,11 +250,9 @@ $this->crud->addField([
         $schedules = request()->get('schedule');
 
         if ($schedules !== null) {
-
             $lastDate = null;
             foreach ($schedules as $day) {
-
-            if ($lastDate != null && Carbon::parse($lastDate) >= Carbon::parse($day['date_end']) && Carbon::parse($lastDate) >= Carbon::parse($day['date_start']) ) {
+                if ($lastDate != null && Carbon::parse($lastDate) >= Carbon::parse($day['date_end']) && Carbon::parse($lastDate) >= Carbon::parse($day['date_start'])) {
                     \Alert::error('Dates is incorrect')->flash();
                     $schedules = null;
                     break;
@@ -272,26 +262,26 @@ $this->crud->addField([
 
                 Validator::make($day,
                     ['date_start' => 'required',
-                    'date_end' => 'required',
-                        'day' => 'required'
+                        'date_end' => 'required',
+                        'day' => 'required',
                     ],
                     [
                         'date_start' => 'date start is required',
                         'date_end' => 'date end is required',
-                        'day' => 'Day is required'
+                        'day' => 'Day is required',
                     ])->validate();
             }
         } else {
             $request['schedule'] = '';
         }
- 
+
         if ($schedules === null) {
-            Validator::make($schedules ?? [], 
-            [
-                'schedule' => 'required'
-            ], [
-                'schedule' => 'please check the schedule'
-            ])->validate();
+            Validator::make($schedules ?? [],
+                [
+                    'schedule' => 'required',
+                ], [
+                    'schedule' => 'please check the schedule',
+                ])->validate();
         }
 
         $request = $this->crud->validateRequest();
@@ -301,7 +291,6 @@ $this->crud->addField([
 
         // $date2  = \Carbon\Carbon::parse($request->get('date_end'), session()->get('timezone') ?? 'UTC') ;
         // $request['date_end'] = $date2->setTimezone('UTC');
-
 
         $this->crud->registerFieldEvents();
 
@@ -321,15 +310,13 @@ $this->crud->addField([
 
     public function update()
     {
-        
         $schedules = request()->get('schedule');
 
         if ($schedules !== null) {
             // (new Validators)->checkDateOverlap();
             $lastDate = null;
             foreach ($schedules as $day) {
-
-            if ($lastDate != null && Carbon::parse($lastDate) >= Carbon::parse($day['date_end']) && Carbon::parse($lastDate) >= Carbon::parse($day['date_start']) ) {
+                if ($lastDate != null && Carbon::parse($lastDate) >= Carbon::parse($day['date_end']) && Carbon::parse($lastDate) >= Carbon::parse($day['date_start'])) {
                     \Alert::error('Dates is incorrect')->flash();
                     $schedules = null;
                     break;
@@ -339,28 +326,27 @@ $this->crud->addField([
 
                 Validator::make($day,
                     ['date_start' => 'required',
-                    'date_end' => 'required',
-                        'day' => 'required'
+                        'date_end' => 'required',
+                        'day' => 'required',
                     ],
                     [
                         'date_start' => 'date start is required',
                         'date_end' => 'date end is required',
-                        'day' => 'Day is required'
+                        'day' => 'Day is required',
                     ])->validate();
             }
         } else {
             $request['schedule'] = '';
         }
- 
-        if ($schedules === null) {
-            Validator::make($schedules ?? [], 
-            [
-                'schedule' => 'required'
-            ], [
-                'schedule' => 'please check the schedule'
-            ])->validate();
-        }
 
+        if ($schedules === null) {
+            Validator::make($schedules ?? [],
+                [
+                    'schedule' => 'required',
+                ], [
+                    'schedule' => 'please check the schedule',
+                ])->validate();
+        }
 
         $this->crud->hasAccessOrFail('update');
 
@@ -377,8 +363,6 @@ $this->crud->addField([
         // $request->date_end = Carbon::parse($request->date_end, $timezone_name)->setTimezone('UTC');
 
         // dd($request);
-
-
 
         // register any Model Events defined on fields
         $this->crud->registerFieldEvents();
@@ -400,17 +384,13 @@ $this->crud->addField([
 
     public function destroy($id)
     {
-
         if ($this->crud->getCurrentEntry()->event_reports->count()) {
             return \Alert::error('This event has live reporting inside')->flash();
-
         }
         $this->crud->hasAccessOrFail('delete');
-        
+
         $id = $this->crud->getCurrentEntryId() ?? $id;
 
         return $this->crud->delete($id);
     }
-
-
 }

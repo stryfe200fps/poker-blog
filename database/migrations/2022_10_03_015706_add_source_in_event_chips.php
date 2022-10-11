@@ -14,14 +14,11 @@ return new class extends Migration
     public function up()
     {
         try {
-
-       Schema::table('event_chips', function (Blueprint $table) {
-            $table->dateTime('date_published')->nullable();
-        });
+            Schema::table('event_chips', function (Blueprint $table) {
+                $table->dateTime('date_published')->nullable();
+            });
         } catch(Exception $e) {
-
         }
-        
     }
 
     /**

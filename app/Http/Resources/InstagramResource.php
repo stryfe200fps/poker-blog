@@ -19,7 +19,7 @@ class InstagramResource extends JsonResource
             'caption' => $this->caption,
             'timestamp' => $this->timestamp,
             'permalink' => $this->permalink,
-            'id' => $this->id
+            'id' => $this->id,
         ];
     }
 }

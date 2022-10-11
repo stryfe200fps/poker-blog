@@ -2,9 +2,7 @@
 
 namespace App\Presenters;
 
-use JsonLd\Context;
-
-class WebsitePresenter 
+class WebsitePresenter
 {
     /**
      * Create JSON-LD object.
@@ -13,31 +11,31 @@ class WebsitePresenter
      */
     public function webpage($page = 'Home', $url = '/')
     {
-      return \JsonLd\Context::create('web_page', [
-        'headline' => $page,
-        'description' => $page.' page',
-        'url' => config('app.url') . $url,
-    ]);
+        return \JsonLd\Context::create('web_page', [
+            'headline' => $page,
+            'description' => $page.' page',
+            'url' => config('app.url').$url,
+        ]);
     }
 
     public function website()
     {
-      return \JsonLd\Context::create('web_site', [
-        'headline' => 'Life of poker',
-        'description' => 'Bringing actions to your doorstep',
-        'url' => config('app.url'),
-    ]);
+        return \JsonLd\Context::create('web_site', [
+            'headline' => 'Life of poker',
+            'description' => 'Bringing actions to your doorstep',
+            'url' => config('app.url'),
+        ]);
     }
 
     public function organization()
     {
-      return \JsonLd\Context::create('organization', [
-        'headline' => 'Life of poker',
-        'description' => 'Poker',
-        'mainEntityOfPage' => [
-          'url' => config('app.url'),
-        ]
-    ]);
+        return \JsonLd\Context::create('organization', [
+            'headline' => 'Life of poker',
+            'description' => 'Poker',
+            'mainEntityOfPage' => [
+                'url' => config('app.url'),
+            ],
+        ]);
     }
 
     // public function brand()

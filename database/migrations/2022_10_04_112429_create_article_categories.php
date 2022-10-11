@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::table('article_categories', function (Blueprint $table) {
             $table->string('slug');
         });
-
     }
 
     /**

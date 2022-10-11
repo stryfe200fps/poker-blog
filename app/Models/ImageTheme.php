@@ -22,7 +22,6 @@ class ImageTheme extends Model implements HasMedia
 
     public function registerMediaConversions(?Media $media = null): void
     {
-
     }
 
     public function getImageAttribute($value)
@@ -32,12 +31,13 @@ class ImageTheme extends Model implements HasMedia
 
     public function setImageAttribute($value)
     {
-        if ($value == null) 
+        if ($value == null) {
             $this->media()->delete();
+        }
 
-        if (preg_match("/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).base64,.*/", $value) == 0) 
+        if (preg_match("/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).base64,.*/", $value) == 0) {
             return false;
-
+        }
 
         $this->addMediaFromBase64($value)
             ->toMediaCollection('image-theme');

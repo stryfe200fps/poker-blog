@@ -1,17 +1,11 @@
 <?php
 
-use Carbon\Carbon;
-use App\Models\User;
 use App\Models\Event;
-use App\Models\Article;
 use App\Models\Tournament;
-use App\Models\ArticleAuthor;
-use App\Models\ArticleCategory;
-use Spatie\Permission\Models\Role;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
-
 
 it('cannot create events if unauthenticated', function () {
     $this->post('admin/events/', [
@@ -25,7 +19,7 @@ it('can insert event if authenticated', function () {
 
     $this->get('admin/events/create')->assertStatus(200);
 
-    $sheduleFormat = 
+    $sheduleFormat =
     '[
         {"day":"1",
         "date_start":"2022-09-29 06:53:00",
@@ -50,8 +44,7 @@ it('can insert event if authenticated', function () {
 
     $this->post('/admin/events', $data);
 
-    $this->assertDatabaseHas('events', ['title' => 'Things I do' ]);
-
+    $this->assertDatabaseHas('events', ['title' => 'Things I do']);
 });
 
 it('can update event if authenticated', function () {
@@ -59,24 +52,23 @@ it('can update event if authenticated', function () {
     superAdminAuthenticate();
     $event = Event::factory()->create();
 
-    $this->get('admin/events/'. $event->id . '/edit')->assertStatus(200);
+    $this->get('admin/events/'.$event->id.'/edit')->assertStatus(200);
 
-// dd($sheduleFormat);
-
+    // dd($sheduleFormat);
 
     $day1DateStart = Carbon::now();
 
     $sheduleFormat = [
-    [
-        'day' => 1,
-        'date_start' =>  $day1DateStart->toString(),
-        'date_end' => $day1DateStart->addHours(12)->toString()
-    ],
-    [
-        'day' => 2,
-        'date_start' =>  $day1DateStart->addDay(1)->toString(),
-        'date_end' => $day1DateStart->addHours(36)->toString()
-    ]
+        [
+            'day' => 1,
+            'date_start' => $day1DateStart->toString(),
+            'date_end' => $day1DateStart->addHours(12)->toString(),
+        ],
+        [
+            'day' => 2,
+            'date_start' => $day1DateStart->addDay(1)->toString(),
+            'date_end' => $day1DateStart->addHours(36)->toString(),
+        ],
     ];
 
     $data = [
@@ -92,13 +84,11 @@ it('can update event if authenticated', function () {
 
     $this->assertDatabaseHas('events', ['title' => 'Things I do',
     ]);
- 
-    $this->assertDatabaseCount('events', 1);
 
+    $this->assertDatabaseCount('events', 1);
 });
 
 it('can delete events if authenticated', function () {
-
     superAdminAuthenticate();
 
     $event = Event::factory()->create();

@@ -43,7 +43,7 @@ class EventChipFactory extends Factory
             'player_id' => Player::factory()->create()->id,
             'event_report_id' => EventReport::factory()->create()->id,
             'event_id' => Event::factory()->create()->id,
-            'date_published' => Carbon::now()->toString()
+            'date_published' => Carbon::now()->toString(),
         ];
     }
 }

@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Carbon\Carbon;
-use Illuminate\Http\Request;
 use App\Http\Requests\TournamentRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 /**
  * Class
@@ -47,25 +47,23 @@ class TournamentCrudController extends CrudController
         CRUD::column('description');
         CRUD::column('tour_id');
 
- $this->crud->addColumns([
+        $this->crud->addColumns([
             [
                 'name' => 'date_start', // the column that contains the ID of that connected entity;
                 'label' => 'Date End', // Table column heading
                 'type' => 'datetime',
-                'format' => config('app.date_format')
+                'format' => config('app.date_format'),
             ],
         ]);
 
- $this->crud->addColumns([
+        $this->crud->addColumns([
             [
                 'name' => 'date_end', // the column that contains the ID of that connected entity;
                 'label' => 'Date End', // Table column heading
                 'type' => 'datetime',
-                'format' => config('app.date_format')
+                'format' => config('app.date_format'),
             ],
         ]);
-
-
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
@@ -146,8 +144,6 @@ class TournamentCrudController extends CrudController
 
         ]);
 
-
-
         /**
          * Fields can be defined using the fluent syntax or array syntax:
          * - CRUD::field('price')->type('number');
@@ -169,48 +165,48 @@ class TournamentCrudController extends CrudController
 
     public function store(Request $request)
     {
-    $this->crud->hasAccessOrFail('create');
+        $this->crud->hasAccessOrFail('create');
 
-    // execute the FormRequest authorization and validation, if one is required
-    $request = $this->crud->validateRequest();
+        // execute the FormRequest authorization and validation, if one is required
+        $request = $this->crud->validateRequest();
 
-    // $date  = \Carbon\Carbon::parse($request->get('date_start'), session()->get('timezone') ?? 'UTC') ;
-    // $request['date_start'] = $date->setTimezone('UTC');
+        // $date  = \Carbon\Carbon::parse($request->get('date_start'), session()->get('timezone') ?? 'UTC') ;
+        // $request['date_start'] = $date->setTimezone('UTC');
 
-    // $date2  = \Carbon\Carbon::parse($request->get('date_end'), session()->get('timezone') ?? 'UTC') ;
-    // $request['date_end'] = $date2->setTimezone('UTC');
+        // $date2  = \Carbon\Carbon::parse($request->get('date_end'), session()->get('timezone') ?? 'UTC') ;
+        // $request['date_end'] = $date2->setTimezone('UTC');
 
-    // register any Model Events defined on fields
-    $this->crud->registerFieldEvents();
+        // register any Model Events defined on fields
+        $this->crud->registerFieldEvents();
 
-    $item = $this->crud->create($this->crud->getStrippedSaveRequest($request));
+        $item = $this->crud->create($this->crud->getStrippedSaveRequest($request));
 
-    // dd($request->get('published_date'), $request->get('timezone'));
-    // $this->attributes['published_date'] = $date->setTimezone('UTC');
-    // $item->setAttribute('timezone', $request['timezone']);
+        // dd($request->get('published_date'), $request->get('timezone'));
+        // $this->attributes['published_date'] = $date->setTimezone('UTC');
+        // $item->setAttribute('timezone', $request['timezone']);
 
-    $this->data['entry'] = $this->crud->entry = $item;
+        $this->data['entry'] = $this->crud->entry = $item;
 
-    // session()->put('new_article', 'a new article');
+        // session()->put('new_article', 'a new article');
 
-    session()->flash('new_article', $item->id);
+        session()->flash('new_article', $item->id);
 
-    \Alert::success(trans('backpack::crud.insert_success'))->flash();
+        \Alert::success(trans('backpack::crud.insert_success'))->flash();
 
-    $this->crud->setSaveAction();
+        $this->crud->setSaveAction();
 
-    return $this->crud->performSaveAction($item->getKey());
-}
+        return $this->crud->performSaveAction($item->getKey());
+    }
 
     public function destroy($id)
     {
-
         if ($this->crud->getCurrentEntry()->events->count()) {
             return \Alert::error('This tournament has events inside')->flash();
         }
 
         $this->crud->hasAccessOrFail('delete');
         $id = $this->crud->getCurrentEntryId() ?? $id;
+
         return $this->crud->delete($id);
     }
 }

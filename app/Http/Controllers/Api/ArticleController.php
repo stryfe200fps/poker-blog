@@ -20,12 +20,12 @@ class ArticleController extends Controller
         return new ArticleResource(Article::where('slug', $slug)->first());
     }
 
-    public function related($slug) 
+    public function related($slug)
     {
         return ArticleResource::collection(Article::where('slug', $slug)->first()->relatedArticles());
     }
 
-    public function articleCategory($slug) 
+    public function articleCategory($slug)
     {
         return ArticleResource::collection(ArticleCategory::where('slug', $slug)->firstOrFail()->articles()->latest()->paginate(5));
     }

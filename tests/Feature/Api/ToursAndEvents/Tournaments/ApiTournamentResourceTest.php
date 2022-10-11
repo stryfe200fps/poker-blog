@@ -6,32 +6,22 @@ use App\Models\Tournament;
 use Database\Seeders\CountrySeeder;
 
 test('lof tournamnet api works', function () {
+    $this->seed(CountrySeeder::class);
 
+    $countrySeeder = Country::inRandomOrder()->first();
 
-  $this->seed(CountrySeeder::class);
+    $tournament = Tournament::factory()->create([
+        'timezone' => 'Asia/Manila',
+        'country_id' => $countrySeeder->id,
+    ]);
 
+    $event = Event::factory()->create([
 
-  $countrySeeder = Country::inRandomOrder()->first();
+        'tournament_id' => $tournament->id,
+    ]);
 
+    $tournamentApi = $this->get('api/lof-tournament');
+    $tournamentApi->assertStatus(200);
 
-
-  $tournament = Tournament::factory()->create([
-    'timezone' => 'Asia/Manila' ,
-    'country_id' => $countrySeeder->id
-  ]);
-
-  $event = Event::factory()->create([
-
-    'tournament_id' => $tournament->id
-  ]);
-  
- $tournamentApi = $this->get('api/lof-tournament');
- $tournamentApi->assertStatus(200);
-
-
-//  dd($tournamentApi->json());
-
-
-
-
+    //  dd($tournamentApi->json());
 });

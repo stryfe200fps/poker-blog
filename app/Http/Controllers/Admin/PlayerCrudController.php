@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Player;
-use App\Models\EventChip;
 use App\Http\Requests\PlayerRequest;
+use App\Models\EventChip;
+use App\Models\Player;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -22,8 +22,6 @@ class PlayerCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\InlineCreateOperation;
 
-
-
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
      *
@@ -35,8 +33,8 @@ class PlayerCrudController extends CrudController
         CRUD::setModel(\App\Models\Player::class);
         CRUD::setRoute(config('backpack.base.route_prefix').'/player');
         CRUD::setEntityNameStrings('player', 'players');
-    
-         $this->crud->orderBy('name');
+
+        $this->crud->orderBy('name');
     }
 
     /**
@@ -48,9 +46,7 @@ class PlayerCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-
-
-         $this->crud->orderBy('name');
+        $this->crud->orderBy('name');
         CRUD::column('name');
         CRUD::column('pseudonym');
         CRUD::column('country_id');
@@ -119,7 +115,6 @@ class PlayerCrudController extends CrudController
 
     public function destroy($id)
     {
-
         $getChips = EventChip::where('player_id', $id)->count();
 
         if ($getChips) {
@@ -128,8 +123,7 @@ class PlayerCrudController extends CrudController
 
         $this->crud->hasAccessOrFail('delete');
         $id = $this->crud->getCurrentEntryId() ?? $id;
+
         return $this->crud->delete($id);
     }
-
-
 }

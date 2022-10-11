@@ -29,7 +29,6 @@ class LoginController extends Controller
      *
      * @return void
      */
-
     protected function authenticated(Request $request, $user)
     {
         session()->put('timezone', $request->get('timezone'));
@@ -37,8 +36,6 @@ class LoginController extends Controller
 
     public function __construct(Request $request)
     {
-
-
         $guard = backpack_guard_name();
 
         $this->middleware("guest:$guard", ['except' => 'logout']);

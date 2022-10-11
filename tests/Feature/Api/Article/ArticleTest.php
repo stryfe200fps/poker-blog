@@ -3,10 +3,7 @@
 use App\Models\Article;
 use App\Models\ArticleAuthor;
 use App\Models\ArticleCategory;
-use App\Models\ArticleTag;
-use App\Models\Tag;
 use App\Models\User;
-use Illuminate\Database\Query\Expression;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Role;
 
@@ -24,7 +21,6 @@ it('cannot create articles if unauthenticated', function () {
 });
 
 it('can insert article if authenticated', function () {
-
     superAdminAuthenticate();
 
     $this->get('admin/article/create')->assertStatus(200);
@@ -46,7 +42,6 @@ it('can insert article if authenticated', function () {
 });
 
 it('can update article if authenticated', function () {
-   
     superAdminAuthenticate();
 
     $article = Article::factory()->create();
@@ -85,12 +80,7 @@ it('can delete article if authenticated', function () {
 });
 
 it('can fetch related related articles', function () {
-
     // dd(superAdminAuthenticate());
 
     // dd($u);
 });
-
-
-
-
