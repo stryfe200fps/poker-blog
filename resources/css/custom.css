@@ -3,6 +3,55 @@ html {
     scroll-padding-top: var(--scroll-padding, 50px);
 }
 
+body {
+    position: static !important;
+}
+
+.goog-te-banner-frame {
+    display: none !important;
+}
+
+.goog-te-combo {
+    width: 80px;
+    margin: 0 !important;
+    font-family: "Lato", sans-serif !important;
+    font-size: 14px !important;
+    background: none;
+    color: #fff;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    scrollbar-width: none;
+}
+
+.goog-te-combo option {
+    background-color: #fff !important;
+    color: #222 !important;
+}
+
+.goog-te-combo::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+
+.goog-logo-link {
+    display: none !important;
+}
+
+.goog-te-gadget {
+    color: transparent !important;
+    user-select: none;
+}
+
+#goog-gt-tt,
+.goog-te-balloon-frame {
+    display: none !important;
+}
+.goog-text-highlight {
+    background: none !important;
+    box-shadow: none !important;
+}
+
 .text-primary {
     color: #f44336 !important;
 }
