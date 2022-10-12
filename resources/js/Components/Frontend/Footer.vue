@@ -1,6 +1,8 @@
 <script setup>
 import { Link, usePage } from "@inertiajs/inertia-vue3";
 import { ref } from "@vue/runtime-core";
+import { createToast } from "mosha-vue-toastify";
+import "mosha-vue-toastify/dist/style.css";
 
 const email = ref(null);
 
@@ -10,7 +12,15 @@ async function submitEmail() {
             email: email.value,
         });
         email.value = null;
-        alert("Thank you for subscribing.");
+        createToast("Thank you for subscribing.", {
+            position: "top-center",
+            hideProgressBar: true,
+            type: "success",
+            transition: "slide",
+            timeout: 2000,
+            showIcon: true,
+            showCloseButton: true,
+        });
     } catch (error) {
         console.error(error);
     }

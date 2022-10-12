@@ -9,11 +9,11 @@
 
         <!-- {{ getArticle(slug) }} -->
         <div class="block-content">
-            <label id="table-of-contents" class="dropdown">
-                <div @click="isPull = !isPull" class="dd-button">
+            <label id="table-of-contents" class="table-contents">
+                <div @click="isPull = !isPull" class="table-header">
                     Table of Contents
                 </div>
-                <ul class="dd-menu" :class="{ pull: isPull }">
+                <ul class="table-menu" :class="{ pull: isPull }">
                     <li
                         v-for="(content, index) in article.content"
                         :key="index"
@@ -425,7 +425,7 @@ ul.post-tags {
     transform: translate(-50%) rotate(45deg);
 }
 
-.dropdown {
+.table-contents {
     position: -webkit-sticky;
     position: sticky;
     top: 0;
@@ -442,11 +442,11 @@ ul.post-tags {
     user-select: none;
 }
 
-.dropdown.active {
+.table-contents.active {
     display: inline-block;
 }
 
-.dd-button {
+.table-header {
     display: inline-block;
     width: 100%;
     padding: 15px 30px 15px 20px;
@@ -454,7 +454,7 @@ ul.post-tags {
     cursor: pointer;
 }
 
-.dd-button:after {
+.table-header:after {
     content: "";
     position: absolute;
     top: 50%;
@@ -467,7 +467,7 @@ ul.post-tags {
     transform: translateY(-50%);
 }
 
-.dd-menu {
+.table-menu {
     position: absolute;
     top: 100%;
     z-index: 1;
@@ -484,22 +484,22 @@ ul.post-tags {
     box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.1);
 }
 
-.dd-menu.pull {
+.table-menu.pull {
     display: block;
 }
 
-.dd-menu li {
+.table-menu li {
     padding: 10px 20px;
     border-bottom: 1px solid #fff;
     cursor: pointer;
     white-space: nowrap;
 }
 
-.dd-menu li:hover {
+.table-menu li:hover {
     background-color: #ccc;
 }
 
-.dd-menu li a {
+.table-menu li a {
     display: block;
     width: 100%;
     text-decoration: none;

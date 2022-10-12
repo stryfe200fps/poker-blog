@@ -90,6 +90,8 @@ import TournamentList from "../../Components/Frontend/Tournament/List.vue";
 import { useArticleStore } from "@/Stores/article.js";
 import { onMounted, ref, watch } from "@vue/runtime-core";
 import axios from "axios";
+import { createToast } from "mosha-vue-toastify";
+import "mosha-vue-toastify/dist/style.css";
 
 const articleStore = useArticleStore();
 
@@ -118,7 +120,15 @@ async function submitMessage() {
         email.value = null;
         subject.value = null;
         message.value = null;
-        alert("Message has been sent.");
+        createToast("Message has been sent.", {
+            position: "top-center",
+            hideProgressBar: true,
+            type: "success",
+            transition: "slide",
+            timeout: 2000,
+            showIcon: true,
+            showCloseButton: true,
+        });
     } catch (error) {
         console.error(error.response.data.message);
     }
