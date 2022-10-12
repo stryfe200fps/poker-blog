@@ -207,12 +207,13 @@ Route::post('upload_excel', function () {
 // });
 
 
+    try { 
+
 foreach (MenuItem::getTree() as $item) {
 
     // if (!$item->parent_id == null && !$item->name == 'News & Info')
     // return; 
    
-    try { 
 
 
     if ($item->link == null)
@@ -237,9 +238,9 @@ foreach (MenuItem::getTree() as $item) {
             ]);
         });
     }
-} catch (Exception $e) {
+} }  catch (Exception $e) {
 
-}
+
 }
 
 Route::get('/{page}/{other?}', function ($page, $other = null) {
