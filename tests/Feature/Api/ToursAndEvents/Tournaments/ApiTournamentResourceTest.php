@@ -16,7 +16,6 @@ test('lof tournamnet api works', function () {
     ]);
 
     $event = Event::factory()->create([
-
         'tournament_id' => $tournament->id,
     ]);
 

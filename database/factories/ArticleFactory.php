@@ -3,6 +3,9 @@
 namespace Database\Factories;
 
 use App\Models\Article;
+use App\Models\ArticleAuthor;
+use App\Models\ArticleCategory;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ArticleFactory extends Factory
@@ -21,12 +24,18 @@ class ArticleFactory extends Factory
      */
     public function definition()
     {
+
         return [
             'title' => $this->faker->name,
-            'body' => $this->faker->text,
+            'content' => [
+                [ 
+                'title' => 'this title',
+                'body' => 'this body'
+                ]
+            ],
             'slug' => $this->faker->slug,
-            'article_author_id' => 1,
-            'published_date' => $this->faker->date,
+            'published_date' => Carbon::now()->toString(),
+            'article_author_id' => ArticleAuthor::factory()->create()->id,
         ];
     }
 }

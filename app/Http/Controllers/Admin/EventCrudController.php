@@ -54,24 +54,6 @@ class EventCrudController extends CrudController
         CRUD::column('event_date_start')->type('date')->format(config('app.date_format'));
         CRUD::column('event_date_end')->type('date')->format(config('app.date_format'));
 
-        $this->crud->addColumns([
-            [
-                'name' => 'date_start', // the column that contains the ID of that connected entity;
-                'label' => 'Date Start', // Table column heading
-                'type' => 'date',
-                'format' => config('app.date_format'),
-            ],
-        ]);
-
-        $this->crud->addColumns([
-            [
-                'name' => 'date_end', // the column that contains the ID of that connected entity;
-                'label' => 'Date End', // Table column heading
-                'type' => 'date',
-                'format' => config('app.date_format'),
-            ],
-        ]);
-
         $this->crud->addButtonFromModelFunction('line', 'open_payout', 'openPayout', 'beginning');
         $this->crud->addButtonFromModelFunction('line', 'open_chip_count', 'openChipCount', 'beginning');
         $this->crud->addButtonFromModelFunction('line', 'open_google', 'openLiveReporting', 'beginning');
@@ -130,38 +112,38 @@ class EventCrudController extends CrudController
 
         // dd(Carbon::now());
 
-        $this->crud->addFields([
+        // $this->crud->addFields([
 
-            [   // date_range
-                'name' => ['date_start', 'date_end'], // db columns for start_date & end_date
-                'label' => 'Event Duration',
-                'type' => 'date_range',
-                // options sent to daterangepicker.js
-                'date_range_options' => [
-                    'drops' => 'down', // can be one of [down/up/auto]
-                    'timePicker' => true,
-                    'locale' => ['format' => 'M/D/YYYY hh:mm a'],
-                ],
-            ],
-        ]);
+        //     [   // date_range
+        //         'name' => ['date_start', 'date_end'], // db columns for start_date & end_date
+        //         'label' => 'Event Duration',
+        //         'type' => 'date_range',
+        //         // options sent to daterangepicker.js
+        //         'date_range_options' => [
+        //             'drops' => 'down', // can be one of [down/up/auto]
+        //             'timePicker' => true,
+        //             'locale' => ['format' => 'M/D/YYYY hh:mm a'],
+        //         ],
+        //     ],
+        // ]);
 
-        // dd(session()->get('timezone'));
+        // // dd(session()->get('timezone'));
 
-        $this->crud->addField([
-            'name' => ['date_start', 'date_end'], // db columns for start_date & end_date
-            'type' => 'date_range',
-            'label' => 'Event Duration',
-            'default' => [Carbon::now()->setTimezone(session()->get('timezone') ?? 'UTC'), Carbon::now()->setTimezone(session()->get('timezone') ?? 'UTC')->addDays(2)],
-            'date_range_options' => [
-                'todayBtn' => 'linked',
-                // options sent to daterangepicker.js
-                'timePicker' => true,
-                // 'startDate' => Carbon::now()->setTimezone(session()->get('timezone')),
-                // 'endDate' => date("Y-m-d"),
-                'locale' => ['format' => 'MMM D, YYYY hh:mm a'],
-            ],
-            'allows_null' => true,
-        ]);
+        // $this->crud->addField([
+        //     'name' => ['date_start', 'date_end'], // db columns for start_date & end_date
+        //     'type' => 'date_range',
+        //     'label' => 'Event Duration',
+        //     'default' => [Carbon::now()->setTimezone(session()->get('timezone') ?? 'UTC'), Carbon::now()->setTimezone(session()->get('timezone') ?? 'UTC')->addDays(2)],
+        //     'date_range_options' => [
+        //         'todayBtn' => 'linked',
+        //         // options sent to daterangepicker.js
+        //         'timePicker' => true,
+        //         // 'startDate' => Carbon::now()->setTimezone(session()->get('timezone')),
+        //         // 'endDate' => date("Y-m-d"),
+        //         'locale' => ['format' => 'MMM D, YYYY hh:mm a'],
+        //     ],
+        //     'allows_null' => true,
+        // ]);
 
         $this->crud->addField([   // select2_from_array
             'name' => 'tournament_id',

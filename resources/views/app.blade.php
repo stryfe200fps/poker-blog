@@ -54,18 +54,4 @@
        
     </body>
 
-{{-- <script>
-
-	window.addEventListener('load', function () {
-
-        window.Echo.channel('report')
-		.listen('NewReport', (e) => {
-			console.log(e)
-			alert('bugitong')
-	})
-		
-	});
-
-</script> --}}
-
 </html>

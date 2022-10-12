@@ -15,7 +15,6 @@ return new class extends Migration
     {
         Schema::table('articles', function (Blueprint $table) {
             $table->text('content');
-            //
         });
     }
 

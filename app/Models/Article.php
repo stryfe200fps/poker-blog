@@ -40,9 +40,9 @@ class Article extends Model implements HasMedia
     {
         $new = collect($content)->map(function ($item, $key) {
             $item['body'] = '<div id="content'.$key.'">'.$item['body'].'</div>';
-
             return $item;
         });
+
         $this->attributes['content'] = json_encode($new->toArray());
     }
 

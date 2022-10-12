@@ -25,19 +25,13 @@ it('can insert article if authenticated', function () {
 
     $this->get('admin/article/create')->assertStatus(200);
 
-    $data = [
+    $data = Article::factory()->make([
         'title' => 'Things I do',
-        'description' => 'description',
-        'body' => 'body',
-        'published_date' => '2020-04-17',
-        'article_author_id' => ArticleAuthor::factory()->create()->id,
         'article_categories' => collect(ArticleCategory::factory()->times(2)->create())->pluck('id')->toArray(),
-    ];
+    ])->attributesToArray();
 
     $datas = $this->post('admin/article', $data);
-    $this->assertDatabaseHas('articles', ['title' => 'Things I do',
-        'description' => 'description',
-        'body' => 'body',
+    $this->assertDatabaseHas('articles', ['title' => 'Things I do'
     ]);
 });
 
@@ -48,21 +42,22 @@ it('can update article if authenticated', function () {
 
     $this->get('admin/article/'.$article->id.'/edit')->assertStatus(200);
 
-    $data = [
+    $data = Article::factory()->make([
         'id' => $article->id,
         'title' => 'things I hate',
-        'description' => 'description',
-        'body' => 'body',
-        'published_date' => '2020-04-17',
-        'article_author_id' => ArticleAuthor::factory()->create()->id,
         'article_categories' => collect(ArticleCategory::factory()->times(2)->create())->pluck('id')->toArray(),
-    ];
+    ])->attributesToArray();
+
+    // $data = [
+    //     'title' => 'things I hate',
+    //     'description' => 'description',
+    //     'body' => 'body',
+    //     'published_date' => '2020-04-17',
+    //     'article_author_id' => ArticleAuthor::factory()->create()->id,
+    // ];
 
     $datas = $this->put('admin/article/update', $data);
-    $this->assertDatabaseHas('articles', ['title' => 'things I hate',
-        'description' => 'description',
-        'body' => 'body',
-    ]);
+    $this->assertDatabaseHas('articles', ['title' => 'things I hate']);
     $this->assertDatabaseCount('articles', 1);
 });
 
@@ -79,8 +74,3 @@ it('can delete article if authenticated', function () {
     $datas = $this->delete('admin/article/1');
 });
 
-it('can fetch related related articles', function () {
-    // dd(superAdminAuthenticate());
-
-    // dd($u);
-});

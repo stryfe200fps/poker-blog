@@ -13,13 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('event_schedules', function (Blueprint $table) {
-            $table->id();
-            $table->string('title');
-            $table->dateTime('date_start');
-            $table->dateTime('date_end');
-            $table->foreignId('event_id');
-            $table->timestamps();
+        Schema::table('events', function (Blueprint $table) {
+            $table->dropColumn(['date_start', 'date_end']);
         });
     }
 
@@ -30,6 +25,9 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('event_schedules');
+        Schema::table('events', function (Blueprint $table) {
+            $table->dateTime('date_start');
+            $table->dateTime('date_end');
+        });
     }
 };

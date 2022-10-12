@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Event;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use Carbon\Carbon;
@@ -31,11 +32,17 @@ class LiveCrudController extends CrudController
         CRUD::setRoute(config('backpack.base.route_prefix').'/live');
         CRUD::setEntityNameStrings('Live Poker Event', 'Live Poker Event');
         CRUD::denyAccess('create');
-        $this->crud->addClause('where', function ($query) {
-            $date = Carbon::now();
-            $query->where('date_start', '<=', $date);
-            $query->where('date_end', '>=', $date);
-        });
+
+        $allLiveEvents = collect(Event::all())
+            ->filter(fn ($arr) => 
+               $arr->status() == 'live'
+        );
+
+        foreach ($allLiveEvents as $live) {
+            $this->crud->addClause('orWhere', function ($query) use ($live) {
+                $query->orWhere('id', $live->id );
+            });
+        }
     }
 
     /**

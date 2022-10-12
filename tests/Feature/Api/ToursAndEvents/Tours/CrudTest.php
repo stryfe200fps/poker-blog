@@ -14,81 +14,83 @@ uses(RefreshDatabase::class);
 //     $response->assertStatus(200);
 // });
 
-it('cannot create articles if unauthenticated', function () {
-    $this->post('admin/article/', [
-        'name' => 'adrian',
-    ])->assertStatus(302);
-});
+// it('cannot create articles if unauthenticated', function () {
+//     $this->post('admin/article/', [
+//         'name' => 'adrian',
+//     ])->assertStatus(302);
+// });
 
-it('can insert article if authenticated', function () {
-    $u = User::factory()->create();
-    $role = Role::create([
-        'name' => 'super-admin',
-    ]);
+// it('can insert article if authenticated', function () {
+//     $u = User::factory()->create();
+//     $role = Role::create([
+//         'name' => 'super-admin',
+//     ]);
 
-    $user = $this->actingAs(User::factory()->create(), 'web');
+//     $user = $this->actingAs(User::factory()->create(), 'web');
 
-    backpack_user()->assignRole('super-admin');
+//     backpack_user()->assignRole('super-admin');
 
-    $this->get('admin/article/create')->assertStatus(200);
+//     $this->get('admin/article/create')->assertStatus(200);
 
-    $data = [
-        'title' => 'Things I do',
-        'description' => 'description',
-        'body' => 'body',
-        'published_date' => '2020-04-17',
-        'article_author_id' => ArticleAuthor::factory()->create()->id,
-        'article_categories' => collect(ArticleCategory::factory()->times(2)->create())->pluck('id')->toArray(),
-    ];
+//     // $data = [
+//     //     'title' => 'Things I do',
+//     //     'description' => 'description',
+//     //     'published_date' => '2020-04-17',
+//     // ];
 
-    $datas = $this->post('admin/article', $data);
-    $this->assertDatabaseHas('articles', ['title' => 'Things I do',
-        'description' => 'description',
-        'body' => 'body',
-    ]);
-});
+//     $data = Article::factory()->make([
+//         'title' => 'Things I do'
+//     ])->attributesToArray();
 
-it('can update article if authenticated', function () {
-    $u = User::factory()->create();
-    $role = Role::create([
-        'name' => 'super-admin',
-    ]);
 
-    $user = $this->actingAs(User::factory()->create(), 'web');
+//     $datas = $this->post('admin/article', $data);
+//     $this->assertDatabaseHas('articles', ['title' => 'Things I do',
+//         'description' => 'description',
+//         'body' => 'body',
+//     ]);
+// });
 
-    backpack_user()->assignRole('super-admin');
+// it('can update article if authenticated', function () {
+//     $u = User::factory()->create();
+//     $role = Role::create([
+//         'name' => 'super-admin',
+//     ]);
 
-    $article = Article::factory()->create();
+//     $user = $this->actingAs(User::factory()->create(), 'web');
 
-    $this->get('admin/article/'.$article->id.'/edit')->assertStatus(200);
+//     backpack_user()->assignRole('super-admin');
 
-    $data = [
-        'id' => $article->id,
-        'title' => 'things I hate',
-        'description' => 'description',
-        'body' => 'body',
-        'published_date' => '2020-04-17',
-        'article_author_id' => ArticleAuthor::factory()->create()->id,
-        'article_categories' => collect(ArticleCategory::factory()->times(2)->create())->pluck('id')->toArray(),
-    ];
+//     // $article = Article::factory()->create();
+//     $article = Article::factory()->create();
 
-    $datas = $this->put('admin/article/update', $data);
-    $this->assertDatabaseHas('articles', ['title' => 'things I hate',
-        'description' => 'description',
-        'body' => 'body',
-    ]);
-    $this->assertDatabaseCount('articles', 1);
-});
+//     $this->get('admin/article/'.$article->id.'/edit')->assertStatus(200);
 
-it('can delete article if authenticated', function () {
-    $u = User::factory()->create();
-    $role = Role::create([
-        'name' => 'super-admin',
-    ]);
+//     // $data = [
+//     //     'id' => $article->id,
+//     // ];
 
-    $user = $this->actingAs(User::factory()->create(), 'web');
-    backpack_user()->assignRole('super-admin');
-    $article = Article::factory()->create();
-    $this->get('admin/article')->assertStatus(200);
-    $datas = $this->delete('admin/article/1');
-});
+//     $data = Article::factory()->make([
+//         'id' => $article->id,
+//         'title' => 'things I hate'
+//     ]);
+
+//     $datas = $this->put('admin/article/update', $data);
+//     $this->assertDatabaseHas('articles', ['title' => 'things I hate',
+//         'description' => 'description',
+//         'body' => 'body',
+//     ]);
+//     $this->assertDatabaseCount('articles', 1);
+// });
+
+// it('can delete article if authenticated', function () {
+//     $u = User::factory()->create();
+//     $role = Role::create([
+//         'name' => 'super-admin',
+//     ]);
+
+//     $user = $this->actingAs(User::factory()->create(), 'web');
+//     backpack_user()->assignRole('super-admin');
+//     $article = Article::factory()->create();
+//     $this->get('admin/article')->assertStatus(200);
+//     $datas = $this->delete('admin/article/1');
+// });

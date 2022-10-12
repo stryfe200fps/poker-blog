@@ -25,8 +25,6 @@ class EventFactory extends Factory
     {
         $day1DateStart = Carbon::now();
 
-        // dd($day1DateStart);
-
         $sheduleFormat = [
             [
                 'day' => '1B',
@@ -45,8 +43,6 @@ class EventFactory extends Factory
             'title' => $this->faker->name,
             'description' => $this->faker->text,
             'schedule' => $sheduleFormat,
-            'date_start' => $this->faker->dateTime(),
-            'date_end' => $this->faker->dateTime(),
         ];
     }
 }

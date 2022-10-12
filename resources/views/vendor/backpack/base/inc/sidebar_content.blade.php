@@ -68,7 +68,7 @@
 
 <li class="nav-item"><a class="nav-link" href="{{ backpack_url('currency') }}"><i class="nav-icon la la-money"></i> Currencies</a></li>
 
-<li class="nav-item"><a class="nav-link" href="{{ backpack_url('live-report-player') }}"><i class="nav-icon la la-users"></i> Live report players</a></li>
+<!-- <li class="nav-item"><a class="nav-link" href="{{ backpack_url('live-report-player') }}"><i class="nav-icon la la-users"></i> Live report players</a></li> -->
 <li class="nav-item"><a class="nav-link" href="{{ backpack_url('country') }}"><i class="nav-icon la la-flag"></i> Countries</a></li>
 
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('setting') }}'><i class='nav-icon la la-cog'></i> <span>Settings</span></a></li>
@@ -79,5 +79,5 @@
 
 
 
-<li class="nav-item"><a class="nav-link" href="{{ backpack_url('event-schedule') }}"><i class="nav-icon la la-question"></i> Event schedules</a></li>
+<!-- <li class="nav-item"><a class="nav-link" href="{{ backpack_url('event-schedule') }}"><i class="nav-icon la la-question"></i> Event schedules</a></li> -->
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('menu-item') }}'><i class='nav-icon la la-list'></i> <span>Menu</span></a></li>
