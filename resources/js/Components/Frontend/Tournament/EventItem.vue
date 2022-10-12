@@ -38,7 +38,7 @@
                         <li>
                             <Link
                                 class="text-capitalize"
-                                :href="`/report/${report.slug}`"
+                                :href="`/event/${event.slug}/report/${report.slug}`"
                                 ><i class="fa-solid fa-angle-right"></i
                                 >{{ report.title }}</Link
                             >

@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\LOFApiEventIndexResource;
 use App\Models\Event;
 use Illuminate\Http\Request;
+use App\Http\Resources\LOFApiEventIndexResource;
+use App\Http\Resources\LOFApiEventIndexChipCountResource;
 
 class LOFApiEventIndexController extends Controller
 {
@@ -47,6 +48,13 @@ class LOFApiEventIndexController extends Controller
     public function show($id)
     {
         return new LOFApiEventIndexResource(Event::with(['event_payouts'])->find($id));
+    }
+
+// Route::get('lof-event-index/{slug}/chipcount', [LOFApiEventIndexController::class, 'chipCounts']);
+
+    public function chipCounts($slug)
+    {
+        return new LOFApiEventIndexChipCountResource( Event::with('latest_event_chips')->where('slug', $slug)->firstOrFail() );
     }
 
     /**

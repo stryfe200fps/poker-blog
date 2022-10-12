@@ -50,6 +50,7 @@
                         :event="eventData"
                         :reports="liveReport"
                         @loadMore="loadMoreReports"
+                        :currentTab="page"
                     />
                 </div>
             </div>
@@ -75,6 +76,9 @@ const props = defineProps({
     slug: {
         type: String,
     },
+    page: {
+        type: String,
+    }
 });
 
 const eventData = ref([]);

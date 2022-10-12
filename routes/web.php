@@ -33,23 +33,33 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/event/{slug}', function ($slug) {
+Route::get('/event/{slug}/{page?}', function ($slug, $page = null) {
+    $webPage = \JsonLd\Context::create('web_page', [
+        'description' => 'Home page',
+        'url' => config('app.url'). '/event',
+    ]);
     return Inertia::render('Event/Index', [
         'slug' => $slug,
+        'page' => $page,
+        'title' => 'Life of poker',
+        'description' => 'life of poker',
+        'json-ld-webpage' => $webPage,
     ]);
 })->name('event');
 
-Route::get('/report/{slug}', function ($slug) {
-    $report = new LOFApiEventReportsResource(EventReport::where('slug', $slug)->first());
+Route::get('/event/{eventSlug}/report/{reportSlug}', function ($eventSlug, $reportSlug) {
+
+    $report = new LOFApiEventReportsResource(EventReport::where('slug', $reportSlug)->first());
 
     return Inertia::render('Report/Show', [
         'report' => $report,
         'title' => $report->title,
-        'slug' => $slug,
+        'slug' => $reportSlug,
         'image' => $report->getFirstMediaUrl('event-report', 'main-image'),
         'description' => \Illuminate\Support\Str::limit($report->title, 100, $end = '...'),
     ]);
 })->name('event');
+
 
 Route::get('/tournament', function () {
     return Inertia::render('Tournament/Index');

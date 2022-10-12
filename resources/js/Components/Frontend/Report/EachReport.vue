@@ -4,7 +4,7 @@
             <h1 class="text-capitalize">
                 <Link
                     class="default-text-color"
-                    :href="`/report/${item.slug}`"
+                    :href="`/event/${item.event.slug}/report/${item.slug}`"
                     >{{ item.title }}</Link
                 >
             </h1>

@@ -1,30 +1,32 @@
 <template>
     <div class="about-more-autor">
         <ul class="nav nav-tabs custom-tabs">
-            <li @click.prevent="changeTab(0)" :class="{ active: tab == 0 }">
+            <li @click.prevent="changeTab(currentTab)" :class="{ active: currentTab == 'report' }">
                 <a href="#" data-toggle="tab">
                     <span class="hide-on-mobile">LIVE UPDATES</span>
                     <span class="show-on-mobile">UPDATES</span>
                 </a>
             </li>
-            <li @click.prevent="changeTab(1)" :class="{ active: tab == 1 }">
-                <a href="#" data-toggle="tab">
+
+            <li @click="changeTab(currentTab)" :class="{ active: currentTab == 'chip-stack' }">
+                <Link :href="'/event/'+ event.slug + '/chip-stack'   " data-toggle="tab">
                     <span class="hide-on-mobile">CHIP COUNTS</span>
                     <span class="show-on-mobile">CHIPS</span>
-                </a>
+                </Link>
             </li>
-            <li @click.prevent="changeTab(2)" :class="{ active: tab == 2 }">
-                <a href="#" data-toggle="tab">GALLERY</a>
+            <li @click="changeTab(currentTab)" :class="{ active: currentTab == 'gallery' }">
+                <Link :href="'/event/'+ event.slug + '/gallery'" data-toggle="tab">GALLERY</Link>
             </li>
-            <li @click.prevent="changeTab(3)" :class="{ active: tab == 3 }">
-                <a href="#" data-toggle="tab">PAYOUT</a>
+            <li @click="changeTab(currentTab)" :class="{ active: currentTab == 'payout' }">
+                <Link :href="'/event/'+ event.slug + '/payout'" data-toggle="tab">PAYOUT</Link>
             </li>
-            <li @click.prevent="changeTab(4)" :class="{ active: tab == 4 }">
-                <a href="#" data-toggle="tab">#WHATSAPP</a>
+
+            <li @click="changeTab(currentTab)" :class="{ active: currentTab == 'whatsapp' }">
+                <Link :href="'/event/'+ event.slug + '/whatsapp'" data-toggle="tab">#WHATSAPP</Link>
             </li>
         </ul>
         <div class="tab-content">
-            <div v-show="tab == 0 && reports.length" id="liveReport">
+            <div v-show="currentTab == 'reports' && reports.length" id="liveReport">
                 <div
                     v-for="(report, index) in reports"
                     :key="index"
@@ -51,7 +53,7 @@
                     v-observe-visibility="handleScrolledToBottom"
                 ></div>
             </div>
-            <div v-show="tab == 1">
+            <div v-show="currentTab == 'chip-stack'">
                 <div class="margin-top">
                     <CustomeTable v-if="event?.chip_stacks?.length">
                         <template v-slot:table-head>
@@ -117,7 +119,7 @@
                                 </td>
                                 <td
                                     v-if="stack.report_id == null"
-                                    class="text-right"
+                                   class="text-right"
                                 >
                                     <i class="fa fa-whatsapp"> </i> whatsapp
                                 </td>
@@ -147,7 +149,7 @@
                     </CustomeTable>
                 </div>
             </div>
-            <div v-show="tab == 2">
+            <div v-show="currentTab == 'gallery'">
                 <div class="grid-box">
                     <div id="my-gallery" class="row">
                         <div class="col-xs-12">
@@ -177,7 +179,7 @@
                     </div>
                 </div>
             </div>
-            <div v-show="tab == 3">
+            <div v-show="currentTab == 'payout'">
                 <div class="margin-top">
                     <CustomeTable v-if="event?.payouts?.length">
                         <template v-slot:table-head>
@@ -235,7 +237,7 @@
                     </CustomeTable>
                 </div>
             </div>
-            <div v-show="tab == 4">
+            <div v-show="currentTab == 'whatsapp'">
                 <div class="margin-top">
                     {{ event.whatsapp }}
                     <p>Whatsapp</p>
@@ -251,6 +253,8 @@
 </template>
 
 <script setup>
+
+import { Link } from "@inertiajs/inertia-vue3";
 import { ref, computed } from "@vue/reactivity";
 import { onMounted, onBeforeUnmount, watch } from "@vue/runtime-core";
 import CustomeTable from "../CustomeTable.vue";
@@ -279,6 +283,9 @@ const props = defineProps({
     event: {
         type: Object,
     },
+    currentTab: {
+        type: String
+    }
 });
 const emit = defineEmits(["loadMore"]);
 

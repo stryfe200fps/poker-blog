@@ -17,7 +17,6 @@ class LOFApiEventsController extends Controller
     public function index()
     {
         $dateNow = Carbon::now();
-
         // dd(Event::eventDuration()->get() );
 
         // dd(Event::latest()->where('date_start', '<=', $dateNow)
@@ -27,6 +26,8 @@ class LOFApiEventsController extends Controller
         ->paginate(2));
         //
     }
+
+    
 
     /**
      * Show the form for creating a new resource.

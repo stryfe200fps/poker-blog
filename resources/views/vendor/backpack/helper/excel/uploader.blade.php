@@ -158,7 +158,7 @@
      
     this.filepond.setOptions({
       allowRevert: false,
-      acceptedFileTypes: ['image/png'],
+      acceptedFileTypes: ['image/png', 'image/jpg', 'image/jpeg'],
 
         server: {
           process: (fieldName, file, metadata, load, error, progress, abort, transfer, options) => {

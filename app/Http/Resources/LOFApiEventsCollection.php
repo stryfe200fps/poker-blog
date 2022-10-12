@@ -15,7 +15,7 @@ class LOFApiEventsCollection extends ResourceCollection
     public function toArray($request)
     {
         $mapped = $this->collection->map(function ($result, $item) {
-            return array_merge(['status' => $result->status(), 'events' => collect($result->event_reports->take(2))->toArray()], collect(new LOFApiEventsResource($result))->toArray());
+            return array_merge(['status' => $result->status(), 'events' => collect($result->event_reports->sortByDesc('date_added')->take(2))->toArray()], collect(new LOFApiEventsResource($result))->toArray());
         })->sortByDesc('id');
 
         $statusPriorities = ['live', 'upcoming', 'tba', 'past'];

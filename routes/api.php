@@ -31,7 +31,9 @@ Route::get('article/category/{slug}', [ArticleController::class, 'articleCategor
 // Route::get('article/tag/{tag}', [ArticleController::class, 'tag' ]);
 
 Route::get('tag/articles/{slug}', [TagController::class, 'articles']);
+
 Route::get('tag/reports/{slug}', [TagController::class, 'reports']);
+
 
 Route::resource('live-report', LiveReportController::class);
 Route::resource('tournament', PokerTournamentApiController::class);
@@ -51,9 +53,13 @@ Route::resource('reports', ReportsApiController::class);
 
 Route::resource('lof-tournament', LOFApiTournamentsController::class);
 Route::resource('lof-event', LOFApiEventsController::class);
-Route::resource('lof-event-index', LOFApiEventIndexController::class);
-Route::resource('lof-live-report', EventReportsController::class);
 
+
+Route::resource('lof-event-index', LOFApiEventIndexController::class);
+Route::get('lof-event-index/{slug}/chipcount', [LOFApiEventIndexController::class, 'chipCounts']);
+
+
+Route::resource('lof-live-report', EventReportsController::class);
 Route::resource('page', PageManagerController::class);
 
 Route::get('twitter', [SocialMediaController::class, 'fetchTwitter']);
