@@ -13,7 +13,6 @@
                 <div @click="isPull = !isPull" class="dd-button">
                     Table of Contents
                 </div>
-                <!-- <input type="checkbox" class="dd-input" :checked="isPull" /> -->
                 <ul class="dd-menu" :class="{ pull: isPull }">
                     <li
                         v-for="(content, index) in article.content"
@@ -38,129 +37,47 @@
                     </h1></Link
                 >
             </div>
-
-            <div>
-                <div class="single-post-box">
-                    <div class="title-post">
+            <div class="single-post-box">
+                <div class="title-post">
+                    <h1>
                         <h1>{{ article.title }}</h1>
-                        <div
-                            style="
-                                display: flex;
-                                justify-content: space-between;
-                                align-items: center;
-                            "
-                        >
-                            <div>
-                                <ul class="post-tags">
-                                    <li>
-                                        <i class="fa fa-clock-o"></i
-                                        >{{ article.date }}
-                                    </li>
-                                    <li>
-                                        <i class="fa fa-user"></i>by
-                                        <a href="#"
-                                            >{{ article.author?.name }}
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div>
-                                <ul class="post-tags share-post-links">
+                    </h1>
+                    <div
+                        style="
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                        "
+                    >
+                        <div>
+                            <ul class="post-tags">
+                                <li>
+                                    <i class="fa fa-clock-o"></i
+                                    >{{ article.date }}
+                                </li>
+                                <li>
+                                    <i class="fa fa-user"></i>by
+                                    <a href="#">{{ article.author?.name }} </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <ul class="post-tags share-post-links">
+                                <div
+                                    class="share-post-mobile"
+                                    style="position: relative"
+                                >
                                     <div
-                                        class="share-post-mobile"
-                                        style="position: relative"
+                                        class="btn-group-vertical social-links-group"
+                                        :class="{ show: isOpen }"
                                     >
-                                        <div
-                                            class="btn-group-vertical social-links-group"
-                                            :class="{ show: isOpen }"
-                                        >
-                                            <li
-                                                class="btn"
-                                                style="
-                                                    margin-right: 0;
-                                                    background-color: #1854dd;
-                                                "
-                                            >
-                                                <a
-                                                    target="_blank"
-                                                    :href="
-                                                        'https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Flifeofpoker.com%2Freport%2F' +
-                                                        article.slug +
-                                                        '&amp;src=sdkpreparse'
-                                                    "
-                                                    ><i
-                                                        class="fa-brands fa-facebook-f"
-                                                        style="
-                                                            margin-right: 0;
-                                                            color: #fff;
-                                                        "
-                                                    ></i>
-                                                </a>
-                                            </li>
-                                            <li
-                                                class="btn"
-                                                style="
-                                                    margin-right: 0;
-                                                    background-color: #18a3dd;
-                                                "
-                                            >
-                                                <a
-                                                    target="_blank"
-                                                    :href="
-                                                        'https://twitter.com/intent/tweet?text=https%3A//lifeofpoker.com/report/' +
-                                                        article.slug
-                                                    "
-                                                    ><i
-                                                        class="fa fa-twitter"
-                                                        style="
-                                                            margin-right: 0;
-                                                            color: #fff;
-                                                        "
-                                                    ></i
-                                                ></a>
-                                            </li>
-                                            <li
-                                                class="btn"
-                                                style="
-                                                    background-color: #25d366;
-                                                "
-                                            >
-                                                <a
-                                                    target="_blank"
-                                                    :href="
-                                                        'https://api.whatsapp.com/send?text=%0ahttps://lifeofpoker.com/report/' +
-                                                        article.slug
-                                                    "
-                                                    ><i
-                                                        class="fa fa-whatsapp"
-                                                        style="
-                                                            margin-right: 0;
-                                                            color: #fff;
-                                                        "
-                                                    ></i
-                                                ></a>
-                                            </li>
-                                        </div>
                                         <li
-                                            @click="showShare"
-                                            class="btn btn-default share-btn-mobile"
+                                            class="btn"
+                                            style="
+                                                margin-right: 0;
+                                                background-color: #1854dd;
+                                            "
                                         >
-                                            <i class="fa fa-share-alt"></i
-                                            ><span class="text-uppercase"
-                                                >Share</span
-                                            >
-                                        </li>
-                                    </div>
-                                    <div class="share-post-desktop">
-                                        <li class="text-secondary">
-                                            <i
-                                                class="fa fa-share-alt text-secondary"
-                                            ></i
-                                            ><span class="text-secondary"
-                                                >Share Post</span
-                                            >
-                                        </li>
-                                        <li>
                                             <a
                                                 target="_blank"
                                                 :href="
@@ -168,83 +85,142 @@
                                                     article.slug +
                                                     '&amp;src=sdkpreparse'
                                                 "
-                                                class="facebook"
                                                 ><i
-                                                    class="fa fa-facebook text-secondary"
-                                                ></i
-                                            ></a>
+                                                    class="fa-brands fa-facebook-f"
+                                                    style="
+                                                        margin-right: 0;
+                                                        color: #fff;
+                                                    "
+                                                ></i>
+                                            </a>
                                         </li>
-                                        <li>
+                                        <li
+                                            class="btn"
+                                            style="
+                                                margin-right: 0;
+                                                background-color: #18a3dd;
+                                            "
+                                        >
                                             <a
                                                 target="_blank"
                                                 :href="
                                                     'https://twitter.com/intent/tweet?text=https%3A//lifeofpoker.com/report/' +
                                                     article.slug
                                                 "
-                                                class="twitter"
                                                 ><i
-                                                    class="fa fa-twitter text-secondary"
+                                                    class="fa fa-twitter"
+                                                    style="
+                                                        margin-right: 0;
+                                                        color: #fff;
+                                                    "
                                                 ></i
                                             ></a>
                                         </li>
-                                        <li>
+                                        <li
+                                            class="btn"
+                                            style="background-color: #25d366"
+                                        >
                                             <a
                                                 target="_blank"
                                                 :href="
                                                     'https://api.whatsapp.com/send?text=%0ahttps://lifeofpoker.com/report/' +
                                                     article.slug
                                                 "
-                                                class="whatsapp"
                                                 ><i
-                                                    class="fa fa-whatsapp text-secondary"
+                                                    class="fa fa-whatsapp"
+                                                    style="
+                                                        margin-right: 0;
+                                                        color: #fff;
+                                                    "
                                                 ></i
                                             ></a>
                                         </li>
                                     </div>
-                                </ul>
-                            </div>
+                                    <li
+                                        @click="showShare"
+                                        class="btn btn-default share-btn-mobile"
+                                    >
+                                        <i class="fa fa-share-alt"></i
+                                        ><span class="text-uppercase"
+                                            >Share</span
+                                        >
+                                    </li>
+                                </div>
+                                <div class="share-post-desktop">
+                                    <li class="text-secondary">
+                                        <i
+                                            class="fa fa-share-alt text-secondary"
+                                        ></i
+                                        ><span class="text-secondary"
+                                            >Share Post</span
+                                        >
+                                    </li>
+                                    <li>
+                                        <a
+                                            target="_blank"
+                                            :href="
+                                                'https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Flifeofpoker.com%2Freport%2F' +
+                                                article.slug +
+                                                '&amp;src=sdkpreparse'
+                                            "
+                                            class="facebook"
+                                            ><i
+                                                class="fa fa-facebook text-secondary"
+                                            ></i
+                                        ></a>
+                                    </li>
+                                    <li>
+                                        <a
+                                            target="_blank"
+                                            :href="
+                                                'https://twitter.com/intent/tweet?text=https%3A//lifeofpoker.com/report/' +
+                                                article.slug
+                                            "
+                                            class="twitter"
+                                            ><i
+                                                class="fa fa-twitter text-secondary"
+                                            ></i
+                                        ></a>
+                                    </li>
+                                    <li>
+                                        <a
+                                            target="_blank"
+                                            :href="
+                                                'https://api.whatsapp.com/send?text=%0ahttps://lifeofpoker.com/report/' +
+                                                article.slug
+                                            "
+                                            class="whatsapp"
+                                            ><i
+                                                class="fa fa-whatsapp text-secondary"
+                                            ></i
+                                        ></a>
+                                    </li>
+                                </div>
+                            </ul>
                         </div>
                     </div>
-
-                    <div
-                        :class="
-                            article.main_image ? 'post-content-min-height' : ''
-                        "
-                        class="post-content"
-                    >
-                        <div
-                            v-if="article.main_image"
-                            class="post-gallery float-img"
-                            style="float: left; margin: 0px 15px 5px 0px"
-                        >
-                            <img :src="article.main_image" alt="" />
-                            <span class="image-caption">{{
-                                article.caption
-                            }}</span>
-                        </div>
-                        <div
-                            v-for="(content, index) in article.content"
-                            :key="index"
-                        >
-                            <h3>{{ content.title }}</h3>
-                            <div
-                                class="remove-padding"
-                                v-html="content.body"
-                            ></div>
-                        </div>
-                    </div>
-                    <div class="post-tags-box" v-if="article.tags?.length">
-                        <ul class="tags-box">
-                            <li>
-                                <i class="fa fa-tags"></i><span>Tags:</span>
-                            </li>
-                            <li v-for="tags in article.tags" :key="tags.id">
-                                <Link :href="'/tag/articles/' + tags.slug">{{
-                                    tags.title
-                                }}</Link>
-                            </li>
-                        </ul>
-                    </div>
+                </div>
+                <div v-if="article.main_image" class="post-gallery">
+                    <img :src="article.main_image" :alt="article.main_image" />
+                    <span class="image-caption">{{ article.caption }}</span>
+                </div>
+                <div
+                    v-for="(content, index) in article.content"
+                    :key="index"
+                    class="post-content"
+                >
+                    <h3 style="margin-bottom: 20px">{{ content.title }}</h3>
+                    <div v-html="content.body"></div>
+                </div>
+                <div class="post-tags-box" v-if="article.tags?.length">
+                    <ul class="tags-box">
+                        <li><i class="fa fa-tags"></i><span>Tags:</span></li>
+                        <li v-for="tags in article.tags" :key="tags.id">
+                            <Link :href="'/tag/articles/' + tags.slug">{{
+                                tags.title
+                            }}</Link>
+                        </li>
+                    </ul>
                 </div>
                 <div
                     class="title-section"
@@ -329,7 +305,7 @@ function onScrollContents() {
     // adding scroll-padding-top
     document.documentElement.style.setProperty(
         "--scroll-padding",
-        tableOfContents.offsetHeight + 50 + "px"
+        tableOfContents.offsetHeight + 80 + "px"
     );
 }
 
@@ -357,9 +333,19 @@ watch(
 );
 </script>
 
-<style scoped>
+<style>
 :deep(.remove-padding p) {
     padding-left: unset;
+}
+
+.post-gallery {
+    float: none !important;
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+}
+
+.content p {
+    padding-left: 0 !important;
 }
 
 ul.post-tags {
@@ -379,10 +365,6 @@ ul.post-tags {
 
 .text-secondary {
     color: #2d3436 !important;
-}
-
-.single-post-box > .post-content p {
-    padding: unset;
 }
 
 .single-post-box .share-post-box ul.share-box li a {
@@ -444,6 +426,7 @@ ul.post-tags {
 }
 
 .dropdown {
+    position: -webkit-sticky;
     position: sticky;
     top: 0;
     left: 0;

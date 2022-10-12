@@ -32,7 +32,7 @@ window.Echo.channel("report").listen("NewReport", (e) => {
     <Head>
         <title>Home</title>
     </Head>
-    <div id="container" class="active">
+    <div class="active">
         <Header />
 
         <main>

@@ -26,8 +26,8 @@ class Article extends Model implements HasMedia
     public function registerMediaConversions(?Media $media = null): void
     {
         $this->addMediaConversion('main-image')
-            ->width(424)
-            ->height(285)
+            ->width(847)
+            ->height(563)
             ->nonQueued();
 
         $this->addMediaConversion('main-thumb')
@@ -39,7 +39,7 @@ class Article extends Model implements HasMedia
     public function setContentAttribute($content)
     {
         $new = collect($content)->map(function ($item, $key) {
-            $item['body'] = '<div id="content'.$key.'">'.$item['body'].'</div>';
+            $item['body'] = '<div class="content" id="content'.$key.'">'.$item['body'].'</div>';
             return $item;
         });
 
