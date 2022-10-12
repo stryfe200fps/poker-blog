@@ -176,7 +176,11 @@ function onScroll(e) {
 }
 
 onMounted(() => {
-    if (pathname.value !== "tournament" && pathname.value !== "event")
+    if (
+        pathname.value !== "tournament" &&
+        pathname.value !== "event" &&
+        pathname.value !== "article"
+    )
         window.addEventListener("scroll", onScroll);
 });
 
