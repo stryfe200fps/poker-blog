@@ -52,7 +52,7 @@ class PayoutCrudController extends CrudController
             $this->crud->denyAccess('create');
         }
 
-        // $this->crud->orderBy('position', 'ASC')->withCasts(['position' => 'integer']) ;
+      
     }
 
     /**
@@ -64,16 +64,11 @@ class PayoutCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        $this->crud->addClause('where', 'event_id', session()->get('payout_event_id'));
 
-        // $this->crud->addColumn([
-        //     'name' => 'position',
-        //     'type' => 'number',
-        //     'orderable'  => true,
-        //     'orderLogic' => function ($query, $column, $columnDirection) {
-        //         return $query->withCasts(['positioned' => 'integer'])->orderBy('position', 'DESC')->select('event_payouts.*');
-        //     }
-        // ]);
+        $this->crud->addClause('where', 'event_id', session()->get('payout_event_id'));
+        $this->crud->orderBy('position');
+    
+
         $this->crud->addColumn([
             'name' => 'player_id',
             'type' => 'relationship',
@@ -104,7 +99,10 @@ class PayoutCrudController extends CrudController
                 'text_color_duration' => 3000, // how long (in miliseconds) should the text stay that color (0 for infinite, aka until page refresh)
             ],
             'auto_update_row' => true, // update related columns in same row, after the AJAX call?
+          
         ]);
+
+        
 
         CRUD::addColumn([
             'name' => 'position',
@@ -126,6 +124,10 @@ class PayoutCrudController extends CrudController
                 'text_color_duration' => 3000, // how long (in miliseconds) should the text stay that color (0 for infinite, aka until page refresh)
             ],
             'auto_update_row' => true, // update related columns in same row, after the AJAX call?
+            'orderLogic' => function ($query, $column, $columnDirection) {
+                return $query->orderBy('position', 'ASC');
+            }
+ 
         ]);
 
         Widget::add()->to('after_content')->type('view')->view('vendor.backpack.helper.payout')->eventId(session()->get('payout_event_id')); // widgets to show the ordering card

@@ -22,6 +22,7 @@ return [
     'name' => env('APP_NAME', 'Laravel'),
 
     'date_format' => 'MMM DD, OY,  h:mm a, ddd',
+    'carbon_date_format' => 'M d, Y,  h:m a, D',
 
     'slug_placeholder' => 'Slug will autogenerate if leave empty',
 

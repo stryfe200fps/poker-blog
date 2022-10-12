@@ -28,6 +28,9 @@ class Event extends Model implements HasMedia
     protected $appends = [
         'event_date_start',
         'event_date_end',
+
+        'actual_event_date_start',
+        'actual_event_date_end',
     ];
 
     public function getEventDateStartAttribute()
@@ -40,6 +43,28 @@ class Event extends Model implements HasMedia
         return $this->scheduleArray($this->schedule)->last()['date_end'] ?? '';
     }
 
+    public function getActualEventDateStartAttribute()
+    {
+        $timezone = null;
+        $timezoneArray = explode(' ',$this->tournament->timezone);
+
+        if (count($timezoneArray) > 1)
+            $timezone = $timezoneArray[count($timezoneArray) - 1];
+
+        return $this->scheduleArray($this->schedule, $timezone)->first()['date_start'] ?? '';
+    }
+
+    public function getActualEventDateEndAttribute()
+    {
+        $timezone = null;
+        $timezoneArray = explode(' ',$this->tournament->timezone);
+
+        if (count($timezoneArray) > 1)
+            $timezone = $timezoneArray[count($timezoneArray) - 1];
+
+        return $this->scheduleArray($this->schedule, $timezone)->last()['date_end'] ?? '';
+    }
+
     public function scheduleArray($schedule = [], $timezone = null)
     {
         if (is_string($schedule))
@@ -48,7 +73,7 @@ class Event extends Model implements HasMedia
         if ($timezone == null)
             $timezone = session()->get('timezone');
 
-        return collect($schedule)->map(function ($item) {
+        return collect($schedule)->map(function ($item) use ($timezone) {
             $item['date_start'] = Carbon::parse($item['date_start'], $timezone ?? 'UTC')
             ->setTimezone('UTC')
             ->toDateTimeString();

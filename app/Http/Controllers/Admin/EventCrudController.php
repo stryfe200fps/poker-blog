@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Helpers\Validators;
-use App\Http\Requests\EventRequest;
+use Carbon\Carbon;
 use App\Models\Tour;
+use App\Models\Event;
 use App\Models\Tournament;
+use App\Helpers\Validators;
+use Illuminate\Http\Request;
+use App\Http\Requests\EventRequest;
+use Backpack\CRUD\app\Library\Widget;
+use Illuminate\Support\Facades\Validator;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
-use Backpack\CRUD\app\Library\Widget;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 /**
  * Class
@@ -37,6 +38,7 @@ class EventCrudController extends CrudController
         CRUD::setModel(\App\Models\Event::class);
         CRUD::setRoute(config('backpack.base.route_prefix').'/events');
         CRUD::setEntityNameStrings('events', 'events');
+        $this->crud->enableDetailsRow();
     }
 
     /**
@@ -204,6 +206,19 @@ class EventCrudController extends CrudController
             'view' => 'partials/custom-ajax-button',
         ]);
     }
+
+
+    public function showDetailsRow($id) 
+    {
+        // $this->data['entry'] = $this->crud->getEntry($id);
+        // $this->data['crud'] = $this->crud;
+
+        // load the view from /resources/views/vendor/backpack/crud/ if it exists, otherwise load the one in the package
+        return view('crud::event_details',[ 'event' =>  Event::find($id) ] );
+
+    }
+
+
 
     /**
      * Define what happens when the Update operation is loaded.

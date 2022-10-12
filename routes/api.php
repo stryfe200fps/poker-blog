@@ -15,6 +15,7 @@ use App\Http\Controllers\PageManagerController;
 use App\Http\Controllers\PayoutController;
 use App\Http\Controllers\SocialMediaController;
 use App\Http\Controllers\TagController;
+use App\Models\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -62,3 +63,7 @@ Route::post('contact', [ContactUsController::class, 'store']);
 Route::post('subscribe', [NewsletterController::class, 'store']);
 
 Route::get('payout/{player_id}/{event}', [PayoutController::class, 'player']);
+
+// Route::get('admin/getEvents/{id}', function ($id) {
+//     return Event::find($id);
+// });
