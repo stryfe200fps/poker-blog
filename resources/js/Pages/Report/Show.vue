@@ -360,19 +360,20 @@
                         </template>
                     </CustomeTable>
                 </div>
-
-                <div class="post-tags-box">
-                    <ul class="tags-box">
-                        <li>
-                            <i class="fa fa-tags"></i><span>Tags:</span
-                            ><a
-                                href="#"
-                                v-for="tag in report.data.event_chips"
-                                :key="tag.id"
-                                >{{ tag.player.name }}</a
-                            >
-                        </li>
-                    </ul>
+                <div v-if="report.data.event_chips.length">
+                    <div class="post-tags-box">
+                        <ul class="tags-box">
+                            <li>
+                                <i class="fa fa-tags"></i><span>Tags:</span
+                                ><a
+                                    href="#"
+                                    v-for="tag in report.data.event_chips"
+                                    :key="tag.id"
+                                    >{{ tag.player.name }}</a
+                                >
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
