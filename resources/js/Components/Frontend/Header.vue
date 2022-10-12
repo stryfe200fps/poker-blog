@@ -32,7 +32,7 @@
                         </div>
                         <div
                             class="advertisement"
-                            style="overflow: visible; padding: 0; opacity: 0"
+                            style="overflow: visible; padding: 0"
                         >
                             <div class="desktop-advert">
                                 <div class="header-actions">
@@ -40,7 +40,8 @@
                                         class="fa fa-search header-actions__icon"
                                     ></i>
                                     <h6 class="header-actions__icon">|</h6>
-                                    <label class="dropdown">
+                                    <div id="google_translate_element"></div>
+                                    <!-- <label class="dropdown">
                                         <div class="dd-button">ENG</div>
                                         <input
                                             type="checkbox"
@@ -52,7 +53,7 @@
                                             <li>Another action</li>
                                             <li>Something else here</li>
                                         </ul>
-                                    </label>
+                                    </label> -->
                                 </div>
                             </div>
                         </div>
@@ -149,7 +150,7 @@
 </template>
 
 <script setup>
-import { onBeforeUnmount, onMounted, ref, watch } from "vue";
+import { onBeforeUnmount, onMounted, ref } from "vue";
 import { Link, InertiaApp } from "@inertiajs/inertia-vue3";
 import logo from "/public/lop_logo_small.png";
 
@@ -175,6 +176,48 @@ function onScroll(e) {
     }
 }
 
+function googleTranslateElementInit() {
+    new google.translate.TranslateElement(
+        { pageLanguage: "en", includedLanguages: "zh-CN,zh-TW,en,ko,ja,es,de" },
+        "google_translate_element"
+    );
+    const targetElement = document.getElementById("google_translate_element");
+    const select = document.getElementsByClassName("goog-te-combo");
+    if (targetElement && select) {
+        targetElement.addEventListener("DOMNodeInserted", () => {
+            const options = select[0].options;
+            Array.prototype.forEach.call(options, (element) => {
+                switch (element.value) {
+                    case "zh-CN":
+                        element.text = "中文 (简体)";
+                        break;
+                    case "zh-TW":
+                        element.text = "中文 (繁体)";
+                        break;
+                    case "de":
+                        element.text = "Deutsch";
+                        break;
+                    case "ja":
+                        element.text = "にほんご";
+                        break;
+                    case "ko":
+                        element.text = "한국어";
+                        break;
+                    case "es":
+                        element.text = "Español";
+                        break;
+                    default:
+                        element.text = "English";
+                }
+            });
+        });
+        select[0].addEventListener("change", function () {
+            if (select[0].value === "en") {
+                window.location.reload();
+            }
+        });
+    }
+}
 onMounted(() => {
     if (
         pathname.value !== "tournament" &&
@@ -182,6 +225,20 @@ onMounted(() => {
         pathname.value !== "article"
     )
         window.addEventListener("scroll", onScroll);
+
+    let targetElement = document.getElementById("google_translate_element");
+    if (targetElement) {
+        targetElement.innerHTML = "";
+        const script = document.createElement("script");
+        script.type = "text/javascript";
+        script.src =
+            "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+        document.head.appendChild(script);
+        setTimeout(() => {
+            googleTranslateElementInit();
+        }, 500);
+        return;
+    }
 });
 
 onBeforeUnmount(() => {
