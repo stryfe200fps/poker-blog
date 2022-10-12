@@ -9,10 +9,10 @@ export const useCategoryStore = defineStore("category", {
     },
 
     actions: {
-        async getCategoryLists(slug) {
+        async getCategoryLists(slug, page) {
             try {
                 const { data } = await axios.get(
-                    `/api/article/category/${slug}`
+                    `/api/article/category/${slug}?page=${page}`
                 );
                 this.categoryLists = data;
             } catch (error) {

@@ -20,7 +20,7 @@ export const useEventStore = defineStore("event", {
     actions: {
         async getMainEvents() {
             const { data } = await axios.get("/api/lof-event/");
-            
+
             this.mainEvents = data;
         },
         async getEventData(id) {
@@ -28,11 +28,15 @@ export const useEventStore = defineStore("event", {
             this.eventData = data;
         },
 
-        async getLiveReport(event, day) {
-            const { data } = await axios.get(
-                `/api/lof-live-report?event=${event}&filterDay=${day}`
-            );
-            this.liveReportList = data;
+        async getLiveReport(page, event, day) {
+            try {
+                let { data } = await axios.get(
+                    `/api/lof-live-report?page=${page}&event=${event}&filterDay=${day}`
+                );
+                this.liveReportList = data;
+            } catch (error) {
+                console.error(error);
+            }
         },
         // async getArticleBySlug(slug) {
         //   await axios.get('/api/article/'+ slug).then((res) => {

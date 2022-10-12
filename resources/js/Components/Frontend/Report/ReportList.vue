@@ -35,7 +35,6 @@
                         :key="index"
                         :item="item"
                     />
-
                     <div
                         class="day-divider"
                         style="
@@ -47,6 +46,10 @@
                         ><br />
                     </div>
                 </div>
+                <div
+                    v-if="reports.length"
+                    v-observe-visibility="handleScrolledToBottom"
+                ></div>
             </div>
             <div v-show="tab == 1">
                 <div class="margin-top">
@@ -277,6 +280,15 @@ const props = defineProps({
         type: Object,
     },
 });
+const emit = defineEmits(["loadMore"]);
+
+const page = ref(1);
+
+function handleScrolledToBottom(isVisible) {
+    if (!isVisible) return;
+    page.value++;
+    emit("loadMore", page.value);
+}
 
 const tab = ref(0);
 

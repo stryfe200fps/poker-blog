@@ -192,24 +192,39 @@ Route::post('upload_excel', function () {
     }
 });
 
-try {
-    foreach (MenuItem::getTree()  as $item) {
-        // if (!$item->parent_id == null && !$item->name == 'News & Info')
-        // return;
+// Route::get('instagram/auth/callback', function () {
+//     return redirect('/');
+// });
 
-        if ($item->link == null) {
-            return;
-        }
 
-        foreach ($item->children as $child) {
-            Route::get($item->link.'/'.$child->link, function () use ($child) {
-                return Inertia::render('Categories/CategoryPage', [
-                    'title' => $child->name,
-                    'description' => $child->name,
-                    'page' => $child->link,
-                ]);
-            });
+foreach (MenuItem::getTree() as $item) {
+
+    // if (!$item->parent_id == null && !$item->name == 'News & Info')
+    // return; 
+   
+
+
+    if ($item->link == null)
+    return ;
+
+    foreach ($item->children as $child) {
+        if ($item->link === $child->link) {
+
+            Route::get($item->link, function () use ($item) {
+                    return Inertia::render('Categories/CategoryPage', [
+                        'title' => '',
+                        'description' => 'asdasd',
+                        'page' => 'news'
+                    ]);
+                });
         }
+        Route::get($item->link. '/' .$child->link, function () use ($child) {
+            return Inertia::render('Categories/CategoryPage', [
+                'title' => $child->name,
+                'description' => $child->name,
+                'page' => $child->link
+            ]);
+        });
     }
 } catch (Exception $e) {
 }

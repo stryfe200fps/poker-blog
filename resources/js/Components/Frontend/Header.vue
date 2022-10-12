@@ -15,7 +15,7 @@
                             >
                                 <img
                                     class="header-logo"
-                                    src="/lop_logo_small.png"
+                                    src="/lop_logo_white.svg"
                                     alt="Logo"
                                 />
                             </Link>
@@ -117,12 +117,21 @@
                                         :key="children.id"
                                     >
                                         <Link
+                                            v-if="menu.link !== children.link"
                                             :href="
                                                 '/' +
                                                 menu.link +
                                                 '/' +
                                                 children.link
                                             "
+                                            style="
+                                                background: rgb(239, 239, 239);
+                                            "
+                                            >{{ children.name }}</Link
+                                        >
+                                        <Link
+                                            v-else
+                                            :href="'/' + children.link"
                                             style="
                                                 background: rgb(239, 239, 239);
                                             "

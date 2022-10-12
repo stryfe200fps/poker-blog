@@ -24,7 +24,12 @@
                                     :key="category.id"
                                     class="text-capitalize"
                                 >
-                                    <Link :href="'/news/' + category.link">{{
+                                    <Link
+                                        v-if="category.link !== 'news'"
+                                        :href="'/news/' + category.link"
+                                        >{{ category.name }}</Link
+                                    >
+                                    <Link v-else :href="'/' + category.link">{{
                                         category.name
                                     }}</Link>
                                 </li>
@@ -32,41 +37,57 @@
                         </label>
                     </div>
                 </div>
-                <div class="grid">
-                    <div v-for="(category, index) in categories" :key="index">
+                <div v-if="categories?.length">
+                    <div class="grid">
                         <div
-                            class="news-post standard-post2"
-                            style="
-                                display: flex;
-                                flex-direction: column;
-                                height: 100%;
-                            "
+                            v-for="(category, index) in categories"
+                            :key="index"
                         >
-                            <div class="post-gallery">
-                                <img
-                                    v-if="category.thumb_image"
-                                    :src="category.thumb_image"
-                                    :alt="category.thumb_image"
-                                />
-                                <img
-                                    v-else
-                                    :src="defaultImg"
-                                    :alt="defaultImg"
-                                />
-                                <Link class="category-post food" :href="page">{{
-                                    page
-                                }}</Link>
-                            </div>
-                            <div class="post-title" style="flex-grow: 1">
-                                <h2>
+                            <div
+                                class="news-post standard-post2"
+                                style="
+                                    display: flex;
+                                    flex-direction: column;
+                                    height: 100%;
+                                "
+                            >
+                                <div class="post-gallery">
+                                    <img
+                                        v-if="category.thumb_image"
+                                        :src="category.thumb_image"
+                                        :alt="category.thumb_image"
+                                    />
+                                    <img
+                                        v-else
+                                        :src="defaultImg"
+                                        :alt="defaultImg"
+                                    />
                                     <Link
-                                        :href="'/article/show/' + category.slug"
-                                        >{{ category.title }}</Link
+                                        class="category-post food"
+                                        :href="page"
+                                        >{{ page }}</Link
                                     >
-                                </h2>
+                                </div>
+                                <div class="post-title" style="flex-grow: 1">
+                                    <h2>
+                                        <Link
+                                            :href="
+                                                '/article/show/' + category.slug
+                                            "
+                                            >{{ category.title }}</Link
+                                        >
+                                    </h2>
+                                </div>
                             </div>
                         </div>
+                        <div
+                            v-if="categories?.length"
+                            v-observe-visibility="handleScrolledToBottom"
+                        ></div>
                     </div>
+                </div>
+                <div v-else>
+                    <h2 class="text-capitalize">No {{ page }} available</h2>
                 </div>
             </div>
         </div>
@@ -77,8 +98,14 @@
 import FrontLayout from "@/Layouts/FrontLayout.vue";
 import defaultImg from "/public/default-img.png";
 import { Link } from "@inertiajs/inertia-vue3";
-import { useCategoryStore } from "@/Stores/category.js";
-import { onMounted, ref, watch, computed } from "@vue/runtime-core";
+import { useCategoryStore } from "@/stores/category.js";
+import {
+    onMounted,
+    ref,
+    watch,
+    computed,
+    onBeforeMount,
+} from "@vue/runtime-core";
 
 const props = defineProps({
     page: String,
@@ -86,15 +113,33 @@ const props = defineProps({
 
 const categoryStore = useCategoryStore();
 const categories = ref(null);
+const currentPage = ref(1);
+const lastPage = ref(1);
+
+async function handleScrolledToBottom(isVisible) {
+    if (!isVisible) return;
+
+    currentPage.value++;
+
+    if (currentPage.value > lastPage.value) return;
+
+    await categoryStore.getCategoryLists(props.page, currentPage.value);
+    lastPage.value = categoryStore.categoryLists.meta.last_page;
+}
 
 onMounted(async () => {
-    await categoryStore.getCategoryLists(props.page);
+    await categoryStore.getCategoryLists(props.page, 1);
+    lastPage.value = categoryStore.categoryLists.meta.last_page;
 });
 
 watch(
     () => categoryStore.categoryLists,
     function () {
-        categories.value = categoryStore.categoryLists.data;
+        if (!categories.value) {
+            categories.value = categoryStore.categoryLists.data;
+            return;
+        }
+        categories.value.push(...categoryStore.categoryLists.data);
     }
 );
 </script>

@@ -46,7 +46,11 @@
                     </div>
                 </div>
                 <div class="single-post-box">
-                    <ReportList :event="eventData" :reports="liveReport" />
+                    <ReportList
+                        :event="eventData"
+                        :reports="liveReport"
+                        @loadMore="loadMoreReports"
+                    />
                 </div>
             </div>
         </div>
@@ -76,6 +80,7 @@ const props = defineProps({
 const eventData = ref([]);
 const selectDay = ref(null);
 const liveReport = ref([]);
+const lastPage = ref(1);
 
 const highestDay = () => {
     let { available_days } = eventStore.eventData.data;
@@ -83,15 +88,41 @@ const highestDay = () => {
     return days.toString();
 };
 
+async function loadMoreReports(page) {
+    if (page > lastPage.value) return;
+
+    await eventStore.getLiveReport(page, props.slug, selectDay.value);
+
+    const newLevel = eventStore.liveReportList.data
+        .map((data) => data.level)
+        .toString();
+
+    for (const report of liveReport.value) {
+        if (report.level === newLevel) {
+            const index = eventStore.liveReportList.data.findIndex(
+                (data) => data.level === report.level
+            );
+            const newCollection = report.collection.concat(
+                eventStore.liveReportList.data[index].collection
+            );
+            report.collection = newCollection;
+            return;
+        }
+    }
+    lastPage.value = eventStore.liveReportList.meta.last_page;
+}
+
 onMounted(async () => {
     await eventStore.getEventData(props.slug);
     await tournamentStore.getList();
-    await eventStore.getLiveReport(props.slug, highestDay());
+    await eventStore.getLiveReport(1, props.slug, highestDay());
+    liveReport.value = eventStore.liveReportList.data;
+    lastPage.value = eventStore.liveReportList.meta.last_page;
     selectDay.value = highestDay();
 });
 
 const fetchLiveReports = async () => {
-    await eventStore.getLiveReport(props.slug, selectDay.value);
+    await eventStore.getLiveReport(1, props.slug, selectDay.value);
 };
 
 // const fetchPage = async () => {
@@ -105,12 +136,12 @@ watch(
     }
 );
 
-watch(
-    () => eventStore.liveReportList,
-    function () {
-        liveReport.value = eventStore.liveReportList.data;
-    }
-);
+// watch(
+//     () => eventStore.liveReportList,
+//     function () {
+//         liveReport.value = eventStore.liveReportList.data;
+//     }
+// );
 </script>
 
 <style scoped>
