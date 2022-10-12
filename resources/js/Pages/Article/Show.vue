@@ -9,6 +9,22 @@
 
         <!-- {{ getArticle(slug) }} -->
         <div class="block-content">
+            <label id="table-of-contents" class="dropdown">
+                <div @click="isPull = !isPull" class="dd-button">
+                    Table of Contents
+                </div>
+                <!-- <input type="checkbox" class="dd-input" :checked="isPull" /> -->
+                <ul class="dd-menu" :class="{ pull: isPull }">
+                    <li
+                        v-for="(content, index) in article.content"
+                        :key="index"
+                    >
+                        <a :href="'#content' + index" @click="isPull = false">{{
+                            content.title
+                        }}</a>
+                    </li>
+                </ul>
+            </label>
             <div class="title-section">
                 <Link href="/"
                     ><h1 class="text-primary">
@@ -23,7 +39,7 @@
                 >
             </div>
 
-            <div class="">
+            <div>
                 <div class="single-post-box">
                     <div class="title-post">
                         <h1>{{ article.title }}</h1>
@@ -206,7 +222,16 @@
                                 article.caption
                             }}</span>
                         </div>
-                        <div class="remove-padding" v-html="article.body"></div>
+                        <div
+                            v-for="(content, index) in article.content"
+                            :key="index"
+                        >
+                            <h3>{{ content.title }}</h3>
+                            <div
+                                class="remove-padding"
+                                v-html="content.body"
+                            ></div>
+                        </div>
                     </div>
                     <div class="post-tags-box" v-if="article.tags?.length">
                         <ul class="tags-box">
@@ -270,8 +295,8 @@ import ReportList from "../../Components/Frontend/Report/ReportList.vue";
 import SideBar from "../../Components/Frontend/MainContent/SideBar.vue";
 import TournamentList from "../../Components/Frontend/Tournament/List.vue";
 
-import { useArticleStore } from "@/Stores/article.js";
-import { onMounted, ref, watch } from "@vue/runtime-core";
+import { useArticleStore } from "@/stores/article.js";
+import { onBeforeUnmount, onMounted, ref, watch } from "@vue/runtime-core";
 import defaultImg from "/public/default-img.png";
 const articleStore = useArticleStore();
 
@@ -286,14 +311,36 @@ const article = ref([]);
 const related = ref(null);
 
 const isOpen = ref(false);
+const isPull = ref(false);
 
 const showShare = () => {
     isOpen.value = !isOpen.value;
 };
 
+function onScrollContents() {
+    const tableOfContents = document.querySelector("#table-of-contents");
+
+    if (window.scrollY > 200) {
+        tableOfContents.classList.add("active");
+    } else {
+        tableOfContents.classList.remove("active");
+    }
+
+    // adding scroll-padding-top
+    document.documentElement.style.setProperty(
+        "--scroll-padding",
+        tableOfContents.offsetHeight + 50 + "px"
+    );
+}
+
 onMounted(async () => {
     await articleStore.getList();
     await articleStore.getRelatedNews(props.slug);
+    window.addEventListener("scroll", onScrollContents);
+});
+
+onBeforeUnmount(() => {
+    window.removeEventListener("scroll", onScrollContents);
 });
 
 watch(
@@ -394,6 +441,86 @@ ul.post-tags {
     width: 8px;
     background-color: #25d366;
     transform: translate(-50%) rotate(45deg);
+}
+
+.dropdown {
+    position: sticky;
+    top: 0;
+    left: 0;
+    display: none;
+    width: 100%;
+    margin-bottom: 0;
+    font-family: "Lato", sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    background-color: #2d3436;
+    border-bottom: 1px solid #222;
+    color: #fff;
+    user-select: none;
+}
+
+.dropdown.active {
+    display: inline-block;
+}
+
+.dd-button {
+    display: inline-block;
+    width: 100%;
+    padding: 15px 30px 15px 20px;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.dd-button:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #fff;
+    transform: translateY(-50%);
+}
+
+.dd-menu {
+    position: absolute;
+    top: 100%;
+    z-index: 1;
+    right: 0;
+    display: none;
+    width: 100%;
+    margin: 2px 0 0 0;
+    padding: 0;
+    font-family: "Lato", sans-serif;
+    text-align: start;
+    list-style-type: none;
+    background-color: #2d3436;
+    color: #fff;
+    box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.1);
+}
+
+.dd-menu.pull {
+    display: block;
+}
+
+.dd-menu li {
+    padding: 10px 20px;
+    border-bottom: 1px solid #fff;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.dd-menu li:hover {
+    background-color: #ccc;
+}
+
+.dd-menu li a {
+    display: block;
+    width: 100%;
+    text-decoration: none;
+    color: #fff;
 }
 
 /* ul.post-tags li .twitter, 

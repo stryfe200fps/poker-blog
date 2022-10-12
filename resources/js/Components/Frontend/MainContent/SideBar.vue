@@ -266,7 +266,7 @@ watch(
     () => [twitterStore.tweetIDs, igStore.igFeed],
     function () {
         tweetIDs.value = twitterStore.tweetIDs.data;
-        igFeed.value = igStore.igFeed.data;
+        igFeed.value = igStore.igFeed?.data;
     }
 );
 </script>
