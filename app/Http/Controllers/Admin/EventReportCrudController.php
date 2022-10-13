@@ -406,7 +406,18 @@ public function fetchTags()
 
     public function fetchPlayer()
     {
-        return $this->fetch(\App\Models\Player::class);
+        return $this->fetch(
+
+            [
+                'model' => \App\Models\Player::class,
+                'paginate' => 10,
+                'searchOperator' => 'LIKE',
+                'query' => function ($model) {
+                    return $model->orderBy('name');
+                },
+            ]
+        );
+        // return $this->fetch(\App\Models\Player::class);
     }
 
     public function store(Request $request)
