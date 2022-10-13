@@ -90,22 +90,8 @@
             </div>
             <div class="news-post video-post">
                 <div v-if="igFeed">
-                    <!-- <iframe
-                        :src="`${igLink}embed`"
-                        width="320"
-                        height="466"
-                        allowtransparency="true"
-                        allowfullscreen="true"
-                        frameborder="0"
-                        scrolling="no"
-                        style="
-                            width: 100%;
-                            border: 0.05rem solid rgb(190, 190, 190);
-                            border-radius: 5px;
-                        "
-                    ></iframe> -->
                     <iframe
-                        src="https://www.instagram.com/p/B00ceH7pcYY/embed"
+                        :src="`${igLink}embed`"
                         width="320"
                         height="466"
                         allowtransparency="true"
@@ -136,110 +122,6 @@
             </div>
         </div>
     </div>
-    <!-- <div class="sidebar">
-        <div class="widget social-widget">
-            <div class="title-section">
-                <h1><span>Stay Connected</span></h1>
-            </div>
-
-            <div class="single-post-box">
-                <div class="share-post-box" style="padding: 0">
-                    <ul class="share-box share-box-button" style="">
-                        <li style="width: 100%">
-                            <a
-                                class="facebook"
-                                href="https://www.facebook.com/profile.php?id=100083369017397"
-                                target="_blank"
-                                style="width: 100%"
-                                ><i class="fa fa-facebook"></i
-                                ><span>Facebook</span></a
-                            >
-                        </li>
-                        <li style="width: 100%">
-                            <a
-                                class="facebook"
-                                href="https://www.instagram.com/lifeofpoker_com/"
-                                target="_blank"
-                                style="
-                                    width: 100%;
-                                    background: linear-gradient(
-                                        45deg,
-                                        #f09433 0%,
-                                        #e6683c 25%,
-                                        #dc2743 50%,
-                                        #cc2366 75%,
-                                        #bc1888 100%
-                                    );
-                                "
-                                ><i class="fa-brands fa-instagram"></i
-                                ><span>Instagram</span></a
-                            >
-                        </li>
-                        <li style="width: 100%">
-                            <a
-                                class="twitter"
-                                href="https://twitter.com/Life_of_Poker"
-                                target="_blank"
-                                style="width: 100%"
-                                ><i class="fa fa-twitter"></i
-                                ><span>Twitter</span></a
-                            >
-                        </li>
-                        <li style="width: 100%">
-                            <a
-                                class="twitter"
-                                href="https://www.youtube.com/channel/UCbBvulSR2T9y2vTtcKglXUg"
-                                target="_blank"
-                                style="width: 100%; background-color: #e74c3c"
-                                ><i class="fa-brands fa-youtube"></i
-                                ><span>Youtube</span></a
-                            >
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div class="widget features-slide-widget" v-if="eventStore.list">
-            <div class="title-section">
-                <h1><span>Events</span></h1>
-            </div>
-            <ul class="list-posts">
-                <li
-                    v-for="(event, index) in eventStore.list.data"
-                    :key="event.id"
-                >
-                    <div v-if="index <= 4">
-                        <img v-if="event.image" :src="event.image" />
-                        <img
-                            v-else
-                            :src="defaultImg"
-                            style="aspect-ratio: 3/3; background: #e7e7e7"
-                        />
-                        <div class="post-content">
-                            <h2
-                                class="post-content-link"
-                                @click="navigateTo(event.id)"
-                            >
-                                {{ event.title }}
-                            </h2>
-                            <h2>
-                                <router-link :to="`/live-report/${event.id}`">{{
-                                    event.title
-                                }}</router-link>
-                            </h2>
-                            <ul class="post-tags">
-                                <li>
-                                    <i class="fa fa-clock-o"></i
-                                    >{{ event.date_start }}
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </div> -->
 </template>
 
 <script setup>
