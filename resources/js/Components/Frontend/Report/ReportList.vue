@@ -1,16 +1,11 @@
 <template>
     <div class="about-more-autor">
         <ul class="nav nav-tabs custom-tabs">
-<<<<<<< Updated upstream
             <li
                 @click.prevent="changeTab(currentTab)"
                 :class="{ active: currentTab == 'reports' }"
             >
                 <Link :href="'/event/' + event.slug + ''" data-toggle="tab">
-=======
-            <li @click.prevent="changeTab(currentTab)" :class="{ active: currentTab == 'reports' }">
-                <Link :href="'/event/'+ event.slug + ''   " data-toggle="tab">
->>>>>>> Stashed changes
                     <span class="hide-on-mobile">LIVE UPDATES</span>
                     <span class="show-on-mobile">UPDATES</span>
                 </Link>

@@ -108,7 +108,7 @@ defineProps({
                                         >{{ news.title }}
                                     </Link>
                                 </h2>
-                                <p>{{ news.description }}</p>
+                                <div v-html="news.description"></div>
                             </div>
                         </div>
                     </div>
