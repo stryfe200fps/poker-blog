@@ -17,17 +17,17 @@ it('filters scheduled day in event', function () {
         'event_id' => $event->id,
         'level_id' => $level->id,
         'title' => 'hugas plato',
-        'date_added' => Carbon::parse(json_decode($event->schedule, true)[0]['date_start'])->addHours(2),
+        'date_added' => Carbon::parse($event->schedule[0]['date_start'])->addHours(2),
     ]);
 
     $report2 = EventReport::factory()->times(2)->create([
         'event_id' => $event->id,
         'level_id' => $level->id,
         'title' => 'boy tornado',
-        'date_added' => Carbon::parse(json_decode($event->schedule, true)[1]['date_start'])->addHours(2),
+        'date_added' => Carbon::parse($event->schedule[1]['date_start'])->addHours(2),
     ]);
 
-    $day1 = json_decode($event->schedule)[0]->day;
+    $day1 = $event->schedule[0]['day'];
     $result1 = $this->get("api/lof-live-report?event=$event->slug&filterDay=$day1");
 
     $result1
@@ -35,7 +35,7 @@ it('filters scheduled day in event', function () {
           'data.0.collection.0.slug', 'hugas-plato'
       );
 
-    $day2 = json_decode($event->schedule)[1]->day;
+    $day2 = $event->schedule[1]['day'];
 
     $result2 = $this->get("api/lof-live-report?event=$event->slug&filterDay=$day2");
 

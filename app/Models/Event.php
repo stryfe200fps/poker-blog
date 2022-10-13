@@ -35,12 +35,26 @@ class Event extends Model implements HasMedia
 
     public function getEventDateStartAttribute()
     {
-        return $this->scheduleArray($this->schedule)->first()['date_start'] ?? '';
+
+        $collect =  collect($this->schedule)->map(function ($item)  {
+            $item['date_start'] = Carbon::parse($item['date_start']);
+            $item['date_end'] = Carbon::parse($item['date_end']);
+            return $item;
+        });
+
+        return $collect->first()['date_start'] ?? '';
     }
 
     public function getEventDateEndAttribute()
     {
-        return $this->scheduleArray($this->schedule)->last()['date_end'] ?? '';
+
+        $collect =  collect($this->schedule)->map(function ($item)  {
+            $item['date_start'] = Carbon::parse($item['date_start']);
+            $item['date_end'] = Carbon::parse($item['date_end']);
+            return $item;
+        });
+
+        return $collect->first()['date_end'] ?? '';
     }
 
     public function getActualEventDateStartAttribute()
@@ -51,7 +65,14 @@ class Event extends Model implements HasMedia
         if (count($timezoneArray) > 1)
             $timezone = $timezoneArray[count($timezoneArray) - 1];
 
-        return $this->scheduleArray($this->schedule, $timezone)->first()['date_start'] ?? '';
+
+        $collect =  collect($this->schedule)->map(function ($item) use ($timezone) {
+            $item['date_start'] = Carbon::parse($item['date_start']);
+            $item['date_end'] = Carbon::parse($item['date_end']);
+            return $item;
+        });
+
+        return $collect->first()['date_start'] ?? '';
     }
 
     public function getActualEventDateEndAttribute()
@@ -62,7 +83,15 @@ class Event extends Model implements HasMedia
         if (count($timezoneArray) > 1)
             $timezone = $timezoneArray[count($timezoneArray) - 1];
 
-        return $this->scheduleArray($this->schedule, $timezone)->last()['date_end'] ?? '';
+
+        $collect =  collect($this->schedule)->map(function ($item) use ($timezone) {
+            $item['date_start'] = Carbon::parse($item['date_start']);
+            $item['date_end'] = Carbon::parse($item['date_end']);
+            return $item;
+        });
+
+        return $collect->last()['date_end'] ?? '';
+
     }
 
     public function scheduleArray($schedule = [], $timezone = null)
@@ -73,17 +102,19 @@ class Event extends Model implements HasMedia
         if ($timezone == null)
             $timezone = session()->get('timezone');
 
-        return collect($schedule)->map(function ($item) use ($timezone) {
-            $item['date_start'] = Carbon::parse($item['date_start'], $timezone ?? 'UTC')
+        $collect =  collect($schedule)->map(function ($item) use ($timezone) {
+            $item['date_start'] = Carbon::parse($item['date_start'], session()->get('timezone'))
             ->setTimezone('UTC')
             ->toDateTimeString();
 
-            $item['date_end'] = Carbon::parse($item['date_end'], $timezone ?? 'UTC')
-           ->setTimezone('UTC')
+            $item['date_end'] = Carbon::parse($item['date_end'],  session()->get('timezone'))
+            ->setTimezone('UTC')
            ->toDateTimeString();
 
             return $item;
         });
+
+        return $collect;
     }
 
     public function setScheduleAttribute($schedule)
@@ -91,11 +122,21 @@ class Event extends Model implements HasMedia
         $this->attributes['schedule'] = $this->scheduleArray($schedule);
     }
 
-
     public function getScheduleAttribute($schedule)
     {
         $sched = json_decode($schedule, true);
-        return $this->scheduleArray($sched);
+
+        $collect =  collect($sched)->map(function ($item)  {
+            $item['date_start'] = Carbon::parse($item['date_start'], 'UTC')
+            ->setTimezone(session()->get('timezone'))
+            ->toDateTimeString();
+            $item['date_end'] = Carbon::parse($item['date_end'],  'UTC')
+            ->setTimezone(session()->get('timezone'))
+           ->toDateTimeString();
+
+            return $item;
+        });
+        return $collect;
     }
 
     public function getSlugOptions(): SlugOptions
@@ -150,13 +191,9 @@ class Event extends Model implements HasMedia
 
         foreach ($schedules as $sched) {
             if ($dateNow < Carbon::parse($sched['date_start'])) {
-                // date("F j, Y, g:i a");
-                // $hora = Carbon::parse($sched['date_start'])->format('M j, Y, ga D');
-                // dd($hora);
                 return 'Day '.$sched['day'].'  :  '.Carbon::parse($sched['date_start'])->format('M j, Y, ga D').' to '.Carbon::parse($sched['date_end'])->format('M j, Y, ga D').'   -   '.Carbon::parse($sched['date_start'])->diffForHumans();
             }
         }
-
         return 'schedule ended '.Carbon::parse($schedules[count($schedules) - 1]['date_end'])->diffForHumans();
     }
 

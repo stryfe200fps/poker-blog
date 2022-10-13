@@ -14,7 +14,7 @@ uses(RefreshDatabase::class);
 // });
 
 it('cannot create tournament if unauthenticated', function () {
-    $this->post('admin/poker-tournament/', [
+    $this->post('admin/series/', [
         'name' => 'adrian',
     ])->assertStatus(302);
 });
@@ -22,7 +22,7 @@ it('cannot create tournament if unauthenticated', function () {
 it('can insert tournament if authenticated', function () {
     superAdminAuthenticate();
 
-    $this->get('admin/poker-tournament/create')->assertStatus(200);
+    $this->get('admin/series/create')->assertStatus(200);
     // dd(faker()->dateTimeThisCentury());
 
     $tournamentFactory = Tournament::factory()->make([
@@ -34,7 +34,7 @@ it('can insert tournament if authenticated', function () {
 
     ]);
 
-    $this->post('admin/poker-tournament', $tournamentFactory->attributesToArray());
+    $this->post('admin/series', $tournamentFactory->attributesToArray());
     $this->assertDatabaseHas('tournaments', ['title' => 'my tournament']);
 });
 
@@ -52,9 +52,9 @@ it('can update article if authenticated', function () {
 
     ]);
 
-    $this->get('admin/poker-tournament/'.$tournament->id.'/edit')->assertStatus(200);
+    $this->get('admin/series/'.$tournament->id.'/edit')->assertStatus(200);
 
-    $this->put('admin/poker-tournament/update', $alteredTournament->attributesToArray());
+    $this->put('admin/series/update', $alteredTournament->attributesToArray());
 
     $this->assertDatabaseHas('tournaments', ['title' => 'altered tournament']);
     $this->assertDatabaseCount('tournaments', 1);
@@ -65,6 +65,6 @@ it('can delete tournament if authenticated', function () {
 
     Tournament::factory()->create();
 
-    $this->get('admin/poker-tournament')->assertStatus(200);
-    $this->delete('admin/poker-tournament/1');
+    $this->get('admin/series')->assertStatus(200);
+    $this->delete('admin/series/1');
 });
