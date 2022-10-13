@@ -82,13 +82,13 @@ class ArticleCrudController extends CrudController
         $this->crud->addFilter([
             'type' => 'select2',
             'name' => 'article_categories',
-            'label' => 'Poker Event',
+            'label' => 'Category',
         ],
             function () {
                 return ArticleCategory::all()->pluck('title', 'id')->toArray();
             },
             function ($values) {
-                $this->crud->query = $this->crud->query->whereHas('article_category', function ($query) use ($values) {
+                $this->crud->query = $this->crud->query->whereHas('article_categories', function ($query) use ($values) {
                     $query->where('id', $values);
                 });
             });
@@ -332,10 +332,7 @@ public function store(Request $request)
 
     // session()->put('new_article', 'a new article');
 
-    session()->flash('new_article', $item->id);
-
-    // dd('tubul');
-    // dd('asd');
+    session()->flash('new_article', [ 'id' => $item->id ]);
 
     \Alert::success(trans('backpack::crud.insert_success'))->flash();
 

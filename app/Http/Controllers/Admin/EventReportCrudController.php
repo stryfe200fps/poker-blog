@@ -88,7 +88,9 @@ class EventReportCrudController extends CrudController
         Widget::add()->to('after_content')->type('view')->view('vendor.backpack.helper.live_report'); // widgets to show the ordering card
         $this->crud->addClause('where', 'event_id', session()->get('event_id'));
 
-        $this->crud->addButtonFromModelFunction('line', 'open_google', 'shareToSocialMedia', 'beginning');
+        $this->crud->addButtonFromModelFunction('line', 'open_fb', 'shareFacebook', 'beginning');
+        $this->crud->addButtonFromModelFunction('line', 'open_twitter', 'shareTwitter', 'beginning');
+
         if (session()->get('new_reports')) {
             $liveReportId = EventReport::find(session()->get('new_reports'))->first()->id;
             Widget::add()->to('before_content')->type('view')->view('vendor.backpack.custom.share')->liveReportId($liveReportId); // widgets to show the ordering card

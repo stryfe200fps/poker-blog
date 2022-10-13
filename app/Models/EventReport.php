@@ -106,9 +106,17 @@ class EventReport extends Model implements HasMedia
         return Level::where('event_id', session()->get('event_id'))->orderByDesc('created_at')->first();
     }
 
-    public function shareToSocialMedia()
+    public function shareFacebook()
     {
-        return '<a class="btn btn-sm btn-link"  href="https://facebook.com" data-toggle="tooltip" title="Share to facebook"><i class="la la-facebook"></i>    </a>';
+        $event = Event::find($this->event_id);
+        return '<a class="btn btn-sm btn-link"  href="https://www.facebook.com/sharer/sharer.php?u='.config('app.url').'/event/'.$event->slug.'/report/'.$this->slug.'" data-toggle="tooltip" title="Share to facebook"><i class="la la-facebook"></i>    </a>';
+    }
+
+    public function shareTwitter()
+    {
+
+        $event = Event::find($this->event_id);
+        return '<a class="btn btn-sm btn-link"  href="https://twitter.com/intent/tweet?text='.config('app.url').'/event/'.$event->slug.'/report/'.$this->slug.'" data-toggle="tooltip" title="Share to facebook"><i class="la la-twitter"></i>    </a>';
     }
 
     protected $casts = [
