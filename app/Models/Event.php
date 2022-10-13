@@ -130,7 +130,7 @@ class Event extends Model implements HasMedia
             }
         }
 
-        return 'tba';
+        return 'upcoming';
     }
 
     public function currentDateSchedule()
@@ -147,8 +147,6 @@ class Event extends Model implements HasMedia
                 return 'Day '.$sched['day'].'  :  '.Carbon::parse($sched['date_start'])->format('M j, Y, ga D').' to '.Carbon::parse($sched['date_end'])->format('M j, Y, ga D').'   -   '.Carbon::parse($sched['date_start'])->diffForHumans();
             }
         }
-
-        //upcoming
 
         foreach ($schedules as $sched) {
             if ($dateNow < Carbon::parse($sched['date_start'])) {

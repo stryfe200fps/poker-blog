@@ -30,8 +30,8 @@ class TournamentCrudController extends CrudController
     {
         $this->crud->denyAccess('show');
         CRUD::setModel(\App\Models\Tournament::class);
-        CRUD::setRoute(config('backpack.base.route_prefix').'/poker-tournament');
-        CRUD::setEntityNameStrings('poker tournament', 'poker tournaments');
+        CRUD::setRoute(config('backpack.base.route_prefix').'/series');
+        CRUD::setEntityNameStrings('series', 'series');
     }
 
     /**

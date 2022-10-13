@@ -40,7 +40,7 @@ class LOFApiEventIndexResource extends JsonResource
             'id' => $this->id,
             'slug' => $this->slug,
             'title' => $this->title,
-            'status' => $status,
+            'status' => $this->status(),
             'main_image' => $this->getFirstMediaUrl('event', 'main-image'),
             'main_thumb' => $this->getFirstMediaUrl('event', 'main-thumb'),
             'gallery' => $imgResource,

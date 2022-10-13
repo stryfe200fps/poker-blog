@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Event;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class LOFApiEventsResource extends JsonResource
@@ -19,6 +20,7 @@ class LOFApiEventsResource extends JsonResource
 
     public function toArray($request)
     {
+
         return [
             'status' => $this->status(),
             'id' => $this->id,
@@ -27,6 +29,8 @@ class LOFApiEventsResource extends JsonResource
             'description' => $this->description,
             'image' => $this->image,
             'schedule' => $this->schedule,
+            'date_start' => $this->scheduleArray($this->schedule, session()->get('timezone'))->first()['date_start'] ?? '',
+            'date_end' => $this->scheduleArray($this->schedule, session()->get('timezone'))->last()['date_end'] ?? '',
         ];
     }
 }

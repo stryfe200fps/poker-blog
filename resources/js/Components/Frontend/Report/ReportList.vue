@@ -1,11 +1,11 @@
 <template>
     <div class="about-more-autor">
         <ul class="nav nav-tabs custom-tabs">
-            <li @click.prevent="changeTab(currentTab)" :class="{ active: currentTab == 'report' }">
-                <a href="#" data-toggle="tab">
+            <li @click.prevent="changeTab(currentTab)" :class="{ active: currentTab == 'reports' }">
+                <Link :href="'/event/'+ event.slug + ''   " data-toggle="tab">
                     <span class="hide-on-mobile">LIVE UPDATES</span>
                     <span class="show-on-mobile">UPDATES</span>
-                </a>
+                </Link>
             </li>
 
             <li @click="changeTab(currentTab)" :class="{ active: currentTab == 'chip-stack' }">
@@ -253,6 +253,20 @@
 </template>
 
 <script setup>
+import { createToast } from "mosha-vue-toastify";
+import "mosha-vue-toastify/dist/style.css";
+import AlertMessage from "@/Layouts/AlertMessage.vue";
+window.Echo.channel("report").listen("NewReport", (e) => {
+    createToast(AlertMessage, {
+        position: "top-center",
+        hideProgressBar: true,
+        type: "danger",
+        transition: "slide",
+        timeout: 5000,
+        showIcon: true,
+        showCloseButton: false,
+    });
+});
 
 import { Link } from "@inertiajs/inertia-vue3";
 import { ref, computed } from "@vue/reactivity";
@@ -284,7 +298,8 @@ const props = defineProps({
         type: Object,
     },
     currentTab: {
-        type: String
+        type: String,
+        default: 'report'
     }
 });
 const emit = defineEmits(["loadMore"]);

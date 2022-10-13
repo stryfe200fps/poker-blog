@@ -51,8 +51,8 @@ class EventCrudController extends CrudController
     protected function setupListOperation()
     {
         CRUD::column('title');
-        CRUD::column('tournament');
-        CRUD::column('tournament.timezone')->label('Tournament Timezone');
+        CRUD::column('tournament')->label('Series');
+        CRUD::column('tournament.timezone')->label('Series Timezone');
         CRUD::column('event_date_start')->type('date')->format(config('app.date_format'))->label('date start (Local)');
         CRUD::column('event_date_end')->type('date')->format(config('app.date_format'))->label('date end (Local)');
         $this->crud->addButtonFromModelFunction('line', 'open_payout', 'openPayout', 'beginning');

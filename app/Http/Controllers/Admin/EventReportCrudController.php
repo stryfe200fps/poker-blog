@@ -445,6 +445,8 @@ public function fetchTags()
             $request['players'] = '';
         }
 
+        NewReport::dispatch('new report');
+
         $request = $this->crud->validateRequest();
         $this->crud->registerFieldEvents();
 
@@ -456,7 +458,6 @@ public function fetchTags()
 
         \Alert::success(trans('backpack::crud.insert_success'))->flash();
 
-        NewReport::dispatch('new report');
 
         $this->crud->setSaveAction();
 

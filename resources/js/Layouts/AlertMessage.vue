@@ -1,5 +1,5 @@
 <template>
-    <p class="alert-msg" @click="scrollToTop">New Reports added.</p>
+    <div class="alert-msg" @click="scrollToTop">New Reports added.</div>
 </template>
 
 <script setup>
@@ -16,7 +16,7 @@ const scrollToTop = () => {
     height: 100%;
     font-size: 1.75rem;
     font-weight: 500;
-    color: #fff;
+    color: #000;
     cursor: pointer;
 }
 </style>

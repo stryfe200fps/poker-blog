@@ -15,7 +15,7 @@
                             >{{ event.title }}</Link
                         >
                     </h2>
-                    <ul class="post-tags">
+                    <ul class="post-tags" v-if="event.date_start.length">
                         <li>
                             <i class="fa fa-clock-o"></i>
                             {{ moment(event.date_start).format("MMM D YYYY") }}

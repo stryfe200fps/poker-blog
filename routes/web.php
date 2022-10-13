@@ -40,7 +40,7 @@ Route::get('/event/{slug}/{page?}', function ($slug, $page = null) {
     ]);
     return Inertia::render('Event/Index', [
         'slug' => $slug,
-        'page' => $page,
+        'page' => $page ?? 'reports',
         'title' => 'Life of poker',
         'description' => 'life of poker',
         'json-ld-webpage' => $webPage,

@@ -35,7 +35,7 @@
     <a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon la la-globe-europe"></i> Tours & Events</a>
     <ul class="nav-dropdown-items">
 <li class="nav-item"><a class="nav-link" href="{{ backpack_url('events') }}"><i class="nav-icon la la-calendar"></i> Events </a></li>
-<li class="nav-item"><a class="nav-link" href="{{ backpack_url('poker-tournament') }}"><i class="nav-icon la la-icons"></i> Tournaments</a></li>
+<li class="nav-item"><a class="nav-link" href="{{ backpack_url('series') }}"><i class="nav-icon la la-icons"></i> Series</a></li>
 <li class="nav-item"><a class="nav-link" href="{{ backpack_url('poker-tour') }}"><i class="nav-icon la la-map"></i> Tours</a></li>
     </ul>
 </li>

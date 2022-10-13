@@ -7,25 +7,12 @@ import { Head, Link } from "@inertiajs/inertia-vue3";
 import { onMounted } from "@vue/runtime-core";
 
 import Echo from "laravel-echo";
-import { createToast } from "mosha-vue-toastify";
-import "mosha-vue-toastify/dist/style.css";
-import AlertMessage from "./AlertMessage.vue";
 
 defineProps({
     title: String,
 });
 
-window.Echo.channel("report").listen("NewReport", (e) => {
-    createToast(AlertMessage, {
-        position: "top-center",
-        hideProgressBar: true,
-        type: "danger",
-        transition: "slide",
-        timeout: 5000,
-        showIcon: true,
-        showCloseButton: false,
-    });
-});
+
 </script>
 
 <template>
