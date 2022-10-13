@@ -109,7 +109,7 @@ class EventCrudController extends CrudController
 
         $this->crud->addField([   
             'name' => 'tournament_id',
-            'label' => 'Tournament',
+            'label' => 'Series',
             'type' => 'relationship',
             'entity' => 'tournament',
             'attribute' => 'parent',

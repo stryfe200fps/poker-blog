@@ -54,6 +54,7 @@ class EventReportCrudController extends CrudController
             $this->crud->denyAccess('create');
         }
         $this->crud->orderBy('date_added', 'DESC');
+
     }
 
     /**
@@ -65,8 +66,9 @@ class EventReportCrudController extends CrudController
      */
     protected function setupShowOperation()
     {
-        Widget::add()->type('script')->content('assets/js/admin/forms/image_condition.js');
+
         $this->setupListOperation();
+
     }
 
     public function nowItIsFlat($arr)
@@ -111,7 +113,6 @@ class EventReportCrudController extends CrudController
 
     protected function setupCreateOperation()
     {
-        Widget::add()->type('script')->content('assets/js/admin/forms/image_condition.js');
         if (! session()->get('event_id')) {
             $this->crud->denyAccess('create');
         }
@@ -279,13 +280,16 @@ class EventReportCrudController extends CrudController
                 'name' => 'image_caption',
                 'type' => 'text',
                 'wrapper' => [
-                    'class' => 'form-group col-md-6 image_caption d-none',
+                    'class' => 'form-group col-md-6 image_caption  ',
                 ],
             ],
             [
                 'label' => 'Theme',
                 'name' => 'image_theme',
                 'type' => 'select2_from_array',
+                'attributes' => [
+                   'id'  => 'image_theme'
+                ],
                 'options' => [
                     'brokenMirror' => 'broken mirror',
                     'bulletHole' => 'bullet hole',
@@ -298,7 +302,7 @@ class EventReportCrudController extends CrudController
                     'waterWaves' => 'water waves',
                 ],
                 'wrapper' => [
-                    'class' => 'form-group col-md-6 image_theme d-none',
+                    'class' => 'form-group col-md-6 image_theme ',
                 ],
             ],
             [
@@ -364,6 +368,7 @@ class EventReportCrudController extends CrudController
             ],
         ]);
 
+
         Widget::add()->type('script')->content('assets/js/admin/forms/repeatable_chips.js');
 
         // if ($this->crud->getCurrentOperation() === 'update') {
@@ -386,7 +391,9 @@ public function fetchTags()
      */
     protected function setupUpdateOperation()
     {
+
         $this->setupCreateOperation();
+
     }
 
     public function fetchLevel()

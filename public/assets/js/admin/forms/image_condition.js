@@ -1,4 +1,7 @@
 
+$(document).ready(function () { 
+
+
 
   $('[data-handle=mainImage]').ready(function (val) {
 
@@ -11,8 +14,8 @@
 
 
 crud.field('image').onChange(function(field) {
-// crud.field('players').subfield('chips', field.rowNumber).input.value = Math.floor(Math.random() * 100) 
 
+// crud.field('players').subfield('chips', field.rowNumber).input.value = Math.floor(Math.random() * 100) 
 
 });
 
@@ -34,3 +37,4 @@ crud.field('image').onChange(function(field) {
     $('.image_caption').val('');
     // console.log('handle with care')
   })
+})

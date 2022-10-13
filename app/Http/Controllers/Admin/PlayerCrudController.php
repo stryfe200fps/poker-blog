@@ -50,7 +50,7 @@ class PlayerCrudController extends CrudController
         CRUD::column('name');
         CRUD::column('pseudonym');
         CRUD::column('country_id');
-        $this->crud->addButtonFromModelFunction('line', 'open_history', 'openHistory', 'beginning');
+        // $this->crud->addButtonFromModelFunction('line', 'open_history', 'openHistory', 'beginning');
 
         $this->crud->addFilter([
             'type' => 'select2',
