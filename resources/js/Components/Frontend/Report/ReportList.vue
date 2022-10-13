@@ -1,32 +1,65 @@
 <template>
     <div class="about-more-autor">
         <ul class="nav nav-tabs custom-tabs">
-            <li @click.prevent="changeTab(currentTab)" :class="{ active: currentTab == 'reports' }">
-                <Link :href="'/event/'+ event.slug + ''   " data-toggle="tab">
+            <li
+                @click.prevent="changeTab(currentTab)"
+                :class="{ active: currentTab == 'reports' }"
+            >
+                <Link :href="'/event/' + event.slug + ''" data-toggle="tab">
                     <span class="hide-on-mobile">LIVE UPDATES</span>
                     <span class="show-on-mobile">UPDATES</span>
                 </Link>
             </li>
 
-            <li @click="changeTab(currentTab)" :class="{ active: currentTab == 'chip-stack' }">
-                <Link :href="'/event/'+ event.slug + '/chip-stack'   " data-toggle="tab">
+            <li
+                @click="changeTab(currentTab)"
+                :class="{ active: currentTab == 'chip-stack' }"
+            >
+                <Link
+                    :href="'/event/' + event.slug + '/chip-stack'"
+                    data-toggle="tab"
+                >
                     <span class="hide-on-mobile">CHIP COUNTS</span>
                     <span class="show-on-mobile">CHIPS</span>
                 </Link>
             </li>
-            <li @click="changeTab(currentTab)" :class="{ active: currentTab == 'gallery' }">
-                <Link :href="'/event/'+ event.slug + '/gallery'" data-toggle="tab">GALLERY</Link>
+            <li
+                @click="changeTab(currentTab)"
+                :class="{ active: currentTab == 'gallery' }"
+            >
+                <Link
+                    :href="'/event/' + event.slug + '/gallery'"
+                    data-toggle="tab"
+                    >GALLERY</Link
+                >
             </li>
-            <li @click="changeTab(currentTab)" :class="{ active: currentTab == 'payout' }">
-                <Link :href="'/event/'+ event.slug + '/payout'" data-toggle="tab">PAYOUT</Link>
+            <li
+                @click="changeTab(currentTab)"
+                :class="{ active: currentTab == 'payout' }"
+            >
+                <Link
+                    :href="'/event/' + event.slug + '/payout'"
+                    data-toggle="tab"
+                    >PAYOUT</Link
+                >
             </li>
 
-            <li @click="changeTab(currentTab)" :class="{ active: currentTab == 'whatsapp' }">
-                <Link :href="'/event/'+ event.slug + '/whatsapp'" data-toggle="tab">#WHATSAPP</Link>
+            <li
+                @click="changeTab(currentTab)"
+                :class="{ active: currentTab == 'whatsapp' }"
+            >
+                <Link
+                    :href="'/event/' + event.slug + '/whatsapp'"
+                    data-toggle="tab"
+                    >#WHATSAPP</Link
+                >
             </li>
         </ul>
         <div class="tab-content">
-            <div v-show="currentTab == 'reports' && reports.length" id="liveReport">
+            <div
+                v-show="currentTab == 'reports' && reports.length"
+                id="liveReport"
+            >
                 <div
                     v-for="(report, index) in reports"
                     :key="index"
@@ -86,9 +119,14 @@
                                         v-else
                                         :src="defaultAvatar"
                                     />
-                                    <span style="white-space: nowrap">{{
-                                        stack?.player?.name
-                                    }}</span>
+                                    <span style="white-space: nowrap"
+                                        >{{ stack?.player?.name }}
+                                        <span v-if="stack.player?.pseudonym"
+                                            >({{
+                                                stack.player?.pseudonym
+                                            }})</span
+                                        ></span
+                                    >
                                 </td>
                                 <td
                                     class="text-center hide-on-tablet"
@@ -119,7 +157,7 @@
                                 </td>
                                 <td
                                     v-if="stack.report_id == null"
-                                   class="text-right"
+                                    class="text-right"
                                 >
                                     <i class="fa fa-whatsapp"> </i> whatsapp
                                 </td>
@@ -299,8 +337,8 @@ const props = defineProps({
     },
     currentTab: {
         type: String,
-        default: 'report'
-    }
+        default: "report",
+    },
 });
 const emit = defineEmits(["loadMore"]);
 
