@@ -148,6 +148,8 @@ class ArticleCrudController extends CrudController
                 'name' => 'description',
                 'label' => 'Description',
                 'type' => 'ckeditor',
+
+                'tab' => 'Basic',
                 'extra_plugins' => ['widget', 'autocomplete', 'textmatch', 'toolbar', 'wysiwygarea', 'image', 'sourcearea'],
 
                 'options' => [
