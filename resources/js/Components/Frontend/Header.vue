@@ -36,10 +36,10 @@
                         >
                             <div class="desktop-advert">
                                 <div class="header-actions">
-                                    <i
+                                    <!-- <i
                                         class="fa fa-search header-actions__icon"
                                     ></i>
-                                    <h6 class="header-actions__icon">|</h6>
+                                    <h6 class="header-actions__icon">|</h6> -->
                                     <div id="google_translate_element"></div>
                                     <!-- <label class="dropdown">
                                         <div class="dd-button">ENG</div>
