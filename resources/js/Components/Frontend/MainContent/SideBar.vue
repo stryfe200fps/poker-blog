@@ -103,7 +103,7 @@
                             border: 0.05rem solid rgb(190, 190, 190);
                             border-radius: 5px;
                         "
-                    ></iframe> -->
+                    ></iframe>
                 </div>
                 <div v-else class="tweets-skeleton">
                     <div class="tweet-skeleton">

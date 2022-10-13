@@ -342,12 +342,9 @@ const props = defineProps({
 });
 const emit = defineEmits(["loadMore"]);
 
-const page = ref(1);
-
 function handleScrolledToBottom(isVisible) {
     if (!isVisible) return;
-    page.value++;
-    emit("loadMore", page.value);
+    emit("loadMore");
 }
 
 const tab = ref(0);
