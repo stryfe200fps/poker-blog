@@ -89,7 +89,7 @@
                 <h1><span>instagram</span></h1>
             </div>
             <div class="news-post video-post">
-                <div v-if="igFeed">
+                <!-- <div v-if="igFeed">
                     <iframe
                         :src="`${igLink}embed`"
                         width="320"
@@ -104,8 +104,8 @@
                             border-radius: 5px;
                         "
                     ></iframe>
-                </div>
-                <div v-else class="tweets-skeleton">
+                </div> -->
+                <div class="tweets-skeleton">
                     <div class="tweet-skeleton">
                         <div class="img"></div>
                         <div class="content-1">
@@ -120,6 +120,8 @@
                     </div>
                 </div>
             </div>
+
+
         </div>
     </div>
 </template>
