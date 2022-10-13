@@ -9,7 +9,11 @@
 
         <!-- {{ getArticle(slug) }} -->
         <div class="block-content">
-            <label id="table-of-contents" class="table-contents">
+            <label
+                id="table-of-contents"
+                class="table-contents"
+                v-if="article.content?.length > 1"
+            >
                 <div @click="isPull = !isPull" class="table-header">
                     Table of Contents
                 </div>
@@ -204,6 +208,23 @@
                     <img :src="article.main_image" :alt="article.main_image" />
                     <span class="image-caption">{{ article.caption }}</span>
                 </div>
+                <div v-if="article.content?.length > 1">
+                    <h4 class="text-uppercase">Table of Contents</h4>
+                    <ul style="padding-inline-start: 20px; font-size: 16px">
+                        <li
+                            v-for="(content, index) in article.content"
+                            :key="index"
+                            style="margin: 10px 0; list-style: square"
+                        >
+                            <a
+                                class="text-primary"
+                                :href="'#content' + index"
+                                @click="isPull = false"
+                                >{{ content.title }}</a
+                            >
+                        </li>
+                    </ul>
+                </div>
                 <div
                     v-for="(content, index) in article.content"
                     :key="index"
@@ -379,7 +400,7 @@ ul.post-tags {
 
 .facebook {
     background-color: unset;
-    margin-left: 10px;
+    /* margin-left: 10px; */
 }
 .twitter {
     background-color: unset;
