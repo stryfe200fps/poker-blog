@@ -69,7 +69,7 @@ const props = defineProps({
 .tour-wrapper {
     margin-bottom: 30px;
     padding: 15px 15px 0 15px;
-    background-color: #fafafa;
+    background-color: #f5f5f5;
     border-radius: 5px;
 }
 
