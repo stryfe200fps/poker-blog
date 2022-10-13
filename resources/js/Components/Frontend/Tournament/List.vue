@@ -3,8 +3,8 @@
         <ul class="nav nav-tabs custom-tabs">
             <li @click.prevent="changeTab(0)" :class="{ active: tab == 0 }">
                 <a href="#" data-toggle="tab"
-                    ><span class="hidden-xs">latest events</span
-                    ><span class="visible-xs">latest</span></a
+                    ><span class="hidden-xs">live events</span
+                    ><span class="visible-xs">live</span></a
                 >
             </li>
             <li @click.prevent="changeTab(1)" :class="{ active: tab == 1 }">
