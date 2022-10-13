@@ -24,7 +24,7 @@
                             }}</span>
                         </h1>
                         <!-- <h1><span>{{list.data.title}}</span></h1> -->
-                        <p>
+                        <p v-if="eventData.available_days?.length > 1">
                             <select
                                 class="form-control"
                                 v-model="selectDay"
@@ -42,6 +42,13 @@
                                     Day {{ data }}
                                 </option>
                             </select>
+                        </p>
+                        <p
+                            v-else
+                            v-for="(data, index) in eventData.available_days"
+                            :key="index"
+                        >
+                            Day: {{ data }}
                         </p>
                     </div>
                 </div>
@@ -78,24 +85,26 @@ const props = defineProps({
     },
     page: {
         type: String,
-    }
+    },
 });
 
 const eventData = ref([]);
 const selectDay = ref(null);
 const liveReport = ref([]);
+const loadPage = ref(1);
 const lastPage = ref(1);
 
 const highestDay = () => {
     let { available_days } = eventStore.eventData.data;
     let days = Object.values(available_days);
-    return days.toString();
+    return days[days.length - 1];
 };
 
-async function loadMoreReports(page) {
-    if (page > lastPage.value) return;
+async function loadMoreReports() {
+    if (loadPage.value >= lastPage.value) return;
+    loadPage.value++;
 
-    await eventStore.getLiveReport(page, props.slug, selectDay.value);
+    await eventStore.getLiveReport(loadPage.value, props.slug, selectDay.value);
 
     const newLevel = eventStore.liveReportList.data
         .map((data) => data.level)
@@ -126,7 +135,11 @@ onMounted(async () => {
 });
 
 const fetchLiveReports = async () => {
+    loadPage.value = 1;
+    lastPage.value = 1;
     await eventStore.getLiveReport(1, props.slug, selectDay.value);
+    liveReport.value = eventStore.liveReportList.data;
+    lastPage.value = eventStore.liveReportList.meta.last_page;
 };
 
 // const fetchPage = async () => {
