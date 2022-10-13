@@ -1,9 +1,11 @@
 <template>
-    <div class="alert-msg" @click="scrollToTop">New Reports added.</div>
+    <div class="alert-msg" @click="handleAlertReport">
+        New post - click here
+    </div>
 </template>
 
 <script setup>
-const scrollToTop = () => {
+const handleAlertReport = () => {
     window.scroll({ top: 0, behavior: "smooth" });
 };
 </script>
@@ -16,7 +18,7 @@ const scrollToTop = () => {
     height: 100%;
     font-size: 1.75rem;
     font-weight: 500;
-    color: #000;
+    color: #fff;
     cursor: pointer;
 }
 </style>

@@ -57,6 +57,7 @@
                         :event="eventData"
                         :reports="liveReport"
                         @loadMore="loadMoreReports"
+                        @showNewReport="fetchLiveReports"
                         :currentTab="page"
                     />
                 </div>

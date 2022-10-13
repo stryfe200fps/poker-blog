@@ -291,21 +291,6 @@
 </template>
 
 <script setup>
-import { createToast } from "mosha-vue-toastify";
-import "mosha-vue-toastify/dist/style.css";
-import AlertMessage from "@/Layouts/AlertMessage.vue";
-window.Echo.channel("report").listen("NewReport", (e) => {
-    createToast(AlertMessage, {
-        position: "top-center",
-        hideProgressBar: true,
-        type: "danger",
-        transition: "slide",
-        timeout: 5000,
-        showIcon: true,
-        showCloseButton: false,
-    });
-});
-
 import { Link } from "@inertiajs/inertia-vue3";
 import { ref, computed } from "@vue/reactivity";
 import { onMounted, onBeforeUnmount, watch } from "@vue/runtime-core";
@@ -324,9 +309,12 @@ import pocketAces from "@/photo_templates/pocketaces.png";
 import sunRays from "@/photo_templates/sunrays.png";
 import waterLeaves from "@/photo_templates/water-leaves.png";
 import waterWaves from "@/photo_templates/water-waves.png";
+import { createToast } from "mosha-vue-toastify";
+import "mosha-vue-toastify/dist/style.css";
 
 // components
 import EachReport from "./EachReport.vue";
+import AlertMessage from "./AlertMessage.vue";
 
 const props = defineProps({
     reports: {
@@ -340,7 +328,20 @@ const props = defineProps({
         default: "report",
     },
 });
-const emit = defineEmits(["loadMore"]);
+const emit = defineEmits(["loadMore", "showNewReport"]);
+
+window.Echo.channel("report").listen("NewReport", (e) => {
+    createToast(AlertMessage, {
+        position: "top-center",
+        hideProgressBar: true,
+        type: "danger",
+        transition: "slide",
+        timeout: 5000,
+        showIcon: true,
+        showCloseButton: false,
+    });
+    emit("showNewReport");
+});
 
 function handleScrolledToBottom(isVisible) {
     if (!isVisible) return;
@@ -410,7 +411,7 @@ onBeforeUnmount(() => {
     lightbox.destroy();
 });
 
-onMounted(async () => {
+onMounted(() => {
     window.addEventListener("scroll", stickyScroll);
     lightbox.init();
 });
