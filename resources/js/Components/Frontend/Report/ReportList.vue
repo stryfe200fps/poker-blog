@@ -314,7 +314,7 @@ import "mosha-vue-toastify/dist/style.css";
 
 // components
 import EachReport from "./EachReport.vue";
-import AlertMessage from "./AlertMessage.vue";
+import AlertMessage from "@/photo_templates/AlertMessage.vue";
 
 const props = defineProps({
     reports: {
@@ -329,19 +329,6 @@ const props = defineProps({
     },
 });
 const emit = defineEmits(["loadMore", "showNewReport"]);
-
-window.Echo.channel("report").listen("NewReport", (e) => {
-    createToast(AlertMessage, {
-        position: "top-center",
-        hideProgressBar: true,
-        type: "danger",
-        transition: "slide",
-        timeout: 5000,
-        showIcon: true,
-        showCloseButton: false,
-    });
-    emit("showNewReport");
-});
 
 function handleScrolledToBottom(isVisible) {
     if (!isVisible) return;
@@ -413,7 +400,21 @@ onBeforeUnmount(() => {
 
 onMounted(() => {
     window.addEventListener("scroll", stickyScroll);
+
     lightbox.init();
+
+window.Echo.channel("report").listen("NewReport", (e) => {
+    createToast(AlertMessage, {
+        position: "top-center",
+        hideProgressBar: true,
+        type: "danger",
+        transition: "slide",
+        timeout: 5000,
+        showIcon: true,
+        showCloseButton: false,
+    });
+    emit("showNewReport");
+});
 });
 </script>
 

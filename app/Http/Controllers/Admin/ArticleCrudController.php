@@ -49,10 +49,16 @@ class ArticleCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+
+
+
         if (session()->get('new_article')) {
             $articleId = Article::find(session()->get('new_article'))->first()->slug;
             Widget::add()->to('before_content')->type('view')->view('vendor.backpack.custom.share')->slug($articleId); // widgets to show the ordering card
         }
+
+        $this->crud->addButtonFromModelFunction('line', 'open_fb', 'shareFacebook', 'beginning');
+        $this->crud->addButtonFromModelFunction('line', 'open_twitter', 'shareTwitter', 'beginning');
 
         CRUD::column('title');
 

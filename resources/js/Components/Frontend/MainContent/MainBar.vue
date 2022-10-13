@@ -87,9 +87,9 @@ defineProps({
                         <div class="col-sm-6">
                             <div class="post-gallery">
                                 <img
-                                    v-if="news.main_image.length"
-                                    :src="news.main_image"
-                                    :alt="news.main_image"
+                                    v-if="news.thumb_image.length"
+                                    :src="news.thumb_image"
+                                    :alt="news.thumb_image"
                                 />
                                 <img
                                     v-else
