@@ -210,9 +210,7 @@ class EventCrudController extends CrudController
             $lastDate = null;
             foreach ($schedules as $day) {
                 if ($lastDate != null && Carbon::parse($lastDate) >= Carbon::parse($day['date_end']) && Carbon::parse($lastDate) >= Carbon::parse($day['date_start'])) {
-                    \Alert::error('Dates is incorrect')->flash();
-                    $schedules = null;
-                    break;
+                    \Alert::error('There is an overlap')->flash();
                 }
 
                 $lastDate = $day['date_end'];

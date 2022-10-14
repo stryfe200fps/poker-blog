@@ -18,6 +18,7 @@ it('filters scheduled day in event', function () {
         'level_id' => $level->id,
         'title' => 'hugas plato',
         'date_added' => Carbon::parse($event->schedule[0]['date_start'])->addHours(2),
+        'day' => 50
     ]);
 
     $report2 = EventReport::factory()->times(2)->create([
@@ -25,10 +26,11 @@ it('filters scheduled day in event', function () {
         'level_id' => $level->id,
         'title' => 'boy tornado',
         'date_added' => Carbon::parse($event->schedule[1]['date_start'])->addHours(2),
+        'day' => 33
     ]);
 
     $day1 = $event->schedule[0]['day'];
-    $result1 = $this->get("api/lof-live-report?event=$event->slug&filterDay=$day1");
+    $result1 = $this->get("api/lof-live-report?event=$event->slug&filterDay=50");
 
     $result1
       ->assertJsonPath(
@@ -37,7 +39,7 @@ it('filters scheduled day in event', function () {
 
     $day2 = $event->schedule[1]['day'];
 
-    $result2 = $this->get("api/lof-live-report?event=$event->slug&filterDay=$day2");
+    $result2 = $this->get("api/lof-live-report?event=$event->slug&filterDay=33");
 
     $result2
        ->assertJsonPath(

@@ -240,7 +240,7 @@ class EventReportCrudController extends CrudController
             [
                 'label' => 'Schedule',
                 'name' => 'labelSchedule',
-                'type' => 'hidden',
+                'type' => 'text',
                 'value' => $event?->currentDateSchedule(),
                 'wrapper' => [
                     'class' => 'form-group col-md-10',
@@ -250,8 +250,8 @@ class EventReportCrudController extends CrudController
             [
                 'label' => 'Day',
                 'name' => 'day',
-                'type' => 'hidden',
-                'value' => $event?->currentDay() ?? '',
+                'type' => 'select2_from_array',
+                'options' => $event?->getAvailableDays(),
                 'attributes' => [
                     'readonly' => 'readonly',
                 ],

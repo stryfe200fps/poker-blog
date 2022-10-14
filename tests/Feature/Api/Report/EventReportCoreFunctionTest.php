@@ -79,7 +79,7 @@ test('if the "stacks before" is updating on next report ', function () {
 
     $day = $event->schedule[0]['day'];
 
-    $json = $this->get('api/lof-live-report'.'?event='.$event->slug.'&filterDay='.$day.'');
+    $json = $this->get('api/lof-live-report'.'?event='.$event->slug.'&filterDay=1');
 
     $json
     ->assertJsonPath(
