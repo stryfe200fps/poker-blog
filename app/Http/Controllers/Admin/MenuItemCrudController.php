@@ -1,7 +1,8 @@
 <?php
 
-namespace Backpack\MenuCRUD\app\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin;
 
+use App\Traits\LimitUserPermissions;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 
 class MenuItemCrudController extends CrudController
@@ -11,12 +12,15 @@ class MenuItemCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ReorderOperation;
+    use LimitUserPermissions;
 
     public function setup()
     {
         $this->crud->setModel("Backpack\MenuCRUD\app\Models\MenuItem");
         $this->crud->setRoute(config('backpack.base.route_prefix').'/menu-item');
-        $this->crud->setEntityNameStrings('menu item', 'menu items');
+        $this->crud->setEntityNameStrings('menu-item', 'menu items');
+
+        $this->denyAccessIfNoPermission();
 
         $this->crud->enableReorder('name', 3);
 

@@ -55,7 +55,7 @@ it('available days is showing', function () {
 
     $callJson->assertJsonFragment([
         'available_days' => [
-            0 => '1B',
+            '1B' => '1B',
         ],
     ]);
 

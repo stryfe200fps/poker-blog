@@ -9,6 +9,7 @@ use App\Models\Tournament;
 use App\Helpers\Validators;
 use Illuminate\Http\Request;
 use App\Http\Requests\EventRequest;
+use App\Traits\LimitUserPermissions;
 use Backpack\CRUD\app\Library\Widget;
 use Illuminate\Support\Facades\Validator;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
@@ -27,6 +28,7 @@ class EventCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
 
+    use LimitUserPermissions;
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
      *
@@ -37,8 +39,11 @@ class EventCrudController extends CrudController
         $this->crud->denyAccess('show');
         CRUD::setModel(\App\Models\Event::class);
         CRUD::setRoute(config('backpack.base.route_prefix').'/events');
-        CRUD::setEntityNameStrings('events', 'events');
+        CRUD::setEntityNameStrings('event', 'events');
         $this->crud->enableDetailsRow();
+
+        $this->denyAccessIfNoPermission();
+
     }
 
     /**

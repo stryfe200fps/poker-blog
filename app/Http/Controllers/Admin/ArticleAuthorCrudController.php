@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\ArticleAuthorRequest;
 use App\Models\User;
+use App\Traits\LimitUserPermissions;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use Exception;
@@ -21,6 +22,7 @@ class ArticleAuthorCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    use LimitUserPermissions;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -32,7 +34,8 @@ class ArticleAuthorCrudController extends CrudController
         $this->crud->denyAccess('show');
         CRUD::setModel(\App\Models\ArticleAuthor::class);
         CRUD::setRoute(config('backpack.base.route_prefix').'/article-author');
-        CRUD::setEntityNameStrings('article author', 'article authors');
+        CRUD::setEntityNameStrings('author', 'authors');
+        $this->denyAccessIfNoPermission();
     }
 
     /**

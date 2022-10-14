@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Events\NewReport;
-use App\Http\Requests\EventReportRequest;
-use App\Models\ArticleAuthor;
+use DateTime;
 use App\Models\Event;
+use App\Events\NewReport;
 use App\Models\EventReport;
+use Illuminate\Http\Request;
+use App\Models\ArticleAuthor;
+use Illuminate\Support\Facades\DB;
+use App\Traits\LimitUserPermissions;
+use Backpack\CRUD\app\Library\Widget;
+use App\Http\Requests\EventReportRequest;
+use Illuminate\Support\Facades\Validator;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
-use Backpack\CRUD\app\Library\Widget;
-use DateTime;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
 
 /**
  * Class LiveReportCrudController
@@ -28,6 +29,7 @@ class EventReportCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
+    use LimitUserPermissions;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -36,8 +38,10 @@ class EventReportCrudController extends CrudController
      */
     public function setup()
     {
+
         CRUD::setModel(\App\Models\EventReport::class);
         CRUD::setRoute(config('backpack.base.route_prefix').'/report');
+        CRUD::setEntityNameStrings('report','report');
 
         $this->crud->denyAccess('show');
 
@@ -47,13 +51,15 @@ class EventReportCrudController extends CrudController
             }
 
             $getEvent = Event::where('id', session()->get('event_id'))->first();
-            CRUD::setEntityNameStrings('reports', $getEvent?->title);
+            CRUD::setEntityNameStrings('report', $getEvent?->title);
 
-        // $this->crud->addFilter($options, $values, $filter_logic);
         } else {
+
             $this->crud->denyAccess('create');
         }
         $this->crud->orderBy('date_added', 'DESC');
+
+            $this->denyAccessIfNoPermission();
 
     }
 
@@ -286,20 +292,9 @@ class EventReportCrudController extends CrudController
             [
                 'label' => 'Theme',
                 'name' => 'image_theme',
-                'type' => 'select2_from_array',
+                'type' => 'relationship',
                 'attributes' => [
                    'id'  => 'image_theme'
-                ],
-                'options' => [
-                    'brokenMirror' => 'broken mirror',
-                    'bulletHole' => 'bullet hole',
-                    'flames' => 'flames',
-                    'happyBirthday' => 'happy birthay',
-                    'iceCubes' => 'ice cubes',
-                    'pocketAces' => 'pocket aces',
-                    'sunRays' => 'sun rays',
-                    'waterleaves' => 'water leaves',
-                    'waterWaves' => 'water waves',
                 ],
                 'wrapper' => [
                     'class' => 'form-group col-md-6 image_theme ',

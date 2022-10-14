@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Event;
+use App\Traits\LimitUserPermissions;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use Carbon\Carbon;
@@ -19,6 +20,7 @@ class LiveCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    use LimitUserPermissions;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -30,8 +32,9 @@ class LiveCrudController extends CrudController
         $this->crud->denyAccess('show');
         CRUD::setModel(\App\Models\Event::class);
         CRUD::setRoute(config('backpack.base.route_prefix').'/live');
-        CRUD::setEntityNameStrings('Live Poker Event', 'Live Poker Event');
+        CRUD::setEntityNameStrings('report', 'Live Poker Event');
         CRUD::denyAccess('create');
+        $this->denyAccessIfNoPermission();
 
         $allLiveEvents = collect(Event::all())
             ->filter(fn ($arr) => 

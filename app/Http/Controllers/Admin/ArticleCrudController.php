@@ -8,6 +8,7 @@ use App\Models\ArticleAuthor;
 
 use Illuminate\Support\Facades\Validator;
 use App\Models\ArticleCategory;
+use App\Traits\LimitUserPermissions;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use Backpack\CRUD\app\Library\Widget;
@@ -26,6 +27,7 @@ class ArticleCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
+    use LimitUserPermissions;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -34,10 +36,10 @@ class ArticleCrudController extends CrudController
      */
     public function setup()
     {
-        $this->crud->denyAccess('show');
         CRUD::setModel(\App\Models\Article::class);
         CRUD::setRoute(config('backpack.base.route_prefix').'/article');
         CRUD::setEntityNameStrings('article', 'articles');
+        $this->denyAccessIfNoPermission();
     }
 
     /**
@@ -49,8 +51,7 @@ class ArticleCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-
-
+      
 
         if (session()->get('new_article')) {
             $articleId = Article::find(session()->get('new_article'))->first()->slug;

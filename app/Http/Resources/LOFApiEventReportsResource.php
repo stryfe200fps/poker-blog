@@ -23,7 +23,7 @@ class LOFApiEventReportsResource extends JsonResource
             'main_image' => $this->getFirstMediaUrl('event-report', 'main-image'),
             'main_thumb' => $this->getFirstMediaUrl('event-report', 'main-thumb'),
             'caption' => $this->image_caption,
-            'theme' => $this->image_theme,
+            'theme' => $this->image_theme?->image,
             'day' => $this->day,
             'article_author' => $this->article_author,
             'level' => $this->level,

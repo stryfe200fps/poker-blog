@@ -146,8 +146,7 @@
                     <div
                         class="imageFrame"
                         :style="{
-                            'background-image':
-                                'url(' + getFrame(item.theme) + ')',
+                            'background-image': 'url('+item.theme+')' 
                         }"
                     ></div>
                 </div>
@@ -249,16 +248,6 @@ import CustomeTable from "../CustomeTable.vue";
 import CountryFlag from "vue3-country-flag-icon";
 import defaultAvatar from "@/default-avatar.png";
 import moment from "moment";
-
-import brokenMirror from "@/photo_templates/brokenmirror.png";
-import bulletHole from "@/photo_templates/bullethole.png";
-import flames from "@/photo_templates/flames.png";
-import happyBirthday from "@/photo_templates/happybirthday.png";
-import iceCubes from "@/photo_templates/icecubes.png";
-import pocketAces from "@/photo_templates/pocketaces.png";
-import sunRays from "@/photo_templates/sunrays.png";
-import waterLeaves from "@/photo_templates/water-leaves.png";
-import waterWaves from "@/photo_templates/water-waves.png";
 
 const props = defineProps({
     item: {

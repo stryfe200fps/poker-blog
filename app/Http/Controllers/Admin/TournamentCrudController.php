@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\TournamentRequest;
+use App\Traits\LimitUserPermissions;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use Carbon\Carbon;
@@ -21,6 +22,7 @@ class TournamentCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
 
+    use LimitUserPermissions;
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
      *
@@ -32,6 +34,7 @@ class TournamentCrudController extends CrudController
         CRUD::setModel(\App\Models\Tournament::class);
         CRUD::setRoute(config('backpack.base.route_prefix').'/series');
         CRUD::setEntityNameStrings('series', 'series');
+        $this->denyAccessIfNoPermission();
     }
 
     /**

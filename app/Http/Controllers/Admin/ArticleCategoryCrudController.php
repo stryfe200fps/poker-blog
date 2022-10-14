@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Traits\LimitUserPermissions;
 use App\Http\Requests\ArticleCategoryRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
@@ -18,6 +19,7 @@ class ArticleCategoryCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    use LimitUserPermissions;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -29,7 +31,8 @@ class ArticleCategoryCrudController extends CrudController
         $this->crud->denyAccess('show');
         CRUD::setModel(\App\Models\ArticleCategory::class);
         CRUD::setRoute(config('backpack.base.route_prefix').'/article-category');
-        CRUD::setEntityNameStrings('article category', 'article categories');
+        CRUD::setEntityNameStrings('article-category', 'article categories');
+        $this->denyAccessIfNoPermission();
     }
 
     /**

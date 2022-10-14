@@ -2,9 +2,12 @@
 
 namespace App\Providers;
 
-use App\Http\Controllers\Auth\LoginController;
 use Dymantic\InstagramFeed\Instagram;
 use Illuminate\Support\ServiceProvider;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Admin\PageCrudController;
+use App\Http\Controllers\Admin\RoleCrudController;
+use App\Http\Controllers\Admin\MenuItemCrudController;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -18,6 +21,11 @@ class AppServiceProvider extends ServiceProvider
         //
 
         $this->app->bind(\Backpack\CRUD\app\Http\Controllers\Auth\LoginController::class, LoginController::class);
+        $this->app->bind(\Backpack\PageManager\app\Http\Controllers\Admin\PageCrudController::class, PageCrudController::class);
+
+        $this->app->bind(\Backpack\MenuCRUD\app\Http\Controllers\Admin\MenuItemCrudController::class, MenuItemCrudController::class);
+        $this->app->bind(\Backpack\PermissionManager\app\Http\Controllers\RoleCrudController::class, RoleCrudController::class);
+
     }
 
     /**

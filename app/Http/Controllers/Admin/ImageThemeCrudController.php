@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\ImageThemeRequest;
+use App\Traits\LimitUserPermissions;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -18,6 +19,7 @@ class ImageThemeCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    use LimitUserPermissions;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -29,7 +31,8 @@ class ImageThemeCrudController extends CrudController
         $this->crud->denyAccess('show');
         CRUD::setModel(\App\Models\ImageTheme::class);
         CRUD::setRoute(config('backpack.base.route_prefix').'/image-theme');
-        CRUD::setEntityNameStrings('image theme', 'image themes');
+        CRUD::setEntityNameStrings('image-theme', 'image themes');
+        $this->denyAccessIfNoPermission();
     }
 
     /**
