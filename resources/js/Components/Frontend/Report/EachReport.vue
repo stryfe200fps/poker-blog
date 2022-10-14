@@ -5,7 +5,7 @@
                 <Link
                     class="default-text-color"
                     :href="`/event/${item.event.slug}/report/${item.slug}`"
-                    >{{ item.title }}{{ id }}</Link
+                    >{{ item.title }}</Link
                 >
             </h1>
             <h1 v-else class="text-capitalize">

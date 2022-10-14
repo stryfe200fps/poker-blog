@@ -247,7 +247,7 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .custom-header--bg {
-    background-image: url("background-black.jpg");
+    background-image: url("/background-black.jpg");
     background-color: #2d3436;
 }
 
@@ -336,7 +336,7 @@ onBeforeUnmount(() => {
 }
 
 header.active .nav-list-container {
-    background-image: url("background-black.jpg");
+    background-image: url("/background-black.jpg");
     background-color: #2d3436;
 }
 
