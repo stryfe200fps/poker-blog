@@ -32,13 +32,21 @@
                 <div class="post-content" v-if="event.events.length">
                     <ul
                         class="post-tags post-tags--custom"
-                        v-for="report in event.events"
+                        v-for="(report, index) in event.events"
                         :key="report.id"
                     >
                         <li>
                             <Link
                                 class="text-capitalize"
-                                :href="`/event/${event.slug}/report/${report.slug}`"
+                                v-if="index == 1"
+                                :href="`/event/${event.slug}#${report.slug}${index}`"
+                                ><i class="fa-solid fa-angle-right"></i
+                                >{{ report.title }}</Link
+                            >
+                            <Link
+                                v-else
+                                class="text-capitalize"
+                                :href="`/event/${event.slug}`"
                                 ><i class="fa-solid fa-angle-right"></i
                                 >{{ report.title }}</Link
                             >
