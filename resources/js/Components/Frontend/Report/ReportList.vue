@@ -196,6 +196,8 @@
                                 v-for="(image, index) in event.gallery"
                                 :key="index"
                                 :href="image.main"
+                                :data-pswp-width="900"
+                                :data-pswp-height="640"
                                 target="_blank"
                                 rel="noreferrer"
                             >
