@@ -69,6 +69,7 @@
                         v-for="(item, index) in report.collection"
                         :key="index"
                         :item="item"
+                        :id="index"
                     />
                     <div
                         class="day-divider"
@@ -292,8 +293,8 @@
 
 <script setup>
 import { Link } from "@inertiajs/inertia-vue3";
-import { ref, computed } from "@vue/reactivity";
-import { onMounted, onBeforeUnmount, watch } from "@vue/runtime-core";
+import { ref } from "@vue/reactivity";
+import { onMounted, onBeforeUnmount, onUpdated } from "@vue/runtime-core";
 import CustomeTable from "../CustomeTable.vue";
 import CountryFlag from "vue3-country-flag-icon";
 import defaultAvatar from "@/default-avatar.png";
@@ -336,6 +337,7 @@ function handleScrolledToBottom(isVisible) {
 }
 
 const tab = ref(0);
+const id = ref(null);
 
 function stickyScroll() {
     const tabs = document.querySelector(".custom-tabs");
@@ -399,6 +401,7 @@ onBeforeUnmount(() => {
 });
 
 onMounted(() => {
+    id.value = window.location.hash.substring(1);
     window.addEventListener("scroll", stickyScroll);
 
     lightbox.init();
@@ -415,6 +418,10 @@ window.Echo.channel("report").listen("NewReport", (e) => {
     });
     emit("showNewReport");
 });
+});
+
+onUpdated(() => {
+    document.getElementById(id.value)?.scrollIntoView();
 });
 </script>
 
