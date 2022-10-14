@@ -232,8 +232,7 @@ class Event extends Model implements HasMedia
             ->nonQueued();
 
         $this->addMediaConversion('main-gallery')
-            ->width(1000)
-            ->height(500)
+            ->crop('crop-center', 900, 640)
             ->nonQueued();
     }
 
