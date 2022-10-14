@@ -25,9 +25,7 @@
                             style="align-self: center; padding: 0"
                         >
                             <div class="desktop-advert">
-                                <h4 class="text-uppercase" style="color: #fff">
-                                    “BRINGING THE ACTION TO YOUR DOORSTEP”
-                                </h4>
+                                <img :src="slogan" alt="slogan" />
                             </div>
                         </div>
                         <div
@@ -153,6 +151,7 @@
 import { onBeforeUnmount, onMounted, ref } from "vue";
 import { Link, InertiaApp } from "@inertiajs/inertia-vue3";
 import logo from "/public/lop_logo_small.png";
+import slogan from "/public/header-slogan.png";
 
 const toggleMenu = ref(false);
 const windowTop = ref(0);
@@ -248,6 +247,7 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .custom-header--bg {
+    background-image: url("background-black.jpg");
     background-color: #2d3436;
 }
 
@@ -336,7 +336,8 @@ onBeforeUnmount(() => {
 }
 
 header.active .nav-list-container {
-    background-color: #2d3436 !important;
+    background-image: url("background-black.jpg");
+    background-color: #2d3436;
 }
 
 .navbar-collapse--custom {
