@@ -40,10 +40,11 @@ class EventChipFactory extends Factory
             'current_chips' => $this->faker->numberBetween(0, 10000),
             'chips_before' => $this->faker->numberBetween(0, 10000),
             'rank' => 1,
+            'is_whatsapp' => 0,
             'player_id' => Player::factory()->create()->id,
             'event_report_id' => EventReport::factory()->create()->id,
             'event_id' => Event::factory()->create()->id,
-            'date_published' => Carbon::now()->toString(),
+            'date_published' => Carbon::now()->addHours(2)->toString(),
         ];
     }
 }

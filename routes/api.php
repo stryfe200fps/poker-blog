@@ -56,7 +56,9 @@ Route::resource('lof-event', LOFApiEventsController::class);
 
 
 Route::resource('lof-event-index', LOFApiEventIndexController::class);
+
 Route::get('lof-event-index/{slug}/chipcount', [LOFApiEventIndexController::class, 'chipCounts']);
+Route::get('lof-event-index/{slug}/whatsapp', [LOFApiEventIndexController::class, 'whatsapp']);
 
 
 Route::resource('lof-live-report', EventReportsController::class);
@@ -69,6 +71,9 @@ Route::post('contact', [ContactUsController::class, 'store']);
 Route::post('subscribe', [NewsletterController::class, 'store']);
 
 Route::get('payout/{player_id}/{event}', [PayoutController::class, 'player']);
+
+
+
 
 // Route::get('admin/getEvents/{id}', function ($id) {
 //     return Event::find($id);

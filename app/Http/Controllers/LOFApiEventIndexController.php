@@ -57,6 +57,13 @@ class LOFApiEventIndexController extends Controller
         return new LOFApiEventIndexChipCountResource( Event::with('latest_event_chips')->where('slug', $slug)->firstOrFail() );
     }
 
+    public function whatsapp($slug) 
+    {
+        return new LOFApiEventIndexChipCountResource( Event::with(['latest_event_chips' => function ($query) {
+            $query->where('is_whatsapp', 1);
+        }])->where('slug', $slug)->firstOrFail() );
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

@@ -56,6 +56,11 @@ class EventChip extends Model
         return $this->belongsTo(Event::class);
     }
 
+    public function getIsWhatsappAttribute($value) 
+    {
+        return (int)$value;
+    }
+
     public function getPreviousReportAttribute($value)
     {
         $q = $this->where('player_id', $this->player_id);

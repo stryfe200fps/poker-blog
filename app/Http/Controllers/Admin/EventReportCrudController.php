@@ -351,6 +351,12 @@ class EventReportCrudController extends CrudController
                         'name' => 'current_chips',
                         'type' => 'number',
                     ],
+
+                    [   //image
+                        'label' => 'is whatsapp source?',
+                        'name' => 'is_whatsapp',
+                        'type' => 'switch',
+                    ],
                     [   //image
                         'label' => 'Rank',
                         'name' => 'rank',
@@ -465,7 +471,6 @@ public function fetchTags()
             $request['players'] = '';
         }
 
-        NewReport::dispatch('new report');
 
         $request = $this->crud->validateRequest();
         $this->crud->registerFieldEvents();

@@ -22,6 +22,7 @@ class EventChipsResource extends JsonResource
             'rank' => $this->rank,
             'payout' => $this->payout,
             'current_chips' => $this->current_chips,
+            'is_whatsapp' => $this->is_whatsapp,
             'report_id' => $this->event_report_id,
             'previous' => $report,
             'changes' => $changes = $this->current_chips >= $report ?

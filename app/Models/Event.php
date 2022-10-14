@@ -272,6 +272,7 @@ class Event extends Model implements HasMedia
         return $this->hasMany(EventChip::class)->orderByDesc('created_at');
     }
 
+
     public function tournament()
     {
         return $this->belongsTo(Tournament::class);

@@ -3,14 +3,15 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Events\NewReport;
 use Illuminate\Support\Str;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Sluggable\HasSlug;
+use Spatie\MediaLibrary\HasMedia;
 use Spatie\Sluggable\SlugOptions;
+use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class EventReport extends Model implements HasMedia
 {
@@ -129,6 +130,7 @@ class EventReport extends Model implements HasMedia
             if (is_array($value) && count($value) > 0) {
                 $this->event_chips()->delete();
                 $jsonObj = [];
+
                 foreach ($value as $eventChipPlayer) {
                     $savedEventChip = EventChip::create([
                         'name' => '',
@@ -136,6 +138,7 @@ class EventReport extends Model implements HasMedia
                         'event_id' => $this->attributes['event_id'],
                         'date_published' => $this->attributes['date_added'],
                         'player_id' => $eventChipPlayer['player_id'],
+                        'is_whatsapp' => $eventChipPlayer['is_whatsapp'],
                         'current_chips' => $eventChipPlayer['current_chips'],
                     ]);
 
@@ -235,6 +238,7 @@ class EventReport extends Model implements HasMedia
         });
 
         static::created(function ($createdEventReport) {
+
             $createdEventReport->slug = Str::slug($createdEventReport->slug);
             $createdEventReport->save();
 
@@ -252,6 +256,7 @@ class EventReport extends Model implements HasMedia
                         'date_published' => $createdEventReport->date_added,
                         'event_id' => $createdEventReport->event_id,
                         'player_id' => $eventChipPlayer['player_id'],
+                        'is_whatsapp' => $eventChipPlayer['is_whatsapp'],
                         'current_chips' => $eventChipPlayer['current_chips'],
                     ]);
 
@@ -270,6 +275,8 @@ class EventReport extends Model implements HasMedia
                     }
                 }
             }
+
+        NewReport::dispatch('new report');
         });
     }
 }
