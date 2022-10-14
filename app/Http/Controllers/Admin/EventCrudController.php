@@ -230,14 +230,14 @@ class EventCrudController extends CrudController
             $request['schedule'] = '';
         }
 
-        if ($schedules === null) {
-            Validator::make($schedules ?? [],
-                [
-                    'schedule' => 'required',
-                ], [
-                    'schedule' => 'please check the schedule',
-                ])->validate();
-        }
+        // if ($schedules === null) {
+        //     Validator::make($schedules ?? [],
+        //         [
+        //             'schedule' => 'required',
+        //         ], [
+        //             'schedule' => 'please check the schedule',
+        //         ])->validate();
+        // }
 
         $request = $this->crud->validateRequest();
 
@@ -294,14 +294,14 @@ class EventCrudController extends CrudController
             $request['schedule'] = '';
         }
 
-        if ($schedules === null) {
-            Validator::make($schedules ?? [],
-                [
-                    'schedule' => 'required',
-                ], [
-                    'schedule' => 'please check the schedule',
-                ])->validate();
-        }
+        // if ($schedules === null) {
+        //     Validator::make($schedules ?? [],
+        //         [
+        //             'schedule' => 'required',
+        //         ], [
+        //             'schedule' => 'please check the schedule',
+        //         ])->validate();
+        // }
 
         $this->crud->hasAccessOrFail('update');
 

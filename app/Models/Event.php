@@ -231,9 +231,7 @@ class Event extends Model implements HasMedia
             ->height(86)
             ->nonQueued();
 
-        $this->addMediaConversion('main-gallery')
-            ->crop('crop-center', 900, 640)
-            ->nonQueued();
+        $this->addMediaConversion('main-gallery');
     }
 
     public function getImageAttribute($value)

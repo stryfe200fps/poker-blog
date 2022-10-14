@@ -323,7 +323,6 @@ class EventReportCrudController extends CrudController
             ],
             [
                 'name' => 'players',
-                //chip stack
                 'label' => 'Chip Counts',
                 'type' => 'repeatable',
 
@@ -342,7 +341,7 @@ class EventReportCrudController extends CrudController
                         'pivot' => true, // on create&update, do you need to add/delete pivot table entries?
                         'inline_create' => ['entity' => 'player'],
                         'minimum_input_length' => 0,
-                        'allows_null' => true,
+                        'allows_null' => false,
                         'ajax' => true,
 
                     ],
@@ -450,9 +449,11 @@ public function fetchTags()
                 if ($user['player_id'] == $lastPlayerId) {
                     Validator::make([],
                         ['player_id' => 'required',
+                        'current_chips' => 'required',
                         ],
                         [
                             'player_id' => 'There is a duplicate player in Chip Stacks',
+                            'current_chips' => 'Chip field is required',
                         ])->validate();
                 }
 
@@ -494,17 +495,8 @@ public function fetchTags()
         $players = request()->get('players');
         if ($players !== null) {
             $lastPlayerId = 0;
-            foreach ($players as $user) {
-                if ($user['player_id'] == $lastPlayerId) {
-                    Validator::make([],
-                        ['player_id' => 'required',
-                        ],
-                        [
-                            'player_id' => 'There is a duplicate player in Chip Stacks',
-                        ])->validate();
-                }
 
-                $lastPlayerId = $user['player_id'];
+            foreach ($players as $user) {
 
                 Validator::make($user,
                     ['player_id' => 'required',
@@ -516,8 +508,27 @@ public function fetchTags()
                         'current_chips' => 'Chip field is required',
 
                     ])->validate();
+
+                if ($user['player_id'] == $lastPlayerId) {
+
+                    Validator::make($user,
+                        ['player_id' => 'required',
+                        'current_chips' => 'required',
+                        ],
+                        [
+                            'player_id' => 'There is a duplicate player in Chip Stacks',
+
+                        'current_chips' => 'Chip field is required',
+                        ])->validate();
+
+                        
+                }
+
+                $lastPlayerId = $user['player_id'];
+
             }
         }
+
 
         $this->crud->hasAccessOrFail('update');
 

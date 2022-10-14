@@ -172,8 +172,7 @@
             const request = new XMLHttpRequest();
             request.open('POST', '/api/events/gallery/upload');
 
-            request.timeout = 3000
-
+            request.timeout = 20000
 
             request.upload.onprogress = (e) => {
               progress(e.lengthComputable, e.loaded, e.total);

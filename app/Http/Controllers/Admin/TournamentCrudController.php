@@ -128,7 +128,7 @@ class TournamentCrudController extends CrudController
             ],
             [   // date_range
                 'name' => ['date_start', 'date_end'], // db columns for start_date & end_date
-                'label' => 'Tournament Duration',
+                'label' => 'Series Duration',
                 'type' => 'date_range',
 
                 // OPTIONALS

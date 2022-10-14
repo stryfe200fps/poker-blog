@@ -67,6 +67,11 @@ class EventReport extends Model implements HasMedia
         return $this->belongsTo(Event::class);
     }
 
+    public function image_theme()
+    {
+        return $this->belongsTo(ImageTheme::class);
+    }
+
     public function event_chips()
     {
         return $this->hasMany(EventChip::class)->orderByDesc('current_chips');
