@@ -142,7 +142,9 @@
                                     </div>
                                     <li
                                         @click="showShare"
+                                        @blur="isOpen = false"
                                         class="btn btn-default share-btn-mobile"
+                                        tabindex="0"
                                     >
                                         <i class="fa fa-share-alt"></i
                                         ><span class="text-uppercase"
@@ -366,6 +368,10 @@ ul.post-tags {
 
 .share-btn-mobile {
     margin: 0;
+}
+
+.share-btn-mobile:focus {
+    outline: none;
 }
 
 .social-links-group {
