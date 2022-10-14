@@ -12,6 +12,7 @@
                 <div class="title-section hide-underline">
                     <!-- <h1 class="text-primary"><span>{{list.data.poker_tournament}}</span></h1> -->
                     <div
+                        v-if="eventData"
                         style="
                             display: flex;
                             justify-content: space-between;
@@ -24,7 +25,7 @@
                             }}</span>
                         </h1>
                         <!-- <h1><span>{{list.data.title}}</span></h1> -->
-                        <p v-if="eventData.available_days?.length > 1">
+                        <p v-if="eventDays?.length > 1">
                             <select
                                 class="form-control"
                                 v-model="selectDay"
@@ -32,9 +33,7 @@
                             >
                                 <option
                                     class="text-center"
-                                    v-for="(
-                                        data, index
-                                    ) in eventData.available_days"
+                                    v-for="(data, index) in eventDays"
                                     :key="index"
                                     :value="data"
                                     :checked="data == selectDay"
@@ -45,13 +44,14 @@
                         </p>
                         <p
                             v-else
-                            v-for="(data, index) in eventData.available_days"
+                            v-for="(data, index) in eventDays"
                             :key="index"
                         >
                             Day: {{ data }}
                         </p>
                     </div>
                 </div>
+
                 <div class="single-post-box">
                     <ReportList
                         :event="eventData"
@@ -75,7 +75,7 @@ import TournamentList from "../../Components/Frontend/Tournament/List.vue";
 
 import { useEventStore } from "@/Stores/event.js";
 import { useTournamentStore } from "@/Stores/tournament.js";
-import { onMounted, ref, watch } from "@vue/runtime-core";
+import { onMounted, ref, watch, computed } from "@vue/runtime-core";
 
 const eventStore = useEventStore();
 const tournamentStore = useTournamentStore();
@@ -94,6 +94,10 @@ const selectDay = ref(null);
 const liveReport = ref([]);
 const loadPage = ref(1);
 const lastPage = ref(1);
+
+const eventDays = computed(() => {
+    return Object.values(eventData?.value?.available_days ?? {});
+});
 
 const highestDay = () => {
     let { available_days } = eventStore.eventData.data;

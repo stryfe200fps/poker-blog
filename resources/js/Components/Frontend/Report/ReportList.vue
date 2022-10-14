@@ -203,7 +203,6 @@
                             >
                                 <img
                                     style="
-                                        width: 120px;
                                         max-width: 100%;
                                         height: auto;
                                         object-fit: cover;
