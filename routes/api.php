@@ -16,6 +16,7 @@ use App\Http\Controllers\PayoutController;
 use App\Http\Controllers\SocialMediaController;
 use App\Http\Controllers\TagController;
 use App\Models\Event;
+use App\Models\ImageTheme;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -74,8 +75,6 @@ Route::post('subscribe', [NewsletterController::class, 'store']);
 Route::get('payout/{player_id}/{event}', [PayoutController::class, 'player']);
 
 
-
-
-// Route::get('admin/getEvents/{id}', function ($id) {
-//     return Event::find($id);
-// });
+Route::get('admin/attach-image/{id}', function ($id) {
+    return ImageTheme::find($id)->image ?? '';
+});

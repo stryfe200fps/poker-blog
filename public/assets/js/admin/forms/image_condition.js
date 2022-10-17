@@ -2,7 +2,6 @@
 $(document).ready(function () { 
 
 
-
   $('[data-handle=mainImage]').ready(function (val) {
 
     if ($('[data-handle=mainImage]')[0].currentSrc == '') 
@@ -35,6 +34,7 @@ crud.field('image').onChange(function(field) {
 
     $('.image_caption').val('');
     $('.image_caption').val('');
+
     // console.log('handle with care')
   })
 })

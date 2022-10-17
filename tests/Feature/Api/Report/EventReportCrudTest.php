@@ -4,6 +4,7 @@ use App\Models\ArticleAuthor;
 use App\Models\Event;
 use App\Models\EventChip;
 use App\Models\EventReport;
+use App\Models\ImageTheme;
 use App\Models\Level;
 use App\Models\Player;
 use App\Models\User;
@@ -138,6 +139,7 @@ it('can insert reports if authenticated', function () {
         'level' => Level::factory()->create(),
         'event_id' => $event->id,
         'poker_event_id' => Event::factory()->create()->id,
+        'image_theme_id' => ImageTheme::factory()->create()->id,
         'date_added' => '2021-02-02 00:00:00',
         'user_id' => User::factory()->create()->id,
         'article_author_id' => ArticleAuthor::factory()->create()->id,
@@ -170,6 +172,7 @@ it('can insert reports with event chips players', function () {
         'level_id' => Level::factory()->create()->id,
         'level' => Level::factory()->create(),
         'event_id' => $event->id,
+        'image_theme_id' => ImageTheme::factory()->create()->id,
         'poker_event_id' => Event::factory()->create()->id,
         'date_added' => '2021-02-02 00:00:00',
         'user_id' => User::factory()->create()->id,
@@ -203,6 +206,7 @@ it('can update reports if authenticated', function () {
         'day' => '1A',
         'level_id' => Level::factory()->create()->id,
         'level' => Level::factory()->create(),
+        'image_theme_id' => ImageTheme::factory()->create()->id,
         'event_id' => $event->id,
         'poker_event_id' => Event::factory()->create()->id,
         'date_added' => '2021-02-02 00:00:00',

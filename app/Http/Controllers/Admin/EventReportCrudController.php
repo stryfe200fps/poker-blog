@@ -280,6 +280,7 @@ class EventReportCrudController extends CrudController
                 'aspect_ratio' => 3 / 2, // omit or set to 0 to allow any aspect ratio
                 'wrapper' => [
                     'class' => 'form-group col-md-12 image',
+                    'id' => 'image'
                 ],
             ],
             [
@@ -294,7 +295,8 @@ class EventReportCrudController extends CrudController
                 'name' => 'image_theme',
                 'type' => 'relationship',
                 'attributes' => [
-                   'id'  => 'image_theme'
+                   'id'  => 'image-theme'
+
                 ],
                 'wrapper' => [
                     'class' => 'form-group col-md-6 image_theme ',
@@ -368,9 +370,9 @@ class EventReportCrudController extends CrudController
             ],
         ]);
 
-
         Widget::add()->type('script')->content('assets/js/admin/forms/repeatable_chips.js');
-
+        if ($this->crud->getCurrentOperation() === 'create')
+            Widget::add()->type('script')->content('resources/admin/js/create-admin-image-theme-attach.js');
         // if ($this->crud->getCurrentOperation() === 'update') {
         //     $liveReport = LiveReport::find($this->crud->getCurrentEntryId());
         //     $players = collect($liveReport->liveReportPlayers);
@@ -391,9 +393,8 @@ public function fetchTags()
      */
     protected function setupUpdateOperation()
     {
-
         $this->setupCreateOperation();
-
+        Widget::add()->type('script')->content('resources/admin/js/update-admin-image-theme-attach.js');
     }
 
     public function fetchLevel()

@@ -27,13 +27,11 @@ class Article extends Model implements HasMedia
     {
         $this->addMediaConversion('main-image')
             ->width(847)
-            ->height(563)
-            ->nonQueued();
+            ->height(563);
 
         $this->addMediaConversion('main-thumb')
             ->width(337)
-            ->height(225)
-            ->nonQueued();
+            ->height(225);
     }
 
     public function setContentAttribute($content)

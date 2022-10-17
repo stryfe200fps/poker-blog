@@ -17,6 +17,9 @@
         <meta property="og:type" content="website"/>
         <meta property="og:url" content="{{ url()->current() }}" />
         <meta property="og:image" content="{{ $page['props']['image'] ?? 'Image' }}" >
+        <meta property="og:image:type" content="image/jpeg" />
+        <meta property="og:image:width" content="900">
+        <meta property="og:image:height" content="600">
         <meta property="og:site_name" content="Life of poker">
         <meta property="og:description" content="{{ $page['props']['description'] ?? 'Life Of Poker'  }}" />
         

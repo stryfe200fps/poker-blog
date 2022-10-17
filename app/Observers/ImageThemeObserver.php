@@ -9,6 +9,7 @@ class ImageThemeObserver
 
     public function saved($model) {
 
+        dd(request()->all());
         $value = request()->only('image')['image'];
 
         if ($value == null) {

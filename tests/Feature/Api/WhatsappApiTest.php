@@ -8,6 +8,7 @@ use App\Models\Player;
 use App\Models\EventChip;
 use App\Models\EventReport;
 use App\Models\ArticleAuthor;
+use App\Models\ImageTheme;
 
 test('whatsapp api', function () {
     $this->withExceptionHandling();
@@ -37,6 +38,7 @@ test('whatsapp api', function () {
         'day' => '1A',
         'level_id' => Level::factory()->create()->id,
         'level' => Level::factory()->create(),
+     
         'event_id' => $event->id,
         'poker_event_id' => Event::factory()->create()->id,
         'date_added' => Carbon::now()->addHours(3),
