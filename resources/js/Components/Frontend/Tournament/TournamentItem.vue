@@ -52,12 +52,18 @@ const props = defineProps({
 });
 
 const formattedDate = computed(() => {
-    const startYear = moment(props.tournament?.date_start).format("YYYY");
-    const endYear = moment(props.tournament?.date_end).format("YYYY");
-    const startMonth = moment(props.tournament?.date_start).format("MMMM");
-    const endMonth = moment(props.tournament?.date_end).format("MMMM");
-    const startDay = moment(props.tournament?.date_start).format("D");
-    const endDay = moment(props.tournament?.date_end).format("D");
+    const startYear = moment(new Date(props.tournament?.date_start)).format(
+        "YYYY"
+    );
+    const endYear = moment(new Date(props.tournament?.date_end)).format("YYYY");
+    const startMonth = moment(new Date(props.tournament?.date_start)).format(
+        "MMMM"
+    );
+    const endMonth = moment(new Date(props.tournament?.date_end)).format(
+        "MMMM"
+    );
+    const startDay = moment(new Date(props.tournament?.date_start)).format("D");
+    const endDay = moment(new Date(props.tournament?.date_end)).format("D");
     if (
         startYear === endYear &&
         startMonth === endMonth &&
