@@ -81,6 +81,15 @@
                         <ul
                             class="nav navbar-nav navbar-left navbar-nav--custom"
                         >
+                            <li class="drop drop-img">
+                                <Link href="/">
+                                    <img
+                                        class="drop-logo"
+                                        src="/lop_logo_white.svg"
+                                        alt="Logo"
+                                    />
+                                </Link>
+                            </li>
                             <li
                                 class="drop"
                                 v-for="menu in $page['props']['menu']"
@@ -165,13 +174,16 @@ function toggleBtn() {
 function onScroll(e) {
     windowTop.value = e.target.documentElement.scrollTop;
     var width = document.body.clientWidth;
+    const navImg = document.querySelector(".drop-img");
 
     if (width < 769) return;
 
     if (windowTop.value >= sticky.value.offsetTop + 100) {
         sticky.value.classList.add("active");
+        navImg.classList.add("scroll");
     } else {
         sticky.value.classList.remove("active");
+        navImg.classList.remove("scroll");
     }
 }
 
@@ -253,6 +265,10 @@ onBeforeUnmount(() => {
 
 .header-logo {
     width: 150px;
+}
+
+.drop-logo {
+    width: 80px;
 }
 
 .custom-header--flex {
@@ -350,7 +366,6 @@ header.active .nav-list-container {
 }
 
 .navbar-nav--custom > li > a {
-    padding-block: 15px;
     color: #fff !important;
 }
 
@@ -358,8 +373,24 @@ header.active .nav-list-container {
     display: none;
 }
 
-.navbar-nav > li:first-child > a {
+.navbar-nav > li:nth-child(2) > a {
     padding-left: 0 !important;
+}
+
+.navbar-nav .drop-img a {
+    padding-left: 0 !important;
+}
+
+.drop-img {
+    display: none;
+}
+
+.drop-img.scroll {
+    display: block;
+}
+
+.drop-img a::after {
+    opacity: 0;
 }
 
 .home--custom {
@@ -371,6 +402,7 @@ header.active .nav-list-container {
 }
 
 .home--custom::after {
+    top: 15px;
     opacity: 0;
 }
 
@@ -387,5 +419,27 @@ header.active .nav-list-container {
 .router-link-exact-active {
     background-color: #f44336 !important;
     color: white;
+}
+
+@media screen and (max-width: 1024px) {
+    .drop-img {
+        padding-right: 15px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .drop-img {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 769px) {
+    .navbar-nav--custom {
+        display: flex;
+        align-items: center;
+    }
+    .navbar-nav--custom > li > a {
+        padding-block: 15px;
+    }
 }
 </style>
