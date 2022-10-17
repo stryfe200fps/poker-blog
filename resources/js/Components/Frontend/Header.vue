@@ -421,7 +421,7 @@ header.active .nav-list-container {
     color: white;
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1199px) {
     .drop-img {
         padding-right: 15px;
     }
