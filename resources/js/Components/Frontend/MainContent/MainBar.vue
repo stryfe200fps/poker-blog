@@ -96,9 +96,13 @@ defineProps({
                                     :src="defaultImg"
                                     :alt="defaultImg"
                                 />
-                                <Link class="category-post food" href="/">{{
-                                    news.categories[0]?.title
-                                }}</Link>
+
+                                <Link
+                                    v-if="news.categories.length"
+                                    class="category-post food"
+                                    :href="news.categories[0]?.slug"
+                                    >{{ news.categories[0]?.title }}</Link
+                                >
                             </div>
                         </div>
                         <div class="col-sm-6">

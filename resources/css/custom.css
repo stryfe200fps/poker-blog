@@ -125,11 +125,11 @@ body {
     border-bottom: none;
 }
 
-.single-post-box.round {
-    /* border-top: 1px solid #d3d3d3;
-    border-bottom: 1px solid #d3d3d3; */
-    /* padding: 20px 0px; */
-}
+/* .single-post-box.round {
+    border-top: 1px solid #d3d3d3;
+    border-bottom: 1px solid #d3d3d3;
+    padding: 20px 0px;
+} */
 
 .post-content {
     font-size: 18px;
@@ -159,8 +159,8 @@ body {
     padding: 5px 8px;
 }
 
-.post-tags .share-post-links li a i {
-}
+/* .post-tags .share-post-links li a i {
+} */
 
 .share-box-button {
     display: grid;

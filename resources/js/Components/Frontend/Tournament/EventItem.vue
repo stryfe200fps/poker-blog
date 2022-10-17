@@ -1,6 +1,6 @@
 <template>
-    <div class="news-post article-post">
-        <div class="row">
+    <div class="news-post article-post article-post--custom">
+        <div class="row" v-if="event.status !== 'upcoming'">
             <div class="col-sm-5">
                 <div class="post-content">
                     <h2 style="margin-bottom: 15px">
@@ -10,7 +10,7 @@
                     </h2>
                     <h2>
                         <Link
-                            class="text-capitalize"
+                            class="text-capitalize link--custom"
                             :href="`/event/${event.slug}`"
                             >{{ event.title }}</Link
                         >
@@ -18,9 +18,7 @@
                     <ul class="post-tags" v-if="event.date_start.length">
                         <li>
                             <i class="fa fa-clock-o"></i>
-                            {{ moment(event.date_start).format("MMM D YYYY") }}
-                            -
-                            {{ moment(event.date_end).format("MMM D YYYY") }}
+                            {{ formattedDate }}
                         </li>
                     </ul>
                 </div>
@@ -37,17 +35,21 @@
                     >
                         <li>
                             <Link
-                                class="text-capitalize"
+                                class="text-capitalize link--custom"
                                 v-if="index == 1"
                                 :href="`/event/${event.slug}#${report.slug}${index}`"
-                                ><i class="fa-solid fa-angle-right"></i
+                                ><i
+                                    class="fa-solid fa-angle-right link-icon--custom"
+                                ></i
                                 >{{ report.title }}</Link
                             >
                             <Link
                                 v-else
-                                class="text-capitalize"
+                                class="text-capitalize link--custom"
                                 :href="`/event/${event.slug}`"
-                                ><i class="fa-solid fa-angle-right"></i
+                                ><i
+                                    class="fa-solid fa-angle-right link-icon--custom"
+                                ></i
                                 >{{ report.title }}</Link
                             >
                         </li>
@@ -63,6 +65,42 @@
                             >No reports yet</small
                         >
                     </h5>
+                </div>
+            </div>
+        </div>
+        <div class="row" v-else>
+            <div class="col-sm-12">
+                <div class="post-content">
+                    <h2 style="margin-bottom: 15px">
+                        <span
+                            v-if="event.date_start.length"
+                            class="label text-uppercase"
+                            :class="labelClass"
+                        >
+                            {{ labelText }}</span
+                        >
+                        <span v-else class="label label-warning text-uppercase">
+                            tba</span
+                        >
+                    </h2>
+                    <div
+                        style="
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: baseline;
+                        "
+                    >
+                        <h2 class="text-capitalize">
+                            {{ event.title }}
+                        </h2>
+                        <p
+                            v-if="event.date_start.length"
+                            class="text-uppercase"
+                            style="color: #333"
+                        >
+                            {{ formattedDate }}
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -83,10 +121,10 @@ const labelClass = computed(() => {
             return "label-danger";
         case "upcoming":
             return "label-success";
-        case "tba":
-            return "label-warning";
-        default:
+        case "past":
             return "label-default";
+        default:
+            return "label-warning";
     }
 });
 const labelText = computed(() => {
@@ -95,8 +133,51 @@ const labelText = computed(() => {
             return "live now";
         case "past":
             return "ended";
+        case "upcoming":
+            return "upcoming";
         default:
             return props.event.status;
     }
 });
+
+const formattedDate = computed(() => {
+    const startYear = moment(props.event.date_start).format("YYYY");
+    const endYear = moment(props.event.date_end).format("YYYY");
+    const startMonth = moment(props.event.date_start).format("MMMM");
+    const endMonth = moment(props.event.date_end).format("MMMM");
+    const startDay = moment(props.event.date_start).format("D");
+    const endDay = moment(props.event.date_end).format("D");
+    if (
+        startYear === endYear &&
+        startMonth === endMonth &&
+        startDay === endDay
+    ) {
+        return `${endMonth} ${endDay}, ${endYear}`;
+    } else if (
+        startYear === endYear &&
+        startMonth === endMonth &&
+        startDay !== endDay
+    ) {
+        return `${endMonth} ${startDay} - ${endDay}, ${endYear}`;
+    } else if (
+        startYear === endYear &&
+        startMonth !== endMonth &&
+        startDay !== endDay
+    ) {
+        return `${startMonth} ${startDay} - ${endMonth} ${endDay}, ${endYear}`;
+    } else {
+        return `${startMonth} ${startDay}, ${startYear} - ${endMonth} ${endDay}, ${endYear}`;
+    }
+});
 </script>
+
+<style scoped>
+.article-post--custom {
+    border-bottom-color: #d0d0d0;
+}
+
+.link--custom,
+.link-icon--custom {
+    color: #f44336 !important;
+}
+</style>
