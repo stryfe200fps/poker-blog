@@ -96,7 +96,6 @@ class EventReportCrudController extends CrudController
         $this->crud->disableResponsiveTable();
         Widget::add()->to('after_content')->type('view')->view('vendor.backpack.helper.live_report'); // widgets to show the ordering card
         $this->crud->addClause('where', 'event_id', session()->get('event_id'));
-
         $this->crud->addButtonFromModelFunction('line', 'open_fb', 'shareFacebook', 'beginning');
         $this->crud->addButtonFromModelFunction('line', 'open_twitter', 'shareTwitter', 'beginning');
 
@@ -322,16 +321,19 @@ class EventReportCrudController extends CrudController
                 ],
             ],
             [
-                'name' => 'players',
+                'name' => 'eventChipPlayers',
                 'label' => 'Chip Counts',
                 'type' => 'repeatable',
-
                 'attributes' => [
                     'id' => 'repeat',
                 ],
                 'new_item_label' => 'add stack',
                 'tab' => 'Chip Stack',
                 'subfields' => [
+                    [
+                        'name' => 'id',
+                        'type' => 'text'
+                    ],
                     [
                         'label' => 'Player',
                         'type' => 'relationship',
