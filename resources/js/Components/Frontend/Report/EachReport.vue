@@ -146,7 +146,7 @@
                     <div
                         class="imageFrame"
                         :style="{
-                            'background-image': 'url('+item.theme+')' 
+                            'background-image': 'url(' + item.theme + ')',
                         }"
                     ></div>
                 </div>
@@ -310,6 +310,19 @@ function getFrame(theme) {
 </script>
 
 <style scoped>
+:deep(.remove-padding table) {
+    width: 100%;
+    margin-bottom: 10px;
+    border: 1px solid #95a5a662;
+}
+
+:deep(.remove-padding table tr td) {
+    padding: 5px 10px;
+    font-family: Lato, sans-serif;
+    font-size: 14px;
+    background-color: #fbfbfb;
+}
+
 :deep(.remove-padding p) {
     padding-left: unset;
 }
