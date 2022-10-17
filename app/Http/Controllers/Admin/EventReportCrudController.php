@@ -372,7 +372,8 @@ class EventReportCrudController extends CrudController
 
         Widget::add()->type('script')->content('assets/js/admin/forms/repeatable_chips.js');
         if ($this->crud->getCurrentOperation() === 'create')
-            Widget::add()->type('script')->content('resources/admin/js/create-admin-image-theme-attach.js');
+            Widget::add()->type('script')->content('assets/js/admin/create-admin-image-theme-attach.js');
+
         // if ($this->crud->getCurrentOperation() === 'update') {
         //     $liveReport = LiveReport::find($this->crud->getCurrentEntryId());
         //     $players = collect($liveReport->liveReportPlayers);
@@ -394,7 +395,7 @@ public function fetchTags()
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
-        Widget::add()->type('script')->content('resources/admin/js/update-admin-image-theme-attach.js');
+        Widget::add()->type('script')->content('assets/js/admin/update-admin-image-theme-attach.js');
     }
 
     public function fetchLevel()
