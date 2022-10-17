@@ -42,7 +42,6 @@ Route::resource('level', levelApiController::class);
 Route::get('live-report/view/{id}', [LiveReportController::class, 'view']);
 Route::get('events', [EventApiController::class, 'index']);
 
-
 Route::post('events/gallery/upload', [EventApiController::class, 'upload']);
 
 Route::get('events/gallery/fetch/{id}', [EventApiController::class, 'fetchGallery']);

@@ -41,6 +41,7 @@ class CountryCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        $this->crud->disableResponsiveTable();
         CRUD::column('name');
 
         $this->crud->denyAccess('show');

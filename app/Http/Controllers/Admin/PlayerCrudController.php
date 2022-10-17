@@ -49,6 +49,9 @@ class PlayerCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+
+
+        $this->crud->disableResponsiveTable();
         $this->crud->orderBy('name');
         CRUD::column('name');
         CRUD::column('pseudonym');

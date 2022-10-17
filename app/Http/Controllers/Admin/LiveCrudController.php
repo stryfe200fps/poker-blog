@@ -57,6 +57,7 @@ class LiveCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        $this->crud->disableResponsiveTable();
         CRUD::column('title');
         $this->crud->addButtonFromModelFunction('line', 'open_google', 'openLiveReporting', 'beginning');
     }

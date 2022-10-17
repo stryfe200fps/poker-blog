@@ -67,6 +67,7 @@ class ChipCountCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        $this->crud->disableResponsiveTable();
         // $this->crud->addClause('join', 'event_reports', 'event_reports.id','=','event_chips.event_report_id' )
         // ->where('event_reports.id', session()->get('event_id'));
         // $this->crud->addClause('where', 'event_id', session()->get('event_id'));

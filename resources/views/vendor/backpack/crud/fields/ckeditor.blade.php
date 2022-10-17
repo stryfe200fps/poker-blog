@@ -43,6 +43,10 @@
    var suits = ['s','c','h','d'];
                 var cards = ['2','3','4','5','6','7','8','9','t','a','j','q','k'];
                 var PLACEHOLDERS = [];
+                PLACEHOLDERS.push({
+                    id : 5000,
+                    code: 'adi'
+                })
                 suits.forEach(function (suit, index) {
                 cards.forEach(function (card, indexs) {
                     PLACEHOLDERS.push({
@@ -68,8 +72,6 @@
                 // trigger the change event on textarea when ckeditor changes
                 element.editor.on('change', (evt, data) => {
                 element.trigger('change');
-
-                    
                 });
 
                 element.editor.on('instanceReady', (evt) => {
@@ -85,12 +87,11 @@
                     outputTemplate: outputTemplate
                     });
 
-                       autocomplete.getHtmlToInsert = function(item) {
+                    autocomplete.getHtmlToInsert = function(item) {
+                        console.log(item);
                     return this.outputTemplate.output(item);
                     }
-
                 })
-
 
                 element.on('CrudField:disable', function(e) {
                     if (typeof element.editor !== undefined) {
@@ -107,7 +108,7 @@
                 // console.log(new CKEDITOR.plugins.autocomplete());
             }
 
-                function textTestCallback(range) {
+     function textTestCallback(range) {
       if (!range.collapsed) {
         return null;
       }
@@ -135,10 +136,15 @@
     function dataCallback(matchInfo, callback) {
       var data = PLACEHOLDERS.filter(function(item) {
         var itemName = '/' + item.code;
-        
-        return itemName.indexOf(matchInfo.query.toLowerCase()) == 0;
-      });
+        var isCardMatched =  itemName.indexOf(matchInfo.query.toLowerCase()) == 0;
 
+        if (isCardMatched)
+            return isCardMatched;
+        else {
+            var test = '/adi';
+            var isTestMatched = test.indexOf(matchInfo.query.toLowerCase()) == 0;
+        }
+      });
 
       callback(data);
     }

@@ -52,6 +52,7 @@ class ArticleCrudController extends CrudController
     protected function setupListOperation()
     {
       
+        $this->crud->disableResponsiveTable();
 
         if (session()->get('new_article')) {
             $articleId = Article::find(session()->get('new_article'))->first()->slug;

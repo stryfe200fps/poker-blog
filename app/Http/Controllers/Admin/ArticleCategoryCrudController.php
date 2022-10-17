@@ -44,6 +44,7 @@ class ArticleCategoryCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        $this->crud->disableResponsiveTable();
         CRUD::column('title');
         CRUD::column('slug');
     }

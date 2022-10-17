@@ -41,6 +41,7 @@ class EventChipCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        $this->crud->disableResponsiveTable();
         CRUD::column('name');
         CRUD::column('current_chips');
         CRUD::column('chips_before');

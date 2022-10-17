@@ -55,6 +55,7 @@ class EventCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        $this->crud->disableResponsiveTable();
         CRUD::column('title');
         CRUD::column('tournament')->label('Series');
         CRUD::column('tournament.timezone')->label('Series Timezone');

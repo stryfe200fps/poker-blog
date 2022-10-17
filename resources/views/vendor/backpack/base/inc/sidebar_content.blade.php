@@ -5,53 +5,90 @@
         }
     </style>
 
- {{ session()->get('timezone') }} 
-
 <li class="nav-item"><a class="nav-link" href="{{ backpack_url('dashboard') }}"><i class="la la-home nav-icon"></i> {{ trans('backpack::base.dashboard') }}</a></li>
 
  {{-- @includeWhen(class_exists(\Backpack\DevTools\DevToolsServiceProvider::class), 'backpack.devtools::buttons.sidebar_item')  --}}
 
- <li class="nav-item nav-dropdown">
-    <a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon la la-newspaper"></i> Live Reporting</a>
-    <ul class="nav-dropdown-items">
-        <li class="nav-item"><a class="nav-link" href="{{ backpack_url('live') }}"><i class="nav-icon la la-exclamation"></i> Live</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{ backpack_url('report') }}"><i class="nav-icon la la-list"></i> Last Reports</a></li>
-    </ul>
-</li> 
 
-<li class="nav-item nav-dropdown">
-    <a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon la la-newspaper"></i> Articles</a>
-    <ul class="nav-dropdown-items">
-
-        <li class="nav-item"><a class="nav-link" href="{{ backpack_url('article') }}"><i class="nav-icon la la-newspaper"></i> Manage</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{ backpack_url('article-category') }}"><i class="nav-icon la la-list"></i> Categories</a></li>
-       
-    </ul>
-</li>
-
-<li class="nav-item nav-dropdown">
-    <a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon la la-globe-europe"></i> Tours & Events</a>
-    <ul class="nav-dropdown-items">
-<li class="nav-item"><a class="nav-link" href="{{ backpack_url('events') }}"><i class="nav-icon la la-calendar"></i> Events </a></li>
-<li class="nav-item"><a class="nav-link" href="{{ backpack_url('series') }}"><i class="nav-icon la la-icons"></i> Series</a></li>
-<li class="nav-item"><a class="nav-link" href="{{ backpack_url('poker-tour') }}"><i class="nav-icon la la-map"></i> Tours</a></li>
-    </ul>
-</li>
+@if(backpack_user()->can('report.list') || backpack_user()->role('super-admin'))
+    <li class="nav-item nav-dropdown">
+        <a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon la la-newspaper"></i> Live Reporting</a>
+        <ul class="nav-dropdown-items">
+            <li class="nav-item"><a class="nav-link" href="{{ backpack_url('live') }}"><i class="nav-icon la la-exclamation"></i> Live</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ backpack_url('report') }}"><i class="nav-icon la la-list"></i> Last Reports</a></li>
+        </ul>
+    </li> 
+@endif
 
 
-<li class="nav-item"><a class="nav-link" href="{{ backpack_url('player') }}"><i class="nav-icon la la-user"></i> Players</a></li>
+@if(backpack_user()->can('article.list') || backpack_user()->can('article-category.list') || backpack_user()->role('super-admin'))
+    <li class="nav-item nav-dropdown">
+        <a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon la la-newspaper"></i> Articles</a>
+        <ul class="nav-dropdown-items">
 
-        @role('super-admin')
+        @if(backpack_user()->can('article.list') || backpack_user()->role('super-admin'))
+            <li class="nav-item"><a class="nav-link" href="{{ backpack_url('article') }}"><i class="nav-icon la la-newspaper"></i> Manage</a></li>
+        @endif
+
+
+        @if(backpack_user()->can('article-category.list') || backpack_user()->role('super-admin'))
+            <li class="nav-item"><a class="nav-link" href="{{ backpack_url('article-category') }}"><i class="nav-icon la la-list"></i> Categories</a></li>
+        @endif
+        
+        </ul>
+    </li>
+@endif
+
+@if(backpack_user()->can('event.list') || backpack_user()->can('series.list') || backpack_user()->can('tour.list') || backpack_user()->role('super-admin') )
+    <li class="nav-item nav-dropdown">
+        <a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon la la-globe-europe"></i> Tours & Events</a>
+        <ul class="nav-dropdown-items">
+
+    @if(backpack_user()->can('event.list') || backpack_user()->role('super-admin'))
+        <li class="nav-item"><a class="nav-link" href="{{ backpack_url('events') }}"><i class="nav-icon la la-calendar"></i> Events </a></li>
+    @endif
+
+    @if(backpack_user()->can('series.list') || backpack_user()->role('super-admin'))
+        <li class="nav-item"><a class="nav-link" href="{{ backpack_url('series') }}"><i class="nav-icon la la-icons"></i> Series</a></li>
+    @endif
+
+    @if(backpack_user()->can('tour.list') || backpack_user()->role('super-admin'))
+        <li class="nav-item"><a class="nav-link" href="{{ backpack_url('poker-tour') }}"><i class="nav-icon la la-map"></i> Tours</a></li>
+    @endif
+
+        </ul>
+    </li>
+@endif
+
+@if(backpack_user()->can('player.list') || backpack_user()->role('super-admin'))
+    <li class="nav-item"><a class="nav-link" href="{{ backpack_url('player') }}"><i class="nav-icon la la-user"></i> Players</a></li>
+@endif
+
+        @if(backpack_user()->can('author.list') || backpack_user()->role('super-admin'))
         <li class="nav-item"><a class="nav-link" href="{{ backpack_url('article-author') }}"><i class="nav-icon la la-user"></i> Authors </a></li>
-        @endrole
+        @endif
 
 <li class="nav-item nav-dropdown">
     <a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon la la-newspaper"></i> Miscellaneous</a>
     <ul class="nav-dropdown-items">
 
-<li class="nav-item"><a class="nav-link" href="{{ backpack_url('tag') }}"><i class="nav-icon la la-list"></i> Tags</a></li>
-<li class="nav-item"><a class="nav-link" href="{{ backpack_url('image-theme') }}"><i class="nav-icon la la-image"></i> Image themes</a></li>
-<li class='nav-item'><a class='nav-link' href='{{ backpack_url('page') }}'><i class='nav-icon la la-file-o'></i> <span>Pages</span></a></li>
+@if(backpack_user()->can('tag.list') || backpack_user()->role('super-admin'))
+    <li class="nav-item"><a class="nav-link" href="{{ backpack_url('tag') }}"><i class="nav-icon la la-list"></i> Tags</a></li>
+@endif
+
+@if(backpack_user()->can('menu-item.list') || backpack_user()->role('super-admin'))
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('menu-item') }}'><i class='nav-icon la la-list'></i> <span>Menu</span></a></li>
+@endif
+
+@if(backpack_user()->can('page.list') || backpack_user()->role('super-admin') )
+    <li class='nav-item'><a class='nav-link' href='{{ backpack_url('page') }}'><i class='nav-icon la la-file-o'></i> <span>Pages</span></a></li>
+@endif
+
+@if(backpack_user()->can('image-theme.list') || backpack_user()->role('super-admin'))
+    <li class="nav-item"><a class="nav-link" href="{{ backpack_url('image-theme') }}"><i class="nav-icon la la-image"></i> Image themes</a></li>
+@endif
+
+
 
 @role('super-admin')
 
@@ -82,7 +119,7 @@
 
 
 <!-- <li class="nav-item"><a class="nav-link" href="{{ backpack_url('event-schedule') }}"><i class="nav-icon la la-question"></i> Event schedules</a></li> -->
-<li class='nav-item'><a class='nav-link' href='{{ backpack_url('menu-item') }}'><i class='nav-icon la la-list'></i> <span>Menu</span></a></li>
+
 
 <style>
 .imageFrame {

@@ -42,6 +42,7 @@ class LevelCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        $this->crud->disableResponsiveTable();
         $this->crud->addColumn([
             'name' => 'level',
             'type' => 'number',

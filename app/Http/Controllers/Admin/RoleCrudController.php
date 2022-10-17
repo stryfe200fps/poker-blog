@@ -39,6 +39,7 @@ class RoleCrudController extends CrudController
 
     public function setupListOperation()
     {
+        $this->crud->disableResponsiveTable();
         /**
          * Show a column for the name of the role.
          */
@@ -151,6 +152,7 @@ class RoleCrudController extends CrudController
      *
      * @return array
      **/
+
     private function getGuardTypes()
     {
         $guards = config('auth.guards');

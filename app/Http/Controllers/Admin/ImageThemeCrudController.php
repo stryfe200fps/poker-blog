@@ -44,6 +44,7 @@ class ImageThemeCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        $this->crud->disableResponsiveTable();
         CRUD::column('name');
         CRUD::column('image')->type('image');
 

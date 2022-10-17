@@ -45,6 +45,7 @@ class TagCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        $this->crud->disableResponsiveTable();
         CRUD::column('title');
         /**
          * Columns can be defined using the fluent syntax or array syntax:

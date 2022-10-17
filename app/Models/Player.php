@@ -31,10 +31,15 @@ class Player extends Model implements HasMedia
 
     public function setAvatarAttribute($value)
     {
-        if ($value == null || preg_match("/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).base64,.*/", $value) == 0) {
-            return;
+          if ($value == null) {
+            $this->media()->delete();
         }
 
+        if (preg_match("/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).base64,.*/", $value) == 0) {
+            return false;
+        }
+
+        $this->media()->delete();
         $this->addMediaFromBase64($value)
             ->toMediaCollection('player');
     }

@@ -64,6 +64,7 @@ class PayoutCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        $this->crud->disableResponsiveTable();
 
         $this->crud->addClause('where', 'event_id', session()->get('payout_event_id'));
         $this->crud->orderBy('position');

@@ -47,6 +47,8 @@ class ArticleAuthorCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+
+        $this->crud->disableResponsiveTable();
         $this->crud->addColumn([
 
             'label' => 'Image',

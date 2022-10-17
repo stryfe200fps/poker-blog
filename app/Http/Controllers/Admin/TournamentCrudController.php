@@ -46,6 +46,7 @@ class TournamentCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        $this->crud->disableResponsiveTable();
         CRUD::column('title');
         CRUD::column('description');
         CRUD::column('tour_id');

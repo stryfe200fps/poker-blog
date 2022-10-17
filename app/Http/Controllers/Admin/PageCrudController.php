@@ -28,6 +28,7 @@ class PageCrudController extends CrudController
 
     protected function setupListOperation()
     {
+        $this->crud->disableResponsiveTable();
         $this->crud->addColumn([
             'name' => 'name',
             'label' => trans('backpack::pagemanager.name'),

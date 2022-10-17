@@ -93,6 +93,7 @@ class EventReportCrudController extends CrudController
 
     protected function setupListOperation()
     {
+        $this->crud->disableResponsiveTable();
         Widget::add()->to('after_content')->type('view')->view('vendor.backpack.helper.live_report'); // widgets to show the ordering card
         $this->crud->addClause('where', 'event_id', session()->get('event_id'));
 
@@ -228,6 +229,19 @@ class EventReportCrudController extends CrudController
 
             ],
             [
+                'label' => 'Day',
+                'name' => 'day',
+                'type' => 'select2_from_array',
+                'options' => $event?->getAvailableDays(),
+                'attributes' => [
+                    'readonly' => 'readonly',
+                ],
+                'wrapper' => [
+                    'class' => 'form-group col-md-6',
+                ],
+            ],
+
+            [
                 'label' => 'Levels',
                 'type' => 'relationship',
                 'name' => 'level', // the method that defines the relationship in your Model
@@ -240,7 +254,7 @@ class EventReportCrudController extends CrudController
                 'allows_null' => true,
                 'value' => $this->crud->getCurrentOperation() === 'create' ? EventReport::lastLevel()->id ?? 0 : $this->crud->getCurrentEntry()->level->id,
                 'wrapper' => [
-                    'class' => 'form-group col-md-4',
+                    'class' => 'form-group col-md-12',
                 ],
             ],
             [
@@ -253,18 +267,7 @@ class EventReportCrudController extends CrudController
                 ],
 
             ],
-            [
-                'label' => 'Day',
-                'name' => 'day',
-                'type' => 'select2_from_array',
-                'options' => $event?->getAvailableDays(),
-                'attributes' => [
-                    'readonly' => 'readonly',
-                ],
-                'wrapper' => [
-                    'class' => 'form-group col-md-2',
-                ],
-            ],
+            
 
             [
                 'label' => 'Media',
