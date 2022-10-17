@@ -350,6 +350,7 @@ header.active .nav-list-container {
 }
 
 .navbar-nav--custom > li > a {
+    padding-block: 15px;
     color: #fff !important;
 }
 
