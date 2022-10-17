@@ -142,7 +142,7 @@ class RoleCrudController extends CrudController
             'pivot'     => true,
         ]);
 
-        Widget::add()->type('script')->content('resources/admin/js/admin-role.js');
+        Widget::add()->type('script')->content('assets/js/admin/admin-role.js');
     }
 
     /*
