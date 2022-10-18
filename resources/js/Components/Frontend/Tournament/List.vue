@@ -153,4 +153,8 @@ watch(
 .scroll-top-btn {
     box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.15);
 }
+
+.scroll-top-btn:focus {
+    outline: none;
+}
 </style>

@@ -8,12 +8,15 @@
                             {{ labelText }}</span
                         >
                     </h2>
-                    <h2>
+                    <h2 v-if="event.events.length">
                         <Link
                             class="text-capitalize link--custom"
                             :href="`/event/${event.slug}`"
                             >{{ event.title }}</Link
                         >
+                    </h2>
+                    <h2 v-else>
+                        {{ event.title }}
                     </h2>
                     <ul class="post-tags" v-if="event.date_start.length">
                         <li>
