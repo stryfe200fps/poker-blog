@@ -28,18 +28,21 @@
                                 <img :src="slogan" alt="slogan" />
                             </div>
                         </div>
-                        <div
-                            class="advertisement"
-                            style="overflow: visible; padding: 0"
-                        >
-                            <div class="desktop-advert">
-                                <div class="header-actions">
-                                    <!-- <i
+                        <div class="button-actions">
+                            <div
+                                class="advertisement google-translate"
+                                style="overflow: visible; padding: 0"
+                            >
+                                <div class="desktop-advert">
+                                    <div class="header-actions">
+                                        <!-- <i
                                         class="fa fa-search header-actions__icon"
                                     ></i>
                                     <h6 class="header-actions__icon">|</h6> -->
-                                    <div id="google_translate_element"></div>
-                                    <!-- <label class="dropdown">
+                                        <div
+                                            id="google_translate_element"
+                                        ></div>
+                                        <!-- <label class="dropdown">
                                         <div class="dd-button">ENG</div>
                                         <input
                                             type="checkbox"
@@ -52,22 +55,20 @@
                                             <li>Something else here</li>
                                         </ul>
                                     </label> -->
+                                    </div>
                                 </div>
                             </div>
+                            <button
+                                class="hamburger hamburger--spin"
+                                :class="{ 'is-active': toggleMenu }"
+                                type="button"
+                                @click="toggleBtn"
+                            >
+                                <span class="hamburger-box">
+                                    <span class="hamburger-inner"></span>
+                                </span>
+                            </button>
                         </div>
-                        <button
-                            type="button"
-                            class="navbar-toggle collapsed"
-                            data-toggle="collapse"
-                            data-target="#bs-example-navbar-collapse-1"
-                            style="align-self: center; margin: 0 15px 0 0"
-                            @click="toggleBtn"
-                        >
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
                     </div>
                 </div>
             </div>
@@ -75,7 +76,7 @@
                 <div class="container">
                     <div
                         class="collapse navbar-collapse navbar-collapse--custom"
-                        :class="{ in: toggleMenu }"
+                        :class="{ pull: toggleMenu }"
                         id="bs-example-navbar-collapse-1"
                     >
                         <ul
@@ -94,6 +95,7 @@
                                 class="drop"
                                 v-for="menu in $page['props']['menu']"
                                 :key="menu.id"
+                                @click="toggleDropdown(menu)"
                             >
                                 <Link
                                     class="home home--custom"
@@ -116,8 +118,15 @@
                                 >
                                     {{ menu.name }}
                                 </Link>
+                                <span
+                                    class="dropdown-arrow"
+                                    :class="{ show: toggleSubMenu }"
+                                    v-if="menu.children.length"
+                                    ><i class="fas fa-chevron-down"></i
+                                ></span>
                                 <ul
                                     class="dropdown"
+                                    :class="{ show: toggleSubMenu }"
                                     v-if="menu.children.length"
                                 >
                                     <li
@@ -163,12 +172,22 @@ import logo from "/public/lop_logo_small.png";
 import slogan from "/public/header-slogan.png";
 
 const toggleMenu = ref(false);
+const toggleSubMenu = ref(false);
 const windowTop = ref(0);
 const sticky = ref(null);
 const pathname = ref(window.location.pathname.split("/")[1]);
 
 function toggleBtn() {
     toggleMenu.value = !toggleMenu.value;
+    if (toggleMenu.value) {
+        document.body.style.overflow = "hidden";
+        return;
+    }
+    document.body.style.overflow = "auto";
+}
+
+function toggleDropdown(menu) {
+    if (menu.children.length) toggleSubMenu.value = !toggleSubMenu.value;
 }
 
 function onScroll(e) {
@@ -356,8 +375,11 @@ header.active .nav-list-container {
     background-color: #2d3436;
 }
 
+.collapse {
+    display: block;
+}
+
 .navbar-collapse--custom {
-    overflow-y: scroll;
     scrollbar-width: none;
 }
 
@@ -421,15 +443,234 @@ header.active .nav-list-container {
     color: white;
 }
 
+.hamburger {
+    overflow: visible;
+    display: none;
+    font: inherit;
+    text-transform: none;
+    color: inherit;
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+    transition-property: opacity, filter;
+    transition-duration: 0.15s;
+    transition-timing-function: linear;
+}
+
+.hamburger:hover {
+    opacity: 0.7;
+}
+
+.hamburger.is-active:hover {
+    opacity: 0.7;
+}
+
+.hamburger.is-active .hamburger-inner,
+.hamburger.is-active .hamburger-inner::before,
+.hamburger.is-active .hamburger-inner::after {
+    background-color: #fff;
+}
+
+.hamburger-box {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 24px;
+}
+
+.hamburger-inner {
+    top: 50%;
+    display: block;
+    margin-top: -2px;
+}
+
+.hamburger-inner,
+.hamburger-inner::before,
+.hamburger-inner::after {
+    position: absolute;
+    width: 35px;
+    height: 3px;
+    background-color: #fff;
+    border-radius: 4px;
+    transition: transform 0.15s ease;
+}
+
+.hamburger-inner::before,
+.hamburger-inner::after {
+    content: "";
+    display: block;
+}
+
+.hamburger-inner::before {
+    top: -10px;
+}
+
+.hamburger-inner::after {
+    bottom: -10px;
+}
+
+.hamburger--spin .hamburger-inner {
+    transition-duration: 0.22s;
+    transition-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
+
+.hamburger--spin .hamburger-inner::before {
+    transition: top 0.1s 0.25s ease-in, opacity 0.1s ease-in;
+}
+
+.hamburger--spin .hamburger-inner::after {
+    transition: bottom 0.1s 0.25s ease-in,
+        transform 0.22s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
+
+.hamburger--spin.is-active .hamburger-inner {
+    transform: rotate(225deg);
+    transition-delay: 0.12s;
+    transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.hamburger--spin.is-active .hamburger-inner::before {
+    top: 0;
+    opacity: 0;
+    transition: top 0.1s ease-out, opacity 0.1s 0.12s ease-out;
+}
+
+.hamburger--spin.is-active .hamburger-inner::after {
+    bottom: 0;
+    transform: rotate(-90deg);
+    transition: bottom 0.1s ease-out,
+        transform 0.22s 0.12s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.dropdown-arrow {
+    display: none !important;
+}
+
 @media screen and (max-width: 1199px) {
     .drop-img {
         padding-right: 15px;
     }
+
+    .navbar-nav--custom > li > a {
+        padding-inline-start: 20px;
+    }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767px) {
     .drop-img {
         display: none;
+    }
+
+    .custom-header--flex {
+        padding-block: 1rem;
+    }
+
+    .navbar-header {
+        align-self: center;
+    }
+
+    .header-logo {
+        width: 100px;
+    }
+
+    .hamburger {
+        display: inline-block;
+    }
+
+    .advertisement .desktop-advert {
+        display: block !important;
+    }
+
+    .button-actions {
+        display: flex;
+        align-items: center;
+        align-self: center;
+        gap: 20px;
+    }
+
+    .google-translate {
+        display: block !important;
+        margin-top: 20px;
+    }
+
+    .navbar-nav--custom {
+        margin-block: 0;
+    }
+
+    .navbar-nav > li > a.home {
+        display: inline-block;
+        padding-inline: 0;
+        padding-block: 15px;
+    }
+
+    .navbar-nav > li {
+        border-bottom: 1px solid #5c5555;
+    }
+
+    .router-link-active,
+    .router-link-exact-active {
+        background-color: transparent !important;
+    }
+
+    .navbar-nav li.drop ul.dropdown {
+        overflow: hidden;
+        max-height: 0;
+        transition: max-height 1s ease;
+    }
+
+    .navbar-nav li.drop ul.dropdown.show {
+        max-height: 300px;
+    }
+
+    .navbar-nav li.drop ul.dropdown li:last-child {
+        margin-bottom: 20px;
+    }
+
+    .navbar-nav li.drop ul.dropdown li a {
+        display: inline-block;
+        color: #f6f6f6;
+    }
+
+    .navbar-nav--custom > li {
+        padding-left: 15px;
+    }
+
+    .navbar-collapse--custom {
+        display: none;
+        min-height: 100vh;
+        background-color: #2a2828;
+    }
+
+    .navbar-collapse--custom.pull {
+        display: block;
+        animation: fadeIn 1s ease;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    .dropdown-arrow {
+        position: absolute;
+        top: 13px;
+        right: 30px;
+        display: inline-block !important;
+        transition: transform 0.5s ease;
+    }
+
+    .dropdown-arrow i {
+        font-size: 12px;
+        color: #fff;
+    }
+
+    .dropdown-arrow.show {
+        transform: rotate(180deg);
     }
 }
 
@@ -438,6 +679,7 @@ header.active .nav-list-container {
         display: flex;
         align-items: center;
     }
+
     .navbar-nav--custom > li > a {
         padding-block: 15px;
     }
