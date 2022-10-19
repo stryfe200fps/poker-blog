@@ -10,10 +10,12 @@ class LOFApiTournamentsController extends Controller
 {
     public function index()
     {
-        // return  LOFApiTournamentResource::collection(Tournament::latest()->latest()->paginate(10));
-
-        return  new LOFApiTournamentCollection(Tournament::latest()->get());
+        // dd(Tournament::latest()->get());
+        return  new LOFApiTournamentCollection(Tournament::latest()->paginate(5));
     }
+
+
+    
 
     public function show($id)
     {

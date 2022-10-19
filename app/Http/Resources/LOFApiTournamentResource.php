@@ -14,14 +14,14 @@ class LOFApiTournamentResource extends JsonResource
         $dateStart = Carbon::parse($this->date_start);
         $dateEnd = Carbon::parse($this->date_end);
 
-        $status = '';
-        if ($dateNow >= $dateStart && $dateNow <= $dateEnd) {
-            $status = 'live';
-        } elseif ($dateNow <= $dateStart->addDay(2)) {
-            $status = 'upcoming';
-        } else {
-            $status = 'past';
-        }
+        // $status = '';
+        // if ($dateNow >= $dateStart && $dateNow <= $dateEnd) {
+        //     $status = 'live';
+        // } elseif ($dateNow <= $dateStart->addDay(2)) {
+        //     $status = 'upcoming';
+        // } else {
+        //     $status = 'past';
+        // }
 
         return [
             'id' => $this->id,
@@ -34,7 +34,6 @@ class LOFApiTournamentResource extends JsonResource
             'country' => $this->country,
             'date_start' => Carbon::parse($this->date_start)->toFormattedDateString(),
             'date_end' => Carbon::parse($this->date_end)->toFormattedDateString(),
-            'status' => $this->hasLiveEvents(),
             'events' => new LOFApiEventsCollection($this->events),
         ];
     }

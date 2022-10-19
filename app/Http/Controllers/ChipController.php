@@ -14,10 +14,6 @@ class ChipController extends Controller
     {
         $event = Event::where('slug', $slug)->firstOrFail();
         
-        // return $event->latest_event_chips();
-
-
-
         return collect(EventChipsResource::collection($event->latest_event_chips()));
 
         // return collect(EventChipsResource::collection($event->latest_event_chips->sortByDesc('date_published')

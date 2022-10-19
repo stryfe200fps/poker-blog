@@ -163,20 +163,22 @@ class Event extends Model implements HasMedia
         $dateNow = Carbon::now();
 
         $schedule = $this->days->toArray() ?? [];
+
+        if (count($schedule) === 0)
+            return 'tba';
+
+
         foreach ($schedule as $sched) {
             if ($dateNow >= Carbon::parse($sched['date_start']) && $dateNow <= Carbon::parse($sched['date_end'])) {
                 return 'live';
             } 
         }
 
-        if (Carbon::parse($schedule[0]['date_start'] ?? null  > $dateNow ))
+        if (Carbon::parse($schedule[0]['date_start'])  > $dateNow )
             return 'upcoming';
-        
 
-        if (Carbon::parse($schedule[count($schedule)]['date_end'] ?? null  < $dateNow ))
+        if (Carbon::parse($schedule[count($schedule) - 1]['date_end'])   < $dateNow )
             return 'end';
-
-        return 'tba';
     }
 
     public function getSchedule()
@@ -267,13 +269,11 @@ class Event extends Model implements HasMedia
 
     public function latest_event_chips()
     {
-
         $reduced = collect($this->descendingDays()->get())->map(function ($day) {
             return $day->event_chips()->orderBy('date_published', 'DESC')->get();
         });
-
-        return $reduced->flatten()->sortByDesc('date_published')->unique('player_id')->sortByDesc('current_chips');
-
+        // return $reduced->flatten()->sortByDesc('date_published')->unique('player_id')->sortByDesc('current_chips');
+        return $reduced->flatten()->unique('player_id')->sortByDesc('current_chips');
     }
 
 
