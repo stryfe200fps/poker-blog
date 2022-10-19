@@ -5,7 +5,11 @@
                 @click.prevent="changeTab(currentTab)"
                 :class="{ active: currentTab == 'reports' }"
             >
-                <Link :href="'/event/' + event.slug + ''" data-toggle="tab">
+                <Link
+                    :href="'/event/' + event.slug"
+                    data-toggle="tab"
+                    preserve-state
+                >
                     <span class="hide-on-mobile">LIVE UPDATES</span>
                     <span class="show-on-mobile">UPDATES</span>
                 </Link>
@@ -18,6 +22,7 @@
                 <Link
                     :href="'/event/' + event.slug + '/chip-stack'"
                     data-toggle="tab"
+                    preserve-state
                 >
                     <span class="hide-on-mobile">CHIP COUNTS</span>
                     <span class="show-on-mobile">CHIPS</span>
@@ -30,17 +35,19 @@
                 <Link
                     :href="'/event/' + event.slug + '/gallery'"
                     data-toggle="tab"
+                    preserve-state
                     >GALLERY</Link
                 >
             </li>
             <li
                 @click="changeTab(currentTab)"
-                :class="{ active: currentTab == 'payout' }"
+                :class="{ active: currentTab == 'payouts' }"
             >
                 <Link
-                    :href="'/event/' + event.slug + '/payout'"
+                    :href="'/event/' + event.slug + '/payouts'"
                     data-toggle="tab"
-                    >PAYOUT</Link
+                    preserve-state
+                    >PAYOUTS</Link
                 >
             </li>
 
@@ -51,6 +58,7 @@
                 <Link
                     :href="'/event/' + event.slug + '/whatsapp'"
                     data-toggle="tab"
+                    preserve-state
                     >#WHATSAPP</Link
                 >
             </li>
@@ -90,7 +98,7 @@
             </div>
             <div v-show="currentTab == 'chip-stack'">
                 <div class="margin-top">
-                    <CustomeTable v-if="event?.chip_stacks?.length">
+                    <CustomeTable v-if="chipCounts.length">
                         <template v-slot:table-head>
                             <tr class="text-primary">
                                 <th class="text-center">Rank</th>
@@ -106,8 +114,8 @@
                         </template>
                         <template v-slot:table-body>
                             <tr
-                                v-for="(stack, index) in event.chip_stacks"
-                                :key="stack?.player?.id"
+                                v-for="(stack, index) in chipCounts"
+                                :key="index"
                             >
                                 <td class="text-center">{{ index + 1 }}</td>
                                 <td>
@@ -134,12 +142,13 @@
                                     class="text-center hide-on-tablet"
                                     v-if="stack?.player?.country"
                                 >
-                                    <CountryFlag
+                                    {{ stack?.player?.country }}
+                                    <!-- <CountryFlag
                                         :title="stack?.player?.country?.name"
                                         :iso="
                                             stack?.player?.country?.iso_3166_2
                                         "
-                                    />
+                                    /> -->
                                 </td>
                                 <td class="text-center hide-on-tablet" v-else>
                                     ?
@@ -194,7 +203,7 @@
                     <div id="my-gallery" class="row">
                         <div class="col-xs-12">
                             <a
-                                v-for="(image, index) in event.gallery"
+                                v-for="(image, index) in gallery"
                                 :key="index"
                                 :href="image.main"
                                 :data-pswp-width="900"
@@ -218,9 +227,9 @@
                     </div>
                 </div>
             </div>
-            <div v-show="currentTab == 'payout'">
+            <div v-show="currentTab == 'payouts'">
                 <div class="margin-top">
-                    <CustomeTable v-if="event?.payouts?.length">
+                    <CustomeTable v-if="payouts?.length">
                         <template v-slot:table-head>
                             <tr class="text-primary">
                                 <th class="text-center">Place</th>
@@ -236,11 +245,7 @@
                             </tr>
                         </template>
                         <template v-slot:table-body>
-                            <tr
-                                v-for="payout in event.payouts"
-                                :key="payout.player"
-                            >
-                                <div v-if="payout.player"></div>
+                            <tr v-for="(payout, index) in payouts" :key="index">
                                 <td class="text-center">
                                     {{ payout.position }}
                                 </td>
@@ -253,18 +258,17 @@
                                     <span v-else>N/A</span>
                                 </td>
                                 <td class="text-center hide-on-mobile">
-                                    <span v-if="payout.player?.country">
+                                    {{ payout.player.country }}
+                                    <!-- <span v-if="payout.player?.country">
                                         <CountryFlag
-                                            :title="
-                                                payout.player?.country
-                                                    ?.full_name
-                                            "
+                                            :title="payout.player?.country"
                                             :iso="
                                                 payout.player?.country
                                                     ?.iso_3166_2
                                             "
-                                    /></span>
-                                    <span v-else>N/A</span>
+                                        />
+                                    </span>
+                                    <span v-else>N/A</span> -->
                                 </td>
                                 <td class="text-right">
                                     <span v-html="event.currency.prefix">
@@ -328,10 +332,19 @@ import EachReport from "./EachReport.vue";
 import AlertMessage from "@/photo_templates/AlertMessage.vue";
 
 const props = defineProps({
+    event: {
+        type: Object,
+    },
     reports: {
         type: Object,
     },
-    event: {
+    chipCounts: {
+        type: Object,
+    },
+    gallery: {
+        type: Object,
+    },
+    payouts: {
         type: Object,
     },
     currentTab: {
@@ -352,20 +365,29 @@ const isActive = ref(false);
 
 function stickyScroll() {
     const tabs = document.querySelector(".custom-tabs");
+    const nav = document.querySelector(".nav-list-container");
     const { top } = tabs.getBoundingClientRect();
     const scrollTopBtn = document.querySelector(".scroll-top");
 
-    if (top <= 0) {
+    if (top <= nav.offsetHeight) {
+        tabs.style.top = `${nav.offsetHeight}px`;
         tabs.style.border = "none";
         tabs.style.backgroundColor = "white";
         tabs.style.boxShadow = "0px 8px 40px rgba(0, 0, 0, 0.20)";
         scrollTopBtn.style.display = "block";
         return;
     }
+    tabs.style.top = "0px";
     tabs.style.backgroundColor = "none";
     tabs.style.boxShadow = "none";
     scrollTopBtn.style.display = "none";
     tabs.style.borderBottom = "2px solid #f44336";
+
+    // adding scroll-padding-top
+    document.documentElement.style.setProperty(
+        "--scroll-padding",
+        tabs.offsetHeight + 150 + "px"
+    );
 }
 
 function scrollToTop() {
@@ -438,6 +460,7 @@ onUpdated(() => {
     position: -webkit-sticky;
     top: 0;
     z-index: 999;
+    transition: all 0.5s ease;
 }
 
 .scroll-top {

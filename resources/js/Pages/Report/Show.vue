@@ -27,9 +27,9 @@
                     class="day-divider"
                     style="border-bottom: 1px solid #d3d3d3; margin-top: 20px"
                 >
-                    <span>Day: {{ report.data.day }}</span
-                    ><br />
-                    <span>{{ report.data.level.level }}</span
+                    <!-- <span>Day: {{ report.data.day }}</span
+                    ><br /> -->
+                    <span>{{ report.data.level.level_value }}</span
                     ><br />
                 </div>
                 <div class="title-post">
@@ -45,27 +45,17 @@
                             <ul class="post-tags">
                                 <li>
                                     <i class="fa fa-clock-o"></i
-                                    >{{
-                                        moment(report.data.date_added).format(
-                                            "MMM D YYYY"
-                                        )
-                                    }}
+                                    >{{ report.data.date_for_humans }}
                                 </li>
                                 <li>
                                     <i class="fa fa-user"></i>by
                                     <a href="#"
-                                        >{{
-                                            report.data.article_author
-                                                .first_name
-                                        }}
-                                        {{
-                                            report.data.article_author.last_name
-                                        }}
+                                        >{{ report.data.author.name }}
                                     </a>
                                 </li>
                                 <li>
                                     <i class="fa fa-bookmark"></i>
-                                    {{ report.data.level.level }}
+                                    {{ report.data.level.level_value }}
                                 </li>
                             </ul>
                         </div>

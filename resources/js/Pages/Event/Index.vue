@@ -1,18 +1,14 @@
 <template>
     <FrontLayout title="Event">
         <div v-if="eventData">
-            <div v-if="liveReport"></div>
             <div class="block-content" v-if="1">
-                <!-- <div class="block-content" v-if="list.data"> -->
                 <div class="title-section">
                     <h1>
                         <span>{{ eventData.tournament }}</span>
                     </h1>
                 </div>
                 <div class="title-section hide-underline">
-                    <!-- <h1 class="text-primary"><span>{{list.data.poker_tournament}}</span></h1> -->
                     <div
-                        v-if="eventData"
                         style="
                             display: flex;
                             justify-content: space-between;
@@ -24,8 +20,7 @@
                                 eventData.title
                             }}</span>
                         </h1>
-                        <!-- <h1><span>{{list.data.title}}</span></h1> -->
-                        <div v-if="pathname !== 'payout'">
+                        <div v-if="pathname !== 'payouts'">
                             <p v-if="eventDays?.length > 1">
                                 <select
                                     class="form-control"
@@ -33,13 +28,13 @@
                                     @change="fetchLiveReports"
                                 >
                                     <option
-                                        class="text-center"
+                                        class="text-start text-uppercase"
                                         v-for="(data, index) in eventDays"
                                         :key="index"
                                         :value="data"
                                         :checked="data == selectDay"
                                     >
-                                        Day {{ data }}
+                                        Day {{ eventData.available_days[data] }}
                                     </option>
                                 </select>
                             </p>
@@ -48,7 +43,10 @@
                                 v-for="(data, index) in eventDays"
                                 :key="index"
                             >
-                                Day: {{ data }}
+                                Day:
+                                <span class="text-uppercase">
+                                    {{ eventData.available_days[data] }}</span
+                                >
                             </p>
                         </div>
                     </div>
@@ -57,6 +55,9 @@
                     <ReportList
                         :event="eventData"
                         :reports="liveReport"
+                        :chipCounts="chipCountsData"
+                        :gallery="galleryData"
+                        :payouts="payoutsData"
                         @loadMore="loadMoreReports"
                         @showNewReport="fetchLiveReports"
                         :currentTab="page"
@@ -76,7 +77,7 @@ import TournamentList from "../../Components/Frontend/Tournament/List.vue";
 
 import { useEventStore } from "@/Stores/event.js";
 import { useTournamentStore } from "@/Stores/tournament.js";
-import { onMounted, ref, watch, computed } from "@vue/runtime-core";
+import { onMounted, ref, watch, computed, onUpdated } from "@vue/runtime-core";
 
 const eventStore = useEventStore();
 const tournamentStore = useTournamentStore();
@@ -93,6 +94,9 @@ const props = defineProps({
 const eventData = ref([]);
 const selectDay = ref(null);
 const liveReport = ref([]);
+const chipCountsData = ref([]);
+const galleryData = ref([]);
+const payoutsData = ref([]);
 const loadPage = ref(1);
 const lastPage = ref(1);
 const pathname = ref(window.location.pathname.split("/")[3]);
@@ -102,7 +106,7 @@ const eventDays = computed(() => {
 });
 
 const highestDay = () => {
-    let { available_days } = eventStore.eventData.data;
+    let { available_days } = eventData.value;
     let days = Object.keys(available_days);
     return days[days.length - 1];
 };
@@ -132,13 +136,43 @@ async function loadMoreReports() {
     lastPage.value = eventStore.liveReportList.meta.last_page;
 }
 
+async function reportViewing(pathname) {
+    if (pathname === undefined) {
+        await eventStore.getLiveReport(1, highestDay());
+        liveReport.value = eventStore.liveReportList.data;
+        lastPage.value = eventStore.liveReportList.meta.last_page;
+        return;
+    }
+
+    if (pathname === "chip-stack") {
+        await eventStore.getChipCountsData(eventData.value.slug);
+        chipCountsData.value = eventStore.chipCounts;
+        return;
+    }
+
+    if (pathname === "gallery") {
+        await eventStore.getGalleryData(highestDay());
+        galleryData.value = eventStore.galleryData;
+        return;
+    }
+
+    if (pathname === "payouts") {
+        await eventStore.getPayoutsData(eventData.value.slug);
+        payoutsData.value = eventStore.payouts.data;
+        return;
+    }
+}
+
 onMounted(async () => {
     await eventStore.getEventData(props.slug);
-    await tournamentStore.getList();
-    await eventStore.getLiveReport(1, highestDay());
-    liveReport.value = eventStore.liveReportList.data;
-    lastPage.value = eventStore.liveReportList.meta.last_page;
     selectDay.value = highestDay();
+    reportViewing(pathname.value);
+    // await tournamentStore.getList();
+});
+
+onUpdated(() => {
+    pathname.value = window.location.pathname.split("/")[3];
+    reportViewing(pathname.value);
 });
 
 const fetchLiveReports = async () => {

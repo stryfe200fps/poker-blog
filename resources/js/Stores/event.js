@@ -7,6 +7,8 @@ export const useEventStore = defineStore("event", {
             eventData: [],
             liveReportList: [],
             mainEvents: [],
+            galleryData: [],
+            payouts: [],
             chipCounts: [],
         };
     },
@@ -20,19 +22,18 @@ export const useEventStore = defineStore("event", {
 
     actions: {
         async getMainEvents() {
-            const { data } = await axios.get("/api/lof-event/");
+            try {
+                const { data } = await axios.get("/api/lof-event/");
 
-            this.mainEvents = data;
+                this.mainEvents = data;
+            } catch (error) {
+                console.error(error);
+            }
         },
         async getEventData(id) {
+            if (this.eventData.length) return;
             const { data } = await axios.get("/api/lof-event/" + id);
             this.eventData = data;
-        },
-        async getChipCountsData(id) {
-            const { data } = await axios.get(
-                "/api/lof-event/" + id + "/chipcount"
-            );
-            this.chipCounts = data;
         },
         async getLiveReport(page, day) {
             try {
@@ -41,6 +42,39 @@ export const useEventStore = defineStore("event", {
                     `/api/lof-live-report?page=${page}&day=${day}`
                 );
                 this.liveReportList = data;
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        // async getChipCountsData(id) {
+        //     const { data } = await axios.get(
+        //         "/api/lof-event/" + id + "/chipcount"
+        //     );
+        //     this.chipCounts = data;
+        // },
+        async getChipCountsData(slug) {
+            try {
+                if (this.chipCounts.length) return;
+                const { data } = await axios.get("/api/chip/event/" + slug);
+                this.chipCounts = data;
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        async getGalleryData(day) {
+            try {
+                if (this.galleryData.length) return;
+                const { data } = await axios.get("/api/gallery/day/" + day);
+                this.galleryData = data;
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        async getPayoutsData(slug) {
+            try {
+                if (this.payouts.length) return;
+                const { data } = await axios.get("/api/payout/event/" + slug);
+                this.payouts = data;
             } catch (error) {
                 console.error(error);
             }

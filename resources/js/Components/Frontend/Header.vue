@@ -249,11 +249,7 @@ function googleTranslateElementInit() {
     }
 }
 onMounted(() => {
-    if (
-        pathname.value !== "tournament" &&
-        pathname.value !== "event" &&
-        pathname.value !== "article"
-    )
+    if (pathname.value !== "article")
         window.addEventListener("scroll", onScroll);
 
     let targetElement = document.getElementById("google_translate_element");

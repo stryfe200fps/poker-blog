@@ -90,16 +90,19 @@ const upcomingEventCollection = ref([]);
 
 function stickyScroll() {
     const tabs = document.querySelector(".custom-tabs");
+    const nav = document.querySelector(".nav-list-container");
     const { top } = tabs.getBoundingClientRect();
     const scrollTopBtn = document.querySelector(".scroll-top");
 
-    if (top <= 0) {
+    if (top <= nav.offsetHeight) {
+        tabs.style.top = `${nav.offsetHeight}px`;
         tabs.style.border = "none";
         tabs.style.backgroundColor = "white";
         tabs.style.boxShadow = "0px 8px 40px rgba(0, 0, 0, 0.20)";
         scrollTopBtn.style.display = "block";
         return;
     }
+    tabs.style.top = "0px";
     tabs.style.backgroundColor = "none";
     tabs.style.boxShadow = "none";
     scrollTopBtn.style.display = "none";
@@ -139,6 +142,7 @@ watch(
     position: -webkit-sticky;
     top: 0;
     z-index: 999;
+    transition: all 0.5s ease;
 }
 
 .scroll-top {

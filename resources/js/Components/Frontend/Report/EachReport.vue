@@ -150,7 +150,6 @@
             </div>
             <div class="remove-padding" v-html="item.content"></div>
         </div>
-
         <div v-if="item.event_chips">
             <CustomeTable>
                 <template v-slot:table-body>
@@ -176,10 +175,10 @@
                                 item.player?.country
                             "
                         >
-                            <CountryFlag
+                            <!-- <CountryFlag
                                 :title="item.player?.country?.name"
                                 :iso="item.player?.country?.iso_3166_2"
-                            />
+                            /> -->
                         </td>
                         <td class="text-center hide-on-tablet" v-else></td>
                         <td v-if="item.player?.name != null" class="text-right">
