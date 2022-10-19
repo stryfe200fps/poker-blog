@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\EventResource;
+use App\Models\Day;
 use App\Models\Event;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -28,27 +29,29 @@ class EventApiController extends Controller
 
     public function upload(Request $request)
     {
-        $event = Event::find(request()->get('event_id'));
+        $day = Day::where('event_id', request()->get('event_id'))->where('id', request()->get('day_id'))->firstOrFail();
+
 
         if ($request->file('image')) {
-            $things = $event->addMediaFromRequest('image')
+             $day->addMediaFromRequest('image')
                     ->toMediaCollection('event_gallery');
         }
 
         return 200;
     }
 
-    public function fetchGallery($id)
+    public function fetchGallery($dayId)
     {
-        $event = Event::find($id);
+
+        $day = Day::where('id', $dayId)->first();
 
         $imgResource = [];
 
-        foreach ($event->getMedia('event_gallery') as $media) {
+        foreach ($day->getMedia('event_gallery') as $media) {
             $imgResource[] = [
                 'id' => $media->id,
-                'thumbnail' => $media->getUrl('main-thumb'),
-                'main' => $media->getUrl('main-image'),
+                'thumbnail' => $media->getUrl('main-gallery-thumb'),
+                'main' => $media->getUrl('main-gallery'),
             ];
         }
 

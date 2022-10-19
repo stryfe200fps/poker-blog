@@ -25,33 +25,34 @@
                             }}</span>
                         </h1>
                         <!-- <h1><span>{{list.data.title}}</span></h1> -->
-                        <p v-if="eventDays?.length > 1">
-                            <select
-                                class="form-control"
-                                v-model="selectDay"
-                                @change="fetchLiveReports"
-                            >
-                                <option
-                                    class="text-center"
-                                    v-for="(data, index) in eventDays"
-                                    :key="index"
-                                    :value="data"
-                                    :checked="data == selectDay"
+                        <div v-if="pathname !== 'payout'">
+                            <p v-if="eventDays?.length > 1">
+                                <select
+                                    class="form-control"
+                                    v-model="selectDay"
+                                    @change="fetchLiveReports"
                                 >
-                                    Day {{ data }}
-                                </option>
-                            </select>
-                        </p>
-                        <p
-                            v-else
-                            v-for="(data, index) in eventDays"
-                            :key="index"
-                        >
-                            Day: {{ data }}
-                        </p>
+                                    <option
+                                        class="text-center"
+                                        v-for="(data, index) in eventDays"
+                                        :key="index"
+                                        :value="data"
+                                        :checked="data == selectDay"
+                                    >
+                                        Day {{ data }}
+                                    </option>
+                                </select>
+                            </p>
+                            <p
+                                v-else
+                                v-for="(data, index) in eventDays"
+                                :key="index"
+                            >
+                                Day: {{ data }}
+                            </p>
+                        </div>
                     </div>
                 </div>
-
                 <div class="single-post-box">
                     <ReportList
                         :event="eventData"
@@ -94,14 +95,15 @@ const selectDay = ref(null);
 const liveReport = ref([]);
 const loadPage = ref(1);
 const lastPage = ref(1);
+const pathname = ref(window.location.pathname.split("/")[3]);
 
 const eventDays = computed(() => {
-    return Object.values(eventData?.value?.available_days ?? {});
+    return Object.keys(eventData?.value?.available_days ?? {});
 });
 
 const highestDay = () => {
     let { available_days } = eventStore.eventData.data;
-    let days = Object.values(available_days);
+    let days = Object.keys(available_days);
     return days[days.length - 1];
 };
 
@@ -109,7 +111,7 @@ async function loadMoreReports() {
     if (loadPage.value >= lastPage.value) return;
     loadPage.value++;
 
-    await eventStore.getLiveReport(loadPage.value, props.slug, selectDay.value);
+    await eventStore.getLiveReport(loadPage.value, selectDay.value);
 
     const newLevel = eventStore.liveReportList.data
         .map((data) => data.level)
@@ -133,7 +135,7 @@ async function loadMoreReports() {
 onMounted(async () => {
     await eventStore.getEventData(props.slug);
     await tournamentStore.getList();
-    await eventStore.getLiveReport(1, props.slug, highestDay());
+    await eventStore.getLiveReport(1, highestDay());
     liveReport.value = eventStore.liveReportList.data;
     lastPage.value = eventStore.liveReportList.meta.last_page;
     selectDay.value = highestDay();
@@ -142,7 +144,7 @@ onMounted(async () => {
 const fetchLiveReports = async () => {
     loadPage.value = 1;
     lastPage.value = 1;
-    await eventStore.getLiveReport(1, props.slug, selectDay.value);
+    await eventStore.getLiveReport(1, selectDay.value);
     liveReport.value = eventStore.liveReportList.data;
     lastPage.value = eventStore.liveReportList.meta.last_page;
 };

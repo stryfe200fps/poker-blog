@@ -46,7 +46,6 @@ class ImageTheme extends Model implements HasMedia
 
 
     public static function boot(){
-       
         parent::boot();
         self::observe(new ImageThemeObserver);
     }

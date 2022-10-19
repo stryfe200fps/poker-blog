@@ -368,4 +368,19 @@ public function store(Request $request)
     {
         $this->setupCreateOperation();
     }
+
+    protected function setupShowOperation()
+    {
+    //     CRUD::column('title')->limit(-1);
+
+    //    $content = $this->crud->getCurrentEntry()->content;
+
+    //    dd($content);
+
+    //     CRUD::column('content')->limit(50000000000)->type('function')->value(function ($ret) {
+
+    //         return $ret;
+    //     });
+        $this->setupListOperation();
+    }
 }

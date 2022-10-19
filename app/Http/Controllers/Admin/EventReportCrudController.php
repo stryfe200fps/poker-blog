@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use App\Traits\LimitUserPermissions;
 use Backpack\CRUD\app\Library\Widget;
 use App\Http\Requests\EventReportRequest;
+use App\Models\Day;
 use Illuminate\Support\Facades\Validator;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
@@ -48,11 +49,12 @@ class EventReportCrudController extends CrudController
         if (request()->get('event') || session()->get('event_id')) {
             if (request()->get('event') !== null) {
                 session()->put('event_id', request()->get('event'));
+                session()->put('event_day', request()->get('day'));
             }
 
             $getEvent = Event::where('id', session()->get('event_id'))->first();
-            CRUD::setEntityNameStrings('report', $getEvent?->title);
-
+            $getDay = Day::where('id', session()->get('event_day'))->first();
+            CRUD::setEntityNameStrings('report', $getEvent?->title. ' - Day ' .$getDay?->name);
         } else {
 
             $this->crud->denyAccess('create');
@@ -60,7 +62,6 @@ class EventReportCrudController extends CrudController
         $this->crud->orderBy('date_added', 'DESC');
 
             $this->denyAccessIfNoPermission();
-
     }
 
     /**
@@ -72,23 +73,7 @@ class EventReportCrudController extends CrudController
      */
     protected function setupShowOperation()
     {
-
         $this->setupListOperation();
-
-    }
-
-    public function nowItIsFlat($arr)
-    {
-        $output = [];
-        foreach ($arr as $key => $val) {
-            if (is_array($val)) {
-                $output[array_key_first($val)] = $val[array_key_first($val)];
-            } else {
-                $output[array_key_first($val)] = $val[array_key_first($val)];
-            }
-        }
-
-        return $output;
     }
 
     protected function setupListOperation()
@@ -96,6 +81,7 @@ class EventReportCrudController extends CrudController
         $this->crud->disableResponsiveTable();
         Widget::add()->to('after_content')->type('view')->view('vendor.backpack.helper.live_report'); // widgets to show the ordering card
         $this->crud->addClause('where', 'event_id', session()->get('event_id'));
+        $this->crud->addClause('where', 'day_id', session()->get('event_day'));
         $this->crud->addButtonFromModelFunction('line', 'open_fb', 'shareFacebook', 'beginning');
         $this->crud->addButtonFromModelFunction('line', 'open_twitter', 'shareTwitter', 'beginning');
 
@@ -153,6 +139,8 @@ class EventReportCrudController extends CrudController
         //     $join->on('levels.id', '=', 'event_reports.level_id');
         // })->where('event_id', request()->session()->get('event_id'))->orderByDesc('name')
         // ->get(['level_id'])->first()->level_id ?? 1;
+
+
 
         CRUD::field('title');
 
@@ -226,26 +214,33 @@ class EventReportCrudController extends CrudController
                     'class' => 'form-group col-md-6',
                 ],
 
-            ],
-            [
-                'label' => 'Day',
-                'name' => 'day',
-                'type' => 'select2_from_array',
-                'options' => $event?->getAvailableDays(),
-                'attributes' => [
-                    'readonly' => 'readonly',
-                ],
-                'wrapper' => [
-                    'class' => 'form-group col-md-6',
-                ],
-            ],
+            ] ]);
 
+
+
+        CRUD::field('day_id')->type('hidden')->value(session()->get('event_day'));
+
+            // $this->crud->addField( 
+            //     [ 
+            //     'label' => 'Day',
+            //     'name' => 'day',
+            //     'type' => 'text',
+            //     'value' => '',
+            //     'attributes' => [
+            //         'readonly' => 'readonly',
+            //     ],
+            //     'wrapper' => [
+            //         'class' => 'form-group col-md-6',
+            //     ]] );
+            
+
+    $this->crud->addFields([ 
             [
                 'label' => 'Levels',
                 'type' => 'relationship',
                 'name' => 'level', // the method that defines the relationship in your Model
                 'entity' => 'level', // the method that defines the relationship in your Model
-                'attribute' => 'level', // foreign key attribute that is shown to user
+                'attribute' => 'level_value', // foreign key attribute that is shown to user
                 'pivot' => true, // on create&update, do you need to add/delete pivot table entries?
                 'inline_create' => ['entity' => 'level'],
                 'ajax' => true,
@@ -260,7 +255,8 @@ class EventReportCrudController extends CrudController
                 'label' => 'Schedule',
                 'name' => 'labelSchedule',
                 'type' => 'text',
-                'value' => $event?->currentDateSchedule(),
+                // 'value' => $event?->currentDateSchedule(),
+                'value' => 'testing',
                 'wrapper' => [
                     'class' => 'form-group col-md-10',
                 ],
@@ -375,7 +371,17 @@ class EventReportCrudController extends CrudController
             ],
         ]);
 
-        Widget::add()->type('script')->content('assets/js/admin/forms/repeatable_chips.js');
+
+        $this->crud->addField([
+            'name' => 'type',
+            'type' => 'select2_from_array',
+            'options' => [
+                'report'  => 'report',
+                'level' => 'level'
+            ],
+        ]);
+
+
         if ($this->crud->getCurrentOperation() === 'create')
             Widget::add()->type('script')->content('assets/js/admin/create-admin-image-theme-attach.js');
 
@@ -400,6 +406,7 @@ public function fetchTags()
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
+        Widget::add()->type('script')->content('assets/js/admin/forms/repeatable_chips.js');
         Widget::add()->type('script')->content('assets/js/admin/update-admin-image-theme-attach.js');
     }
 

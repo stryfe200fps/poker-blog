@@ -23,19 +23,6 @@ class LOFApiEventIndexResource extends JsonResource
             ];
         }
 
-        $dateNow = Carbon::now();
-        $dateStart = Carbon::parse($this->date_start);
-        $dateEnd = Carbon::parse($this->date_end);
-
-        $status = '';
-        if ($dateNow >= $dateStart && $dateNow <= $dateEnd) {
-            $status = 'live';
-        } elseif ($dateNow <= $dateStart->addDay(2)) {
-            $status = 'upcoming';
-        } else {
-            $status = 'past';
-        }
-
         return [
             'id' => $this->id,
             'slug' => $this->slug,
@@ -43,13 +30,13 @@ class LOFApiEventIndexResource extends JsonResource
             'status' => $this->status(),
             'main_image' => $this->getFirstMediaUrl('event', 'main-image'),
             'main_thumb' => $this->getFirstMediaUrl('event', 'main-thumb'),
-            'gallery' => $imgResource,
+            // 'gallery' => $imgResource,
             'tournament' => $this->tournament->title,
             'currency' => $this->tournament->currency,
-            'available_days' => $this->getAvailableDays(),
-            'tour' => $this->tournament->tour->title,
-            'payouts' => collect($this->event_payouts->load(['player', 'player.country']))->sortBy('position')->values()->all(),
-            'chip_stacks' => collect(EventChipsResource::collection($this->latest_event_chips->sortByDesc('date_published')->unique('player_id')))->sortByDesc('current_chips')->values()->all(),
+            'available_days' => $this->getSchedule(),
+            // 'tour' => $this->tournament->tour->title,
+            // 'payouts' => collect($this->event_payouts->load(['player', 'player.country']))->sortBy('position')->values()->all(),
+            // 'chip_stacks' => collect(EventChipsResource::collection($this->latest_event_chips->sortByDesc('date_published')->unique('player_id')))->sortByDesc('current_chips')->values()->all(),
         ];
     }
 }

@@ -11,11 +11,8 @@ class EventReportObserver
     public function saved($model) {
 
             if (is_array($model->eventChipPlayers->toArray()) ) {
-
-
                 $model->event_chips()->delete();
-                foreach (request()->get('eventChipPlayers') as $eventChipPlayer) {
-
+                foreach (request()->get('eventChipPlayers') ?? [] as $eventChipPlayer) {
                       $event =   EventChip::create([
                         'name' => '',
                         'event_report_id' => $model->id,
@@ -24,9 +21,7 @@ class EventReportObserver
                         'player_id' => $eventChipPlayer['player_id'],
                         'is_whatsapp' => $eventChipPlayer['is_whatsapp'],
                         'current_chips' => $eventChipPlayer['current_chips'],
-
                     ]);
-
 
                     if ($eventChipPlayer['payout'] ?? null !== null) {
                         if (EventPayout::where('event_id', $model->event_id)->where('player_id', $eventChipPlayer['player_id'])->count() > 0) {

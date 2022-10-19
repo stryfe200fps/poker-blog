@@ -14,6 +14,7 @@ class LiveReportFilterByDays
         if (! request()->has('filterDay')) {
             return $next($builder);
         }
+
         // dd(request()->get('event'));
 
         // $event = Event::where('slug', request()->get('event'));
@@ -29,7 +30,7 @@ class LiveReportFilterByDays
         // }
 
         // $c = $builder->whereBetween('date_added', [$dateStart, $dateEnd]);
-        $c = $builder->where('day', request()->get('filterDay'));
+        // $c = $builder->whereHas('day', request()->get('filterDay'));
 
         return $next($builder);
     }

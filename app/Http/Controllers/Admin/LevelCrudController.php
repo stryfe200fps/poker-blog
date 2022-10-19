@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Event;
 use App\Http\Requests\LevelRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
@@ -31,6 +32,22 @@ class LevelCrudController extends CrudController
         CRUD::setModel(\App\Models\Level::class);
         CRUD::setRoute(config('backpack.base.route_prefix').'/level');
         CRUD::setEntityNameStrings('level', 'levels');
+
+        if (request()->get('event') || session()->get('event_id')) {
+            if (request()->get('event') !== null) {
+                session()->put('event_id', request()->get('event'));
+            }
+
+            $getEvent = Event::where('id', session()->get('event_id'))->first();
+            CRUD::setEntityNameStrings('day', $getEvent?->title . ' Levels');
+        } else {
+            $this->crud->denyAccess('create');
+        }
+
+        $this->crud->query = $this->crud->query->where('event_id', session()->get('event_id'));
+
+
+
     }
 
     /**
@@ -42,6 +59,7 @@ class LevelCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        $this->crud->orderBy('level');
         $this->crud->disableResponsiveTable();
         $this->crud->addColumn([
             'name' => 'level',

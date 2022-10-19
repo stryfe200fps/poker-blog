@@ -131,11 +131,14 @@
       },
     async changeTab(tab)
     {
+
       this.tab= tab
+
     },
     async fetchGallery()
     {
-    await axios.get('/api/events/gallery/fetch/' + {{ $widget['eventId'] }}).then((res) => {
+    await axios.get('/api/events/gallery/fetch/' + {{ $widget['dayId'] }}  ).then((res) => {
+      console.log(res);
       this.gallery = res.data
       })
     },
@@ -166,6 +169,7 @@
             const formData = new FormData();
 
             formData.append('event_id',  {{ $widget['eventId'] }} ) 
+            formData.append('day_id',  {{ $widget['dayId'] }} ) 
 
             formData.append(fieldName, file, file.name);
 
@@ -184,7 +188,7 @@
                 load(request.responseText);
                 this.fetchGallery()
               } else if (request.status >= 400)  {
-                error('wala tangina mo')
+                error('nothing')
               }
             };
 
