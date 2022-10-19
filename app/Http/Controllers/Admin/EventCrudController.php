@@ -59,11 +59,10 @@ class EventCrudController extends CrudController
         CRUD::column('tournament.timezone')->label('Series Timezone');
         CRUD::column('event_date_start')->type('date')->format(config('app.date_format'))->label('date start (Local)');
         CRUD::column('event_date_end')->type('date')->format(config('app.date_format'))->label('date end (Local)');
-        $this->crud->addButtonFromModelFunction('line', 'open_payout', 'openPayout', 'beginning');
-        $this->crud->addButtonFromModelFunction('line', 'days', 'openDay', 'beginning');
-        $this->crud->addButtonFromModelFunction('line', 'open_chip_count', 'openChipCount', 'beginning');
         $this->crud->addButtonFromModelFunction('line', 'openLevel', 'openLevel', 'beginning');
-        $this->crud->addButtonFromModelFunction('line', 'open_google', 'openLiveReporting', 'beginning');
+        $this->crud->addButtonFromModelFunction('line', 'open_payout', 'openPayout', 'beginning');
+        $this->crud->addButtonFromModelFunction('line', 'open_chip_count', 'openChipCount', 'beginning');
+        $this->crud->addButtonFromModelFunction('line', 'days', 'openDay', 'beginning');
     }
 
      /**

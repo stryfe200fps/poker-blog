@@ -28,8 +28,8 @@ class EventChip extends Model
         'is_whatsapp',
         'rank',
         'date_published',
-        'event_payout_id',
         'event_id',
+        'day_id'
     ];
 
     /**
@@ -64,9 +64,12 @@ class EventChip extends Model
     public function getPreviousReportAttribute($value)
     {
         $q = $this->where('player_id', $this->player_id);
-        $q->where('event_id', $this->event_id);
+        $q->where('day_id', $this->day_id);
 
-        return $q->where('id', '!=', $this->id)->where('date_published', '<', $this->date_published)->orderBy('date_published', 'desc')->first()->current_chips ?? 0;
+        return $q->where('id', '!=', $this->id)
+            ->where('date_published', '<', $this->date_published)
+            ->orderBy('date_published', 'desc')
+            ->first()->current_chips ?? 0;
     }
 
     public function setDatePublishedAttribute($value)

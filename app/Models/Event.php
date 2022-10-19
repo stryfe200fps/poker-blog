@@ -162,19 +162,21 @@ class Event extends Model implements HasMedia
     {
         $dateNow = Carbon::now();
 
-
-        foreach ($this->days->toArray() ?? [] as $sched) {
+        $schedule = $this->days->toArray() ?? [];
+        foreach ($schedule as $sched) {
             if ($dateNow >= Carbon::parse($sched['date_start']) && $dateNow <= Carbon::parse($sched['date_end'])) {
                 return 'live';
-            } elseif ($dateNow <= Carbon::parse($sched['date_start'])->addDays(2)) {
-                return 'upcoming';
-            } else {
-                return 'past';
-            }
+            } 
         }
 
-        return 'upcoming';
+        if (Carbon::parse($schedule[0]['date_start'] ?? null  > $dateNow ))
+            return 'upcoming';
+        
 
+        if (Carbon::parse($schedule[count($schedule)]['date_end'] ?? null  < $dateNow ))
+            return 'end';
+
+        return 'tba';
     }
 
     public function getSchedule()

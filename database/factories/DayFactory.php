@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Event;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,7 +20,8 @@ class DayFactory extends Factory
         return [
             'name' => $this->faker->name,
             'date_start' => $this->faker->date,
-            'date_end' => $this->faker->date
+            'date_end' => $this->faker->date,
+            'event_id' => Event::factory()->create()->id
         ];
     }
 }

@@ -6,5 +6,4 @@ it('works', function () {
 
   $day = Day::factory()->create();
 
-
 });

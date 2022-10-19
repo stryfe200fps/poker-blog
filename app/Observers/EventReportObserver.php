@@ -16,7 +16,7 @@ class EventReportObserver
                       $event =   EventChip::create([
                         'name' => '',
                         'event_report_id' => $model->id,
-                        'event_id' => $model->event_id,
+                        'day_id' => $model->day_id,
                         'date_published' => $model->date_added,
                         'player_id' => $eventChipPlayer['player_id'],
                         'is_whatsapp' => $eventChipPlayer['is_whatsapp'],

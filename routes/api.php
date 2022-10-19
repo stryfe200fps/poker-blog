@@ -56,6 +56,7 @@ Route::resource('reports', ReportsApiController::class);
 
 Route::resource('lof-tournament', LOFApiTournamentsController::class);
 
+
 Route::resource('lof-event', LOFApiEventsController::class);
 
 
