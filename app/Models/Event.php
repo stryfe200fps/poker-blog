@@ -193,6 +193,11 @@ class Event extends Model implements HasMedia
         return $this->hasMany(Day::class);
     }
 
+    public function descendingDays()
+    {
+        return $this->hasMany(Day::class)->orderByDesc('lft');
+    }
+
     public function eventSchedules()
     {
         return collect()->pluck('day', 'day');
@@ -262,7 +267,13 @@ class Event extends Model implements HasMedia
 
     public function latest_event_chips()
     {
-        return $this->hasMany(EventChip::class)->orderByDesc('created_at');
+
+        $reduced = collect($this->descendingDays()->get())->map(function ($day) {
+            return $day->event_chips()->orderBy('date_published', 'DESC')->get();
+        });
+
+        return $reduced->flatten()->sortByDesc('date_published')->unique('player_id')->sortByDesc('current_chips');
+
     }
 
 

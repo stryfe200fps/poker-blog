@@ -13,8 +13,15 @@ class ChipController extends Controller
     public function event($slug)
     {
         $event = Event::where('slug', $slug)->firstOrFail();
-        return collect(EventChipsResource::collection($event->latest_event_chips->sortByDesc('date_published')
-         ->unique('player_id')))->sortByDesc('current_chips')->values()->all();
+        
+        // return $event->latest_event_chips();
+
+
+
+        return collect(EventChipsResource::collection($event->latest_event_chips()));
+
+        // return collect(EventChipsResource::collection($event->latest_event_chips->sortByDesc('date_published')
+        //  ->unique('player_id')))->sortByDesc('current_chips')->values()->all();
 
     }
 }

@@ -33,7 +33,7 @@ class LOFApiEventsController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**

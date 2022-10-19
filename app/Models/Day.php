@@ -42,4 +42,9 @@ class Day extends Model implements HasMedia
         return $this->event_reports()->count();
     }
 
+    public function event_chips()
+    {
+        return $this->hasMany(EventChip::class);
+    }
+
 }
