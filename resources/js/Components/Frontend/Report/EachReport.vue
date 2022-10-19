@@ -1,17 +1,17 @@
 <template>
-    <div class="single-post-box">
+    <div class="single-post-box" v-if="item.type === 'report'">
         <div class="title-post">
             <h1 v-if="id == 1" :id="item.slug + id" class="text-capitalize">
                 <Link
                     class="default-text-color"
-                    :href="`/event/${item.event.slug}/report/${item.slug}`"
+                    :href="`/event/${event.slug}/report/${item.slug}`"
                     >{{ item.title }}</Link
                 >
             </h1>
             <h1 v-else class="text-capitalize">
                 <Link
                     class="default-text-color"
-                    :href="`/event/${item.event.slug}/report/${item.slug}`"
+                    :href="`/event/${event.slug}/report/${item.slug}`"
                     >{{ item.title }}</Link
                 >
             </h1>
@@ -26,21 +26,15 @@
                     <ul class="post-tags">
                         <li>
                             <i class="fa fa-user"></i>by
-                            <a href="#"
-                                >{{ item.author?.first_name }}
-                                {{ item.author?.last_name }}</a
-                            >
+                            <a href="#">{{ item.author?.name }} </a>
                         </li>
                         <li>
                             <i class="fa fa-clock-o"></i
-                            >{{
-                                item.isFinished
-                                    ? getDate(item.date_added)
-                                    : item.formattedDate
-                            }}
+                            >{{ item.date_for_humans }}
                         </li>
                         <li>
-                            <i class="fa fa-bookmark"></i>{{ item.level.level }}
+                            <i class="fa fa-bookmark"></i
+                            >{{ item.level.level_value }}
                         </li>
                     </ul>
                 </div>
@@ -251,6 +245,9 @@ import moment from "moment";
 
 const props = defineProps({
     item: {
+        type: Object,
+    },
+    event: {
         type: Object,
     },
     id: {

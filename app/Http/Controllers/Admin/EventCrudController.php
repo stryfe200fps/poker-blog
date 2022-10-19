@@ -41,9 +41,7 @@ class EventCrudController extends CrudController
         CRUD::setRoute(config('backpack.base.route_prefix').'/events');
         CRUD::setEntityNameStrings('event', 'events');
         $this->crud->enableDetailsRow();
-
         $this->denyAccessIfNoPermission();
-
     }
 
     /**
@@ -62,7 +60,9 @@ class EventCrudController extends CrudController
         CRUD::column('event_date_start')->type('date')->format(config('app.date_format'))->label('date start (Local)');
         CRUD::column('event_date_end')->type('date')->format(config('app.date_format'))->label('date end (Local)');
         $this->crud->addButtonFromModelFunction('line', 'open_payout', 'openPayout', 'beginning');
+        $this->crud->addButtonFromModelFunction('line', 'days', 'openDay', 'beginning');
         $this->crud->addButtonFromModelFunction('line', 'open_chip_count', 'openChipCount', 'beginning');
+        $this->crud->addButtonFromModelFunction('line', 'openLevel', 'openLevel', 'beginning');
         $this->crud->addButtonFromModelFunction('line', 'open_google', 'openLiveReporting', 'beginning');
     }
 
@@ -73,19 +73,6 @@ class EventCrudController extends CrudController
       *
       * @return void
       */
-     public function nowItIsFlat($arr)
-     {
-         $output = [];
-         foreach ($arr as $key => $val) {
-             if (is_array($val)) {
-                 $output[array_key_first($val)] = $val[array_key_first($val)];
-             } else {
-                 $output[array_key_first($val)] = $val[array_key_first($val)];
-             }
-         }
-
-         return $output;
-     }
 
     protected function setupCreateOperation()
     {
@@ -166,11 +153,11 @@ class EventCrudController extends CrudController
         ],
         );
 
-        $this->crud->addField([
-            'name' => 'custom-ajax-button',
-            'type' => 'view',
-            'view' => 'partials/custom-ajax-button',
-        ]);
+        // $this->crud->addField([
+        //     'name' => 'custom-ajax-button',
+        //     'type' => 'view',
+        //     'view' => 'partials/custom-ajax-button',
+        // ]);
     }
 
 
@@ -203,7 +190,10 @@ class EventCrudController extends CrudController
             $id = session()->put('event_id', $id);
         }
         $this->setupCreateOperation();
-        Widget::add()->to('after_content')->type('view')->view('vendor.backpack.helper.excel.uploader')->eventId($id); // widgets to show the ordering card
+
+        // Widget::add()->to('after_content')->type('view')->view('vendor.backpack.helper.excel.uploader')->eventId($id); // widgets to show the ordering card
+
+
     }
 
     public function store(Request $request)

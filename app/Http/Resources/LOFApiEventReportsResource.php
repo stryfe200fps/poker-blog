@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Carbon\Carbon;
+use App\Http\Resources\AuthorResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class LOFApiEventReportsResource extends JsonResource
@@ -11,22 +12,17 @@ class LOFApiEventReportsResource extends JsonResource
     {
         return [
             'slug' => $this->slug,
-            'id' => $this->id,
-            'date_added' => $this->date_added,
             'title' => $this->title,
             'content' => $this->content,
-            'event' => $this->event,
-            'author' => $this->article_author,
-            'date' => Carbon::parse($this->date_added)->toFormattedDateString(),
-            'isFinished' => $this->event->tournament->date_end < Carbon::now(),
-            'formattedDate' => Carbon::parse($this->date_added)->diffForHumans(),
+            'date_published' => $this->date_added,
+            'date_for_humans' => Carbon::parse($this->date_added)->diffForHumans(),
             'main_image' => $this->getFirstMediaUrl('event-report', 'main-image'),
             'main_thumb' => $this->getFirstMediaUrl('event-report', 'main-thumb'),
             'caption' => $this->image_caption,
             'theme' => $this->image_theme?->image,
-            'day' => $this->day,
-            'article_author' => $this->article_author,
-            'level' => $this->level,
+            'type' => $this->type,
+            'level' => new LevelResource($this->level),
+            'author' => new AuthorResource($this->article_author),
             'event_chips' => EventChipsResource::collection($this->event_chips),
         ];
     }

@@ -69,6 +69,7 @@
                         v-for="(item, index) in report.collection"
                         :key="index"
                         :item="item"
+                        :event="event"
                         :id="index"
                     />
                     <div

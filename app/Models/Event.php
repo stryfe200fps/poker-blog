@@ -161,7 +161,9 @@ class Event extends Model implements HasMedia
     public function status()
     {
         $dateNow = Carbon::now();
-        foreach (json_decode($this->attributes['schedule'], true) ?? [] as $sched) {
+
+
+        foreach ($this->days->toArray() ?? [] as $sched) {
             if ($dateNow >= Carbon::parse($sched['date_start']) && $dateNow <= Carbon::parse($sched['date_end'])) {
                 return 'live';
             } elseif ($dateNow <= Carbon::parse($sched['date_start'])->addDays(2)) {
@@ -172,29 +174,21 @@ class Event extends Model implements HasMedia
         }
 
         return 'upcoming';
+
     }
 
-    public function currentDateSchedule()
+    public function getSchedule()
     {
-        $dateNow = Carbon::now();
-        $schedules = json_decode($this->attributes['schedule'], true);
+        $sched =  $this->days->filter(function ($item) {
+            return $item->report_count();
+        })->sortBy('lft')->pluck('name', 'id');
 
-        if (! is_countable($schedules)) {
-            return 'no schedule yet';
-        }
+        return $sched;
+    }
 
-        foreach ($schedules as $sched) {
-            if ($dateNow >= Carbon::parse($sched['date_start']) && $dateNow <= Carbon::parse($sched['date_end'])) {
-                return 'Day '.$sched['day'].'  :  '.Carbon::parse($sched['date_start'])->format('M j, Y, ga D').' to '.Carbon::parse($sched['date_end'])->format('M j, Y, ga D').'   -   '.Carbon::parse($sched['date_start'])->diffForHumans();
-            }
-        }
-
-        foreach ($schedules as $sched) {
-            if ($dateNow < Carbon::parse($sched['date_start'])) {
-                return 'Day '.$sched['day'].'  :  '.Carbon::parse($sched['date_start'])->format('M j, Y, ga D').' to '.Carbon::parse($sched['date_end'])->format('M j, Y, ga D').'   -   '.Carbon::parse($sched['date_start'])->diffForHumans();
-            }
-        }
-        return 'schedule ended '.Carbon::parse($schedules[count($schedules) - 1]['date_end'])->diffForHumans();
+    public function days()
+    {
+        return $this->hasMany(Day::class);
     }
 
     public function eventSchedules()
@@ -313,6 +307,16 @@ class Event extends Model implements HasMedia
     public function openChipCount($crud = false)
     {
         return '<a class="btn btn-sm btn-link"  href="chip-count?event='.urlencode($this->attributes['id']).'" data-toggle="tooltip" title="Chip  Count"><i class="fa fa-search"></i> Chip Counts  </a>';
+    }
+
+    public function openDay($crud = false)
+    {
+        return '<a class="btn btn-sm btn-link"  href="day?event='.urlencode($this->attributes['id']).'" data-toggle="tooltip" title="Days"><i class="fa fa-search"></i> Days  </a>';
+    }
+
+    public function openLevel($crud = false)
+    {
+        return '<a class="btn btn-sm btn-link"  href="level?event='.urlencode($this->attributes['id']).'" data-toggle="tooltip" title="Days"><i class="fa fa-search"></i> Level  </a>';
     }
 
     // public function setDateStartAttribute($value)

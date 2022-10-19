@@ -64,6 +64,16 @@ class LOFApiEventIndexController extends Controller
         }])->where('slug', $slug)->firstOrFail() );
     }
 
+    // public function player($player_id, $event)
+    // {
+    //     try {
+    //         $payout = EventPayout::where('player_id', $player_id)->where('event_id', $event)->firstOrFail();
+    //         return $payout?->prize ?? '';
+    //     } catch (Exception $e) {
+    //         return '';
+    //     }
+    // }
+
     /**
      * Show the form for editing the specified resource.
      *

@@ -15,8 +15,10 @@ class LevelResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'level' => $this->name,
-            'questions' => LOFApiEventReportsResource::collection($this->event_reports),
+            'level' => $this->level,
+            'level_value' => $this->level_value,
+            'blinds' => $this->blinds,
+            'ante' => $this->ante
         ];
     }
 }

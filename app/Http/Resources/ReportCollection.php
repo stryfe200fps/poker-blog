@@ -19,7 +19,7 @@ class ReportCollection extends ResourceCollection
         $reducedCollection = $this->collection->groupBy('level')->reduce(function ($result, $item) {
             $level = $item->first()->level;
             $result[] = [
-                'level' => $level->level,
+                'level' => $level->level_value,
                 'collection' => collect($item)->map(function ($i) {
                     return new LOFApiEventReportsResource($i);
                 }),
@@ -35,4 +35,6 @@ class ReportCollection extends ResourceCollection
             ],
         ];
     }
+
+
 }

@@ -7,7 +7,7 @@ export const useEventStore = defineStore("event", {
             eventData: [],
             liveReportList: [],
             mainEvents: [],
-            chipCounts: []
+            chipCounts: [],
         };
     },
 
@@ -29,13 +29,16 @@ export const useEventStore = defineStore("event", {
             this.eventData = data;
         },
         async getChipCountsData(id) {
-            const { data } = await axios.get("/api/lof-event/" + id + "/chipcount"  );
+            const { data } = await axios.get(
+                "/api/lof-event/" + id + "/chipcount"
+            );
             this.chipCounts = data;
         },
-        async getLiveReport(page, event, day) {
+        async getLiveReport(page, day) {
             try {
                 let { data } = await axios.get(
-                    `/api/lof-live-report?page=${page}&event=${event}&filterDay=${day}`
+                    // `/api/lof-live-report?page=${page}&event=${event}&filterDay=${day}`
+                    `/api/lof-live-report?page=${page}&day=${day}`
                 );
                 this.liveReportList = data;
             } catch (error) {

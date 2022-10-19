@@ -10,6 +10,10 @@ class Level extends Model
 {
     protected $guarded = ['id'];
 
+    protected $appends = [
+        'level_value'
+    ];
+
     use CrudTrait;
     use HasFactory;
 
@@ -18,7 +22,7 @@ class Level extends Model
         return $this->hasMany(EventReport::class);
     }
 
-    public function getLevelAttribute()
+    public function getLevelValueAttribute()
     {
         return 'Level '.$this->attributes['level'].' - Blinds '.$this->attributes['blinds'].'/'.$this->attributes['ante'].' ante '.$this->attributes['ante'];
     }
