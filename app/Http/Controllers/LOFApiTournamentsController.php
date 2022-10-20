@@ -18,20 +18,8 @@ class LOFApiTournamentsController extends Controller
 
     
 
-    // public function show($id)
-    // {
-    //     return new LOFApiTournamentResource(Tournament::with('media')->where('id', $id)->first());  
-    // }
-
-    public function show(Request $request,$id)
+    public function show($id)
     {
-        if(is_numeric($id)) { //id of event
-            return new LOFApiTournamentResource(Tournament::with('media')->where('id', $id)->first());
-        }
-        else{ //string, type of event
-            $request->merge(['status'=>$id]);
-            return  new LOFApiTournamentCollection(Tournament::latest()->get());
-        }
-        
+        return new LOFApiTournamentResource(Tournament::with('media')->where('id', $id)->first());  
     }
 }

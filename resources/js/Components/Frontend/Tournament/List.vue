@@ -38,37 +38,49 @@
         </ul>
         <div class="tab-content">
             <div class="block-content" v-show="currentTab == 'live'">
-                <div class="article-box" v-if="live.data?.length">
+                <div class="article-box" v-if="live?.length">
                     <TournamentItem
-                        v-for="main in live.data"
+                        v-for="main in live"
                         :key="main.id"
                         :tournament="main"
                     />
                 </div>
+                <div
+                    v-if="live?.length"
+                    v-observe-visibility="handleScrolledToBottom"
+                ></div>
                 <div v-else>
                     <h4>Coming soon...</h4>
                 </div>
             </div>
             <div class="block-content" v-show="currentTab == 'past'">
-                <div class="article-box" v-if="past.data?.length">
+                <div class="article-box" v-if="past?.length">
                     <TournamentItem
-                        v-for="main in past.data"
+                        v-for="main in past"
                         :key="main.id"
                         :tournament="main"
                     />
                 </div>
+                <div
+                    v-if="past?.length"
+                    v-observe-visibility="handleScrolledToBottom"
+                ></div>
                 <div v-else>
                     <h4>No past event...</h4>
                 </div>
             </div>
             <div class="block-content" v-show="currentTab == 'upcoming'">
-                <div class="article-box" v-if="upcoming.data?.length">
+                <div class="article-box" v-if="upcoming?.length">
                     <TournamentItem
-                        v-for="main in upcoming.data"
+                        v-for="main in upcoming"
                         :key="main.id"
                         :tournament="main"
                     />
                 </div>
+                <div
+                    v-if="upcoming?.length"
+                    v-observe-visibility="handleScrolledToBottom"
+                ></div>
                 <div v-else>
                     <h4>No upcoming event...</h4>
                 </div>
@@ -109,6 +121,13 @@ const changeTab = (currentTab) => {
 // const liveEventCollection = ref([]);
 // const pastEventCollection = ref([]);
 // const upcomingEventCollection = ref([]);
+
+const emit = defineEmits(["loadMore"]);
+
+function handleScrolledToBottom(isVisible) {
+    if (!isVisible) return;
+    emit("loadMore");
+}
 
 function stickyScroll() {
     const tabs = document.querySelector(".custom-tabs");

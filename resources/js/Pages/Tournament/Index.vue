@@ -17,6 +17,7 @@
                     :past="pastEventCollection"
                     :upcoming="upcomingEventCollection"
                     :currentTab="page"
+                    @loadMore="loadMoreReports"
                 />
             </div>
         </div>
@@ -47,23 +48,56 @@ const liveEventCollection = ref([]);
 const pastEventCollection = ref([]);
 const upcomingEventCollection = ref([]);
 const pathname = ref(window.location.pathname.split("/")[2]);
+const loadPage = ref(1);
+const lastPage = ref(1);
+
+async function loadMoreReports() {
+    if (loadPage.value >= lastPage.value) return;
+    loadPage.value++;
+
+    if (pathname.value === undefined || pathname.value === "live") {
+        await tournamentStore.getList(loadPage.value, "live");
+        liveEventCollection.value.push(...tournamentStore.list.data);
+        lastPage.value = tournamentStore.list.meta.last_page;
+        return;
+    }
+
+    if (pathname.value === "past") {
+        await tournamentStore.getList(loadPage.value, "end");
+        pastEventCollection.value.push(...tournamentStore.list.data);
+        lastPage.value = tournamentStore.list.meta.last_page;
+        return;
+    }
+
+    if (pathname.value === "upcoming") {
+        await tournamentStore.getList(loadPage.value, pathname.value);
+        upcomingEventCollection.value.push(...tournamentStore.list.data);
+        lastPage.value = tournamentStore.list.meta.last_page;
+        return;
+    }
+}
 
 async function eventViewing(pathname) {
+    loadPage.value = 1;
+    lastPage.value = 1;
     if (pathname === undefined || pathname === "live") {
-        await tournamentStore.getList("live");
-        liveEventCollection.value = tournamentStore.list;
+        await tournamentStore.getList(1, "live");
+        liveEventCollection.value = tournamentStore.list.data;
+        lastPage.value = tournamentStore.list.meta.last_page;
         return;
     }
 
     if (pathname === "past") {
-        await tournamentStore.getList("end");
-        pastEventCollection.value = tournamentStore.list;
+        await tournamentStore.getList(1, "end");
+        pastEventCollection.value = tournamentStore.list.data;
+        lastPage.value = tournamentStore.list.meta.last_page;
         return;
     }
 
     if (pathname === "upcoming") {
-        await tournamentStore.getList("tba");
-        upcomingEventCollection.value = tournamentStore.list;
+        await tournamentStore.getList(1, pathname);
+        upcomingEventCollection.value = tournamentStore.list.data;
+        lastPage.value = tournamentStore.list.meta.last_page;
         return;
     }
 }
