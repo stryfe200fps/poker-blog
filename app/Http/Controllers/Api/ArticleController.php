@@ -12,7 +12,7 @@ class ArticleController extends Controller
 {
     public function index()
     {
-        return  ArticleResource::collection(Article::with(['article_author', 'media', 'article_categories'])->latest()->orderBy('published_date','DESC')->limit(6)->get());
+        return  ArticleResource::collection(Article::with(['article_author', 'media', 'article_categories'])->orderBy('published_date','DESC')->limit(6)->get());
     }
 
     public function show($slug)
