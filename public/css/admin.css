@@ -1,0 +1,47 @@
+/*
+    Customized 'Layover' for LifeOfPoker
+*/
+
+/* Buttons */
+.btn-primary,
+.page-item.active .page-link,
+.sidebar .nav-link:hover {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+.btn-primary:hover {
+    background-color: #0062ca;
+    border-color: #0062ca;
+}
+
+/* Links */
+a,
+.btn-link,
+.sidebar .nav-link.active .nav-icon {
+    color: #007bff;
+}
+a:hover,
+.btn-link:hover,
+.sidebar .nav-link.active .nav-icon:hover {
+    color: #0062ca;
+}
+.sidebar .nav-link.active {
+    background: rgba(0, 98, 202, 0.3);
+ }
+
+
+/* Nav */
+.bg-dark {
+    background-color: #222630!important;
+}
+
+/* Search */
+.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px #dcdefb;
+}
+
+/* Table */
+table.table-hover tbody tr:hover {
+    background-color: rgba(105, 114, 239, 0.1);
+}
