@@ -21,6 +21,9 @@
     background-color: #f44336;
     color: #fff;
 }
+.sidebar .nav-link .nav-icon {
+    color: #fff;
+
 
 /* Links */
 a,
@@ -39,7 +42,7 @@ a:hover,
 
 /* Nav */
 .bg-dark {
-    background-color: #251716!important;
+    background-color: #4a1713!important;
 }
 
 /* Search */
@@ -51,4 +54,12 @@ a:hover,
 /* Table */
 table.table-hover tbody tr:hover {
     background-color: rgb(224, 103, 94, 0.1);
+}
+
+/* Margins */
+.sidebar .nav-dropdown-items {
+    margin-left: 0.8rem;
+}
+.sidebar .nav-dropdown-items .nav-dropdown {
+    margin-left: 0;
 }
