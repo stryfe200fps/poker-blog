@@ -319,7 +319,7 @@ class Event extends Model implements HasMedia
 
     public function openChipCount($crud = false)
     {
-        return '<a class="btn btn-sm btn-link"  href="chip-count?event='.urlencode($this->attributes['id']).'" data-toggle="tooltip" title="Chip  Count"><i class="fa fa-search"></i> Chip Counts  </a>';
+        return '<a class="btn btn-sm btn-link"  href="chip-count?event='.urlencode($this->attributes['id']).'" data-toggle="tooltip" title="Chip Counts"><i class="fa fa-search"></i> Chips  </a>';
     }
 
     public function openDay($crud = false)
@@ -329,7 +329,7 @@ class Event extends Model implements HasMedia
 
     public function openLevel($crud = false)
     {
-        return '<a class="btn btn-sm btn-link"  href="level?event='.urlencode($this->attributes['id']).'" data-toggle="tooltip" title="Days"><i class="fa fa-search"></i> Level  </a>';
+        return '<a class="btn btn-sm btn-link"  href="level?event='.urlencode($this->attributes['id']).'" data-toggle="tooltip" title="Days"><i class="fa fa-search"></i> Levels  </a>';
     }
 
     // public function setDateStartAttribute($value)

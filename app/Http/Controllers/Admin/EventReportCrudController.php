@@ -294,7 +294,6 @@ class EventReportCrudController extends CrudController
                 'type' => 'relationship',
                 'attributes' => [
                    'id'  => 'image-theme'
-
                 ],
                 'wrapper' => [
                     'class' => 'form-group col-md-6 image_theme ',
@@ -318,7 +317,7 @@ class EventReportCrudController extends CrudController
             ],
             [
                 'name' => 'eventChipPlayers',
-                'label' => 'Chip Counts',
+                'label' => 'Players\' stack',
                 'type' => 'repeatable',
                 'attributes' => [
                     'id' => 'repeat',
