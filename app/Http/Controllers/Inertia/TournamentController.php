@@ -7,8 +7,13 @@ use App\Http\Controllers\Controller;
 
 class TournamentController extends Controller
 {
-    public function index() {
-    return Inertia::render('Tournament/Index');
+//     public function index() {
+//     return Inertia::render('Tournament/Index');
+// }
+    public function index($page = null) {
+    return Inertia::render('Tournament/Index', [
+        'page' => $page ?? 'live',
+    ]);
 }
 
 }

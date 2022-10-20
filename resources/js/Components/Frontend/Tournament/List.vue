@@ -1,30 +1,46 @@
 <template>
     <div class="about-more-autor">
         <ul class="nav nav-tabs custom-tabs">
-            <li @click.prevent="changeTab(0)" :class="{ active: tab == 0 }">
-                <a href="#" data-toggle="tab"
+            <li
+                @click.prevent="changeTab(currentTab)"
+                :class="{ active: currentTab == 'live' }"
+            >
+                <Link
+                    href="/tournament/live"
+                    data-toggle="tab"
+                    preserve-state
+                    style="cursor: pointer"
                     ><span class="hidden-xs">live events</span
-                    ><span class="visible-xs">live</span></a
+                    ><span class="visible-xs">live</span></Link
                 >
             </li>
-            <li @click.prevent="changeTab(1)" :class="{ active: tab == 1 }">
-                <a href="#" data-toggle="tab"
+            <li
+                @click.prevent="changeTab(currentTab)"
+                :class="{ active: currentTab == 'past' }"
+            >
+                <Link href="/tournament/past" data-toggle="tab" preserve-state
                     ><span class="hidden-xs">past events</span
                     ><span class="visible-xs">past</span>
-                </a>
+                </Link>
             </li>
-            <li @click.prevent="changeTab(2)" :class="{ active: tab == 2 }">
-                <a href="#" data-toggle="tab"
+            <li
+                @click.prevent="changeTab(currentTab)"
+                :class="{ active: currentTab == 'upcoming' }"
+            >
+                <Link
+                    href="/tournament/upcoming"
+                    data-toggle="tab"
+                    preserve-state
                     ><span class="hidden-xs">upcoming events</span
                     ><span class="visible-xs">upcoming</span>
-                </a>
+                </Link>
             </li>
         </ul>
         <div class="tab-content">
-            <div class="block-content" v-show="tab == 0">
-                <div class="article-box" v-if="liveEventCollection.length">
+            <div class="block-content" v-show="currentTab == 'live'">
+                <div class="article-box" v-if="live.data?.length">
                     <TournamentItem
-                        v-for="main in liveEventCollection"
+                        v-for="main in live.data"
                         :key="main.id"
                         :tournament="main"
                     />
@@ -33,10 +49,10 @@
                     <h4>Coming soon...</h4>
                 </div>
             </div>
-            <div class="block-content" v-show="tab == 1">
-                <div class="article-box" v-if="pastEventCollection.length">
+            <div class="block-content" v-show="currentTab == 'past'">
+                <div class="article-box" v-if="past.data?.length">
                     <TournamentItem
-                        v-for="main in pastEventCollection"
+                        v-for="main in past.data"
                         :key="main.id"
                         :tournament="main"
                     />
@@ -45,10 +61,10 @@
                     <h4>No past event...</h4>
                 </div>
             </div>
-            <div class="block-content" v-show="tab == 2">
-                <div class="article-box" v-if="upcomingEventCollection.length">
+            <div class="block-content" v-show="currentTab == 'upcoming'">
+                <div class="article-box" v-if="upcoming.data?.length">
                     <TournamentItem
-                        v-for="main in upcomingEventCollection"
+                        v-for="main in upcoming.data"
                         :key="main.id"
                         :tournament="main"
                     />
@@ -75,7 +91,13 @@ import moment from "moment";
 import TournamentItem from "./TournamentItem.vue";
 
 const props = defineProps({
-    tournamentList: Object,
+    live: Object,
+    past: Object,
+    upcoming: Object,
+    currentTab: {
+        type: String,
+        default: "live",
+    },
 });
 
 const tab = ref(0);
@@ -84,9 +106,9 @@ const changeTab = (currentTab) => {
     tab.value = currentTab;
 };
 
-const liveEventCollection = ref([]);
-const pastEventCollection = ref([]);
-const upcomingEventCollection = ref([]);
+// const liveEventCollection = ref([]);
+// const pastEventCollection = ref([]);
+// const upcomingEventCollection = ref([]);
 
 function stickyScroll() {
     const tabs = document.querySelector(".custom-tabs");
@@ -120,20 +142,20 @@ onBeforeUnmount(() => {
     window.removeEventListener("scroll", stickyScroll);
 });
 
-watch(
-    () => props.tournamentList.data,
-    (first) => {
-        upcomingEventCollection.value = first.filter(
-            ({ status }) => status === "upcoming"
-        );
-        pastEventCollection.value = first.filter(
-            ({ status }) => status === "past"
-        );
-        liveEventCollection.value = first.filter(
-            ({ status }) => status === "live"
-        );
-    }
-);
+// watch(
+//     () => props.tournamentList.data,
+//     (first) => {
+//         upcomingEventCollection.value = first.filter(
+//             ({ status }) => status === "upcoming"
+//         );
+//         pastEventCollection.value = first.filter(
+//             ({ status }) => status === "past"
+//         );
+//         liveEventCollection.value = first.filter(
+//             ({ status }) => status === "live"
+//         );
+//     }
+// );
 </script>
 
 <style scoped>

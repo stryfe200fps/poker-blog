@@ -16,6 +16,8 @@ use App\Http\Controllers\Inertia\TournamentController;
 Route::get('/', [ HomeController::class, 'index' ]);
 Route::get('/tournament', [TournamentController::class , 'index'] );
 
+Route::get('/tournament/{page?}', [TournamentController::class , 'index'] ); // added by raven
+
 Route::get('/event/{slug}/{page?}', [EventController::class, 'show'] );
 Route::get('/event/{eventSlug}/report/{reportSlug}', [ReportController::class, 'show'] );
 

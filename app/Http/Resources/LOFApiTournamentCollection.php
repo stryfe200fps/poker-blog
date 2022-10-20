@@ -12,15 +12,34 @@ class LOFApiTournamentCollection extends ResourceCollection
      * @param  \Illuminate\Http\Request  $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
+    // public function toArray($request)
+    // {
+
+    //     if ($request->get('status') == null)
+    //         return;
+
+    //     $tournamentList =  $this->collection->map(function ($tourna) use ($request) {
+    //         $tourna->events = $tourna->events->filter(fn ($event) 
+    //        =>  $event->status() ==  $request->get('status') 
+    //         );
+    //         return $tourna;
+    //     })->filter(function ($tourna) {
+    //         return count($tourna->events);
+    //     });
+
+    //     return [
+    //         'data' => LOFApiTournamentResource::collection($tournamentList),
+    //     ];
+    // }
     public function toArray($request)
     {
 
         if ($request->get('status') == null)
             return;
-
+        
         $tournamentList =  $this->collection->map(function ($tourna) use ($request) {
-            $tourna->events = $tourna->events->filter(fn ($event) 
-           =>  $event->status() ==  $request->get('status') 
+            $tourna->events = $tourna->events->filter(fn ($event) =>  
+                $request->get('status') != 'all' ? $event->status() ==  $request->get('status') : $event->status() 
             );
             return $tourna;
         })->filter(function ($tourna) {

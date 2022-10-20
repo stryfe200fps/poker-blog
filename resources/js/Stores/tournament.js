@@ -20,9 +20,11 @@ export const useTournamentStore = defineStore("tournament", {
     },
 
     actions: {
-        async getList() {
+        async getList(status) {
             try {
-                const { data } = await axios.get("/api/lof-tournament");
+                const { data } = await axios.get(
+                    `/api/lof-tournament/${status}`
+                );
                 this.list = data;
             } catch (error) {
                 console.error(error);

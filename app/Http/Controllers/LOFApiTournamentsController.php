@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\LOFApiTournamentCollection;
 use App\Http\Resources\LOFApiTournamentResource;
 use App\Models\Tournament;
+use Illuminate\Http\Request;
 
 class LOFApiTournamentsController extends Controller
 {
@@ -17,8 +18,20 @@ class LOFApiTournamentsController extends Controller
 
     
 
-    public function show($id)
+    // public function show($id)
+    // {
+    //     return new LOFApiTournamentResource(Tournament::with('media')->where('id', $id)->first());  
+    // }
+
+    public function show(Request $request,$id)
     {
-        return new LOFApiTournamentResource(Tournament::with('media')->where('id', $id)->first());
+        if(is_numeric($id)) { //id of event
+            return new LOFApiTournamentResource(Tournament::with('media')->where('id', $id)->first());
+        }
+        else{ //string, type of event
+            $request->merge(['status'=>$id]);
+            return  new LOFApiTournamentCollection(Tournament::latest()->get());
+        }
+        
     }
 }

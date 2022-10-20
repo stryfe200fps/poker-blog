@@ -12,7 +12,12 @@
             </div>
             <div class="single-post-box">
                 <!-- <EventTabs :tournament-list="tournamentStore.list" :list="eventStore.list"></EventTabs> -->
-                <TournamentList :tournamentList="list" />
+                <TournamentList
+                    :live="liveEventCollection"
+                    :past="pastEventCollection"
+                    :upcoming="upcomingEventCollection"
+                    :currentTab="page"
+                />
             </div>
         </div>
     </FrontLayout>
@@ -27,20 +32,56 @@ import SideBar from "../../Components/Frontend/MainContent/SideBar.vue";
 import TournamentList from "../../Components/Frontend/Tournament/List.vue";
 
 import { useTournamentStore } from "@/Stores/tournament.js";
-import { onMounted, ref, watch } from "@vue/runtime-core";
+import { onMounted, onUpdated, ref, watch } from "@vue/runtime-core";
+
+const props = defineProps({
+    page: {
+        type: String,
+    },
+});
 
 const tournamentStore = useTournamentStore();
 
 const list = ref([]);
+const liveEventCollection = ref([]);
+const pastEventCollection = ref([]);
+const upcomingEventCollection = ref([]);
+const pathname = ref(window.location.pathname.split("/")[2]);
 
-onMounted(async () => {
-    await tournamentStore.getList();
+async function eventViewing(pathname) {
+    if (pathname === undefined || pathname === "live") {
+        await tournamentStore.getList("live");
+        liveEventCollection.value = tournamentStore.list;
+        return;
+    }
+
+    if (pathname === "past") {
+        await tournamentStore.getList("end");
+        pastEventCollection.value = tournamentStore.list;
+        return;
+    }
+
+    if (pathname === "upcoming") {
+        await tournamentStore.getList("tba");
+        upcomingEventCollection.value = tournamentStore.list;
+        return;
+    }
+}
+
+onMounted(() => {
+    // await tournamentStore.getList();
+    eventViewing(pathname.value);
 });
 
-watch(
-    () => tournamentStore.list.data,
-    function () {
-        list.value = tournamentStore.list;
-    }
-);
+onUpdated(() => {
+    pathname.value = window.location.pathname.split("/")[2];
+    eventViewing(pathname.value);
+});
+
+// watch(
+//     () => tournamentStore.list.data,
+//     function () {
+//         list.value = tournamentStore.list;
+//     }
+// );
 </script>

@@ -268,18 +268,19 @@ const showShare = () => {
 
 function onScrollContents() {
     const tableOfContents = document.querySelector("#table-of-contents");
+    if (tableOfContents) {
+        if (window.scrollY > 200) {
+            tableOfContents.classList.add("active");
+        } else {
+            tableOfContents.classList.remove("active");
+        }
 
-    if (window.scrollY > 200) {
-        tableOfContents.classList.add("active");
-    } else {
-        tableOfContents.classList.remove("active");
+        // adding scroll-padding-top
+        document.documentElement.style.setProperty(
+            "--scroll-padding",
+            tableOfContents.offsetHeight + 80 + "px"
+        );
     }
-
-    // adding scroll-padding-top
-    document.documentElement.style.setProperty(
-        "--scroll-padding",
-        tableOfContents.offsetHeight + 80 + "px"
-    );
 }
 
 onMounted(async () => {

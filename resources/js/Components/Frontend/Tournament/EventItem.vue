@@ -1,6 +1,9 @@
 <template>
     <div class="news-post article-post article-post--custom">
-        <div class="row" v-if="event.status !== 'upcoming'">
+        <div
+            class="row"
+            v-if="event.status !== 'upcoming' && event.status !== 'tba'"
+        >
             <div class="col-sm-5">
                 <div class="post-content">
                     <h2 style="margin-bottom: 15px">
@@ -124,7 +127,7 @@ const labelClass = computed(() => {
             return "label-danger";
         case "upcoming":
             return "label-success";
-        case "past":
+        case "end":
             return "label-default";
         default:
             return "label-warning";
@@ -134,7 +137,7 @@ const labelText = computed(() => {
     switch (props.event.status) {
         case "live":
             return "live now";
-        case "past":
+        case "end":
             return "ended";
         case "upcoming":
             return "upcoming";
