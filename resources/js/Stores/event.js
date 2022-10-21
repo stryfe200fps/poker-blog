@@ -31,7 +31,7 @@ export const useEventStore = defineStore("event", {
             }
         },
         async getEventData(id) {
-            if (this.eventData.length) return;
+            // if (this.eventData.length) return;
             const { data } = await axios.get("/api/lof-event/" + id);
             this.eventData = data;
         },
@@ -54,7 +54,7 @@ export const useEventStore = defineStore("event", {
         // },
         async getChipCountsData(slug) {
             try {
-                if (this.chipCounts.length) return;
+                // if (this.chipCounts.length) return;
                 const { data } = await axios.get("/api/chip/event/" + slug);
                 this.chipCounts = data;
             } catch (error) {
@@ -63,7 +63,7 @@ export const useEventStore = defineStore("event", {
         },
         async getGalleryData(day) {
             try {
-                if (this.galleryData.length) return;
+                // if (this.galleryData.length) return;
                 const { data } = await axios.get("/api/gallery/day/" + day);
                 this.galleryData = data;
             } catch (error) {
@@ -72,7 +72,7 @@ export const useEventStore = defineStore("event", {
         },
         async getPayoutsData(slug) {
             try {
-                if (this.payouts.length) return;
+                // if (this.payouts.length) return;
                 const { data } = await axios.get("/api/payout/event/" + slug);
                 this.payouts = data;
             } catch (error) {

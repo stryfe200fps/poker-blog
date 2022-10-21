@@ -138,7 +138,7 @@ async function loadMoreReports() {
 
 async function reportViewing(pathname) {
     if (pathname === undefined) {
-        await eventStore.getLiveReport(1, highestDay());
+        await eventStore.getLiveReport(1, selectDay.value);
         liveReport.value = eventStore.liveReportList.data;
         lastPage.value = eventStore.liveReportList.meta.last_page;
         return;
@@ -151,7 +151,7 @@ async function reportViewing(pathname) {
     }
 
     if (pathname === "gallery") {
-        await eventStore.getGalleryData(highestDay());
+        await eventStore.getGalleryData(selectDay.value);
         galleryData.value = eventStore.galleryData;
         return;
     }
@@ -178,9 +178,12 @@ onUpdated(() => {
 const fetchLiveReports = async () => {
     loadPage.value = 1;
     lastPage.value = 1;
-    await eventStore.getLiveReport(1, selectDay.value);
-    liveReport.value = eventStore.liveReportList.data;
-    lastPage.value = eventStore.liveReportList.meta.last_page;
+    reportViewing(pathname.value);
+    // await eventStore.getLiveReport(1, selectDay.value);
+    // liveReport.value = eventStore.liveReportList.data;
+    // lastPage.value = eventStore.liveReportList.meta.last_page;
+    // await eventStore.getGalleryData(selectDay.value);
+    // galleryData.value = eventStore.galleryData;
 };
 
 // const fetchPage = async () => {
