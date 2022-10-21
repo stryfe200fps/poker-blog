@@ -13,6 +13,7 @@ defineProps({
 });
 
 onMounted(() => {
+    document.body.style.overflow = "auto";
     setTimeout(() => {
         window.scrollTo({ top: 0, behavior: "smooth" });
     }, 100);

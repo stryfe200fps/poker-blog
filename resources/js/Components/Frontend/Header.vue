@@ -91,72 +91,11 @@
                                     />
                                 </Link>
                             </li>
-                            <li
-                                class="drop"
+                            <NavLinks
                                 v-for="menu in $page['props']['menu']"
                                 :key="menu.id"
-                                @click="toggleDropdown(menu)"
-                            >
-                                <Link
-                                    class="home home--custom"
-                                    :class="{
-                                        child: menu.children.length,
-                                        'router-link-active':
-                                            pathname == menu.link,
-                                    }"
-                                    :href="'/' + menu.link"
-                                    v-if="!menu.children.length"
-                                >
-                                    {{ menu.name }}
-                                </Link>
-                                <Link
-                                    class="home home--custom"
-                                    :class="{
-                                        child: menu.children.length,
-                                    }"
-                                    v-else
-                                >
-                                    {{ menu.name }}
-                                </Link>
-                                <span
-                                    class="dropdown-arrow"
-                                    :class="{ show: toggleSubMenu }"
-                                    v-if="menu.children.length"
-                                    ><i class="fas fa-chevron-down"></i
-                                ></span>
-                                <ul
-                                    class="dropdown"
-                                    :class="{ show: toggleSubMenu }"
-                                    v-if="menu.children.length"
-                                >
-                                    <li
-                                        v-for="children in menu.children"
-                                        :key="children.id"
-                                    >
-                                        <Link
-                                            v-if="menu.link !== children.link"
-                                            :href="
-                                                '/' +
-                                                menu.link +
-                                                '/' +
-                                                children.link
-                                            "
-                                            style="
-                                                background: rgb(239, 239, 239);
-                                            "
-                                            >{{ children.name }}</Link
-                                        >
-                                        <Link
-                                            v-else
-                                            :href="'/' + children.link"
-                                            style="
-                                                background: rgb(239, 239, 239);
-                                            "
-                                            >{{ children.name }}</Link
-                                        >
-                                    </li>
-                                </ul>
-                            </li>
+                                :menu="menu"
+                            />
                         </ul>
                     </div>
                 </div>
@@ -167,12 +106,12 @@
 
 <script setup>
 import { onBeforeUnmount, onMounted, ref } from "vue";
-import { Link, InertiaApp } from "@inertiajs/inertia-vue3";
+import { Link } from "@inertiajs/inertia-vue3";
 import logo from "/public/lop_logo_small.png";
 import slogan from "/public/header-slogan.png";
+import NavLinks from "./NavLinks.vue";
 
 const toggleMenu = ref(false);
-const toggleSubMenu = ref(false);
 const windowTop = ref(0);
 const sticky = ref(null);
 const pathname = ref(window.location.pathname.split("/")[1]);
@@ -184,10 +123,6 @@ function toggleBtn() {
         return;
     }
     document.body.style.overflow = "auto";
-}
-
-function toggleDropdown(menu) {
-    if (menu.children.length) toggleSubMenu.value = !toggleSubMenu.value;
 }
 
 function onScroll(e) {
@@ -383,18 +318,6 @@ header.active .nav-list-container {
     display: none;
 }
 
-.navbar-nav--custom > li > a {
-    color: #fff !important;
-}
-
-.navbar-nav--custom > li > a:before {
-    display: none;
-}
-
-.navbar-nav > li:nth-child(2) > a {
-    padding-left: 0 !important;
-}
-
 .navbar-nav .drop-img a {
     padding-left: 0 !important;
 }
@@ -411,32 +334,8 @@ header.active .nav-list-container {
     opacity: 0;
 }
 
-.home--custom {
-    padding-right: 20px !important;
-}
-
-.home--custom.child {
-    padding-right: 30px !important;
-}
-
-.home--custom::after {
-    top: 15px;
-    opacity: 0;
-}
-
-.home--custom.child::after {
-    opacity: 1;
-}
-
-.navbar-nav > li > a:not(.router-link-active):hover,
-.navbar-nav > li > a:not(.router-link-active):hover::after {
-    color: #f44336 !important;
-}
-
-.router-link-active,
-.router-link-exact-active {
-    background-color: #f44336 !important;
-    color: white;
+.navbar-nav--custom > li > a:before {
+    display: none;
 }
 
 .hamburger {
@@ -538,10 +437,6 @@ header.active .nav-list-container {
         transform 0.22s 0.12s cubic-bezier(0.215, 0.61, 0.355, 1);
 }
 
-.dropdown-arrow {
-    display: none !important;
-}
-
 @media screen and (max-width: 1199px) {
     .drop-img {
         padding-right: 15px;
@@ -593,44 +488,6 @@ header.active .nav-list-container {
         margin-block: 0;
     }
 
-    .navbar-nav > li > a.home {
-        display: inline-block;
-        padding-inline: 0;
-        padding-block: 15px;
-    }
-
-    .navbar-nav > li {
-        border-bottom: 1px solid #5c5555;
-    }
-
-    .router-link-active,
-    .router-link-exact-active {
-        background-color: transparent !important;
-    }
-
-    .navbar-nav li.drop ul.dropdown {
-        overflow: hidden;
-        max-height: 0;
-        transition: max-height 1s ease;
-    }
-
-    .navbar-nav li.drop ul.dropdown.show {
-        max-height: 300px;
-    }
-
-    .navbar-nav li.drop ul.dropdown li:last-child {
-        margin-bottom: 20px;
-    }
-
-    .navbar-nav li.drop ul.dropdown li a {
-        display: inline-block;
-        color: #f6f6f6;
-    }
-
-    .navbar-nav--custom > li {
-        padding-left: 15px;
-    }
-
     .navbar-collapse--custom {
         display: none;
         min-height: 100vh;
@@ -650,23 +507,6 @@ header.active .nav-list-container {
         to {
             opacity: 1;
         }
-    }
-
-    .dropdown-arrow {
-        position: absolute;
-        top: 13px;
-        right: 30px;
-        display: inline-block !important;
-        transition: transform 0.5s ease;
-    }
-
-    .dropdown-arrow i {
-        font-size: 12px;
-        color: #fff;
-    }
-
-    .dropdown-arrow.show {
-        transform: rotate(180deg);
     }
 }
 
