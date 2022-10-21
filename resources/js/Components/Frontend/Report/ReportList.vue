@@ -166,13 +166,13 @@
                                             : stack.current_chips.toLocaleString()
                                     }}
                                 </td>
-                                <td
+                                <!-- <td
                                     v-if="stack.report_id == null"
                                     class="text-right"
                                 >
                                     <i class="fa fa-whatsapp"> </i> whatsapp
-                                </td>
-                                <td v-else class="text-right hide-on-mobile">
+                                </td> -->
+                                <td class="text-right hide-on-mobile">
                                     {{
                                         stack.current_chips === 0
                                             ? ""

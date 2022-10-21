@@ -10,8 +10,8 @@
                     data-toggle="tab"
                     preserve-state
                     style="cursor: pointer"
-                    ><span class="hidden-xs">live events</span
-                    ><span class="visible-xs">live</span></Link
+                    ><span class="hidden-xs">live & upcoming events</span
+                    ><span class="visible-xs">live & upcoming</span></Link
                 >
             </li>
             <li
@@ -23,7 +23,7 @@
                     ><span class="visible-xs">past</span>
                 </Link>
             </li>
-            <li
+            <!-- <li
                 @click.prevent="changeTab(currentTab)"
                 :class="{ active: currentTab == 'upcoming' }"
             >
@@ -34,7 +34,7 @@
                     ><span class="hidden-xs">upcoming events</span
                     ><span class="visible-xs">upcoming</span>
                 </Link>
-            </li>
+            </li> -->
         </ul>
         <div class="tab-content">
             <div class="block-content" v-show="currentTab == 'live'">
@@ -69,7 +69,7 @@
                     <h4>No past event...</h4>
                 </div>
             </div>
-            <div class="block-content" v-show="currentTab == 'upcoming'">
+            <!-- <div class="block-content" v-show="currentTab == 'upcoming'">
                 <div class="article-box" v-if="upcoming?.length">
                     <TournamentItem
                         v-for="main in upcoming"
@@ -84,7 +84,7 @@
                 <div v-else>
                     <h4>No upcoming event...</h4>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
     <div class="scroll-top">

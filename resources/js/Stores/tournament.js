@@ -8,6 +8,7 @@ export const useTournamentStore = defineStore("tournament", {
     state: () => {
         return {
             list: [],
+            upcoming: [],
 
             //   slugs: []
         };
@@ -22,6 +23,12 @@ export const useTournamentStore = defineStore("tournament", {
     actions: {
         async getList(page, status) {
             try {
+                if (status === "upcoming") {
+                    const { data } = await axios.get(
+                        `/api/lof-tournament?page=${page}&status=${status}`
+                    );
+                    this.upcoming = data;
+                }
                 const { data } = await axios.get(
                     `/api/lof-tournament?page=${page}&status=${status}`
                 );

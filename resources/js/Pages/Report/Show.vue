@@ -136,62 +136,14 @@
                                     </div>
                                     <li
                                         @click="showShare"
+                                        @blur="isOpen = false"
                                         class="btn btn-default share-btn-mobile"
+                                        tabindex="0"
                                     >
                                         <i class="fa fa-share-alt"></i
                                         ><span class="text-uppercase"
                                             >Share</span
                                         >
-                                    </li>
-                                </div>
-                                <div class="share-post-desktop">
-                                    <li class="text-secondary">
-                                        <i
-                                            class="fa fa-share-alt text-secondary"
-                                        ></i
-                                        ><span class="text-secondary"
-                                            >Share Post</span
-                                        >
-                                    </li>
-                                    <li>
-                                        <a
-                                            target="_blank"
-                                            :href="
-                                                'https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Flifeofpoker.com%2Freport%2F' +
-                                                report.data.slug +
-                                                '&amp;src=sdkpreparse'
-                                            "
-                                            class="facebook"
-                                            ><i
-                                                class="fa fa-facebook text-secondary"
-                                            ></i
-                                        ></a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            target="_blank"
-                                            :href="
-                                                'https://twitter.com/intent/tweet?text=https%3A//lifeofpoker.com/report/' +
-                                                report.data.slug
-                                            "
-                                            class="twitter"
-                                            ><i
-                                                class="fa fa-twitter text-secondary"
-                                            ></i
-                                        ></a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            target="_blank"
-                                            :href="
-                                                'https://api.whatsapp.com/send?text=%0ahttps://lifeofpoker.com/report/' +
-                                                report.data.slug
-                                            "
-                                            class="whatsapp"
-                                            ><i
-                                                class="fa fa-whatsapp text-secondary"
-                                            ></i
-                                        ></a>
                                     </li>
                                 </div>
                             </ul>
@@ -509,12 +461,12 @@ ul.post-tags li .twitter {
     padding: unset;
 }
 
-.share-post-desktop {
-    display: none;
-}
-
 .share-btn-mobile {
     margin: 0;
+}
+
+.share-btn-mobile:focus {
+    outline: none;
 }
 
 .social-links-group {
@@ -555,14 +507,6 @@ ul.post-tags li .twitter {
 @media (min-width: 992px) {
     .post-content-min-height {
         min-height: 270px;
-    }
-
-    .share-post-mobile {
-        display: none;
-    }
-
-    .share-post-desktop {
-        display: block;
     }
 }
 

@@ -56,9 +56,9 @@ async function loadMoreReports() {
     loadPage.value++;
 
     if (pathname.value === undefined || pathname.value === "live") {
-        await tournamentStore.getList(loadPage.value, "live");
-        liveEventCollection.value.push(...tournamentStore.list.data);
-        lastPage.value = tournamentStore.list.meta.last_page;
+        await tournamentStore.getList(loadPage.value, "upcoming");
+        liveEventCollection.value.push(...tournamentStore.upcoming.data);
+        lastPage.value = tournamentStore.upcoming.meta.last_page;
         return;
     }
 
@@ -69,12 +69,12 @@ async function loadMoreReports() {
         return;
     }
 
-    if (pathname.value === "upcoming") {
-        await tournamentStore.getList(loadPage.value, pathname.value);
-        upcomingEventCollection.value.push(...tournamentStore.list.data);
-        lastPage.value = tournamentStore.list.meta.last_page;
-        return;
-    }
+    // if (pathname.value === "upcoming") {
+    //     await tournamentStore.getList(loadPage.value, pathname.value);
+    //     upcomingEventCollection.value.push(...tournamentStore.list.data);
+    //     lastPage.value = tournamentStore.list.meta.last_page;
+    //     return;
+    // }
 }
 
 async function eventViewing(pathname) {
@@ -83,7 +83,9 @@ async function eventViewing(pathname) {
     if (pathname === undefined || pathname === "live") {
         await tournamentStore.getList(1, "live");
         liveEventCollection.value = tournamentStore.list.data;
-        lastPage.value = tournamentStore.list.meta.last_page;
+        await tournamentStore.getList(1, "upcoming");
+        liveEventCollection.value.push(...tournamentStore.upcoming.data);
+        lastPage.value = tournamentStore.upcoming.meta.last_page;
         return;
     }
 
@@ -94,12 +96,12 @@ async function eventViewing(pathname) {
         return;
     }
 
-    if (pathname === "upcoming") {
-        await tournamentStore.getList(1, pathname);
-        upcomingEventCollection.value = tournamentStore.list.data;
-        lastPage.value = tournamentStore.list.meta.last_page;
-        return;
-    }
+    // if (pathname === "upcoming") {
+    //     await tournamentStore.getList(1, pathname);
+    //     upcomingEventCollection.value = tournamentStore.list.data;
+    //     lastPage.value = tournamentStore.list.meta.last_page;
+    //     return;
+    // }
 }
 
 onMounted(() => {
