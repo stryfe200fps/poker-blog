@@ -61,7 +61,7 @@ class Day extends Model implements HasMedia
 
     public function whatsapp_event_chips()
     {
-        return $this->event_chips()->orderBy('date_published', 'DESC')->get();
+        return $this->event_chips()->where('is_whatsapp', true)->orderBy('date_published', 'DESC')->get();
     }
 
     protected static function booted()
