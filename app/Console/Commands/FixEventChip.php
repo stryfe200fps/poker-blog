@@ -35,7 +35,7 @@ class FixEventChip extends Command
             $eventReport = EventReport::find($chip->event_report_id);
             if ($eventReport?->day_id  !== null && $eventReport?->day_id !== 0) {
                 $chip->day_id =  $eventReport->day_id;
-                // dump($eventReport?->day_id);
+                $chip->save();
             }
         }
 
