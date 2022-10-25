@@ -47,4 +47,9 @@ class Day extends Model implements HasMedia
         return $this->hasMany(EventChip::class);
     }
 
+    public function latest_event_chips()
+    {
+        return $this->event_chips()->orderBy('date_published', 'DESC')->get()->flatten()->unique('player_id')->sortByDesc('current_chips');
+    }
+
 }

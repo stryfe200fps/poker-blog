@@ -6,18 +6,15 @@ use App\Models\Event;
 use Illuminate\Http\Request;
 use App\Http\Resources\EventChipsResource;
 use App\Http\Resources\LOFApiEventIndexChipCountResource;
+use App\Models\Day;
 
 class ChipController extends Controller
 {
     //
-    public function event($slug)
+    public function event_chip($id)
     {
-        $event = Event::where('slug', $slug)->firstOrFail();
-        
-        return collect(EventChipsResource::collection($event->latest_event_chips()));
-
-        // return collect(EventChipsResource::collection($event->latest_event_chips->sortByDesc('date_published')
-        //  ->unique('player_id')))->sortByDesc('current_chips')->values()->all();
+        $day = Day::find($id);
+        return collect(EventChipsResource::collection($day->latest_event_chips()));
 
     }
 }
