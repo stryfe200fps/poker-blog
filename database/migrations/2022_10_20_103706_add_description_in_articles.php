@@ -13,9 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
+        try { 
         Schema::table('articles', function (Blueprint $table) {
             $table->text('description');
         });
+        } catch (Exception $e) {
+
+        }
 
         DB::statement("ALTER TABLE `articles` MODIFY COLUMN `created_at` DATE AFTER `description`");
         DB::statement("ALTER TABLE `articles` MODIFY COLUMN `updated_at` DATE AFTER `created_at`");

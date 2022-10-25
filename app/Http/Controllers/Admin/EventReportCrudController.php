@@ -47,14 +47,14 @@ class EventReportCrudController extends CrudController
         $this->crud->denyAccess('show');
 
         if (request()->get('event') || session()->get('event_id')) {
-            if (request()->get('event') !== null) {
+            if (request()->get('event') !== null && request()->get('day') !== null) {
                 session()->put('event_id', request()->get('event'));
                 session()->put('event_day', request()->get('day'));
             }
 
             $getEvent = Event::where('id', session()->get('event_id'))->first();
             $getDay = Day::where('id', session()->get('event_day'))->first();
-            CRUD::setEntityNameStrings('report', $getEvent?->title. ' - Day ' .$getDay?->name);
+            CRUD::setEntityNameStrings('report', $getEvent?->title. ' - Day: ' .$getDay?->name);
         } else {
 
             $this->crud->denyAccess('create');
@@ -78,6 +78,11 @@ class EventReportCrudController extends CrudController
 
     protected function setupListOperation()
     {
+        // if (request()->get('event') !== null && request()->get('day') !== null) {
+        //         session()->put('event_id', request()->get('event'));
+        //         session()->put('event_day', request()->get('day'));
+        // }
+
         $this->crud->disableResponsiveTable();
         Widget::add()->to('after_content')->type('view')->view('vendor.backpack.helper.live_report'); // widgets to show the ordering card
         $this->crud->addClause('where', 'event_id', session()->get('event_id'));
@@ -327,7 +332,7 @@ class EventReportCrudController extends CrudController
                 'subfields' => [
                     [
                         'name' => 'id',
-                        'type' => 'text'
+                        'type' => 'hidden'
                     ],
                     [
                         'label' => 'Player',
@@ -444,10 +449,9 @@ public function fetchTags()
     {
         $this->crud->hasAccessOrFail('create');
 
-        if (request()->get('day') == 0) {
-            \Alert::add('error', 'This event schedule hasn\'t has not started yet,')->flash();
-            // return back();
-        }
+        // if (request()->get('day') == 0) {
+        //     \Alert::add('error', 'This event schedule hasn\'t has not started yet,')->flash();
+        // }
 
         $players = request()->get('players');
 

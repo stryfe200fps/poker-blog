@@ -47,6 +47,7 @@ class TagCrudController extends CrudController
     {
         $this->crud->disableResponsiveTable();
         CRUD::column('title');
+        CRUD::column('slug');
         /**
          * Columns can be defined using the fluent syntax or array syntax:
          * - CRUD::column('price')->type('number');
@@ -66,6 +67,13 @@ class TagCrudController extends CrudController
         CRUD::setValidation(TagRequest::class);
 
         CRUD::field('title');
+        $this->crud->addField([
+            'name' => 'slug',
+            'attributes' => [
+                'placeholder' => config('app.slug_placeholder'),
+            ],
+            'type' => 'text',
+        ]);
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:
@@ -84,5 +92,6 @@ class TagCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
+
     }
 }

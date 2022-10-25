@@ -40,6 +40,8 @@ class DayCrudController extends CrudController
      */
     public function setup()
     {
+
+        $this->crud->denyAccess('show');
         CRUD::setModel(\App\Models\Day::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/day');
         CRUD::setEntityNameStrings('day', 'days');

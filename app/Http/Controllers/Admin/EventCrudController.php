@@ -114,45 +114,6 @@ class EventCrudController extends CrudController
             // 'allows_multiple' => true, // OPTIONAL; needs you to cast this to array in your model;
         ]);
 
-        $this->crud->addField([
-            'name' => 'schedule',
-            'label' => 'Schedule',
-            'type' => 'repeatable',
-            'new_item_label' => 'add day',
-            'tab' => 'Days',
-            'subfields' => [
-
-                [
-                    'label' => 'Day',
-                    'tooltip' => 'example: 1A',
-                    'name' => 'day',
-                    'type' => 'text',
-                    'wrapper' => [
-                        'class' => 'form-group col-md-6',
-                    ],
-                ],
-
-                [   // date_range
-                    'name' => ['date_start', 'date_end'], // db columns for start_date & end_date
-                    'label' => 'Day Duration',
-                    'type' => 'date_range',
-                    'wrapper' => [
-                        'class' => 'form-group col-md-6',
-                    ],
-                    'default' => [Carbon::now()->setTimezone(session()->get('timezone') ?? 'UTC'), Carbon::now()->setTimezone(session()->get('timezone') ?? 'UTC')->addDays(2)],
-                    // options sent to daterangepicker.js
-                    'date_range_options' => [
-                        'drops' => 'down', // can be one of [down/up/auto]
-                        'timePicker' => true,
-                        'locale' => ['format' => 'MMM D, YYYY hh:mm a'],
-                    ],
-                ],
-
-            ],
-            'init_rows' => 0,
-        ],
-        );
-
         // $this->crud->addField([
         //     'name' => 'custom-ajax-button',
         //     'type' => 'view',

@@ -30,7 +30,7 @@ class EventReportsController extends Controller
     public function index(Request $request)
     {
         $day = Day::find($request->only('day')['day']);
-        return new ReportCollection($day->event_reports()->orderBy('date_added', 'DESC')->paginate(10));
+        return new ReportCollection($day->event_reports()->where('event_id', $day->event_id)->orderBy('date_added', 'DESC')->paginate(10));
     }
 
     public function create()

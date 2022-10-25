@@ -237,10 +237,12 @@ class EventReport extends Model implements HasMedia
         });
 
         static::updating(function ($model) {
-            $model->slug = Str::slug($model->slug);
-        });
-
-        static::updated(function ($updatedEvent) {
+            $report = EventReport::find($model->id);
+            if ($model->title !== $report->title) {
+                $model->slug = $report->slug;
+            } else {
+                $model->slug = Str::slug($model->slug);
+            }
         });
 
         // static::created(function ($createdEventReport) {

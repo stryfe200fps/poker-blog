@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Tag extends Model
 {
@@ -32,6 +33,28 @@ class Tag extends Model
     public function event_reports()
     {
         return $this->morphedByMany(EventReport::class, 'taggable');
+    }
+
+        protected static function booted()
+        {
+        static::creating(function ($model) {
+            if ($model->slug == '') {
+                return;
+            }
+
+            $model->slug = Str::slug($model->slug);
+        });
+
+        static::updating(function ($model) {
+            $tag = Tag::find($model->id);
+            if ($model->title !== $tag->title) {
+                $model->slug = $tag->slug;
+            } else {
+                $model->slug = Str::slug($model->slug);
+            }
+        });
+
+
     }
 
     // public function tags()

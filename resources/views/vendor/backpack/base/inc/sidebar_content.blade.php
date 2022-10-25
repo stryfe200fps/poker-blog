@@ -117,8 +117,6 @@
 </li>
 
 
-
-
 <!-- <li class="nav-item"><a class="nav-link" href="{{ backpack_url('event-schedule') }}"><i class="nav-icon la la-question"></i> Event schedules</a></li> -->
 
 
@@ -145,4 +143,4 @@
     margin-left:15.4px;
 }
 </style>
-<li class="nav-item"><a class="nav-link" href="{{ backpack_url('day') }}"><i class="nav-icon la la-question"></i> Days</a></li>
+<!-- <li class="nav-item"><a class="nav-link" href="{{ backpack_url('day') }}"><i class="nav-icon la la-question"></i> Days</a></li> -->

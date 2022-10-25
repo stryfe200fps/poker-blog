@@ -354,17 +354,23 @@ class Event extends Model implements HasMedia
 
     protected static function booted()
     {
-        static::created(function ($model) {
+        static::creating(function ($model) {
             if ($model->slug == '') {
                 return;
             }
 
             $model->slug = Str::slug($model->slug);
-            $model->save();
         });
 
         static::updating(function ($model) {
-            $model->slug = Str::slug($model->slug);
+            $article = Event::find($model->id);
+            if ($model->title !== $article->title) {
+                $model->slug = $article->slug;
+            } else {
+                $model->slug = Str::slug($model->slug);
+            }
         });
+
+
     }
 }

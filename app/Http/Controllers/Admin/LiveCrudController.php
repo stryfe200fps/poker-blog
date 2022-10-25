@@ -59,7 +59,11 @@ class LiveCrudController extends CrudController
     {
         $this->crud->disableResponsiveTable();
         CRUD::column('title');
-        $this->crud->addButtonFromModelFunction('line', 'open_google', 'openLiveReporting', 'beginning');
+        $this->crud->addButtonFromModelFunction('line', 'openLevel', 'openLevel', 'beginning');
+        $this->crud->addButtonFromModelFunction('line', 'open_payout', 'openPayout', 'beginning');
+        // $this->crud->addButtonFromModelFunction('line', 'open_chip_count', 'openChipCount', 'beginning');
+        // TODO: Chips should be part of days
+        $this->crud->addButtonFromModelFunction('line', 'days', 'openDay', 'beginning');
     }
 
     protected function setupCreateOperation()
