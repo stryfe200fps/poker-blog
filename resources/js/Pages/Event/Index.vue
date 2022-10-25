@@ -145,7 +145,7 @@ async function reportViewing(pathname) {
     }
 
     if (pathname === "chip-stack") {
-        await eventStore.getChipCountsData(eventData.value.slug);
+        await eventStore.getChipCountsData(selectDay.value);
         chipCountsData.value = eventStore.chipCounts;
         return;
     }

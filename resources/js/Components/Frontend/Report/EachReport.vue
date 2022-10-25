@@ -170,17 +170,14 @@
                         </td>
                         <td
                             class="text-center hide-on-tablet"
-                            v-if="
-                                item.player?.name != null &&
-                                item.player?.country
-                            "
+                            v-if="item.player?.name && item.player?.country"
                         >
-                            <!-- <CountryFlag
-                                :title="item.player?.country?.name"
-                                :iso="item.player?.country?.iso_3166_2"
-                            /> -->
+                            <CountryFlag
+                                :title="item.player?.country"
+                                :iso="item.player?.flag"
+                            />
                         </td>
-                        <td class="text-center hide-on-tablet" v-else></td>
+                        <td class="text-center hide-on-tablet" v-else>?</td>
                         <td v-if="item.player?.name != null" class="text-right">
                             {{
                                 item.current_chips === 0
