@@ -17,4 +17,10 @@ class ChipController extends Controller
         return collect(EventChipsResource::collection($day->latest_event_chips()));
 
     }
+
+    public function whatsapp($id)
+    {
+        $day = Day::find($id);
+        return collect(EventChipsResource::collection($day->latest_event_chips()->where('is_whatsapp', true)));
+    }
 }

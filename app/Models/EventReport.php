@@ -245,6 +245,8 @@ class EventReport extends Model implements HasMedia
             }
         });
 
+
+
         // static::created(function ($createdEventReport) {
 
         //     $createdEventReport->slug = Str::slug($createdEventReport->slug);
@@ -284,7 +286,6 @@ class EventReport extends Model implements HasMedia
         //         }
         //     }
 
-        // NewReport::dispatch('new report');
         // });
     }
 }

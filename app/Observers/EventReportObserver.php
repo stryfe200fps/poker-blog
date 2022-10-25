@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Events\NewReport;
 use App\Models\EventChip;
 use App\Models\EventPayout;
 use Illuminate\Support\Facades\DB;
@@ -36,12 +37,9 @@ class EventReportObserver
 
                         }
                     }
-
-
+                    NewReport::dispatch('new report');
                 }
-
             } 
-           
 
         }
 }
