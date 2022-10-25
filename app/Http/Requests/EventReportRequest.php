@@ -31,6 +31,7 @@ class EventReportRequest extends FormRequest
             ],
             'slug' => 'unique:event_reports,slug,'.\Request::get('id'),
             'content' => 'required',
+            'type' => 'required',
 
             'level' => 'required',
         ];
