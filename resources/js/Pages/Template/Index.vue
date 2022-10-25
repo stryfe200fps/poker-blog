@@ -140,6 +140,14 @@ async function submitMessage() {
     padding: unset !important;
 }
 
+:deep(.post-content h2) {
+    padding: 0;
+}
+
+:deep(.post-content ol li) {
+    list-style: decimal;
+}
+
 .contact-email,
 .contact-subject {
     display: block;
