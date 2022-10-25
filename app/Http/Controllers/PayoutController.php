@@ -13,7 +13,7 @@ class PayoutController extends Controller
     {
         try {
             $payout = EventPayout::where('player_id', $player_id)->where('event_id', $event)->firstOrFail();
-            return $payout?->prize ?? '';
+            return $payout ?? '';
         } catch (Exception $e) {
             return '';
         }

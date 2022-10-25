@@ -370,7 +370,5 @@ class Event extends Model implements HasMedia
                 $model->slug = Str::slug($model->slug);
             }
         });
-
-
     }
 }

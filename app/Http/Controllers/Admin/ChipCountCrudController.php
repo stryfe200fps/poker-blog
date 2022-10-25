@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\ChipCountRequest;
+use App\Models\Day;
 use App\Models\Event;
+use Illuminate\Http\Request;
+use App\Http\Requests\ChipCountRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
-use Illuminate\Http\Request;
 
 /**
  * Class ChipCountCrudController
@@ -35,11 +36,14 @@ class ChipCountCrudController extends CrudController
         CRUD::setEntityNameStrings('chip count', 'chip counts');
 
         if (request()->get('event') || session()->get('event_id')) {
-            if (request()->get('event') !== null) {
+            if (request()->get('event') !== null && request()->get('day') !== null) {
                 session()->put('event_id', request()->get('event'));
+                session()->put('event_day', request()->get('day'));
             }
 
             $getEvent = Event::where('id', session()->get('event_id'))->first();
+            $getDay = Day::where('id', session()->get('event_day'))->first();
+            CRUD::setEntityNameStrings('report', $getEvent?->title. ' - Day: ' .$getDay?->name);
 
             if ($getEvent === null) {
                 \Alert::error('Dates is incorrect')->flash();
@@ -47,10 +51,8 @@ class ChipCountCrudController extends CrudController
                 return back();
             }
             $this->crud->query = $this->crud->query
-            ->where('event_id', session()->get('event_id'))
-            ->where('event_report_id', 0)
-            ->orderByDesc('date_published')
-            ->lastPerGroup(['player_id']);
+            ->where('day_id', session()->get('event_day'))
+            ->orderByDesc('date_published');
 
             CRUD::setEntityNameStrings('chips', $getEvent->title);
         } else {
@@ -145,6 +147,8 @@ class ChipCountCrudController extends CrudController
             'auto_update_row' => true, // update related columns in same row, after the AJAX call?
         ]);
 
+
+
         CRUD::addColumn([
             'name' => 'is_whatsapp',
             'label' => 'Whatsapp',
@@ -152,6 +156,12 @@ class ChipCountCrudController extends CrudController
             'color' => 'success',
             'onLabel' => '✓',
             'offLabel' => '✕',
+        ]);
+
+     $this->crud->addColumn([
+            'name' => 'date_published',
+            'type' => 'datetime',
+            'label' => 'Date',
         ]);
 
         /**
@@ -180,10 +190,10 @@ class ChipCountCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'name' => 'event_id',
+            'name' => 'day_id',
             'type' => 'hidden',
             'label' => 'Player',
-            'value' => session()->get('event_id'),
+            'value' => session()->get('event_day'),
         ]);
 
         $this->crud->addField([
@@ -216,6 +226,8 @@ class ChipCountCrudController extends CrudController
                 ],
             ]
         );
+
+   
 
         // $this->crud->addField([
         //     'name' =>  'current_chips',

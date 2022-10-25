@@ -92,6 +92,7 @@ class DayCrudController extends CrudController
         CRUD::column('date_end')->type('date')
             ->format(config('app.date_format'));
         $this->crud->addButtonFromModelFunction('line', 'openReport', 'openReport', 'beginning');
+        $this->crud->addButtonFromModelFunction('line', 'openChipCount', 'openChipCount', 'beginning');
     }
 
 

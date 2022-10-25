@@ -19,7 +19,6 @@ class EventReportObserver
                         'day_id' => $model->day_id,
                         'date_published' => $model->date_added,
                         'player_id' => $eventChipPlayer['player_id'],
-                        'is_whatsapp' => $eventChipPlayer['is_whatsapp'],
                         'current_chips' => $eventChipPlayer['current_chips'],
                     ]);
 
@@ -27,6 +26,7 @@ class EventReportObserver
                         if (EventPayout::where('event_id', $model->event_id)->where('player_id', $eventChipPlayer['player_id'])->count() > 0) {
                             $eventPayout = EventPayout::where('event_id', $model->event_id)->where('player_id', $eventChipPlayer['player_id'])->firstOrFail();
                             $eventPayout->prize = $eventChipPlayer['payout'];
+                            $eventPayout->position = $eventChipPlayer['position'];
                             $eventPayout->save();
                         } else {
                             EventPayout::create([

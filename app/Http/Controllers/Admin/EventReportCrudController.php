@@ -256,18 +256,6 @@ class EventReportCrudController extends CrudController
                     'class' => 'form-group col-md-12',
                 ],
             ],
-            [
-                'label' => 'Schedule',
-                'name' => 'labelSchedule',
-                'type' => 'text',
-                // 'value' => $event?->currentDateSchedule(),
-                'value' => 'testing',
-                'wrapper' => [
-                    'class' => 'form-group col-md-10',
-                ],
-
-            ],
-            
 
             [
                 'label' => 'Media',
@@ -354,9 +342,15 @@ class EventReportCrudController extends CrudController
                     ],
 
                     [   //image
-                        'label' => 'is whatsapp source?',
-                        'name' => 'is_whatsapp',
-                        'type' => 'switch',
+                        'name' => 'divider',
+                        'type' => 'custom_html',
+                        'value' => '<hr>'
+                    ],
+
+                    [   //image
+                        'name' => 'divider',
+                        'type' => 'custom_html',
+                        'value' => '<b>Payout</b>'
                     ],
                     [   //image
                         'label' => 'Rank',
@@ -364,11 +358,17 @@ class EventReportCrudController extends CrudController
                         'type' => 'hidden',
                         'value' => '',
                     ],
+                    [
+                        'label' => 'Position',
+                        'name' => 'position',
+                        'value' => '',
+                        'type' => 'number',
+                    ],
                     [   //image
                         'label' => 'Payout',
                         'name' => 'payout',
                         'value' => '',
-                        'type' => 'text',
+                        'type' => 'number',
                     ],
                 ],
                 'init_rows' => 0,

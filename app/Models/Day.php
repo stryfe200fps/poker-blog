@@ -32,6 +32,13 @@ class Day extends Model implements HasMedia
         return '<a class="btn btn-sm btn-link"  href="report?day='.urlencode($this->attributes['id']).'&event='.urlencode($this->attributes['event_id']).'" data-toggle="tooltip" title="Days"><i class="fa fa-search"></i> Report  </a>';
     }
 
+    public function openChipCount($crud = false)
+    {
+        return '<a class="btn btn-sm btn-link"  href="chip-count?day='.urlencode($this->attributes['id']).'&event='.urlencode($this->attributes['event_id']).'"><i class="fa fa-search"></i> Chip Counts  </a>';
+    }
+
+
+
     public function event_reports()
     {
         return $this->hasMany(EventReport::class);
@@ -50,6 +57,19 @@ class Day extends Model implements HasMedia
     public function latest_event_chips()
     {
         return $this->event_chips()->orderBy('date_published', 'DESC')->get()->flatten()->unique('player_id')->sortByDesc('current_chips');
+    }
+
+    protected static function booted()
+    {
+
+        static::deleting(function ($model) {
+
+            if ($model->event_reports()->count()) {
+
+            }
+
+        });
+
     }
 
 }

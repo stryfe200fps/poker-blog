@@ -181,6 +181,12 @@ class PayoutCrudController extends CrudController
             }),
         ]);
 
+     $this->crud->addField([
+            'name' => 'position',
+            'label' => 'Position',
+            'type' => 'number',
+        ]);
+
         $this->crud->addField([
             'name' => 'prize',
             'label' => 'Prize',
@@ -198,11 +204,7 @@ class PayoutCrudController extends CrudController
         //     ],
         // ]);
 
-        $this->crud->addField([
-            'name' => 'position',
-            'label' => 'Position',
-            'type' => 'number',
-        ]);
+   
     }
 
     protected function setupUpdateOperation()
