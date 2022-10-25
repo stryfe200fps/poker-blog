@@ -312,6 +312,19 @@ watch(
     padding-left: unset;
 }
 
+.content table {
+    width: 100%;
+    margin-bottom: 10px;
+    border: 1px solid #95a5a662;
+}
+
+.content table tr td {
+    padding: 5px 10px;
+    font-family: Lato, sans-serif;
+    font-size: 14px;
+    background-color: #fbfbfb;
+}
+
 .post-gallery {
     float: none !important;
     margin-right: 0 !important;
