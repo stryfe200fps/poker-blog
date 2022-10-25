@@ -28,7 +28,7 @@ async function submitEmail() {
 </script>
 
 <template>
-    <footer style="background: #2d3436">
+    <footer style="background-color: #2d3436">
         <div class="container">
             <div class="footer-widgets-part">
                 <div class="row">
@@ -95,10 +95,18 @@ async function submitEmail() {
                                         ><i class="fa-brands fa-youtube"></i
                                     ></a>
                                 </li>
-                                <!-- <li><a href="#" class="whatsapp-hover"><i class="fa-brands fa-whatsapp"></i></a></li> -->
                                 <!-- <li>
-                                    <a href="#" class="whatsapp-hover" style="border: none"><i
-                                            class="fa-brands fa-spotify"></i></a>
+                                    <a href="#" class="whatsapp-hover"
+                                        ><i class="fa-brands fa-whatsapp"></i
+                                    ></a>
+                                </li>
+                                <li>
+                                    <a
+                                        href="#"
+                                        class="whatsapp-hover"
+                                        style="border: none"
+                                        ><i class="fa-brands fa-spotify"></i
+                                    ></a>
                                 </li> -->
                             </ul>
                         </div>
@@ -131,73 +139,47 @@ async function submitEmail() {
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="widget most-posts-widget">
+                        <div class="widget categories-widget">
                             <h1 style="color: white; border-color: #999">
-                                Quick Links
+                                Help Center
                             </h1>
-                            <div class="row"></div>
-                            <ul
-                                class="col-md-6 list-unstyled"
-                                style="padding-left: unset"
-                            >
-                                <li
-                                    class="footer-links"
-                                    style="margin-bottom: 1rem"
-                                >
-                                    <Link href="/about" style="color: white"
-                                        >About Us</Link
+                            <ul class="category-list">
+                                <li>
+                                    <Link href="/terms"
+                                        >Terms & Conditions</Link
                                     >
                                 </li>
-                                <li
-                                    class="footer-links"
-                                    style="margin-bottom: 1rem"
-                                >
-                                    <a href="#" style="color: white">News</a>
+                                <li>
+                                    <Link href="/disclaimer">Disclaimer</Link>
                                 </li>
-                                <li
-                                    class="footer-links"
-                                    style="margin-bottom: 1rem"
-                                >
-                                    <a href="#" style="color: white"
-                                        >Live Reporting</a
+                                <li>
+                                    <Link href="/cookie">Cookie Policy</Link>
+                                </li>
+                                <li>
+                                    <Link href="/privacy">Privacy Policy</Link>
+                                </li>
+                                <li>
+                                    <Link href="/acceptable-use"
+                                        >Acceptable Use Policy</Link
                                     >
                                 </li>
-                                <li
-                                    class="footer-links"
-                                    style="margin-bottom: 1rem"
-                                >
-                                    <a href="#" style="color: white"
-                                        >Event Calendar</a
+                                <li>
+                                    <Link href="/dmca">DMCA Policy</Link>
+                                </li>
+                                <li>
+                                    <Link href="/guest-post"
+                                        >Guest Post Policy</Link
                                     >
                                 </li>
-                                <li
-                                    class="footer-links"
-                                    style="margin-bottom: 1rem"
-                                >
-                                    <a href="#" style="color: white">Contact</a>
+                                <li>
+                                    <Link href="/refund">Refund Policy</Link>
                                 </li>
-
-                                <!-- <li class="footer-links" style="margin-bottom: 1rem">
-                                    <a href="#" style="color: white">Videos</a>
+                                <li>
+                                    <Link href="/responsible-gambling"
+                                        >Responsible Gambling</Link
+                                    >
                                 </li>
-                                <li class="footer-links" style="margin-bottom: 1rem">
-                                    <a href="#" style="color: white">Promotions</a>
-                                </li>
-                                <li class="footer-links" style="margin-bottom: 1rem">
-                                    <a href="#" style="color: white">Contact</a>
-                                </li> -->
                             </ul>
-                            <!-- <ul class="col-md-6 list-unstyled">
-                                <li class="footer-links" style="margin-bottom: 1rem">
-                                    <a href="#" style="color: white">News</a>
-                                </li>
-                                <li class="footer-links" style="margin-bottom: 1rem">
-                                    <a href="#" style="color: white">Leaderboards</a>
-                                </li>
-                                <li class="footer-links" style="margin-bottom: 1rem">
-                                    <a href="#" style="color: white">Events</a>
-                                </li>
-                            </ul> -->
                         </div>
                     </div>
                 </div>
@@ -211,15 +193,24 @@ async function submitEmail() {
                         <nav class="footer-nav">
                             <ul>
                                 <li>
-                                    <Link href="/terms"
-                                        >Terms & Conditions</Link
+                                    <Link href="/news">News & Info</Link>
+                                </li>
+                                <li>
+                                    <Link href="/tournament"
+                                        >Live Reporting</Link
                                     >
                                 </li>
-                                <li><Link href="/privacy">Privacy</Link></li>
                                 <li>
-                                    <Link href="/disclaimer">Disclaimer</Link>
+                                    <Link href="/event-calendar"
+                                        >Event Calendar</Link
+                                    >
                                 </li>
-                                <!-- <li><a href="contact.html">Contact</a></li> -->
+                                <li>
+                                    <Link href="/about">About Us</Link>
+                                </li>
+                                <li>
+                                    <Link href="/contact">Contact</Link>
+                                </li>
                             </ul>
                         </nav>
                     </div>
@@ -250,6 +241,10 @@ footer .social-widget ul.social-icons li a.whatsapp-hover:hover {
 
 footer .social-widget ul.social-icons li a {
     border: 1px solid #333333;
+}
+
+footer .categories-widget ul.category-list li a {
+    padding: 0;
 }
 
 .subscribe-email {
