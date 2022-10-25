@@ -40,7 +40,7 @@ class EventCrudController extends CrudController
         CRUD::setModel(\App\Models\Event::class);
         CRUD::setRoute(config('backpack.base.route_prefix').'/events');
         CRUD::setEntityNameStrings('event', 'events');
-        $this->crud->enableDetailsRow();
+        // $this->crud->enableDetailsRow();
         $this->denyAccessIfNoPermission();
     }
 
@@ -54,6 +54,7 @@ class EventCrudController extends CrudController
     protected function setupListOperation()
     {
         $this->crud->disableResponsiveTable();
+
         CRUD::column('title');
         CRUD::column('tournament')->label('Series');
         CRUD::column('tournament.timezone')->label('Series Timezone');

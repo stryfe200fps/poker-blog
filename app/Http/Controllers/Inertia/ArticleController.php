@@ -6,6 +6,7 @@ use Inertia\Inertia;
 use App\Models\Article;
 use App\Models\EventReport;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ArticleResource;
 use App\Http\Resources\LOFApiEventReportsResource;
 
 class ArticleController extends Controller
@@ -70,6 +71,10 @@ class ArticleController extends Controller
     return Inertia::render('Tag/TagArticle', [
         'slug' => $slug,
     ]);
-}
+    }
+
+    public function article($slug) {
+        return new ArticleResource(Article::where('slug', $slug));
+    }
 
 }

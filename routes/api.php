@@ -28,6 +28,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::resource('article', ArticleController::class);
 Route::get('article/{slug}/related', [ArticleController::class, 'related']);
+Route::get('article/{slug}', [ArticleController::class, 'article']);
 
 Route::get('article/category/{slug}', [ArticleController::class, 'articleCategory']);
 
