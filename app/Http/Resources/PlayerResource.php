@@ -19,7 +19,7 @@ class PlayerResource extends JsonResource
             'pseudonym' => $this->pseudonym,
             'avatar'=> $this->avatar,
             'country' => $this->country?->name,
-            'flag' => $this->iso_3166_2
+            'flag' => $this->country?->iso_3166_2
         ];
     }
 }

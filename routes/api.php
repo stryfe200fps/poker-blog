@@ -84,7 +84,7 @@ Route::get('payout/player/{player_id}/event/{event}', [PayoutController::class, 
 Route::get('payout/event/{slug}', [PayoutController::class, 'event_payout']);
 Route::get('chip/day/{id}', [ChipController::class, 'event_chip']);
 Route::get('gallery/day/{id}', [GalleryController::class, 'gallery']);
-
+// Route::get('whatsapp/day/{id}', [Whatsapp::class, 'event_chip']);
 
 
 Route::get('admin/attach-image/{id}', function ($id) {
