@@ -145,18 +145,15 @@ async function submitEmail() {
                             </h1>
                             <ul class="category-list">
                                 <li>
-                                    <Link href="/terms"
-                                        >Terms & Conditions</Link
-                                    >
-                                </li>
-                                <li>
-                                    <Link href="/disclaimer">Disclaimer</Link>
+                                    <Link href="/news">News & Info</Link>
                                 </li>
                                 <li>
                                     <Link href="/cookie">Cookie Policy</Link>
                                 </li>
                                 <li>
-                                    <Link href="/privacy">Privacy Policy</Link>
+                                    <Link href="/tournament"
+                                        >Live Reporting</Link
+                                    >
                                 </li>
                                 <li>
                                     <Link href="/acceptable-use"
@@ -164,7 +161,15 @@ async function submitEmail() {
                                     >
                                 </li>
                                 <li>
+                                    <Link href="/event-calendar"
+                                        >Event Calendar</Link
+                                    >
+                                </li>
+                                <li>
                                     <Link href="/dmca">DMCA Policy</Link>
+                                </li>
+                                <li>
+                                    <Link href="/about">About Us</Link>
                                 </li>
                                 <li>
                                     <Link href="/guest-post"
@@ -172,8 +177,14 @@ async function submitEmail() {
                                     >
                                 </li>
                                 <li>
+                                    <Link href="/contact">Contact</Link>
+                                </li>
+                                <li>
                                     <Link href="/refund">Refund Policy</Link>
                                 </li>
+                                <li
+                                    style="opacity: 0; pointer-events: none"
+                                ></li>
                                 <li>
                                     <Link href="/responsible-gambling"
                                         >Responsible Gambling</Link
@@ -193,23 +204,15 @@ async function submitEmail() {
                         <nav class="footer-nav">
                             <ul>
                                 <li>
-                                    <Link href="/news">News & Info</Link>
-                                </li>
-                                <li>
-                                    <Link href="/tournament"
-                                        >Live Reporting</Link
+                                    <Link href="/terms"
+                                        >Terms & Conditions</Link
                                     >
                                 </li>
                                 <li>
-                                    <Link href="/event-calendar"
-                                        >Event Calendar</Link
-                                    >
+                                    <Link href="/privacy">Privacy Policy</Link>
                                 </li>
                                 <li>
-                                    <Link href="/about">About Us</Link>
-                                </li>
-                                <li>
-                                    <Link href="/contact">Contact</Link>
+                                    <Link href="/disclaimer">Disclaimer</Link>
                                 </li>
                             </ul>
                         </nav>
