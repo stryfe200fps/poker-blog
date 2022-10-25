@@ -57,8 +57,8 @@ class EventCrudController extends CrudController
         CRUD::column('title');
         CRUD::column('tournament')->label('Series');
         CRUD::column('tournament.timezone')->label('Series Timezone');
-        CRUD::column('event_date_start')->type('date')->format(config('app.date_format'))->label('Start date');
-        CRUD::column('event_date_end')->type('date')->format(config('app.date_format'))->label('End date');
+        // CRUD::column('event_date_start')->type('date')->format(config('app.date_format'))->label('Start date');
+        // CRUD::column('event_date_end')->type('date')->format(config('app.date_format'))->label('End date');
         $this->crud->addButtonFromModelFunction('line', 'openLevel', 'openLevel', 'beginning');
         $this->crud->addButtonFromModelFunction('line', 'open_payout', 'openPayout', 'beginning');
         // $this->crud->addButtonFromModelFunction('line', 'open_chip_count', 'openChipCount', 'beginning');
@@ -151,10 +151,7 @@ class EventCrudController extends CrudController
             $id = session()->put('event_id', $id);
         }
         $this->setupCreateOperation();
-
         // Widget::add()->to('after_content')->type('view')->view('vendor.backpack.helper.excel.uploader')->eventId($id); // widgets to show the ordering card
-
-
     }
 
     public function store(Request $request)
