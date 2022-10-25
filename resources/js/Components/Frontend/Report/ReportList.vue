@@ -30,6 +30,17 @@
             </li>
             <li
                 @click="changeTab(currentTab)"
+                :class="{ active: currentTab == 'whatsapp' }"
+            >
+                <Link
+                    :href="'/event/' + event.slug + '/whatsapp'"
+                    data-toggle="tab"
+                    preserve-state
+                    >#WHATSAPP</Link
+                >
+            </li>
+            <li
+                @click="changeTab(currentTab)"
                 :class="{ active: currentTab == 'gallery' }"
             >
                 <Link
@@ -48,18 +59,6 @@
                     data-toggle="tab"
                     preserve-state
                     >PAYOUTS</Link
-                >
-            </li>
-
-            <li
-                @click="changeTab(currentTab)"
-                :class="{ active: currentTab == 'whatsapp' }"
-            >
-                <Link
-                    :href="'/event/' + event.slug + '/whatsapp'"
-                    data-toggle="tab"
-                    preserve-state
-                    >#WHATSAPP</Link
                 >
             </li>
         </ul>
@@ -143,12 +142,11 @@
                                     v-if="stack?.player?.country"
                                 >
                                     {{ stack?.player?.country }}
-                                    <!-- <CountryFlag
-                                        :title="stack?.player?.country?.name"
-                                        :iso="
-                                            stack?.player?.country?.iso_3166_2
-                                        "
-                                    /> -->
+
+                                    <CountryFlag
+                                        :title="stack?.player?.country"
+                                        :iso="stack?.player?.flag"
+                                    />
                                 </td>
                                 <td class="text-center hide-on-tablet" v-else>
                                     ?
@@ -258,17 +256,13 @@
                                     <span v-else>N/A</span>
                                 </td>
                                 <td class="text-center hide-on-mobile">
-                                    {{ payout.player.country }}
-                                    <!-- <span v-if="payout.player?.country">
+                                    <span v-if="payout.player?.country">
                                         <CountryFlag
                                             :title="payout.player?.country"
-                                            :iso="
-                                                payout.player?.country
-                                                    ?.iso_3166_2
-                                            "
+                                            :iso="payout.player?.flag"
                                         />
                                     </span>
-                                    <span v-else>N/A</span> -->
+                                    <span v-else>?</span>
                                 </td>
                                 <td class="text-right">
                                     <span v-html="event.currency.prefix">

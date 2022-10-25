@@ -52,10 +52,10 @@ export const useEventStore = defineStore("event", {
         //     );
         //     this.chipCounts = data;
         // },
-        async getChipCountsData(slug) {
+        async getChipCountsData(day) {
             try {
                 // if (this.chipCounts.length) return;
-                const { data } = await axios.get("/api/chip/event/" + slug);
+                const { data } = await axios.get("/api/chip/day/" + day);
                 this.chipCounts = data;
             } catch (error) {
                 console.error(error);
