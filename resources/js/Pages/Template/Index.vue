@@ -145,7 +145,17 @@ async function submitMessage() {
 }
 
 :deep(.post-content ol li) {
+    font-size: 16px;
     list-style: decimal;
+}
+
+:deep(.post-content ul li) {
+    font-size: 16px;
+    list-style: disc;
+}
+
+:deep(.post-content ol li a) {
+    color: #f44336;
 }
 
 .contact-email,
