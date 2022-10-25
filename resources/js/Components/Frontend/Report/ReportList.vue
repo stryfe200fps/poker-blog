@@ -141,8 +141,102 @@
                                     class="text-center hide-on-tablet"
                                     v-if="stack?.player?.country"
                                 >
-                                    {{ stack?.player?.country }}
-
+                                    <CountryFlag
+                                        :title="stack?.player?.country"
+                                        :iso="stack?.player?.flag"
+                                    />
+                                </td>
+                                <td class="text-center hide-on-tablet" v-else>
+                                    ?
+                                </td>
+                                <td
+                                    v-if="stack.report_id == null"
+                                    class="text-right"
+                                >
+                                    {{ stack.current_chips.toLocaleString() }}
+                                </td>
+                                <td v-else class="text-right">
+                                    {{
+                                        stack.current_chips === 0
+                                            ? "BUSTED"
+                                            : stack.current_chips.toLocaleString()
+                                    }}
+                                </td>
+                                <!-- <td
+                                    v-if="stack.report_id == null"
+                                    class="text-right"
+                                >
+                                    <i class="fa fa-whatsapp"> </i> whatsapp
+                                </td> -->
+                                <td class="text-right hide-on-mobile">
+                                    {{
+                                        stack.current_chips === 0
+                                            ? ""
+                                            : stack.changes.toLocaleString()
+                                    }}
+                                    <span
+                                        v-if="stack.symbol === 'up'"
+                                        style="margin-left: 10px"
+                                        ><i
+                                            v-if="stack.current_chips != 0"
+                                            class="fa-sharp fa-solid fa-caret-up text-green"
+                                        ></i
+                                    ></span>
+                                    <span v-else style="margin-left: 10px"
+                                        ><i
+                                            v-if="stack.current_chips != 0"
+                                            class="fa-sharp fa-solid fa-caret-down text-red"
+                                        ></i
+                                    ></span>
+                                </td>
+                            </tr>
+                        </template>
+                    </CustomeTable>
+                </div>
+            </div>
+            <div v-show="currentTab == 'whatsapp'">
+                <div class="margin-top">
+                    <CustomeTable v-if="whatsapp?.length">
+                        <template v-slot:table-head>
+                            <tr class="text-primary">
+                                <th class="text-center">Rank</th>
+                                <th>Player</th>
+                                <th class="text-center hide-on-tablet">
+                                    Country
+                                </th>
+                                <th class="text-right">Chips</th>
+                                <th class="text-right hide-on-mobile">
+                                    Progress
+                                </th>
+                            </tr>
+                        </template>
+                        <template v-slot:table-body>
+                            <tr v-for="(stack, index) in whatsapp" :key="index">
+                                <td class="text-center">{{ index + 1 }}</td>
+                                <td>
+                                    <img
+                                        class="hide-on-tablet"
+                                        v-if="stack?.player?.avatar"
+                                        :src="stack?.player?.avatar"
+                                    />
+                                    <img
+                                        class="hide-on-tablet"
+                                        v-else
+                                        :src="defaultAvatar"
+                                    />
+                                    <span style="white-space: nowrap"
+                                        >{{ stack?.player?.name }}
+                                        <span v-if="stack.player?.pseudonym"
+                                            >({{
+                                                stack.player?.pseudonym
+                                            }})</span
+                                        ></span
+                                    >
+                                </td>
+                                <td
+                                    class="text-center hide-on-tablet"
+                                    v-if="stack?.player?.country"
+                                >
                                     <CountryFlag
                                         :title="stack?.player?.country"
                                         :iso="stack?.player?.flag"
@@ -274,12 +368,6 @@
                     </CustomeTable>
                 </div>
             </div>
-            <div v-show="currentTab == 'whatsapp'">
-                <div class="margin-top">
-                    {{ event.whatsapp }}
-                    <p>Whatsapp</p>
-                </div>
-            </div>
         </div>
     </div>
     <div class="scroll-top">
@@ -333,6 +421,9 @@ const props = defineProps({
         type: Object,
     },
     chipCounts: {
+        type: Object,
+    },
+    whatsapp: {
         type: Object,
     },
     gallery: {

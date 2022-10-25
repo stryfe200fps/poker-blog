@@ -10,6 +10,7 @@ export const useEventStore = defineStore("event", {
             galleryData: [],
             payouts: [],
             chipCounts: [],
+            whatsapp: [],
         };
     },
 
@@ -57,6 +58,17 @@ export const useEventStore = defineStore("event", {
                 // if (this.chipCounts.length) return;
                 const { data } = await axios.get("/api/chip/day/" + day);
                 this.chipCounts = data;
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        async getWhatsappData(day) {
+            try {
+                // if (this.chipCounts.length) return;
+                const { data } = await axios.get(
+                    "/api/chip/day/" + day + "/whatsapp"
+                );
+                this.whatsapp = data;
             } catch (error) {
                 console.error(error);
             }

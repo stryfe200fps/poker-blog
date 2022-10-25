@@ -56,6 +56,7 @@
                         :event="eventData"
                         :reports="liveReport"
                         :chipCounts="chipCountsData"
+                        :whatsapp="whatsappData"
                         :gallery="galleryData"
                         :payouts="payoutsData"
                         @loadMore="loadMoreReports"
@@ -95,6 +96,7 @@ const eventData = ref([]);
 const selectDay = ref(null);
 const liveReport = ref([]);
 const chipCountsData = ref([]);
+const whatsappData = ref([]);
 const galleryData = ref([]);
 const payoutsData = ref([]);
 const loadPage = ref(1);
@@ -147,6 +149,12 @@ async function reportViewing(pathname) {
     if (pathname === "chip-stack") {
         await eventStore.getChipCountsData(selectDay.value);
         chipCountsData.value = eventStore.chipCounts;
+        return;
+    }
+
+    if (pathname === "whatsapp") {
+        await eventStore.getWhatsappData(selectDay.value);
+        whatsappData.value = eventStore.whatsapp;
         return;
     }
 
