@@ -9,9 +9,14 @@ use Illuminate\Support\Facades\DB;
 
 class EventReportObserver
 {
-    public function saved($model) {
+    
+    public function created($model) {
+        NewReport::dispatch('new report');
+    }
 
+    public function saved($model) {
             if (is_array($model->eventChipPlayers->toArray()) ) {
+
                 $model->event_chips()->delete();
                 foreach (request()->get('eventChipPlayers') ?? [] as $eventChipPlayer) {
                       $event =   EventChip::create([
@@ -37,7 +42,6 @@ class EventReportObserver
 
                         }
                     }
-                    NewReport::dispatch('new report');
                 }
             } 
 
