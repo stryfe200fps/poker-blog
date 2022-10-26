@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Inertia;
 
 use Inertia\Inertia;
 use App\Http\Controllers\Controller;
-
+use App\Models\Event;
 class EventController extends Controller
 {
     public function show($slug, $page = null)
@@ -15,11 +15,13 @@ class EventController extends Controller
         'url' => config('app.url'). '/event',
     ]);
 
+    $event = Event::where('slug', $slug)->first();
+
     return Inertia::render('Event/Index', [
         'slug' => $slug,
         'page' => $page ?? 'reports',
-        'title' => 'Life of poker',
-        'description' => 'life of poker',
+        'title' => $event->tournament->title .' | '. $event->title .' | LifeOfPoker' ,
+        'description' => $event->tournament->description,
         'json-ld-webpage' => $webPage,
     ]);
 

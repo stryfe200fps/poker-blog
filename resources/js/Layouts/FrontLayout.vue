@@ -64,7 +64,7 @@ onMounted(() => {
 
 <template>
     <Head>
-        <title>Home</title>
+        <title>Life of poker</title>
     </Head>
     <div class="active">
         <Header />
