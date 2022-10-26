@@ -23,7 +23,7 @@
                         <div v-if="pathname !== 'payouts'">
                             <p v-if="eventDays?.length > 1">
                                 <select
-                                    class="form-control"
+                                    class="form-control custom-form-control"
                                     v-model="selectDay"
                                     @change="fetchLiveReports"
                                 >
@@ -245,6 +245,10 @@ watch(
 </script>
 
 <style scoped>
+.custom-form-control {
+    width: auto !important;
+}
+
 .toast {
     position: fixed;
     top: 25px;
