@@ -425,7 +425,7 @@ public function fetchTags()
                 'paginate' => 10,
                 'searchOperator' => 'LIKE',
                 'query' => function ($model) {
-                    return $model->where('event_id', session()->get('event_id'));
+                    return $model->where('event_id', session()->get('event_id'))->orderByDesc('level');
                 },
             ]
         );
