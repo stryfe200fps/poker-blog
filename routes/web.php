@@ -43,6 +43,7 @@ Route::get('/tours/{tour}/{series}/{eventSlug}/{type?}/{day?}', [EventController
 Route::get('/event/{slug}/{day?}/{value?}', [EventController::class, 'show'] );
 
 // Route::get('/event/{slug}/day/{day}/{page?}', [EventController::class, 'showDay'] );
+
 Route::get('/event/{eventSlug}/report/{reportSlug}', [ReportController::class, 'show'] );
 
 
