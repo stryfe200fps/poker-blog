@@ -48,14 +48,11 @@ Route::get('/event/{eventSlug}/report/{reportSlug}', [ReportController::class, '
 
 
 
-
-
 Route::get('/tag/articles/{slug}', [ ArticleController::class, 'tag'])->name('article');
 
-// same
 
-// Route::get('/article', [ArticleController::class, 'index'])->name('article');
-// Route::get('/article/show/{slug}', [ArticleController::class, 'show'])->name('article-show');
+Route::get('/article', [ArticleController::class, 'index'])->name('article');
+Route::get('/article/show/{slug}', [ArticleController::class, 'show'])->name('article-show');
 
 Route::get('/news', [ArticleController::class, 'index'])->name('article');
 Route::get('/news/category', [ArticleController::class, 'index'])->name('article');
