@@ -1,6 +1,9 @@
 <template>
     <div class="single-post-box" v-if="item.type === 'report'">
-        <div class="title-post">
+        <div
+            class="title-post"
+            style="padding-top: 20px; border-top: 1px solid #d3d3d3"
+        >
             <h1 v-if="id == 1" :id="item.slug + id" class="text-capitalize">
                 <Link
                     class="default-text-color"
