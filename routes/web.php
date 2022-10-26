@@ -19,6 +19,7 @@ Route::get('/tournament', [TournamentController::class , 'index'] );
 Route::get('/tournament/{page?}', [TournamentController::class , 'index'] );
 
 Route::get('/event/{slug}/{page?}', [EventController::class, 'show'] );
+Route::get('/event/{slug}/{page?}', [EventController::class, 'show'] );
 Route::get('/event/{eventSlug}/report/{reportSlug}', [ReportController::class, 'show'] );
 
 
