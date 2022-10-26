@@ -138,7 +138,6 @@
                                     </div>
                                     <li
                                         @click="showShare"
-                                        @blur="isOpen = false"
                                         class="btn btn-default share-btn-mobile"
                                         tabindex="0"
                                     >
