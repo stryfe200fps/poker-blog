@@ -26,7 +26,7 @@
         <meta name="twitter:site" content="@lifeofpoker" />
         <meta name="twitter:title"  content="{{ $page['props']['title'] ?? 'Life Of Poker'  }}">
     
-        <meta name="twitter:image" content="{{ $page['props']??['image'] == null && $page['props']??['image'] == '' ? config('app.url'). '/lop_logo_small.png' : $page['props']['image']  }}" />
+        <meta name="twitter:image" content="{{ $page['props']['image'] ?? config('app.url'). '/lop_logo_small.png'  }}" />
 
         <meta name="twitter:description" content="{{ $page['props']['description'] ?? 'Life Of Poker'  }}" />
 
