@@ -60,11 +60,11 @@
                                 >
                                     <a
                                         target="_blank"
-                                        :href="
-                                            'https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Flifeofpoker.com%2Freport%2F' +
-                                            item.slug +
-                                            '&amp;src=sdkpreparse'
-                                        "
+                                        :href="`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+                                            url
+                                        )}/report/${
+                                            item.slug
+                                        }&amp;src=sdkpreparse`"
                                         ><i
                                             class="fa-brands fa-facebook-f"
                                             style="margin-right: 0; color: #fff"
@@ -80,10 +80,9 @@
                                 >
                                     <a
                                         target="_blank"
-                                        :href="
-                                            'https://twitter.com/intent/tweet?text=https%3A//lifeofpoker.com/report/' +
-                                            item.slug
-                                        "
+                                        :href="`https://twitter.com/intent/tweet?text=${encodeURIComponent(
+                                            url
+                                        )}/report/${item.slug}`"
                                         ><i
                                             class="fa fa-twitter"
                                             style="margin-right: 0; color: #fff"
@@ -96,10 +95,7 @@
                                 >
                                     <a
                                         target="_blank"
-                                        :href="
-                                            'https://api.whatsapp.com/send?text=%0ahttps://lifeofpoker.com/report/' +
-                                            item.slug
-                                        "
+                                        :href="`https://api.whatsapp.com/send?text=%0a${url}/report/${item.slug}`"
                                         ><i
                                             class="fa fa-whatsapp"
                                             style="margin-right: 0; color: #fff"
@@ -253,7 +249,20 @@ const props = defineProps({
     },
 });
 
+const url = ref(window.location.href);
+
 // const items = ref([]);
+function handleBlur(event) {
+    console.log(event.currentTarget);
+    console.log(event.relatedTarget);
+    // if the blur was because of outside focus
+    // currentTarget is the parent element, relatedTarget is the clicked element
+    if (event.relatedTarget == null) {
+        isOpen.value = false;
+    } else {
+        isOpen.value = true;
+    }
+}
 
 const getDate = (date) => {
     let eventEndDate = props.item.event.date_end;
@@ -299,6 +308,8 @@ function getFrame(theme) {
             return waterWaves;
     }
 }
+
+console.log(encodeURIComponent(url.value));
 </script>
 
 <style scoped>
