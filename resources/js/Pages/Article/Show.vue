@@ -82,9 +82,7 @@
                                                 target="_blank"
                                                 :href="`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
                                                     url
-                                                )}/report/${
-                                                    article.slug
-                                                }&amp;src=sdkpreparse`"
+                                                )}&amp;src=sdkpreparse`"
                                                 ><i
                                                     class="fa-brands fa-facebook-f"
                                                     style="
@@ -105,7 +103,7 @@
                                                 target="_blank"
                                                 :href="`https://twitter.com/intent/tweet?text=${encodeURIComponent(
                                                     url
-                                                )}/report/${article.slug}`"
+                                                )}`"
                                                 ><i
                                                     class="fa fa-twitter"
                                                     style="
@@ -121,7 +119,7 @@
                                         >
                                             <a
                                                 target="_blank"
-                                                :href="`https://api.whatsapp.com/send?text=%0a${url}/report/${article.slug}`"
+                                                :href="`https://api.whatsapp.com/send?text=%0a${url}`"
                                                 ><i
                                                     class="fa fa-whatsapp"
                                                     style="

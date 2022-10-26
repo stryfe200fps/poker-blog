@@ -29,7 +29,9 @@
                 >
                     <!-- <span>Day: {{ report.data.day }}</span
                     ><br /> -->
-                    <span>{{ report.data.level.level_value }}</span
+                    <span
+                        >{{ report.data.level.level_value }}
+                        {{ report.data.slug }}</span
                     ><br />
                 </div>
                 <div class="title-post">
@@ -80,9 +82,7 @@
                                                 target="_blank"
                                                 :href="`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
                                                     url
-                                                )}/report/${
-                                                    report.data.slug
-                                                }&amp;src=sdkpreparse`"
+                                                )}&amp;src=sdkpreparse`"
                                                 ><i
                                                     class="fa-brands fa-facebook-f"
                                                     style="
@@ -103,7 +103,7 @@
                                                 target="_blank"
                                                 :href="`https://twitter.com/intent/tweet?text=${encodeURIComponent(
                                                     url
-                                                )}/report/${report.data.slug}`"
+                                                )}`"
                                                 ><i
                                                     class="fa fa-twitter"
                                                     style="
@@ -119,7 +119,7 @@
                                         >
                                             <a
                                                 target="_blank"
-                                                :href="`https://api.whatsapp.com/send?text=%0a${url}/report/${report.data.slug}`"
+                                                :href="`https://api.whatsapp.com/send?text=%0a${url}`"
                                                 ><i
                                                     class="fa fa-whatsapp"
                                                     style="
