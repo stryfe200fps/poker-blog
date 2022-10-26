@@ -9,10 +9,12 @@ use App\Http\Resources\LOFApiEventReportsResource;
 
 class ReportController extends Controller
 {
-    public function show($eventSlug, $reportSlug) {
+    public function show($tour, $series, $eventSlug,  $reportSlug) {
 
-        dd('show me the money');
-    $report = new LOFApiEventReportsResource(EventReport::where('slug', $reportSlug)->first());
+// Route::get('/tours/{tour}/{series}/{eventSlug}/report/{re}', [ReportController::class, 'show'] );
+
+    $report = new LOFApiEventReportsResource(EventReport::where('slug', $reportSlug)->firstOrFail());
+
     return Inertia::render('Report/Show', [
         'report' => $report,
         'title' => $report->title.' | LifeOfPoker',
