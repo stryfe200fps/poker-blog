@@ -383,6 +383,8 @@ class EventReportCrudController extends CrudController
                 'report'  => 'report',
                 'level' => 'level'
             ],
+            'allows_null' => false,
+            'default' => 'report' 
         ]);
 
 
@@ -453,11 +455,21 @@ public function fetchTags()
         //     \Alert::add('error', 'This event schedule hasn\'t has not started yet,')->flash();
         // }
 
-        $players = request()->get('players');
+        $players = request()->get('eventChipPlayers');
 
         $lastPlayerId = 0;
         if ($players !== null) {
             foreach ($players as $user) {
+            Validator::make($user,
+                    ['player_id' => 'required',
+                        'current_chips' => 'required',
+                    ],
+                    [
+                        'player_id' => 'Player field is required',
+                        'current_chips' => 'Chip field is required',
+                    ])->validate();
+
+
                 if ($user['player_id'] == $lastPlayerId) {
                     Validator::make([],
                         ['player_id' => 'required',
@@ -471,14 +483,7 @@ public function fetchTags()
 
                 $lastPlayerId = $user['player_id'];
 
-                Validator::make($user,
-                    ['player_id' => 'required',
-                        'current_chips' => 'required',
-                    ],
-                    [
-                        'player_id' => 'Player field is required',
-                        'current_chips' => 'Chip field is required',
-                    ])->validate();
+           
             }
         } else {
             $request['players'] = '';
