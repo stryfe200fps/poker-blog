@@ -21,8 +21,18 @@ class ArticleController extends Controller
     return Inertia::render('Article/Index');
     }
 
-    public function show($slug) {
-    $article = Article::where('slug', $slug)->first();
+    public function show($year, $month, $slug) {
+
+    $article = Article::where('slug', $slug)->firstOrFail();
+
+    // $article->published_date->addDays(200);
+    // dd($year == )
+    if ($month != $article->published_date->format('m') || $year != $article->published_date->format('Y')) {
+        // dd('tugirak');
+        return redirect('/news/'. $article->published_date->format('Y'). '/'. $article->published_date->format('m') . '/'. $slug );
+    } 
+
+    // dd($article->published_date->addDays(200)->format('m'), $article->published_date->format('Y') );
 
     $webPage = \JsonLd\Context::create('web_page', [
         'description' => 'Home page',

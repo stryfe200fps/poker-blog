@@ -11,6 +11,7 @@ class ReportController extends Controller
 {
     public function show($eventSlug, $reportSlug) {
 
+        dd('show me the money');
     $report = new LOFApiEventReportsResource(EventReport::where('slug', $reportSlug)->first());
     return Inertia::render('Report/Show', [
         'report' => $report,

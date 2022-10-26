@@ -14,21 +14,52 @@ use App\Http\Controllers\Inertia\TournamentController;
 
 
 Route::get('/', [ HomeController::class, 'index' ]);
-Route::get('/tournament', [TournamentController::class , 'index'] );
+// Route::get('/tournament', [TournamentController::class , 'index'] );
 
 Route::get('/tournament/{page?}', [TournamentController::class , 'index'] );
 
 Route::get('/event/{slug}/day/{value}', [EventController::class, 'show'] );
 Route::get('/event/{slug}', [EventController::class, 'show'] );
 
-// Route::get('/event/{slug}/day/{day}/{page?}', [EventController::class, 'showDay'] );
+Route::get('/tours/{tour}/{series}/{eventSlug}', [EventController::class, 'show'] );
 
+
+Route::get('/tours', [TournamentController::class , 'index'] );
+
+Route::get('/tours/{tour}/{series}/{eventSlug}', [EventController::class, 'show'] );
+Route::get('/tours/{tour}/{series}/{eventSlug}/{type?}/{day?}', [EventController::class, 'show'] );
+// Route::get('/tours/{tour}/{series}/{eventSlug}/{id}', [EventController::class, 'show'] );
+
+Route::get('/tours/{tour}/{series}/{eventSlug}/{id}', [ReportController::class, 'show'] );
+
+// Route::get('/tours/{eventSlug}/report/{reportSlug}', [ReportController::class, 'show'] );
+
+// Route::get('/tours/{tour}/{series}/{eventSlug}/{chipCount}', [EventController::class, 'show'] );
+
+// Route::get('/event/{slug}/{day?}/{value?}', [EventController::class, 'show'] );
+// // Route::get('/event/{slug}/day/{day}/{page?}', [EventController::class, 'showDay'] );
+
+Route::get('/event/{slug}/{day?}/{value?}', [EventController::class, 'show'] );
+
+// Route::get('/event/{slug}/day/{day}/{page?}', [EventController::class, 'showDay'] );
 Route::get('/event/{eventSlug}/report/{reportSlug}', [ReportController::class, 'show'] );
 
 
+
+
+
+
 Route::get('/tag/articles/{slug}', [ ArticleController::class, 'tag'])->name('article');
-Route::get('/article', [ArticleController::class, 'index'])->name('article');
-Route::get('/article/show/{slug}', [ArticleController::class, 'show'])->name('article-show');
+
+// same
+
+// Route::get('/article', [ArticleController::class, 'index'])->name('article');
+// Route::get('/article/show/{slug}', [ArticleController::class, 'show'])->name('article-show');
+
+Route::get('/news', [ArticleController::class, 'index'])->name('article');
+Route::get('/news/category', [ArticleController::class, 'index'])->name('article');
+Route::get('/news/{year}/{month}/{slug}', [ArticleController::class, 'show'])->name('article-show');
+
 
 Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
 

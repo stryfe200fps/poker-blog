@@ -48,6 +48,7 @@ class TournamentCrudController extends CrudController
     {
         $this->crud->disableResponsiveTable();
         CRUD::column('title');
+        CRUD::column('slug');
         CRUD::column('description');
         CRUD::column('tour_id');
 
@@ -94,6 +95,15 @@ class TournamentCrudController extends CrudController
         });
 
         CRUD::field('title');
+
+
+        $this->crud->addField([
+            'name' => 'slug',
+            'attributes' => [
+                'placeholder' => config('app.slug_placeholder'),
+            ],
+            'type' => 'text',
+        ]);
         CRUD::field('description');
 
         $this->crud->addField([

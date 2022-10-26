@@ -46,6 +46,7 @@ class TourCrudController extends CrudController
     {
         $this->crud->disableResponsiveTable();
         CRUD::column('title');
+        CRUD::column('slug');
         CRUD::column('description');
 
         /**
@@ -67,6 +68,15 @@ class TourCrudController extends CrudController
         CRUD::setValidation(TourRequest::class);
 
         CRUD::field('title');
+
+        $this->crud->addField([
+            'name' => 'slug',
+            'attributes' => [
+                'placeholder' => config('app.slug_placeholder'),
+            ],
+            'type' => 'text',
+        ]);
+
         CRUD::field('description');
 
         $this->crud->addFields([[

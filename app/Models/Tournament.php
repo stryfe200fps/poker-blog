@@ -3,10 +3,13 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
+use Spatie\Sluggable\HasSlug;
 use Spatie\MediaLibrary\HasMedia;
+use Spatie\Sluggable\SlugOptions;
+use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Tournament extends Model implements HasMedia
@@ -14,6 +17,15 @@ class Tournament extends Model implements HasMedia
     use \Backpack\CRUD\app\Models\Traits\CrudTrait;
     use HasFactory;
     use InteractsWithMedia;
+    use HasSlug;
+
+
+    public function getSlugOptions(): SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('title')
+            ->saveSlugsTo('slug');
+    }
 
     public function registerMediaConversions(?Media $media = null): void
     {
@@ -117,6 +129,23 @@ class Tournament extends Model implements HasMedia
 
     protected static function booted()
     {
+
+    static::creating(function ($model) {
+            if ($model->slug == '') {
+                return;
+            }
+
+            $model->slug = Str::slug($model->slug);
+        });
+
+        static::updating(function ($model) {
+            $article = Tournament::find($model->id);
+            if ($model->title !== $article->title) {
+                $model->slug = $article->slug;
+            } else {
+                $model->slug = Str::slug($model->slug);
+            }
+        });
         static::updating(function ($model) {
             // dd($model->date_start);
             // $model->date_start  = \Carbon\Carbon::parse($model->date_start, session()->get('timezone') ?? 'UTC')->setTimezone('UTC') ;
@@ -125,4 +154,6 @@ class Tournament extends Model implements HasMedia
             // $request['date_end'] = $date2->setTimezone('UTC');
         });
     }
+
+
 }

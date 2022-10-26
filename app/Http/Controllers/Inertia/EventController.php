@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Event;
 class EventController extends Controller
 {
-    public function show($slug,  $value = null )
+    public function show($tour, $series, $eventSlug, $type = null, $day = null )
     {
 
     $webPage = \JsonLd\Context::create('web_page', [
@@ -15,12 +15,22 @@ class EventController extends Controller
         'url' => config('app.url'). '/event',
     ]);
 
-    $event = Event::where('slug', $slug)->first();
+
+    $event = Event::where('slug', $eventSlug)->firstOrFail();
+
+    // dd($tour ,  $event->tournament->tour->slug);
+    if ($tour != $event->tournament->tour->slug || $series != $event->tournament->slug    ) {
+        return redirect('/tours/'. $event->tournament->tour->slug . '/'. $event->tournament->slug  . '/'. $eventSlug );
+    } 
+
+    // dd('wow');
+    // dd($eventSlug, $event->tournament->tour->slug, $event->tournament->slug);
 
     return Inertia::render('Event/Index', [
-        'slug' => $slug,
+        'slug' => $eventSlug,
         'page' => 'reports',
-        'day' => $value ?? '',
+        'day' => $day ?? '',
+        'type' => $type ?? '',
         'title' => $event->tournament->title .' | '. $event->title .' | LifeOfPoker' ,
         'description' => $event->tournament->description,
         'json-ld-webpage' => $webPage,
