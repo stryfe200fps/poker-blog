@@ -87,7 +87,7 @@
                     </div>
                 </div>
                 <div v-else>
-                    <h2 class="text-capitalize">No {{ page }} available</h2>
+                    <h4 class="text-capitalize">No {{ page }} available</h4>
                 </div>
             </div>
         </div>
@@ -151,6 +151,10 @@ watch(
     margin-left: 0 !important;
 }
 
+.post-title {
+    padding: 0 !important;
+}
+
 .dropdown {
     position: relative;
     display: inline-block;
@@ -209,7 +213,6 @@ watch(
 }
 
 .dd-menu li {
-    padding: 10px 20px;
     cursor: pointer;
     white-space: nowrap;
 }
@@ -219,6 +222,8 @@ watch(
 }
 
 .dd-menu li a {
+    display: inline-block;
+    padding: 10px 20px;
     text-decoration: none;
     color: #222;
 }

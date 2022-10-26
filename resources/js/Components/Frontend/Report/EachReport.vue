@@ -228,6 +228,16 @@
             </ul>
         </div>
     </div>
+    <div class="toast" :class="{ active: isActive }" @click="scrollToTop">
+        <div class="toast-content">
+            <i class="fas fa-info-circle info"></i>
+
+            <div class="message">
+                <span class="text text-1">New post - click here</span>
+            </div>
+        </div>
+        <div class="progress" :class="{ active: isActive }"></div>
+    </div>
 </template>
 
 <script setup>
@@ -251,6 +261,8 @@ const props = defineProps({
     },
 });
 
+const emit = defineEmits(["showNewReport"]);
+
 // const items = ref([]);
 
 const getDate = (date) => {
@@ -262,11 +274,9 @@ const getDate = (date) => {
 
 // const newItem = ref(null);
 
-// onMounted(async () => {
-//     lastLevel.value = "";
-// });
 const tab = ref(0);
 const isOpen = ref(false);
+const isActive = ref(false);
 //const lastLevel = ref("");
 
 const changeTab = (currentTab) => {
@@ -300,9 +310,101 @@ function getFrame(theme) {
             return waterWaves;
     }
 }
+
+function scrollToTop() {
+    window.scroll({ top: 0, behavior: "smooth" });
+    isActive.value = false;
+}
+
+onMounted(() => {
+    window.Echo.channel("report").listen("NewReport", (e) => {
+        emit("showNewReport");
+        isActive.value = true;
+
+        setTimeout(() => {
+            isActive.value = false;
+        }, 5000);
+    });
+});
 </script>
 
 <style scoped>
+.toast {
+    position: fixed;
+    top: 25px;
+    right: 30px;
+    z-index: 1000;
+    overflow: hidden;
+    padding: 20px 35px 20px 25px;
+    background-color: #fff;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 6px 20px -5px rgba(0, 0, 0, 0.5);
+    transform: translateX(calc(100% + 30px));
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.35);
+}
+
+.toast.active {
+    transform: translateX(0%);
+}
+
+.toast .toast-content {
+    display: flex;
+    align-items: center;
+}
+
+.toast-content .info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+}
+
+.toast-content .message {
+    display: flex;
+    flex-direction: column;
+    margin: 0 20px;
+}
+
+.message .text {
+    font-size: 16px;
+    font-weight: 400;
+    color: #666666;
+}
+
+.message .text.text-1 {
+    font-weight: 600;
+    color: #333;
+}
+
+.toast .progress {
+    position: absolute;
+    bottom: -20px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+}
+
+.toast .progress:before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #f44336;
+}
+
+.progress.active:before {
+    animation: progress 5s linear forwards;
+}
+
+@keyframes progress {
+    100% {
+        right: 100%;
+    }
+}
+
 :deep(.remove-padding table) {
     width: 100%;
     margin-bottom: 10px;

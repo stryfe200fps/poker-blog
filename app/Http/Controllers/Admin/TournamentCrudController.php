@@ -54,7 +54,7 @@ class TournamentCrudController extends CrudController
         $this->crud->addColumns([
             [
                 'name' => 'date_start', // the column that contains the ID of that connected entity;
-                'label' => 'Date End', // Table column heading
+                'label' => 'Date Start', // Table column heading
                 'type' => 'datetime',
                 'format' => config('app.date_format'),
             ],
