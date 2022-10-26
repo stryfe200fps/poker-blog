@@ -1,4 +1,7 @@
 <template>
+    <Head>
+        <title>{{ page.charAt(0).toUpperCase() + page.slice(1) }}</title>
+    </Head>
     <FrontLayout>
         <div class="block-content">
             <div class="grid-box">
@@ -18,29 +21,22 @@
                             <input type="checkbox" class="dd-input" id="test" />
                             <ul class="dd-menu">
                                 <li
-                                    v-for="category in $page['props'][
-                                        'category'
-                                    ]"
-                                    :key="category.id"
+                                    v-for="(category, index) in categories"
+                                    :key="index"
                                     class="text-capitalize"
                                 >
-                                    <Link
-                                        v-if="category.link !== 'news'"
-                                        :href="'/news/' + category.link"
-                                        >{{ category.name }}</Link
-                                    >
-                                    <Link v-else :href="'/' + category.link">{{
-                                        category.name
+                                    <Link :href="`/news/${category.slug}`">{{
+                                        category.title
                                     }}</Link>
                                 </li>
                             </ul>
                         </label>
                     </div>
                 </div>
-                <div v-if="categories?.length">
+                <div v-if="articleCategories?.length">
                     <div class="grid">
                         <div
-                            v-for="(category, index) in categories"
+                            v-for="(category, index) in articleCategories"
                             :key="index"
                         >
                             <div
@@ -64,8 +60,14 @@
                                     />
                                     <Link
                                         class="category-post food"
-                                        :href="page"
-                                        >{{ page }}</Link
+                                        v-for="item in category.categories"
+                                        :key="item.id"
+                                        :href="
+                                            item.slug === 'news'
+                                                ? item.slug
+                                                : `/news/${item.slug}`
+                                        "
+                                        >{{ item.title }}</Link
                                     >
                                 </div>
                                 <div class="post-title" style="flex-grow: 1">
@@ -81,7 +83,7 @@
                             </div>
                         </div>
                         <div
-                            v-if="categories?.length"
+                            v-if="articleCategories?.length"
                             v-observe-visibility="handleScrolledToBottom"
                         ></div>
                     </div>
@@ -97,8 +99,8 @@
 <script setup>
 import FrontLayout from "@/Layouts/FrontLayout.vue";
 import defaultImg from "/public/default-img.png";
-import { Link } from "@inertiajs/inertia-vue3";
-import { useCategoryStore } from "@/Stores/category.js";
+import { Head, Link } from "@inertiajs/inertia-vue3";
+import { useArticleCategoryStore } from "@/Stores/articleCategory.js";
 import {
     onMounted,
     ref,
@@ -111,10 +113,12 @@ const props = defineProps({
     page: String,
 });
 
-const categoryStore = useCategoryStore();
+const articleCategoryStore = useArticleCategoryStore();
+const articleCategories = ref(null);
 const categories = ref(null);
 const currentPage = ref(1);
 const lastPage = ref(1);
+const pathname = ref(window.location.pathname.split("/")[2]);
 
 async function handleScrolledToBottom(isVisible) {
     if (!isVisible) return;
@@ -123,23 +127,31 @@ async function handleScrolledToBottom(isVisible) {
 
     if (currentPage.value > lastPage.value) return;
 
-    await categoryStore.getCategoryLists(props.page, currentPage.value);
-    lastPage.value = categoryStore.categoryLists.meta.last_page;
+    await articleCategoryStore.getArticleCategoryLists(
+        props.page,
+        currentPage.value
+    );
+    lastPage.value = articleCategoryStore.articleCategoryLists.meta.last_page;
 }
 
 onMounted(async () => {
-    await categoryStore.getCategoryLists(props.page, 1);
-    lastPage.value = categoryStore.categoryLists.meta.last_page;
+    await articleCategoryStore.getCategoryLists();
+    categories.value = articleCategoryStore.categoryLists.data;
+    await articleCategoryStore.getArticleCategoryLists(pathname.value, 1);
+    lastPage.value = articleCategoryStore.articleCategoryLists.meta.last_page;
 });
 
 watch(
-    () => categoryStore.categoryLists,
+    () => articleCategoryStore.articleCategoryLists,
     function () {
-        if (!categories.value) {
-            categories.value = categoryStore.categoryLists.data;
+        if (!articleCategories.value) {
+            articleCategories.value =
+                articleCategoryStore.articleCategoryLists.data;
             return;
         }
-        categories.value.push(...categoryStore.categoryLists.data);
+        articleCategories.value.push(
+            ...articleCategoryStore.articleCategoryLists.data
+        );
     }
 );
 </script>

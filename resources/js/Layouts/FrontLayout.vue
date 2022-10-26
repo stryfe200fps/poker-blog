@@ -63,12 +63,8 @@ onMounted(() => {
 </script>
 
 <template>
-    <Head>
-        <title>Life of poker</title>
-    </Head>
     <div class="active">
         <Header />
-
         <main>
             <section class="block-wrapper">
                 <div class="container">
@@ -84,7 +80,6 @@ onMounted(() => {
             </section>
         </main>
         <Footer />
-
         <div class="cookie row" :class="{ hide: getCookie || isSetCookie }">
             <div class="cookie__text col-sm-6 col-md-6">
                 This website uses cookies to ensure you get the best experience

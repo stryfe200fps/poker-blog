@@ -14,8 +14,15 @@ class PageController extends Controller
     public function index($page, $other = null) {
 
     if ($page = Page::findBySlug($page)) {
+
+        $webPage = \JsonLd\Context::create('web_page', [
+            'description' => 'Home page',
+            'url' => config('app.url').'/'.$page->slug,
+        ]);
+        
         return Inertia::render('Template/Index', [
-            'title' => $page->name,
+            'title' => $page->title .' | LifeOfPoker',
+            'json-ld-webpage' => $webPage,
             'description' => \Illuminate\Support\Str::limit($page->name, 100, $end = '...'),
             'page' => $page,
 

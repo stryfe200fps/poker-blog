@@ -1,11 +1,9 @@
 <template>
     <Head>
-        <title>This is a dynamic inertia</title>
-        <meta property="og:image" name="test" />
-        <meta property="og:image" name="test" />
+        <title>Live Reporting</title>
     </Head>
 
-    <FrontLayout title="kurik">
+    <FrontLayout>
         <div class="block-content">
             <div class="title-section">
                 <h1><span>Live reporting</span></h1>

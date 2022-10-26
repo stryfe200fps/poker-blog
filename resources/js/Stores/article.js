@@ -9,27 +9,44 @@ export const useArticleStore = defineStore("article", {
         return {
             list: [],
             related: [],
-            singleArticle: {},
+            singleArticle: [],
             slugs: [],
         };
     },
 
-    getters: {
-        getArticleBySlug: (state) => {
-            return (slug) =>
-                state.list.data.find((article) => article.slug === slug);
-        },
-    },
+    // getters: {
+    //     getArticleBySlug: (state) => {
+    //         return (slug) =>
+    //             state.list.data.find((article) => article.slug === slug);
+    //     },
+    // },
 
     actions: {
         async getList() {
-            await axios.get("/api/article").then((res) => {
-                this.list = res.data;
-            });
+            try {
+                const { data } = await axios.get("/api/article");
+                this.list = data;
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        async getSingleArticle(slug) {
+            try {
+                const { data } = await axios.get(`/api/article/${slug}`);
+                this.singleArticle = data;
+            } catch (error) {
+                console.error(error);
+            }
         },
         async getRelatedNews(slug) {
-            const { data } = await axios.get(`/api/article/${slug}/related`);
-            this.related = data;
+            try {
+                const { data } = await axios.get(
+                    `/api/article/${slug}/related`
+                );
+                this.related = data;
+            } catch (error) {
+                console.error(error);
+            }
         },
         // async getArticleBySlug(slug) {
         //   await axios.get('/api/article/'+ slug).then((res) => {

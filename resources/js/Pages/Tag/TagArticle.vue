@@ -1,4 +1,7 @@
 <template>
+    <Head>
+        <title>Tag: {{ slug.charAt(0).toUpperCase() + slug.slice(1) }}</title>
+    </Head>
     <FrontLayout>
         <div class="block-content">
             <div class="grid-box">
@@ -45,7 +48,7 @@
 <script setup>
 import FrontLayout from "@/Layouts/FrontLayout.vue";
 import defaultImg from "/public/default-img.png";
-import { Link } from "@inertiajs/inertia-vue3";
+import { Head, Link } from "@inertiajs/inertia-vue3";
 import { useTagStore } from "@/Stores/tag.js";
 import { onMounted, ref, watch } from "@vue/runtime-core";
 

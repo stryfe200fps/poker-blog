@@ -1,10 +1,8 @@
 <template>
     <Head>
-        <title>This is a dynamic inertia</title>
-        <meta property="og:image" name="test" />
-        <meta property="og:image" name="test" />
+        <title>{{ page.title }}</title>
     </Head>
-    <FrontLayout title="kurik">
+    <FrontLayout>
         <div class="block-content">
             <div class="contact-info-box">
                 <div class="title-section">

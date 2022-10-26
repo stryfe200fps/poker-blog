@@ -43,19 +43,18 @@ try {
     
         foreach ($item->children as $child) {
             if ($item->link === $child->link) {
-    
                 Route::get($item->link, function () use ($item) {
                         return Inertia::render('Categories/CategoryPage', [
-                            'title' => '',
-                            'description' => 'asdasd',
-                            'page' => 'news'
+                            'title' => $item->name.' | LifeOfPoker',
+                            'description' => $item->name,
+                            'page' => $item->link
                         ]);
                     });
             }
 
             Route::get($item->link. '/' .$child->link, function () use ($child) {
                 return Inertia::render('Categories/CategoryPage', [
-                    'title' => $child->name,
+                    'title' => $child->name.' | LifeOfPoker',
                     'description' => $child->name,
                     'page' => $child->link
                 ]);

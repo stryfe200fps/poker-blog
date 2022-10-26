@@ -2,11 +2,7 @@
     <FrontLayout title="">
         <Head>
             <title>{{ article.title }}</title>
-            <meta name="description" content="Your page description" />
-            <meta property="og:title=" :content="article.title" />
-            <meta property="og:description" :content="article.body" />
         </Head>
-
         <!-- {{ getArticle(slug) }} -->
         <div class="block-content">
             <label
@@ -284,7 +280,7 @@ function onScrollContents() {
 }
 
 onMounted(async () => {
-    await articleStore.getList();
+    await articleStore.getSingleArticle(props.slug);
     await articleStore.getRelatedNews(props.slug);
     window.addEventListener("scroll", onScrollContents);
 });
@@ -294,9 +290,9 @@ onBeforeUnmount(() => {
 });
 
 watch(
-    () => articleStore.list,
+    () => articleStore.singleArticle,
     function () {
-        article.value = articleStore.getArticleBySlug(props.slug);
+        article.value = articleStore.singleArticle.data;
     }
 );
 watch(

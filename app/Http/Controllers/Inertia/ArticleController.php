@@ -58,17 +58,19 @@ class ArticleController extends Controller
 
     return Inertia::render('Article/Show',
         [
-            'title' => $article->title,
+            'title' => $article->title .' | LifeOfPoker',
             'slug' => $slug,
             'image' => $article->image,
             'json-ld-article' => $context,
             'json-ld-webpage' => $webPage,
-            'description' => \Illuminate\Support\Str::limit($article->description, 100, $end = '...'),
+            'description' => $article->description,
+            // 'description' => \Illuminate\Support\Str::limit($article->description, 100, $end = '...'),
         ]);
     }
 
     public function tag($slug) {
     return Inertia::render('Tag/TagArticle', [
+        'title' => 'Tag: '.$slug.' | LifeOfPoker',
         'slug' => $slug,
     ]);
     }

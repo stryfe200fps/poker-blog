@@ -12,9 +12,9 @@ onMounted(async () => {
     await eventStore.getMainEvents();
 });
 
-const showArticle = async (id) => {
-    articleStore.getArticleBySlug(id);
-};
+// const showArticle = async (id) => {
+//     articleStore.getArticleBySlug(id);
+// };
 
 defineProps({
     articleList: {
@@ -25,6 +25,9 @@ defineProps({
 </script>
 
 <template>
+    <Head>
+        <title>Home</title>
+    </Head>
     <div class="block-content">
         <div class="grid-box" v-if="eventStore.mainEvents.data?.length">
             <div class="title-section">
@@ -70,7 +73,9 @@ defineProps({
         </div>
         <div class="grid-box">
             <div class="title-section">
-                <h1><span>Latest News</span></h1>
+                <h1>
+                    <span>Latest News</span>
+                </h1>
             </div>
             <div
                 class="news-post article-post"
@@ -78,11 +83,7 @@ defineProps({
                 :key="news.id"
                 style="margin-bottom: 30px"
             >
-                <Link
-                    @click.prevent="showArticle(news.slug)"
-                    @mouseover="showArticle(news.slug)"
-                    :href="'/article/show/' + news.slug"
-                >
+                <Link :href="'/article/show/' + news.slug">
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="post-gallery">

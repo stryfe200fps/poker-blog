@@ -12,10 +12,9 @@ class ReportController extends Controller
     public function show($eventSlug, $reportSlug) {
 
     $report = new LOFApiEventReportsResource(EventReport::where('slug', $reportSlug)->first());
-
     return Inertia::render('Report/Show', [
         'report' => $report,
-        'title' => $report->title,
+        'title' => $report->title.' | LifeOfPoker',
         'slug' => $reportSlug,
         'image' => $report->getFirstMediaUrl('event-report', 'main-image'),
         'description' => \Illuminate\Support\Str::limit($report->title, 100, $end = '...'),
