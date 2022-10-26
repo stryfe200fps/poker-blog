@@ -77,17 +77,20 @@
                                             "
                                         >
                                             <a
-                                        target="_blank"
-                                        :href="`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-                                            url
-                                        )}/report/${
-                                            item.slug
-                                        }&amp;src=sdkpreparse`"
-                                        ><i
-                                            class="fa-brands fa-facebook-f"
-                                            style="margin-right: 0; color: #fff"
-                                        ></i>
-                                    </a>
+                                                target="_blank"
+                                                :href="`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+                                                    url
+                                                )}/report/${
+                                                    report.data.slug
+                                                }&amp;src=sdkpreparse`"
+                                                ><i
+                                                    class="fa-brands fa-facebook-f"
+                                                    style="
+                                                        margin-right: 0;
+                                                        color: #fff;
+                                                    "
+                                                ></i>
+                                            </a>
                                         </li>
                                         <li
                                             class="btn"
@@ -97,28 +100,34 @@
                                             "
                                         >
                                             <a
-                                        target="_blank"
-                                        :href="`https://twitter.com/intent/tweet?text=${encodeURIComponent(
-                                            url
-                                        )}/report/${item.slug}`"
-                                        ><i
-                                            class="fa fa-twitter"
-                                            style="margin-right: 0; color: #fff"
-                                        ></i
-                                    ></a>
+                                                target="_blank"
+                                                :href="`https://twitter.com/intent/tweet?text=${encodeURIComponent(
+                                                    url
+                                                )}/report/${report.data.slug}`"
+                                                ><i
+                                                    class="fa fa-twitter"
+                                                    style="
+                                                        margin-right: 0;
+                                                        color: #fff;
+                                                    "
+                                                ></i
+                                            ></a>
                                         </li>
                                         <li
                                             class="btn"
                                             style="background-color: #25d366"
                                         >
-                                           <a
-                                        target="_blank"
-                                        :href="`https://api.whatsapp.com/send?text=%0a${url}/report/${item.slug}`"
-                                        ><i
-                                            class="fa fa-whatsapp"
-                                            style="margin-right: 0; color: #fff"
-                                        ></i
-                                    ></a>
+                                            <a
+                                                target="_blank"
+                                                :href="`https://api.whatsapp.com/send?text=%0a${url}/report/${report.data.slug}`"
+                                                ><i
+                                                    class="fa fa-whatsapp"
+                                                    style="
+                                                        margin-right: 0;
+                                                        color: #fff;
+                                                    "
+                                                ></i
+                                            ></a>
                                         </li>
                                     </div>
                                     <li
@@ -342,6 +351,7 @@ const props = defineProps({
 });
 
 const isOpen = ref(false);
+const url = ref(window.location.href);
 
 const showShare = () => {
     isOpen.value = !isOpen.value;
