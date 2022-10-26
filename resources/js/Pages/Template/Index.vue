@@ -156,6 +156,19 @@ async function submitMessage() {
     color: #f44336;
 }
 
+:deep(.post-content table) {
+    width: 100%;
+    margin-bottom: 10px;
+    border: 1px solid #95a5a662;
+}
+
+:deep(.post-content table tr td) {
+    padding: 5px 10px;
+    font-family: Lato, sans-serif;
+    font-size: 14px;
+    background-color: #fbfbfb;
+}
+
 .contact-email,
 .contact-subject {
     display: block;

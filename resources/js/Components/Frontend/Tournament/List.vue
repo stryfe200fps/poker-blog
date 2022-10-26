@@ -50,7 +50,7 @@
                     v-observe-visibility="handleScrolledToBottom"
                 ></div>
                 <div v-else>
-                    <h4>Coming soon...</h4>
+                    <h4>There are no live or upcoming events at the moment.</h4>
                 </div>
             </div>
             <div class="block-content" v-show="currentTab == 'past'">
@@ -66,7 +66,7 @@
                     v-observe-visibility="handleScrolledToBottom"
                 ></div>
                 <div v-else>
-                    <h4>No past event...</h4>
+                    <h4>There are no past events at the moment.</h4>
                 </div>
             </div>
             <!-- <div class="block-content" v-show="currentTab == 'upcoming'">

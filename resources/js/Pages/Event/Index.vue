@@ -90,6 +90,9 @@ const props = defineProps({
     page: {
         type: String,
     },
+    day: {
+        type: String,
+    },
 });
 
 const eventData = ref([]);

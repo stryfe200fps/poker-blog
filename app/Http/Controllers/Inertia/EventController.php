@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Event;
 class EventController extends Controller
 {
-    public function show($slug, $day = null, $value = null )
+    public function show($slug,  $value = null )
     {
 
     $webPage = \JsonLd\Context::create('web_page', [
@@ -20,7 +20,7 @@ class EventController extends Controller
     return Inertia::render('Event/Index', [
         'slug' => $slug,
         'page' => 'reports',
-        'day' => $value,
+        'day' => $value ?? '',
         'title' => $event->tournament->title .' | '. $event->title .' | LifeOfPoker' ,
         'description' => $event->tournament->description,
         'json-ld-webpage' => $webPage,
