@@ -19,7 +19,7 @@ Route::get('/tournament', [TournamentController::class , 'index'] );
 Route::get('/tournament/{page?}', [TournamentController::class , 'index'] );
 
 Route::get('/event/{slug}/{page?}', [EventController::class, 'show'] );
-Route::get('/event/{slug}/{page?}', [EventController::class, 'show'] );
+// Route::get('/event/{slug}/{page?}', [EventController::class, 'show'] );
 Route::get('/event/{eventSlug}/report/{reportSlug}', [ReportController::class, 'show'] );
 
 
@@ -51,6 +51,7 @@ try {
                         ]);
                     });
             }
+
             Route::get($item->link. '/' .$child->link, function () use ($child) {
                 return Inertia::render('Categories/CategoryPage', [
                     'title' => $child->name,
@@ -64,8 +65,6 @@ try {
     
     }
 Route::get('/{page}/{other?}', [PageController::class, 'index']);
-
-
 
 //for dev
 Route::get('admin/player_history/{id}', function ($id) {

@@ -29,15 +29,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::resource('article', ArticleController::class);
 Route::get('article/{slug}/related', [ArticleController::class, 'related']);
 Route::get('article/{slug}', [ArticleController::class, 'article']);
-
 Route::get('article/category/{slug}', [ArticleController::class, 'articleCategory']);
-
-// Route::get('article/tag/{tag}', [ArticleController::class, 'tag' ]);
+// Route::get('article/category/all', [ArticleController::class, 'category']);
 
 Route::get('tag/articles/{slug}', [TagController::class, 'articles']);
-
 Route::get('tag/reports/{slug}', [TagController::class, 'reports']);
-
 
 // Route::resource('live-report', LiveReportController::class);
 Route::resource('tournament', PokerTournamentApiController::class);

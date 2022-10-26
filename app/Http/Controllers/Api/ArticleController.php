@@ -12,7 +12,7 @@ class ArticleController extends Controller
 {
     public function index()
     {
-        return  ArticleResource::collection(Article::with(['article_author', 'media', 'article_categories'])->orderBy('published_date','DESC')->limit(6)->get());
+        return  ArticleResource::collection(Article::with(['article_author', 'media', 'article_categories'])->orderBy('published_date','DESC')->paginate(6));
     }
 
     public function show($slug)
@@ -33,5 +33,12 @@ class ArticleController extends Controller
     public function tag($tag)
     {
         return ArticleResource::collection(ArticleTag::where('title', $tag)->first()->articles->paginate(10));
+    }
+
+    public function category()
+    {
+        // dd('asd');
+        // dd(Article::orderBy('published_date')->get());
+        // return ArticleResource::collection(Article::all()->orderBy('published_date')->paginate(5));
     }
 }

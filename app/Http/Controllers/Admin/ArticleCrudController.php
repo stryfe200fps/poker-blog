@@ -155,16 +155,8 @@ class ArticleCrudController extends CrudController
             [   // CKEditor
                 'name' => 'description',
                 'label' => 'Description',
-                'type' => 'ckeditor',
-
-                'tab' => 'Basic',
-                'extra_plugins' => ['widget', 'autocomplete', 'textmatch', 'toolbar', 'wysiwygarea', 'image', 'sourcearea'],
-
-                'options' => [
-                    'autoGrow_minHeight' => 200,
-                    'autoGrow_bottomSpace' => 50,
-                    'removePlugins' => 'resize,maximize',
-                ],
+                'type' => 'textarea',
+                'tab' => 'Basic'
             ],
 
                 [
