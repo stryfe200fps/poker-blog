@@ -17,7 +17,7 @@ class NewReport implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct(public int $eventId, public int $dayid )
+    public function __construct(public int $eventSlug, public int $dayid )
     {
 
     }
