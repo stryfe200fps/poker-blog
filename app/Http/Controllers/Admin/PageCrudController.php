@@ -59,6 +59,8 @@ class PageCrudController extends CrudController
         $this->addDefaultPageFields(\Request::input('template'));
         $this->useTemplate(\Request::input('template'));
 
+        // dd(   $this->addDefaultPageFields(\Request::input('template')));
+
         $this->crud->setValidation(PageRequest::class);
     }
 
@@ -66,6 +68,7 @@ class PageCrudController extends CrudController
     {
         // if the template in the GET parameter is missing, figure it out from the db
         $template = \Request::input('template') ?? $this->crud->getCurrentEntry()->template;
+
 
         $this->addDefaultPageFields($template);
         $this->useTemplate($template);

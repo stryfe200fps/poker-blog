@@ -165,8 +165,7 @@ class Event extends Model implements HasMedia
         $schedule = $this->days->toArray() ?? [];
 
         if (count($schedule) === 0)
-            return 'tba';
-
+            return 'upcoming';
 
         foreach ($schedule as $sched) {
             if ($dateNow >= Carbon::parse($sched['date_start']) && $dateNow <= Carbon::parse($sched['date_end'])) {
