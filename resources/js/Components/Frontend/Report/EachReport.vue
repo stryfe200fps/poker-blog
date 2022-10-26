@@ -323,6 +323,7 @@ onMounted(() => {
     window.Echo.channel("report").listen("NewReport", (e) => {
         emit("showNewReport");
         isActive.value = true;
+        console.log(e);
 
         setTimeout(() => {
             isActive.value = false;

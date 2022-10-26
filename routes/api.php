@@ -31,6 +31,7 @@ Route::resource('article', ArticleController::class);
 Route::get('article/{slug}/related', [ArticleController::class, 'related']);
 Route::get('article/{slug}', [ArticleController::class, 'article']);
 Route::get('article/category/{slug}', [ArticleController::class, 'articleCategory']);
+
 Route::get('category/article', [ArticleCategoryController::class, 'index']);
 // Route::get('article/category/all', [ArticleController::class, 'category']);
 
@@ -44,7 +45,6 @@ Route::resource('level', levelApiController::class);
 Route::get('events', [EventApiController::class, 'index']);
 
 Route::post('events/gallery/upload', [EventApiController::class, 'upload']);
-
 Route::get('events/gallery/fetch/{dayId}', [EventApiController::class, 'fetchGallery']);
 Route::delete('events/gallery/delete/{dayId}', [EventApiController::class, 'deleteImage']);
 
