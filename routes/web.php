@@ -26,9 +26,9 @@ Route::get('/tours/{tour}/{series}/{eventSlug}', [EventController::class, 'show'
 
 Route::get('/tours', [TournamentController::class , 'index'] );
 
-Route::get('/tours/{tour}/{series}/{eventSlug}', [EventController::class, 'show'] );
-
 Route::get('/tours/{tour}/{series}/{eventSlug}/report/{reportSlug}', [ReportController::class, 'show'] );
+
+Route::get('/tours/{tour}/{series}/{eventSlug}', [EventController::class, 'show'] );
 Route::get('/tours/{tour}/{series}/{eventSlug}/{type?}/{day?}', [EventController::class, 'show'] );
 // Route::get('/tours/{tour}/{series}/{eventSlug}/{id}', [EventController::class, 'show'] );
 
