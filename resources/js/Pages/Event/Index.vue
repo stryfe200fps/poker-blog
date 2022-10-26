@@ -131,23 +131,23 @@ async function loadMoreReports() {
     loadPage.value++;
 
     await eventStore.getLiveReport(loadPage.value, selectDay.value);
+    liveReport.value.push(...eventStore.liveReportList.data);
+    // const newLevel = eventStore.liveReportList.data
+    //     .map((data) => data.level)
+    //     .toString();
 
-    const newLevel = eventStore.liveReportList.data
-        .map((data) => data.level)
-        .toString();
-
-    for (const report of liveReport.value) {
-        if (report.level === newLevel) {
-            const index = eventStore.liveReportList.data.findIndex(
-                (data) => data.level === report.level
-            );
-            const newCollection = report.collection.concat(
-                eventStore.liveReportList.data[index].collection
-            );
-            report.collection = newCollection;
-            return;
-        }
-    }
+    // for (const report of liveReport.value) {
+    //     if (report.level === newLevel) {
+    //         const index = eventStore.liveReportList.data.findIndex(
+    //             (data) => data.level === report.level
+    //         );
+    //         const newCollection = report.collection.concat(
+    //             eventStore.liveReportList.data[index].collection
+    //         );
+    //         report.collection = newCollection;
+    //         return;
+    //     }
+    // }
     lastPage.value = eventStore.liveReportList.meta.last_page;
 }
 
