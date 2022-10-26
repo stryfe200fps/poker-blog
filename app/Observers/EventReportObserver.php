@@ -11,7 +11,7 @@ class EventReportObserver
 {
     
     public function created($model) {
-        NewReport::dispatch($model->slug, $model->day_id);
+        NewReport::dispatch($model->event->slug, $model->day_id);
     }
 
     public function saved($model) {

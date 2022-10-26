@@ -78,7 +78,6 @@
                         :item="item"
                         :event="event"
                         :id="index"
-                        @showNewReport="showNewReport"
                     />
                     <div
                         class="day-divider"
@@ -428,15 +427,11 @@ const props = defineProps({
         default: "report",
     },
 });
-const emit = defineEmits(["loadMore", "showNewReport"]);
+const emit = defineEmits(["loadMore"]);
 
 function handleScrolledToBottom(isVisible) {
     if (!isVisible) return;
     emit("loadMore");
-}
-
-function showNewReport() {
-    emit("showNewReport");
 }
 
 const tab = ref(0);
