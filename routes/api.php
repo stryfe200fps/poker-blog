@@ -35,25 +35,22 @@ Route::get('article/category/{slug}', [ArticleController::class, 'articleCategor
 
 Route::get('category/article', [ArticleCategoryController::class, 'index']);
 // Route::get('article/category/all', [ArticleController::class, 'category']);
-
 Route::get('tag/articles/{slug}', [TagController::class, 'articles']);
 Route::get('tag/reports/{slug}', [TagController::class, 'reports']);
-
 // Route::resource('live-report', LiveReportController::class);
+
+
+
 Route::resource('tournament', PokerTournamentApiController::class);
 Route::resource('level', levelApiController::class);
 // Route::get('live-report/view/{id}', [LiveReportController::class, 'view']);
 Route::get('events', [EventApiController::class, 'index']);
-
 Route::post('events/gallery/upload', [EventApiController::class, 'upload']);
 Route::get('events/gallery/fetch/{dayId}', [EventApiController::class, 'fetchGallery']);
 Route::delete('events/gallery/delete/{dayId}', [EventApiController::class, 'deleteImage']);
-
 Route::get('events/{id}', [EventApiController::class, 'show']);
 Route::post('events/{id}', [EventApiController::class, 'show']);
-
 Route::resource('reports', ReportsApiController::class);
-
 Route::resource('lof-tournament', LOFApiTournamentsController::class);
 
 Route::resource('lof-event', LOFApiEventsController::class);
@@ -62,16 +59,12 @@ Route::resource('lof-event/{slug}/payout', LOFApiEventsController::class);
 
 Route::get('lof-event/{slug}/chipcount', [LOFApiEventIndexController::class, 'chipCounts']);
 Route::get('lof-event/{slug}/whatsapp', [LOFApiEventIndexController::class, 'whatsapp']);
-
 Route::resource('lof-event-index', LOFApiEventIndexController::class);
-
 Route::resource('lof-live-report', EventReportsController::class);
-
 Route::resource('page', PageManagerController::class);
 
 Route::get('twitter', [SocialMediaController::class, 'fetchTwitter']);
 Route::get('instagram', [SocialMediaController::class, 'fetchInstagram']);
-
 Route::post('contact', [ContactUsController::class, 'store']);
 Route::post('subscribe', [NewsletterController::class, 'store']);
 

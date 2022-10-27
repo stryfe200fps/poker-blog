@@ -19,15 +19,13 @@ class ArticleController extends Controller
         return Inertia::render('Article/Index');
     }
 
-    // public function show($year, $month, $slug) {
-    public function show($slug)
+    public function show($year, $month, $slug) 
     {
         $article = Article::where('slug', $slug)->firstOrFail();
 
-        // if ($month != $article->published_date->format('m') || $year != $article->published_date->format('Y')) {
-    //     // dd('tugirak');
-    //     return redirect('/news/'. $article->published_date->format('Y'). '/'. $article->published_date->format('m') . '/'. $slug );
-        // }
+        if ($month != $article->published_date->format('m') || $year != $article->published_date->format('Y')) {
+            return redirect('/news/'. $article->published_date->format('Y'). '/'. $article->published_date->format('m') . '/'. $slug );
+        }
 
         $webPage = \JsonLd\Context::create('web_page', [
             'description' => 'Home page',
