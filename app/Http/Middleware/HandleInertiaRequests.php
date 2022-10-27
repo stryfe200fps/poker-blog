@@ -46,11 +46,14 @@ class HandleInertiaRequests extends Middleware
             'menu' => MenuItem::getTree(),
             'supported_locales' => config('app.supported_locales'),
             'locale' => function () {
-                return session()->get('locale') ?? 'en';
+                return 'en';
             },
             'language' => function () {
+
+                $locale = session()->get('locale') != null ? session()->get('locale').'.json' : 'en.json';
+
                 return translations(
-                    resource_path('lang/'.session()->get('locale').'.json' ?? 'en'.'.json')
+                    resource_path("lang/$locale")
                 );
             },
             'category' => MenuItem::getTree()->where('link', 'news')->first()->children ?? [],

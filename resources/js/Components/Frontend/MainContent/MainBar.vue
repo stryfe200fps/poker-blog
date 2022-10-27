@@ -74,7 +74,7 @@ defineProps({
         <div class="grid-box">
             <div class="title-section">
                 <h1>
-                    <span>Latest News</span>
+                    <span>{{ __("core.latest_news") }}</span>
                 </h1>
             </div>
             <div

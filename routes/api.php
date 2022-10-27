@@ -21,6 +21,8 @@ use App\Http\Controllers\TagController;
 use App\Models\ImageTheme;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LanguageController;
+
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -84,3 +86,7 @@ Route::get('gallery/day/{id}', [GalleryController::class, 'gallery']);
 Route::get('admin/attach-image/{id}', function ($id) {
     return ImageTheme::find($id)->image ?? '';
 });
+
+
+
+Route::get('locale/{locale}', [LanguageController::class, 'setLocale'])->name('set-locale');

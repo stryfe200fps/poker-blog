@@ -212,7 +212,11 @@
             </CustomeTable>
         </div>
 
-        <div class="post-tags-box margin-top" v-if="item.event_chips.length">
+        <div
+            class="post-tags-box margin-top"
+            v-if="item.event_chips.length"
+            style="border: none"
+        >
             <ul class="tags-box">
                 <li>
                     <i class="fa fa-tags"></i><span>Tags:</span

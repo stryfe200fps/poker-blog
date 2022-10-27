@@ -9,12 +9,11 @@ use Inertia\Inertia;
 class LanguageController extends Controller
 {
     //
-    public function setLocale($locale): RedirectResponse
+    public function setLocale($locale)
     {
-
         session()->put('locale', $locale);
         Inertia::share('locale', $locale);
 
-        return redirect()->back();
+        return $locale;
     }
 }

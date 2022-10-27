@@ -66,6 +66,7 @@ onMounted(() => {
 <template>
     <div class="active">
         <Header />
+
         <main>
             <section class="block-wrapper">
                 <div class="container">

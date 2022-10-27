@@ -8,13 +8,11 @@ use App\Http\Controllers\Inertia\MenuItemController;
 use App\Http\Controllers\Inertia\PageController;
 use App\Http\Controllers\Inertia\ReportController;
 use App\Http\Controllers\Inertia\TournamentController;
-use App\Http\Controllers\LanguageController;
 use App\Models\EventChip;
 use App\Models\MenuItem;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('select-locale/{locale}', [LanguageController::class, 'setLocale'])->name('set-locale');
 
 Route::get('/', [HomeController::class, 'index']);
 // Route::get('/tournament', [TournamentController::class , 'index'] );
