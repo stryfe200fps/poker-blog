@@ -45,17 +45,17 @@ class HandleInertiaRequests extends Middleware
             'title' => fn (MetaInterface $meta) => ($meta->toArray()['head'][0]['content']),
             'menu' => MenuItem::getTree(),
             'supported_locales' => config('app.supported_locales'),
-            'locale' => function () {
-                return 'en';
-            },
-            'language' => function () {
+            // 'locale' => function () {
+            //     return 'en';
+            // },
+            // 'language' => function () {
 
-                $locale = session()->get('locale') != null ? session()->get('locale').'.json' : 'en.json';
+            //     $locale = session()->get('locale') != null ? session()->get('locale').'.json' : 'en.json';
 
-                return translations(
-                    resource_path("lang/$locale")
-                );
-            },
+            //     return translations(
+            //         resource_path("lang/$locale")
+            //     );
+            // },
             'category' => MenuItem::getTree()->where('link', 'news')->first()->children ?? [],
         ]);
     }
