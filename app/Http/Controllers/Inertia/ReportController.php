@@ -9,10 +9,7 @@ use Inertia\Inertia;
 
 class ReportController extends Controller
 {
-    // public function show($tour, $series, $eventSlug,  $reportSlug) {
-    public function show($eventSlug, $reportSlug)
-    {
-        // Route::get('/tours/{tour}/{series}/{eventSlug}/report/{re}', [ReportController::class, 'show'] );
+    public function show($tour, $series, $eventSlug,  $reportSlug) {
 
         $report = new LOFApiEventReportsResource(EventReport::where('slug', $reportSlug)->firstOrFail());
 
