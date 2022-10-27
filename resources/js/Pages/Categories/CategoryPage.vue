@@ -16,21 +16,22 @@
                         <h1 style="margin: 20px 0 -1px 0">
                             <span>{{ page }}</span>
                         </h1>
-                        <label class="dropdown">
-                            <div class="dd-button">Categories</div>
-                            <input type="checkbox" class="dd-input" id="test" />
-                            <ul class="dd-menu">
-                                <li
-                                    v-for="(category, index) in categories"
-                                    :key="index"
-                                    class="text-capitalize"
-                                >
-                                    <Link :href="`/news/${category.slug}`">{{
-                                        category.title
-                                    }}</Link>
-                                </li>
-                            </ul>
-                        </label>
+                        <select
+                            class="form-control"
+                            v-model="selectCategory"
+                            @change="changeCategory"
+                            style="width: auto !important"
+                        >
+                            <option
+                                v-for="(category, index) in categories"
+                                :key="index"
+                                :value="category.slug"
+                                :checked="category.title == selectCategory"
+                                :disabled="category.title == 'Categories'"
+                            >
+                                {{ category.title }}
+                            </option>
+                        </select>
                     </div>
                 </div>
                 <div v-if="articleCategories?.length">
@@ -39,48 +40,54 @@
                             v-for="(category, index) in articleCategories"
                             :key="index"
                         >
-                            <div
-                                class="news-post standard-post2"
-                                style="
-                                    display: flex;
-                                    flex-direction: column;
-                                    height: 100%;
-                                "
-                            >
-                                <div class="post-gallery">
-                                    <img
-                                        v-if="category.thumb_image"
-                                        :src="category.thumb_image"
-                                        :alt="category.thumb_image"
-                                    />
-                                    <img
-                                        v-else
-                                        :src="defaultImg"
-                                        :alt="defaultImg"
-                                    />
-                                    <Link
-                                        class="category-post food"
-                                        v-for="item in category.categories"
-                                        :key="item.id"
-                                        :href="
-                                            item.slug === 'news'
-                                                ? item.slug
-                                                : `/news/${item.slug}`
-                                        "
-                                        >{{ item.title }}</Link
-                                    >
-                                </div>
-                                <div class="post-title" style="flex-grow: 1">
-                                    <h2>
+                            <Link :href="'/article/show/' + category.slug">
+                                <div
+                                    class="news-post standard-post2"
+                                    style="
+                                        display: flex;
+                                        flex-direction: column;
+                                        height: 100%;
+                                    "
+                                >
+                                    <div class="post-gallery">
+                                        <img
+                                            v-if="category.thumb_image"
+                                            :src="category.thumb_image"
+                                            :alt="category.thumb_image"
+                                        />
+                                        <img
+                                            v-else
+                                            :src="defaultImg"
+                                            :alt="defaultImg"
+                                        />
                                         <Link
+                                            class="category-post food"
+                                            v-for="item in category.categories"
+                                            :key="item.id"
                                             :href="
-                                                '/article/show/' + category.slug
+                                                item.slug === 'news'
+                                                    ? item.slug
+                                                    : `/news/${item.slug}`
                                             "
-                                            >{{ category.title }}</Link
+                                            >{{ item.title }}</Link
                                         >
-                                    </h2>
+                                    </div>
+                                    <div
+                                        class="post-title"
+                                        style="flex-grow: 1"
+                                    >
+                                        <h2>
+                                            <Link
+                                                :href="
+                                                    '/article/show/' +
+                                                    category.slug
+                                                "
+                                                >{{ category.title }}</Link
+                                            >
+                                        </h2>
+                                    </div>
                                 </div>
-                            </div>
+                            </Link>
                         </div>
                         <div
                             v-if="articleCategories?.length"
@@ -99,6 +106,7 @@
 <script setup>
 import FrontLayout from "@/Layouts/FrontLayout.vue";
 import defaultImg from "/public/default-img.png";
+import { Inertia } from "@inertiajs/inertia";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import { useArticleCategoryStore } from "@/Stores/articleCategory.js";
 import {
@@ -115,9 +123,10 @@ const props = defineProps({
 
 const articleCategoryStore = useArticleCategoryStore();
 const articleCategories = ref(null);
-const categories = ref(null);
+const categories = ref([{ title: "Categories", slug: "categories" }]);
 const currentPage = ref(1);
 const lastPage = ref(1);
+const selectCategory = ref("categories");
 const pathname = ref(window.location.pathname.split("/")[2]);
 
 async function handleScrolledToBottom(isVisible) {
@@ -134,9 +143,13 @@ async function handleScrolledToBottom(isVisible) {
     lastPage.value = articleCategoryStore.articleCategoryLists.meta.last_page;
 }
 
+function changeCategory() {
+    Inertia.visit(`/news/${selectCategory.value}`);
+}
+
 onMounted(async () => {
     await articleCategoryStore.getCategoryLists();
-    categories.value = articleCategoryStore.categoryLists.data;
+    categories.value.push(...articleCategoryStore.categoryLists.data);
     await articleCategoryStore.getArticleCategoryLists(pathname.value, 1);
     lastPage.value = articleCategoryStore.articleCategoryLists.meta.last_page;
 });
@@ -165,79 +178,6 @@ watch(
 
 .post-title {
     padding: 0 !important;
-}
-
-.dropdown {
-    position: relative;
-    display: inline-block;
-    margin-bottom: 0;
-    font-weight: 400;
-}
-
-.dd-button {
-    display: inline-block;
-    padding: 10px 30px 10px 20px;
-    white-space: nowrap;
-    border: 1px solid gray;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.dd-button:after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    width: 0;
-    height: 0;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 5px solid #222;
-    transform: translateY(-50%);
-}
-
-.dd-input {
-    display: none;
-}
-
-.dd-menu {
-    position: absolute;
-    top: 100%;
-    z-index: 1;
-    right: 0;
-    margin: 2px 0 0 0;
-    padding: 0;
-    text-align: start;
-    list-style-type: none;
-    background-color: #ffffff;
-    color: #222;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.1);
-}
-
-.dd-input + .dd-menu {
-    display: none;
-}
-
-.dd-input:checked + .dd-menu {
-    display: block;
-}
-
-.dd-menu li {
-    cursor: pointer;
-    white-space: nowrap;
-}
-
-.dd-menu li:hover {
-    background-color: #f6f6f6;
-}
-
-.dd-menu li a {
-    display: inline-block;
-    padding: 10px 20px;
-    text-decoration: none;
-    color: #222;
 }
 
 .grid {

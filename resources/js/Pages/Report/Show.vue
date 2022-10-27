@@ -9,17 +9,12 @@
 
         <div class="block-content">
             <div class="title-section">
-                <Link onclick="history.back();return false;"
-                    ><h1 class="text-primary">
-                        <span
-                            ><i
-                                class="fa fa-chevron-left"
-                                aria-hidden="true"
-                            ></i>
-                            Back</span
-                        >
-                    </h1></Link
-                >
+                <h1 class="text-primary">
+                    <span style="cursor: pointer" @click="goBack"
+                        ><i class="fa fa-chevron-left" aria-hidden="true"></i>
+                        Back</span
+                    >
+                </h1>
             </div>
 
             <div class="single-post-box">
@@ -72,7 +67,7 @@
                                         :class="{ show: isOpen }"
                                     >
                                         <li
-                                            class="btn"
+                                            class="btn custom-btn"
                                             style="
                                                 margin-right: 0;
                                                 background-color: #1854dd;
@@ -93,7 +88,7 @@
                                             </a>
                                         </li>
                                         <li
-                                            class="btn"
+                                            class="btn custom-btn"
                                             style="
                                                 margin-right: 0;
                                                 background-color: #18a3dd;
@@ -114,7 +109,7 @@
                                             ></a>
                                         </li>
                                         <li
-                                            class="btn"
+                                            class="btn custom-btn"
                                             style="background-color: #25d366"
                                         >
                                             <a
@@ -132,8 +127,8 @@
                                     </div>
                                     <li
                                         @click="showShare"
+                                        v-click-outside-element="onClickOutside"
                                         class="btn btn-default share-btn-mobile"
-                                        tabindex="0"
                                     >
                                         <i class="fa fa-share-alt"></i
                                         ><span class="text-uppercase"
@@ -357,6 +352,18 @@ const showShare = () => {
     isOpen.value = !isOpen.value;
 };
 
+function goBack() {
+    history.back();
+    return false;
+}
+
+function onClickOutside(event) {
+    if (event.target.localName !== "a") {
+        isOpen.value = false;
+        return;
+    }
+}
+
 function getFrame(theme) {
     switch (theme) {
         case "brokenMirror":
@@ -488,6 +495,14 @@ ul.post-tags li .twitter {
     width: 8px;
     background-color: #25d366;
     transform: translate(-50%) rotate(45deg);
+}
+
+.custom-btn {
+    padding: 0;
+}
+
+.custom-btn a {
+    padding: 6px 12px;
 }
 
 @media (min-width: 768px) {

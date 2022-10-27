@@ -52,7 +52,7 @@
                                 :class="{ show: isOpen }"
                             >
                                 <li
-                                    class="btn"
+                                    class="btn custom-btn"
                                     style="
                                         margin-right: 0;
                                         background-color: #1854dd;
@@ -72,7 +72,7 @@
                                     </a>
                                 </li>
                                 <li
-                                    class="btn"
+                                    class="btn custom-btn"
                                     style="
                                         margin-right: 0;
                                         background-color: #18a3dd;
@@ -90,7 +90,7 @@
                                     ></a>
                                 </li>
                                 <li
-                                    class="btn"
+                                    class="btn custom-btn"
                                     style="background-color: #25d366"
                                 >
                                     <a
@@ -105,8 +105,8 @@
                             </div>
                             <li
                                 @click="showShare"
+                                v-click-outside-element="onClickOutside"
                                 class="btn btn-default share-btn-mobile"
-                                tabindex="0"
                             >
                                 <i class="fa fa-share-alt"></i
                                 ><span class="text-uppercase">Share</span>
@@ -252,15 +252,11 @@ const props = defineProps({
 const url = ref(window.location.href);
 
 // const items = ref([]);
-function handleBlur(event) {
-    console.log(event.currentTarget);
-    console.log(event.relatedTarget);
-    // if the blur was because of outside focus
-    // currentTarget is the parent element, relatedTarget is the clicked element
-    if (event.relatedTarget == null) {
+
+function onClickOutside(event) {
+    if (event.target.localName !== "a") {
         isOpen.value = false;
-    } else {
-        isOpen.value = true;
+        return;
     }
 }
 
@@ -308,8 +304,6 @@ function getFrame(theme) {
             return waterWaves;
     }
 }
-
-console.log(encodeURIComponent(url.value));
 </script>
 
 <style scoped>
@@ -423,6 +417,14 @@ ul.post-tags li .twitter {
 
 .social-links-group.show {
     display: block;
+}
+
+.custom-btn {
+    padding: 0;
+}
+
+.custom-btn a {
+    padding: 6px 12px;
 }
 
 .social-links-group::before {

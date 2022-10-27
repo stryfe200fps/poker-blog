@@ -8,7 +8,7 @@ import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { ZiggyVue } from "../../vendor/tightenco/ziggy/dist/vue.m";
 import { ObserveVisibility } from "vue-observe-visibility";
 import { createPinia } from "pinia";
-
+import vueClickOutsideElement from "vue-click-outside-element";
 const pinia = createPinia();
 
 const appName =
@@ -35,6 +35,7 @@ createInertiaApp({
                 update: ObserveVisibility.update,
                 unmounted: ObserveVisibility.unbind,
             })
+            .use(vueClickOutsideElement)
             .mount(el);
     },
 });

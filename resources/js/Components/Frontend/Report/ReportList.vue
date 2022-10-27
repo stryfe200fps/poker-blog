@@ -1,4 +1,7 @@
 <template>
+    <Head>
+        <title>Live Reporting</title>
+    </Head>
     <div class="about-more-autor">
         <ul class="nav nav-tabs custom-tabs">
             <li
@@ -378,7 +381,7 @@
 </template>
 
 <script setup>
-import { Link } from "@inertiajs/inertia-vue3";
+import { Head, Link } from "@inertiajs/inertia-vue3";
 import { ref } from "@vue/reactivity";
 import { onMounted, onBeforeUnmount, onUpdated } from "@vue/runtime-core";
 import CustomeTable from "../CustomeTable.vue";
