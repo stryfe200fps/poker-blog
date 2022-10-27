@@ -55,7 +55,6 @@ const getCookie = computed(() => {
 });
 
 onMounted(() => {
-    console.log(usePage().props.value.locale);
     document.body.style.overflow = "auto";
     setTimeout(() => {
         window.scrollTo({ top: 0, behavior: "smooth" });
@@ -66,7 +65,6 @@ onMounted(() => {
 <template>
     <div class="active">
         <Header />
-
         <main>
             <section class="block-wrapper">
                 <div class="container">
