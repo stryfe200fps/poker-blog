@@ -30,7 +30,6 @@ Route::get('/tours/{tour}/{series}/{eventSlug}', [EventController::class, 'show'
 Route::get('/tours', [TournamentController::class, 'index']);
 
 Route::get('/tours/{tour}/{series}/{eventSlug}/report/{reportSlug}', [ReportController::class, 'show']);
-
 Route::get('/tours/{tour}/{series}/{eventSlug}', [EventController::class, 'show']);
 Route::get('/tours/{tour}/{series}/{eventSlug}/{type?}/{day?}', [EventController::class, 'show']);
 // Route::get('/tours/{tour}/{series}/{eventSlug}/{id}', [EventController::class, 'show'] );
@@ -51,7 +50,6 @@ Route::get('/tag/articles/{slug}', [ArticleController::class, 'tag'])->name('art
 
 Route::get('/article', [ArticleController::class, 'index'])->name('article');
 Route::get('/article/show/{slug}', [ArticleController::class, 'show'])->name('article-show');
-
 
 Route::get('/news', [ArticleController::class, 'index'])->name('article');
 Route::get('/news/category', [ArticleController::class, 'index'])->name('article');
