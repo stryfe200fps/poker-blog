@@ -3,13 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Day;
-use Illuminate\Http\Request;
 
 class GalleryController extends Controller
 {
     public function gallery(int $id)
     {
-
         $day = Day::find($id);
 
         $imgResource = [];
@@ -21,7 +19,5 @@ class GalleryController extends Controller
         }
 
         return $imgResource;
-
-
     }
 }

@@ -13,13 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-
-        try { 
-        Schema::table('tours', function (Blueprint $table) {
-            $table->text('slug');
-        });
+        try {
+            Schema::table('tours', function (Blueprint $table) {
+                $table->text('slug');
+            });
         } catch (Exception $e) {
-
         }
     }
 
@@ -30,7 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-
         Schema::table('tours', function (Blueprint $table) {
             $table->dropColumn('slug');
         });

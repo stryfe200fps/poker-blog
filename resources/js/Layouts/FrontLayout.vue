@@ -2,7 +2,7 @@
 import Header from "../Components/Frontend/Header.vue";
 import Footer from "../Components/Frontend/Footer.vue";
 import SideBar from "../Components/Frontend/MainContent/SideBar.vue";
-import { Head, Link } from "@inertiajs/inertia-vue3";
+import { Head, Link, usePage } from "@inertiajs/inertia-vue3";
 
 import { onMounted, ref, computed } from "@vue/runtime-core";
 
@@ -55,6 +55,7 @@ const getCookie = computed(() => {
 });
 
 onMounted(() => {
+    console.log(usePage().props.value.locale);
     document.body.style.overflow = "auto";
     setTimeout(() => {
         window.scrollTo({ top: 0, behavior: "smooth" });

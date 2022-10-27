@@ -31,7 +31,7 @@ class Player extends Model implements HasMedia
 
     public function setAvatarAttribute($value)
     {
-          if ($value == null) {
+        if ($value == null) {
             $this->media()->delete();
         }
 

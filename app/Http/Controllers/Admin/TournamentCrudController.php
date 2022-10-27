@@ -21,8 +21,8 @@ class TournamentCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
-
     use LimitUserPermissions;
+
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
      *
@@ -95,7 +95,6 @@ class TournamentCrudController extends CrudController
         });
 
         CRUD::field('title');
-
 
         $this->crud->addField([
             'name' => 'slug',

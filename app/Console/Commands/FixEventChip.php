@@ -31,18 +31,18 @@ class FixEventChip extends Command
     {
         $events = EventChip::all();
         foreach ($events as $chip) {
-
             $chip->date_published = $chip->created_at;
             $chip->save();
 
             $eventReport = EventReport::find($chip->event_report_id);
-            if ($eventReport?->day_id  !== null && $eventReport?->day_id !== 0) {
-                $chip->day_id =  $eventReport->day_id;
+            if ($eventReport?->day_id !== null && $eventReport?->day_id !== 0) {
+                $chip->day_id = $eventReport->day_id;
                 $chip->save();
             }
         }
 
         echo 'done!!!!';
+
         return Command::SUCCESS;
     }
 }

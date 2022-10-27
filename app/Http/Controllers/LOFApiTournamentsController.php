@@ -20,15 +20,10 @@ class LOFApiTournamentsController extends Controller
         // dd(Tournament::latest()->get());
 
         return  new LOFApiTournamentCollection($request->get('status') == 'live' ? Tournament::latest()->get() : Tournament::latest()->paginate(5));
-
-
     }
-
-
-    
 
     public function show($id)
     {
-        return new LOFApiTournamentResource(Tournament::with('media')->where('id', $id)->first());  
+        return new LOFApiTournamentResource(Tournament::with('media')->where('id', $id)->first());
     }
 }

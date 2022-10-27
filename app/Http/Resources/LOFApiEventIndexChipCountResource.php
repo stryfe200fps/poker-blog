@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources;
 
-use App\Http\Resources\EventChipsResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class LOFApiEventIndexChipCountResource extends JsonResource
@@ -16,7 +15,7 @@ class LOFApiEventIndexChipCountResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'event_chips' =>  collect(EventChipsResource::collection($this->latest_event_chips->sortByDesc('date_published')->unique('player_id')))->sortByDesc('current_chips')->values()->all()
+            'event_chips' => collect(EventChipsResource::collection($this->latest_event_chips->sortByDesc('date_published')->unique('player_id')))->sortByDesc('current_chips')->values()->all(),
         ];
     }
 }

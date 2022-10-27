@@ -31,7 +31,7 @@ it('can insert article if authenticated', function () {
     ])->attributesToArray();
 
     $datas = $this->post('admin/article', $data);
-    $this->assertDatabaseHas('articles', ['title' => 'Things I do'
+    $this->assertDatabaseHas('articles', ['title' => 'Things I do',
     ]);
 });
 
@@ -73,4 +73,3 @@ it('can delete article if authenticated', function () {
     $this->get('admin/article')->assertStatus(200);
     $datas = $this->delete('admin/article/1');
 });
-

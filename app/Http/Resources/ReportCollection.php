@@ -35,6 +35,4 @@ class ReportCollection extends ResourceCollection
             ],
         ];
     }
-
-
 }

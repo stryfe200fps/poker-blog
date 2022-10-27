@@ -2,20 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
-use DateTime;
-use App\Models\Event;
-use App\Events\NewReport;
-use App\Models\EventReport;
-use Illuminate\Http\Request;
-use App\Models\ArticleAuthor;
-use Illuminate\Support\Facades\DB;
-use App\Traits\LimitUserPermissions;
-use Backpack\CRUD\app\Library\Widget;
 use App\Http\Requests\EventReportRequest;
+use App\Models\ArticleAuthor;
 use App\Models\Day;
-use Illuminate\Support\Facades\Validator;
+use App\Models\Event;
+use App\Models\EventReport;
+use App\Traits\LimitUserPermissions;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use Backpack\CRUD\app\Library\Widget;
+use DateTime;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 /**
  * Class LiveReportCrudController
@@ -39,10 +38,9 @@ class EventReportCrudController extends CrudController
      */
     public function setup()
     {
-
         CRUD::setModel(\App\Models\EventReport::class);
         CRUD::setRoute(config('backpack.base.route_prefix').'/report');
-        CRUD::setEntityNameStrings('report','report');
+        CRUD::setEntityNameStrings('report', 'report');
 
         $this->crud->denyAccess('show');
 
@@ -54,14 +52,13 @@ class EventReportCrudController extends CrudController
 
             $getEvent = Event::where('id', session()->get('event_id'))->first();
             $getDay = Day::where('id', session()->get('event_day'))->first();
-            CRUD::setEntityNameStrings('report', $getEvent?->title. ' - Day: ' .$getDay?->name);
+            CRUD::setEntityNameStrings('report', $getEvent?->title.' - Day: '.$getDay?->name);
         } else {
-
             $this->crud->denyAccess('create');
         }
         $this->crud->orderBy('date_added', 'DESC');
 
-            $this->denyAccessIfNoPermission();
+        $this->denyAccessIfNoPermission();
     }
 
     /**
@@ -145,8 +142,6 @@ class EventReportCrudController extends CrudController
         // })->where('event_id', request()->session()->get('event_id'))->orderByDesc('name')
         // ->get(['level_id'])->first()->level_id ?? 1;
 
-
-
         CRUD::field('title');
 
         $this->crud->addField([
@@ -219,14 +214,12 @@ class EventReportCrudController extends CrudController
                     'class' => 'form-group col-md-6',
                 ],
 
-            ] ]);
-
-
+            ], ]);
 
         CRUD::field('day_id')->type('hidden')->value(session()->get('event_day'));
 
-            // $this->crud->addField( 
-            //     [ 
+        // $this->crud->addField(
+            //     [
             //     'label' => 'Day',
             //     'name' => 'day',
             //     'type' => 'text',
@@ -237,9 +230,8 @@ class EventReportCrudController extends CrudController
             //     'wrapper' => [
             //         'class' => 'form-group col-md-6',
             //     ]] );
-            
 
-    $this->crud->addFields([ 
+        $this->crud->addFields([
             [
                 'label' => 'Levels',
                 'type' => 'relationship',
@@ -271,7 +263,7 @@ class EventReportCrudController extends CrudController
                 'aspect_ratio' => 3 / 2, // omit or set to 0 to allow any aspect ratio
                 'wrapper' => [
                     'class' => 'form-group col-md-12 image',
-                    'id' => 'image'
+                    'id' => 'image',
                 ],
             ],
             [
@@ -286,7 +278,7 @@ class EventReportCrudController extends CrudController
                 'name' => 'image_theme',
                 'type' => 'relationship',
                 'attributes' => [
-                   'id'  => 'image-theme'
+                    'id' => 'image-theme',
                 ],
                 'wrapper' => [
                     'class' => 'form-group col-md-6 image_theme ',
@@ -320,7 +312,7 @@ class EventReportCrudController extends CrudController
                 'subfields' => [
                     [
                         'name' => 'id',
-                        'type' => 'hidden'
+                        'type' => 'hidden',
                     ],
                     [
                         'label' => 'Player',
@@ -344,13 +336,13 @@ class EventReportCrudController extends CrudController
                     [   //image
                         'name' => 'divider',
                         'type' => 'custom_html',
-                        'value' => '<hr>'
+                        'value' => '<hr>',
                     ],
 
                     [   //image
                         'name' => 'divider',
                         'type' => 'custom_html',
-                        'value' => '<b>Payout</b>'
+                        'value' => '<b>Payout</b>',
                     ],
                     [   //image
                         'label' => 'Rank',
@@ -375,21 +367,20 @@ class EventReportCrudController extends CrudController
             ],
         ]);
 
-
         $this->crud->addField([
             'name' => 'type',
             'type' => 'select2_from_array',
             'options' => [
-                'report'  => 'report',
-                'level' => 'level'
+                'report' => 'report',
+                'level' => 'level',
             ],
             'allows_null' => false,
-            'default' => 'report' 
+            'default' => 'report',
         ]);
 
-
-        if ($this->crud->getCurrentOperation() === 'create')
+        if ($this->crud->getCurrentOperation() === 'create') {
             Widget::add()->type('script')->content('assets/js/admin/create-admin-image-theme-attach.js');
+        }
 
         // if ($this->crud->getCurrentOperation() === 'update') {
         //     $liveReport = LiveReport::find($this->crud->getCurrentEntryId());
@@ -460,7 +451,7 @@ public function fetchTags()
         $lastPlayerId = 0;
         if ($players !== null) {
             foreach ($players as $user) {
-            Validator::make($user,
+                Validator::make($user,
                     ['player_id' => 'required',
                         'current_chips' => 'required',
                     ],
@@ -469,11 +460,10 @@ public function fetchTags()
                         'current_chips' => 'Chip field is required',
                     ])->validate();
 
-
                 if ($user['player_id'] == $lastPlayerId) {
                     Validator::make([],
                         ['player_id' => 'required',
-                        'current_chips' => 'required',
+                            'current_chips' => 'required',
                         ],
                         [
                             'player_id' => 'There is a duplicate player in Chip Stacks',
@@ -482,13 +472,10 @@ public function fetchTags()
                 }
 
                 $lastPlayerId = $user['player_id'];
-
-           
             }
         } else {
             $request['players'] = '';
         }
-
 
         $request = $this->crud->validateRequest();
         $this->crud->registerFieldEvents();
@@ -500,7 +487,6 @@ public function fetchTags()
         session()->flash('new_reports', $item->id);
 
         \Alert::success(trans('backpack::crud.insert_success'))->flash();
-
 
         $this->crud->setSaveAction();
 
@@ -514,7 +500,6 @@ public function fetchTags()
             $lastPlayerId = 0;
 
             foreach ($players as $user) {
-
                 Validator::make($user,
                     ['player_id' => 'required',
                         'current_chips' => 'required',
@@ -527,25 +512,20 @@ public function fetchTags()
                     ])->validate();
 
                 if ($user['player_id'] == $lastPlayerId) {
-
                     Validator::make($user,
                         ['player_id' => 'required',
-                        'current_chips' => 'required',
+                            'current_chips' => 'required',
                         ],
                         [
                             'player_id' => 'There is a duplicate player in Chip Stacks',
 
-                        'current_chips' => 'Chip field is required',
+                            'current_chips' => 'Chip field is required',
                         ])->validate();
-
-                        
                 }
 
                 $lastPlayerId = $user['player_id'];
-
             }
         }
-
 
         $this->crud->hasAccessOrFail('update');
 

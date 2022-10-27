@@ -18,6 +18,6 @@ class EventPayoutResource extends JsonResource
             'player' => new PlayerResource($this->player),
             'prize' => $this->prize,
             'position' => $this->position,
-        ] ;
+        ];
     }
 }

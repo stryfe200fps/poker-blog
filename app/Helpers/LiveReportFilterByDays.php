@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Builder;
 
 class LiveReportFilterByDays
 {
-
     public function handle(Builder $builder, $next)
     {
         if (! request()->has('filterDay')) {

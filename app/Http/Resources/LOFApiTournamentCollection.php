@@ -14,14 +14,14 @@ class LOFApiTournamentCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-
-        if ($request->get('status') == null)
+        if ($request->get('status') == null) {
             return;
+        }
 
-        $tournamentList =  $this->collection->map(function ($tourna) use ($request) {
-            $tourna->events = $tourna->events->filter(fn ($event) 
-           =>  $event->status() ==  $request->get('status') 
+        $tournamentList = $this->collection->map(function ($tourna) use ($request) {
+            $tourna->events = $tourna->events->filter(fn ($event) => $event->status() == $request->get('status')
             );
+
             return $tourna;
         })->filter(function ($tourna) {
             return count($tourna->events);

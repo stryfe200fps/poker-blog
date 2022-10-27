@@ -51,8 +51,6 @@ class PayoutCrudController extends CrudController
         } else {
             $this->crud->denyAccess('create');
         }
-
-      
     }
 
     /**
@@ -68,7 +66,6 @@ class PayoutCrudController extends CrudController
 
         $this->crud->addClause('where', 'event_id', session()->get('payout_event_id'));
         $this->crud->orderBy('position');
-    
 
         $this->crud->addColumn([
             'name' => 'player_id',
@@ -100,10 +97,8 @@ class PayoutCrudController extends CrudController
                 'text_color_duration' => 3000, // how long (in miliseconds) should the text stay that color (0 for infinite, aka until page refresh)
             ],
             'auto_update_row' => true, // update related columns in same row, after the AJAX call?
-          
-        ]);
 
-        
+        ]);
 
         CRUD::addColumn([
             'name' => 'position',
@@ -127,8 +122,8 @@ class PayoutCrudController extends CrudController
             'auto_update_row' => true, // update related columns in same row, after the AJAX call?
             'orderLogic' => function ($query, $column, $columnDirection) {
                 return $query->orderBy('position', 'ASC');
-            }
- 
+            },
+
         ]);
 
         Widget::add()->to('after_content')->type('view')->view('vendor.backpack.helper.payout')->eventId(session()->get('payout_event_id')); // widgets to show the ordering card
@@ -181,7 +176,7 @@ class PayoutCrudController extends CrudController
             }),
         ]);
 
-     $this->crud->addField([
+        $this->crud->addField([
             'name' => 'position',
             'label' => 'Position',
             'type' => 'number',
@@ -203,8 +198,6 @@ class PayoutCrudController extends CrudController
         //         'whatsapp' => 'whatsapp',
         //     ],
         // ]);
-
-   
     }
 
     protected function setupUpdateOperation()

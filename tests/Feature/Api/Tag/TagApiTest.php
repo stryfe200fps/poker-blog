@@ -29,7 +29,6 @@ test('article with tags ', function () {
 
     $json = $this->json('get', "/api/tag/articles/{$tag1->slug}");
 
-
     $json
     ->assertJsonPath(
         'data.0.title', 'adrian blog'

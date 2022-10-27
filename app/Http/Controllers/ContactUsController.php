@@ -5,8 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ContactFormRequest;
 use App\Mail\ContactMail;
 use App\Models\ContactForm;
-
-        use Illuminate\Support\Facades\Mail; // Put this at the top of your controller
+use Illuminate\Support\Facades\Mail; // Put this at the top of your controller
 
 class ContactUsController extends Controller
 {

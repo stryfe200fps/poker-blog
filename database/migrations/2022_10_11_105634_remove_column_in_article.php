@@ -14,11 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::table('articles', function (Blueprint $table) {
-            try { 
-            // $table->dropColumn(['title', 'body']);
-}catch( Exception $e) {
-
-}
+            try {
+                // $table->dropColumn(['title', 'body']);
+            } catch(Exception $e) {
+            }
         });
     }
 

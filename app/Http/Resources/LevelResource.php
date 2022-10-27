@@ -18,7 +18,7 @@ class LevelResource extends JsonResource
             'level' => $this->level,
             'level_value' => $this->level_value,
             'blinds' => $this->blinds,
-            'ante' => $this->ante
+            'ante' => $this->ante,
         ];
     }
 }

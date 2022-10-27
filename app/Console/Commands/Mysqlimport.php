@@ -2,10 +2,10 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Event;
 use App\Models\EventReport;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+
 // use Thamaraiselvam\MysqlImport\Import;
 // use Thamaraiselvam\MysqlImport\Import;
 
@@ -32,27 +32,22 @@ class Mysqlimport extends Command
      */
     public function handle()
     {
-
         $eventReports = new EventReport;
-
-
 
         $eventReports->setConnection('mysql2');
 
         foreach ($eventReports->get() as $event) {
-
             $isMatch = false;
             foreach (EventReport::all() as $repo) {
-
-                if ($event->id == $repo->id)
+                if ($event->id == $repo->id) {
                     $isMatch = true;
-
+                }
             }
 
-            if ($isMatch == false)
+            if ($isMatch == false) {
                 dump($event);
-                // dump('no one here huh');
-
+            }
+            // dump('no one here huh');
         }
 
         $other = new EventReport;
@@ -76,17 +71,17 @@ class Mysqlimport extends Command
 
         // dd($eventReports->all()->count(), EventReport::all()->count());
 
-    // $users = DB::connection('mysql2')->select(...);
+        // $users = DB::connection('mysql2')->select(...);
 
-    // $filename = 'database.sql';
-    // $username = 'root';
-    // $password = '';
-    // $database = 'sampleproject';
-    // $host = 'localhost';
-    // $adi = new Import($filename, $username, $password, $database, $host);
+        // $filename = 'database.sql';
+        // $username = 'root';
+        // $password = '';
+        // $database = 'sampleproject';
+        // $host = 'localhost';
+        // $adi = new Import($filename, $username, $password, $database, $host);
 
-    // dd($adi);
+        // dd($adi);
 
-    return Command::SUCCESS;
+        return Command::SUCCESS;
     }
 }

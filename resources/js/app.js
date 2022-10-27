@@ -25,6 +25,44 @@ createInertiaApp({
     setup({ el, app, props, plugin }) {
         return createApp({ render: () => h(app, props) })
             .use(pinia)
+            .mixin({
+                  methods: {
+        /**
+         * Translate the given key.
+         */
+        __(key, replace = {}) {
+            let keys = key.split('.');
+            var translation = this.$page.props.language;
+            keys.forEach(function(keyTmp){
+                 translation = translation[keyTmp]
+                    ? translation[keyTmp]
+                    : keyTmp
+            });
+
+            Object.keys(replace).forEach(function (key) {
+                translation = translation.replace(':' + key, replace[key])
+            });
+
+            return translation
+        },
+
+        /**
+         * Translate the given key with basic pluralization.
+         */
+        __n(key, number, replace = {}) {
+            var options = key.split('|');
+
+            key = options[1];
+            if(number == 1) {
+                key = options[0];
+            }
+
+            return tt(key, replace);
+        },
+    }
+
+
+            })
             .use(plugin)
             .use(ZiggyVue, Ziggy)
             .directive("observe-visibility", {

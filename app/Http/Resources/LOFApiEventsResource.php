@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources;
 
-use App\Models\Event;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class LOFApiEventsResource extends JsonResource
@@ -20,7 +19,6 @@ class LOFApiEventsResource extends JsonResource
 
     public function toArray($request)
     {
-
         return [
             'status' => $this->status(),
             'id' => $this->id,

@@ -31,10 +31,9 @@ class EventApiController extends Controller
     {
         $day = Day::where('event_id', request()->get('event_id'))->where('id', request()->get('day_id'))->firstOrFail();
 
-
         if ($request->file('image')) {
-             $day->addMediaFromRequest('image')
-                    ->toMediaCollection('event_gallery');
+            $day->addMediaFromRequest('image')
+                   ->toMediaCollection('event_gallery');
         }
 
         return 200;
@@ -42,7 +41,6 @@ class EventApiController extends Controller
 
     public function fetchGallery($dayId)
     {
-
         $day = Day::where('id', $dayId)->first();
 
         $imgResource = [];

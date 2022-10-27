@@ -16,7 +16,7 @@ class ArticleCategoryResource extends JsonResource
     {
         return [
             'title' => $this->title,
-            'slug' => $this->slug
+            'slug' => $this->slug,
         ];
     }
 }

@@ -26,7 +26,7 @@ class ImageThemeRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'image' => 'required'
+            'image' => 'required',
         ];
     }
 
@@ -50,7 +50,7 @@ class ImageThemeRequest extends FormRequest
     {
         return [
             'name' => 'title is required',
-            'image' => 'image is required'
+            'image' => 'image is required',
         ];
     }
 }

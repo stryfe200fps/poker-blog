@@ -13,7 +13,6 @@ test('twitter has local endpoints', function () {
     $this->get($profile->getInstagramAuthUrl());
     $feed = \Dymantic\InstagramFeed\InstagramFeed::for('lifeofpoker_com');
 
-
     // $this->artisan('update:tweets');
 
     // $twitterApi = $this->get('api/twitter');

@@ -18,7 +18,7 @@ it('filters scheduled day in event', function () {
         'level_id' => $level->id,
         'title' => 'hugas plato',
         'date_added' => Carbon::parse($event->schedule[0]['date_start'])->addHours(2),
-        'day' => 50
+        'day' => 50,
     ]);
 
     $report2 = EventReport::factory()->times(2)->create([
@@ -26,7 +26,7 @@ it('filters scheduled day in event', function () {
         'level_id' => $level->id,
         'title' => 'boy tornado',
         'date_added' => Carbon::parse($event->schedule[1]['date_start'])->addHours(2),
-        'day' => 33
+        'day' => 33,
     ]);
 
     $day1 = $event->schedule[0]['day'];

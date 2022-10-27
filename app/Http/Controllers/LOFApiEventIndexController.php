@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\LOFApiEventIndexChipCountResource;
+use App\Http\Resources\LOFApiEventIndexResource;
 use App\Models\Event;
 use Illuminate\Http\Request;
-use App\Http\Resources\LOFApiEventIndexResource;
-use App\Http\Resources\LOFApiEventIndexChipCountResource;
 
 class LOFApiEventIndexController extends Controller
 {
@@ -54,14 +54,14 @@ class LOFApiEventIndexController extends Controller
 
     public function chipCounts($slug)
     {
-        return new LOFApiEventIndexChipCountResource( Event::with('latest_event_chips')->where('slug', $slug)->firstOrFail() );
+        return new LOFApiEventIndexChipCountResource(Event::with('latest_event_chips')->where('slug', $slug)->firstOrFail());
     }
 
-    public function whatsapp($slug) 
+    public function whatsapp($slug)
     {
-        return new LOFApiEventIndexChipCountResource( Event::with(['latest_event_chips' => function ($query) {
+        return new LOFApiEventIndexChipCountResource(Event::with(['latest_event_chips' => function ($query) {
             $query->where('is_whatsapp', 1);
-        }])->where('slug', $slug)->firstOrFail() );
+        }])->where('slug', $slug)->firstOrFail());
     }
 
     // public function player($player_id, $event)

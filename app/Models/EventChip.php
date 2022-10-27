@@ -28,7 +28,7 @@ class EventChip extends Model
         'is_whatsapp',
         'rank',
         'date_published',
-        'day_id'
+        'day_id',
     ];
 
     /**
@@ -55,9 +55,9 @@ class EventChip extends Model
         return $this->belongsTo(Event::class);
     }
 
-    public function getIsWhatsappAttribute($value) 
+    public function getIsWhatsappAttribute($value)
     {
-        return (int)$value;
+        return (int) $value;
     }
 
     public function getPreviousReportAttribute($value)

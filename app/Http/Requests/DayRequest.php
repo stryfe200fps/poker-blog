@@ -27,7 +27,7 @@ class DayRequest extends FormRequest
         return [
             'name' => 'required',
             'date_start' => 'required',
-            'date_end' => 'required'
+            'date_end' => 'required',
         ];
     }
 
@@ -51,7 +51,7 @@ class DayRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'Name is required'
+            'name.required' => 'Name is required',
         ];
     }
 }

@@ -35,10 +35,10 @@ class Event extends Model implements HasMedia
 
     public function getEventDateStartAttribute()
     {
-
-        $collect =  collect($this->schedule)->map(function ($item)  {
+        $collect = collect($this->schedule)->map(function ($item) {
             $item['date_start'] = Carbon::parse($item['date_start']);
             $item['date_end'] = Carbon::parse($item['date_end']);
+
             return $item;
         });
 
@@ -47,10 +47,10 @@ class Event extends Model implements HasMedia
 
     public function getEventDateEndAttribute()
     {
-
-        $collect =  collect($this->schedule)->map(function ($item)  {
+        $collect = collect($this->schedule)->map(function ($item) {
             $item['date_start'] = Carbon::parse($item['date_start']);
             $item['date_end'] = Carbon::parse($item['date_end']);
+
             return $item;
         });
 
@@ -60,15 +60,16 @@ class Event extends Model implements HasMedia
     public function getActualEventDateStartAttribute()
     {
         $timezone = null;
-        $timezoneArray = explode(' ',$this->tournament->timezone);
+        $timezoneArray = explode(' ', $this->tournament->timezone);
 
-        if (count($timezoneArray) > 1)
+        if (count($timezoneArray) > 1) {
             $timezone = $timezoneArray[count($timezoneArray) - 1];
+        }
 
-
-        $collect =  collect($this->schedule)->map(function ($item) use ($timezone) {
+        $collect = collect($this->schedule)->map(function ($item) {
             $item['date_start'] = Carbon::parse($item['date_start']);
             $item['date_end'] = Carbon::parse($item['date_end']);
+
             return $item;
         });
 
@@ -78,36 +79,38 @@ class Event extends Model implements HasMedia
     public function getActualEventDateEndAttribute()
     {
         $timezone = null;
-        $timezoneArray = explode(' ',$this->tournament->timezone);
+        $timezoneArray = explode(' ', $this->tournament->timezone);
 
-        if (count($timezoneArray) > 1)
+        if (count($timezoneArray) > 1) {
             $timezone = $timezoneArray[count($timezoneArray) - 1];
+        }
 
-
-        $collect =  collect($this->schedule)->map(function ($item) use ($timezone) {
+        $collect = collect($this->schedule)->map(function ($item) {
             $item['date_start'] = Carbon::parse($item['date_start']);
             $item['date_end'] = Carbon::parse($item['date_end']);
+
             return $item;
         });
 
         return $collect->last()['date_end'] ?? '';
-
     }
 
     public function scheduleArray($schedule = [], $timezone = null)
     {
-        if (is_string($schedule))
+        if (is_string($schedule)) {
             $schedule = json_decode($schedule, true);
+        }
 
-        if ($timezone == null)
+        if ($timezone == null) {
             $timezone = session()->get('timezone');
+        }
 
-        $collect =  collect($schedule)->map(function ($item) use ($timezone) {
+        $collect = collect($schedule)->map(function ($item) {
             $item['date_start'] = Carbon::parse($item['date_start'], session()->get('timezone'))
             ->setTimezone('UTC')
             ->toDateTimeString();
 
-            $item['date_end'] = Carbon::parse($item['date_end'],  session()->get('timezone'))
+            $item['date_end'] = Carbon::parse($item['date_end'], session()->get('timezone'))
             ->setTimezone('UTC')
            ->toDateTimeString();
 
@@ -126,16 +129,17 @@ class Event extends Model implements HasMedia
     {
         $sched = json_decode($schedule, true);
 
-        $collect =  collect($sched)->map(function ($item)  {
+        $collect = collect($sched)->map(function ($item) {
             $item['date_start'] = Carbon::parse($item['date_start'], 'UTC')
             ->setTimezone(session()->get('timezone'))
             ->toDateTimeString();
-            $item['date_end'] = Carbon::parse($item['date_end'],  'UTC')
+            $item['date_end'] = Carbon::parse($item['date_end'], 'UTC')
             ->setTimezone(session()->get('timezone'))
            ->toDateTimeString();
 
             return $item;
         });
+
         return $collect;
     }
 
@@ -164,25 +168,28 @@ class Event extends Model implements HasMedia
 
         $schedule = $this->days->toArray() ?? [];
 
-        if (count($schedule) === 0)
+        if (count($schedule) === 0) {
             return 'upcoming';
+        }
 
         foreach ($schedule as $sched) {
             if ($dateNow >= Carbon::parse($sched['date_start']) && $dateNow <= Carbon::parse($sched['date_end'])) {
                 return 'live';
-            } 
+            }
         }
 
-        if (Carbon::parse($schedule[0]['date_start'])  > $dateNow )
+        if (Carbon::parse($schedule[0]['date_start']) > $dateNow) {
             return 'upcoming';
+        }
 
-        if (Carbon::parse($schedule[count($schedule) - 1]['date_end'])   < $dateNow )
+        if (Carbon::parse($schedule[count($schedule) - 1]['date_end']) < $dateNow) {
             return 'end';
+        }
     }
 
     public function getSchedule()
     {
-        $sched =  $this->days->filter(function ($item) {
+        $sched = $this->days->filter(function ($item) {
             return $item->report_count();
         })->sortBy('lft')->pluck('name', 'id');
 
@@ -275,7 +282,6 @@ class Event extends Model implements HasMedia
         return $reduced->flatten()->unique('player_id')->sortByDesc('current_chips');
     }
 
-
     public function tournament()
     {
         return $this->belongsTo(Tournament::class);
@@ -299,7 +305,7 @@ class Event extends Model implements HasMedia
         $days = [];
         foreach (collect(json_decode($schedule, true))->toArray() as $sched) {
             if ($dateNow >= Carbon::parse($sched['date_start'])) {
-                $days[] = [ 'day' => $sched['day'] ];
+                $days[] = ['day' => $sched['day']];
             }
         }
 

@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Support\Str;
-use Spatie\Sluggable\HasSlug;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\Sluggable\SlugOptions;
-use Illuminate\Database\Eloquent\Model;
-use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 class Tour extends Model implements HasMedia
 {
@@ -19,7 +19,6 @@ class Tour extends Model implements HasMedia
     use HasSlug;
 
     protected $guarded = ['id'];
-
 
     public function getSlugOptions(): SlugOptions
     {

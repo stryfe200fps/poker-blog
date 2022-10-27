@@ -2,17 +2,16 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
-use App\Events\NewReport;
 use App\Observers\EventReportObserver;
-use Illuminate\Support\Str;
-use Spatie\Sluggable\HasSlug;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\Sluggable\SlugOptions;
-use Illuminate\Database\Eloquent\Model;
-use Spatie\MediaLibrary\InteractsWithMedia;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 class EventReport extends Model implements HasMedia
 {
@@ -116,13 +115,14 @@ class EventReport extends Model implements HasMedia
     public function shareFacebook()
     {
         $event = Event::find($this->event_id);
+
         return '<a class="btn btn-sm btn-link"  href="https://www.facebook.com/sharer/sharer.php?u='.config('app.url').'/event/'.$event->slug.'/report/'.$this->slug.'" data-toggle="tooltip" target="_blank" title="Share to facebook"><i class="la la-facebook"></i>    </a>';
     }
 
     public function shareTwitter()
     {
-
         $event = Event::find($this->event_id);
+
         return '<a class="btn btn-sm btn-link"  href="https://twitter.com/intent/tweet?text='.config('app.url').'/event/'.$event->slug.'/report/'.$this->slug.'" data-toggle="tooltip" target="_blank" title="Share to facebook"><i class="la la-twitter"></i>    </a>';
     }
 
@@ -130,13 +130,13 @@ class EventReport extends Model implements HasMedia
         'players' => 'json',
     ];
 
-    public static function boot(){
-       
+    public static function boot()
+    {
         parent::boot();
         self::observe(new EventReportObserver);
     }
 
-    // public function setEventChipPlayersAttribute($value)  
+    // public function setEventChipPlayersAttribute($value)
     // {
 
     // // dd(request()->all());
@@ -200,8 +200,8 @@ class EventReport extends Model implements HasMedia
     //                 //     $saved = $payout->save();
     //                 // }
     //             }
-    //         } 
-    //     } 
+    //         }
+    //     }
     // }
 
     public function getEventChipPlayersAttribute($value)
@@ -212,7 +212,6 @@ class EventReport extends Model implements HasMedia
     public function getPlayersAttribute($value)
     {
         return EventChip::where('event_report_id', $this->id)->get();
-     
     }
 
     public function setDateAddedAttribute($value)
@@ -244,8 +243,6 @@ class EventReport extends Model implements HasMedia
                 $model->slug = Str::slug($model->slug);
             }
         });
-
-
 
         // static::created(function ($createdEventReport) {
 

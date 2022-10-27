@@ -5,14 +5,13 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\ArticleRequest;
 use App\Models\Article;
 use App\Models\ArticleAuthor;
-
-use Illuminate\Support\Facades\Validator;
 use App\Models\ArticleCategory;
 use App\Traits\LimitUserPermissions;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use Backpack\CRUD\app\Library\Widget;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 /**
  * Class ArticleCrudController
@@ -51,7 +50,6 @@ class ArticleCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-      
         $this->crud->disableResponsiveTable();
 
         if (session()->get('new_article')) {
@@ -142,7 +140,6 @@ class ArticleCrudController extends CrudController
         //     'type' => 'text'
         // ]);
 
-
         $this->crud->addFields(
             [
 
@@ -152,12 +149,12 @@ class ArticleCrudController extends CrudController
                     'tab' => 'Basic',
                 ],
 
-            [   // CKEditor
-                'name' => 'description',
-                'label' => 'Description',
-                'type' => 'textarea',
-                'tab' => 'Basic'
-            ],
+                [   // CKEditor
+                    'name' => 'description',
+                    'label' => 'Description',
+                    'type' => 'textarea',
+                    'tab' => 'Basic',
+                ],
 
                 [
                     'name' => 'slug',
@@ -168,39 +165,38 @@ class ArticleCrudController extends CrudController
                     'tab' => 'Basic',
                 ],
 
-        [
-            'name' => 'content',
-            'label' => 'Content',
-            'type' => 'repeatable',
-            'new_item_label' => 'add page',
-            'tab' => 'Basic',
-            'subfields' => [
                 [
-                    'label' => 'Title',
-                    'name' => 'title',
-                    'type' => 'text',
-                    'wrapper' => [
-                        'class' => 'form-group col-md-6',
+                    'name' => 'content',
+                    'label' => 'Content',
+                    'type' => 'repeatable',
+                    'new_item_label' => 'add page',
+                    'tab' => 'Basic',
+                    'subfields' => [
+                        [
+                            'label' => 'Title',
+                            'name' => 'title',
+                            'type' => 'text',
+                            'wrapper' => [
+                                'class' => 'form-group col-md-6',
+                            ],
+                        ],
+
+                        [   // CKEditor
+                            'name' => 'body',
+                            'label' => 'Content',
+                            'type' => 'ckeditor',
+                            'extra_plugins' => ['widget', 'autocomplete', 'textmatch', 'toolbar', 'wysiwygarea', 'image', 'sourcearea'],
+
+                            'options' => [
+                                'autoGrow_minHeight' => 200,
+                                'autoGrow_bottomSpace' => 50,
+                                'removePlugins' => 'resize,maximize',
+                            ],
+                        ],
+
                     ],
+                    'init_rows' => 1,
                 ],
-
-                [   // CKEditor
-                'name' => 'body',
-                'label' => 'Content',
-                'type' => 'ckeditor',
-                'extra_plugins' => ['widget', 'autocomplete', 'textmatch', 'toolbar', 'wysiwygarea', 'image', 'sourcearea'],
-
-                'options' => [
-                    'autoGrow_minHeight' => 200,
-                    'autoGrow_bottomSpace' => 50,
-                    'removePlugins' => 'resize,maximize',
-                ],
-            ],
-
-            ],
-            'init_rows' => 1,
-        ],
-               
 
                 [
                     'name' => 'article_categories',
@@ -222,8 +218,6 @@ class ArticleCrudController extends CrudController
                 //         'class' => 'form-group col-md-12',
                 //     ],
                 // ],
-
-             
 
                 [   // DateTime
                     'name' => 'published_date',
@@ -313,20 +307,18 @@ public function store(Request $request)
 {
     $this->crud->hasAccessOrFail('create');
 
-    if ($request->get('content') != null ) { 
-    foreach ($request->get('content')  as $content) {
-
-        Validator::make($content,
-            ['title' => 'required',
-                'body' => 'required',
-            ],
-            [
-                'title' => 'title is required',
-                'body' => 'body is required',
-            ])->validate();
-    }
+    if ($request->get('content') != null) {
+        foreach ($request->get('content')  as $content) {
+            Validator::make($content,
+                ['title' => 'required',
+                    'body' => 'required',
+                ],
+                [
+                    'title' => 'title is required',
+                    'body' => 'body is required',
+                ])->validate();
+        }
     } else {
-
     }
     // execute the FormRequest authorization and validation, if one is required
     $request = $this->crud->validateRequest();
@@ -347,7 +339,7 @@ public function store(Request $request)
 
     // session()->put('new_article', 'a new article');
 
-    session()->flash('new_article', [ 'id' => $item->id ]);
+    session()->flash('new_article', ['id' => $item->id]);
 
     \Alert::success(trans('backpack::crud.insert_success'))->flash();
 

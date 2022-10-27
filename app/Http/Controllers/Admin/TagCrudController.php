@@ -22,7 +22,6 @@ class TagCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\InlineCreateOperation;
     use LimitUserPermissions;
 
-
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
      *
@@ -92,6 +91,5 @@ class TagCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
-
     }
 }

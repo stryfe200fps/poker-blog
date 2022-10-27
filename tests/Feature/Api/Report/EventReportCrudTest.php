@@ -161,9 +161,8 @@ it('can insert reports with event chips players', function () {
     $playerId = Player::factory()->create();
     $eventChip = EventChip::factory()->create([
         'player_id' => $playerId->id,
-        'is_whatsapp' => 1
+        'is_whatsapp' => 1,
     ]);
-
 
     $data = [
         'title' => 'A report',
@@ -180,7 +179,6 @@ it('can insert reports with event chips players', function () {
         'players' => $eventChip->get()->toArray(),
     ];
 
-
     $datas = $this->post('/admin/report', $data);
 
     $this->assertDatabaseHas('event_reports', ['title' => 'A report',
@@ -194,7 +192,7 @@ it('can update reports if authenticated', function () {
     $playerId = Player::factory()->create();
     $eventChip = EventChip::factory()->create([
         'player_id' => $playerId->id,
-        'is_whatsapp' => 1
+        'is_whatsapp' => 1,
     ]);
 
     $event = Event::factory()->create();

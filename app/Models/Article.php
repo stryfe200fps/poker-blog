@@ -38,6 +38,7 @@ class Article extends Model implements HasMedia
     {
         $new = collect($content)->map(function ($item, $key) {
             $item['body'] = '<div class="content" id="content'.$key.'">'.$item['body'].'</div>';
+
             return $item;
         });
 
@@ -62,12 +63,14 @@ class Article extends Model implements HasMedia
 public function shareFacebook()
 {
     $event = Event::find($this->event_id);
+
     return '<a class="btn btn-sm btn-link"  href="https://www.facebook.com/sharer/sharer.php?u='.config('app.url').'/article/show/'.$this->slug.'" data-toggle="tooltip" target="_blank" title="Share to facebook"><i class="la la-facebook"></i>    </a>';
 }
 
 public function shareTwitter()
 {
     $event = Event::find($this->event_id);
+
     return '<a class="btn btn-sm btn-link"  href="https://twitter.com/intent/tweet?text='.config('app.url').'/article/show/'.$this->slug.'" data-toggle="tooltip" target="_blank" title="Share to facebook"><i class="la la-twitter"></i>    </a>';
 }
 
@@ -159,7 +162,7 @@ public function shareTwitter()
             $model->slug = Str::slug($model->slug);
         });
 
-         static::updating(function ($model) {
+        static::updating(function ($model) {
             $article = Article::find($model->id);
             if ($model->title !== $article->title) {
                 $model->slug = $article->slug;

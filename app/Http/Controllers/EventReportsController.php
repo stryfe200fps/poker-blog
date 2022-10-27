@@ -2,15 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\LiveReportFilterByDays;
-use App\Helpers\LiveReportOrder;
 use App\Http\Resources\LOFApiEventReportsResource;
 use App\Http\Resources\ReportCollection;
 use App\Models\Day;
 use App\Models\Event;
 use App\Models\EventReport;
 use Illuminate\Http\Request;
-use Illuminate\Pipeline\Pipeline;
 
 class EventReportsController extends Controller
 {
@@ -30,6 +27,7 @@ class EventReportsController extends Controller
     public function index(Request $request)
     {
         $day = Day::find($request->only('day')['day']);
+
         return new ReportCollection($day->event_reports()->where('event_id', $day->event_id)->orderBy('date_added', 'DESC')->paginate(10));
     }
 

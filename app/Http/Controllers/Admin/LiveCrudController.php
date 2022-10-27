@@ -6,7 +6,6 @@ use App\Models\Event;
 use App\Traits\LimitUserPermissions;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
-use Carbon\Carbon;
 
 /**
  * Class LiveCrudController
@@ -37,13 +36,12 @@ class LiveCrudController extends CrudController
         $this->denyAccessIfNoPermission();
 
         $allLiveEvents = collect(Event::all())
-            ->filter(fn ($arr) => 
-               $arr->status() == 'live'
-        );
+            ->filter(fn ($arr) => $arr->status() == 'live'
+            );
 
         foreach ($allLiveEvents as $live) {
             $this->crud->addClause('orWhere', function ($query) use ($live) {
-                $query->orWhere('id', $live->id );
+                $query->orWhere('id', $live->id);
             });
         }
     }

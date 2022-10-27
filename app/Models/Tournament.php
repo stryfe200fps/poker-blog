@@ -3,14 +3,14 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Support\Str;
-use Spatie\Sluggable\HasSlug;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\Sluggable\SlugOptions;
-use Illuminate\Database\Eloquent\Model;
-use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 class Tournament extends Model implements HasMedia
 {
@@ -18,7 +18,6 @@ class Tournament extends Model implements HasMedia
     use HasFactory;
     use InteractsWithMedia;
     use HasSlug;
-
 
     public function getSlugOptions(): SlugOptions
     {
@@ -129,8 +128,7 @@ class Tournament extends Model implements HasMedia
 
     protected static function booted()
     {
-
-    static::creating(function ($model) {
+        static::creating(function ($model) {
             if ($model->slug == '') {
                 return;
             }
@@ -154,6 +152,4 @@ class Tournament extends Model implements HasMedia
             // $request['date_end'] = $date2->setTimezone('UTC');
         });
     }
-
-
 }

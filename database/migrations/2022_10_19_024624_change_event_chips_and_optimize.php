@@ -14,15 +14,13 @@ return new class extends Migration
     public function up()
     {
         Schema::table('event_chips', function (Blueprint $table) {
-
             $table->dropColumn([
                 'rank',
                 'chips_before',
-                'event_id'
+                'event_id',
             ]);
 
             $table->foreignId('day_id');
-
         });
     }
 
@@ -34,7 +32,6 @@ return new class extends Migration
     public function down()
     {
         Schema::table('event_chips', function (Blueprint $table) {
-
             $table->foreignId('event_id');
             $table->integer('rank')->nullable();
             $table->integer('chips_before')->default(0);
@@ -42,7 +39,6 @@ return new class extends Migration
             $table->dropColumn([
                 'day_id',
             ]);
-            
         });
     }
 };

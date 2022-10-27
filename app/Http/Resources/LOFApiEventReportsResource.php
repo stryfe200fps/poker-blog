@@ -3,7 +3,6 @@
 namespace App\Http\Resources;
 
 use Carbon\Carbon;
-use App\Http\Resources\AuthorResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class LOFApiEventReportsResource extends JsonResource

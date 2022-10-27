@@ -20,11 +20,9 @@ class LOFApiEventsController extends Controller
 
         return  LOFApiEventIndexResource::collection(Event::latest()->get()->filter(function ($item) {
             return $item->status() == 'live';
-        })->slice(0,2));
+        })->slice(0, 2));
         //
     }
-
-    
 
     /**
      * Show the form for creating a new resource.
@@ -33,7 +31,6 @@ class LOFApiEventsController extends Controller
      */
     public function create()
     {
-
     }
 
     /**

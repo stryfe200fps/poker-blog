@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Carbon\Carbon;
-use App\Models\Tour;
-use App\Models\Event;
-use App\Models\Tournament;
 use App\Helpers\Validators;
-use Illuminate\Http\Request;
 use App\Http\Requests\EventRequest;
+use App\Models\Event;
+use App\Models\Tour;
+use App\Models\Tournament;
 use App\Traits\LimitUserPermissions;
-use Backpack\CRUD\app\Library\Widget;
-use Illuminate\Support\Facades\Validator;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use Backpack\CRUD\app\Library\Widget;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 /**
  * Class
@@ -27,8 +27,8 @@ class EventCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
-
     use LimitUserPermissions;
+
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
      *
@@ -67,14 +67,13 @@ class EventCrudController extends CrudController
         $this->crud->addButtonFromModelFunction('line', 'days', 'openDay', 'beginning');
     }
 
-     /**
-      * Define what happens when the Create operation is loaded.
-      *
-      * @see https://backpackforlaravel.com/docs/crud-operation-create
-      *
-      * @return void
-      */
-
+    /**
+     * Define what happens when the Create operation is loaded.
+     *
+     * @see https://backpackforlaravel.com/docs/crud-operation-create
+     *
+     * @return void
+     */
     protected function setupCreateOperation()
     {
         CRUD::setValidation(EventRequest::class);
@@ -101,7 +100,7 @@ class EventCrudController extends CrudController
         $end = Carbon::now()->addDays(1)->toDateTimeString();
         $pokerTours = Tour::all();
 
-        $this->crud->addField([   
+        $this->crud->addField([
             'name' => 'tournament_id',
             'label' => 'Series',
             'type' => 'relationship',
@@ -122,18 +121,14 @@ class EventCrudController extends CrudController
         // ]);
     }
 
-
-    public function showDetailsRow($id) 
+    public function showDetailsRow($id)
     {
         // $this->data['entry'] = $this->crud->getEntry($id);
         // $this->data['crud'] = $this->crud;
 
         // load the view from /resources/views/vendor/backpack/crud/ if it exists, otherwise load the one in the package
-        return view('crud::event_details',[ 'event' =>  Event::find($id) ] );
-
+        return view('crud::event_details', ['event' => Event::find($id)]);
     }
-
-
 
     /**
      * Define what happens when the Update operation is loaded.

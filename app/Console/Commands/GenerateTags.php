@@ -2,12 +2,10 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Tag;
-use App\Models\User;
 use App\Models\Player;
-use Cocur\Slugify\Slugify;
-use Illuminate\Support\Str;
+use App\Models\Tag;
 use Illuminate\Console\Command;
+use Illuminate\Support\Str;
 
 class GenerateTags extends Command
 {
@@ -32,12 +30,13 @@ class GenerateTags extends Command
         foreach ($users as $user) {
             $slugifiedName = Str::slug($user->name);
 
-            if (Tag::where('slug', $slugifiedName)->count())
+            if (Tag::where('slug', $slugifiedName)->count()) {
                 continue;
+            }
 
             Tag::create([
                 'title' => $user->name,
-                'slug' => $slugifiedName
+                'slug' => $slugifiedName,
             ]);
         }
 

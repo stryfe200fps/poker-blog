@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Events\NewReport;
 use App\Observers\ImageThemeObserver;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -22,13 +21,10 @@ class ImageTheme extends Model implements HasMedia
 
     protected $appends = ['image'];
 
-   
-
     public $timestamps = false;
 
     public function registerMediaConversions(?Media $media = null): void
     {
-
     }
 
     public function getImageAttribute($value)
@@ -36,16 +32,13 @@ class ImageTheme extends Model implements HasMedia
         return $this->getFirstMediaUrl('image-theme');
     }
 
-  
-
     public function live_report()
     {
         return $this->belongsTo(EventReport::class);
-
     }
 
-
-    public static function boot(){
+    public static function boot()
+    {
         parent::boot();
         self::observe(new ImageThemeObserver);
     }
@@ -55,7 +48,6 @@ class ImageTheme extends Model implements HasMedia
     //     static::updating(function ($model) {
 
     //         dd('qwe');
-
 
     //     });
 
@@ -84,14 +76,8 @@ class ImageTheme extends Model implements HasMedia
 
     //     });
     // }
-        
-        
 
         // static::updating(function ($model) {
 
-
-
         // });
-
-    
 }

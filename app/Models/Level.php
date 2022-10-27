@@ -11,7 +11,7 @@ class Level extends Model
     protected $guarded = ['id'];
 
     protected $appends = [
-        'level_value'
+        'level_value',
     ];
 
     use CrudTrait;

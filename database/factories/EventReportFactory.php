@@ -35,7 +35,6 @@ class EventReportFactory extends Factory
             'event_id' => Event::factory()->create()->id,
             'article_author_id' => 1,
             'image_theme_id' => ImageTheme::factory()->create(function ($image) {
-
             })->id,
             'date_added' => $this->faker->date,
             'image_caption' => $this->faker->name,

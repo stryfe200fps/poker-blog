@@ -17,7 +17,7 @@ class EventChipsResource extends JsonResource
         $report = $this->previousReport;
 
         return [
-            'player' =>  new PlayerResource($this->player),
+            'player' => new PlayerResource($this->player),
             'rank' => $this->rank,
             'current_chips' => $this->current_chips,
             'previous' => $report,

@@ -35,7 +35,7 @@ return new class extends Migration
                 'lft',
                 'rgt',
                 'depth',
-                'order'
+                'order',
             ]);
         });
     }

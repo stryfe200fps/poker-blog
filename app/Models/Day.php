@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use Spatie\MediaLibrary\HasMedia;
-use Illuminate\Database\Eloquent\Model;
-use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Day extends Model implements HasMedia
@@ -15,7 +15,7 @@ class Day extends Model implements HasMedia
     use HasFactory;
 
     protected $guarded = [
-        'id'
+        'id',
     ];
 
     public function registerMediaConversions(?Media $media = null): void
@@ -36,8 +36,6 @@ class Day extends Model implements HasMedia
     {
         return '<a class="btn btn-sm btn-link"  href="chip-count?day='.urlencode($this->attributes['id']).'&event='.urlencode($this->attributes['event_id']).'"><i class="fa fa-search"></i> Chip Counts  </a>';
     }
-
-
 
     public function event_reports()
     {
@@ -66,15 +64,9 @@ class Day extends Model implements HasMedia
 
     protected static function booted()
     {
-
         static::deleting(function ($model) {
-
             if ($model->event_reports()->count()) {
-
             }
-
         });
-
     }
-
 }

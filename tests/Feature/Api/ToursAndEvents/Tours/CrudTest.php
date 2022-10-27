@@ -1,8 +1,6 @@
 <?php
 
 use App\Models\Article;
-use App\Models\ArticleAuthor;
-use App\Models\ArticleCategory;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Role;
@@ -41,7 +39,6 @@ uses(RefreshDatabase::class);
 //     $data = Article::factory()->make([
 //         'title' => 'Things I do'
 //     ])->attributesToArray();
-
 
 //     $datas = $this->post('admin/article', $data);
 //     $this->assertDatabaseHas('articles', ['title' => 'Things I do',

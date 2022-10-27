@@ -44,7 +44,16 @@ class HandleInertiaRequests extends Middleware
         return array_merge(parent::share($request), [
             'title' => fn (MetaInterface $meta) => ($meta->toArray()['head'][0]['content']),
             'menu' => MenuItem::getTree(),
-            'category' => MenuItem::getTree()->where('link', 'news')->first()->children ?? []
+            'supported_locales' => config('app.supported_locales'),
+            'locale' => function () {
+                return session()->get('locale') ?? 'en';
+            },
+            'language' => function () {
+                return translations(
+                    resource_path('lang/'.session()->get('locale').'.json' ?? 'en'.'.json')
+                );
+            },
+            'category' => MenuItem::getTree()->where('link', 'news')->first()->children ?? [],
         ]);
     }
 }
