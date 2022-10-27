@@ -27,6 +27,8 @@ class LOFApiEventsResource extends JsonResource
             'description' => $this->description,
             'image' => $this->image,
             'tournament' => $this->tournament->title,
+            'tournament_slug' => $this->tournament->slug,
+            'tour_slug' => $this->tournament->tour->slug,
             'schedule' => $this->schedule,
             'date_start' => $this->scheduleArray($this->schedule, session()->get('timezone'))->first()['date_start'] ?? '',
             'date_end' => $this->scheduleArray($this->schedule, session()->get('timezone'))->last()['date_end'] ?? '',
