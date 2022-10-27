@@ -89,4 +89,3 @@ Route::get('admin/attach-image/{id}', function ($id) {
 
 
 
-Route::get('locale/{locale}', [LanguageController::class, 'setLocale'])->name('set-locale');

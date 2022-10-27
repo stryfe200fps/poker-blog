@@ -14,6 +14,7 @@ class LanguageController extends Controller
         session()->put('locale', $locale);
         Inertia::share('locale', $locale);
 
-        return $locale;
+
+        return back();
     }
 }

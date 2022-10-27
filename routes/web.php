@@ -1,18 +1,20 @@
 <?php
 
-use App\Http\Controllers\Admin\Utilities\ExcelUploadController;
-use App\Http\Controllers\Inertia\ArticleController;
-use App\Http\Controllers\Inertia\EventController;
-use App\Http\Controllers\Inertia\HomeController;
-use App\Http\Controllers\Inertia\MenuItemController;
-use App\Http\Controllers\Inertia\PageController;
-use App\Http\Controllers\Inertia\ReportController;
-use App\Http\Controllers\Inertia\TournamentController;
-use App\Models\EventChip;
-use App\Models\MenuItem;
-use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Models\MenuItem;
+use App\Models\EventChip;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\Inertia\HomeController;
+use App\Http\Controllers\Inertia\PageController;
+use App\Http\Controllers\Inertia\EventController;
+use App\Http\Controllers\Inertia\ReportController;
+use App\Http\Controllers\Inertia\ArticleController;
+use App\Http\Controllers\Inertia\MenuItemController;
+use App\Http\Controllers\Inertia\TournamentController;
+use App\Http\Controllers\Admin\Utilities\ExcelUploadController;
 
+Route::get('locale/{locale}', [LanguageController::class, 'setLocale'])->name('set-locale');
 
 Route::get('/', [HomeController::class, 'index']);
 // Route::get('/tournament', [TournamentController::class , 'index'] );
