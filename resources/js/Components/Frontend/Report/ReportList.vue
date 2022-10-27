@@ -441,6 +441,7 @@ const tab = ref(0);
 const id = ref(null);
 
 function stickyScroll() {
+    const cookie = document.querySelector(".cookie.hide");
     const tabs = document.querySelector(".custom-tabs");
     const nav = document.querySelector(".nav-list-container");
     const { top } = tabs.getBoundingClientRect();
@@ -451,7 +452,9 @@ function stickyScroll() {
         tabs.style.border = "none";
         tabs.style.backgroundColor = "white";
         tabs.style.boxShadow = "0px 8px 40px rgba(0, 0, 0, 0.20)";
-        scrollTopBtn.style.display = "block";
+        if (cookie) {
+            scrollTopBtn.style.display = "block";
+        }
         return;
     }
     tabs.style.top = "0px";
