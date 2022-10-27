@@ -4,6 +4,7 @@ import { Head, Link } from "@inertiajs/inertia-vue3";
 import { useArticleStore } from "@/Stores/article.js";
 import { useEventStore } from "@/Stores/event.js";
 import { onMounted } from "@vue/runtime-core";
+import moment from "moment";
 
 const articleStore = useArticleStore();
 const eventStore = useEventStore();
@@ -83,7 +84,13 @@ defineProps({
                 :key="news.id"
                 style="margin-bottom: 30px"
             >
-                <Link :href="'/article/show/' + news.slug">
+                <Link
+                    :href="`/news/${moment(new Date(news.date)).format(
+                        'YYYY'
+                    )}/${moment(new Date(news.date)).format('MM')}/${
+                        news.slug
+                    }`"
+                >
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="post-gallery">
@@ -109,7 +116,12 @@ defineProps({
                         <div class="col-sm-6">
                             <div class="post-content">
                                 <h2>
-                                    <Link :href="'/article/show/' + news.slug"
+                                    <Link
+                                        :href="`/news/${moment(
+                                            new Date(news.date)
+                                        ).format('YYYY')}/${moment(
+                                            new Date(news.date)
+                                        ).format('MM')}/${news.slug}`"
                                         >{{ news.title }}
                                     </Link>
                                 </h2>

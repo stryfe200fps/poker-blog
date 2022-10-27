@@ -26,9 +26,14 @@
                             <img v-else :src="defaultImg" :alt="defaultImg" />
                             <div class="hover-box">
                                 <h2>
-                                    <Link :href="'/article/show/' + tag.slug">{{
-                                        tag.title
-                                    }}</Link>
+                                    <Link
+                                        :href="`/news/${moment(
+                                            new Date(tag.date)
+                                        ).format('YYYY')}/${moment(
+                                            new Date(tag.date)
+                                        ).format('MM')}/${tag.slug}`"
+                                        >{{ tag.title }}</Link
+                                    >
                                 </h2>
                                 <ul class="post-tags">
                                     <li>
@@ -51,6 +56,7 @@ import defaultImg from "/public/default-img.png";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import { useTagStore } from "@/Stores/tag.js";
 import { onMounted, ref, watch } from "@vue/runtime-core";
+import moment from "moment";
 
 const props = defineProps({
     slug: String,

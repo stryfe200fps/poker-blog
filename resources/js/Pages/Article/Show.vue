@@ -202,9 +202,14 @@
                             <img v-else :src="defaultImg" alt="" />
                             <div class="hover-box">
                                 <h2>
-                                    <a :href="'/article/show/' + relate.slug">{{
-                                        relate.title
-                                    }}</a>
+                                    <Link
+                                        :href="`/news/${moment(
+                                            new Date(relate.date)
+                                        ).format('YYYY')}/${moment(
+                                            new Date(relate.date)
+                                        ).format('MM')}/${relate.slug}`"
+                                        >{{ relate.title }}
+                                    </Link>
                                 </h2>
                                 <ul class="post-tags">
                                     <li>
@@ -231,6 +236,7 @@ import TournamentList from "../../Components/Frontend/Tournament/List.vue";
 import { useArticleStore } from "@/Stores/article.js";
 import { onBeforeUnmount, onMounted, ref, watch } from "@vue/runtime-core";
 import defaultImg from "/public/default-img.png";
+import moment from "moment";
 const articleStore = useArticleStore();
 
 const props = defineProps({

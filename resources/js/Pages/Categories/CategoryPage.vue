@@ -40,7 +40,13 @@
                             v-for="(category, index) in articleCategories"
                             :key="index"
                         >
-                            <Link :href="'/article/show/' + category.slug">
+                            <Link
+                                :href="`/news/${moment(
+                                    new Date(category.date)
+                                ).format('YYYY')}/${moment(
+                                    new Date(category.date)
+                                ).format('MM')}/${category.slug}`"
+                            >
                                 <div
                                     class="news-post standard-post2"
                                     style="
@@ -78,10 +84,13 @@
                                     >
                                         <h2>
                                             <Link
-                                                :href="
-                                                    '/article/show/' +
+                                                :href="`/news/${moment(
+                                                    new Date(category.date)
+                                                ).format('YYYY')}/${moment(
+                                                    new Date(category.date)
+                                                ).format('MM')}/${
                                                     category.slug
-                                                "
+                                                }`"
                                                 >{{ category.title }}</Link
                                             >
                                         </h2>
@@ -116,6 +125,7 @@ import {
     computed,
     onBeforeMount,
 } from "@vue/runtime-core";
+import moment from "moment";
 
 const props = defineProps({
     page: String,
