@@ -356,6 +356,7 @@ class EventReportCrudController extends CrudController
             'options' => [
                 'report' => 'report',
                 'level' => 'level',
+                'content' => 'content',
             ],
             'allows_null' => false,
             'default' => 'report',
