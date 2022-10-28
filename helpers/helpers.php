@@ -20,7 +20,6 @@ function googleTranslateExclude($content) {
    $content = collect($content)->map(function ($item) {
 
         if (is_countable($item)) {
-
             $glossary = Glossary::all()->pluck('word')->toArray();
             foreach ($glossary as $word) { 
             $pattern = '/'.$word.'/i';
@@ -41,6 +40,11 @@ function googleTranslateExclude($content) {
         return $item;
 
     });
+
+
+    if (!is_array($content)) {
+        return $content;
+    }  
 
     return $content[0];
 }

@@ -12,8 +12,6 @@ class ArticleResource extends JsonResource
     {
 
      
-
-        ;
         // dd('a');
         return [
             'title' => $this->title,
