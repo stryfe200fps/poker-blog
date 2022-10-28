@@ -138,13 +138,13 @@ class EventCrudController extends CrudController
     $this->crud->addField([
         'name' => 'buyin',
         'type' => 'number',
-        'hint' =>  'All numbers will follow the currency from the series'
+        'hint' =>  'note: All numbers will follow the currency from the series'
     ]);
 
     $this->crud->addField([
         'name' => 'fee',
         'type' => 'number',
-        'hint' => 'All numbers will follow the currency from the series',
+        'hint' => 'note: All numbers will follow the currency from the series',
     ]);
 
 
