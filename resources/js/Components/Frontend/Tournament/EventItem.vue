@@ -14,7 +14,7 @@
                     <h2 v-if="event.events.length">
                         <Link
                             class="text-capitalize link--custom"
-                            :href="`/event/${event.slug}`"
+                            :href="`/tours/${event.tour_slug}/${event.tournament_slug}/${event.slug}`"
                             >{{ event.title }}</Link
                         >
                     </h2>
@@ -43,7 +43,7 @@
                             <Link
                                 class="text-capitalize link--custom"
                                 v-if="index == 1"
-                                :href="`/event/${event.slug}#${report.slug}${index}`"
+                                :href="`/tours/${event.tour_slug}/${event.tournament_slug}/${event.slug}#${report.id}`"
                                 ><i
                                     class="fa-solid fa-angle-right link-icon--custom"
                                 ></i
@@ -52,7 +52,7 @@
                             <Link
                                 v-else
                                 class="text-capitalize link--custom"
-                                :href="`/event/${event.slug}`"
+                                :href="`/tours/${event.tour_slug}/${event.tournament_slug}/${event.slug}`"
                                 ><i
                                     class="fa-solid fa-angle-right link-icon--custom"
                                 ></i

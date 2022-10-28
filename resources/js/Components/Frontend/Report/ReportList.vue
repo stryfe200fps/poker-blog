@@ -6,10 +6,12 @@
         <ul class="nav nav-tabs custom-tabs">
             <li
                 @click.prevent="changeTab(currentTab)"
-                :class="{ active: currentTab == 'reports' }"
+                :class="{
+                    active: currentTab == '' || currentTab == 'live-updates',
+                }"
             >
                 <Link
-                    :href="'/event/' + event.slug"
+                    :href="`/tours/${event.tour_slug}/${event.tournament_slug}/${event.slug}/${dayValue}/live-updates`"
                     data-toggle="tab"
                     preserve-state
                 >
@@ -23,7 +25,7 @@
                 :class="{ active: currentTab == 'chip-stack' }"
             >
                 <Link
-                    :href="'/event/' + event.slug + '/chip-stack'"
+                    :href="`/tours/${event.tour_slug}/${event.tournament_slug}/${event.slug}/${dayValue}/chip-stack`"
                     data-toggle="tab"
                     preserve-state
                 >
@@ -36,7 +38,7 @@
                 :class="{ active: currentTab == 'whatsapp' }"
             >
                 <Link
-                    :href="'/event/' + event.slug + '/whatsapp'"
+                    :href="`/tours/${event.tour_slug}/${event.tournament_slug}/${event.slug}/${dayValue}/whatsapp`"
                     data-toggle="tab"
                     preserve-state
                     >#WHATSAPP</Link
@@ -47,7 +49,7 @@
                 :class="{ active: currentTab == 'gallery' }"
             >
                 <Link
-                    :href="'/event/' + event.slug + '/gallery'"
+                    :href="`/tours/${event.tour_slug}/${event.tournament_slug}/${event.slug}/${dayValue}/gallery`"
                     data-toggle="tab"
                     preserve-state
                     >GALLERY</Link
@@ -58,7 +60,7 @@
                 :class="{ active: currentTab == 'payouts' }"
             >
                 <Link
-                    :href="'/event/' + event.slug + '/payouts'"
+                    :href="`/tours/${event.tour_slug}/${event.tournament_slug}/${event.slug}/${dayValue}/payouts`"
                     data-toggle="tab"
                     preserve-state
                     >PAYOUTS</Link
@@ -67,7 +69,10 @@
         </ul>
         <div class="tab-content">
             <div
-                v-show="currentTab == 'reports' && reports.length"
+                v-show="
+                    (currentTab == 'live-updates' || currentTab == '') &&
+                    reports.length
+                "
                 id="liveReport"
             >
                 <div
@@ -383,7 +388,12 @@
 <script setup>
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import { ref } from "@vue/reactivity";
-import { onMounted, onBeforeUnmount, onUpdated } from "@vue/runtime-core";
+import {
+    onMounted,
+    onBeforeUnmount,
+    onUpdated,
+    computed,
+} from "@vue/runtime-core";
 import CustomeTable from "../CustomeTable.vue";
 import CountryFlag from "vue3-country-flag-icon";
 import defaultAvatar from "@/default-avatar.png";
@@ -429,8 +439,19 @@ const props = defineProps({
         type: String,
         default: "report",
     },
+    day: {
+        type: String,
+    },
 });
 const emit = defineEmits(["loadMore"]);
+
+const dayValue = computed(() => {
+    if (props.day === "") {
+        const dayValues = Object.values(props?.event?.available_days ?? {});
+        return dayValues[dayValues.length - 1];
+    }
+    return props.day;
+});
 
 function handleScrolledToBottom(isVisible) {
     if (!isVisible) return;

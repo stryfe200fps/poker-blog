@@ -19,7 +19,7 @@ Route::get('locale/{locale}', [LanguageController::class, 'setLocale'])->name('s
 Route::get('/', [HomeController::class, 'index']);
 // Route::get('/tournament', [TournamentController::class , 'index'] );
 
-Route::get('/tournament/{page?}', [TournamentController::class, 'index']);
+
 
 // Route::get('/event/{slug}/{page?}', [EventController::class, 'show']);
 // Route::get('/event/{eventSlug}/report/{reportSlug}', [ReportController::class, 'show']);
@@ -37,10 +37,12 @@ Route::prefix('news')->group(function () {
 Route::prefix('tours')->group(function () {
 
     Route::get('/', [TournamentController::class, 'index']);
-    Route::get('/{pages}', [TournamentController::class, 'index']);
+ 
+    Route::get('/{page?}', [TournamentController::class, 'index']);
     Route::get('/{tour}/{series}/{eventSlug}', [EventController::class, 'show']);
+
     Route::get('/{tour}/{series}/{eventSlug}/{reportId}', [ReportController::class, 'show'])->where('reportid', '(\w+\-\d+)');
-    Route::get('/{tour}/{series}/{eventSlug}/{type?}/{day?}', [EventController::class, 'show']);
+    Route::get('/{tour}/{series}/{eventSlug}/{day?}/{type?}', [EventController::class, 'show']);
 });
 
 
@@ -58,11 +60,12 @@ try {
 
         foreach ($item->children as $child) {
             if ($item->link === $child->link) {
-                Route::get($item->link, function () use ($item) {
+                Route::get($item->link, function () use ($item, $child) {
                     return Inertia::render('Categories/CategoryPage', [
                         'title' => $item->name.' | LifeOfPoker',
                         'description' => $item->name,
                         'page' => $item->link,
+                        'page_title' => $child->name
                     ]);
                 });
             }
@@ -72,6 +75,7 @@ try {
                     'title' => $child->name.' | LifeOfPoker',
                     'description' => $child->name,
                     'page' => $child->link,
+                    'page_title' => $child->name
                 ]);
             });
         }
