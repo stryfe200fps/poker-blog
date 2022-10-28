@@ -19,12 +19,12 @@ class Tour extends Model implements HasMedia
     use HasSlug;
 
     protected $guarded = ['id'];
-
-    public function getSlugOptions(): SlugOptions
+public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
             ->generateSlugsFrom('title')
-            ->saveSlugsTo('slug');
+            ->saveSlugsTo('slug')
+            ->doNotGenerateSlugsOnUpdate();
     }
 
     public function registerMediaConversions(?Media $media = null): void
@@ -78,14 +78,10 @@ class Tour extends Model implements HasMedia
             static::updating(function ($model) {
 
             $findModel = Tour::find($model->id);
-
-            if ($model->title !== $findModel->title && $model->slug !== $findModel->slug) {
+             if ($model->slug !== $findModel->slug) {
                 $model->slug = Str::slug($model->slug);
-            } else if ($model->title !== $findModel->title) {
-                $model->slug = $findModel->slug;
-            } else {
-                $model->slug = Str::slug($model->slug);
-            }
-        }); 
+            } 
+        });
+         
     }
 }

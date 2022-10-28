@@ -18,7 +18,8 @@ class Tag extends Model
     {
         return SlugOptions::create()
             ->generateSlugsFrom('title')
-            ->saveSlugsTo('slug');
+            ->saveSlugsTo('slug')
+            ->doNotGenerateSlugsOnUpdate();
     }
 
     protected $guarded = [
@@ -45,18 +46,14 @@ class Tag extends Model
                 $model->slug = Str::slug($model->slug);
             });
 
-                 static::updating(function ($model) {
+                    static::updating(function ($model) {
 
             $findModel = Tag::find($model->id);
-
-            if ($model->title !== $findModel->title && $model->slug !== $findModel->slug) {
+             if ($model->slug !== $findModel->slug) {
                 $model->slug = Str::slug($model->slug);
-            } else if ($model->title !== $findModel->title) {
-                $model->slug = $findModel->slug;
-            } else {
-                $model->slug = Str::slug($model->slug);
-            }
+            } 
         });
+            
         }
 
     // public function tags()

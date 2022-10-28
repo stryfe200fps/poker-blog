@@ -150,8 +150,11 @@ public function shareTwitter()
     {
         return SlugOptions::create()
             ->generateSlugsFrom('title')
-            ->saveSlugsTo('slug');
+            ->saveSlugsTo('slug')
+            ->doNotGenerateSlugsOnUpdate();
     }
+
+
 
     public function user()
     {
@@ -177,17 +180,14 @@ public function shareTwitter()
 
             $model->slug = Str::slug($model->slug);
         });
-        static::updating(function ($model) {
+        
+
+             static::updating(function ($model) {
 
             $findModel = Article::find($model->id);
-
-            if ($model->title !== $findModel->title && $model->slug !== $findModel->slug) {
+             if ($model->slug !== $findModel->slug) {
                 $model->slug = Str::slug($model->slug);
-            } else if ($model->title !== $findModel->title) {
-                $model->slug = $findModel->slug;
-            } else {
-                $model->slug = Str::slug($model->slug);
-            }
+            } 
         });
     }
 }

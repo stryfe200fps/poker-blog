@@ -23,8 +23,11 @@ class Tournament extends Model implements HasMedia
     {
         return SlugOptions::create()
             ->generateSlugsFrom('title')
-            ->saveSlugsTo('slug');
+            ->saveSlugsTo('slug')
+            ->doNotGenerateSlugsOnUpdate();
     }
+
+
 
     public function registerMediaConversions(?Media $media = null): void
     {
@@ -135,17 +138,13 @@ class Tournament extends Model implements HasMedia
 
             $model->slug = Str::slug($model->slug);
         });
-     static::updating(function ($model) {
+           static::updating(function ($model) {
 
             $findModel = Tournament::find($model->id);
-
-            if ($model->title !== $findModel->title && $model->slug !== $findModel->slug) {
+             if ($model->slug !== $findModel->slug) {
                 $model->slug = Str::slug($model->slug);
-            } else if ($model->title !== $findModel->title) {
-                $model->slug = $findModel->slug;
-            } else {
-                $model->slug = Str::slug($model->slug);
-            }
+            } 
         });
+
     }
 }

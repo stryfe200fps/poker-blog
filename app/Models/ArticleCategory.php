@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ArticleCategory extends Model
 {
@@ -17,7 +18,8 @@ class ArticleCategory extends Model
     {
         return SlugOptions::create()
             ->generateSlugsFrom('title')
-            ->saveSlugsTo('slug');
+            ->saveSlugsTo('slug')
+            ->doNotGenerateSlugsOnUpdate();
     }
 
     /**
@@ -44,5 +46,18 @@ class ArticleCategory extends Model
     public function articles()
     {
         return $this->belongsToMany(Article::class);
+    }
+
+        protected static function booted()
+    {
+       
+
+             static::updating(function ($model) {
+
+            $findModel = ArticleCategory::find($model->id);
+             if ($model->slug !== $findModel->slug) {
+                $model->slug = Str::slug($model->slug);
+            } 
+        });
     }
 }
