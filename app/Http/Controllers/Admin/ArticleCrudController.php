@@ -161,12 +161,6 @@ class ArticleCrudController extends CrudController
                     'tab' => 'Basic',
                 ],
 
-                [   // CKEditor
-                    'name' => 'description',
-                    'label' => 'Description',
-                    'type' => 'textarea',
-                    'tab' => 'Basic',
-                ],
 
                 [
                     'name' => 'slug',
@@ -174,6 +168,14 @@ class ArticleCrudController extends CrudController
                     'attributes' => [
                         'placeholder' => config('app.slug_placeholder'),
                     ],
+                    'tab' => 'Basic',
+                ],
+
+
+                [   // CKEditor
+                    'name' => 'description',
+                    'label' => 'Description',
+                    'type' => 'textarea',
                     'tab' => 'Basic',
                 ],
 

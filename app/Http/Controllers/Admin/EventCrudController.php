@@ -78,6 +78,21 @@ class EventCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(EventRequest::class);
+
+        $this->crud->addField([
+            'name' => 'tournament_id',
+            'label' => 'Series',
+            'type' => 'relationship',
+            'entity' => 'tournament',
+            'attribute' => 'parent',
+            'allows_null' => false,
+            'options' => (function ($query) {
+                return $query->orderBy('title', 'ASC')->get();
+            }),
+
+            // 'allows_multiple' => true, // OPTIONAL; needs you to cast this to array in your model;
+        ]);
+
         CRUD::field('title');
 
         $this->crud->addField([
@@ -110,19 +125,6 @@ class EventCrudController extends CrudController
         $end = Carbon::now()->addDays(1)->toDateTimeString();
         $pokerTours = Tour::all();
 
-        $this->crud->addField([
-            'name' => 'tournament_id',
-            'label' => 'Series',
-            'type' => 'relationship',
-            'entity' => 'tournament',
-            'attribute' => 'parent',
-            'allows_null' => false,
-            'options' => (function ($query) {
-                return $query->orderBy('title', 'ASC')->get();
-            }),
-
-            // 'allows_multiple' => true, // OPTIONAL; needs you to cast this to array in your model;
-        ]);
 
     $this->crud->addField([
         'name' => 'event_game_table',
@@ -135,12 +137,14 @@ class EventCrudController extends CrudController
 
     $this->crud->addField([
         'name' => 'buyin',
-        'type' => 'number'
+        'type' => 'number',
+        'hint' =>  'All numbers will follow the currency from the series'
     ]);
 
     $this->crud->addField([
         'name' => 'fee',
-        'type' => 'number'
+        'type' => 'number',
+        'hint' => 'All numbers will follow the currency from the series',
     ]);
 
 
