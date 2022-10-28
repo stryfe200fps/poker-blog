@@ -10,7 +10,7 @@ class LOFApiEventReportsResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'slug' => $this->slug,
+            'id' => $this->id,
             'title' => $this->title,
             'content' => $this->content,
             'date_published' => $this->date_added,
