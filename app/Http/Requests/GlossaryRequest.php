@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class ArticleRequest extends FormRequest
+class GlossaryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +25,10 @@ class ArticleRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'title' => 'required',
-            'article_categories' => 'required',
-            'published_date' => 'required',
-            'article_author_id' => 'required',
+         return [
+            'word' => [
+                'required',
+                Rule::unique('glossaries')->ignore(request()->get('id')), ],
         ];
     }
 
@@ -40,7 +40,7 @@ class ArticleRequest extends FormRequest
     public function attributes()
     {
         return [
-            //
+
         ];
     }
 
@@ -52,10 +52,8 @@ class ArticleRequest extends FormRequest
     public function messages()
     {
         return [
-            'title.required' => 'Title is required',
-            'article_categories.required' => 'Category is required',
-            'published_date.required' => 'Published date is required',
-            'article_author_id.required' => 'Author is required',
+            'word.required' => 'Word is required',
+            'word.unique' => 'Word already exist'
         ];
     }
 }

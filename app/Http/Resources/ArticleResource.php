@@ -3,17 +3,23 @@
 namespace App\Http\Resources;
 
 use Carbon\Carbon;
+use App\Models\Glossary;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ArticleResource extends JsonResource
 {
     public function toArray($request)
     {
+
+     
+
+        ;
+        // dd('a');
         return [
             'title' => $this->title,
             'description' => $this->description,
             'categories' => $this->article_categories,
-            'content' => $this->content,
+            'content' => googleTranslateExclude($this->content),
             'slug' => $this->slug,
             'tags' => $this->tags,
             'date' => Carbon::parse($this->published_date)->toFormattedDateString(),

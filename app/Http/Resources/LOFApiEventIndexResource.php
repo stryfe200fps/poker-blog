@@ -39,6 +39,10 @@ class LOFApiEventIndexResource extends JsonResource
             'buyin' => $this->buyin,
             'fee' => $this->fee,
             'game_table' => $this->event_game_table?->title,
+
+
+            'description' => $this->description,
+            'content' => googleTranslateExclude($this->content),
         ];
     }
 }

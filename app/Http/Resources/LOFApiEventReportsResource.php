@@ -12,7 +12,7 @@ class LOFApiEventReportsResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
-            'content' => $this->content,
+            'content' => googleTranslateExclude($this->content),
             'date_published' => $this->date_added,
             'date_for_humans' => Carbon::parse($this->date_added)->diffForHumans(),
             'main_image' => $this->getFirstMediaUrl('event-report', 'main-image'),

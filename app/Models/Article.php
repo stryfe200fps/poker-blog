@@ -34,11 +34,27 @@ class Article extends Model implements HasMedia
             ->height(225);
     }
 
+    public function resetContentHtml($content) 
+    {
+        $pattern = '/<span translate="no">/i';
+        $fPattern = '/<\/span>/i';
+        $reset1 = preg_replace($pattern, '' , $content);
+        $reset2 = preg_replace($fPattern, '' , $content);
+    }
     public function setContentAttribute($content)
     {
         $new = collect($content)->map(function ($item, $key) {
-            $item['body'] = '<div class="content" id="content'.$key.'">'.$item['body'].'</div>';
 
+            $glossary = Glossary::all()->pluck('word')->toArray();
+            // foreach ($glossary as $word) { 
+            // $pattern = '/ '.$word.'/i';
+            // $item['body'] = preg_replace($pattern, '<span translate="no">'.$word.'</span>' , $item['body']);
+            // $item['title'] = preg_replace($pattern, '<span translate="no">'.$word.'</span>' , $item['title']);
+            // }
+
+            // dd($item['body']);
+
+            $item['body'] = '<div class="content" id="content'.$key.'">'.$item['body'].'</div>';
             return $item;
         });
 

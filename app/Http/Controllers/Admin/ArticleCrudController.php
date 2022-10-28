@@ -189,9 +189,22 @@ class ArticleCrudController extends CrudController
                             'name' => 'title',
                             'type' => 'text',
                             'wrapper' => [
-                                'class' => 'form-group col-md-6',
+                                'class' => 'form-group col-md-12',
                             ],
                         ],
+
+                        // [   // CKEditor
+                        //     'name' => 'title',
+                        //     'label' => 'Title',
+                        //     'type' => 'ckeditor',
+                        //     'extra_plugins' => ['widget', 'autocomplete', 'textmatch', 'toolbar', 'wysiwygarea', 'image', 'sourcearea'],
+                        //     'options' => [
+                        //     'height' => '80px',
+                        //         'autoGrow_minHeight' => 200,
+                        //         'autoGrow_bottomSpace' => 50,
+                        //         'removePlugins' => 'resize,maximize',
+                        //     ],
+                        // ],
 
                         [   // CKEditor
                             'name' => 'body',
@@ -336,8 +349,7 @@ public function store(Request $request)
                     'body' => 'body is required',
                 ])->validate();
         }
-    } else {
-    }
+    } 
     // execute the FormRequest authorization and validation, if one is required
     $request = $this->crud->validateRequest();
 
@@ -364,7 +376,49 @@ public function store(Request $request)
     $this->crud->setSaveAction();
 
     return $this->crud->performSaveAction($item->getKey());
-}
+    }
+
+    public function update(Request $request)
+    {
+        $this->crud->hasAccessOrFail('update');
+
+
+    if ($request->get('content') != null) {
+        foreach ($request->get('content')  as $content) {
+            Validator::make($content,
+                ['title' => 'required',
+                    'body' => 'required',
+                ],
+                [
+                    'title' => 'title is required',
+                    'body' => 'body is required',
+                ])->validate();
+        }
+    } 
+
+        // execute the FormRequest authorization and validation, if one is required
+        $request = $this->crud->validateRequest();
+
+        // register any Model Events defined on fields
+        $this->crud->registerFieldEvents();
+
+        // update the row in the db
+        $item = $this->crud->update(
+            $request->get($this->crud->model->getKeyName()),
+            $this->crud->getStrippedSaveRequest($request)
+        );
+        $this->data['entry'] = $this->crud->entry = $item;
+
+        // show a success message
+        \Alert::success(trans('backpack::crud.update_success'))->flash();
+
+        // save the redirect choice for next time
+        $this->crud->setSaveAction();
+
+        return $this->crud->performSaveAction($item->getKey());
+    }
+
+
 
     protected function setupUpdateOperation()
     {

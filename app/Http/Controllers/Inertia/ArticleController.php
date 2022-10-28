@@ -29,14 +29,14 @@ class ArticleController extends Controller
 
         $webPage = \JsonLd\Context::create('web_page', [
             'description' => 'Home page',
-            'url' => config('app.url').'/article/show/'.$slug,
+            'url' => config('app.url').'/news/'.$year.'/'.$month.'/'.$slug,
         ]);
 
         $context = \JsonLd\Context::create('news_article', [
             'headline' => $article->title,
             'description' => $article->description,
             'mainEntityOfPage' => [
-                'url' => config('app.url').'/article',
+                'url' => config('app.url').'/news',
 
             ],
             'image' => [

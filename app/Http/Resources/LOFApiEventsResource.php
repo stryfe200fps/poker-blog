@@ -25,6 +25,7 @@ class LOFApiEventsResource extends JsonResource
             'slug' => $this->slug,
             'title' => $this->title,
             'description' => $this->description,
+            'content' => googleTranslateExclude($this->content),
             'image' => $this->image,
             'tournament' => $this->tournament->title,
             'tournament_slug' => $this->tournament->slug,
@@ -36,6 +37,7 @@ class LOFApiEventsResource extends JsonResource
             'buyin' => $this->buyin,
             'fee' => $this->fee,
             'game_table' => $this->event_game_table?->title,
+
         ];
     }
 }

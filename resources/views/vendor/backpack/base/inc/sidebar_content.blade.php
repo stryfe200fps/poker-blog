@@ -110,6 +110,7 @@
 
     <li class="nav-item"><a class="nav-link" href="{{ backpack_url('event-game-table') }}"><i class="nav-icon la la-list"></i> Event game tables</a></li>
 
+    <li class="nav-item"><a class="nav-link" href="{{ backpack_url('glossary') }}"><i class="nav-icon la la-list"></i> Glossaries</a></li>
     <li class='nav-item'><a class='nav-link' href='{{ backpack_url('setting') }}'><i class='nav-icon la la-cog'></i> <span>Settings</span></a></li>
 
 <!-- <li class="nav-item"><a class="nav-link" href="{{ backpack_url('currency') }}"><i class="nav-icon la la-money"></i> Currencies</a></li> -->
@@ -144,6 +145,9 @@
     background-repeat: no-repeat;
     background-size: contain;
     margin-left:15.4px;
+}
+.cke_reset {
+    /* display:none!important; */
 }
 </style>
 <!-- <li class="nav-item"><a class="nav-link" href="{{ backpack_url('day') }}"><i class="nav-icon la la-question"></i> Days</a></li> -->
