@@ -207,7 +207,7 @@
                     <CustomeTable v-if="whatsapp?.length">
                         <template v-slot:table-head>
                             <tr class="text-primary">
-                                <th class="text-center">Date Posted</th>
+                                <th class="text-start">Date Posted</th>
                                 <th>Player</th>
                                 <th class="text-center hide-on-tablet">
                                     Country
