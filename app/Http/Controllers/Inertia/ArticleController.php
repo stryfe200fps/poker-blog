@@ -73,9 +73,14 @@ class ArticleController extends Controller
 
     public function tag($slug)
     {
+        $webPage = \JsonLd\Context::create('web_page', [
+            'description' => 'News Tag',
+            'url' => config('app.url')
+        ]);
         return Inertia::render('Tag/TagArticle', [
             'title' => 'Tag: '.$slug.' | LifeOfPoker',
             'slug' => $slug,
+            'json-ld-webpage' => $webPage,
         ]);
     }
 
