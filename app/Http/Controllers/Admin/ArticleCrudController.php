@@ -255,16 +255,6 @@ class ArticleCrudController extends CrudController
                     ],
                 ],
 
-                [
-                    'name' => 'image',
-                    'type' => 'image',
-                    'aspect_ratio' => 3 / 2,
-                    'crop' => true,
-                    'tab' => 'Basic',
-                    'wrapper' => [
-                        'class' => 'form-group col-md-12',
-                    ],
-                ],
 
             ]
         );
@@ -295,6 +285,22 @@ class ArticleCrudController extends CrudController
                 ],
             ]);
         }
+
+
+        $this->crud->addField(
+
+                [
+                    'name' => 'image',
+                    'type' => 'image',
+                    'aspect_ratio' => 3 / 2,
+                    'crop' => true,
+                    'tab' => 'Basic',
+                    'wrapper' => [
+                        'class' => 'form-group col-md-12',
+                    ],
+                ],
+            );
+
         // Widget::add()->type('script')->content('assets/js/admin/date/modify_datepicker.js');
     }
 

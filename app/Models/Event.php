@@ -263,6 +263,11 @@ class Event extends Model implements HasMedia
             ->toMediaCollection('event');
     }
 
+    public function event_game_table()
+    {
+        return $this->belongsTo(EventGameTable::class);
+    }
+
     public function getParentAttribute($value)
     {
         return $this->poker_tournament()->first()->title.' > '.$this->title;

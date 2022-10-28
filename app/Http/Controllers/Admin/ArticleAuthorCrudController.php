@@ -80,15 +80,7 @@ class ArticleAuthorCrudController extends CrudController
 
         CRUD::field('first_name');
         CRUD::field('last_name');
-        $this->crud->addField([
-            'label' => 'Image',
-            'name' => 'avatar',
-            'type' => 'image',
-            'crop' => 'true',
-            'aspect_ratio' => 1,
-        ]);
-
-        $this->crud->addField([   // CKEditor
+         $this->crud->addField([   // CKEditor
             'name' => 'description',
             'label' => 'Content',
             'type' => 'ckeditor',
@@ -127,6 +119,16 @@ class ArticleAuthorCrudController extends CrudController
                 }),
             ]);
         }
+
+       $this->crud->addField([
+            'label' => 'Image',
+            'name' => 'avatar',
+            'type' => 'image',
+            'crop' => 'true',
+            'aspect_ratio' => 1,
+        ]);
+
+
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:

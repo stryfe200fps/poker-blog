@@ -36,6 +36,9 @@ class LOFApiEventIndexResource extends JsonResource
             // 'tour' => $this->tournament->tour->title,
             // 'payouts' => collect($this->event_payouts->load(['player', 'player.country']))->sortBy('position')->values()->all(),
             // 'chip_stacks' => collect(EventChipsResource::collection($this->latest_event_chips->sortByDesc('date_published')->unique('player_id')))->sortByDesc('current_chips')->values()->all(),
+            'buyin' => $this->buyin,
+            'fee' => $this->fee,
+            'game_table' => $this->event_game_table?->title,
         ];
     }
 }

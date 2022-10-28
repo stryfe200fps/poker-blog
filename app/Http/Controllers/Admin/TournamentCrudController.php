@@ -103,7 +103,25 @@ class TournamentCrudController extends CrudController
             ],
             'type' => 'text',
         ]);
-        CRUD::field('description');
+        CRUD::field('description')->type('textarea');
+
+
+        $this->crud->addFields([
+
+            [   // CKEditor
+                'name' => 'content',
+                'label' => 'Content',
+                'type' => 'ckeditor',
+                'extra_plugins' => ['widget', 'autocomplete', 'textmatch', 'toolbar', 'wysiwygarea', 'image', 'sourcearea'],
+
+                'options' => [
+                    'autoGrow_minHeight' => 200,
+                    'autoGrow_bottomSpace' => 50,
+                    'removePlugins' => 'resize,maximize',
+                ],
+            ], ]);
+
+
 
         $this->crud->addField([
             'name' => 'currency_id',
@@ -132,13 +150,7 @@ class TournamentCrudController extends CrudController
         );
 
         $this->crud->addFields([
-            [
-                'name' => 'image',
-                'label' => 'image',
-                'type' => 'image',
-                'aspect_ratio' => 3 / 2,
-                'crop' => true,
-            ],
+           
             [   // date_range
                 'name' => ['date_start', 'date_end'], // db columns for start_date & end_date
                 'label' => 'Series Duration',
@@ -153,6 +165,13 @@ class TournamentCrudController extends CrudController
                     'timePicker' => true,
                     'locale' => ['format' => 'MMM D, YYYY hh:mm a'],
                 ],
+            ],
+ [
+                'name' => 'image',
+                'label' => 'Image',
+                'type' => 'image',
+                'aspect_ratio' => 3 / 2,
+                'crop' => true,
             ],
 
         ]);

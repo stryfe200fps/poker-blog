@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class EventRequest extends FormRequest
+class EventGameTableRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,11 +26,11 @@ class EventRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required',
-            'description' => 'required',
-            'fee' => 'required',
-            'buyin' => 'required',
+            'title' => [
+                'required',
+            ]
         ];
+       
     }
 
     /**
@@ -52,11 +53,8 @@ class EventRequest extends FormRequest
     public function messages()
     {
         return [
-            //
             'title.required' => 'Title is required',
-            'description.required' => 'Description is required',
-            'fee.required' => 'Fee is required',
-            'buyin.required' => 'Buyin is required',
+
         ];
     }
 }

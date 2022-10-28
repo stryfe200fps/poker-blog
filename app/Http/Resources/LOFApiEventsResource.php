@@ -32,6 +32,10 @@ class LOFApiEventsResource extends JsonResource
             'schedule' => $this->schedule,
             'date_start' => $this->scheduleArray($this->schedule, session()->get('timezone'))->first()['date_start'] ?? '',
             'date_end' => $this->scheduleArray($this->schedule, session()->get('timezone'))->last()['date_end'] ?? '',
+
+            'buyin' => $this->buyin,
+            'fee' => $this->fee,
+            'game_table' => $this->event_game_table?->title,
         ];
     }
 }

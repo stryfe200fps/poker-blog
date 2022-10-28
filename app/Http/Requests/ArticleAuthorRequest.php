@@ -25,7 +25,8 @@ class ArticleAuthorRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'name' => 'required|min:5|max:255'
+            'first_name' => 'required',
+            'last_name' => 'required',
         ];
     }
 
@@ -49,7 +50,8 @@ class ArticleAuthorRequest extends FormRequest
     public function messages()
     {
         return [
-            //
+            'first_name.required' => 'First Name is required',
+            'last_name.required' => 'Last Name is required',
         ];
     }
 }

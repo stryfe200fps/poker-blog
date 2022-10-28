@@ -55,8 +55,9 @@ class EventCrudController extends CrudController
     {
         $this->crud->disableResponsiveTable();
 
-        CRUD::column('title');
+
         CRUD::column('tournament')->label('Series');
+        CRUD::column('title');
         CRUD::column('tournament.timezone')->label('Series Timezone');
         // CRUD::column('event_date_start')->type('date')->format(config('app.date_format'))->label('Start date');
         // CRUD::column('event_date_end')->type('date')->format(config('app.date_format'))->label('End date');
@@ -89,12 +90,21 @@ class EventCrudController extends CrudController
 
         CRUD::field('description');
 
-        $this->crud->addField([
-            'name' => 'image',
-            'type' => 'image',
-            'aspect_ratio' => 3 / 2,
-            'crop' => true,
-        ]);
+        $this->crud->addFields([
+
+            [   // CKEditor
+                'name' => 'content',
+                'label' => 'Content',
+                'type' => 'ckeditor',
+                'extra_plugins' => ['widget', 'autocomplete', 'textmatch', 'toolbar', 'wysiwygarea', 'image', 'sourcearea'],
+
+                'options' => [
+                    'autoGrow_minHeight' => 200,
+                    'autoGrow_bottomSpace' => 50,
+                    'removePlugins' => 'resize,maximize',
+                ],
+            ], ]);
+
 
         $start = Carbon::now()->toDateTimeString();
         $end = Carbon::now()->addDays(1)->toDateTimeString();
@@ -112,6 +122,34 @@ class EventCrudController extends CrudController
             }),
 
             // 'allows_multiple' => true, // OPTIONAL; needs you to cast this to array in your model;
+        ]);
+
+    $this->crud->addField([
+        'name' => 'event_game_table',
+        'type' => 'relationship',
+        // 'options' => (function ($query) {
+        //     return $query->where('article_author_id', '=', 0)->orWhere('article_author_id', '=', null)->get();
+        // }),
+    ]);
+
+    $this->crud->addField([
+        'name' => 'buyin',
+        'type' => 'number'
+    ]);
+
+    $this->crud->addField([
+        'name' => 'fee',
+        'type' => 'number'
+    ]);
+
+
+
+
+        $this->crud->addField([
+            'name' => 'image',
+            'type' => 'image',
+            'aspect_ratio' => 3 / 2,
+            'crop' => true,
         ]);
 
         // $this->crud->addField([

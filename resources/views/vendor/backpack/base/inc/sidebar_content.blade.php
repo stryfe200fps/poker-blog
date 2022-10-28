@@ -107,6 +107,9 @@
     <li class="nav-item"><a class="nav-link" href="{{ backpack_url('image-theme') }}"><i class="nav-icon la la-image"></i> <span>Image themes</span></a></li>
     @endif
 
+
+    <li class="nav-item"><a class="nav-link" href="{{ backpack_url('event-game-table') }}"><i class="nav-icon la la-list"></i> Event game tables</a></li>
+
     <li class='nav-item'><a class='nav-link' href='{{ backpack_url('setting') }}'><i class='nav-icon la la-cog'></i> <span>Settings</span></a></li>
 
 <!-- <li class="nav-item"><a class="nav-link" href="{{ backpack_url('currency') }}"><i class="nav-icon la la-money"></i> Currencies</a></li> -->

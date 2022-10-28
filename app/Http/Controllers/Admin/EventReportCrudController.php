@@ -250,23 +250,6 @@ class EventReportCrudController extends CrudController
             ],
 
             [
-                'label' => 'Media',
-                'name' => 'divider',
-                'type' => 'custom_html',
-                'value' => '<b>Media</b>',
-            ],
-            [
-                'label' => 'Image',
-                'name' => 'image',
-                'type' => 'image',
-                'crop' => true, // set to true to allow cropping, false to disable
-                'aspect_ratio' => 3 / 2, // omit or set to 0 to allow any aspect ratio
-                'wrapper' => [
-                    'class' => 'form-group col-md-12 image',
-                    'id' => 'image',
-                ],
-            ],
-            [
                 'name' => 'image_caption',
                 'type' => 'text',
                 'wrapper' => [
@@ -376,6 +359,28 @@ class EventReportCrudController extends CrudController
             ],
             'allows_null' => false,
             'default' => 'report',
+        ]);
+
+
+        $this->crud->addFields(
+            [ 
+            [
+                'label' => 'Media',
+                'name' => 'divider',
+                'type' => 'custom_html',
+                'value' => '<b>Media</b>',
+            ],
+            [
+                'label' => 'Image',
+                'name' => 'image',
+                'type' => 'image',
+                'crop' => true, // set to true to allow cropping, false to disable
+                'aspect_ratio' => 3 / 2, // omit or set to 0 to allow any aspect ratio
+                'wrapper' => [
+                    'class' => 'form-group col-md-12 image',
+                    'id' => 'image',
+                ],
+            ],
         ]);
 
         if ($this->crud->getCurrentOperation() === 'create') {
