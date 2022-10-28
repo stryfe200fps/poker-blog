@@ -108,7 +108,9 @@
                     </div>
                 </div>
                 <div v-else>
-                    <h4 class="text-capitalize">No {{ page }} available</h4>
+                    <h4 class="text-capitalize">
+                        No {{ page_title }} available
+                    </h4>
                 </div>
             </div>
         </div>

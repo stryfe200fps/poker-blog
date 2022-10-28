@@ -12,8 +12,7 @@ class ArticleController extends Controller
     public function index()
     {
         $webPage = \JsonLd\Context::create('web_page', [
-            'description' => 'Article',
-            'url' => config('app.url').'/article',
+            'url' => request()->url(),
         ]);
 
         return Inertia::render('Article/Index');
@@ -28,8 +27,7 @@ class ArticleController extends Controller
         }
 
         $webPage = \JsonLd\Context::create('web_page', [
-            'description' => 'Home page',
-            'url' => config('app.url').'/news/'.$year.'/'.$month.'/'.$slug,
+            'url' => request()->url(),
         ]);
 
         $context = \JsonLd\Context::create('news_article', [
@@ -74,8 +72,7 @@ class ArticleController extends Controller
     public function tag($slug)
     {
         $webPage = \JsonLd\Context::create('web_page', [
-            'description' => 'News Tag',
-            'url' => config('app.url')
+            'url' => request()->url()
         ]);
         return Inertia::render('Tag/TagArticle', [
             'title' => 'Tag: '.$slug.' | LifeOfPoker',

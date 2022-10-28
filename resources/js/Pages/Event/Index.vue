@@ -120,7 +120,6 @@ const galleryData = ref([]);
 const payoutsData = ref([]);
 const loadPage = ref(1);
 const lastPage = ref(1);
-const pathname = ref(window.location.pathname.split("/")[6]);
 const isActive = ref(false);
 
 const eventDays = computed(() => {
@@ -194,18 +193,31 @@ async function reportViewing() {
 function scrollToTop() {
     window.scroll({ top: 0, behavior: "smooth" });
     isActive.value = false;
+    Inertia.visit(
+        `/tours/${eventData.value.tour_slug}/${
+            eventData.value.tournament_slug
+        }/${eventData.value.slug}/${eventData.value.available_days[
+            selectDay.value
+        ]
+            .replace(/[^A-Z0-9]+/gi, "-")
+            .toLowerCase()}/live-updates`,
+        { preserveState: true }
+    );
 }
 
 onMounted(async () => {
     await eventStore.getEventData(props.slug);
-    if (props.day === "" && selectDay.value === null) {
+    if (props.day === "" || selectDay.value == null) {
         selectDay.value = highestDay();
     } else {
         selectDay.value = Object.keys(eventData.value.available_days).find(
-            (key) => eventData.value.available_days[key] === props.day
+            (key) =>
+                JSON.stringify(eventData.value.available_days[key]) ===
+                JSON.stringify(props.day)
         );
     }
     reportViewing();
+
     window.Echo.channel("report").listen(
         "NewReport",
         ({ eventSlug, dayid }) => {
@@ -223,7 +235,6 @@ onMounted(async () => {
 });
 
 onUpdated(() => {
-    pathname.value = window.location.pathname.split("/")[6];
     reportViewing();
 });
 
@@ -231,13 +242,16 @@ const fetchLiveReports = () => {
     loadPage.value = 1;
     lastPage.value = 1;
     reportViewing();
-    if (pathname.value === undefined && props.day === "") {
+
+    if (props.type === "" && props.day === "") {
         Inertia.visit(
             `/tours/${eventData.value.tour_slug}/${
                 eventData.value.tournament_slug
-            }/${eventData.value.slug}/${
-                eventData.value.available_days[selectDay.value]
-            }/live-updates`,
+            }/${eventData.value.slug}/${eventData.value.available_days[
+                selectDay.value
+            ]
+                .replace(/[^A-Z0-9]+/gi, "-")
+                .toLowerCase()}/live-updates`,
             { preserveState: true }
         );
         return;
@@ -245,9 +259,11 @@ const fetchLiveReports = () => {
     Inertia.visit(
         `/tours/${eventData.value.tour_slug}/${
             eventData.value.tournament_slug
-        }/${eventData.value.slug}/${
-            eventData.value.available_days[selectDay.value]
-        }/${pathname.value}`,
+        }/${eventData.value.slug}/${eventData.value.available_days[
+            selectDay.value
+        ]
+            .replace(/[^A-Z0-9]+/gi, "-")
+            .toLowerCase()}/${props.type}`,
         { preserveState: true }
     );
 

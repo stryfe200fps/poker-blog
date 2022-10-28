@@ -25,13 +25,16 @@ class ReportController extends Controller
         if ($tour != $reportTourSlug || $series != $reportTournamentSlug   || $eventSlug != $reportEventSlug ) {
             return redirect('/tours/'. $reportTourSlug . '/'. $reportTournamentSlug  . '/'. $reportEventSlug . '/'. $reportId );
         }
-
+        $webPage = \JsonLd\Context::create('web_page', [
+            'url' => request()->url()
+        ]);
         return Inertia::render('Report/Show', [
             'report' => $report,
             'title' => $report->title.' | LifeOfPoker',
             'slug' => $reportId,
             'image' => $report->getFirstMediaUrl('event-report', 'main-image'),
             'description' => \Illuminate\Support\Str::limit($report->title, 100, $end = '...'),
+            'json-ld-webpage' => $webPage,
         ]);
     }
 }

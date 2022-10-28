@@ -99,7 +99,7 @@
                     </div>
                 </div>
                 <div
-                    v-if="reports.length"
+                    v-if="reports?.length"
                     v-observe-visibility="handleScrolledToBottom"
                 ></div>
             </div>
@@ -448,9 +448,12 @@ const emit = defineEmits(["loadMore"]);
 const dayValue = computed(() => {
     if (props.day === "") {
         const dayValues = Object.values(props?.event?.available_days ?? {});
-        return dayValues[dayValues.length - 1];
+        if (dayValues.length)
+            return dayValues[dayValues.length - 1]
+                .replace(/[^A-Z0-9]+/gi, "-")
+                .toLowerCase();
     }
-    return props.day;
+    return props.day.replace(/[^A-Z0-9]+/gi, "-").toLowerCase();
 });
 
 function handleScrolledToBottom(isVisible) {

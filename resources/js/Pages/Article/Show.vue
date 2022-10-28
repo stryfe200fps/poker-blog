@@ -18,9 +18,11 @@
                         v-for="(content, index) in article.content"
                         :key="index"
                     >
-                        <a :href="'#content' + index" @click="isPull = false">{{
-                            content.title
-                        }}</a>
+                        <a
+                            :href="'#content' + index"
+                            v-html="content.title"
+                            @click="isPull = false"
+                        ></a>
                     </li>
                 </ul>
             </label>
@@ -156,8 +158,8 @@
                                 class="text-primary"
                                 :href="'#content' + index"
                                 @click="isPull = false"
-                                >{{ content.title }}</a
-                            >
+                                v-html="content.title"
+                            ></a>
                         </li>
                     </ul>
                 </div>
@@ -166,7 +168,7 @@
                     :key="index"
                     class="post-content"
                 >
-                    <h3 style="margin-bottom: 20px">{{ content.title }}</h3>
+                    <h3 style="margin-bottom: 20px" v-html="content.title"></h3>
                     <div v-html="content.body"></div>
                 </div>
                 <div class="post-tags-box" v-if="article.tags?.length">

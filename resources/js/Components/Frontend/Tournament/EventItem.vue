@@ -15,8 +15,38 @@
                         <Link
                             class="text-capitalize link--custom"
                             :href="`/tours/${event.tour_slug}/${event.tournament_slug}/${event.slug}`"
-                            >{{ event.title }}</Link
+                            >{{ event.title }}
+                        </Link>
+                        <p
+                            style="
+                                margin-top: 5px;
+                                font-size: 12px;
+                                font-style: italic;
+                            "
+                            v-if="event.game_table"
                         >
+                            Event Game: {{ event.game_table }}dd
+                        </p>
+                        <p
+                            style="
+                                margin-top: -15px;
+                                font-size: 12px;
+                                font-style: italic;
+                            "
+                            v-if="event.buyin !== 0"
+                        >
+                            Buy In: {{ event.buyin }}
+                        </p>
+                        <p
+                            style="
+                                margin-top: -15px;
+                                font-size: 12px;
+                                font-style: italic;
+                            "
+                            v-if="event.fee !== 0"
+                        >
+                            Fee: {{ event.fee }}
+                        </p>
                     </h2>
                     <h2 v-else>
                         {{ event.title }}

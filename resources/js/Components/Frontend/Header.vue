@@ -184,8 +184,7 @@ function googleTranslateElementInit() {
     }
 }
 onMounted(() => {
-    if (pathname.value !== "article")
-        window.addEventListener("scroll", onScroll);
+    if (pathname.value !== "news") window.addEventListener("scroll", onScroll);
 
     let targetElement = document.getElementById("google_translate_element");
     if (targetElement) {
@@ -197,7 +196,7 @@ onMounted(() => {
         document.head.appendChild(script);
         setTimeout(() => {
             googleTranslateElementInit();
-        }, 500);
+        }, 1500);
         return;
     }
 });

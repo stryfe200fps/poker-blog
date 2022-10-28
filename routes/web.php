@@ -61,21 +61,29 @@ try {
         foreach ($item->children as $child) {
             if ($item->link === $child->link) {
                 Route::get($item->link, function () use ($item, $child) {
+                    $webPage = \JsonLd\Context::create('web_page', [
+                        'url' => request()->url()
+                    ]);
                     return Inertia::render('Categories/CategoryPage', [
                         'title' => $item->name.' | LifeOfPoker',
                         'description' => $item->name,
                         'page' => $item->link,
-                        'page_title' => $child->name
+                        'page_title' => $child->name,
+                        'json-ld-webpage' => $webPage,
                     ]);
                 });
             }
 
             Route::get($item->link.'/'.$child->link, function () use ($child) {
+                $webPage = \JsonLd\Context::create('web_page', [
+                    'url' => request()->url()
+                ]);
                 return Inertia::render('Categories/CategoryPage', [
                     'title' => $child->name.' | LifeOfPoker',
                     'description' => $child->name,
                     'page' => $child->link,
-                    'page_title' => $child->name
+                    'page_title' => $child->name,
+                    'json-ld-webpage' => $webPage,
                 ]);
             });
         }
