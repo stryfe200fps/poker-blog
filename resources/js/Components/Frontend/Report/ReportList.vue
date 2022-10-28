@@ -207,7 +207,7 @@
                     <CustomeTable v-if="whatsapp?.length">
                         <template v-slot:table-head>
                             <tr class="text-primary">
-                                <th class="text-center">Rank</th>
+                                <th class="text-center">Date Posted</th>
                                 <th>Player</th>
                                 <th class="text-center hide-on-tablet">
                                     Country
@@ -220,7 +220,7 @@
                         </template>
                         <template v-slot:table-body>
                             <tr v-for="(stack, index) in whatsapp" :key="index">
-                                <td class="text-center">{{ index + 1 }}</td>
+                                <td class="text-start">{{ stack.date }}</td>
                                 <td>
                                     <img
                                         class="hide-on-tablet"

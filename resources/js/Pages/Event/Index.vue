@@ -193,16 +193,18 @@ async function reportViewing() {
 function scrollToTop() {
     window.scroll({ top: 0, behavior: "smooth" });
     isActive.value = false;
-    Inertia.visit(
-        `/tours/${eventData.value.tour_slug}/${
-            eventData.value.tournament_slug
-        }/${eventData.value.slug}/${eventData.value.available_days[
-            selectDay.value
-        ]
-            .replace(/[^A-Z0-9]+/gi, "-")
-            .toLowerCase()}/live-updates`,
-        { preserveState: true }
-    );
+    if (props.type !== "live-updates") {
+        Inertia.visit(
+            `/tours/${eventData.value.tour_slug}/${
+                eventData.value.tournament_slug
+            }/${eventData.value.slug}/${eventData.value.available_days[
+                selectDay.value
+            ]
+                .replace(/[^A-Z0-9]+/gi, "-")
+                .toLowerCase()}/live-updates`,
+            { preserveState: true }
+        );
+    }
 }
 
 onMounted(async () => {

@@ -21,6 +21,7 @@ class EventChipsResource extends JsonResource
             'rank' => $this->rank,
             'current_chips' => $this->current_chips,
             'previous' => $report,
+            'date' => $this->date_published->diffForHumans(),
             'changes' => $changes = $this->current_chips >= $report ?
             $this->current_chips - $report :
             $report - $this->current_chips,
