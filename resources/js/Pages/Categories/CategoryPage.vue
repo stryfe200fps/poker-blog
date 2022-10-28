@@ -1,6 +1,9 @@
 <template>
     <Head>
-        <title>{{ page.charAt(0).toUpperCase() + page.slice(1) }}</title>
+        <title>
+            {{ page_title.charAt(0).toUpperCase() + page_title.slice(1) }} |
+            LifeOfPoker
+        </title>
     </Head>
     <FrontLayout>
         <div class="block-content">
@@ -14,7 +17,7 @@
                         "
                     >
                         <h1 style="margin: 20px 0 -1px 0">
-                            <span>{{ page }}</span>
+                            <span>{{ page_title }}</span>
                         </h1>
                         <select
                             class="form-control"
@@ -128,7 +131,13 @@ import {
 import moment from "moment";
 
 const props = defineProps({
-    page: String,
+    page: {
+        type: String,
+    },
+
+    page_title: {
+        type: String,
+    },
 });
 
 const articleCategoryStore = useArticleCategoryStore();

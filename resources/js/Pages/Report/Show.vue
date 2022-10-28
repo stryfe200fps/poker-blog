@@ -30,7 +30,7 @@
                     ><br />
                 </div>
                 <div class="title-post">
-                    <h1>{{ report.data.title }}</h1>
+                    <h1 class="text-capitalize">{{ report.data.title }}</h1>
                     <div
                         style="
                             display: flex;

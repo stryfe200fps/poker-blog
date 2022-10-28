@@ -20,7 +20,7 @@
                                 eventData.title
                             }}</span>
                         </h1>
-                        <div v-if="pathname !== 'payouts'">
+                        <div v-if="props.type !== 'payouts'">
                             <p v-if="eventDays?.length > 1">
                                 <select
                                     class="form-control custom-form-control"
@@ -59,8 +59,9 @@
                         :whatsapp="whatsappData"
                         :gallery="galleryData"
                         :payouts="payoutsData"
+                        :currentTab="type"
+                        :day="day"
                         @loadMore="loadMoreReports"
-                        :currentTab="page"
                     />
                 </div>
             </div>
@@ -88,7 +89,7 @@ import TournamentList from "../../Components/Frontend/Tournament/List.vue";
 import { useEventStore } from "@/Stores/event.js";
 import { useTournamentStore } from "@/Stores/tournament.js";
 import { onMounted, ref, watch, computed, onUpdated } from "@vue/runtime-core";
-
+import { Inertia } from "@inertiajs/inertia";
 const eventStore = useEventStore();
 const tournamentStore = useTournamentStore();
 
@@ -99,7 +100,13 @@ const props = defineProps({
     page: {
         type: String,
     },
+    series: {
+        type: String,
+    },
     day: {
+        type: String,
+    },
+    type: {
         type: String,
     },
 });
@@ -113,7 +120,7 @@ const galleryData = ref([]);
 const payoutsData = ref([]);
 const loadPage = ref(1);
 const lastPage = ref(1);
-const pathname = ref(window.location.pathname.split("/")[3]);
+const pathname = ref(window.location.pathname.split("/")[6]);
 const isActive = ref(false);
 
 const eventDays = computed(() => {
@@ -151,33 +158,33 @@ async function loadMoreReports() {
     lastPage.value = eventStore.liveReportList.meta.last_page;
 }
 
-async function reportViewing(pathname) {
-    if (pathname === undefined) {
+async function reportViewing() {
+    if (props.type === "" || props.type === "live-updates") {
         await eventStore.getLiveReport(1, selectDay.value);
         liveReport.value = eventStore.liveReportList.data;
         lastPage.value = eventStore.liveReportList.meta.last_page;
         return;
     }
 
-    if (pathname === "chip-stack") {
+    if (props.type === "chip-stack") {
         await eventStore.getChipCountsData(selectDay.value);
         chipCountsData.value = eventStore.chipCounts;
         return;
     }
 
-    if (pathname === "whatsapp") {
+    if (props.type === "whatsapp") {
         await eventStore.getWhatsappData(selectDay.value);
         whatsappData.value = eventStore.whatsapp;
         return;
     }
 
-    if (pathname === "gallery") {
+    if (props.type === "gallery") {
         await eventStore.getGalleryData(selectDay.value);
         galleryData.value = eventStore.galleryData;
         return;
     }
 
-    if (pathname === "payouts") {
+    if (props.type === "payouts") {
         await eventStore.getPayoutsData(eventData.value.slug);
         payoutsData.value = eventStore.payouts.data;
         return;
@@ -191,8 +198,14 @@ function scrollToTop() {
 
 onMounted(async () => {
     await eventStore.getEventData(props.slug);
-    selectDay.value = highestDay();
-    reportViewing(pathname.value);
+    if (props.day === "" && selectDay.value === null) {
+        selectDay.value = highestDay();
+    } else {
+        selectDay.value = Object.keys(eventData.value.available_days).find(
+            (key) => eventData.value.available_days[key] === props.day
+        );
+    }
+    reportViewing();
     window.Echo.channel("report").listen(
         "NewReport",
         ({ eventSlug, dayid }) => {
@@ -210,14 +223,34 @@ onMounted(async () => {
 });
 
 onUpdated(() => {
-    pathname.value = window.location.pathname.split("/")[3];
-    reportViewing(pathname.value);
+    pathname.value = window.location.pathname.split("/")[6];
+    reportViewing();
 });
 
-const fetchLiveReports = async () => {
+const fetchLiveReports = () => {
     loadPage.value = 1;
     lastPage.value = 1;
-    reportViewing(pathname.value);
+    reportViewing();
+    if (pathname.value === undefined && props.day === "") {
+        Inertia.visit(
+            `/tours/${eventData.value.tour_slug}/${
+                eventData.value.tournament_slug
+            }/${eventData.value.slug}/${
+                eventData.value.available_days[selectDay.value]
+            }/live-updates`,
+            { preserveState: true }
+        );
+        return;
+    }
+    Inertia.visit(
+        `/tours/${eventData.value.tour_slug}/${
+            eventData.value.tournament_slug
+        }/${eventData.value.slug}/${
+            eventData.value.available_days[selectDay.value]
+        }/${pathname.value}`,
+        { preserveState: true }
+    );
+
     // await eventStore.getLiveReport(1, selectDay.value);
     // liveReport.value = eventStore.liveReportList.data;
     // lastPage.value = eventStore.liveReportList.meta.last_page;

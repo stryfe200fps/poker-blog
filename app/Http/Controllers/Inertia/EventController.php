@@ -8,7 +8,7 @@ use Inertia\Inertia;
 
 class EventController extends Controller
 {
-    public function show($tour, $series, $eventSlug, $type = null, $day = null )
+    public function show($tour, $series, $eventSlug, $day = null, $type = null )
     {
         $webPage = \JsonLd\Context::create('web_page', [
             'description' => 'Home page',
