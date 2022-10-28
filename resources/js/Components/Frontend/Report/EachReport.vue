@@ -60,11 +60,7 @@
                                 >
                                     <a
                                         target="_blank"
-                                        :href="`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-                                            url
-                                        )}/update-${
-                                            item.id
-                                        }&amp;src=sdkpreparse`"
+                                        :href="`https://www.facebook.com/sharer/sharer.php?u=https://uat.lifeofpoker.com/tours/${event.tour_slug}/${event.tournament_slug}/${event.slug}/update-${item.id}&amp;src=sdkpreparse`"
                                         ><i
                                             class="fa-brands fa-facebook-f"
                                             style="margin-right: 0; color: #fff"
@@ -80,9 +76,7 @@
                                 >
                                     <a
                                         target="_blank"
-                                        :href="`https://twitter.com/intent/tweet?text=${encodeURIComponent(
-                                            url
-                                        )}/update-${item.id}`"
+                                        :href="`https://twitter.com/intent/tweet?text=https://uat.lifeofpoker.com/tours/${event.tour_slug}/${event.tournament_slug}/${event.slug}/update-${item.id}/update-${item.id}`"
                                         ><i
                                             class="fa fa-twitter"
                                             style="margin-right: 0; color: #fff"
@@ -95,7 +89,7 @@
                                 >
                                     <a
                                         target="_blank"
-                                        :href="`https://api.whatsapp.com/send?text=%0a${url}/update-${item.id}`"
+                                        :href="`https://api.whatsapp.com/send?text=%0ahttps://uat.lifeofpoker.com/tours/${event.tour_slug}/${event.tournament_slug}/${event.slug}/update-${item.id}`"
                                         ><i
                                             class="fa fa-whatsapp"
                                             style="margin-right: 0; color: #fff"
