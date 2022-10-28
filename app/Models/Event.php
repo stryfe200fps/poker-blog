@@ -373,9 +373,13 @@ class Event extends Model implements HasMedia
         });
 
         static::updating(function ($model) {
-            $article = Event::find($model->id);
-            if ($model->title !== $article->title) {
-                $model->slug = $article->slug;
+
+            $findModel = Event::find($model->id);
+
+            if ($model->title !== $findModel->title && $model->slug !== $findModel->slug) {
+                $model->slug = Str::slug($model->slug);
+            } else if ($model->title !== $findModel->title) {
+                $model->slug = $findModel->slug;
             } else {
                 $model->slug = Str::slug($model->slug);
             }

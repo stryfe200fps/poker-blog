@@ -75,13 +75,17 @@ class Tour extends Model implements HasMedia
             $model->slug = Str::slug($model->slug);
         });
 
-        static::updating(function ($model) {
-            $article = Tour::find($model->id);
-            if ($model->title !== $article->title) {
-                $model->slug = $article->slug;
+            static::updating(function ($model) {
+
+            $findModel = Tour::find($model->id);
+
+            if ($model->title !== $findModel->title && $model->slug !== $findModel->slug) {
+                $model->slug = Str::slug($model->slug);
+            } else if ($model->title !== $findModel->title) {
+                $model->slug = $findModel->slug;
             } else {
                 $model->slug = Str::slug($model->slug);
             }
-        });
+        }); 
     }
 }

@@ -177,11 +177,14 @@ public function shareTwitter()
 
             $model->slug = Str::slug($model->slug);
         });
-
         static::updating(function ($model) {
-            $article = Article::find($model->id);
-            if ($model->title !== $article->title) {
-                $model->slug = $article->slug;
+
+            $findModel = Article::find($model->id);
+
+            if ($model->title !== $findModel->title && $model->slug !== $findModel->slug) {
+                $model->slug = Str::slug($model->slug);
+            } else if ($model->title !== $findModel->title) {
+                $model->slug = $findModel->slug;
             } else {
                 $model->slug = Str::slug($model->slug);
             }

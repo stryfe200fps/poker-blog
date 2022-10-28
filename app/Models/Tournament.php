@@ -135,21 +135,17 @@ class Tournament extends Model implements HasMedia
 
             $model->slug = Str::slug($model->slug);
         });
+     static::updating(function ($model) {
 
-        static::updating(function ($model) {
-            $article = Tournament::find($model->id);
-            if ($model->title !== $article->title) {
-                $model->slug = $article->slug;
+            $findModel = Tournament::find($model->id);
+
+            if ($model->title !== $findModel->title && $model->slug !== $findModel->slug) {
+                $model->slug = Str::slug($model->slug);
+            } else if ($model->title !== $findModel->title) {
+                $model->slug = $findModel->slug;
             } else {
                 $model->slug = Str::slug($model->slug);
             }
-        });
-        static::updating(function ($model) {
-            // dd($model->date_start);
-            // $model->date_start  = \Carbon\Carbon::parse($model->date_start, session()->get('timezone') ?? 'UTC')->setTimezone('UTC') ;
-            // $model->date_end  = \Carbon\Carbon::parse($model->date_end, session()->get('timezone') ?? 'UTC')->setTimezone('UTC') ;
-
-            // $request['date_end'] = $date2->setTimezone('UTC');
         });
     }
 }

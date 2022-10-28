@@ -45,14 +45,18 @@ class Tag extends Model
                 $model->slug = Str::slug($model->slug);
             });
 
-            static::updating(function ($model) {
-                $tag = Tag::find($model->id);
-                if ($model->title !== $tag->title) {
-                    $model->slug = $tag->slug;
-                } else {
-                    $model->slug = Str::slug($model->slug);
-                }
-            });
+                 static::updating(function ($model) {
+
+            $findModel = Tag::find($model->id);
+
+            if ($model->title !== $findModel->title && $model->slug !== $findModel->slug) {
+                $model->slug = Str::slug($model->slug);
+            } else if ($model->title !== $findModel->title) {
+                $model->slug = $findModel->slug;
+            } else {
+                $model->slug = Str::slug($model->slug);
+            }
+        });
         }
 
     // public function tags()
