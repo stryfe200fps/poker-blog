@@ -62,7 +62,9 @@
                                         target="_blank"
                                         :href="`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
                                             url
-                                        )}&amp;src=sdkpreparse`"
+                                        )}/update-${
+                                            item.id
+                                        }&amp;src=sdkpreparse`"
                                         ><i
                                             class="fa-brands fa-facebook-f"
                                             style="margin-right: 0; color: #fff"
@@ -80,7 +82,7 @@
                                         target="_blank"
                                         :href="`https://twitter.com/intent/tweet?text=${encodeURIComponent(
                                             url
-                                        )}`"
+                                        )}/update-${item.id}`"
                                         ><i
                                             class="fa fa-twitter"
                                             style="margin-right: 0; color: #fff"
@@ -93,7 +95,7 @@
                                 >
                                     <a
                                         target="_blank"
-                                        :href="`https://api.whatsapp.com/send?text=%0a${url}`"
+                                        :href="`https://api.whatsapp.com/send?text=%0a${url}/update-${item.id}`"
                                         ><i
                                             class="fa fa-whatsapp"
                                             style="margin-right: 0; color: #fff"
