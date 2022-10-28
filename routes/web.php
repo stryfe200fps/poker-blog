@@ -39,7 +39,7 @@ Route::prefix('tours')->group(function () {
     Route::get('/', [TournamentController::class, 'index']);
     Route::get('/{pages}', [TournamentController::class, 'index']);
     Route::get('/{tour}/{series}/{eventSlug}', [EventController::class, 'show']);
-    Route::get('/{tour}/{series}/{eventSlug}/{reportSlug}', [ReportController::class, 'show'])->where('reportSlug', '(\w+\-\d+)');
+    Route::get('/{tour}/{series}/{eventSlug}/{reportId}', [ReportController::class, 'show'])->where('reportid', '(\w+\-\d+)');
     Route::get('/{tour}/{series}/{eventSlug}/{type?}/{day?}', [EventController::class, 'show']);
 });
 

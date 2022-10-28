@@ -18,7 +18,7 @@ class EventReport extends Model implements HasMedia
     use InteractsWithMedia;
     use \Backpack\CRUD\app\Models\Traits\CrudTrait;
     use HasFactory;
-    use HasSlug;
+    // use HasSlug;
 
     public function registerMediaConversions(?Media $media = null): void
     {
@@ -33,12 +33,12 @@ class EventReport extends Model implements HasMedia
             ->nonQueued();
     }
 
-    public function getSlugOptions(): SlugOptions
-    {
-        return SlugOptions::create()
-            ->generateSlugsFrom('title')
-            ->saveSlugsTo('slug');
-    }
+    // public function getSlugOptions(): SlugOptions
+    // {
+    //     return SlugOptions::create()
+    //         ->generateSlugsFrom('title')
+    //         ->saveSlugsTo('slug');
+    // }
 
     protected $guarded = ['id'];
 
@@ -235,14 +235,14 @@ class EventReport extends Model implements HasMedia
             $model->date_added = $date->setTimezone('UTC');
         });
 
-        static::updating(function ($model) {
-            $report = EventReport::find($model->id);
-            if ($model->title !== $report->title) {
-                $model->slug = $report->slug;
-            } else {
-                $model->slug = Str::slug($model->slug);
-            }
-        });
+        // static::updating(function ($model) {
+        //     $report = EventReport::find($model->id);
+        //     if ($model->title !== $report->title) {
+        //         $model->slug = $report->slug;
+        //     } else {
+        //         $model->slug = Str::slug($model->slug);
+        //     }
+        // });
 
         // static::created(function ($createdEventReport) {
 

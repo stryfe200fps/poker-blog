@@ -96,7 +96,7 @@ class EventReportCrudController extends CrudController
             'type' => 'text',
             'wrapper' => [
                 'href' => function ($entry, $column, $crud) {
-                    return '/live-report/report/'.$crud->id;
+                    return '/tours/rep/rep/asd/update-'.$crud->id;
                 },
             ],
 
@@ -144,13 +144,13 @@ class EventReportCrudController extends CrudController
 
         CRUD::field('title');
 
-        $this->crud->addField([
-            'name' => 'slug',
-            'attributes' => [
-                'placeholder' => config('app.slug_placeholder'),
-            ],
-            'type' => 'text',
-        ]);
+        // $this->crud->addField([
+        //     'name' => 'slug',
+        //     'attributes' => [
+        //         'placeholder' => config('app.slug_placeholder'),
+        //     ],
+        //     'type' => 'text',
+        // ]);
 
         $author = ArticleAuthor::where('user_id', backpack_user()->id)->first();
 

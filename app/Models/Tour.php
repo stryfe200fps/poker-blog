@@ -60,6 +60,7 @@ class Tour extends Model implements HasMedia
             return false;
         }
 
+        $this->media()->delete();
         $this->addMediaFromBase64($value)
             ->toMediaCollection('tour');
     }

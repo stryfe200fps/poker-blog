@@ -9,14 +9,27 @@ use Inertia\Inertia;
 
 class ReportController extends Controller
 {
-    public function show($tour, $series, $eventSlug,  $reportSlug) {
+    public function show($tour, $series, $eventSlug,  $reportId) {
 
-        $report = new LOFApiEventReportsResource(EventReport::where('slug', $reportSlug)->firstOrFail());
+        $newId = explode('-', $reportId);
+        if (count($newId) <= 1) {
+            return redirect('/');
+        }
+        $findReport = EventReport::find($newId[1]);
+        $report = new LOFApiEventReportsResource($findReport);
+
+        $reportEventSlug = $report->event->slug;
+        $reportTourSlug = $report->event->tournament->tour->slug;
+        $reportTournamentSlug = $report->event->tournament->slug;
+
+        if ($tour != $reportTourSlug || $series != $reportTournamentSlug   || $eventSlug != $reportEventSlug ) {
+            return redirect('/tours/'. $reportTourSlug . '/'. $reportTournamentSlug  . '/'. $reportEventSlug . '/'. $reportId );
+        }
 
         return Inertia::render('Report/Show', [
             'report' => $report,
             'title' => $report->title.' | LifeOfPoker',
-            'slug' => $reportSlug,
+            'slug' => $reportId,
             'image' => $report->getFirstMediaUrl('event-report', 'main-image'),
             'description' => \Illuminate\Support\Str::limit($report->title, 100, $end = '...'),
         ]);
