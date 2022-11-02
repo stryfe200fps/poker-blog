@@ -195,7 +195,11 @@
                         v-for="relate in related"
                         :key="relate.id"
                     >
-                        <div class="item news-post image-post3">
+                        <div
+                            class="item news-post image-post3"
+                            style="cursor: pointer"
+                            @click="showArticle(relate.date, relate.slug)"
+                        >
                             <img
                                 :src="relate.main_image"
                                 alt=""
@@ -234,7 +238,7 @@ import FrontLayout from "@/Layouts/FrontLayout.vue";
 import ReportList from "../../Components/Frontend/Report/ReportList.vue";
 import SideBar from "../../Components/Frontend/MainContent/SideBar.vue";
 import TournamentList from "../../Components/Frontend/Tournament/List.vue";
-
+import { Inertia } from "@inertiajs/inertia";
 import { useArticleStore } from "@/Stores/article.js";
 import { onBeforeUnmount, onMounted, ref, watch } from "@vue/runtime-core";
 import defaultImg from "/public/default-img.png";
@@ -286,6 +290,14 @@ function onScrollContents() {
             tableOfContents.offsetHeight + 80 + "px"
         );
     }
+}
+
+function showArticle(date, slug) {
+    Inertia.visit(
+        `/news/${moment(new Date(date)).format("YYYY")}/${moment(
+            new Date(date)
+        ).format("MM")}/${slug}`
+    );
 }
 
 onMounted(async () => {

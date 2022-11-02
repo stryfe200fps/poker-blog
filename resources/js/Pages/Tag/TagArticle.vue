@@ -17,7 +17,11 @@
                         v-for="(tag, index) in tags"
                         :key="index"
                     >
-                        <div class="item news-post image-post3">
+                        <div
+                            class="item news-post image-post3"
+                            style="cursor: pointer"
+                            @click="showArticle(tag.date, tag.slug)"
+                        >
                             <img
                                 v-if="tag.thumb_image"
                                 :src="tag.thumb_image"
@@ -54,6 +58,7 @@
 import FrontLayout from "@/Layouts/FrontLayout.vue";
 import defaultImg from "/public/default-img.png";
 import { Head, Link } from "@inertiajs/inertia-vue3";
+import { Inertia } from "@inertiajs/inertia";
 import { useTagStore } from "@/Stores/tag.js";
 import { onMounted, ref, watch } from "@vue/runtime-core";
 import moment from "moment";
@@ -64,6 +69,14 @@ const props = defineProps({
 
 const tagStore = useTagStore();
 const tags = ref(null);
+
+function showArticle(date, slug) {
+    Inertia.visit(
+        `/news/${moment(new Date(date)).format("YYYY")}/${moment(
+            new Date(date)
+        ).format("MM")}/${slug}`
+    );
+}
 
 onMounted(async () => {
     await tagStore.getTagLists(props.slug);

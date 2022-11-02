@@ -80,7 +80,7 @@
 </template>
 
 <script setup>
-import { Head, InertiaLink } from "@inertiajs/inertia-vue3";
+import { Head, Link } from "@inertiajs/inertia-vue3";
 import FrontLayout from "@/Layouts/FrontLayout.vue";
 import ReportList from "../../Components/Frontend/Report/ReportList.vue";
 import SideBar from "../../Components/Frontend/MainContent/SideBar.vue";

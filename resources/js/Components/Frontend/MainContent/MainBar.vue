@@ -1,5 +1,6 @@
 <script setup>
 import defaultImg from "/public/default-img.png";
+import { Inertia } from "@inertiajs/inertia";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import { useArticleStore } from "@/Stores/article.js";
 import { useEventStore } from "@/Stores/event.js";
@@ -13,9 +14,13 @@ onMounted(async () => {
     await eventStore.getMainEvents();
 });
 
-// const showArticle = async (id) => {
-//     articleStore.getArticleBySlug(id);
-// };
+function showArticle(date, slug) {
+    Inertia.visit(
+        `/news/${moment(new Date(date)).format("YYYY")}/${moment(
+            new Date(date)
+        ).format("MM")}/${slug}`
+    );
+}
 
 defineProps({
     articleList: {
@@ -84,52 +89,44 @@ defineProps({
                 :key="news.id"
                 style="margin-bottom: 30px"
             >
-                <Link
-                    :href="`/news/${moment(new Date(news.date)).format(
-                        'YYYY'
-                    )}/${moment(new Date(news.date)).format('MM')}/${
-                        news.slug
-                    }`"
+                <div
+                    class="row"
+                    @click="showArticle(news.date, news.slug)"
+                    style="cursor: pointer"
                 >
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="post-gallery">
-                                <img
-                                    v-if="news.thumb_image.length"
-                                    :src="news.thumb_image"
-                                    :alt="news.thumb_image"
-                                />
-                                <img
-                                    v-else
-                                    :src="defaultImg"
-                                    :alt="defaultImg"
-                                />
+                    <div class="col-sm-6">
+                        <div class="post-gallery">
+                            <img
+                                v-if="news.thumb_image.length"
+                                :src="news.thumb_image"
+                                :alt="news.thumb_image"
+                            />
+                            <img v-else :src="defaultImg" :alt="defaultImg" />
 
-                                <Link
-                                    v-if="news.categories.length"
-                                    class="category-post food"
-                                    :href="news.categories[0]?.slug"
-                                    >{{ news.categories[0]?.title }}</Link
-                                >
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="post-content">
-                                <h2>
-                                    <Link
-                                        :href="`/news/${moment(
-                                            new Date(news.date)
-                                        ).format('YYYY')}/${moment(
-                                            new Date(news.date)
-                                        ).format('MM')}/${news.slug}`"
-                                        >{{ news.title }}
-                                    </Link>
-                                </h2>
-                                <div v-html="news.description"></div>
-                            </div>
+                            <Link
+                                v-if="news.categories.length"
+                                class="category-post food"
+                                :href="news.categories[0]?.slug"
+                                >{{ news.categories[0]?.title }}</Link
+                            >
                         </div>
                     </div>
-                </Link>
+                    <div class="col-sm-6">
+                        <div class="post-content">
+                            <h2>
+                                <Link
+                                    :href="`/news/${moment(
+                                        new Date(news.date)
+                                    ).format('YYYY')}/${moment(
+                                        new Date(news.date)
+                                    ).format('MM')}/${news.slug}`"
+                                    >{{ news.title }}
+                                </Link>
+                            </h2>
+                            <div v-html="news.description"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="grid-box">

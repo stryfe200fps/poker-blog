@@ -43,63 +43,54 @@
                             v-for="(category, index) in articleCategories"
                             :key="index"
                         >
-                            <Link
-                                :href="`/news/${moment(
-                                    new Date(category.date)
-                                ).format('YYYY')}/${moment(
-                                    new Date(category.date)
-                                ).format('MM')}/${category.slug}`"
+                            <div
+                                class="news-post standard-post2"
+                                style="
+                                    display: flex;
+                                    flex-direction: column;
+                                    height: 100%;
+                                    cursor: pointer;
+                                "
+                                @click="
+                                    showArticle(category.date, category.slug)
+                                "
                             >
-                                <div
-                                    class="news-post standard-post2"
-                                    style="
-                                        display: flex;
-                                        flex-direction: column;
-                                        height: 100%;
-                                    "
-                                >
-                                    <div class="post-gallery">
-                                        <img
-                                            v-if="category.thumb_image"
-                                            :src="category.thumb_image"
-                                            :alt="category.thumb_image"
-                                        />
-                                        <img
-                                            v-else
-                                            :src="defaultImg"
-                                            :alt="defaultImg"
-                                        />
-                                        <Link
-                                            class="category-post food"
-                                            v-for="item in category.categories"
-                                            :key="item.id"
-                                            :href="
-                                                item.slug === 'news'
-                                                    ? item.slug
-                                                    : `/news/${item.slug}`
-                                            "
-                                            >{{ item.title }}</Link
-                                        >
-                                    </div>
-                                    <div
-                                        class="post-title"
-                                        style="flex-grow: 1"
+                                <div class="post-gallery">
+                                    <img
+                                        v-if="category.thumb_image"
+                                        :src="category.thumb_image"
+                                        :alt="category.thumb_image"
+                                    />
+                                    <img
+                                        v-else
+                                        :src="defaultImg"
+                                        :alt="defaultImg"
+                                    />
+                                    <Link
+                                        class="category-post food"
+                                        v-for="item in category.categories"
+                                        :key="item.id"
+                                        :href="
+                                            item.slug === 'news'
+                                                ? item.slug
+                                                : `/news/${item.slug}`
+                                        "
+                                        >{{ item.title }}</Link
                                     >
-                                        <h2>
-                                            <Link
-                                                :href="`/news/${moment(
-                                                    new Date(category.date)
-                                                ).format('YYYY')}/${moment(
-                                                    new Date(category.date)
-                                                ).format('MM')}/${
-                                                    category.slug
-                                                }`"
-                                                >{{ category.title }}</Link
-                                            >
-                                        </h2>
-                                    </div>
                                 </div>
-                            </Link>
+                                <div class="post-title" style="flex-grow: 1">
+                                    <h2>
+                                        <Link
+                                            :href="`/news/${moment(
+                                                new Date(category.date)
+                                            ).format('YYYY')}/${moment(
+                                                new Date(category.date)
+                                            ).format('MM')}/${category.slug}`"
+                                            >{{ category.title }}</Link
+                                        >
+                                    </h2>
+                                </div>
+                            </div>
                         </div>
                         <div
                             v-if="articleCategories?.length"
@@ -166,6 +157,14 @@ async function handleScrolledToBottom(isVisible) {
 
 function changeCategory() {
     Inertia.visit(`/news/${selectCategory.value}`);
+}
+
+function showArticle(date, slug) {
+    Inertia.visit(
+        `/news/${moment(new Date(date)).format("YYYY")}/${moment(
+            new Date(date)
+        ).format("MM")}/${slug}`
+    );
 }
 
 onMounted(async () => {
