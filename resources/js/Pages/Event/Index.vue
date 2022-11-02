@@ -219,7 +219,7 @@ onMounted(async () => {
     } else {
         selectDay.value = Object.keys(eventData.value.available_days).find(
             (key) =>
-                JSON.stringify(eventData.value.available_days[key]) ===
+                JSON.stringify(eventData.value.available_days[key]) ==
                 JSON.stringify(props.day)
         );
     }
