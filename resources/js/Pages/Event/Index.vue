@@ -162,7 +162,6 @@ async function loadMoreReports() {
 }
 
 async function reportViewing() {
-    console.log(selectDay.value);
     if (props.type === "" || props.type === "live-updates") {
         await eventStore.getLiveReport(1, selectDay.value);
         liveReport.value = eventStore.liveReportList.data;
@@ -219,10 +218,9 @@ onMounted(async () => {
     } else {
         selectDay.value = Object.keys(eventData.value.available_days).find(
             (key) =>
-                JSON.stringify(eventData.value.available_days[key]) ==
-                JSON.stringify(props.day)
+                JSON.stringify(eventData.value.available_days[key]) ===
+                JSON.stringify(props.day.toUpperCase())
         );
-        console.log(selectDay.value);
     }
     reportViewing();
 
