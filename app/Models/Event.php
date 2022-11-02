@@ -24,14 +24,14 @@ class Event extends Model implements HasMedia
 
     protected $guarded = ['id'];
 
-    protected $casts = [
-        'schedule' => 'json',
-    ];
+    // protected $casts = [
+    //     'schedule' => 'json',
+    // ];
 
-    public function setScheduleAttribute($schedule)
-    {
-        $this->attributes['schedule'] = $this->scheduleArray($schedule);
-    }
+    // public function setScheduleAttribute($schedule)
+    // {
+    //     $this->attributes['schedule'] = $this->scheduleArray($schedule);
+    // }
 
     public function getScheduleAttribute()
     {
@@ -285,7 +285,7 @@ class Event extends Model implements HasMedia
         });
 
         static::saved(function ($model) {
-            $media = $model->media()->get()[0]->getPath();
+            // $media = $model->media()->get()[0]->getPath();
 
             // dd($media);
 

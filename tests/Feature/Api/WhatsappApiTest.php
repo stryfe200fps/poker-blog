@@ -1,22 +1,26 @@
 <?php
 
-use App\Models\Author;
-use App\Models\Day;
-use App\Models\Event;
-use App\Models\EventChip;
-use App\Models\Level;
-use App\Models\Player;
-use App\Models\User;
 use Carbon\Carbon;
+use App\Models\Day;
+use App\Models\User;
+use App\Models\Event;
+use App\Models\Level;
+use App\Models\Author;
+use App\Models\Player;
+use App\Models\EventChip;
+use App\Models\Tournament;
+use App\Models\EventGameTable;
 
 test('whatsapp api', function () {
     $this->withExceptionHandling();
     superAdminAuthenticate();
 
     $event = Event::factory()->create([
+
         'id' => 1,
         'slug' => 'final-event',
     ]);
+
 
     $day = Day::factory()->create();
     $page = $this->get('admin/report?event='.$event->id.'&day='. $day->id)->assertStatus(200);
