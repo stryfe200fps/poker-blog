@@ -19,6 +19,11 @@ class Tournament extends Model implements HasMedia
     use InteractsWithMedia;
     use HasSlug;
 
+
+    protected $appends = [
+        'minimized_timezone'
+    ];
+
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
@@ -60,6 +65,11 @@ class Tournament extends Model implements HasMedia
         $this->media()->delete();
         $this->addMediaFromBase64($value)
             ->toMediaCollection('tournament');
+    }
+    public function getMinimizedTimezoneAttribute()
+    {
+        $timezone = explode(' ', $this->timezone)[0];
+        return preg_replace('/([A-Z()])/','', $timezone);
     }
 
     public function setDateStartAttribute($value)
@@ -110,13 +120,6 @@ class Tournament extends Model implements HasMedia
     public function currency()
     {
         return $this->belongsTo(Currency::class);
-    }
-
-    public function timezones()
-    {
-        return [
-
-        ];
     }
 
     public function getParentAttribute($value)

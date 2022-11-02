@@ -1,7 +1,7 @@
 <?php
 
 use App\Models\Article;
-use App\Models\ArticleAuthor;
+use App\Models\Author;
 use App\Models\ArticleCategory;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -53,7 +53,7 @@ it('can update article if authenticated', function () {
     //     'description' => 'description',
     //     'body' => 'body',
     //     'published_date' => '2020-04-17',
-    //     'article_author_id' => ArticleAuthor::factory()->create()->id,
+    //     'author_id' => Author::factory()->create()->id,
     // ];
 
     $datas = $this->put('admin/article/update', $data);

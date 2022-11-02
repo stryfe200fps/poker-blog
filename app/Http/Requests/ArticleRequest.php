@@ -28,7 +28,7 @@ class ArticleRequest extends FormRequest
             'title' => 'required',
             'article_categories' => 'required',
             'published_date' => 'required',
-            'article_author_id' => 'required',
+            'author_id' => 'required',
         ];
     }
 
@@ -55,7 +55,7 @@ class ArticleRequest extends FormRequest
             'title.required' => 'Title is required',
             'article_categories.required' => 'Category is required',
             'published_date.required' => 'Published date is required',
-            'article_author_id.required' => 'Author is required',
+            'author_id.required' => 'Author is required',
         ];
     }
 }

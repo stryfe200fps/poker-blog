@@ -29,6 +29,9 @@ class LiveCrudController extends CrudController
     public function setup()
     {
         $this->crud->denyAccess('show');
+        $this->crud->denyAccess('update');
+        $this->crud->denyAccess('delete');
+        $this->crud->denyAccess('create');
         CRUD::setModel(\App\Models\Event::class);
         CRUD::setRoute(config('backpack.base.route_prefix').'/live');
         CRUD::setEntityNameStrings('report', 'Live Poker Event');
@@ -43,7 +46,7 @@ class LiveCrudController extends CrudController
             $this->crud->addClause('orWhere', function ($query) use ($live) {
                 $query->orWhere('id', $live->id);
             });
-        }
+        } 
     }
 
     /**
@@ -56,7 +59,8 @@ class LiveCrudController extends CrudController
     protected function setupListOperation()
     {
         $this->crud->disableResponsiveTable();
-        CRUD::column('title');
+        CRUD::column('title')->limit(100);
+
         $this->crud->addButtonFromModelFunction('line', 'openLevel', 'openLevel', 'beginning');
         $this->crud->addButtonFromModelFunction('line', 'open_payout', 'openPayout', 'beginning');
         // $this->crud->addButtonFromModelFunction('line', 'open_chip_count', 'openChipCount', 'beginning');

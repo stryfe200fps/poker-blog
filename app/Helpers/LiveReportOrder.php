@@ -11,7 +11,7 @@ class LiveReportOrder
     {
         $builder->orderByDesc(Level::select('level')
             ->whereColumn('levels.id', 'event_reports.level_id')
-        )->orderByDesc('date_added');
+        )->orderByDesc('published_date');
 
         return $next($builder);
     }

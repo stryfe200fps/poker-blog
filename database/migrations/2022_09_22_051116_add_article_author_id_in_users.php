@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->foreignId('article_author_id')->default(0);
+            $table->foreignId('author_id')->default(0);
         });
     }
 

@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 use Spatie\MediaLibrary\HasMedia;
+use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Day extends Model implements HasMedia
@@ -42,6 +43,10 @@ class Day extends Model implements HasMedia
         return $this->hasMany(EventReport::class);
     }
 
+    public function event() {
+        return $this->belongsTo(Event::class);
+    }
+
     public function report_count()
     {
         return $this->event_reports()->count();
@@ -49,24 +54,71 @@ class Day extends Model implements HasMedia
 
     public function event_chips()
     {
-        return $this->hasMany(EventChip::class);
+        return $this->hasManyThrough(EventChip::class, EventReport::class);
     }
 
     public function latest_event_chips()
     {
-        return $this->event_chips()->orderBy('date_published', 'DESC')->get()->flatten()->unique('player_id')->sortByDesc('current_chips');
+        return $this->event_chips()->with(['player', 'player.country', 'player.media'])->orderBy('published_date', 'DESC')->get()->flatten()->unique('player_id')->sortByDesc('current_chips');
     }
 
     public function whatsapp_event_chips()
     {
-        return $this->event_chips()->where('is_whatsapp', true)->orderBy('date_published', 'DESC')->get();
+        return $this->event_chips()->with(['player', 'player.country', 'player.media'])->where('is_whatsapp', true)->orderBy('published_date', 'DESC')->get();
     }
 
     protected static function booted()
     {
         static::deleting(function ($model) {
+
             if ($model->event_reports()->count()) {
+                // \Alert::add('error', 'This day has reports inside');
+                return false;
             }
         });
+
+        static::created(function ($model) {
+            $days = Day::orderBy('lft', 'DESC')->where('event_id', $model->event->id)->firstOrFail();
+
+            if ($days->lft !== 0) { 
+            $model->parent_id = null;
+            $model->lft = $days->lft + 2;
+            $model->rgt = $days->lft + 3;
+            $model->depth = 1;
+            $model->save();
+            } else {
+            $model->parent_id = null;
+            $model->lft = 2;
+            $model->rgt = 3;
+            $model->depth = 1;
+            $model->save();
+            }
+
+        });
     }
+
+    public function setDateStartAttribute($value)
+    {
+        $this->attributes['date_start'] = Carbon::parse($value, session()->get('timezone'))
+            ->setTimezone('UTC');
+    }
+
+    public function getDateStartAttribute($value)
+    {
+        return Carbon::parse($value)->setTimezone(session()->get('timezone'));
+    }
+
+    public function setDateEndAttribute($value)
+    {
+        $this->attributes['date_end'] = Carbon::parse($value, session()->get('timezone'))
+            ->setTimezone('UTC');
+    }
+
+    public function getDateEndAttribute($value)
+    {
+        return Carbon::parse($value)->setTimezone(session()->get('timezone'));
+    }
+
+ 
+
 }

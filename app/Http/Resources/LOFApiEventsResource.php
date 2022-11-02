@@ -29,10 +29,10 @@ class LOFApiEventsResource extends JsonResource
             'image' => $this->image,
             'tournament' => $this->tournament->title,
             'tournament_slug' => $this->tournament->slug,
-            'tour_slug' => $this->tournament->tour->slug,
+            'tour_slug' => $this->tour()->firstOrFail()->slug,
             'schedule' => $this->schedule,
-            'date_start' => $this->scheduleArray($this->schedule, session()->get('timezone'))->first()['date_start'] ?? '',
-            'date_end' => $this->scheduleArray($this->schedule, session()->get('timezone'))->last()['date_end'] ?? '',
+            'date_start' => $this->date_start?->date_start ?? '' ,
+            'date_end' => $this->date_start?->date_end ?? '' ,
 
             'buyin' => $this->buyin,
             'fee' => $this->fee,

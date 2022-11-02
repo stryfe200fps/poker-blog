@@ -24,7 +24,7 @@ class EventApiController extends Controller
             [
                 'live_reports',  'live_reports.media', 'live_report_players',
                 'live_report_players.player', 'live_report_players.player.country',
-                'payouts.player', 'payouts', 'live_reports.article_author', ])->where('id', $id)->first());
+                'payouts.player', 'payouts', 'live_reports.author', ])->where('id', $id)->first());
     }
 
     public function upload(Request $request)

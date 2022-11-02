@@ -62,7 +62,7 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
-    public function article_author()
+    public function author()
     {
         return $this->belongsTo(Author::class);
     }

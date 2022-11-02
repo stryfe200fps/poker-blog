@@ -4,9 +4,12 @@ namespace App\Observers;
 
 class ImageThemeObserver
 {
+
+    public $afterCommit = true;
+
     public function saved($model)
     {
-        $value = request()->only('image')['image'];
+        $value = request()->only('image')['image'] ?? '';
 
         if ($value == null) {
             $model->media()->delete();

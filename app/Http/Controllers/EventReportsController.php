@@ -21,14 +21,15 @@ class EventReportsController extends Controller
 
     //     // return LOFApiEventReportsResource::collection(EventReport::all());
 
-    //     return LOFApiEventReportsResource::collection(EventReport::with(['player', 'article_author', 'level', 'event_chips', 'event_chips.player', 'event_chips.player.country'])->latest()->where('event_id', request()->all()['event'])->paginate(10));
+    //     return LOFApiEventReportsResource::collection(EventReport::with(['player', 'author', 'level', 'event_chips', 'event_chips.player', 'event_chips.player.country'])->latest()->where('event_id', request()->all()['event'])->paginate(10));
     // }
 
     public function index(Request $request)
     {
         $day = Day::find($request->only('day')['day']);
-
-        return new ReportCollection($day->event_reports()->where('event_id', $day->event_id)->orderBy('date_added', 'DESC')->paginate(10));
+        // dd($day->event_reports()->with(['level', 'image_theme', 'author', 'event_chips', 'event_chips.player', 'event_chips.player.country']));
+        // return new ReportCollection($day->event_reports()->with(['level', 'image_theme', 'author', 'event_chips', 'event_chips.player', 'event_chips.player.country'])->where('event_id', $day->event_id)->orderBy('published_date', 'DESC')->paginate(10));
+        return new ReportCollection($day->event_reports()->with(['level', 'image_theme', 'author', 'event_chips', 'event_chips.player', 'event_chips.player.country'])->orderBy('published_date', 'DESC')->paginate(10));
     }
 
     public function create()

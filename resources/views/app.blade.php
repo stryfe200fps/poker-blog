@@ -9,7 +9,7 @@
 
       
 
-        <meta name="description" content="{{ $page['props']['description'] ?? 'Life Of Poker'  }}" >
+        <meta name="description" content="{!! $page['props']['description'] ?? 'Life Of Poker'  !!}" >
 
         <meta property="og:locale" content="en_PH">
         <meta property="og:title" content="{{ $page['props']['title'] ?? 'Life Of Poker' }}" >
@@ -20,7 +20,7 @@
         <meta property="og:image:width" content="900">
         <meta property="og:image:height" content="600">
         <meta property="og:site_name" content="Life of poker">
-        <meta property="og:description" content="{{ $page['props']['description'] ?? 'Life Of Poker'  }}" />
+        <meta property="og:description" content="{!! $page['props']['description'] ?? 'Life Of Poker'  !!}" />
         
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:site" content="@lifeofpoker" />
@@ -28,7 +28,7 @@
     
         <meta name="twitter:image" content="{{ $page['props']['image'] ?? config('app.url'). '/lop_logo_small.png'  }}" />
 
-        <meta name="twitter:description" content="{{ $page['props']['description'] ?? 'Life Of Poker'  }}" />
+        <meta name="twitter:description" content="{!! $page['props']['description'] ?? 'Life Of Poker'  !!}" />
 
 
         @routes

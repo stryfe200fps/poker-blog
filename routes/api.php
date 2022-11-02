@@ -1,28 +1,30 @@
 <?php
 
+use App\Models\ImageTheme;
+use Illuminate\Http\Request;
+use App\Models\EventGameTable;
+use App\Http\Resources\GameResources;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TagController;
+use App\Http\Controllers\ChipController;
+use App\Http\Controllers\PayoutController;
+use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\ContactUsController;
+use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\Api\ArticleController;
+use App\Http\Controllers\PageManagerController;
+use App\Http\Controllers\SocialMediaController;
 use App\Http\Controllers\Api\EventApiController;
 use App\Http\Controllers\Api\levelApiController;
+use App\Http\Controllers\EventReportsController;
+use App\Http\Controllers\LOFApiEventsController;
 use App\Http\Controllers\Api\LiveReportController;
 use App\Http\Controllers\Api\ReportsApiController;
 use App\Http\Controllers\ArticleCategoryController;
-use App\Http\Controllers\ChipController;
-use App\Http\Controllers\ContactUsController;
-use App\Http\Controllers\EventReportsController;
-use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\LOFApiEventIndexController;
-use App\Http\Controllers\LOFApiEventsController;
 use App\Http\Controllers\LOFApiTournamentsController;
-use App\Http\Controllers\NewsletterController;
-use App\Http\Controllers\PageManagerController;
-use App\Http\Controllers\PayoutController;
-use App\Http\Controllers\SocialMediaController;
-use App\Http\Controllers\TagController;
-use App\Models\ImageTheme;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\LanguageController;
-
+use App\Models\Tour;
+use Webpatser\Countries\Countries;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -57,8 +59,9 @@ Route::resource('lof-event', LOFApiEventsController::class);
 
 Route::resource('lof-event/{slug}/payout', LOFApiEventsController::class);
 
-Route::get('lof-event/{slug}/chipcount', [LOFApiEventIndexController::class, 'chipCounts']);
-Route::get('lof-event/{slug}/whatsapp', [LOFApiEventIndexController::class, 'whatsapp']);
+// Route::get('lof-event/{slug}/chipcount', [LOFApiEventIndexController::class, 'chipCounts']);
+// Route::get('lof-event/{slug}/whatsapp', [LOFApiEventIndexController::class, 'whatsapp']);
+
 Route::resource('lof-event-index', LOFApiEventIndexController::class);
 Route::resource('lof-live-report', EventReportsController::class);
 Route::resource('page', PageManagerController::class);
@@ -71,14 +74,32 @@ Route::post('subscribe', [NewsletterController::class, 'store']);
 Route::get('payout/player/{player_id}/event/{event}', [PayoutController::class, 'player']);
 
 Route::get('payout/event/{slug}', [PayoutController::class, 'event_payout']);
+
+
 Route::get('chip/day/{id}', [ChipController::class, 'event_chip']);
 Route::get('chip/day/{id}/whatsapp', [ChipController::class, 'whatsapp']);
+
 Route::get('gallery/day/{id}', [GalleryController::class, 'gallery']);
 // Route::get('whatsapp/day/{id}', [WhatsappController::class, 'whatsapp_chip']);
 
 Route::get('admin/attach-image/{id}', function ($id) {
     return ImageTheme::find($id)->image ?? '';
 });
+
+
+Route::get('select/games', function () {
+    return [ 'data' => EventGameTable::get(['title', 'code']) ];
+});
+
+Route::get('select/tours', function () {
+    return [ 'data' => Tour::get(['title', 'slug']) ];
+});
+
+Route::get('select/countries', function () {
+    return [ 'data' => Countries::get(['full_name', 'iso_3166_2']) ];
+});
+
+// Route::get('')
 
 
 

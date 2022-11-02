@@ -31,7 +31,7 @@ class FixEventChip extends Command
     {
         $events = EventChip::all();
         foreach ($events as $chip) {
-            $chip->date_published = $chip->created_at;
+            $chip->published_date = $chip->created_at;
             $chip->save();
 
             $eventReport = EventReport::find($chip->event_report_id);

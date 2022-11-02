@@ -15,7 +15,7 @@ return new class extends Migration
     {
         try {
             Schema::table('event_chips', function (Blueprint $table) {
-                $table->dateTime('date_published');
+                $table->dateTime('published_date');
             });
         } catch (Exception $e) {
         }

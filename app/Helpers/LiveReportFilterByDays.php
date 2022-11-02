@@ -28,7 +28,7 @@ class LiveReportFilterByDays
         //     }
         // }
 
-        // $c = $builder->whereBetween('date_added', [$dateStart, $dateEnd]);
+        // $c = $builder->whereBetween('published_date', [$dateStart, $dateEnd]);
         // $c = $builder->whereHas('day', request()->get('filterDay'));
 
         return $next($builder);

@@ -40,7 +40,6 @@ class EventCrudController extends CrudController
         CRUD::setModel(\App\Models\Event::class);
         CRUD::setRoute(config('backpack.base.route_prefix').'/events');
         CRUD::setEntityNameStrings('event', 'events');
-        // $this->crud->enableDetailsRow();
         $this->denyAccessIfNoPermission();
     }
 
@@ -55,10 +54,15 @@ class EventCrudController extends CrudController
     {
         $this->crud->disableResponsiveTable();
 
+        CRUD::column('title');
 
         CRUD::column('tournament')->label('Series');
-        CRUD::column('title');
-        CRUD::column('tournament.timezone')->label('Series Timezone');
+
+                    // 'format' => 'MMM D, YYYY hh:mm a',
+        CRUD::column('schedule.date_start')->type('datetime')->format('MMM D, YYYY hh:mm a')->label('Start');
+        CRUD::column('schedule.date_end')->type('datetime')->format('MMM D, YYYY hh:mm a')->label('End');
+        CRUD::column('tournament.minimized_timezone')->label('Timezone');
+
         // CRUD::column('event_date_start')->type('date')->format(config('app.date_format'))->label('Start date');
         // CRUD::column('event_date_end')->type('date')->format(config('app.date_format'))->label('End date');
         $this->crud->addButtonFromModelFunction('line', 'openLevel', 'openLevel', 'beginning');
@@ -66,7 +70,32 @@ class EventCrudController extends CrudController
         // $this->crud->addButtonFromModelFunction('line', 'open_chip_count', 'openChipCount', 'beginning');
         // TODO: Chips should be part of days
         $this->crud->addButtonFromModelFunction('line', 'days', 'openDay', 'beginning');
+
+    $this->crud->addFilter([
+    'name'  => 'tournament_id',
+    'type'  => 'select2',
+    'label' => 'Series'
+    ], function() {
+        return Tournament::all()->pluck('title', 'id')->toArray();
+    }, function($value) { // if the filter is active
+        $this->crud->addClause('where', 'tournament_id', $value);
+    });
+
+
+    $this->crud->addFilter([
+    'name'  => 'timezone_filter',
+    'type'  => 'select2',
+    'label' => 'Timezone'
+    ], function() {
+        return \Timezone::getTimezones();
+    }, function($value) { // if the filter is active
+        $this->crud->query = $this->crud->query->whereHas('tournament', function ($query) use ($value) {
+                $query->where('timezone', $value);
+        });
+    });
+
     }
+
 
     /**
      * Define what happens when the Create operation is loaded.
@@ -131,7 +160,7 @@ class EventCrudController extends CrudController
         'label' => 'Games',
         'type' => 'relationship'
         // 'options' => (function ($query) {
-        //     return $query->where('article_author_id', '=', 0)->orWhere('article_author_id', '=', null)->get();
+        //     return $query->where('author_id', '=', 0)->orWhere('author_id', '=', null)->get();
         // }),
     ]);
 
@@ -197,31 +226,7 @@ class EventCrudController extends CrudController
     {
         $this->crud->hasAccessOrFail('create');
 
-        $schedules = request()->get('schedule');
 
-        if ($schedules !== null) {
-            $lastDate = null;
-            foreach ($schedules as $day) {
-                if ($lastDate != null && Carbon::parse($lastDate) >= Carbon::parse($day['date_end']) && Carbon::parse($lastDate) >= Carbon::parse($day['date_start'])) {
-                    \Alert::error('There is an overlap')->flash();
-                }
-
-                $lastDate = $day['date_end'];
-
-                Validator::make($day,
-                    ['date_start' => 'required',
-                        'date_end' => 'required',
-                        'day' => 'required',
-                    ],
-                    [
-                        'date_start' => 'date start is required',
-                        'date_end' => 'date end is required',
-                        'day' => 'Day is required',
-                    ])->validate();
-            }
-        } else {
-            $request['schedule'] = '';
-        }
 
         // if ($schedules === null) {
         //     Validator::make($schedules ?? [],
@@ -258,34 +263,6 @@ class EventCrudController extends CrudController
 
     public function update()
     {
-        $schedules = request()->get('schedule');
-
-        if ($schedules !== null) {
-            // (new Validators)->checkDateOverlap();
-            $lastDate = null;
-            foreach ($schedules as $day) {
-                if ($lastDate != null && Carbon::parse($lastDate) >= Carbon::parse($day['date_end']) && Carbon::parse($lastDate) >= Carbon::parse($day['date_start'])) {
-                    \Alert::error('Dates is incorrect')->flash();
-                    $schedules = null;
-                    break;
-                }
-
-                $lastDate = $day['date_end'];
-
-                Validator::make($day,
-                    ['date_start' => 'required',
-                        'date_end' => 'required',
-                        'day' => 'required',
-                    ],
-                    [
-                        'date_start' => 'date start is required',
-                        'date_end' => 'date end is required',
-                        'day' => 'Day is required',
-                    ])->validate();
-            }
-        } else {
-            $request['schedule'] = '';
-        }
 
         // if ($schedules === null) {
         //     Validator::make($schedules ?? [],

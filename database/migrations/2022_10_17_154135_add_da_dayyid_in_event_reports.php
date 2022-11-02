@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('event_reports', function (Blueprint $table) {
-            $table->dropColumn(['day']);
+            // $table->dropColumn(['day']);
             $table->foreignId('day_id');
         });
     }

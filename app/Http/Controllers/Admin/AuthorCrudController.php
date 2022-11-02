@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\ArticleAuthorRequest;
+use App\Http\Requests\AuthorRequest;
 use App\Models\User;
 use App\Traits\LimitUserPermissions;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
@@ -11,11 +11,11 @@ use Exception;
 use Illuminate\Http\Request;
 
 /**
- * Class ArticleAuthorCrudController
+ * Class AuthorCrudController
  *
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class ArticleAuthorCrudController extends CrudController
+class AuthorCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -32,7 +32,7 @@ class ArticleAuthorCrudController extends CrudController
     public function setup()
     {
         $this->crud->denyAccess('show');
-        CRUD::setModel(\App\Models\ArticleAuthor::class);
+        CRUD::setModel(\App\Models\Author::class);
         CRUD::setRoute(config('backpack.base.route_prefix').'/article-author');
         CRUD::setEntityNameStrings('author', 'authors');
         $this->denyAccessIfNoPermission();
@@ -76,7 +76,7 @@ class ArticleAuthorCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(ArticleAuthorRequest::class);
+        CRUD::setValidation(AuthorRequest::class);
 
         CRUD::field('first_name');
         CRUD::field('last_name');
@@ -102,8 +102,8 @@ class ArticleAuthorCrudController extends CrudController
                 'value' => $this->crud->getCurrentEntry()->user_id,
                 'options' => (function ($query) {
                     return $query
-                    ->where('article_author_id', '=', 0)
-                    ->orWhere('article_author_id', '=', null)
+                    ->where('author_id', '=', 0)
+                    ->orWhere('author_id', '=', null)
                     ->orWhere('id', $this->crud->getCurrentEntry()->user_id)
                     ->get();
                 }),
@@ -115,7 +115,7 @@ class ArticleAuthorCrudController extends CrudController
                 'type' => 'select2',
                 'attribute' => 'email',
                 'options' => (function ($query) {
-                    return $query->where('article_author_id', '=', 0)->orWhere('article_author_id', '=', null)->get();
+                    return $query->where('author_id', '=', 0)->orWhere('author_id', '=', null)->get();
                 }),
             ]);
         }
@@ -164,7 +164,7 @@ class ArticleAuthorCrudController extends CrudController
 
         if ($item->user_id) {
             $user = User::find($item->user_id);
-            $user->article_author_id = $item->id;
+            $user->author_id = $item->id;
             $user->assignRole('author');
             $user->save();
         }
@@ -200,18 +200,18 @@ class ArticleAuthorCrudController extends CrudController
 
           if ($item->user_id) {
               $user = User::find($item->user_id);
-              $user->article_author_id = $item->id;
+              $user->author_id = $item->id;
               $user->assignRole('author');
               $user->save();
           } else {
-              $user = User::where('article_author_id', $this->crud->getCurrentEntryId())->first();
-              $user->article_author_id = 0;
+              $user = User::where('author_id', $this->crud->getCurrentEntryId())->first();
+              $user->author_id = 0;
               $user->update();
           }
           // else {
 
           // dd($user);
-          // $user->article_author_id = null;
+          // $user->author_id = null;
           // $user->removeRole('author');
           // $user->save();
 

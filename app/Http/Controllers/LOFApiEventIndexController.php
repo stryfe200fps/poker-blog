@@ -2,10 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\LOFApiEventIndexChipCountResource;
-use App\Http\Resources\LOFApiEventIndexResource;
+use App\Http\Filters\DateFilter;
+use App\Http\Filters\GameFilter;
+use App\Http\Filters\LocationFilter;
+use App\Http\Filters\StatusFilter;
+use App\Http\Filters\TourFilter;
+use Carbon\Carbon;
 use App\Models\Event;
 use Illuminate\Http\Request;
+use App\Http\Resources\LOFApiEventIndexResource;
+use App\Http\Resources\LOFApiEventIndexChipCountResource;
+use Illuminate\Pipeline\Pipeline;
 
 class LOFApiEventIndexController extends Controller
 {
@@ -16,7 +23,30 @@ class LOFApiEventIndexController extends Controller
      */
     public function index()
     {
-        //
+        $events = Event::with(
+            [
+            'tournament.currency', 'tournament.tour', 'event_game_table'
+            ]);
+
+        $pipeLine = app(Pipeline::class)
+            ->send($events)
+            ->through([
+                DateFilter::class,
+                LocationFilter::class,
+                StatusFilter::class,
+                GameFilter::class,
+                TourFilter::class
+            ])
+            ->thenReturn()
+            ->paginate(3);
+
+            // dd($pipeLine);
+            // ->get()->sortByDesc(function ($col) {
+//                 return Carbon::parse($col->date_range?->date_start);
+//             })->values()->all()
+            // $events->sortBy('id')->values()->all();
+
+        return LOFApiEventIndexResource::collection($pipeLine);
     }
 
     /**

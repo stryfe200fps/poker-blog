@@ -37,6 +37,7 @@ class TournamentCrudController extends CrudController
         $this->denyAccessIfNoPermission();
     }
 
+
     /**
      * Define what happens when the List operation is loaded.
      *
@@ -105,7 +106,6 @@ class TournamentCrudController extends CrudController
         ]);
         CRUD::field('description')->type('textarea');
 
-
         $this->crud->addFields([
 
             [   // CKEditor
@@ -134,13 +134,6 @@ class TournamentCrudController extends CrudController
             'type' => 'relationship',
 
         ]);
-
-        $this->crud->addField([
-            'name' => 'timezone',
-            'type' => 'select2_from_array',
-            'options' => \Timezone::getTimezones(),
-        ]
-        );
 
         $this->crud->addField([
             'name' => 'timezone',

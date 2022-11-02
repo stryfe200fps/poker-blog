@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\ArticleRequest;
 use App\Models\Article;
-use App\Models\ArticleAuthor;
+use App\Models\Author;
 use App\Models\ArticleCategory;
 use App\Traits\LimitUserPermissions;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
@@ -38,6 +38,7 @@ class ArticleCrudController extends CrudController
         CRUD::setModel(\App\Models\Article::class);
         CRUD::setRoute(config('backpack.base.route_prefix').'/article');
         CRUD::setEntityNameStrings('article', 'articles');
+        $this->crud->denyAccess('show');
         $this->denyAccessIfNoPermission();
     }
 
@@ -286,11 +287,11 @@ class ArticleCrudController extends CrudController
             ]
         );
 
-        $author = ArticleAuthor::where('user_id', backpack_user()->id)->first();
+        $author = Author::where('user_id', backpack_user()->id)->first();
 
         if ($author !== null) {
             $this->crud->addField([
-                'name' => 'article_author_id',
+                'name' => 'author_id',
                 'type' => 'select2',
                 'attribute' => 'fullname',
                 'value' => $author->id,
@@ -302,7 +303,7 @@ class ArticleCrudController extends CrudController
             ]);
         } else {
             $this->crud->addField([
-                'name' => 'article_author_id',
+                'name' => 'author_id',
                 'type' => 'select2',
                 'attribute' => 'fullname',
                 'label' => 'Author',

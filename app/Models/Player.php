@@ -65,9 +65,8 @@ class Player extends Model implements HasMedia
             $eventChip = EventChip::where('player_id', $deletePlayer->id)->get();
 
             if ($eventChip->count()) {
-                \Alert::add('error', 'This is a red bubble.');
-
-                return back();
+                // \Alert::add('error', 'This is a red bubble.');
+                return false;
             }
 
             foreach ($eventChip as $chip) {

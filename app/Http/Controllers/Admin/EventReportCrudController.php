@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\EventReportRequest;
-use App\Models\ArticleAuthor;
+use App\Models\Author;
 use App\Models\Day;
 use App\Models\Event;
 use App\Models\EventReport;
@@ -56,8 +56,9 @@ class EventReportCrudController extends CrudController
         } else {
             $this->crud->denyAccess('create');
         }
-        $this->crud->orderBy('date_added', 'DESC');
 
+        $this->crud->with(['event']);
+        $this->crud->orderBy('published_date', 'DESC');
         $this->denyAccessIfNoPermission();
     }
 
@@ -82,8 +83,8 @@ class EventReportCrudController extends CrudController
 
         $this->crud->disableResponsiveTable();
         Widget::add()->to('after_content')->type('view')->view('vendor.backpack.helper.live_report'); // widgets to show the ordering card
-        $this->crud->addClause('where', 'event_id', session()->get('event_id'));
         $this->crud->addClause('where', 'day_id', session()->get('event_day'));
+
         $this->crud->addButtonFromModelFunction('line', 'open_fb', 'shareFacebook', 'beginning');
         $this->crud->addButtonFromModelFunction('line', 'open_twitter', 'shareTwitter', 'beginning');
 
@@ -99,20 +100,25 @@ class EventReportCrudController extends CrudController
                     return '/tours/rep/rep/asd/update-'.$crud->id;
                 },
             ],
+            'limit' => 100
 
         ]);
 
-        CRUD::column('date_added');
+        CRUD::column('published_date')->type('datetime')->format('MMM D, YYYY hh:mm a')->label('Published Date');
     }
 
     protected function setupCreateOperation()
     {
+
         if (! session()->get('event_id')) {
             $this->crud->denyAccess('create');
         }
 
+
         $event = Event::where('id', session()->get('event_id'))->first();
 
+
+        // dd($event);
         CRUD::setValidation(EventReportRequest::class);
         $this->crud->addField([
 
@@ -126,15 +132,15 @@ class EventReportCrudController extends CrudController
 
         ]);
 
-        $this->crud->addField(
-            [
-                'name' => 'event_id',
-                'type' => 'hidden',
-                'value' => session()->get('event_id'),
-                'wrapper' => [
-                    'class' => 'form-group col-md-12',
-                ],
-            ]);
+        // $this->crud->addField(
+        //     [
+        //         'name' => 'event_id',
+        //         'type' => 'hidden',
+        //         'value' => session()->get('event_id'),
+        //         'wrapper' => [
+        //             'class' => 'form-group col-md-12',
+        //         ],
+        //     ]);
 
         // $lastLevelId = DB::table('event_reports')
         // ->join('levels', function ($join) {
@@ -152,7 +158,7 @@ class EventReportCrudController extends CrudController
         //     'type' => 'text',
         // ]);
 
-        $author = ArticleAuthor::where('user_id', backpack_user()->id)->first();
+        $author = Author::where('user_id', backpack_user()->id)->first();
 
         $this->crud->addFields([
 
@@ -172,7 +178,7 @@ class EventReportCrudController extends CrudController
         if ($this->crud->getCurrentOperation() == 'create') {
             $this->crud->addField(
                 [
-                    'name' => 'article_author_id',
+                    'name' => 'author_id',
                     'type' => 'select2',
                     'attribute' => 'fullname',
                     'value' => $author?->id,
@@ -184,7 +190,7 @@ class EventReportCrudController extends CrudController
         } else {
             $this->crud->addField(
                 [
-                    'name' => 'article_author_id',
+                    'name' => 'author_id',
                     'type' => 'select2',
                     'attribute' => 'fullname',
                     'label' => 'Author',
@@ -197,7 +203,7 @@ class EventReportCrudController extends CrudController
         $this->crud->addFields([
 
             [   // DateTime
-                'name' => 'date_added',
+                'name' => 'published_date',
                 'label' => 'Date',
                 'type' => 'datetime_picker',
                 'default' => 'now',

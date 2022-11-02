@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Day;
 use App\Models\Event;
 use App\Models\EventChip;
 use App\Models\EventReport;
@@ -35,16 +36,15 @@ class EventChipFactory extends Factory
 //             $table->integer('rank')->default(0);
 //             $table->integer('chips_before')->default(0);
 
+// dd(EventReport::factory()->create());
+
         return [
-            'name' => $this->faker->name,
-            'current_chips' => $this->faker->numberBetween(0, 10000),
-            'chips_before' => $this->faker->numberBetween(0, 10000),
-            'rank' => 1,
-            'is_whatsapp' => 0,
             'player_id' => Player::factory()->create()->id,
             'event_report_id' => EventReport::factory()->create()->id,
             'event_id' => Event::factory()->create()->id,
-            'date_published' => Carbon::now()->addHours(2)->toString(),
+            'current_chips' => 2000,
+            'day_id' => Day::factory()->create()->id,
+            'published_date' => Carbon::now()
         ];
     }
 }

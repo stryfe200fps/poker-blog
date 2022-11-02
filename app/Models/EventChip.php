@@ -27,7 +27,7 @@ class EventChip extends Model
         'chips_before',
         'is_whatsapp',
         'rank',
-        'date_published',
+        'published_date',
         'day_id',
     ];
 
@@ -40,9 +40,9 @@ class EventChip extends Model
         'id' => 'integer',
     ];
 
-    public function event_reports()
+    public function event_report()
     {
-        return $this->belongsToMany(EventReport::class);
+        return $this->belongsTo(EventReport::class);
     }
 
     public function player()
@@ -62,21 +62,30 @@ class EventChip extends Model
 
     public function getPreviousReportAttribute($value)
     {
-        $q = $this->where('player_id', $this->player_id);
-        $q->where('day_id', $this->day_id);
+            // ->leftJoin('bookings', function($join) use ($param)
+            //  {
+            //      $join->on('rooms.id', '=', 'bookings.room_type_id')
+            //           ->where('arrival','=', $param);
+            //  })
 
-        return $q->where('id', '!=', $this->id)
-            ->where('date_published', '<', $this->date_published)
-            ->orderBy('date_published', 'desc')
+        $q = $this->where('player_id', $this->player_id);
+
+        $q->leftJoin('event_reports', function ($join) {
+            $join->on('event_chips.event_report_id', '=', 'event_reports.id');
+        });
+
+        return $q->where('event_chips.id', '!=', $this->id)
+            ->where('event_chips.published_date', '<', $this->published_date)
+            ->orderBy('event_chips.published_date', 'desc')
             ->first()->current_chips ?? 0;
     }
 
-    public function setDatePublishedAttribute($value)
+    public function setPublishedDateAttribute($value)
     {
-        $this->attributes['date_published'] = Carbon::parse($value, session()->get('timezone') ?? 'UTC')->setTimezone('UTC');
+        $this->attributes['published_date'] = Carbon::parse($value, session()->get('timezone') ?? 'UTC')->setTimezone('UTC');
     }
 
-    public function getDatePublishedAttribute($value)
+    public function getPublishedDateAttribute($value)
     {
         return Carbon::parse($value)->setTimezone(session()->get('timezone') ?? 'UTC');
     }

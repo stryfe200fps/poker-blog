@@ -8,6 +8,8 @@ use App\Models\EventPayout;
 
 class EventReportObserver
 {
+    public $afterCommit = true;
+
     public function created($model)
     {
         NewReport::dispatch($model->event->slug, $model->day_id);
@@ -22,7 +24,7 @@ class EventReportObserver
                     'name' => '',
                     'event_report_id' => $model->id,
                     'day_id' => $model->day_id,
-                    'date_published' => $model->date_added,
+                    'published_date' => $model->published_date,
                     'player_id' => $eventChipPlayer['player_id'],
                     'current_chips' => $eventChipPlayer['current_chips'],
                 ]);
@@ -43,4 +45,15 @@ class EventReportObserver
             }
         }
     }
+
+
+        public function creating ($model)  { 
+            $date = \Carbon\Carbon::parse($model->published_date?->toDateTimeString(), session()->get('timezone') ?? 'UTC');
+            $model->published_date = $date->setTimezone('UTC');
+
+        } 
+
+        public function deleting($model) {
+            $model->event_chips()->delete();
+        }
 }

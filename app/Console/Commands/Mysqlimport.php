@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\EventChip;
 use App\Models\EventReport;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
@@ -36,23 +37,45 @@ class Mysqlimport extends Command
 
         $eventReports->setConnection('mysql2');
 
-        foreach ($eventReports->get() as $event) {
-            $isMatch = false;
-            foreach (EventReport::all() as $repo) {
-                if ($event->id == $repo->id) {
-                    $isMatch = true;
+        $eventChips = new EventChip;
+
+        $eventChips->setConnection('mysql2');
+
+
+        foreach ($eventChips->all() as $eventChip) {
+            foreach (EventChip::all() as $eventReal) {
+                if ($eventChip->id === $eventReal->id) {
+                    $eventReal->date_published = $eventChip->date_published;
+                    $eventReal->save();
                 }
             }
-
-            if ($isMatch == false) {
-                dump($event);
-            }
-            // dump('no one here huh');
         }
 
-        $other = new EventReport;
 
-        // $other->setConnection('mysql');
+        // foreach ($eventReports->get() as $event) {
+        //     $isMatch = false;
+        //     foreach (EventReport::all() as $repo) {
+        //         if ($event->id == $repo->id) {
+        //             $isMatch = true;
+        //             $repo->published_date = $event->date_added;
+        //             $repo->save();
+        //             foreach ($repo->event_chips() as $chip) {
+        //                 $chip->published_date = $event->date_added;
+        //                 $chip->save();
+        //             }
+        //         }
+        //     }
+
+        //     if ($isMatch == false) {
+        //         dump($event);
+        //     }
+        // }
+
+        // foreach ()
+
+        //insert old
+
+
 
         // dd($other->getConnectionName());
 
