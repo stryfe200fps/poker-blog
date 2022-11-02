@@ -162,6 +162,7 @@ async function loadMoreReports() {
 }
 
 async function reportViewing() {
+    console.log(selectDay.value);
     if (props.type === "" || props.type === "live-updates") {
         await eventStore.getLiveReport(1, selectDay.value);
         liveReport.value = eventStore.liveReportList.data;
