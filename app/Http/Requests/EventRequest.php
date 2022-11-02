@@ -27,8 +27,6 @@ class EventRequest extends FormRequest
         return [
             'title' => 'required',
             'description' => 'required',
-            'fee' => 'required',
-            'buyin' => 'required',
         ];
     }
 
@@ -55,8 +53,6 @@ class EventRequest extends FormRequest
             //
             'title.required' => 'Title is required',
             'description.required' => 'Description is required',
-            'fee.required' => 'Fee is required',
-            'buyin.required' => 'Buyin is required',
         ];
     }
 }

@@ -23,7 +23,9 @@ use App\Http\Controllers\Api\ReportsApiController;
 use App\Http\Controllers\ArticleCategoryController;
 use App\Http\Controllers\LOFApiEventIndexController;
 use App\Http\Controllers\LOFApiTournamentsController;
+use App\Models\Country;
 use App\Models\Tour;
+use App\Models\Tournament;
 use Webpatser\Countries\Countries;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -96,7 +98,13 @@ Route::get('select/tours', function () {
 });
 
 Route::get('select/countries', function () {
-    return [ 'data' => Countries::get(['full_name', 'iso_3166_2']) ];
+
+    $countries = Tournament::groupBy('country_id')->get();
+    $countries = $countries->map(function ($c) {
+        return Country::find($c->country_id);
+    });
+
+    return [ 'data' => $countries ?? [] ];
 });
 
 
