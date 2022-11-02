@@ -12,10 +12,8 @@ class LocationFilter
             return $next($builder);
         }
 
-        $test =  $next($builder)->whereHas('tournament', function ($q) {
-            $q->whereHas('country', function ($queryCountry) {
-                $queryCountry->where('iso_3166_2', request()->get('country'));
-            });
+        $test =  $next($builder)->whereHas('country', function ($q) {
+                $q->where('iso_3166_2', request()->get('country'));
         });
 
         return $test;

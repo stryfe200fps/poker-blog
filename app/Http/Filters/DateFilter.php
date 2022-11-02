@@ -12,7 +12,7 @@ class DateFilter
             return $next($builder);
         }
 
-        $test =  $next($builder)->whereHas('days', function ($q) {
+        $test =  $next($builder)->where(function ($q) {
             $q->where('date_start','>=' , request()->get('date_start'));
             $q->where('date_end', '<=' , request()->get('date_end'));
         });

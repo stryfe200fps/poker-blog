@@ -12,10 +12,9 @@ class TourFilter
             return $next($builder);
         }
 
-        $test =  $next($builder)->whereHas('tournament', function ($q) {
-            $q->whereHas('tour', function ($queryCountry) {
-                $queryCountry->where('slug', request()->get('tour'));
-            });
+        $test =  $next($builder)->whereHas('tour', function ($q) {
+                $q->where('slug', request()->get('tour'));
+
         });
         return $test;
     }

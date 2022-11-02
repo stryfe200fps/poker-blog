@@ -99,7 +99,5 @@ Route::get('select/countries', function () {
     return [ 'data' => Countries::get(['full_name', 'iso_3166_2']) ];
 });
 
-// Route::get('')
-
 
 

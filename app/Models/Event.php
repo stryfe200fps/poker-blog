@@ -3,20 +3,22 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Sluggable\HasSlug;
+use Spatie\MediaLibrary\HasMedia;
 use Spatie\Sluggable\SlugOptions;
+use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 
 class Event extends Model implements HasMedia
 {
     use \Backpack\CRUD\app\Models\Traits\CrudTrait;
     use HasFactory;
     use InteractsWithMedia;
+    // use ImageOptimizer;
     use HasSlug;
     use \Znck\Eloquent\Traits\BelongsToThrough;
 
@@ -280,6 +282,15 @@ class Event extends Model implements HasMedia
              if ($model->slug !== $findModel->slug) {
                 $model->slug = Str::slug($model->slug);
             } 
+        });
+
+        static::saved(function ($model) {
+            $media = $model->media()->get()[0]->getPath();
+
+            // dd($media);
+
+        //  $t=   pathinfo($model->media()->getFirstMediaPath(), PATHINFO_DIRNAME);
+        //     dd($t);
         });
     }
 }

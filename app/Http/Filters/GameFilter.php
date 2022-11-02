@@ -12,8 +12,10 @@ class GameFilter
             return $next($builder);
         }
 
-        $test =  $next($builder)->whereHas('event_game_table', function ($q) {
-            $q->where('code', request()->get('game'));
+        $test =  $next($builder)->whereHas('events', function ($q) {
+            $q->whereHas('event_game_table', function ($queryGameTable) {
+                $queryGameTable->where('code', request()->get('game'));
+            });
         });
         return $test;
     }
