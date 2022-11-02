@@ -31,6 +31,7 @@ class EventController extends Controller
             'json-ld-webpage' => $type === 'payouts' ? \JsonLd\Context::create('web_page', [
                 'url' => config('app.url'). '/tours/'. $event->tournament->tour->slug . '/'. $event->tournament->slug. '/'. $eventSlug . '/payouts',
             ]) :   $webPage,
+            'url' => config('app.url')
         ]);
     }
 }

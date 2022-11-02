@@ -86,6 +86,7 @@
                         :item="item"
                         :event="event"
                         :id="index"
+                        :url="url"
                     />
                     <div
                         class="day-divider"
@@ -440,6 +441,9 @@ const props = defineProps({
         default: "report",
     },
     day: {
+        type: String,
+    },
+    url: {
         type: String,
     },
 });

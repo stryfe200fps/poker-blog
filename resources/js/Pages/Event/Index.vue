@@ -61,6 +61,7 @@
                         :payouts="payoutsData"
                         :currentTab="type"
                         :day="day"
+                        :url="url"
                         @loadMore="loadMoreReports"
                     />
                 </div>
@@ -107,6 +108,9 @@ const props = defineProps({
         type: String,
     },
     type: {
+        type: String,
+    },
+    url: {
         type: String,
     },
 });
