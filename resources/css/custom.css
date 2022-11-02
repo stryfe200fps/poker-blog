@@ -7,6 +7,13 @@ body {
     position: static !important;
 }
 
+input,
+select,
+textarea,
+button {
+    font-family: "Lato", sans-serif !important;
+}
+
 .goog-te-banner-frame {
     display: none !important;
 }

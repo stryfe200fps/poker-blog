@@ -59,13 +59,16 @@ defineProps({
                             :alt="report.main_thumb"
                         />
                         <img v-else :src="defaultImg" :alt="defaultImg" />
-                        <Link :href="'/event/' + report.slug">
+                        <Link
+                            :href="`/tours/${report.tour_slug}/${report.tournament_slug}/${report.slug}`"
+                        >
                             <div class="hover-box" style="inset: 0">
                                 <div class="inner-hover">
                                     <h2>
-                                        <Link :href="'/event/' + report.slug">{{
-                                            report.title
-                                        }}</Link>
+                                        <Link
+                                            :href="`/tours/${report.tour_slug}/${report.tournament_slug}/${report.slug}`"
+                                            >{{ report.title }}</Link
+                                        >
                                     </h2>
                                     <p class="text-white">
                                         {{ report.tournament }}

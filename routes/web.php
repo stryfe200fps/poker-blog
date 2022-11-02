@@ -88,6 +88,17 @@ try {
     }
 } catch (Exception $e) {
 }
+
+Route::get('/events-calendar', function () {
+ return Inertia::render('Event/EventCalendar', [
+    'title' => 'Events Calendar | LifeOfPoker',
+    // 'description' => 'desc',
+    // 'page' => 'tests',
+    'page_title' => 'Event Calendar',
+    // 'json-ld-webpage' => 'testsssss',
+ ]);
+});
+
 Route::get('/{page}/{other?}', [PageController::class, 'index']);
 
 //for dev
