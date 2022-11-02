@@ -17,7 +17,8 @@ class EventGameTableFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'title' => 'Test game',
+            'code' => 'TG'
         ];
     }
 }

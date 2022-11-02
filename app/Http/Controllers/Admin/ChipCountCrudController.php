@@ -52,7 +52,7 @@ class ChipCountCrudController extends CrudController
             }
             $this->crud->query = $this->crud->query
             ->where('day_id', session()->get('event_day'))
-            ->orderByDesc('date_published');
+            ->orderByDesc('published_date');
 
             CRUD::setEntityNameStrings('chips', $getEvent->title);
         } else {
@@ -157,7 +157,7 @@ class ChipCountCrudController extends CrudController
         ]);
 
         $this->crud->addColumn([
-            'name' => 'date_published',
+            'name' => 'published_date',
             'type' => 'datetime',
             'label' => 'Date',
         ]);
@@ -208,7 +208,7 @@ class ChipCountCrudController extends CrudController
 
         CRUD::addField(
             [
-                'name' => 'date_published',
+                'name' => 'published_date',
                 'label' => 'Date',
                 'type' => 'datetime_picker',
                 'default' => 'now',

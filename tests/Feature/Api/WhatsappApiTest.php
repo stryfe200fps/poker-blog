@@ -1,6 +1,7 @@
 <?php
 
-use App\Models\ArticleAuthor;
+use App\Models\Author;
+use App\Models\Day;
 use App\Models\Event;
 use App\Models\EventChip;
 use App\Models\Level;
@@ -16,7 +17,10 @@ test('whatsapp api', function () {
         'id' => 1,
         'slug' => 'final-event',
     ]);
-    $page = $this->get('admin/report/create?event='.$event->id)->assertStatus(200);
+
+    $day = Day::factory()->create();
+    $page = $this->get('admin/report?event='.$event->id.'&day='. $day->id)->assertStatus(200);
+
 
     $eventChip = EventChip::factory()->create([
         'player_id' => Player::factory()->create()->id,
@@ -26,31 +30,18 @@ test('whatsapp api', function () {
 
     $eventChip2 = EventChip::factory()->create([
         'player_id' => Player::factory()->create()->id,
-        'is_whatsapp' => 0,
+        'is_whatsapp' => 1,
         'event_id' => $event->id,
     ]);
 
-    $data = [
-        'title' => 'A report',
-        'content' => 'this a content',
-        'day' => '1A',
-        'level_id' => Level::factory()->create()->id,
-        'level' => Level::factory()->create(),
 
-        'event_id' => $event->id,
-        'poker_event_id' => Event::factory()->create()->id,
-        'date_added' => Carbon::now()->addHours(3),
-        'user_id' => User::factory()->create()->id,
-        'article_author_id' => ArticleAuthor::factory()->create()->id,
-    ];
-
-    $this->post('/admin/report', $data);
-
-    $response = $this->get('api/lof-event-index/'.$event->slug.'/whatsapp');
+    $response = $this->get('api/chip/day/'.$eventChip2->event_report->day_id.'/whatsapp');
     $response->assertStatus(200);
+
+    // dd($response->json());
 
     //check if whatsapp is true
     $response->assertJsonPath(
-        'data.event_chips.0.is_whatsapp', 1
+        '0.is_whatsapp', 1
     );
 });

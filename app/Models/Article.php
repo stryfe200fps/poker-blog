@@ -166,9 +166,9 @@ public function shareTwitter()
         return $this->belongsToMany(ArticleCategory::class);
     }
 
-    public function article_author()
+    public function author()
     {
-        return $this->belongsTo(ArticleAuthor::class);
+        return $this->belongsTo(Author::class);
     }
 
     protected static function booted()

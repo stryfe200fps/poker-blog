@@ -45,7 +45,7 @@ class ArticleController extends Controller
             'datePublished' => $article->published_date,
             'dateModified' => $article->updated_at,
             'author' => [
-                'name' => $article?->article_author?->first_name,
+                'name' => $article?->author?->first_name,
             ],
             'publisher' => [
                 'name' => 'Life of poker',

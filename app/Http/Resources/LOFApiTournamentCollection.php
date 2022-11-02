@@ -14,6 +14,7 @@ class LOFApiTournamentCollection extends ResourceCollection
      */
     public function toArray($request)
     {
+
         if ($request->get('status') == null) {
             return;
         }

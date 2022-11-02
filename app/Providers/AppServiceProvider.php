@@ -2,12 +2,13 @@
 
 namespace App\Providers;
 
-use App\Http\Controllers\Admin\MenuItemCrudController;
+use Dymantic\InstagramFeed\Instagram;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\ServiceProvider;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Admin\PageCrudController;
 use App\Http\Controllers\Admin\RoleCrudController;
-use App\Http\Controllers\Auth\LoginController;
-use Dymantic\InstagramFeed\Instagram;
-use Illuminate\Support\ServiceProvider;
+use App\Http\Controllers\Admin\MenuItemCrudController;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -34,6 +35,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Model::preventLazyLoading(! app()->isProduction());
         // Instagram::ignoreRoutes();
     }
 }

@@ -18,6 +18,7 @@ class Event extends Model implements HasMedia
     use HasFactory;
     use InteractsWithMedia;
     use HasSlug;
+    use \Znck\Eloquent\Traits\BelongsToThrough;
 
     protected $guarded = ['id'];
 
@@ -151,23 +152,23 @@ class Event extends Model implements HasMedia
             ->doNotGenerateSlugsOnUpdate();
     }
 
-    public function currentDay()
-    {
-        $dateNow = Carbon::now();
-        foreach (json_decode($this->attributes['schedule'], true) ?? [] as $sched) {
-            if ($dateNow >= Carbon::parse($sched['date_start']) && $dateNow <= Carbon::parse($sched['date_end'])) {
-                return $sched['day'];
-            }
-        }
+    // public function currentDay()
+    // {
+    //     $dateNow = Carbon::now();
+    //     foreach (json_decode($this->attributes['schedule'], true) ?? [] as $sched) {
+    //         if ($dateNow >= Carbon::parse($sched['date_start']) && $dateNow <= Carbon::parse($sched['date_end'])) {
+    //             return $sched['day'];
+    //         }
+    //     }
 
-        return 0;
-    }
+    //     return 0;
+    // }
 
     public function status()
     {
         $dateNow = Carbon::now();
 
-        $schedule = $this->days->toArray() ?? [];
+        $schedule = $this->load(['days'])->days->toArray() ?? [];
 
         if (count($schedule) === 0) {
             return 'upcoming';
@@ -282,9 +283,9 @@ class Event extends Model implements HasMedia
     public function latest_event_chips()
     {
         $reduced = collect($this->descendingDays()->get())->map(function ($day) {
-            return $day->event_chips()->orderBy('date_published', 'DESC')->get();
+            return $day->event_chips()->orderBy('published_date', 'DESC')->get();
         });
-        // return $reduced->flatten()->sortByDesc('date_published')->unique('player_id')->sortByDesc('current_chips');
+        // return $reduced->flatten()->sortByDesc('published_date')->unique('player_id')->sortByDesc('current_chips');
         return $reduced->flatten()->unique('player_id')->sortByDesc('current_chips');
     }
 
@@ -293,10 +294,15 @@ class Event extends Model implements HasMedia
         return $this->belongsTo(Tournament::class);
     }
 
-    public function event_reports()
+    public function tour()
     {
-        return $this->hasMany(EventReport::class);
+        return $this->belongsToThrough(Tour::class, Tournament::class);
     }
+
+    // public function event_reports()
+    // {
+    //     return $this->hasMany(EventReport::class);
+    // }
 
     public function event_payouts()
     {

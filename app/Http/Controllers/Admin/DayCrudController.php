@@ -70,7 +70,7 @@ class DayCrudController extends CrudController
 
         $this->crud->orderBy('lft');
 
-        // $this->crud->orderBy('date_added', 'DESC');
+        // $this->crud->orderBy('published_date', 'DESC');
     }
 
     /**
@@ -82,7 +82,7 @@ class DayCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::column('name');
+        CRUD::column('name')->limit(100);
         CRUD::column('date_start')->type('date')
             ->format(config('app.date_format'));
 
@@ -102,11 +102,6 @@ class DayCrudController extends CrudController
      */
     public function reorder()
     {
-        // your custom code here
-
-        // dd($this->crud->getReorderView());
-
-        // call the method in the trait
         return $this->traitReorder();
     }
 
@@ -140,4 +135,18 @@ class DayCrudController extends CrudController
          ->eventId(session()->get('event_id'))
          ->dayId($this->crud->getCurrentEntryId());
     }
+
+
+        public function destroy($id)
+    {
+        if ($this->crud->getCurrentEntry()->event_reports()->count()) {
+            return \Alert::error('This day has reports inside')->flash();
+        }
+
+        $this->crud->hasAccessOrFail('delete');
+        $id = $this->crud->getCurrentEntryId() ?? $id;
+
+        return $this->crud->delete($id);
+    }
+
 }

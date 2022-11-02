@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class ArticleAuthorsTableSeeder extends Seeder
+class AuthorsTableSeeder extends Seeder
 {
     /**
      * Auto generated seed file
@@ -13,9 +13,9 @@ class ArticleAuthorsTableSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('article_authors')->delete();
+        \DB::table('authors')->delete();
 
-        \DB::table('article_authors')->insert([
+        \DB::table('authors')->insert([
             0 => [
                 'id' => 6,
                 'first_name' => 'Cyril',

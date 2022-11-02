@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\EventReportRequest;
-use App\Models\ArticleAuthor;
+use App\Models\Author;
 use App\Models\Event;
 use App\Models\EventChip;
 use App\Models\EventReport;
@@ -92,7 +92,7 @@ class AllReportsCrudController extends CrudController
         ]);
 
         CRUD::column('poker_event_id');
-        CRUD::column('date_added');
+        CRUD::column('published_date');
 
         $this->crud->addFilter([
             'type' => 'text',
@@ -155,7 +155,7 @@ class AllReportsCrudController extends CrudController
              ->get(['level_id'])->first()->level_id ?? 1;
 
         CRUD::field('title');
-        $author = ArticleAuthor::where('user_id', backpack_user()->id)->first();
+        $author = Author::where('user_id', backpack_user()->id)->first();
 
         $this->crud->addFields([
 
@@ -173,7 +173,7 @@ class AllReportsCrudController extends CrudController
             ],
 
             [
-                'name' => 'article_author_id',
+                'name' => 'author_id',
                 'type' => 'select2',
                 'attribute' => 'fullname',
                 'value' => $author->id ?? 0,
@@ -185,7 +185,7 @@ class AllReportsCrudController extends CrudController
             ],
 
             [   // DateTime
-                'name' => 'date_added',
+                'name' => 'published_date',
                 'label' => 'Date',
                 'type' => 'datetime_picker',
 

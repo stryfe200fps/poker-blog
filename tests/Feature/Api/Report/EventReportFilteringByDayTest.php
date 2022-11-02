@@ -11,43 +11,36 @@ it('filters scheduled day in event', function () {
     $event = Event::factory()->create();
     $level = Level::factory()->create();
 
-    // dd($event->schedule[0]);
-
     $report1 = EventReport::factory()->times(2)->create([
-        'event_id' => $event->id,
         'level_id' => $level->id,
         'title' => 'hugas plato',
-        'date_added' => Carbon::parse($event->schedule[0]['date_start'])->addHours(2),
-        'day' => 50,
     ]);
+
 
     $report2 = EventReport::factory()->times(2)->create([
-        'event_id' => $event->id,
         'level_id' => $level->id,
         'title' => 'boy tornado',
-        'date_added' => Carbon::parse($event->schedule[1]['date_start'])->addHours(2),
-        'day' => 33,
+        // 'day' => 33,
     ]);
 
-    $day1 = $event->schedule[0]['day'];
-    $result1 = $this->get("api/lof-live-report?event=$event->slug&filterDay=50");
+    $day1 = $report1[0]->day_id;
+    // dd($day1, $report1, EventReport::all()->pluck('title'));
+    $result1 = $this->get("api/lof-live-report?day=$day1");
 
     $result1
       ->assertJsonPath(
-          'data.0.collection.0.slug', 'hugas-plato'
+          'data.0.collection.0.title', 'hugas plato'
       );
 
-    $day2 = $event->schedule[1]['day'];
 
-    $result2 = $this->get("api/lof-live-report?event=$event->slug&filterDay=33");
+    $day2 = $report2[0]->day_id;
+
+    $result2 = $this->get("api/lof-live-report?day=$day2");
+
 
     $result2
        ->assertJsonPath(
-           'data.0.collection.0.slug', 'boy-tornado'
+           'data.0.collection.0.title', 'boy tornado'
        );
 
-    // $json
-    // ->assertJsonPath(
-    //     'data.1.collection.0.slug' , 'first'
-    // );
 });

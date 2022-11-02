@@ -41,7 +41,6 @@ test('live report with tags ', function () {
     $event = Event::factory()->create();
     $report = EventReport::factory()->create([
         'title' => 'adrian live report now',
-        'event_id' => $event->id,
     ]);
 
     $tag1 = Tag::factory()->create([

@@ -39,7 +39,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             // CountriesSeeder::class,
             CurrencySeeder::class,
-            // ArticleAuthorSeeder::class,
+            // AuthorSeeder::class,
             // LevelSeeder::class,
             ArticleCategorySeeder::class,
             // ArticleSeeder::class,
@@ -50,7 +50,7 @@ class DatabaseSeeder extends Seeder
 
         ]);
         $this->call(ArticlesTableSeeder::class);
-        $this->call(ArticleAuthorsTableSeeder::class);
+        $this->call(AuthorsTableSeeder::class);
         // $this->call(LiveReportEventChipTableSeeder::class);
         // $this->call(EventChipsTableSeeder::class);
         // $this->call(LiveReportsTableSeeder::class);

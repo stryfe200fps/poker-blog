@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Day;
 use App\Models\Event;
 use App\Models\EventChip;
 use App\Models\EventReport;
@@ -12,82 +13,69 @@ uses(RefreshDatabase::class);
 
 test('if the "stacks before" is updating on next report ', function () {
     $this->withoutExceptionHandling();
-    $event = Event::factory()->create();
 
-    $playerId = Player::factory()->create([
-        'id' => 33,
+    $event = Event::factory()->create([
+        'id' => 1
     ]);
 
-    $chip = EventChip::factory()->create([
-        'player_id' => 33,
-        'current_chips' => 1000,
+    $day = Day::factory()->create([
+        'id' => 1
     ]);
 
-    $report1 = EventReport::factory()->create([
-        'event_id' => $event->id,
+    $r1 = EventReport::factory()->create([
         'title' => 'first',
-        'date_added' => Carbon::parse($event->schedule[0]['date_start'])->addHours(2),
+        'published_date' => Carbon::now(),
         'level_id' => Level::factory()->create([
             'event_id' => $event->id,
             'level' => 3,
         ])->id,
-        'players' => $chip,
-        'day' => 1,
+        'day_id' => $day->id 
     ]);
 
-    // dd($report1);
-
-    $chip1 = EventChip::factory()->create([
-        'player_id' => 33,
-        'current_chips' => 5000,
-    ]);
-
-    $report2 = EventReport::factory()->create([
-
-        'id' => 25,
+    $r1Chip = EventChip::factory()->create([
         'event_id' => $event->id,
+        'event_report_id' => $r1->id
+    ]);
+
+    $r2 = EventReport::factory()->create([
         'title' => 'second',
-
-        'date_added' => Carbon::parse($event->schedule[0]['date_start'])->addHours(3),
+        'published_date' => Carbon::now()->addHour(),
         'level_id' => Level::factory()->create([
             'event_id' => $event->id,
-            'level' => 1,
+            'level' => 3,
         ])->id,
-        'players' => $chip1,
-        'day' => 1,
+        'day_id' => $day->id 
     ]);
 
-    $chip2 = EventChip::factory()->create([
-        'player_id' => 33,
-        'current_chips' => 5000,
-    ]);
-
-    $report3 = EventReport::factory()->create([
-
-        'id' => 30,
+    $r2Chip = EventChip::factory()->create([
         'event_id' => $event->id,
-        'title' => 'third',
-
-        'date_added' => Carbon::parse($event->schedule[0]['date_start'])->addHours(4),
-        'level_id' => Level::factory()->create([
-            'event_id' => $event->id,
-            'level' => 5,
-        ])->id,
-        'players' => $chip2,
-        'day' => 1,
+        'event_report_id' => $r2->id
     ]);
 
-    $day = $event->schedule[0]['day'];
+    $r3 = EventReport::factory()->create([
+        'title' => 'third',
+        'published_date' => Carbon::now()->addHours(2),
+        'level_id' => Level::factory()->create([
+            'event_id' => $event->id,
+            'level' => 3,
+        ])->id,
+        'day_id' => $day->id 
+    ]);
 
-    $json = $this->get('api/lof-live-report'.'?event='.$event->slug.'&filterDay=1');
+    $r3Chip = EventChip::factory()->create([
+        'event_id' => $event->id,
+        'event_report_id' => $r3->id
+    ]);
+
+    $json = $this->get('api/lof-live-report'.'?day='.$day->id.'');
 
     $json
     ->assertJsonPath(
-        'data.0.collection.0.slug', 'third'
+        'data.0.collection.0.title', 'third'
     );
 
     $json
     ->assertJsonPath(
-        'data.1.collection.0.slug', 'first'
+        'data.2.collection.0.title', 'first'
     );
 });

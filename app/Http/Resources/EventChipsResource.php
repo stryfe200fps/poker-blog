@@ -16,12 +16,14 @@ class EventChipsResource extends JsonResource
     {
         $report = $this->previousReport;
 
+        // $this->load('player');
         return [
             'player' => new PlayerResource($this->player),
             'rank' => $this->rank,
             'current_chips' => $this->current_chips,
+            'is_whatsapp' => $this->is_whatsapp,
             'previous' => $report,
-            'date' => $this->date_published->diffForHumans(),
+            'date' =>  $this->published_date->diffForHumans(),
             'changes' => $changes = $this->current_chips >= $report ?
             $this->current_chips - $report :
             $report - $this->current_chips,

@@ -29,8 +29,8 @@ class EventGamesTableSeeder extends Seeder
         foreach ($array as $table) { 
             try { 
             EventGameTable::factory()->create([
-                'code' => $table[0],
-                'title' => $table[1]
+                'code' => trim($table[0]),
+                'title' => trim($table[1])
             ]);
             } catch (Exception $e) { }
         }

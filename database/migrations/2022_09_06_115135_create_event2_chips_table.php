@@ -20,10 +20,8 @@ class CreateEvent2ChipsTable extends Migration
             $table->foreignId('event_report_id')->nullable()->constrained()->cascadeOnDelete();
             $table->integer('current_chips')->default(0);
             $table->foreignId('event_payout_id')->nullable();
-            $table->integer('rank')->nullable();
-            $table->integer('chips_before')->default(0);
             $table->boolean('is_whatsapp')->default(0);
-            $table->dateTime('date_published');
+            $table->dateTime('published_date');
             $table->timestamps();
         });
     }

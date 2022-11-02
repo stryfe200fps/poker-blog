@@ -8,7 +8,7 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class ArticleAuthor extends Model implements HasMedia
+class Author extends Model implements HasMedia
 {
     use InteractsWithMedia;
     use \Backpack\CRUD\app\Models\Traits\CrudTrait;

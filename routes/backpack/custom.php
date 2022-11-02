@@ -30,7 +30,7 @@ Route::crud('article', 'ArticleCrudController');
     Route::crud('payout', 'PayoutCrudController');
     Route::crud('live', 'LiveCrudController');
     Route::crud('level', 'LevelCrudController');
-    Route::crud('article-author', 'ArticleAuthorCrudController');
+    Route::crud('article-author', 'AuthorCrudController');
     Route::crud('image-theme', 'ImageThemeCrudController');
     Route::crud('tag', 'TagCrudController');
     Route::crud('day', 'DayCrudController');

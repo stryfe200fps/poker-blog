@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Article;
-use App\Models\ArticleAuthor;
+use App\Models\Author;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -33,7 +33,8 @@ class ArticleFactory extends Factory
             ],
             'slug' => $this->faker->slug,
             'published_date' => Carbon::now()->toString(),
-            'article_author_id' => ArticleAuthor::factory()->create()->id,
+            'author_id' => Author::factory()->create()->id,
+            'description' => 'Descriptions'
         ];
     }
 }
