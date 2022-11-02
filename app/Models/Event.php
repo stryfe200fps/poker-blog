@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use App\Models\Day;
 use Illuminate\Support\Str;
 use Spatie\Sluggable\HasSlug;
 use Spatie\MediaLibrary\HasMedia;
@@ -196,10 +197,10 @@ class Event extends Model implements HasMedia
         return $this->belongsToThrough(Tour::class, Tournament::class);
     }
 
-    // public function event_reports()
-    // {
-    //     return $this->hasMany(EventReport::class);
-    // }
+    public function event_reports()
+    {
+        return $this->hasManyThrough(EventReport::class, Day::class);
+    }
 
     public function event_payouts()
     {

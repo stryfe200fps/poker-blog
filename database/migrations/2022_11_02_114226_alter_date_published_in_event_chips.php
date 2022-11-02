@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Schema\Grammars\RenameColumn;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -13,11 +14,9 @@ return new class extends Migration
      */
     public function up()
     {
-        try { 
-        Schema::table('event_reports', function (Blueprint $table) {
-          $table->renameColumn('date_added', 'published_date');
+        Schema::table('event_chips', function (Blueprint $table) {
+           $table->renameColumn('date_published', 'published_date');
         });
-         } catch (Exception $e    ) { }
     }
 
     /**
@@ -27,8 +26,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('event_reports', function (Blueprint $table) {
-            $table->renameColumn('published_date', 'date_added');
+        Schema::table('event_chips', function (Blueprint $table) {
+            $table->renameColumn('published_date', 'date_published');
         });
     }
 };
