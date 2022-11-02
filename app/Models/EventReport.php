@@ -24,6 +24,11 @@ class EventReport extends Model implements HasMedia
 
     public function registerMediaConversions(?Media $media = null): void
     {
+        $this->addMediaConversion('big-image')
+            ->width(1200)
+            ->height(630)
+            ->nonQueued();
+
         $this->addMediaConversion('main-thumb')
             ->width(300)
             ->height(300)

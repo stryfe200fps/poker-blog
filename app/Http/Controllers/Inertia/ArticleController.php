@@ -38,7 +38,7 @@ class ArticleController extends Controller
 
             ],
             'image' => [
-                'url' => $article->getFirstMediaUrl('article'),
+                'url' => $article->getFirstMediaUrl('article', 'big-image'),
                 'height' => 800,
                 'width' => 800,
             ],
@@ -61,7 +61,7 @@ class ArticleController extends Controller
             [
                 'title' => $article->title.' | LifeOfPoker',
                 'slug' => $slug,
-                'image' => $article->image,
+                'image' =>  $article->getFirstMediaUrl('article', 'big-image'),
                 'json-ld-article' => $context,
                 'json-ld-webpage' => $webPage,
                 'description' => $article->description,

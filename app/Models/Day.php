@@ -21,6 +21,10 @@ class Day extends Model implements HasMedia
 
     public function registerMediaConversions(?Media $media = null): void
     {
+        $this->addMediaConversion('big-image')
+            ->width(1200)
+            ->height(630)
+            ->nonQueued();
         $this->addMediaConversion('main-gallery-thumb')
             ->width(130)
             ->height(86);
