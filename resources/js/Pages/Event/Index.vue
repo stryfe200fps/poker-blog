@@ -213,7 +213,7 @@ function scrollToTop() {
 
 onMounted(async () => {
     await eventStore.getEventData(props.slug);
-    if (props.day === "" || selectDay.value == null) {
+    if (props.day === "") {
         selectDay.value = highestDay();
     } else {
         selectDay.value = Object.keys(eventData.value.available_days).find(
