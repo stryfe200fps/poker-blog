@@ -26,123 +26,29 @@ class Event extends Model implements HasMedia
         'schedule' => 'json',
     ];
 
-    protected $appends = [
-        'event_date_start',
-        'event_date_end',
-
-        'actual_event_date_start',
-        'actual_event_date_end',
-    ];
-
-    public function getEventDateStartAttribute()
-    {
-        $collect = collect($this->schedule)->map(function ($item) {
-            $item['date_start'] = Carbon::parse($item['date_start']);
-            $item['date_end'] = Carbon::parse($item['date_end']);
-
-            return $item;
-        });
-
-        return $collect->first()['date_start'] ?? '';
-    }
-
-    public function getEventDateEndAttribute()
-    {
-        $collect = collect($this->schedule)->map(function ($item) {
-            $item['date_start'] = Carbon::parse($item['date_start']);
-            $item['date_end'] = Carbon::parse($item['date_end']);
-
-            return $item;
-        });
-
-        return $collect->first()['date_end'] ?? '';
-    }
-
-    public function getActualEventDateStartAttribute()
-    {
-        $timezone = null;
-        $timezoneArray = explode(' ', $this->tournament->timezone);
-
-        if (count($timezoneArray) > 1) {
-            $timezone = $timezoneArray[count($timezoneArray) - 1];
-        }
-
-        $collect = collect($this->schedule)->map(function ($item) {
-            $item['date_start'] = Carbon::parse($item['date_start']);
-            $item['date_end'] = Carbon::parse($item['date_end']);
-
-            return $item;
-        });
-
-        return $collect->first()['date_start'] ?? '';
-    }
-
-    public function getActualEventDateEndAttribute()
-    {
-        $timezone = null;
-        $timezoneArray = explode(' ', $this->tournament->timezone);
-
-        if (count($timezoneArray) > 1) {
-            $timezone = $timezoneArray[count($timezoneArray) - 1];
-        }
-
-        $collect = collect($this->schedule)->map(function ($item) {
-            $item['date_start'] = Carbon::parse($item['date_start']);
-            $item['date_end'] = Carbon::parse($item['date_end']);
-
-            return $item;
-        });
-
-        return $collect->last()['date_end'] ?? '';
-    }
-
-    public function scheduleArray($schedule = [], $timezone = null)
-    {
-        if (is_string($schedule)) {
-            $schedule = json_decode($schedule, true);
-        }
-
-        if ($timezone == null) {
-            $timezone = session()->get('timezone');
-        }
-
-        $collect = collect($schedule)->map(function ($item) {
-            $item['date_start'] = Carbon::parse($item['date_start'], session()->get('timezone'))
-            ->setTimezone('UTC')
-            ->toDateTimeString();
-
-            $item['date_end'] = Carbon::parse($item['date_end'], session()->get('timezone'))
-            ->setTimezone('UTC')
-           ->toDateTimeString();
-
-            return $item;
-        });
-
-        return $collect;
-    }
-
     public function setScheduleAttribute($schedule)
     {
         $this->attributes['schedule'] = $this->scheduleArray($schedule);
     }
 
-    public function getScheduleAttribute($schedule)
+    public function getScheduleAttribute()
     {
-        $sched = json_decode($schedule, true);
+        $schedule = $this->load('days')->getSchedule()->toArray() ?? [];
 
-        $collect = collect($sched)->map(function ($item) {
-            $item['date_start'] = Carbon::parse($item['date_start'], 'UTC')
-            ->setTimezone(session()->get('timezone'))
-            ->toDateTimeString();
-            $item['date_end'] = Carbon::parse($item['date_end'], 'UTC')
-            ->setTimezone(session()->get('timezone'))
-           ->toDateTimeString();
+        if (!count($schedule))
+            return 'TBA';
 
-            return $item;
-        });
+        $newSched = [
+            'date_start' => Carbon::parse( Day::find(array_key_first($schedule))->date_start, 'UTC' )
+                ->setTimezone(session()->get('timezone'))->toDateTimeString(),
 
-        return $collect;
+            'date_end' => Carbon::parse(Day::find(array_key_last($schedule))->date_end, 'UTC')
+                ->setTimezone(session()->get('timezone'))->toDateTimeString(),
+        ];
+
+        return $newSched;
     }
+    
 
     public function getSlugOptions(): SlugOptions
     {
@@ -152,17 +58,6 @@ class Event extends Model implements HasMedia
             ->doNotGenerateSlugsOnUpdate();
     }
 
-    // public function currentDay()
-    // {
-    //     $dateNow = Carbon::now();
-    //     foreach (json_decode($this->attributes['schedule'], true) ?? [] as $sched) {
-    //         if ($dateNow >= Carbon::parse($sched['date_start']) && $dateNow <= Carbon::parse($sched['date_end'])) {
-    //             return $sched['day'];
-    //         }
-    //     }
-
-    //     return 0;
-    // }
 
     public function status()
     {

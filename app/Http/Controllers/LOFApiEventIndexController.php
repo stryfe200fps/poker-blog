@@ -7,6 +7,7 @@ use App\Http\Filters\GameFilter;
 use App\Http\Filters\LocationFilter;
 use App\Http\Filters\StatusFilter;
 use App\Http\Filters\TourFilter;
+use App\Http\Resources\EventCollection;
 use Carbon\Carbon;
 use App\Models\Event;
 use Illuminate\Http\Request;
@@ -33,7 +34,6 @@ class LOFApiEventIndexController extends Controller
             ->through([
                 DateFilter::class,
                 LocationFilter::class,
-                StatusFilter::class,
                 GameFilter::class,
                 TourFilter::class
             ])
@@ -45,8 +45,9 @@ class LOFApiEventIndexController extends Controller
 //                 return Carbon::parse($col->date_range?->date_start);
 //             })->values()->all()
             // $events->sortBy('id')->values()->all();
+        return new EventCollection($pipeLine);
 
-        return LOFApiEventIndexResource::collection($pipeLine);
+        // return LOFApiEventIndexResource::collection($pipeLine);
     }
 
     /**

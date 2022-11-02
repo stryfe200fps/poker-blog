@@ -2,6 +2,7 @@
 
 namespace App\Http\Filters;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 
 class StatusFilter
@@ -12,7 +13,23 @@ class StatusFilter
             return $next($builder);
         }
 
-        $test =  $next($builder)->where('status', 1);
+
+        $status = request()->get('status');
+
+
+        $test =  $next($builder)->whereHas('days', function ($q) use ($status) {
+
+            if ($status === 'live') 
+                $q->where('date_start', '<=' , Carbon::now())
+                ->where('date_end', '>=', Carbon::now());
+            
+            if ($status === 'upcoming')
+                $q->where('date_start', '>=' , Carbon::now());
+
+            if ($status === 'end')
+                $q->where('date_end', '<=' , Carbon::now());
+
+        } );
 
         return $test;
     }
