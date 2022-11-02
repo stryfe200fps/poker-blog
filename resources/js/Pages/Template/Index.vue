@@ -44,7 +44,11 @@
                                 v-model="subject"
                                 required
                             >
-                                <option selected disabled>
+                                <option
+                                    value=""
+                                    :selected="subject === ''"
+                                    disabled
+                                >
                                     Select Subject
                                 </option>
                                 <option value="General Inquiry">
@@ -96,7 +100,7 @@ const articleStore = useArticleStore();
 const list = ref([]);
 const name = ref(null);
 const email = ref(null);
-const subject = ref(null);
+const subject = ref("");
 const message = ref(null);
 
 const props = defineProps({
