@@ -222,6 +222,7 @@ onMounted(async () => {
                 JSON.stringify(eventData.value.available_days[key]) ==
                 JSON.stringify(props.day)
         );
+        console.log(selectDay.value);
     }
     reportViewing();
 
