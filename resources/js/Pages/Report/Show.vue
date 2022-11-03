@@ -12,22 +12,22 @@
                 <h1 class="text-primary">
                     <span style="cursor: pointer" @click="goBack"
                         ><i class="fa fa-chevron-left" aria-hidden="true"></i>
-                        Back</span
+                        to event report</span
                     >
                 </h1>
             </div>
             <div class="single-post-box">
-                <div
+                <!-- <div
                     class="day-divider"
                     style="border-bottom: 1px solid #d3d3d3; margin-top: 20px"
                 >
-                    <!-- <span>Day: {{ report.data.day }}</span
-                    ><br /> -->
+                    <span>Day: {{ report.data.day }}</span
+                    ><br />
                     <span
                         >{{ report.data.level.level_value }}
                         {{ report.data.slug }}</span
                     ><br />
-                </div>
+                </div> -->
                 <div class="title-post">
                     <h1 class="text-capitalize">{{ report.data.title }}</h1>
                     <div

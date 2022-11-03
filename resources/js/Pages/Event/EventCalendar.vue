@@ -4,7 +4,7 @@
     </Head>
     <FrontLayout>
         <div class="block-content">
-            <div class="article-box">
+            <div class="article-box" style="padding: 0">
                 <div class="title-section">
                     <h1>
                         <span>{{ page_title }}</span>
@@ -13,22 +13,23 @@
                 <div class="row" style="margin-bottom: 25px">
                     <div class="col-md-6">
                         <div class="filters left-filters">
-                            <button type="button" class="btn btn-default">
+                            <button
+                                type="button"
+                                class="btn btn-default"
+                                @click="getDateToday()"
+                            >
                                 Today
                             </button>
                             <input
                                 type="date"
+                                v-model="selectedDate"
                                 class="form-control custom-filter"
                             />
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="filters right-filters">
-                            <select
-                                class="form-control"
-                                v-model="selectedTour"
-                                @change="filterByTour"
-                            >
+                            <select class="form-control" v-model="selectedTour">
                                 <option value="" selected disabled>Tour</option>
                                 <option
                                     v-for="(tour, index) in tours"
@@ -41,7 +42,6 @@
                             <select
                                 class="form-control"
                                 v-model="selectedCountry"
-                                @change="filterByCountry"
                             >
                                 <option value="" selected disabled>
                                     Location
@@ -54,11 +54,7 @@
                                     {{ country.name }}
                                 </option>
                             </select>
-                            <select
-                                class="form-control"
-                                v-model="selectedGame"
-                                @change="filterByGame"
-                            >
+                            <select class="form-control" v-model="selectedGame">
                                 <option value="" selected disabled>Game</option>
                                 <option
                                     v-for="(game, index) in games"
@@ -71,21 +67,27 @@
                         </div>
                     </div>
                 </div>
-                <div class="panel panel-default">
-                    <div
-                        class="panel-heading text-center"
-                        style="font-family: 'Lato', sans-serif"
-                    >
-                        November
+                <div v-for="(series, index) in mergeSeriesList" :key="index">
+                    <div class="panel panel-default">
+                        <div
+                            class="panel-heading text-center"
+                            style="font-family: 'Lato', sans-serif"
+                        >
+                            {{
+                                moment(new Date(series.date)).format(
+                                    "MMMM YYYY"
+                                )
+                            }}
+                        </div>
                     </div>
+                    <EventCalendarItem
+                        v-for="event in series.collection"
+                        :key="event.id"
+                        :event="event"
+                    />
                 </div>
-                <EventCalendarItem
-                    v-for="event in events"
-                    :key="event.id"
-                    :event="event"
-                />
                 <div
-                    v-if="events?.length"
+                    v-if="mergeSeriesList?.length"
                     v-observe-visibility="handleScrolledToBottom"
                 ></div>
             </div>
@@ -95,7 +97,8 @@
 
 <script setup>
 import { Head } from "@inertiajs/inertia-vue3";
-import { onMounted, ref } from "@vue/runtime-core";
+import { computed, onMounted, ref, watch } from "@vue/runtime-core";
+import moment from "moment";
 
 import FrontLayout from "@/Layouts/FrontLayout.vue";
 import EventCalendarItem from "./EventCalendarItem.vue";
@@ -114,20 +117,49 @@ const countries = ref([]);
 const selectedCountry = ref("");
 const games = ref([]);
 const selectedGame = ref("");
-const events = ref([]);
+const seriesList = ref([]);
+const selectedDate = ref(moment().format("YYYY-MM-DD"));
 const currentPage = ref(1);
 const lastPage = ref(1);
 
-function filterByTour() {
-    console.log(selectedTour.value);
-}
+const filteredSeries = computed(() => {
+    return {
+        country: selectedCountry.value || null,
+        game: selectedGame.value || null,
+        tour: selectedTour.value || null,
+        date_start: selectedDate.value,
+    };
+});
 
-function filterByCountry() {
-    console.log(selectedCountry.value);
-}
+const mergeSeriesList = computed(() => {
+    const mergedList = [];
 
-function filterByGame() {
-    console.log(selectedGame.value);
+    seriesList.value.forEach((item) => {
+        const list = mergedList.filter((val) => val.date === item.date);
+
+        if (list.length) {
+            var existingIndex = mergedList.indexOf(list[0]);
+
+            mergedList[existingIndex].collection = mergedList[
+                existingIndex
+            ].collection.concat(item.collection);
+        } else {
+            mergedList.push(item);
+        }
+    });
+
+    return mergedList;
+});
+
+const datePlaceholder = computed(() => {
+    return !selectedDate.value ? "Upcoming" : "wala";
+});
+
+function getDateToday() {
+    selectedDate.value = moment().format("YYYY-MM-DD");
+    selectedCountry.value = "";
+    selectedGame.value = "";
+    selectedTour.value = "";
 }
 
 async function handleScrolledToBottom(isVisible) {
@@ -137,15 +169,24 @@ async function handleScrolledToBottom(isVisible) {
 
     if (currentPage.value > lastPage.value) return;
 
-    await eventCalendarStore.getEvents(currentPage.value);
-    events.value.push(...eventCalendarStore.events.data);
-    lastPage.value = eventCalendarStore.events.meta.last_page;
+    await eventCalendarStore.getSeries({
+        page: currentPage.value,
+        country: selectedCountry.value || null,
+        game: selectedGame.value || null,
+        tour: selectedTour.value || null,
+        date_start: selectedDate.value,
+    });
+    seriesList.value.push(...eventCalendarStore.series.data);
+    lastPage.value = eventCalendarStore.series.meta.last_page;
 }
 
 onMounted(async () => {
-    await eventCalendarStore.getEvents(1);
-    events.value = eventCalendarStore.events.data;
-    lastPage.value = eventCalendarStore.events.meta.last_page;
+    await eventCalendarStore.getSeries({
+        page: 1,
+        date_start: selectedDate.value,
+    });
+    seriesList.value = eventCalendarStore.series.data;
+    lastPage.value = eventCalendarStore.series.meta.last_page;
     await eventCalendarStore.getTours();
     tours.value = eventCalendarStore.tours.data;
     await eventCalendarStore.getCountries();
@@ -153,6 +194,19 @@ onMounted(async () => {
     await eventCalendarStore.getGames();
     games.value = eventCalendarStore.games.data;
 });
+
+watch(
+    () => filteredSeries.value,
+    async function (value) {
+        await eventCalendarStore.getSeries({
+            page: 1,
+            ...value,
+        });
+        currentPage.value = 1;
+        seriesList.value = eventCalendarStore.series.data;
+        lastPage.value = eventCalendarStore.series.meta.last_page;
+    }
+);
 </script>
 
 <style scoped>

@@ -7,7 +7,7 @@ export const useEventCalendarStore = defineStore("eventCalendar", {
             tours: [],
             countries: [],
             games: [],
-            events: [],
+            series: [],
             filter: [],
         };
     },
@@ -37,12 +37,18 @@ export const useEventCalendarStore = defineStore("eventCalendar", {
                 console.error(error);
             }
         },
-        async getEvents(page) {
+        async getSeries({
+            page,
+            country = null,
+            tour = null,
+            game = null,
+            date_start,
+        }) {
             try {
-                let { data } = await axios.get(
-                    `/api/lof-event-index?page=${page}`
-                );
-                this.events = data;
+                let { data } = await axios.get(`/api/lof-event-index`, {
+                    params: { page, country, tour, game, date_start },
+                });
+                this.series = data;
             } catch (error) {
                 console.error(error);
             }

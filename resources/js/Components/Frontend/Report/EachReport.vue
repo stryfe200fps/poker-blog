@@ -8,15 +8,15 @@
                 <Link
                     class="default-text-color"
                     :href="`/tours/${event.tour_slug}/${event.tournament_slug}/${event.slug}/update-${item.id}`"
-                    >{{ item.title }}</Link
-                >
+                    v-html="item.title"
+                ></Link>
             </h1>
             <h1 v-else class="text-capitalize">
                 <Link
                     class="default-text-color"
                     :href="`/tours/${event.tour_slug}/${event.tournament_slug}/${event.slug}/update-${item.id}`"
-                    >{{ item.title }}</Link
-                >
+                    v-html="item.title"
+                ></Link>
             </h1>
             <div
                 style="

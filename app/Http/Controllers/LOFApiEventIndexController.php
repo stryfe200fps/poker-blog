@@ -32,7 +32,7 @@ class LOFApiEventIndexController extends Controller
             'tournament.currency', 'tournament.tour', 'event_game_table'
             ]);
 
-        $series = Tournament::with('tour')->orderBy('date_start', 'DESC');
+        $series = Tournament::with('tour')->orderBy('date_start', 'ASC');
         // dd($events, $series);
 
         $pipeLine = app(Pipeline::class)

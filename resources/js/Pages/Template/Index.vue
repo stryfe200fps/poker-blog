@@ -18,7 +18,7 @@
                     ></div>
                 </div>
             </div>
-            <div class="contact-form-box" v-if="page.slug === 'contact'">
+            <div class="contact-form-box" v-if="page.template === 'contact'">
                 <div class="title-section">
                     <h1><span>Talk to us</span></h1>
                 </div>

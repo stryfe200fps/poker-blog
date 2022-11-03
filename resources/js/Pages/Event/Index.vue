@@ -61,6 +61,7 @@
                         :payouts="payoutsData"
                         :currentTab="type"
                         :day="day"
+                        :lastDay="last_day"
                         :url="url"
                         @loadMore="loadMoreReports"
                     />
@@ -113,6 +114,9 @@ const props = defineProps({
     url: {
         type: String,
     },
+    last_day: {
+        type: String,
+    },
 });
 
 const eventData = ref([]);
@@ -162,7 +166,7 @@ async function loadMoreReports() {
 }
 
 async function reportViewing() {
-    if (props.type === "" || props.type === "live-updates") {
+    if (props.type === null) {
         await eventStore.getLiveReport(1, selectDay.value);
         liveReport.value = eventStore.liveReportList.data;
         lastPage.value = eventStore.liveReportList.meta.last_page;
@@ -249,7 +253,7 @@ const fetchLiveReports = () => {
     lastPage.value = 1;
     reportViewing();
 
-    if (props.type === "" && props.day === "") {
+    if (props.type === null || props.day === "") {
         Inertia.visit(
             `/tours/${eventData.value.tour_slug}/${
                 eventData.value.tournament_slug
@@ -257,7 +261,7 @@ const fetchLiveReports = () => {
                 selectDay.value
             ]
                 .replace(/[^A-Z0-9]+/gi, "-")
-                .toLowerCase()}/live-updates`,
+                .toLowerCase()}`,
             { preserveState: true }
         );
         return;
