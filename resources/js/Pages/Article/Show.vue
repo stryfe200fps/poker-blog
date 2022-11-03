@@ -264,8 +264,9 @@ const showShare = () => {
 };
 
 function goBack() {
-    history.back();
-    return false;
+    Inertia.visit(`/news`);
+    // history.back();
+    // return false;
 }
 
 function onClickOutside(event) {

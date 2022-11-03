@@ -16,7 +16,6 @@
                     >
                 </h1>
             </div>
-
             <div class="single-post-box">
                 <div
                     class="day-divider"
@@ -253,8 +252,8 @@
                                     v-if="item.player.country"
                                 >
                                     <CountryFlag
-                                        :title="item.player.country.name"
-                                        :iso="item.player.country.iso_3166_2"
+                                        :title="item.player.country"
+                                        :iso="item.player.flag"
                                     />
                                 </td>
                                 <td class="text-center hide-on-tablet" v-else>
@@ -319,6 +318,7 @@ import CustomeTable from "@/Components/Frontend/CustomeTable.vue";
 import CountryFlag from "vue3-country-flag-icon";
 import defaultAvatar from "@/default-avatar.png";
 import axios from "axios";
+import { Inertia } from "@inertiajs/inertia";
 
 import brokenMirror from "@/photo_templates/brokenmirror.png";
 import bulletHole from "@/photo_templates/bullethole.png";
@@ -353,8 +353,9 @@ const showShare = () => {
 };
 
 function goBack() {
-    history.back();
-    return false;
+    Inertia.visit(url.value.slice(0, url.value.lastIndexOf("/")));
+    // history.back();
+    // return false;
 }
 
 function onClickOutside(event) {
