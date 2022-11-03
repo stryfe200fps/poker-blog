@@ -20,6 +20,7 @@ use App\Http\Controllers\EventReportsController;
 use App\Http\Controllers\LOFApiEventsController;
 use App\Http\Controllers\Api\LiveReportController;
 use App\Http\Controllers\Api\ReportsApiController;
+use App\Http\Controllers\Api\RoomController;
 use App\Http\Controllers\ArticleCategoryController;
 use App\Http\Controllers\LOFApiEventIndexController;
 use App\Http\Controllers\LOFApiTournamentsController;
@@ -106,6 +107,8 @@ Route::get('select/countries', function () {
 
     return [ 'data' => $countries ?? [] ];
 });
+
+Route::get('rooms', [RoomController::class, 'index']);
 
 
 

@@ -24,7 +24,7 @@ class TournamentCollection extends ResourceCollection
             return Carbon::parse($date->date_start->format('F-Y'));
         })->reduce(function ($result, $item) {
             $result[] = [
-                'date' => $item->first()->date_start->format('F-Y'),
+                'date' =>  $item->first()->date_start->format('F-Y'),
                 'collection' => collect($item)->map(function ($i) {
                     return new LOFApiTournamentResource($i);
                 }) ?? []
