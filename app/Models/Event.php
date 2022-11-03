@@ -96,6 +96,13 @@ class Event extends Model implements HasMedia
         return $sched;
     }
 
+    public function getLastSchedule() 
+    {
+        return $this->days()->orderByDesc('lft')->withCount('event_reports')
+            ->having('event_reports_count', '>', 0 )->first();
+    }
+
+
     public function days()
     {
         return $this->hasMany(Day::class);

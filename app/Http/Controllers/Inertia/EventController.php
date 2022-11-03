@@ -10,6 +10,7 @@ class EventController extends Controller
 {
     public function show($tour, $series, $eventSlug, $day = null, $type = null )
     {
+
         $webPage = \JsonLd\Context::create('web_page', [
             'url' => request()->url(),
         ]);
@@ -19,13 +20,12 @@ class EventController extends Controller
         if ($tour != $event->tournament->tour->slug || $series != $event->tournament->slug    ) {
         return redirect('/tours/'. $event->tournament->tour->slug . '/'. $event->tournament->slug  . '/'. $eventSlug );
         }
-     
 
         return Inertia::render('Event/Index', [
             'slug' => $eventSlug,
             'page' => $page ?? 'reports',
-            'day' => $day ?? '',
-            'type' => $type ?? '',
+            'day' => $type == null ? $event->getLastSchedule()->name : $day,
+            'type' => in_array($day, ['whatsapp', 'chip-stack', 'gallery', 'payouts', 'live-updates']) ? $day : $type  ,
             'title' => $event->tournament->title.' | '.$event->title.' | LifeOfPoker',
             'description' => $event->tournament->description,
             'json-ld-webpage' => $type === 'payouts' ? \JsonLd\Context::create('web_page', [

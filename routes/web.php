@@ -39,7 +39,9 @@ Route::prefix('tours')->group(function () {
     Route::get('/{page?}', [TournamentController::class, 'index']);
     Route::get('/{tour}/{series}/{eventSlug}', [EventController::class, 'show']);
 
-    Route::get('/{tour}/{series}/{eventSlug}/{reportId}', [ReportController::class, 'show'])->where('reportid', '(\w+\-\d+)');
+    Route::get('/{tour}/{series}/{eventSlug}/{reportId}', [ReportController::class, 'show'])->where('reportId', '(\w+\-\d+)');
+
+    // Route::get('/{tour}/{series}/{eventSlug}/{day?}', [EventController::class, 'show'])->whereIn('day', ['chip-stack', 'whatsapp', 'gallery', 'payouts', 'live-updates']);
     Route::get('/{tour}/{series}/{eventSlug}/{day?}/{type?}', [EventController::class, 'show']);
 });
 
