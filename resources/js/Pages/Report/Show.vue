@@ -236,24 +236,24 @@
                                 <td>
                                     <img
                                         class="hide-on-mobile"
-                                        v-if="item.player.avatar"
-                                        :src="item.player.avatar"
+                                        v-if="item.player?.avatar"
+                                        :src="item.player?.avatar"
                                     />
                                     <img
                                         class="hide-on-mobile"
                                         v-else
                                         :src="defaultAvatar"
                                     />
-                                    {{ item.player.name }}
+                                    {{ item.player?.name }}
                                     <span style="white-space: nowrap"></span>
                                 </td>
                                 <td
                                     class="text-center hide-on-tablet"
-                                    v-if="item.player.country"
+                                    v-if="item.player?.country"
                                 >
                                     <CountryFlag
-                                        :title="item.player.country"
-                                        :iso="item.player.flag"
+                                        :title="item.player?.country"
+                                        :iso="item.player?.flag"
                                     />
                                 </td>
                                 <td class="text-center hide-on-tablet" v-else>
@@ -291,16 +291,17 @@
                         </template>
                     </CustomeTable>
                 </div>
-                <div v-if="report.data.event_chips.length">
+                <div v-if="report.data?.event_chips?.length">
                     <div class="post-tags-box">
                         <ul class="tags-box">
                             <li>
                                 <i class="fa fa-tags"></i><span>Tags:</span
                                 ><a
                                     href="#"
-                                    v-for="tag in report.data.event_chips"
-                                    :key="tag.id"
-                                    >{{ tag.player.name }}</a
+                                    v-for="(tag, index) in report.data
+                                        ?.event_chips"
+                                    :key="index"
+                                    >{{ tag.player?.name }}</a
                                 >
                             </li>
                         </ul>
@@ -392,6 +393,19 @@ function getFrame(theme) {
 <style scoped>
 :deep(.remove-padding p) {
     padding-left: unset;
+}
+
+:deep(.remove-padding table) {
+    width: 100%;
+    margin-bottom: 10px;
+    border: 1px solid #95a5a662;
+}
+
+:deep(.remove-padding table tr td) {
+    padding: 5px 10px;
+    font-family: Lato, sans-serif;
+    font-size: 14px;
+    background-color: #fbfbfb;
 }
 
 .single-post-box .post-tags-box ul.tags-box {
