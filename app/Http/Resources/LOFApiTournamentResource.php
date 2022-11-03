@@ -25,7 +25,7 @@ class LOFApiTournamentResource extends JsonResource
 
         return [
             'id' => $this->id,
-            'title' => $this->title,
+            'title' => googleTranslateExclude($this->title)[0] ?? '',
             'content' => googleTranslateExclude($this->content),
             'description' => $this->description,
             'poker_tour' => $this->tour->title,

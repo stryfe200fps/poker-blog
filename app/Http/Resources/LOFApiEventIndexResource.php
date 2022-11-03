@@ -25,7 +25,7 @@ class LOFApiEventIndexResource extends JsonResource
         return [
             'id' => $this->id,
             'slug' => $this->slug,
-            'title' => $this->title,
+            'title' =>  googleTranslateExclude($this->title)[0] ?? '',
             'status' => $this->status(),
             'date_range' => $this->schedule,
             'main_image' => $this->getFirstMediaUrl('event', 'main-image'),

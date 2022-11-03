@@ -23,7 +23,7 @@ class LOFApiEventsResource extends JsonResource
             'status' => $this->status(),
             'id' => $this->id,
             'slug' => $this->slug,
-            'title' => $this->title,
+            'title' => googleTranslateExclude($this->title)[0] ?? '',
             'description' => $this->description,
             'content' => googleTranslateExclude($this->content),
             'image' => $this->image,

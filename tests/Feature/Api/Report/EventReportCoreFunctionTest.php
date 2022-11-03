@@ -4,6 +4,7 @@ use App\Models\Day;
 use App\Models\Event;
 use App\Models\EventChip;
 use App\Models\EventReport;
+use App\Models\Glossary;
 use App\Models\Level;
 use App\Models\Player;
 use Carbon\Carbon;
@@ -23,7 +24,7 @@ test('if the "stacks before" is updating on next report ', function () {
     ]);
 
     $r1 = EventReport::factory()->create([
-        'title' => 'first',
+        'title' => 'first adi',
         'published_date' => Carbon::now(),
         'level_id' => Level::factory()->create([
             'event_id' => $event->id,
@@ -38,7 +39,7 @@ test('if the "stacks before" is updating on next report ', function () {
     ]);
 
     $r2 = EventReport::factory()->create([
-        'title' => 'second',
+        'title' => 'second adi',
         'published_date' => Carbon::now()->addHour(),
         'level_id' => Level::factory()->create([
             'event_id' => $event->id,
@@ -53,7 +54,7 @@ test('if the "stacks before" is updating on next report ', function () {
     ]);
 
     $r3 = EventReport::factory()->create([
-        'title' => 'third',
+        'title' => 'third adi',
         'published_date' => Carbon::now()->addHours(2),
         'level_id' => Level::factory()->create([
             'event_id' => $event->id,
@@ -67,15 +68,21 @@ test('if the "stacks before" is updating on next report ', function () {
         'event_report_id' => $r3->id
     ]);
 
+
+    Glossary::factory()->create([
+       'word' => 'adi'
+    ]);
+
+
     $json = $this->get('api/lof-live-report'.'?day='.$day->id.'');
 
     $json
     ->assertJsonPath(
-        'data.0.collection.0.title', 'third'
+        'data.0.collection.0.title', 'third <span translate="no">adi</span>'
     );
 
     $json
     ->assertJsonPath(
-        'data.2.collection.0.title', 'first'
+        'data.2.collection.0.title', 'first <span translate="no">adi</span>'
     );
 });

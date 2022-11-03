@@ -27,9 +27,10 @@ class EventReportsController extends Controller
     public function index(Request $request)
     {
         $day = Day::find($request->only('day')['day']);
-        // dd($day->event_reports()->with(['level', 'image_theme', 'author', 'event_chips', 'event_chips.player', 'event_chips.player.country']));
-        // return new ReportCollection($day->event_reports()->with(['level', 'image_theme', 'author', 'event_chips', 'event_chips.player', 'event_chips.player.country'])->where('event_id', $day->event_id)->orderBy('published_date', 'DESC')->paginate(10));
-        return new ReportCollection($day->event_reports()->with(['level', 'image_theme', 'author', 'event_chips', 'event_chips.player', 'event_chips.player.country'])->orderBy('published_date', 'DESC')->paginate(10));
+        return new ReportCollection($day->event_reports()
+            ->with(['level', 'image_theme', 'author', 'event_chips', 'event_chips.player', 'event_chips.player.country'])
+            ->orderBy('published_date', 'DESC')
+            ->paginate(10));
     }
 
     public function create()
