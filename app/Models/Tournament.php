@@ -154,4 +154,23 @@ class Tournament extends Model implements HasMedia
         });
 
     }
+
+    public static function selectAvailableTours()
+    {
+        return Tour::select('slug', 'title')->orderBy('title')->withCount('tournaments')
+            ->having('tournaments_count', '>', 0 )->get();
+    }
+
+    public static function selectAvailableCountries()
+    {
+        return Country::select('name', 'iso_3166_2')->orderBy('name')->withCount('tournaments')
+            ->having('tournaments_count', '>', 0 )->get();
+    }
+
+    public static function selectAvailableGamesInEvents()
+    {
+        return EventGameTable::select(['title', 'code'])->orderBy('title')->withCount('events')
+            ->having('events_count', '>', 0 )->get();
+    }
+    
 }

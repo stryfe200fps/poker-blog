@@ -94,21 +94,25 @@ Route::get('select/games', function () {
     return [ 'data' => EventGameTable::get(['title', 'code']) ];
 });
 
+// Route::get('select/tours', function () {
+//     return [ 'data' => Tour::get(['title', 'slug']) ];
+// });
+
+
+Route::get('select/games', function () {
+    return [ 'data' => Tournament::selectAvailableGamesInEvents() ?? [] ];
+});
+
 Route::get('select/tours', function () {
-    return [ 'data' => Tour::get(['title', 'slug']) ];
+    return [ 'data' => Tournament::selectAvailableTours() ?? [] ];
 });
 
 Route::get('select/countries', function () {
-
-    $countries = Tournament::groupBy('country_id')->get();
-    $countries = $countries->map(function ($c) {
-        return Country::find($c->country_id);
-    });
-
-    return [ 'data' => $countries ?? [] ];
+    return [ 'data' => Tournament::selectAvailableCountries() ?? [] ];
 });
 
 Route::get('rooms', [RoomController::class, 'index']);
+Route::get('rooms/{slug}', [RoomController::class, 'show']);
 
 
 

@@ -83,6 +83,7 @@ class LevelCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(LevelRequest::class);
+
         $this->crud->addField([
             'name' => 'level',
             'description' => 'level',
@@ -96,10 +97,31 @@ class LevelCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'label' => 'Blinds',
-            'name' => 'blinds',
-            'description' => 'blinds',
+            'label' => 'Small Blinds',
+            'name' => 'small_blinds',
+            'description' => 'Big Blinds',
             'type' => 'number',
+            'attributes' => [
+                'class' => 'form-control required'
+            ],
+            'wrapper' => [
+                'class' => 'col-md-6 form-group'
+            ]
+
+        ]);
+
+
+        $this->crud->addField([
+            'label' => 'Big Blinds',
+            'name' => 'big_blinds',
+            'description' => 'Big Blinds',
+            'type' => 'number',
+            'attributes' => [
+                'class' => 'form-control required'
+            ],
+              'wrapper' => [
+                'class' => 'col-md-6 form-group'
+            ]
 
         ]);
 

@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Schema;
+
 use Carbon\Carbon;
 use App\Models\Day;
 use App\Models\User;
@@ -23,7 +25,9 @@ test('whatsapp api', function () {
 
 
     $day = Day::factory()->create();
+
     $page = $this->get('admin/report?event='.$event->id.'&day='. $day->id)->assertStatus(200);
+
 
 
     $eventChip = EventChip::factory()->create([

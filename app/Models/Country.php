@@ -26,4 +26,9 @@ class Country extends Model
     {
         return $this->full_name;
     }
+
+    public function tournaments()
+    {
+        return $this->hasMany(Tournament::class);
+    }
 }

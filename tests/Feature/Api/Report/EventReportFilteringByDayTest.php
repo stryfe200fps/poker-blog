@@ -11,6 +11,8 @@ it('filters scheduled day in event', function () {
     $event = Event::factory()->create();
     $level = Level::factory()->create();
 
+    
+
     $report1 = EventReport::factory()->times(2)->create([
         'level_id' => $level->id,
         'title' => 'hugas plato',

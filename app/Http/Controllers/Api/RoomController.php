@@ -22,4 +22,10 @@ class RoomController extends Controller
 
        return RoomResource::collection($rooms->paginate(6));
     }
+
+    public function show ($slug) 
+    {
+       $room = Room::where('slug', $slug)->firstOrFail();
+       return new RoomResource($room);
+    }
 }

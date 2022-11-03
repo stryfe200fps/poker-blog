@@ -19,7 +19,8 @@ class LevelFactory extends Factory
     {
         return [
             'level' => $this->faker->numberBetween(1, 5),
-            'blinds' => $this->faker->numberBetween(500, 1000),
+            'small_blinds' => $this->faker->numberBetween(500, 1000),
+            'big_blinds' => $this->faker->numberBetween(500, 1000),
             'ante' => $this->faker->numberBetween(2000, 5000),
             'event_id' => Event::factory()->create()->id,
         ];
