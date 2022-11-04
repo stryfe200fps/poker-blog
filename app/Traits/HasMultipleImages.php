@@ -31,6 +31,8 @@ trait HasMultipleImages
                 $this->addMediaConversion('xl-image')
                     ->width(1600)
                     ->height(900);
+
+                $this->addMediaConversion('og_image');
             });
 
 

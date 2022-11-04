@@ -44,7 +44,12 @@ class DefaultModelObserver
         }
 
         $path = public_path(). '/tmp/' . $model->mediaCollection . '-'. $model->id . '.jpg';
-        $image = \Image::make($value)->encode('jpg', 100)->resize(1600,900)->save($path);
+
+        $image = \Image::make($value)->encode('jpg', 100)->save($path);
+
+        if ($model?->shouldResizeImage || $model?->shouldResizeImage == null) { 
+            $image->resize(1600,900)->save($path);
+        }
 
         $model->media()->delete();
         $model->addMedia($path)

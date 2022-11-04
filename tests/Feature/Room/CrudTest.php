@@ -18,15 +18,11 @@ it('cannot create rooms if unauthenticated', function () {
 it('can insert rooms if authenticated', function () {
     superAdminAuthenticate();
 
-    $this->get('admin/room/create')->assertStatus(200);
-
-    $data = Room::factory()->make([
+    $this->post('admin/room',  Room::factory()->make([
         'title' => 'Things I do',
-    ])->attributesToArray();
+    ])->attributesToArray());
 
-    $datas = $this->post('admin/room', $data);
-    $this->assertDatabaseHas('rooms', ['title' => 'Things I do',
-    ]);
+    $this->assertDatabaseHas('rooms', ['title' => 'Things I do']);
 });
 
 it('can update room if authenticated', function () {

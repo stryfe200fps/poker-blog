@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class BannerRequest extends FormRequest
@@ -27,7 +28,7 @@ class BannerRequest extends FormRequest
         return [
             'name' => 'required',
             'url' => 'required',
-            'location' => 'required',
+            'location' =>  [ Rule::unique('banners')->ignore(request()->get('id')), 'required'], 
             'image' => 'required'
         ];
     }
@@ -55,6 +56,7 @@ class BannerRequest extends FormRequest
              'name.required' => 'Name is required',
             'url.required' => 'URL is required',
             'location.required' => 'Location is required',
+            'location.unique' => 'Location is unique',
             'image.required' => 'Image is required',
         ];
     }

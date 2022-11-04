@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ArticleRequest extends FormRequest
@@ -29,6 +30,7 @@ class ArticleRequest extends FormRequest
             'article_categories' => 'required',
             'published_date' => 'required',
             'author_id' => 'required',
+            'slug' =>  [ Rule::unique('articles')->ignore(request()->get('id'))], 
         ];
     }
 
@@ -56,6 +58,7 @@ class ArticleRequest extends FormRequest
             'article_categories.required' => 'Category is required',
             'published_date.required' => 'Published date is required',
             'author_id.required' => 'Author is required',
+            'slug.unique' => 'Slug is unique',
         ];
     }
 }

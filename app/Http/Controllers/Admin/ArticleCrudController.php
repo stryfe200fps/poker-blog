@@ -61,9 +61,7 @@ class ArticleCrudController extends CrudController
         $this->crud->addButtonFromModelFunction('line', 'open_fb', 'shareFacebook', 'beginning');
         $this->crud->addButtonFromModelFunction('line', 'open_twitter', 'shareTwitter', 'beginning');
 
-        // CRUD::column('title');
-
- $this->crud->addColumn([
+        $this->crud->addColumn([
             'name' => 'title',
             'type' => 'text',
             'limit' => 200,
@@ -75,7 +73,6 @@ class ArticleCrudController extends CrudController
 
         ]);
 
-        // CRUD::column('slug');
         $this->crud->addColumns([
             [
                 'name' => 'article_categories', // the column that contains the ID of that connected entity;
