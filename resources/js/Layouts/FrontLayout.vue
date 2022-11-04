@@ -74,7 +74,7 @@ onMounted(async () => {
                 ? {
                       backgroundImage: `url(${banners.image_set?.og_image})`,
                       backgroundRepeat: 'no-repeat',
-                      backgroundPosition: 'center center',
+                      backgroundPosition: 'top center',
                       backgroundAttachment: 'fixed',
                       imageRendering: '-webkit-optimize-contrast',
                   }
