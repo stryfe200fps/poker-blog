@@ -143,7 +143,10 @@ function onScroll(e) {
 
 function googleTranslateElementInit() {
     new google.translate.TranslateElement(
-        { pageLanguage: "en", includedLanguages: "zh-CN,zh-TW,en,ko,ja,es,de" },
+        {
+            pageLanguage: "en",
+            includedLanguages: "zh-CN,zh-TW,en,ko,ja,es,nl",
+        },
         "google_translate_element"
     );
     const targetElement = document.getElementById("google_translate_element");
@@ -159,8 +162,8 @@ function googleTranslateElementInit() {
                     case "zh-TW":
                         element.text = "中文 (繁体)";
                         break;
-                    case "de":
-                        element.text = "Deutsch";
+                    case "nl":
+                        element.text = "Nederlands";
                         break;
                     case "ja":
                         element.text = "にほんご";
