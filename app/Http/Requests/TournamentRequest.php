@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class TournamentRequest extends FormRequest
@@ -27,6 +28,7 @@ class TournamentRequest extends FormRequest
         return [
             'title' => 'required|min:5|max:255',
             'description' => 'required',
+            'slug' =>  Rule::unique('tournaments')->ignore(request()->get('id')), 
         ];
     }
 
@@ -53,6 +55,7 @@ class TournamentRequest extends FormRequest
             //
             'title.required' => 'Title is required',
             'description.required' => 'Description is required',
+            'slug.unique' => 'Slug should be unique',
         ];
     }
 }

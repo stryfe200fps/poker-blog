@@ -29,6 +29,7 @@ class TagRequest extends FormRequest
             'title' => [
                 'required',
                 Rule::unique('tags')->ignore(request()->get('id')), ],
+            'slug' =>  Rule::unique('tags')->ignore(request()->get('id')), 
         ];
     }
 
@@ -52,7 +53,8 @@ class TagRequest extends FormRequest
     public function messages()
     {
         return [
-            'title' => 'title is required and should be unique',
+            'title.required' => 'title is required and should be unique',
+            'slug.unique' => 'Slug should be unique',
         ];
     }
 }

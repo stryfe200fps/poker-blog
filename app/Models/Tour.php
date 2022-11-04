@@ -2,14 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Sluggable\HasSlug;
+use Spatie\MediaLibrary\HasMedia;
 use Spatie\Sluggable\SlugOptions;
+use App\Observers\DefaultModelObserver;
+use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Tour extends Model implements HasMedia
 {
@@ -18,8 +19,17 @@ class Tour extends Model implements HasMedia
     use InteractsWithMedia;
     use HasSlug;
 
+    public $mediaCollection = 'tour';
+
+    public static function boot()
+    {
+        parent::boot();
+        self::observe(new DefaultModelObserver);
+    }
+
     protected $guarded = ['id'];
-public function getSlugOptions(): SlugOptions
+
+    public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
             ->generateSlugsFrom('title')
@@ -29,7 +39,7 @@ public function getSlugOptions(): SlugOptions
 
     public function registerMediaConversions(?Media $media = null): void
     {
-                $this->addMediaConversion('big-image')
+        $this->addMediaConversion('big-image')
             ->width(1200)
             ->height(630)
             ->nonQueued();
@@ -52,21 +62,6 @@ public function getSlugOptions(): SlugOptions
     public function getImageAttribute($value)
     {
         return $this->getFirstMediaUrl('tour', 'main-image');
-    }
-
-    public function setImageAttribute($value)
-    {
-        if ($value == null) {
-            $this->media()->delete();
-        }
-
-        if (preg_match("/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).base64,.*/", $value) == 0) {
-            return false;
-        }
-
-        $this->media()->delete();
-        $this->addMediaFromBase64($value)
-            ->toMediaCollection('tour');
     }
 
     protected static function booted()

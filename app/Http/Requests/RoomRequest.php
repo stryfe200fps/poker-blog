@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -28,6 +29,7 @@ class RoomRequest extends FormRequest
         return [
             'title' => 'required',
             'description' => 'required',
+            'slug' =>  Rule::unique('rooms')->ignore(request()->get('id')), 
             'features' => function($attribute, $value, $fail) {
                 // dd(json_decode($value));
                   $fieldGroups = $value;
@@ -75,8 +77,7 @@ class RoomRequest extends FormRequest
         return [
             'title.required' => 'Title is required',
             'description.required' => 'description is required',
-
-
+            'slug.unique' => 'Slug should be unique'
         ];
     }
 }

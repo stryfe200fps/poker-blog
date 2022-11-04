@@ -21,7 +21,6 @@ class EventReportObserver
             $model->event_chips()->delete();
             foreach (request()->get('eventChipPlayers') ?? [] as $eventChipPlayer) {
                 $event = EventChip::create([
-                    'name' => '',
                     'event_report_id' => $model->id,
                     'day_id' => $model->day_id,
                     'published_date' => $model->published_date,
@@ -29,17 +28,22 @@ class EventReportObserver
                     'current_chips' => $eventChipPlayer['current_chips'],
                 ]);
 
+                // dd($eventChipPlayer);
+
                 if ($eventChipPlayer['payout'] ?? null !== null) {
-                    if (EventPayout::where('event_id', $model->event_id)->where('player_id', $eventChipPlayer['player_id'])->count() > 0) {
-                        $eventPayout = EventPayout::where('event_id', $model->event_id)->where('player_id', $eventChipPlayer['player_id'])->firstOrFail();
+
+                    if (EventPayout::where('event_id', $model->event->id)->where('player_id', $eventChipPlayer['player_id'])->count() > 0) {
+                        $eventPayout = EventPayout::where('event_id', $model->event->id)->where('player_id', $eventChipPlayer['player_id'])->firstOrFail();
                         $eventPayout->prize = $eventChipPlayer['payout'];
                         $eventPayout->position = $eventChipPlayer['position'];
-                        $eventPayout->save();
+                        $isSave = $eventPayout->save();
+                        // dump($isSave);
                     } else {
-                        EventPayout::create([
-                            'player_id' => $eventChipPlayer['player_id'], 'event_id' => $model->event_id,
+                     $payout =    EventPayout::create([
+                            'player_id' => $eventChipPlayer['player_id'], 'event_id' => $model->event->id,
                             'prize' => $eventChipPlayer['payout'],
                         ]);
+
                     }
                 }
             }
@@ -50,7 +54,6 @@ class EventReportObserver
         public function creating ($model)  { 
             $date = \Carbon\Carbon::parse($model->published_date?->toDateTimeString(), session()->get('timezone') ?? 'UTC');
             $model->published_date = $date->setTimezone('UTC');
-
         } 
 
         public function deleting($model) {

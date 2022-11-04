@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Observers\DefaultModelObserver;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Illuminate\Database\Eloquent\Model;
@@ -16,6 +17,14 @@ class Room extends Model implements HasMedia
     use HasFactory;
     use InteractsWithMedia;
     use HasSlug;
+
+    public $mediaCollection = 'media';
+
+    public static function boot()
+    {
+        parent::boot();
+        self::observe(new DefaultModelObserver);
+    }
 
     public function getSlugOptions(): SlugOptions
     {
@@ -58,32 +67,6 @@ class Room extends Model implements HasMedia
     public function country()
     {
         return $this->belongsTo(Country::class);
-    }
-
-    protected static function booted()
-    {
-
-    static::saved(function ($model) {
-
-        $value = request()->only('image')['image'] ?? '';
-
-        if ($value == null) {
-            $model->media()->delete();
-
-            return false;
-        }
-
-        if (preg_match("/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).base64,.*/", $value) == 0) {
-            return false;
-        }
-
-        $model->media()->delete();
-        $model->addMediaFromBase64($value)
-            ->toMediaCollection('room');
-
-    });
-    
-
     }
 
 }

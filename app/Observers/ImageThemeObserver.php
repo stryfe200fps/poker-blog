@@ -25,4 +25,5 @@ class ImageThemeObserver
         $model->addMediaFromBase64($value)
             ->toMediaCollection('image-theme');
     }
+
 }

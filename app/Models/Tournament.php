@@ -3,14 +3,15 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Sluggable\HasSlug;
+use Spatie\MediaLibrary\HasMedia;
 use Spatie\Sluggable\SlugOptions;
+use App\Observers\DefaultModelObserver;
+use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Tournament extends Model implements HasMedia
 {
@@ -19,6 +20,13 @@ class Tournament extends Model implements HasMedia
     use InteractsWithMedia;
     use HasSlug;
 
+    public $mediaCollection = 'tournament';
+
+    public static function boot()
+    {
+        parent::boot();
+        self::observe(new DefaultModelObserver);
+    }
 
     protected $appends = [
         'minimized_timezone'
@@ -31,8 +39,6 @@ class Tournament extends Model implements HasMedia
             ->saveSlugsTo('slug')
             ->doNotGenerateSlugsOnUpdate();
     }
-
-
 
     public function registerMediaConversions(?Media $media = null): void
     {
@@ -56,20 +62,7 @@ class Tournament extends Model implements HasMedia
         return $this->getFirstMediaUrl('tournament', 'main-image');
     }
 
-    public function setImageAttribute($value)
-    {
-        if ($value == null) {
-            $this->media()->delete();
-        }
 
-        if (preg_match("/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).base64,.*/", $value) == 0) {
-            return false;
-        }
-
-        $this->media()->delete();
-        $this->addMediaFromBase64($value)
-            ->toMediaCollection('tournament');
-    }
     public function getMinimizedTimezoneAttribute()
     {
         $timezone = explode(' ', $this->timezone)[0];
@@ -136,24 +129,24 @@ class Tournament extends Model implements HasMedia
         return $this->hasMany(Event::class);
     }
 
-    protected static function booted()
-    {
-        static::creating(function ($model) {
-            if ($model->slug == '') {
-                return;
-            }
+    // protected static function booted()
+    // {
+    //     static::creating(function ($model) {
+    //         if ($model->slug == '') {
+    //             return;
+    //         }
 
-            $model->slug = Str::slug($model->slug);
-        });
-           static::updating(function ($model) {
+    //         $model->slug = Str::slug($model->slug);
+    //     });
+    //        static::updating(function ($model) {
 
-            $findModel = Tournament::find($model->id);
-             if ($model->slug !== $findModel->slug) {
-                $model->slug = Str::slug($model->slug);
-            } 
-        });
+    //         $findModel = Tournament::find($model->id);
+    //          if ($model->slug !== $findModel->slug) {
+    //             $model->slug = Str::slug($model->slug);
+    //         } 
+    //     });
 
-    }
+    // }
 
     public static function selectAvailableTours()
     {

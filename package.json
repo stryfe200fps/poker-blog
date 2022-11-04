@@ -21,6 +21,7 @@
         "vue": "^3.2.31"
     },
     "dependencies": {
+        "cwebp": "^2.0.5",
         "laravel-echo": "^1.14.0",
         "moment": "^2.29.4",
         "mosha-vue-toastify": "^1.0.23",

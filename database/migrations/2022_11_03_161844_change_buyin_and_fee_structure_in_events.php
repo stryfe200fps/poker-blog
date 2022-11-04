@@ -13,11 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        try { 
-        Schema::table('levels', function (Blueprint $table) {
-            $table->integer('big_blinds');
+        Schema::table('events', function (Blueprint $table) {
+            $table->integer('buyin')->nullable()->change();
+            $table->integer('fee')->nullable()->change();
         });
-        } catch (Exception $e ) { }
     }
 
     /**
@@ -27,10 +26,9 @@ return new class extends Migration
      */
     public function down()
     {
-        try { 
-        Schema::table('levels', function (Blueprint $table) {
-            $table->dropColumn('big_blinds');
+        Schema::table('events', function (Blueprint $table) {
+            $table->integer('fee')->change();
+            $table->integer('buyin')->change();
         });
-    } catch (Exception $e) {}
     }
 };

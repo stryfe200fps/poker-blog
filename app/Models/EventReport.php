@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Observers\DefaultModelObserver;
 use App\Observers\EventReportObserver;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -19,8 +20,6 @@ class EventReport extends Model implements HasMedia
     use \Backpack\CRUD\app\Models\Traits\CrudTrait;
     use HasFactory;
     use \Znck\Eloquent\Traits\BelongsToThrough;
-
-    // use HasSlug;
 
     public function registerMediaConversions(?Media $media = null): void
     {
@@ -40,33 +39,12 @@ class EventReport extends Model implements HasMedia
             ->nonQueued();
     }
 
-    // public function getSlugOptions(): SlugOptions
-    // {
-    //     return SlugOptions::create()
-    //         ->generateSlugsFrom('title')
-    //         ->saveSlugsTo('slug');
-    // }
 
     protected $guarded = ['id'];
 
     public function getImageAttribute($value)
     {
         return $this->getFirstMediaUrl('event-report', 'main-image');
-    }
-
-    public function setImageAttribute($value)
-    {
-        if ($value == null) {
-            $this->media()->delete();
-        }
-
-        if (preg_match("/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).base64,.*/", $value) == 0) {
-            return false;
-        }
-
-        $this->media()->delete();
-        $this->addMediaFromBase64($value)
-            ->toMediaCollection('event-report');
     }
 
     public function event()
@@ -142,9 +120,12 @@ class EventReport extends Model implements HasMedia
         'players' => 'json',
     ];
 
+    public $mediaCollection = 'event-report';
+
     public static function boot()
     {
         parent::boot();
+        self::observe(new DefaultModelObserver);
         self::observe(new EventReportObserver);
     }
 

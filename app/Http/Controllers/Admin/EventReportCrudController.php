@@ -117,8 +117,6 @@ class EventReportCrudController extends CrudController
 
         $event = Event::where('id', session()->get('event_id'))->first();
 
-
-        // dd($event);
         CRUD::setValidation(EventReportRequest::class);
         $this->crud->addField([
 
@@ -132,15 +130,16 @@ class EventReportCrudController extends CrudController
 
         ]);
 
-        // $this->crud->addField(
-        //     [
-        //         'name' => 'event_id',
-        //         'type' => 'hidden',
-        //         'value' => session()->get('event_id'),
-        //         'wrapper' => [
-        //             'class' => 'form-group col-md-12',
-        //         ],
-        //     ]);
+        $this->crud->addField(
+            [
+                'name' => 'fake_event',
+                'type' => 'hidden',
+                'fake' => true,
+                'value' => session()->get('event_id'),
+                'wrapper' => [
+                    'class' => 'form-group col-md-12',
+                ],
+            ]);
 
         // $lastLevelId = DB::table('event_reports')
         // ->join('levels', function ($join) {

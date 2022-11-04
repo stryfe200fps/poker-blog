@@ -13,6 +13,7 @@ use App\Http\Controllers\Inertia\MenuItemController;
 use App\Http\Controllers\Inertia\TournamentController;
 use App\Http\Controllers\Admin\Utilities\ExcelUploadController;
 use App\Http\Controllers\Inertia\RoomController;
+use App\Models\Tournament;
 
 Route::get('/', [HomeController::class, 'index']);
 // Route::get('/tournament', [TournamentController::class , 'index'] );
@@ -42,6 +43,16 @@ Route::prefix('tours')->group(function () {
     Route::get('/{tour}/{series}/{eventSlug}/{day?}/{type?}', [EventController::class, 'show']);
 });
 
+
+Route::get('/series/{slug}', function ($slug) {
+$tournament = Tournament::where('slug', $slug)->firstOrFail() ;
+return Inertia::render('Series/Show', [
+    'title' => 'Events Calendar | LifeOfPoker',
+    'series' => $tournament,
+    'page_title' => 'Event Calendar',
+    // 'json-ld-webpage' => 'testsssss',
+ ]);
+});
 
 Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
 

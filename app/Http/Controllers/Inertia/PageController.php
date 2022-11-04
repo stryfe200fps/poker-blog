@@ -21,8 +21,6 @@ class PageController extends Controller
                 'json-ld-webpage' => $webPage,
                 'description' => \Illuminate\Support\Str::limit($page->name, 100, $end = '...'),
                 'page' => $page,
-                'template' => $page->template
-
             ]);
         } else {
             return Inertia::render('Error/404');

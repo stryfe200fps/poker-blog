@@ -11,21 +11,21 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class EventApiController extends Controller
 {
-    public function index()
-    {
-        return EventResource::collection(Event::with(['payouts', 'poker_tournament' => function ($q) {
-            $q->with('poker_tour');
-        }])->latest()->paginate(10));
-    }
+    // public function index()
+    // {
+    //     return EventResource::collection(Event::with(['payouts', 'poker_tournament' => function ($q) {
+    //         $q->with('poker_tour');
+    //     }])->latest()->paginate(10));
+    // }
 
-    public function show($id)
-    {
-        return new EventResource(Event::with(
-            [
-                'live_reports',  'live_reports.media', 'live_report_players',
-                'live_report_players.player', 'live_report_players.player.country',
-                'payouts.player', 'payouts', 'live_reports.author', ])->where('id', $id)->first());
-    }
+    // public function show($id)
+    // {
+    //     return new EventResource(Event::with(
+    //         [
+    //             'live_reports',  'live_reports.media', 'live_report_players',
+    //             'live_report_players.player', 'live_report_players.player.country',
+    //             'payouts.player', 'payouts', 'live_reports.author', ])->where('id', $id)->first());
+    // }
 
     public function upload(Request $request)
     {

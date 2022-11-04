@@ -4,12 +4,23 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use App\Models\Day;
+use Spatie\Image\Image;
+use App\Traits\ImageUpload;
 use Illuminate\Support\Str;
 use Spatie\Sluggable\HasSlug;
+use App\Traits\BackpackSlugify;
+use App\Traits\LOPDefaultTrait;
+use App\Traits\HasMultipleImages;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\Sluggable\SlugOptions;
+use App\Traits\HasMediaCollection;
+use App\Observers\DefaultModelObserver;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\ImageOptimizer\OptimizerChain;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\ImageOptimizer\Optimizers\Optipng;
+use Spatie\ImageOptimizer\Optimizers\Pngquant;
+use Spatie\ImageOptimizer\Optimizers\Jpegoptim;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
@@ -18,21 +29,21 @@ class Event extends Model implements HasMedia
 {
     use \Backpack\CRUD\app\Models\Traits\CrudTrait;
     use HasFactory;
-    use InteractsWithMedia;
-    // use ImageOptimizer;
     use HasSlug;
+    use InteractsWithMedia;
     use \Znck\Eloquent\Traits\BelongsToThrough;
+    // use MediaT;
 
     protected $guarded = ['id'];
+    // use HasMediaCollection, HasMultipleImages;
 
-    // protected $casts = [
-    //     'schedule' => 'json',
-    // ];
+    public $mediaCollection = 'event';
 
-    // public function setScheduleAttribute($schedule)
-    // {
-    //     $this->attributes['schedule'] = $this->scheduleArray($schedule);
-    // }
+    public static function boot()
+    {
+        parent::boot();
+        self::observe(new DefaultModelObserver);
+    }
 
     public function getScheduleAttribute()
     {
@@ -51,7 +62,6 @@ class Event extends Model implements HasMedia
 
         return $newSched;
     }
-    
 
     public function getSlugOptions(): SlugOptions
     {
@@ -161,21 +171,6 @@ class Event extends Model implements HasMedia
         return $this->getFirstMediaUrl('event', 'main-image');
     }
 
-    public function setImageAttribute($value)
-    {
-        if ($value == null) {
-            $this->media()->delete();
-        }
-
-        if (preg_match("/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).base64,.*/", $value) == 0) {
-            return false;
-        }
-
-        $this->media()->delete();
-        $this->addMediaFromBase64($value)
-            ->toMediaCollection('event');
-    }
-
     public function event_game_table()
     {
         return $this->belongsTo(EventGameTable::class);
@@ -196,7 +191,6 @@ class Event extends Model implements HasMedia
         $reduced = collect($this->descendingDays()->get())->map(function ($day) {
             return $day->event_chips()->orderBy('published_date', 'DESC')->get();
         });
-        // return $reduced->flatten()->sortByDesc('published_date')->unique('player_id')->sortByDesc('current_chips');
         return $reduced->flatten()->unique('player_id')->sortByDesc('current_chips');
     }
 
@@ -280,31 +274,4 @@ class Event extends Model implements HasMedia
     //     return Carbon::parse($value)->setTimezone(session()->get('timezone') ?? 'UTC');
     // }
 
-    protected static function booted()
-    {
-        static::creating(function ($model) {
-            if ($model->slug == '') {
-                return;
-            }
-
-            $model->slug = Str::slug($model->slug);
-        });
-
-        static::updating(function ($model) {
-
-            $findModel = Event::find($model->id);
-             if ($model->slug !== $findModel->slug) {
-                $model->slug = Str::slug($model->slug);
-            } 
-        });
-
-        static::saved(function ($model) {
-            // $media = $model->media()->get()[0]->getPath();
-
-            // dd($media);
-
-        //  $t=   pathinfo($model->media()->getFirstMediaPath(), PATHINFO_DIRNAME);
-        //     dd($t);
-        });
-    }
 }

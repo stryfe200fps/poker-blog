@@ -28,8 +28,10 @@ class EventGameTableRequest extends FormRequest
         return [
             'title' => [
                 'required',
-            ]
+            ],
+            'code' =>  Rule::unique('event_game_tables')->ignore(request()->get('id')), 
         ];
+
        
     }
 
@@ -54,7 +56,7 @@ class EventGameTableRequest extends FormRequest
     {
         return [
             'title.required' => 'Title is required',
-
+            'code.unique' => 'Code should be unique',
         ];
     }
 }

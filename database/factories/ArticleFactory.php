@@ -23,6 +23,9 @@ class ArticleFactory extends Factory
      */
     public function definition()
     {
+        // $get = base64_encode(file_get_contents('https://www.fillmurray.com/640/360'));
+        // dd(base64_encode($get));
+
         return [
             'title' => $this->faker->name,
             'content' => [
@@ -34,7 +37,7 @@ class ArticleFactory extends Factory
             'slug' => $this->faker->slug,
             'published_date' => Carbon::now()->toString(),
             'author_id' => Author::factory()->create()->id,
-            'description' => 'Descriptions'
+            'description' => 'Descriptions',
         ];
     }
 }
