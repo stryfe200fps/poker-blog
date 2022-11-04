@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class BannerRequest extends FormRequest
+class MediaReportingRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,10 +25,11 @@ class BannerRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
-            'url' => 'required',
-            'location' => 'required',
-            'image' => 'required'
+            'title' => 'required',
+            'type' => 'required',
+            'author_id' => 'required',
+            'published_date' => 'required',
+            'link' => 'required',
         ];
     }
 
@@ -52,10 +53,11 @@ class BannerRequest extends FormRequest
     public function messages()
     {
         return [
-             'name.required' => 'Name is required',
-            'url.required' => 'URL is required',
-            'location.required' => 'Location is required',
-            'image.required' => 'Image is required',
+            'title.required' => 'Title is required',
+            'type.required' => 'Type is required',
+            'author_id.required' => 'Author is required',
+            'published_date.required' => 'Published date is required',
+            'link.required' => 'Add the podcast/video link',
         ];
     }
 }

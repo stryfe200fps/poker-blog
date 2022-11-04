@@ -25,6 +25,7 @@ use App\Http\Controllers\Api\levelApiController;
 use App\Http\Controllers\EventReportsController;
 use App\Http\Controllers\LOFApiEventsController;
 use App\Http\Controllers\Api\LiveReportController;
+use App\Http\Controllers\Api\MediaReportingController;
 use App\Http\Controllers\Api\ReportsApiController;
 use App\Http\Controllers\ArticleCategoryController;
 use App\Http\Controllers\LOFApiEventIndexController;
@@ -117,7 +118,7 @@ Route::get('select/countries', function () {
 Route::get('rooms', [RoomController::class, 'index']);
 Route::get('rooms/{slug}', [RoomController::class, 'show']);
 
-
 Route::get('banners', [BannerController::class, 'index']);
+Route::get('media-reports', [MediaReportingController::class, 'index']);
 
 
