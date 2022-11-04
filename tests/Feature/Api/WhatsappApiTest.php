@@ -24,7 +24,9 @@ test('whatsapp api', function () {
     ]);
 
 
-    $day = Day::factory()->create();
+    $day = Day::factory()->create([
+        'event_id' => $event->id
+    ]);
 
     $page = $this->get('admin/report?event='.$event->id.'&day='. $day->id)->assertStatus(200);
 
@@ -32,16 +34,14 @@ test('whatsapp api', function () {
 
     $eventChip = EventChip::factory()->create([
         'player_id' => Player::factory()->create()->id,
-        'is_whatsapp' => 1,
-        'event_id' => $event->id,
+        'is_whatsapp' => 0,
     ]);
+
 
     $eventChip2 = EventChip::factory()->create([
         'player_id' => Player::factory()->create()->id,
         'is_whatsapp' => 1,
-        'event_id' => $event->id,
     ]);
-
 
     $response = $this->get('api/chip/day/'.$eventChip2->event_report->day_id.'/whatsapp');
     $response->assertStatus(200);

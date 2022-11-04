@@ -12,7 +12,6 @@ class ChipController extends Controller
     {
         $day = Day::with(['event_chips'])->find($id);
 
-        // $day->load(['event_chips.player']);
 
         return collect(EventChipsResource::collection($day->latest_event_chips()));
     }
@@ -20,7 +19,6 @@ class ChipController extends Controller
     public function whatsapp($id)
     {
         $day = Day::with(['event_chips'])->find($id);
-
         return collect(EventChipsResource::collection($day->whatsapp_event_chips()));
     }
 }

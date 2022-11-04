@@ -58,7 +58,7 @@ class Day extends Model implements HasMedia
 
     public function event_chips()
     {
-        return $this->hasManyThrough(EventChip::class, EventReport::class);
+        return $this->hasMany(EventChip::class);
     }
 
     public function latest_event_chips()

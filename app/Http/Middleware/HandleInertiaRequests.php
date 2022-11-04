@@ -42,22 +42,12 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        // dd(Banner::all());
         return array_merge(parent::share($request), [
             'title' => fn (MetaInterface $meta) => ($meta->toArray()['head'][0]['content']),
             'menu' => MenuItem::getTree(),
             'supported_locales' => config('app.supported_locales'),
             'banners' => BannerResource::collection(Banner::all()),
-            // 'locale' => function () {
-            //     return 'en';
-            // },
-            // 'language' => function () {
-
-            //     $locale = session()->get('locale') != null ? session()->get('locale').'.json' : 'en.json';
-
-            //     return translations(
-            //         resource_path("lang/$locale")
-            //     );
-            // },
             'category' => MenuItem::getTree()->where('link', 'news')->first()->children ?? [],
         ]);
     }
