@@ -61,7 +61,6 @@
                         :payouts="payoutsData"
                         :currentTab="type"
                         :day="day"
-                        :lastDay="last_day"
                         :url="url"
                         @loadMore="loadMoreReports"
                     />
@@ -112,9 +111,6 @@ const props = defineProps({
         type: String,
     },
     url: {
-        type: String,
-    },
-    last_day: {
         type: String,
     },
 });
@@ -216,8 +212,10 @@ function scrollToTop() {
 }
 
 onMounted(async () => {
+    console.log(props.day);
+    console.log(props.type);
     await eventStore.getEventData(props.slug);
-    if (props.day === "") {
+    if (props.day === "" || props.day === props.type) {
         selectDay.value = highestDay();
     } else {
         selectDay.value = Object.keys(eventData.value.available_days).find(

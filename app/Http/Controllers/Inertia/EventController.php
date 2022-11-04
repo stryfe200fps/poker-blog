@@ -24,8 +24,7 @@ class EventController extends Controller
         return Inertia::render('Event/Index', [
             'slug' => $eventSlug,
             'page' => $page ?? 'reports',
-            'day' => $type == '' ?  $event->getLastSchedule()->name :  $day,
-            'last_day' => $event->getLastSchedule()->name,
+            'day' => $day == null && $type == null ?  $event->getLastSchedule()->name :  $day,
             'type' => in_array($day, ['whatsapp', 'chip-stack', 'gallery', 'payouts', 'live-updates']) ? $day : $type  ,
             'title' => $event->tournament->title.' | '.$event->title.' | LifeOfPoker',
             'description' => $event->tournament->description,

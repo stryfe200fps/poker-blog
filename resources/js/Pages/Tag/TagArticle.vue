@@ -36,8 +36,8 @@
                                         ).format('YYYY')}/${moment(
                                             new Date(tag.date)
                                         ).format('MM')}/${tag.slug}`"
-                                        >{{ tag.title }}</Link
-                                    >
+                                        v-html="tag.title"
+                                    ></Link>
                                 </h2>
                                 <ul class="post-tags">
                                     <li>

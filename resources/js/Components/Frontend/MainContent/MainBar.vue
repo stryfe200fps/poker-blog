@@ -123,7 +123,8 @@ defineProps({
                                     ).format('YYYY')}/${moment(
                                         new Date(news.date)
                                     ).format('MM')}/${news.slug}`"
-                                    >{{ news.title }}
+                                    v-html="news.title"
+                                >
                                 </Link>
                             </h2>
                             <div v-html="news.description"></div>
