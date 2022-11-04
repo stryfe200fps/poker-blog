@@ -11,6 +11,6 @@ class MediaReportingController extends Controller
 {
     public function index()
     {
-        return MediaReportingResource::collection(MediaReporting::all());
+        return MediaReportingResource::collection(MediaReporting::orderByDesc('published_date')->get());
     }
 }

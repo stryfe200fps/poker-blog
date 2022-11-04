@@ -40,7 +40,8 @@ it('can update event if authenticated', function () {
 
     $eventUpdate = Event::factory()->make([
         'id' => $event->id,
-        'title' => 'Things I do'
+        'title' => 'Things I do',
+        'event_game_table' => EventGameTable::factory()->create()
     ]);
 
     $this->put('/admin/events/update', $eventUpdate->attributesToArray());

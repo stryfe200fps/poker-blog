@@ -12,6 +12,7 @@ class BannerController extends Controller
 
     public function index()
     {
-        return BannerResource::collection(Banner::all());
+
+        return BannerResource::collection(Banner::orderByDesc('id')->get());
     }
 }

@@ -39,6 +39,7 @@ class BannerCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        $this->crud->orderBy('id', 'DESC');
         CRUD::column('name');
         CRUD::column('location');
         CRUD::column('url');

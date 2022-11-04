@@ -30,6 +30,8 @@ class MediaReportingCrudController extends CrudController
         CRUD::setModel(\App\Models\MediaReporting::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/media-reporting');
         CRUD::setEntityNameStrings('media reporting', 'media reportings');
+
+        // $this->crud->query = $this->crud->orderBy('published_date', 'DESC');
     }
 
     /**
@@ -40,8 +42,25 @@ class MediaReportingCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        
+
+        $this->crud->orderBy('published_date', 'DESC');
         CRUD::addColumn('title');
+        CRUD::addColumn('type');
+        CRUD::addColumn('published_date');
+
+        $this->crud->addFilter([
+            'type' => 'select2',
+            'name' => 'author',
+            'label' => 'Author',
+        ],
+            function () {
+                return Author::all()->pluck('full_name', 'id')->toArray();
+            },
+            function ($values) {
+                $this->crud->query = $this->crud->query->whereHas('author', function ($query) use ($values) {
+                    $query->where('id', $values);
+                });
+            });
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
@@ -109,7 +128,7 @@ class MediaReportingCrudController extends CrudController
 
             [   // DateTime
                 'name' => 'published_date',
-                'label' => 'Date',
+                'label' => 'Published Date',
                 'type' => 'datetime_picker',
                 'default' => 'now',
                 'datetime_picker_options' => [
