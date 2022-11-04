@@ -99,7 +99,7 @@ Route::get('/events-calendar', function () {
 });
 
 
-Route::get('/rooms', [ RoomController::class, 'index' ]);
+// Route::get('/rooms', [ RoomController::class, 'index' ]);
 Route::get('/rooms/{slug}', [ RoomController::class, 'show' ]);
 
 Route::get('/{page}/{other?}', [PageController::class, 'index']);

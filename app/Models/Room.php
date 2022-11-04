@@ -55,6 +55,11 @@ class Room extends Model implements HasMedia
         return $this->getFirstMediaUrl('room', 'main-image');
     }
 
+    public function getImageThumbAttribute($value)
+    {
+        return $this->getFirstMediaUrl('room', 'main-thumb');
+    }
+
     public function country()
     {
         return $this->belongsTo(Country::class);
