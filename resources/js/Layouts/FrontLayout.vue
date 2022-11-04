@@ -76,6 +76,7 @@ onMounted(async () => {
                       backgroundRepeat: 'no-repeat',
                       backgroundPosition: 'center center',
                       backgroundAttachment: 'fixed',
+                      imageRendering: '-webkit-optimize-contrast',
                   }
                 : ''
         "
