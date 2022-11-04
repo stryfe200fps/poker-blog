@@ -75,9 +75,7 @@ onMounted(async () => {
                       backgroundImage: `url(${banners.image_set?.og_image})`,
                       backgroundRepeat: 'no-repeat',
                       backgroundPosition: 'center center',
-                      backgroundSize: 'cover',
                       backgroundAttachment: 'fixed',
-                      cursor: 'pointer',
                   }
                 : ''
         "
