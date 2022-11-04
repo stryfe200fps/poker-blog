@@ -77,6 +77,9 @@
     <li class='nav-item'><a class='nav-link' href='{{ backpack_url('menu-item') }}'><i class='nav-icon la la-list'></i> <span>Navigation</span></a></li>
     @endif
 
+
+    <li class="nav-item"><a class="nav-link" href="{{ backpack_url('banner') }}"><i class="nav-icon la la-list"></i> Banners</a></li>
+
     </ul>
 </li>
 
@@ -91,7 +94,6 @@
     </li>
 @endrole
 
-<li class="nav-item"><a class="nav-link" href="{{ backpack_url('room') }}"><i class="nav-icon la la-question"></i> Rooms</a></li>
 
 <li class="nav-item nav-dropdown">
     <a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon la la-newspaper"></i> <span>Miscellaneous</span></a>
@@ -109,7 +111,7 @@
     <li class="nav-item"><a class="nav-link" href="{{ backpack_url('image-theme') }}"><i class="nav-icon la la-image"></i> <span>Image themes</span></a></li>
     @endif
 
-
+    <li class="nav-item"><a class="nav-link" href="{{ backpack_url('room') }}"><i class="nav-icon la la-list"></i> Rooms</a></li>
     <li class="nav-item"><a class="nav-link" href="{{ backpack_url('event-game-table') }}"><i class="nav-icon la la-list"></i>  Games </a></li>
     <li class="nav-item"><a class="nav-link" href="{{ backpack_url('glossary') }}"><i class="nav-icon la la-list"></i> Glossaries</a></li>
     <li class='nav-item'><a class='nav-link' href='{{ backpack_url('setting') }}'><i class='nav-icon la la-cog'></i> <span>Settings</span></a></li>

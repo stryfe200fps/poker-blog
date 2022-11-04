@@ -19,4 +19,9 @@ trait HasMediaCollection
             }
         }
     }
+
+    public function getImageAttribute()
+    {
+        return $this?->getFirstMediaUrl(app()->make(get_class($this))->firstOrFail()->mediaCollection);
+    }
 }

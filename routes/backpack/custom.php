@@ -37,4 +37,5 @@ Route::crud('article', 'ArticleCrudController');
     Route::crud('event-game-table', 'EventGameTableCrudController');
     Route::crud('glossary', 'GlossaryCrudController');
     Route::crud('room', 'RoomCrudController');
+    Route::crud('banner', 'BannerCrudController');
 }); // this should be the absolute last line of this file

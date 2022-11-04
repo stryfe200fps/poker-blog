@@ -11,11 +11,7 @@ trait HasMultipleImages
 
         $this->addMediaCollection(app()->make(get_class($this))->firstOrFail()->mediaCollection)
             ->registerMediaConversions(function () {
-// xs-image  200 x 200
-// sm-image  300 x 250
-// md-image  640 x 480
-// lg-image  900 x 600
-// xl-image  1600 x 900
+
                 $this->addMediaConversion('xs-image')
                     ->width(200)
                     ->height(200);
@@ -24,16 +20,17 @@ trait HasMultipleImages
                     ->width(300)
                     ->height(250);
 
-                $this->addMediaConversion('md-thumb')
+                $this->addMediaConversion('md-image')
                     ->width(640)
                     ->height(480);
 
-                $this->addMediaConversion('main-gallery-thumb')
-                    ->width(130)
-                    ->height(86)
-                    ->nonQueued();
+                $this->addMediaConversion('lg-image')
+                    ->width(900)
+                    ->height(600);
 
-                $this->addMediaConversion('main-gallery');
+                $this->addMediaConversion('xl-image')
+                    ->width(1600)
+                    ->height(900);
             });
 
 

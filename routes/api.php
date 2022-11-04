@@ -17,6 +17,7 @@ use App\Http\Controllers\Api\RoomController;
 use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\Api\ArticleController;
+use App\Http\Controllers\Api\BannerController;
 use App\Http\Controllers\PageManagerController;
 use App\Http\Controllers\SocialMediaController;
 use App\Http\Controllers\Api\EventApiController;
@@ -116,5 +117,7 @@ Route::get('select/countries', function () {
 Route::get('rooms', [RoomController::class, 'index']);
 Route::get('rooms/{slug}', [RoomController::class, 'show']);
 
+
+Route::get('banners', [BannerController::class, 'index']);
 
 
