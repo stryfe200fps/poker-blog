@@ -9,17 +9,17 @@ use App\Models\Room;
 
 class RoomController extends Controller
 {
-    public function index()
-    {
-        $webPage = \JsonLd\Context::create('web_page', [
-            'url' => request()->url()
-        ]);
+    // public function index()
+    // {
+    //     $webPage = \JsonLd\Context::create('web_page', [
+    //         'url' => request()->url()
+    //     ]);
 
-        return Inertia::render('Room/Index', [
-            'title' => 'Rooms | LifeOfPoker',
-            'json-ld-webpage' => $webPage,
-        ]);
-    }
+    //     return Inertia::render('Room/Index', [
+    //         'title' => 'Rooms | LifeOfPoker',
+    //         'json-ld-webpage' => $webPage,
+    //     ]);
+    // }
 
     public function show($slug)
     {
@@ -28,9 +28,10 @@ class RoomController extends Controller
             'url' => request()->url()
         ]);
 
-        return Inertia::render('Room/Show', [
+        return Inertia::render('Template/PokerRoom', [
             'title' => 'Room: ' .$room->title.  ' | LifeOfPoker',
             'slug' => $room->slug,
+            'room' => $room,
             'image' =>  $room->getFirstMediaUrl('room', 'big-image'),
             'json-ld-webpage' => $webPage,
         ]);

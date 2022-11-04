@@ -37,7 +37,7 @@
             <div class="single-post-box">
                 <div class="title-post">
                     <h1>
-                        <h1>{{ article.title }}</h1>
+                        <h1 v-html="article.title"></h1>
                     </h1>
                     <div
                         style="
@@ -214,7 +214,8 @@
                                         ).format('YYYY')}/${moment(
                                             new Date(relate.date)
                                         ).format('MM')}/${relate.slug}`"
-                                        >{{ relate.title }}
+                                        v-html="relate.title"
+                                    >
                                     </Link>
                                 </h2>
                                 <ul class="post-tags">

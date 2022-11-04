@@ -86,8 +86,8 @@
                                             ).format('YYYY')}/${moment(
                                                 new Date(category.date)
                                             ).format('MM')}/${category.slug}`"
-                                            >{{ category.title }}</Link
-                                        >
+                                            v-html="category.title"
+                                        ></Link>
                                     </h2>
                                 </div>
                             </div>

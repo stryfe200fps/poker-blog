@@ -77,31 +77,68 @@
                     </button>
                 </form>
             </div>
+            <div v-if="page.template === 'rooms'">
+                <div class="grid-box filters">
+                    <h4>Find poker rooms near me</h4>
+                    <div>
+                        <select class="form-control" v-model="selectedCountry">
+                            <option value="" selected disabled>
+                                Select Location
+                            </option>
+                            <option
+                                v-for="(country, index) in countries"
+                                :key="index"
+                                :value="country.iso_3166_2"
+                            >
+                                {{ country.name }}
+                            </option>
+                        </select>
+                    </div>
+                    <button
+                        class="btn btn-default"
+                        v-if="selectedCountry !== ''"
+                        @click="resetFilter()"
+                    >
+                        Reset
+                    </button>
+                </div>
+                <div class="grid">
+                    <PokerRooms
+                        v-for="(room, index) in rooms"
+                        :key="index"
+                        :room="room"
+                    />
+                </div>
+                <div
+                    v-if="rooms?.length"
+                    v-observe-visibility="handleScrolledToBottom"
+                ></div>
+            </div>
         </div>
     </FrontLayout>
 </template>
 
 <script setup>
-import { Head, Link, usePage } from "@inertiajs/inertia-vue3";
-
-import FrontLayout from "@/Layouts/FrontLayout.vue";
-import ReportList from "../../Components/Frontend/Report/ReportList.vue";
-import SideBar from "../../Components/Frontend/MainContent/SideBar.vue";
-import TournamentList from "../../Components/Frontend/Tournament/List.vue";
-
-import { useArticleStore } from "@/Stores/article.js";
-import { onMounted, ref, watch } from "@vue/runtime-core";
+import { Head } from "@inertiajs/inertia-vue3";
+import { useRoomStore } from "@/Stores/pokerRoom.js";
+import { onMounted, ref, computed, watch } from "@vue/runtime-core";
 import axios from "axios";
 import { createToast } from "mosha-vue-toastify";
 import "mosha-vue-toastify/dist/style.css";
 
-const articleStore = useArticleStore();
+import FrontLayout from "@/Layouts/FrontLayout.vue";
+import PokerRooms from "./PokerRooms.vue";
 
-const list = ref([]);
 const name = ref(null);
 const email = ref(null);
 const subject = ref("");
 const message = ref(null);
+const countries = ref([]);
+const selectedCountry = ref("");
+const rooms = ref([]);
+const currentPage = ref(1);
+const lastPage = ref(1);
+const pokerRoomStore = useRoomStore();
 
 const props = defineProps({
     page: {
@@ -109,6 +146,31 @@ const props = defineProps({
         default: {},
     },
 });
+
+const filteredLocation = computed(() => {
+    return {
+        country: selectedCountry.value || null,
+    };
+});
+
+async function handleScrolledToBottom(isVisible) {
+    if (!isVisible) return;
+
+    currentPage.value++;
+
+    if (currentPage.value > lastPage.value) return;
+
+    await pokerRoomStore.getRooms({
+        page: currentPage.value,
+        country: selectedCountry.value || null,
+    });
+    rooms.value.push(...pokerRoomStore.rooms.data);
+    lastPage.value = pokerRoomStore.rooms.meta.last_page;
+}
+
+function resetFilter() {
+    selectedCountry.value = "";
+}
 
 async function submitMessage() {
     try {
@@ -135,6 +197,31 @@ async function submitMessage() {
         console.error(error.response.data.message);
     }
 }
+
+onMounted(async () => {
+    if (props.page.template === "rooms") {
+        await pokerRoomStore.getRooms({
+            page: 1,
+        });
+        rooms.value = pokerRoomStore.rooms.data;
+        lastPage.value = pokerRoomStore.rooms.meta.last_page;
+        await pokerRoomStore.getCountries();
+        countries.value = pokerRoomStore.countries.data;
+    }
+});
+
+watch(
+    () => filteredLocation.value,
+    async function (value) {
+        await pokerRoomStore.getRooms({
+            page: 1,
+            ...value,
+        });
+        currentPage.value = 1;
+        rooms.value = pokerRoomStore.rooms.data;
+        lastPage.value = pokerRoomStore.rooms.meta.last_page;
+    }
+);
 </script>
 
 <style scoped>
@@ -191,5 +278,20 @@ async function submitMessage() {
 .contact-form-box #contact-form input.contact-input--error {
     border-width: 2px;
     border-color: #f44336;
+}
+
+.filters {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 40px;
+    font-family: "Lato", sans-serif;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+    gap: 30px;
 }
 </style>

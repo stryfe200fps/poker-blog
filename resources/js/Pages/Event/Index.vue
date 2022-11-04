@@ -61,7 +61,6 @@
                         :payouts="payoutsData"
                         :currentTab="type"
                         :day="day"
-                        :lastDay="last_day"
                         :url="url"
                         @loadMore="loadMoreReports"
                     />
@@ -112,9 +111,6 @@ const props = defineProps({
         type: String,
     },
     url: {
-        type: String,
-    },
-    last_day: {
         type: String,
     },
 });
@@ -199,9 +195,8 @@ async function reportViewing() {
 }
 
 function scrollToTop() {
-    window.scroll({ top: 0, behavior: "smooth" });
     isActive.value = false;
-    if (props.type !== "live-updates") {
+    if (props.type) {
         Inertia.visit(
             `/tours/${eventData.value.tour_slug}/${
                 eventData.value.tournament_slug
@@ -209,15 +204,17 @@ function scrollToTop() {
                 selectDay.value
             ]
                 .replace(/[^A-Z0-9]+/gi, "-")
-                .toLowerCase()}/live-updates`,
+                .toLowerCase()}`,
             { preserveState: true }
         );
+    } else {
+        window.scroll({ top: 0, behavior: "smooth" });
     }
 }
 
 onMounted(async () => {
     await eventStore.getEventData(props.slug);
-    if (props.day === "") {
+    if (props.day === "" || props.day === props.type) {
         selectDay.value = highestDay();
     } else {
         selectDay.value = Object.keys(eventData.value.available_days).find(

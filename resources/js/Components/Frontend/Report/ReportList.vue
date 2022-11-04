@@ -11,19 +11,9 @@
                 }"
             >
                 <Link
-                    :href="`/tours/${event.tour_slug}/${event.tournament_slug}/${event.slug}`"
-                    data-toggle="tab"
-                    preserve-state
-                    v-if="dayValue.toUpperCase() === lastDay"
-                >
-                    <span class="hide-on-mobile">LIVE UPDATES</span>
-                    <span class="show-on-mobile">UPDATES</span>
-                </Link>
-                <Link
                     :href="`/tours/${event.tour_slug}/${event.tournament_slug}/${event.slug}/${dayValue}`"
                     data-toggle="tab"
                     preserve-state
-                    v-else
                 >
                     <span class="hide-on-mobile">LIVE UPDATES</span>
                     <span class="show-on-mobile">UPDATES</span>
@@ -35,19 +25,9 @@
                 :class="{ active: currentTab == 'chip-stack' }"
             >
                 <Link
-                    :href="`/tours/${event.tour_slug}/${event.tournament_slug}/${event.slug}/chip-stack`"
-                    data-toggle="tab"
-                    preserve-state
-                    v-if="dayValue.toUpperCase() === lastDay"
-                >
-                    <span class="hide-on-mobile">CHIP COUNTS</span>
-                    <span class="show-on-mobile">CHIPS</span>
-                </Link>
-                <Link
                     :href="`/tours/${event.tour_slug}/${event.tournament_slug}/${event.slug}/${dayValue}/chip-stack`"
                     data-toggle="tab"
                     preserve-state
-                    v-else
                 >
                     <span class="hide-on-mobile">CHIP COUNTS</span>
                     <span class="show-on-mobile">CHIPS</span>
@@ -58,17 +38,9 @@
                 :class="{ active: currentTab == 'whatsapp' }"
             >
                 <Link
-                    :href="`/tours/${event.tour_slug}/${event.tournament_slug}/${event.slug}/whatsapp`"
-                    data-toggle="tab"
-                    preserve-state
-                    v-if="dayValue.toUpperCase() === lastDay"
-                    >#WHATSAPP</Link
-                >
-                <Link
                     :href="`/tours/${event.tour_slug}/${event.tournament_slug}/${event.slug}/${dayValue}/whatsapp`"
                     data-toggle="tab"
                     preserve-state
-                    v-else
                     >#WHATSAPP</Link
                 >
             </li>
@@ -77,17 +49,9 @@
                 :class="{ active: currentTab == 'gallery' }"
             >
                 <Link
-                    :href="`/tours/${event.tour_slug}/${event.tournament_slug}/${event.slug}/gallery`"
-                    data-toggle="tab"
-                    preserve-state
-                    v-if="dayValue.toUpperCase() === lastDay"
-                    >GALLERY</Link
-                >
-                <Link
                     :href="`/tours/${event.tour_slug}/${event.tournament_slug}/${event.slug}/${dayValue}/gallery`"
                     data-toggle="tab"
                     preserve-state
-                    v-else
                     >GALLERY</Link
                 >
             </li>
@@ -473,9 +437,6 @@ const props = defineProps({
     day: {
         type: String,
     },
-    lastDay: {
-        type: String,
-    },
     url: {
         type: String,
     },
@@ -483,7 +444,7 @@ const props = defineProps({
 const emit = defineEmits(["loadMore"]);
 
 const dayValue = computed(() => {
-    if (props.day === "") {
+    if (props.day === "" || props.day === props.currentTab) {
         const dayValues = Object.values(props?.event?.available_days ?? {});
         if (dayValues.length)
             return dayValues[dayValues.length - 1]

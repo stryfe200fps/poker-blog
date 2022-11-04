@@ -1,10 +1,15 @@
 <script setup>
 import { Link, usePage } from "@inertiajs/inertia-vue3";
-import { ref } from "@vue/runtime-core";
+import { ref, computed } from "@vue/runtime-core";
 import { createToast } from "mosha-vue-toastify";
 import "mosha-vue-toastify/dist/style.css";
+import moment from "moment";
 
 const email = ref(null);
+
+const currentDate = computed(() => {
+    return moment().format("YYYY");
+});
 
 async function submitEmail() {
     try {
@@ -37,19 +42,11 @@ async function submitEmail() {
                             <h1 style="color: white; border-color: #999">
                                 About Us
                             </h1>
-                            <p>We are the ace up the sleeve</p>
                             <p>
                                 Life of poker is a one stop shop for all your
-                                poker needs, we take care of you so you can
-                                bring out your best at the tables! Life of poker
-                                exists of a team of professional poker players
-                                and hospitality industry experts that are here
-                                to take you to the hottest games while
-                                facilitating a smooth and safe process. The next
-                                poker boom is here in Asia and since the
-                                re-opening of travel the major tournament series
-                                have returned with a vengeance breaking record
-                                in prize money consistently.
+                                poker needs. We are here to bring the action to
+                                your doorstep. Live event coverage, interviews,
+                                videos, podcasts and much more.
                             </p>
                         </div>
                     </div>
@@ -198,7 +195,10 @@ async function submitEmail() {
             <div class="footer-last-line">
                 <div class="row">
                     <div class="col-md-6">
-                        <p>&copy; COPYRIGHT 2022 lifeofpoker.com</p>
+                        <p>
+                            &copy; 2021-{{ currentDate }} Life of poker. All
+                            rights reserved.
+                        </p>
                     </div>
                     <div class="col-md-6">
                         <nav class="footer-nav">

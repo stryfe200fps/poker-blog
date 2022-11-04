@@ -20,11 +20,29 @@
                             >
                                 Today
                             </button>
-                            <input
-                                type="date"
-                                v-model="selectedDate"
-                                class="form-control custom-filter"
-                            />
+                            <div class="custom-date-picker">
+                                <div
+                                    class="custom-date-picker__btn"
+                                    @click="openDatePicker"
+                                    @blur="isOpen = false"
+                                    tabindex="0"
+                                >
+                                    <span>{{ datePlaceholder }}</span>
+                                    <i
+                                        class="fas fa-angle-down custom-date-picker__icon"
+                                        :class="{ up: isOpen }"
+                                    ></i>
+                                </div>
+                                <div>
+                                    <input
+                                        type="date"
+                                        v-model="selectedDate"
+                                        class="custom-date-picker__input"
+                                        id="custom-date"
+                                        @change="changeDate"
+                                    />
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -121,6 +139,7 @@ const seriesList = ref([]);
 const selectedDate = ref(moment().format("YYYY-MM-DD"));
 const currentPage = ref(1);
 const lastPage = ref(1);
+const isOpen = ref(false);
 
 const filteredSeries = computed(() => {
     return {
@@ -152,7 +171,9 @@ const mergeSeriesList = computed(() => {
 });
 
 const datePlaceholder = computed(() => {
-    return !selectedDate.value ? "Upcoming" : "wala";
+    return selectedDate.value === moment().format("YYYY-MM-DD")
+        ? "Upcoming"
+        : `${moment(new Date(selectedDate.value)).format("MMMM D")} onwards`;
 });
 
 function getDateToday() {
@@ -160,6 +181,15 @@ function getDateToday() {
     selectedCountry.value = "";
     selectedGame.value = "";
     selectedTour.value = "";
+}
+
+function openDatePicker() {
+    document.getElementById("custom-date").showPicker();
+    isOpen.value = !isOpen.value;
+}
+
+function changeDate() {
+    isOpen.value = false;
 }
 
 async function handleScrolledToBottom(isVisible) {
@@ -240,6 +270,34 @@ watch(
     width: auto;
     border: none;
     box-shadow: none;
+}
+
+.custom-date-picker {
+    position: relative;
+}
+
+.custom-date-picker__btn {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.custom-date-picker__icon {
+    transition: transform 0.5s ease;
+}
+
+.custom-date-picker__icon.up {
+    transform: rotate(180deg);
+}
+
+.custom-date-picker__input {
+    position: absolute;
+    top: -15px;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0;
 }
 
 @media (min-width: 992px) {
