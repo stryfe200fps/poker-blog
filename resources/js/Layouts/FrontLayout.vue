@@ -5,7 +5,7 @@ import SideBar from "../Components/Frontend/MainContent/SideBar.vue";
 import { Head, Link, usePage } from "@inertiajs/inertia-vue3";
 
 import { onMounted, ref, computed } from "@vue/runtime-core";
-
+import { useBannerStore } from "@/Stores/banner.js";
 import Echo from "laravel-echo";
 
 defineProps({
@@ -21,6 +21,8 @@ const preferences = ref([
     "Marketing",
 ]);
 const selectedPreference = ref(["Necessary"]);
+const bannerStore = useBannerStore();
+const banners = ref([]);
 
 function openPreference() {
     isOpen.value = !isOpen.value;
@@ -54,20 +56,36 @@ const getCookie = computed(() => {
     return false;
 });
 
-onMounted(() => {
+onMounted(async () => {
     document.body.style.overflow = "auto";
     setTimeout(() => {
         window.scrollTo({ top: 0, behavior: "smooth" });
     }, 100);
+    await bannerStore.getBanners();
+    banners.value = await bannerStore.getSingleBanner();
 });
 </script>
 
 <template>
-    <div class="active">
+    <div
+        class="active"
+        :style="
+            banners
+                ? {
+                      backgroundImage: `url(${banners.image_set?.og_image})`,
+                      backgroundRepeat: 'no-repeat',
+                      backgroundPosition: 'center center',
+                      backgroundSize: 'cover',
+                      backgroundAttachment: 'fixed',
+                      cursor: 'pointer',
+                  }
+                : ''
+        "
+    >
         <Header />
         <main>
             <section class="block-wrapper">
-                <div class="container">
+                <div class="container" style="background-color: #fff">
                     <div class="row">
                         <div class="col-md-9 col-sm-8">
                             <slot />

@@ -4,14 +4,19 @@ import { Inertia } from "@inertiajs/inertia";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import { useArticleStore } from "@/Stores/article.js";
 import { useEventStore } from "@/Stores/event.js";
-import { onMounted } from "@vue/runtime-core";
+import { useBannerStore } from "@/Stores/banner.js";
+import { onMounted, ref } from "@vue/runtime-core";
 import moment from "moment";
 
 const articleStore = useArticleStore();
 const eventStore = useEventStore();
+const bannerStore = useBannerStore();
+const banner = ref([]);
 
 onMounted(async () => {
     await eventStore.getMainEvents();
+    await bannerStore.getBanners();
+    banner.value = await bannerStore.getMainBanner();
 });
 
 function showArticle(date, slug) {
@@ -20,6 +25,10 @@ function showArticle(date, slug) {
             new Date(date)
         ).format("MM")}/${slug}`
     );
+}
+
+function visitBanner(url) {
+    window.open(url, "_blank");
 }
 
 defineProps({
@@ -85,6 +94,34 @@ defineProps({
                 <h1>
                     <span>Lates news</span>
                 </h1>
+            </div>
+            <div
+                class="advertisement"
+                v-if="banner"
+                style="cursor: pointer"
+                @click="visitBanner(banner.url)"
+            >
+                <div class="desktop-advert">
+                    <img
+                        :src="banner.image_set?.og_image"
+                        :alt="banner.image_set?.lg_image"
+                        class="img-responsive"
+                    />
+                </div>
+                <div class="tablet-advert">
+                    <img
+                        :src="banner.image_set?.og_image"
+                        :alt="banner.image_set?.og_image"
+                        class="img-responsive"
+                    />
+                </div>
+                <div class="mobile-advert">
+                    <img
+                        :src="banner.image_set?.og_image"
+                        :alt="banner.image_set?.og_image"
+                        class="img-responsive"
+                    />
+                </div>
             </div>
             <div
                 class="news-post article-post"

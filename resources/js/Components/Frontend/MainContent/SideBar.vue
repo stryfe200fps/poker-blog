@@ -55,6 +55,34 @@
                 </li>
             </ul>
         </div>
+        <div
+            class="advertisement"
+            v-if="banner"
+            style="cursor: pointer"
+            @click="visitBanner(banner.url)"
+        >
+            <div class="desktop-advert">
+                <img
+                    :src="banner.image_set?.og_image"
+                    :alt="banner.image_set?.og_image"
+                    class="img-responsive"
+                />
+            </div>
+            <div class="tablet-advert">
+                <img
+                    :src="banner.image_set?.og_image"
+                    :alt="banner.image_set?.og_image"
+                    class="img-responsive"
+                />
+            </div>
+            <div class="mobile-advert">
+                <img
+                    :src="banner.image_set?.og_image"
+                    :alt="banner.image_set?.og_image"
+                    class="img-responsive"
+                />
+            </div>
+        </div>
         <div class="widget social-widget">
             <div class="title-section">
                 <h1><span>twitter</span></h1>
@@ -115,20 +143,29 @@
 import Tweet from "vue-tweet";
 import { useTwitterStore } from "@/Stores/twitter.js";
 import { useIGStore } from "@/Stores/instagram.js";
+import { useBannerStore } from "@/Stores/banner.js";
 import { computed, onMounted, ref, watch } from "@vue/runtime-core";
 
 const twitterStore = useTwitterStore();
 const tweetIDs = ref(null);
 const igStore = useIGStore();
 const igFeed = ref(null);
+const bannerStore = useBannerStore();
+const banner = ref([]);
 
 const igLink = computed(() => {
     return igFeed.value?.find((ig) => ig.permalink).permalink;
 });
 
+function visitBanner(url) {
+    window.open(url, "_blank");
+}
+
 onMounted(async () => {
     await twitterStore.getTweetID();
     await igStore.getIGFeed();
+    await bannerStore.getBanners();
+    banner.value = await bannerStore.getSideBanner();
 });
 
 watch(

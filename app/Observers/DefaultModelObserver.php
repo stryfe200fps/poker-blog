@@ -47,7 +47,7 @@ class DefaultModelObserver
 
         $image = \Image::make($value)->encode('jpg', 100)->save($path);
 
-        if ($model?->shouldResizeImage || $model?->shouldResizeImage == null) { 
+        if ($model?->shouldResizeImage && $model?->shouldResizeImage == null) { 
             $image->resize(1600,900)->save($path);
         }
 

@@ -15,11 +15,12 @@ class ImageResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'xs-image' => $this->getUrl('xs-image'),
-            'md-image' => $this->getUrl('md-image'),
-            'lg-image' => $this->getUrl('lg-image'),
-            'sm-image' => $this->getUrl('sm-image'),
-            'xl-image' => $this->getUrl('xl-image'),
+            'xs_image' => $this->getUrl('xs-image'),
+            'md_image' => $this->getUrl('md-image'),
+            'lg_image' => $this->getUrl('lg-image'),
+            'sm_image' => $this->getUrl('sm-image'),
+            'xl_image' => $this->getUrl('xl-image'),
+            'og_image' => $this->getUrl(),
         ];
     }
 }

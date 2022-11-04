@@ -18,7 +18,7 @@ class BannerResource extends JsonResource
             'name' => $this->name,
             'location' => $this->location,
             'url' => $this->url,
-            'image_set' => ImageResource::collection($this->getMedia('banner'))
+            'image_set' => new ImageResource($this->getMedia('banner')[0] ?? [])
         ];
     }
 }

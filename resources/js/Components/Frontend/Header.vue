@@ -108,6 +108,7 @@
 import { onBeforeUnmount, onMounted, ref } from "vue";
 import { Link } from "@inertiajs/inertia-vue3";
 import logo from "/public/lop_logo_small.png";
+import card from "/public/header-card.png";
 import slogan from "/public/header-slogan.png";
 import NavLinks from "./NavLinks.vue";
 

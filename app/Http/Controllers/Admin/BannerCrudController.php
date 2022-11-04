@@ -70,8 +70,6 @@ class BannerCrudController extends CrudController
                 [
                     'name' => 'image',
                     'type' => 'image',
-                    'aspect_ratio' => 3 / 2,
-                    'crop' => true,
                     'wrapper' => [
                         'class' => 'form-group col-md-12',
                     ],

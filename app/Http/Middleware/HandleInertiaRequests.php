@@ -5,8 +5,9 @@ namespace App\Http\Middleware;
 use App\Models\MenuItem;
 use Butschster\Head\Contracts\MetaTags\MetaInterface;
 use Illuminate\Http\Request;
+Use App\Models\Banner;
 use Inertia\Middleware;
-
+use App\Http\Resources\BannerResource;
 class HandleInertiaRequests extends Middleware
 {
     /**
@@ -45,6 +46,7 @@ class HandleInertiaRequests extends Middleware
             'title' => fn (MetaInterface $meta) => ($meta->toArray()['head'][0]['content']),
             'menu' => MenuItem::getTree(),
             'supported_locales' => config('app.supported_locales'),
+            'banners' => BannerResource::collection(Banner::all()),
             // 'locale' => function () {
             //     return 'en';
             // },

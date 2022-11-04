@@ -60,7 +60,10 @@
                         </li>
                     </ul>
                     <h2 style="margin-bottom: 2px">
-                        <Link href="#">{{ event.title }}</Link>
+                        <Link
+                            :href="`/tour/${event.poker_tour_slug}/${event.slug}`"
+                            >{{ event.title }}</Link
+                        >
                     </h2>
                     <ul class="post-tags">
                         <li
