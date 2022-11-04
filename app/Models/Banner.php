@@ -15,6 +15,7 @@ class Banner extends Model implements HasMedia
     use HasFactory;
 
     protected $shouldResizeImage = true;
+    protected $shouldOptimize = false;
 
     protected $guarded = ['id'];
     use HasMediaCollection, HasMultipleImages;
