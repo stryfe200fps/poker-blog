@@ -50,7 +50,6 @@ class TournamentCrudController extends CrudController
         $this->crud->disableResponsiveTable();
         CRUD::column('title');
         CRUD::column('slug');
-        CRUD::column('description');
         CRUD::column('tour_id');
 
         $this->crud->addColumns([
@@ -143,7 +142,7 @@ class TournamentCrudController extends CrudController
         );
 
         $this->crud->addFields([
-           
+
             [   // date_range
                 'name' => ['date_start', 'date_end'], // db columns for start_date & end_date
                 'label' => 'Series Duration',
