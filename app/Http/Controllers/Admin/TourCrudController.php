@@ -83,7 +83,7 @@ class TourCrudController extends CrudController
             'label' => 'Image',
             'name' => 'image',
             'type' => 'image',
-            'crop' => true, // set to true to allow cropping, false to disable
+            'crop' => false, // set to true to allow cropping, false to disable
             'aspect_ratio' => 3 / 2,
             'wrapper' => [
                 'class' => 'form-group col-md-12',
