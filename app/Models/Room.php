@@ -18,7 +18,7 @@ class Room extends Model implements HasMedia
     use InteractsWithMedia;
     use HasSlug;
 
-    public $mediaCollection = 'media';
+    public $mediaCollection = 'room';
 
     public static function boot()
     {
