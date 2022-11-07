@@ -46,4 +46,9 @@ class Author extends Model implements HasMedia
     {
         return $this->belongsTo(User::class);
     }
+
+    public function media_reportings()
+    {
+        return $this->hasMany(MediaReporting::class);
+    }
 }

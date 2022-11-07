@@ -11,6 +11,15 @@ class MediaReportingController extends Controller
 {
     public function index()
     {
-        return MediaReportingResource::collection(MediaReporting::orderByDesc('published_date')->get());
+
+        $mediaReporting = MediaReporting::orderByDesc('published_date');
+
+       if (request()->has('author_id')) {
+        $mediaReporting->whereHas('author', function ($author) {
+            $author->where('id', request()->get('author_id'));
+        });
+       }
+
+        return MediaReportingResource::collection($mediaReporting->get());
     }
 }

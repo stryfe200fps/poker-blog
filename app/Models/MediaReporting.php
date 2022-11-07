@@ -32,4 +32,11 @@ class MediaReporting extends Model implements HasMedia
         return $this->belongsTo(Author::class);
     }
 
+
+    public static function selectAvailableAuthors()
+    {
+        return Author::select(['first_name', 'id'])->orderBy('first_name')->withCount('media_reportings')
+            ->having('media_reportings_count', '>', 0 )->get();
+    }
+
 }

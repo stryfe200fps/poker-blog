@@ -31,6 +31,7 @@ use App\Http\Controllers\ArticleCategoryController;
 use App\Http\Controllers\LOFApiEventIndexController;
 use App\Http\Controllers\Api\TournamentApiController;
 use App\Http\Controllers\LOFApiTournamentsController;
+use App\Models\MediaReporting;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -96,6 +97,11 @@ Route::get('admin/attach-image/{id}', function ($id) {
 
 Route::get('select/games', function () {
     return [ 'data' => EventGameTable::get(['title', 'code']) ];
+});
+
+
+Route::get('media-reports/select/authors', function () {
+    return [ 'data' => MediaReporting::selectAvailableAuthors() ];
 });
 
 // Route::get('select/tours', function () {
