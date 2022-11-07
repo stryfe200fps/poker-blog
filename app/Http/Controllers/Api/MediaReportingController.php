@@ -20,6 +20,6 @@ class MediaReportingController extends Controller
         });
        }
 
-        return MediaReportingResource::collection($mediaReporting->get());
+        return MediaReportingResource::collection($mediaReporting->paginate(5));
     }
 }
