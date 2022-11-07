@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\File;
 
 class GalleryController extends Controller
 {
-    public function gallery(int $id)
+        public function gallery(int $id)
     {
         $day = Day::find($id);
 
@@ -20,17 +20,16 @@ class GalleryController extends Controller
         }
 
         foreach ($day->event_reports as $report) {
-            if ($report->has('media')) { 
-                // if (File::exists($report->getFirstMediaUrl('event-report', 'main-thumb2'))?true:false) { 
+            if ($path = $report->getFirstMediaPath('event-report', 'main-thumb2')) { 
+                if (File::exists($path)?true:false) { 
                 $imgResource[] = [
                 'thumbnail' => $report->getFirstMediaUrl('event-report', 'main-thumb2'),
                 'main' => $report->getFirstMediaUrl('event-report', 'main-image')
                 ];
-            // }
+            }
             }
         }
 
-        // dd($day->event_reports);
 
         return $imgResource;
     }
