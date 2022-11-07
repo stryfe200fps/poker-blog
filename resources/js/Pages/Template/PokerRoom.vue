@@ -38,11 +38,11 @@
                                         /></i>
                                         {{ room.country?.name }}
                                     </li>
-                                    <li>
+                                    <li v-if="room.address">
                                         <i class="fas fa-map-marker-alt"></i
                                         >{{ room.address }}
                                     </li>
-                                    <li>
+                                    <li v-if="room.phone">
                                         <i class="fas fa-mobile-android-alt"></i
                                         >{{ room.phone }}
                                     </li>
