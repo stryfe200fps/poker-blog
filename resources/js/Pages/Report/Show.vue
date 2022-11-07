@@ -307,6 +307,10 @@
                         </ul>
                     </div>
                 </div>
+                <p>
+                    &copy; 2021-{{ currentDate }} Life of poker. All rights
+                    reserved.
+                </p>
             </div>
         </div>
     </FrontLayout>
@@ -332,7 +336,7 @@ import waterLeaves from "@/photo_templates/water-leaves.png";
 import waterWaves from "@/photo_templates/water-waves.png";
 import moment from "moment";
 import { useEventStore } from "@/Stores/event.js";
-import { onMounted, ref, watch } from "@vue/runtime-core";
+import { onMounted, ref, watch, computed } from "@vue/runtime-core";
 
 const eventStore = useEventStore();
 
@@ -348,6 +352,10 @@ const props = defineProps({
 
 const isOpen = ref(false);
 const url = ref(window.location.href);
+
+const currentDate = computed(() => {
+    return moment().format("YYYY");
+});
 
 const showShare = () => {
     isOpen.value = !isOpen.value;

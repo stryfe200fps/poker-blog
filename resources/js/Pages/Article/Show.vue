@@ -1,7 +1,7 @@
 <template>
     <FrontLayout title="">
         <Head>
-            <title>{{ article.title }}</title>
+            <title>{{ article.title_tab }}</title>
         </Head>
         <!-- {{ getArticle(slug) }} -->
         <div class="block-content">
@@ -228,6 +228,10 @@
                         </div>
                     </div>
                 </div>
+                <p>
+                    &copy; 2021-{{ currentDate }} Life of poker. All rights
+                    reserved.
+                </p>
             </div>
         </div>
     </FrontLayout>
@@ -241,7 +245,13 @@ import SideBar from "../../Components/Frontend/MainContent/SideBar.vue";
 import TournamentList from "../../Components/Frontend/Tournament/List.vue";
 import { Inertia } from "@inertiajs/inertia";
 import { useArticleStore } from "@/Stores/article.js";
-import { onBeforeUnmount, onMounted, ref, watch } from "@vue/runtime-core";
+import {
+    onBeforeUnmount,
+    onMounted,
+    ref,
+    watch,
+    computed,
+} from "@vue/runtime-core";
 import defaultImg from "/public/default-img.png";
 import moment from "moment";
 const articleStore = useArticleStore();
@@ -259,6 +269,10 @@ const related = ref(null);
 const isOpen = ref(false);
 const isPull = ref(false);
 const url = ref(window.location.href);
+
+const currentDate = computed(() => {
+    return moment().format("YYYY");
+});
 
 const showShare = () => {
     isOpen.value = !isOpen.value;

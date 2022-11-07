@@ -52,13 +52,18 @@
                                             >{{ room.email }}</a
                                         >
                                     </li>
-                                    <li>
+                                    <li v-if="room.website">
                                         <a
                                             :href="`${room.website}`"
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             ><i class="fas fa-globe"></i
-                                            >{{ room.website }}</a
+                                            >{{
+                                                room.website?.replace(
+                                                    /(^\w+:|^)\/\//,
+                                                    ""
+                                                )
+                                            }}</a
                                         >
                                     </li>
                                 </ul>

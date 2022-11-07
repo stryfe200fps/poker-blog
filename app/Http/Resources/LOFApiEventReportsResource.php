@@ -12,6 +12,7 @@ class LOFApiEventReportsResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => googleTranslateExclude($this->title)[0] ?? '' ,
+            'title_tab' => $this->title ?? '',
             'content' => googleTranslateExclude($this->content),
             'published_date' => $this->published_date,
             'date_for_humans' => Carbon::parse($this->published_date)->diffForHumans(),

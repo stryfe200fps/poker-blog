@@ -140,54 +140,67 @@ async function submitEmail() {
                             <h1 style="color: white; border-color: #999">
                                 Help Center
                             </h1>
-                            <ul class="category-list">
-                                <li>
-                                    <Link href="/news">News & Info</Link>
-                                </li>
-                                <li>
-                                    <Link href="/cookie">Cookie Policy</Link>
-                                </li>
-                                <li>
-                                    <Link href="/tournament"
-                                        >Live Reporting</Link
-                                    >
-                                </li>
-                                <li>
-                                    <Link href="/acceptable-use"
-                                        >Acceptable Use Policy</Link
-                                    >
-                                </li>
-                                <li>
-                                    <Link href="/event-calendar"
-                                        >Event Calendar</Link
-                                    >
-                                </li>
-                                <li>
-                                    <Link href="/dmca">DMCA Policy</Link>
-                                </li>
-                                <li>
-                                    <Link href="/about">About Us</Link>
-                                </li>
-                                <li>
-                                    <Link href="/guest-post"
-                                        >Guest Post Policy</Link
-                                    >
-                                </li>
-                                <li>
-                                    <Link href="/contact">Contact</Link>
-                                </li>
-                                <li>
-                                    <Link href="/refund">Refund Policy</Link>
-                                </li>
-                                <li
-                                    style="opacity: 0; pointer-events: none"
-                                ></li>
-                                <li>
-                                    <Link href="/responsible-gambling"
-                                        >Responsible Gambling</Link
-                                    >
-                                </li>
-                            </ul>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <ul class="category-list">
+                                        <li>
+                                            <Link href="/news"
+                                                >News & Info</Link
+                                            >
+                                        </li>
+                                        <li>
+                                            <Link href="/tournament"
+                                                >Live Reporting</Link
+                                            >
+                                        </li>
+                                        <li>
+                                            <Link href="/event-calendar"
+                                                >Event Calendar</Link
+                                            >
+                                        </li>
+                                        <li>
+                                            <Link href="/about">About Us</Link>
+                                        </li>
+                                        <li>
+                                            <Link href="/contact">Contact</Link>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <ul class="category-list">
+                                        <li>
+                                            <Link href="/cookie"
+                                                >Cookie Policy</Link
+                                            >
+                                        </li>
+                                        <li>
+                                            <Link href="/acceptable-use"
+                                                >Acceptable Use Policy</Link
+                                            >
+                                        </li>
+                                        <li>
+                                            <Link href="/dmca"
+                                                >DMCA Policy</Link
+                                            >
+                                        </li>
+                                        <li>
+                                            <Link href="/guest-post"
+                                                >Guest Post Policy</Link
+                                            >
+                                        </li>
+                                        <li>
+                                            <Link href="/refund"
+                                                >Refund Policy</Link
+                                            >
+                                        </li>
+                                        <li>
+                                            <Link href="/responsible-gambling"
+                                                >Responsible Gambling</Link
+                                            >
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -261,5 +274,14 @@ footer .categories-widget ul.category-list li a {
     outline: none;
     border: none;
     transition: all 0.2s ease-in-out;
+}
+
+footer .categories-widget ul.category-list li:nth-child(2n) {
+    padding-left: 0;
+}
+
+footer .categories-widget ul.category-list li {
+    width: auto;
+    float: none;
 }
 </style>

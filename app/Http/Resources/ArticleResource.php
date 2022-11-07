@@ -15,6 +15,7 @@ class ArticleResource extends JsonResource
         // dd('a');
         return [
             'title' => googleTranslateExclude($this->title)[0] ?? '',
+            'title_tab' => $this->title ?? '',
             'description' => $this->description,
             'categories' => $this->article_categories,
             'content' => googleTranslateExclude($this->content),
