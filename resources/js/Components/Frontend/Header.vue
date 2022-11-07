@@ -28,6 +28,24 @@
                                 <img :src="slogan" alt="slogan" />
                             </div>
                         </div>
+                        <div class="advertisement" style="height: 100%">
+                            <div
+                                class="desktop-advert"
+                                style="
+                                    position: absolute;
+                                    top: 0;
+                                    height: 100%;
+                                    margin-left: -95px;
+                                    filter: drop-shadow(8px 8px 10px #000);
+                                "
+                            >
+                                <img
+                                    :src="card"
+                                    alt="card"
+                                    style="width: 155px; padding-top: 8px"
+                                />
+                            </div>
+                        </div>
                         <div class="button-actions">
                             <div
                                 class="advertisement google-translate"
