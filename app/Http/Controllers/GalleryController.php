@@ -18,6 +18,15 @@ class GalleryController extends Controller
             ];
         }
 
+        foreach ($day->event_reports as $report) {
+            $imgResource[] = [
+              'thumbnail' => $report->getFirstMediaUrl('event-report', 'main-thumb2'),
+              'main' => $report->getFirstMediaUrl('event-report', 'main-image')
+            ];
+        }
+
+        // dd($day->event_reports);
+
         return $imgResource;
     }
 }

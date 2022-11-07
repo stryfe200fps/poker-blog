@@ -33,6 +33,10 @@ class EventReport extends Model implements HasMedia
             ->height(300)
             ->nonQueued();
 
+        $this->addMediaConversion('main-thumb2')
+            ->width(130)
+            ->height(86);
+
         $this->addMediaConversion('main-image')
             ->width(424)
             ->height(285)
