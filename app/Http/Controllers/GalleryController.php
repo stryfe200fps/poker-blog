@@ -21,12 +21,12 @@ class GalleryController extends Controller
 
         foreach ($day->event_reports as $report) {
             if ($report->has('media')) { 
-                if (File::exists($report->getFirstMediaUrl('event-report', 'main-thumb2'))?true:false) { 
+                // if (File::exists($report->getFirstMediaUrl('event-report', 'main-thumb2'))?true:false) { 
                 $imgResource[] = [
                 'thumbnail' => $report->getFirstMediaUrl('event-report', 'main-thumb2'),
                 'main' => $report->getFirstMediaUrl('event-report', 'main-image')
                 ];
-            }
+            // }
             }
         }
 
