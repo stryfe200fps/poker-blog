@@ -29,6 +29,19 @@ class Player extends Model implements HasMedia
         return $this->getFirstMediaUrl('player', 'avatar');
     }
 
+    public function getStatusAttribute($value)
+    {
+        return $value === 'disabled' ? 0 : 1;
+    }
+
+    public function setStatusAttribute($value)
+    {
+        // dd(  !$value  ? 'disabled' : 'enabled');
+        $this->attributes['status'] =  !$value  ? 'disabled' : 'enabled';
+
+        // return $this->attributes;
+    }
+
     public function setAvatarAttribute($value)
     {
         if ($value == null) {

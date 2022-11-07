@@ -442,7 +442,7 @@ public function fetchTags()
                 'paginate' => 10,
                 'searchOperator' => 'LIKE',
                 'query' => function ($model) {
-                    return $model->orderBy('name');
+                    return $model->where('status', '!=', 'disabled' )->orderBy('name');
                 },
             ]
         );

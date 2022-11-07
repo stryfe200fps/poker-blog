@@ -117,6 +117,10 @@ $this->crud->addField([
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
+        $this->crud->addField([
+            'name' => 'status',
+            'type' => 'switch'
+        ]);
     }
 
     public function destroy($id)
