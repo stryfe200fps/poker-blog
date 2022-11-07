@@ -20,7 +20,7 @@ class LOFApiTournamentsController extends Controller
 
         $tournaments = Tournament::with([ 'events', 'events.days','events.days.event_reports', 'tour', 'currency', 'country',  'events.tournament',  'events.event_game_table'])->latest();
 
-        return  new LOFApiTournamentCollection($request->get('status') == 'live' ? $tournaments->get() : $tournaments->paginate(5));
+        return  new LOFApiTournamentCollection($request->get('status') == 'live' ? $tournaments->get() : $tournaments->get());
     }
 
     public function show($id)
