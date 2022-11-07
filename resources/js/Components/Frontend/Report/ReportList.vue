@@ -296,10 +296,12 @@
             <div v-show="currentTab == 'gallery'">
                 <div class="grid-box">
                     <div id="my-gallery" class="row">
-                        <div class="col-xs-12">
+                        <div
+                            class="col-xs-2"
+                            v-for="(image, index) in gallery"
+                            :key="index"
+                        >
                             <a
-                                v-for="(image, index) in gallery"
-                                :key="index"
                                 :href="image.main"
                                 :data-pswp-width="900"
                                 :data-pswp-height="640"

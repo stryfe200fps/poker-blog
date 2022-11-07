@@ -13,8 +13,8 @@
                         >{{ room.title }}</Link
                     >
                 </h2>
-                <ul class="post-tags">
-                    <li v-if="room.country">
+                <ul class="post-tags" v-if="room.country">
+                    <li>
                         <i
                             ><CountryFlag
                                 :title="room.country?.name"
@@ -23,7 +23,7 @@
                         {{ room.country?.name }}
                     </li>
                 </ul>
-                <ul class="post-tags">
+                <ul class="post-tags" v-if="room.address">
                     <li>
                         {{ room.address }}
                     </li>
