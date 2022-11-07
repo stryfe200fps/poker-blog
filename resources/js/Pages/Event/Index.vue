@@ -171,7 +171,7 @@ async function reportViewing() {
 
     if (props.type === "chip-stack") {
         await eventStore.getChipCountsData(selectDay.value);
-        chipCountsData.value = eventStore.chipCounts;
+        chipCountsData.value = eventStore.chipCounts.data;
         return;
     }
 
