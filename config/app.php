@@ -22,7 +22,7 @@ return [
     'name' => env('APP_NAME', 'LifeOfPoker'),
 
     'date_format' => 'MMM DD, OY,  h:mm a, ddd',
-    'carbon_date_format' => 'M d, Y,  h:m a, D',
+    'carbon_date_format' => 'M d, Y h:m a, D',
     'supported_locales' => ['zh', 'ko', 'ja', 'es', 'de'],
     'slug_placeholder' => 'Slug will autogenerate if leave empty',
 

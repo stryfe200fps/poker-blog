@@ -46,6 +46,10 @@ class EventReport extends Model implements HasMedia
 
     protected $guarded = ['id'];
 
+    // protected $appends = [
+    //     'realtime_published_date'
+    // ];
+
     public function getImageAttribute($value)
     {
         return $this->getFirstMediaUrl('event-report', 'main-image');
@@ -152,4 +156,11 @@ class EventReport extends Model implements HasMedia
     {
         return Carbon::parse($value)->setTimezone(session()->get('timezone') ?? 'UTC');
     }
+
+    // public function getRealtimePublishedDateAttribute($value)
+    // {
+    //     return Carbon::parse($value);
+    // }
+
+
 }

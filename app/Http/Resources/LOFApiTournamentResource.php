@@ -37,6 +37,8 @@ class LOFApiTournamentResource extends JsonResource
             'currency' => $this->currency,
             'timezone' => $this->timezone,
             'country' => $this->country,
+            'realtime_date_start' => Carbon::parse($this->date_start)->setTimezone($this->timezone)->format(config('app.carbon_date_format')),
+            'realtime_date_end' => Carbon::parse($this->date_start)->setTimezone($this->timezone)->format(config('app.carbon_date_format')),
             'date_start' => Carbon::parse($this->date_start)->toFormattedDateString(),
             'date_end' => Carbon::parse($this->date_end)->toFormattedDateString(),
             'events' => new LOFApiEventsCollection($this->events),
