@@ -20,7 +20,7 @@
                                 eventData.title
                             }}</span>
                         </h1>
-                        <div v-if="props.type !== 'payouts'">
+                        <div v-show="props.type !== 'payouts'">
                             <p v-if="eventDays?.length > 1">
                                 <select
                                     class="form-control custom-form-control"
