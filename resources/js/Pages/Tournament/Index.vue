@@ -83,14 +83,14 @@ async function eventViewing(pathname) {
         liveEventCollection.value = tournamentStore.list.data;
         await tournamentStore.getList(1, "upcoming");
         liveEventCollection.value.push(...tournamentStore.upcoming.data);
-        lastPage.value = tournamentStore.upcoming.meta.last_page;
+        lastPage.value = tournamentStore.upcoming.meta?.last_page;
         return;
     }
 
     if (pathname === "past") {
         await tournamentStore.getList(1, "end");
         pastEventCollection.value = tournamentStore.list.data;
-        lastPage.value = tournamentStore.list.meta.last_page;
+        lastPage.value = tournamentStore.list.meta?.last_page;
         return;
     }
 

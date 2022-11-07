@@ -17,9 +17,9 @@ class EventController extends Controller
 
         $event = Event::where('slug', $eventSlug)->firstOrFail();
        
-        if ($tour != $event->tournament->tour->slug || $series != $event->tournament->slug    ) {
-        return redirect('/tours/'. $event->tournament->tour->slug . '/'. $event->tournament->slug  . '/'. $eventSlug );
-        }
+        // if ($tour != $event->tournament->tour->slug || $series != $event->tournament->slug) {
+        // return redirect('/tours/'. $event->tournament->tour->slug . '/'. $event->tournament->slug  . '/'. $eventSlug );
+        // }
 
         return Inertia::render('Event/Index', [
             'slug' => $eventSlug,
