@@ -29,7 +29,9 @@ class Tournament extends Model implements HasMedia
     }
 
     protected $appends = [
-        'minimized_timezone'
+        'minimized_timezone',
+        'word_timezone'
+
     ];
 
     public function getSlugOptions(): SlugOptions
@@ -67,6 +69,12 @@ class Tournament extends Model implements HasMedia
     {
         $timezone = explode(' ', $this->timezone)[0];
         return preg_replace('/([A-Z()])/','', $timezone);
+    }
+
+    public function getWordTimezoneAttribute()
+    {
+        $timezone = explode(' ', $this->timezone)[1];
+        return $timezone;
     }
 
     public function setDateStartAttribute($value)
