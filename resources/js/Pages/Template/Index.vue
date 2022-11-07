@@ -114,6 +114,43 @@
                     v-observe-visibility="handleScrolledToBottom"
                 ></div>
             </div>
+            <div v-if="page.template === 'videos'">
+                <div class="grid-box filters">
+                    <h4>Find media reports</h4>
+                    <div>
+                        <select class="form-control" v-model="selectedAuthor">
+                            <option value="" selected disabled>
+                                Select Authors
+                            </option>
+                            <option
+                                v-for="(author, index) in authors"
+                                :key="index"
+                                :value="author.id"
+                            >
+                                {{ author.first_name }}
+                            </option>
+                        </select>
+                    </div>
+                    <button
+                        class="btn btn-default"
+                        v-if="selectedAuthor !== ''"
+                        @click="resetFilter()"
+                    >
+                        Reset
+                    </button>
+                </div>
+                <div class="grid">
+                    <MediaReporting
+                        v-for="(media, index) in medias"
+                        :key="index"
+                        :media="media"
+                    />
+                </div>
+                <div
+                    v-if="medias?.length"
+                    v-observe-visibility="handleScrolledToBottomMedia"
+                ></div>
+            </div>
         </div>
     </FrontLayout>
 </template>
@@ -121,6 +158,7 @@
 <script setup>
 import { Head } from "@inertiajs/inertia-vue3";
 import { useRoomStore } from "@/Stores/pokerRoom.js";
+import { useMediaStore } from "@/Stores/mediaReports.js";
 import { onMounted, ref, computed, watch } from "@vue/runtime-core";
 import axios from "axios";
 import { createToast } from "mosha-vue-toastify";
@@ -128,6 +166,7 @@ import "mosha-vue-toastify/dist/style.css";
 
 import FrontLayout from "@/Layouts/FrontLayout.vue";
 import PokerRooms from "./PokerRooms.vue";
+import MediaReporting from "./MediaReporting.vue";
 
 const name = ref(null);
 const email = ref(null);
@@ -136,9 +175,13 @@ const message = ref(null);
 const countries = ref([]);
 const selectedCountry = ref("");
 const rooms = ref([]);
+const medias = ref([]);
+const authors = ref([]);
+const selectedAuthor = ref("");
 const currentPage = ref(1);
 const lastPage = ref(1);
 const pokerRoomStore = useRoomStore();
+const mediaStore = useMediaStore();
 
 const props = defineProps({
     page: {
@@ -150,6 +193,12 @@ const props = defineProps({
 const filteredLocation = computed(() => {
     return {
         country: selectedCountry.value || null,
+    };
+});
+
+const filteredAuthor = computed(() => {
+    return {
+        author_id: selectedAuthor.value || null,
     };
 });
 
@@ -168,8 +217,23 @@ async function handleScrolledToBottom(isVisible) {
     lastPage.value = pokerRoomStore.rooms.meta.last_page;
 }
 
+async function handleScrolledToBottomMedia(isVisible) {
+    if (!isVisible) return;
+
+    currentPage.value++;
+
+    if (currentPage.value > lastPage.value) return;
+
+    await mediaStore.getMedia({
+        page: currentPage.value,
+    });
+    medias.value.push(...mediaStore.media.data);
+    lastPage.value = mediaStore.media.meta.last_page;
+}
+
 function resetFilter() {
     selectedCountry.value = "";
+    selectedAuthor.value = "";
 }
 
 async function submitMessage() {
@@ -208,6 +272,15 @@ onMounted(async () => {
         await pokerRoomStore.getCountries();
         countries.value = pokerRoomStore.countries.data;
     }
+    if (props.page.template === "videos") {
+        await mediaStore.getMedia({
+            page: 1,
+        });
+        medias.value = mediaStore.media.data;
+        lastPage.value = mediaStore.media.meta.last_page;
+        await mediaStore.getMediaAuthors();
+        authors.value = mediaStore.authors.data;
+    }
 });
 
 watch(
@@ -220,6 +293,18 @@ watch(
         currentPage.value = 1;
         rooms.value = pokerRoomStore.rooms.data;
         lastPage.value = pokerRoomStore.rooms.meta.last_page;
+    }
+);
+watch(
+    () => filteredAuthor.value,
+    async function (value) {
+        await mediaStore.getMedia({
+            page: 1,
+            ...value,
+        });
+        currentPage.value = 1;
+        medias.value = mediaStore.media.data;
+        lastPage.value = mediaStore.media.meta.last_page;
     }
 );
 </script>

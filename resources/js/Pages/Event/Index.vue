@@ -20,7 +20,7 @@
                                 eventData.title
                             }}</span>
                         </h1>
-                        <div v-if="props.type !== 'payouts'">
+                        <div v-show="props.type !== 'payouts'">
                             <p v-if="eventDays?.length > 1">
                                 <select
                                     class="form-control custom-form-control"
@@ -171,7 +171,7 @@ async function reportViewing() {
 
     if (props.type === "chip-stack") {
         await eventStore.getChipCountsData(selectDay.value);
-        chipCountsData.value = eventStore.chipCounts;
+        chipCountsData.value = eventStore.chipCounts.data;
         return;
     }
 

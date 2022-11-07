@@ -38,15 +38,15 @@
                                         /></i>
                                         {{ room.country?.name }}
                                     </li>
-                                    <li>
+                                    <li v-if="room.address">
                                         <i class="fas fa-map-marker-alt"></i
                                         >{{ room.address }}
                                     </li>
-                                    <li>
+                                    <li v-if="room.phone">
                                         <i class="fas fa-mobile-android-alt"></i
                                         >{{ room.phone }}
                                     </li>
-                                    <li>
+                                    <li v-if="room.email">
                                         <a :href="`mailto:${room.email}`"
                                             ><i class="fas fa-envelope"></i
                                             >{{ room.email }}</a
@@ -54,7 +54,7 @@
                                     </li>
                                     <li>
                                         <a
-                                            :href="`//${room.website}`"
+                                            :href="`${room.website}`"
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             ><i class="fas fa-globe"></i

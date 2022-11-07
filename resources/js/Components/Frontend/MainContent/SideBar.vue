@@ -117,7 +117,7 @@
                 <h1><span>instagram</span></h1>
             </div>
             <div class="news-post video-post">
-                <!-- <div v-if="igFeed">
+                <div v-if="igFeed">
                     <iframe
                         :src="`${igLink}embed`"
                         width="320"
@@ -132,8 +132,8 @@
                             border-radius: 5px;
                         "
                     ></iframe>
-                </div> -->
-                <span class="loader"></span>
+                </div>
+                <span class="loader" v-else></span>
             </div>
         </div>
     </div>
