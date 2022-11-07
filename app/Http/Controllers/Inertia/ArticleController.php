@@ -11,11 +11,17 @@ class ArticleController extends Controller
 {
     public function index()
     {
-        $webPage = \JsonLd\Context::create('web_page', [
-            'url' => request()->url(),
-        ]);
+       return Inertia::render('Categories/CategoryPage', [
+                        'title' => ' LifeOfPoker',
+                        'description' => 'test',
+                        'page_title' => 'txest',
+                        // 'json-ld-webpage' => 'test',
+                    ]);
+    }
 
-        return Inertia::render('Article/Index');
+    public function showCategory($slug) 
+    {
+
     }
 
     public function show($year, $month, $slug) 
@@ -80,6 +86,8 @@ class ArticleController extends Controller
             'json-ld-webpage' => $webPage,
         ]);
     }
+
+
 
     public function article($slug)
     {

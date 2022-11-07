@@ -1,5 +1,20 @@
 <template>
-    <li class="drop" @click="toggleDropdown">
+
+    <!-- <li class="drop" @click="toggleDropdown"> -->
+
+<span style="color:red"> <Link :href="`/${menu.page_slug ?? menu.link}`"> {{ menu.name }} </Link></span>
+
+<div v-for="adi in menu.children " :key="adi.id">
+    <br>
+    <br> 
+    <br> 
+    <br> 
+  <Link :href="`/${adi.link}`"> {{ adi.name }}</Link>  
+</div>
+
+
+
+    <!-- <li class="drop" @click="toggleDropdown">
         <Link
             class="home home--custom"
             :class="{
@@ -47,8 +62,9 @@
                     >{{ children.name }}</Link
                 >
             </li>
-        </ul>
-    </li>
+        </ul> -->
+
+    <!-- </li> -->
 </template>
 
 <script setup>

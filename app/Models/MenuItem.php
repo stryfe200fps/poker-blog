@@ -15,18 +15,20 @@ class MenuItem extends Model
 
     public function parent()
     {
-        return $this->belongsTo('Backpack\MenuCRUD\app\Models\MenuItem', 'parent_id');
+        return $this->belongsTo(MenuItem::class);
     }
 
     public function children()
     {
-        return $this->hasMany('Backpack\MenuCRUD\app\Models\MenuItem', 'parent_id');
+        return $this->hasMany(MenuItem::class);
     }
 
     public function page()
     {
-        return $this->belongsTo('Backpack\PageManager\app\Models\Page', 'page_id');
+        return $this->belongsTo(Page::class);
     }
+
+    
 
     /**
      * Get all menu items, in a hierarchical collection.
@@ -37,11 +39,32 @@ class MenuItem extends Model
         $menu = self::orderBy('lft')->get();
 
         if ($menu->count()) {
+            // dd($menu);
             foreach ($menu as $k => $menu_item) {
                 $menu_item->children = collect([]);
+                $menu_item->page_slug = $menu_item->page()->select('slug')->first()?->slug ;
+
+                // $menu_item->link = $menu_item->link . '/' . $menu_subitem->link;
 
                 foreach ($menu as $i => $menu_subitem) {
+                    
                     if ($menu_subitem->parent_id == $menu_item->id) {
+
+
+                        $menu_subitem->page_slug = $menu_subitem->page()->select('slug')->first()?->slug;
+
+
+
+                        if ( $menu_item->link  ===  $menu_subitem->link) { 
+                            $menu_subitem->link = $menu_item->link;
+                        } else {
+
+                            $menu_subitem->link =  $menu_item->link . '/' . $menu_subitem->link;
+                        }
+
+
+                        
+
                         $menu_item->children->push($menu_subitem);
 
                         // remove the subitem for the first level

@@ -158,7 +158,8 @@ class EventCrudController extends CrudController
     $this->crud->addField([
         'name' => 'event_game_table',
         'label' => 'Games',
-        'type' => 'relationship'
+        'type' => 'relationship',
+        'allows_null' => false,
         // 'options' => (function ($query) {
         //     return $query->where('author_id', '=', 0)->orWhere('author_id', '=', null)->get();
         // }),

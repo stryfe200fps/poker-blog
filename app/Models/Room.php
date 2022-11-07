@@ -74,4 +74,9 @@ class Room extends Model implements HasMedia
         return $this->belongsTo(Country::class);
     }
 
+   public static function selectAvailableCountries()
+    {
+        return Country::select('name', 'iso_3166_2')->orderBy('name')->withCount('rooms')
+            ->having('rooms_count', '>', 0 )->get();
+    }
 }

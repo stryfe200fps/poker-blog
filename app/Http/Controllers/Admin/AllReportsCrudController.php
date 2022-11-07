@@ -214,7 +214,6 @@ class AllReportsCrudController extends CrudController
                 'pivot' => true, // on create&update, do you need to add/delete pivot table entries?
                 'inline_create' => ['entity' => 'level'],
                 'ajax' => true,
-
                 'value' => $lastLevelId ?? $this->crud->getCurrentEntry()->level->id,
                 'wrapper' => [
                     'class' => 'form-group col-md-4',

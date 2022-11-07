@@ -12,6 +12,7 @@ use App\Models\Player;
 use App\Models\EventChip;
 use App\Models\Tournament;
 use App\Models\EventGameTable;
+use App\Models\Page;
 
 test('whatsapp api', function () {
     $this->withExceptionHandling();

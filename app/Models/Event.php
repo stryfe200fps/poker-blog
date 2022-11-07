@@ -34,6 +34,8 @@ class Event extends Model implements HasMedia
     use \Znck\Eloquent\Traits\BelongsToThrough;
     // use MediaT;
 
+    public  $shouldOptimize = false;
+
     protected $guarded = ['id'];
     // use HasMediaCollection, HasMultipleImages;
 
