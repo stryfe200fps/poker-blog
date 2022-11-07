@@ -133,7 +133,7 @@
                         "
                     ></iframe>
                 </div>
-                <span class="loader"></span>
+                <span class="loader" v-else></span>
             </div>
         </div>
     </div>
