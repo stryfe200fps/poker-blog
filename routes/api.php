@@ -31,7 +31,7 @@ use App\Http\Controllers\Api\ReportsApiController;
 use App\Http\Controllers\ArticleCategoryController;
 use App\Http\Controllers\LOFApiEventIndexController;
 use App\Http\Controllers\Api\TournamentApiController;
-use App\Http\Controllers\LOFApiTournamentsController;
+use App\Http\Controllers\TournamentController;
 use App\Http\Controllers\Api\MediaReportingController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -62,7 +62,7 @@ Route::delete('events/gallery/delete/{dayId}', [EventApiController::class, 'dele
 Route::get('events/{id}', [EventApiController::class, 'show']);
 Route::post('events/{id}', [EventApiController::class, 'show']);
 Route::resource('reports', ReportsApiController::class);
-Route::resource('lof-tournament', LOFApiTournamentsController::class);
+Route::resource('lof-tournament', TournamentController::class);
 
 Route::resource('lof-event', LOFApiEventsController::class);
 
