@@ -14,15 +14,6 @@ class TournamentResource extends JsonResource
         $dateStart = Carbon::parse($this->date_start);
         $dateEnd = Carbon::parse($this->date_end);
 
-        // $status = '';
-        // if ($dateNow >= $dateStart && $dateNow <= $dateEnd) {
-        //     $status = 'live';
-        // } elseif ($dateNow <= $dateStart->addDay(2)) {
-        //     $status = 'upcoming';
-        // } else {
-        //     $status = 'past';
-        // }
-
         return [
             'id' => $this->id,
             'slug' => $this->slug,

@@ -14,14 +14,6 @@ class LOFApiEventIndexResource extends JsonResource
      */
     public function toArray($request)
     {
-        // $imgResource = [];
-        // foreach ($this->getMedia('event_gallery') as $media) {
-        //     $imgResource[] = [
-        //         'thumbnail' => $media->getUrl('main-gallery-thumb'),
-        //         'main' => $media->getUrl('main-gallery'),
-        //     ];
-        // }
-
         return [
             'id' => $this->id,
             'slug' => $this->slug,
@@ -29,8 +21,9 @@ class LOFApiEventIndexResource extends JsonResource
             'title_tab' => $this->title ?? '',
             'status' => $this->status(),
             'date_range' => $this->schedule,
-            'main_image' => $this->getFirstMediaUrl('event', 'main-image'),
-            'main_thumb' => $this->getFirstMediaUrl('event', 'main-thumb'),
+            'image_set' => ImageResource::collection($this->media),
+            // 'main_image' => $this->getFirstMediaUrl('event', 'main-image'),
+            // 'main_thumb' => $this->getFirstMediaUrl('event', 'main-thumb'),
             'tournament' => $this->tournament->title,
             'country' => $this->tournament->load('country')->country,
             'currency' => $this->tournament->currency,

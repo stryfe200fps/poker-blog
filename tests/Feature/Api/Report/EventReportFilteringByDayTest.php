@@ -27,7 +27,7 @@ it('filters scheduled day in event', function () {
 
     $day1 = $report1[0]->day_id;
     // dd($day1, $report1, EventReport::all()->pluck('title'));
-    $result1 = $this->get("api/lof-live-report?day=$day1");
+    $result1 = $this->get("api/report?day=$day1");
 
     $result1
       ->assertJsonPath(
@@ -37,7 +37,7 @@ it('filters scheduled day in event', function () {
 
     $day2 = $report2[0]->day_id;
 
-    $result2 = $this->get("api/lof-live-report?day=$day2");
+    $result2 = $this->get("api/report?day=$day2");
 
 
     $result2

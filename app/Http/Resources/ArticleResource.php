@@ -23,6 +23,7 @@ class ArticleResource extends JsonResource
             'tags' => $this->tags,
             'date' => Carbon::parse($this->published_date)->toFormattedDateString(),
             'formattedDate' => Carbon::parse($this->published_date)->diffForHumans(),
+            'image_set' => ImageResource::collection($this->media),
             'main_image' => $this->getFirstMediaUrl('article', 'main-image'),
             'thumb_image' => $this->getFirstMediaUrl('article', 'main-thumb'),
             $this->mergeWhen($this->author !== null, [

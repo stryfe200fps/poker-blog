@@ -5,8 +5,10 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Spatie\Sluggable\HasSlug;
+use App\Traits\HasMultipleImages;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\Sluggable\SlugOptions;
+use App\Traits\HasMediaCollection;
 use App\Observers\DefaultModelObserver;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -15,10 +17,12 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Article extends Model implements HasMedia
 {
-    use InteractsWithMedia;
+    // use InteractsWithMedia;
     use \Backpack\CRUD\app\Models\Traits\CrudTrait;
     use HasFactory;
     use HasSlug;
+
+    use HasMediaCollection, HasMultipleImages;
 
     protected $casts = [
         'content' => 'json',

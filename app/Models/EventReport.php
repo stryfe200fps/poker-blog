@@ -2,23 +2,27 @@
 
 namespace App\Models;
 
-use App\Observers\DefaultModelObserver;
-use App\Observers\EventReportObserver;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Sluggable\HasSlug;
+use App\Traits\HasMultipleImages;
+use Spatie\MediaLibrary\HasMedia;
 use Spatie\Sluggable\SlugOptions;
+use App\Traits\HasMediaCollection;
+use App\Observers\EventReportObserver;
+use App\Observers\DefaultModelObserver;
+use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class EventReport extends Model implements HasMedia
 {
-    use InteractsWithMedia;
+    // use InteractsWithMedia;
     use \Backpack\CRUD\app\Models\Traits\CrudTrait;
     use HasFactory;
+
+    use HasMediaCollection, HasMultipleImages;
     use \Znck\Eloquent\Traits\BelongsToThrough;
 
     public function registerMediaConversions(?Media $media = null): void
@@ -46,14 +50,12 @@ class EventReport extends Model implements HasMedia
 
     protected $guarded = ['id'];
 
-    // protected $appends = [
-    //     'realtime_published_date'
-    // ];
 
-    public function getImageAttribute($value)
-    {
-        return $this->getFirstMediaUrl('event-report', 'main-image');
-    }
+
+    // public function getImageAttribute($value)
+    // {
+    //     return $this->getFirstMediaUrl('event-report', 'main-image');
+    // }
 
     public function event()
     {
@@ -79,11 +81,6 @@ class EventReport extends Model implements HasMedia
     {
         return $this->belongsToMany(EventChip::class);
     }
-
-    // public function author()
-    // {
-    //     return $this->belongsTo(User::class);
-    // }
 
     public function author()
     {

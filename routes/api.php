@@ -61,7 +61,7 @@ Route::delete('events/gallery/delete/{dayId}', [EventApiController::class, 'dele
 // Route::get('events/{id}', [EventApiController::class, 'show']);
 // Route::post('events/{id}', [EventApiController::class, 'show']);
 Route::resource('reports', ReportsApiController::class);
-Route::resource('lof-tournament', TournamentController::class);
+Route::resource('tournaments', TournamentController::class);
 
 Route::get('event', [EventController::class, 'index' ]);
 Route::get('event/calendar', [EventController::class, 'calendar']);
@@ -69,7 +69,7 @@ Route::get('event/{slug}', [EventController::class, 'show' ]);
 // Route::resource('event/{slug}/payout', EventController::class);
 
 
-Route::resource('lof-live-report', EventReportsController::class);
+Route::resource('report', EventReportsController::class);
 Route::resource('page', PageManagerController::class);
 
 Route::get('twitter', [SocialMediaController::class, 'fetchTwitter']);

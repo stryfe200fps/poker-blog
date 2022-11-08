@@ -17,6 +17,7 @@ class LOFApiEventReportsResource extends JsonResource
             'published_date' => Carbon::parse($this->published_date)->toDayDateTimeString(),
             'realtime_published_date' => Carbon::parse($this->published_date)->setTimezone($this->event->tournament->word_timezone)->format(config('app.carbon_date_format')),
             'date_for_humans' => Carbon::parse($this->published_date)->setTimezone($this->event->tournament->word_timezone)->diffForHumans(),
+            'image_set' => ImageResource::collection($this->media),
             'main_image' => $this->getFirstMediaUrl('event-report', 'main-image'),
             'main_thumb' => $this->getFirstMediaUrl('event-report', 'main-thumb'),
             'caption' => $this->image_caption,

@@ -30,22 +30,70 @@ class Event extends Model implements HasMedia
     use \Backpack\CRUD\app\Models\Traits\CrudTrait;
     use HasFactory;
     use HasSlug;
-    use InteractsWithMedia;
     use \Znck\Eloquent\Traits\BelongsToThrough;
-    // use MediaT;
 
-    public  $shouldOptimize = false;
+    public $shouldOptimize = false;
 
     protected $guarded = ['id'];
-    // use HasMediaCollection, HasMultipleImages;
 
     public $mediaCollection = 'event';
+    use HasMediaCollection, HasMultipleImages;
+
+    // public function __construct()
+    // {
+    //     $this->extraMediaConversions = [
+    //         'big-image' => [1200,630],
+    //         'main-image' => [424,285],
+    //         'main-thumb' => [337,225],
+    //         'main-gallery-thumb' => [130,86],
+    //         'main-gallery' => [],
+    //     ] ?? [];
+    // }
+
+public function registerMediaConversions(?Media $media = null): void
+    {
+        $this->addMediaConversion('big-image')
+            ->width(1200)
+            ->height(630)
+            ->nonQueued();
+
+        $this->addMediaConversion('main-thumb')
+            ->width(300)
+            ->height(300)
+            ->nonQueued();
+
+        $this->addMediaConversion('main-thumb2')
+            ->width(130)
+            ->height(86);
+
+        $this->addMediaConversion('main-image')
+            ->width(424)
+            ->height(285)
+            ->nonQueued();
+
+                            $this->addMediaConversion('main-gallery-thumb')
+                    ->width(200)
+                    ->height(200);
+
+                             $this->addMediaConversion('main-gallery')
+                    ->width(200)
+                    ->height(200);
+
+
+                $this->addMediaConversion('big-image')
+                    ->width(200)
+                    ->height(200);
+    }
+
 
     public static function boot()
     {
         parent::boot();
         self::observe(new DefaultModelObserver);
     }
+
+    // public $extraMediaConversions = ['buligit'];
+
 
     public function getScheduleAttribute()
     {
@@ -114,7 +162,6 @@ class Event extends Model implements HasMedia
             ->having('event_reports_count', '>', 0 )->first();
     }
 
-
     public function days()
     {
         return $this->hasMany(Day::class);
@@ -140,37 +187,6 @@ class Event extends Model implements HasMedia
         if ($value !== null) {
             $this->attributes['slug'] = $value;
         }
-    }
-
-    public function registerMediaConversions(?Media $media = null): void
-    {
-
-        $this->addMediaConversion('big-image')
-            ->width(1200)
-            ->height(630)
-            ->nonQueued();
-
-        $this->addMediaConversion('main-image')
-            ->width(424)
-            ->height(285)
-            ->nonQueued(); 
-
-        $this->addMediaConversion('main-thumb')
-            ->width(337)
-            ->height(225)
-            ->nonQueued();
-
-        $this->addMediaConversion('main-gallery-thumb')
-            ->width(130)
-            ->height(86)
-            ->nonQueued();
-
-        $this->addMediaConversion('main-gallery');
-    }
-
-    public function getImageAttribute($value)
-    {
-        return $this->getFirstMediaUrl('event', 'main-image');
     }
 
     public function event_game_table()
@@ -256,24 +272,5 @@ class Event extends Model implements HasMedia
         return '<a class="btn btn-sm btn-link"  href="level?event='.urlencode($this->attributes['id']).'" data-toggle="tooltip" title="Days"><i class="fa fa-search"></i> Levels  </a>';
     }
 
-    // public function setDateStartAttribute($value)
-    // {
-    //     $this->attributes['date_start'] = Carbon::parse($value, session()->get('timezone') ?? 'UTC')->setTimezone('UTC');
-    // }
-
-    // public function getDateStartAttribute($value)
-    // {
-    //     return Carbon::parse($value)->setTimezone(session()->get('timezone') ?? 'UTC');
-    // }
-
-    // public function setDateEndAttribute($value)
-    // {
-    //     $this->attributes['date_end'] = Carbon::parse($value, session()->get('timezone') ?? 'UTC')->setTimezone('UTC');
-    // }
-
-    // public function getDateEndAttribute($value)
-    // {
-    //     return Carbon::parse($value)->setTimezone(session()->get('timezone') ?? 'UTC');
-    // }
 
 }

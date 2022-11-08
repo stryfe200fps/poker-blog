@@ -35,6 +35,6 @@ test('imagetheme is attaching to event report', function () {
 
     expect($report->image_theme->image)->toBe(config('app.url').'/storage/1/photo.jpg');
 
-    // $fetch = $this->get('api/lof-live-report?event='.$eventSlug.'&filterDay='.$report->day.'');
+    // $fetch = $this->get('api/report?event='.$eventSlug.'&filterDay='.$report->day.'');
 
 });

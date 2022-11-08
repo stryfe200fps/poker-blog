@@ -39,8 +39,8 @@ export const useEventStore = defineStore("event", {
         async getLiveReport(page, day) {
             try {
                 let { data } = await axios.get(
-                    // `/api/lof-live-report?page=${page}&event=${event}&filterDay=${day}`
-                    `/api/lof-live-report?page=${page}&day=${day}`
+                    // `/api/report?page=${page}&event=${event}&filterDay=${day}`
+                    `/api/report?page=${page}&day=${day}`
                 );
                 this.liveReportList = data;
             } catch (error) {

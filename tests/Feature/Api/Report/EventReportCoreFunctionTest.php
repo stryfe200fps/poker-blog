@@ -74,7 +74,7 @@ test('if the "stacks before" is updating on next report ', function () {
     ]);
 
 
-    $json = $this->get('api/lof-live-report'.'?day='.$day->id.'');
+    $json = $this->get('api/report'.'?day='.$day->id.'');
 
     $json
     ->assertJsonPath(

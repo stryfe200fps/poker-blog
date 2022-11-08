@@ -6,6 +6,9 @@ use Spatie\Image\Manipulations;
 
 trait HasMultipleImages
 {
+
+    // protected array $extraMediaConversions = [];
+
     public function hasMediaCollectionMultipleImages()
     {
 
@@ -32,12 +35,13 @@ trait HasMultipleImages
                     ->width(1600)
                     ->height(900);
 
-                $this->addMediaConversion('og-image')
-                    ->nonOptimized();
+
+                // collect($this->extraMediaConversions)->map(fn ($item, $key) =>
+                //     $this->addMediaConversion($key)
+                //     ->width($item[0] ?? 1600)
+                //     ->height($item[1] ?? 900)
+                // );
 
             });
-
-
-
     }
 }

@@ -24,7 +24,6 @@ class EventFactory extends Factory
      */
     public function definition()
     {
-
         return [
             'tournament_id' => Tournament::factory()->create()->id,
             'buyin' => 200,
