@@ -470,9 +470,10 @@ function stickyScroll() {
     const nav = document.querySelector(".nav-list-container");
     const { top } = tabs.getBoundingClientRect();
     const scrollTopBtn = document.querySelector(".scroll-top");
+    const width = document.body.clientWidth;
 
     if (top <= nav.offsetHeight) {
-        tabs.style.top = `${nav.offsetHeight}px`;
+        tabs.style.top = width === 768 ? "0px" : `${nav.offsetHeight}px`;
         tabs.style.border = "none";
         tabs.style.backgroundColor = "white";
         tabs.style.boxShadow = "0px 8px 40px rgba(0, 0, 0, 0.20)";
@@ -654,7 +655,9 @@ ul.post-tags li .twitter {
     .post-content-min-height {
         min-height: 200px;
     }
+}
 
+@media (min-width: 769px) {
     .show-on-mobile {
         display: none;
     }

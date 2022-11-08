@@ -1,6 +1,6 @@
 <template>
     <li class="drop" @click="toggleDropdown">
-        <a
+        <Link
             class="home home--custom"
             :class="{
                 child: menu.children.length,
@@ -8,18 +8,17 @@
             }"
             :href="'/' + menu.link"
             v-if="!menu.children.length && menu.type === 'internal_link'"
-            >{{ menu.name }}</a
+            >{{ menu.name }}</Link
         >
-        <a
+        <Link
             class="home home--custom"
             :class="{
                 child: menu.children.length,
                 'router-link-active': pathname == menu.link,
             }"
             :href="'/' + menu.page_slug"
-            :target="menu.type === 'external_link' ? '_blank' : '_self'"
             v-else-if="!menu.children.length && menu.type === 'page_link'"
-            >{{ menu.name }}</a
+            >{{ menu.name }}</Link
         >
         <a
             class="home home--custom"
@@ -115,6 +114,7 @@ function toggleDropdown() {
 <style scoped>
 .navbar-nav--custom > li > a {
     color: #fff !important;
+    font-size: 9px;
 }
 
 .navbar-nav--custom > li > a:before {
@@ -164,6 +164,10 @@ function toggleDropdown() {
 }
 
 @media screen and (max-width: 767px) {
+    .navbar-nav--custom > li > a {
+        font-size: 13px;
+    }
+
     .navbar-nav > li > a.home {
         display: inline-block;
         padding-inline: 0;
@@ -223,6 +227,15 @@ function toggleDropdown() {
 @media screen and (min-width: 769px) {
     .navbar-nav--custom > li > a {
         padding-block: 15px;
+    }
+    .navbar-nav--custom > li > a {
+        font-size: 9px;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    .navbar-nav--custom > li > a {
+        font-size: 13px;
     }
 }
 </style>
