@@ -13,7 +13,7 @@ export const useRoomStore = defineStore("rooms", {
     actions: {
         async getCountries() {
             try {
-                const { data } = await axios.get("/api/select/countries");
+                const { data } = await axios.get("/api/rooms/select/countries");
                 this.countries = data;
             } catch (error) {
                 console.error(error);

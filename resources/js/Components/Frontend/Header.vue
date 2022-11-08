@@ -35,7 +35,7 @@
                                     position: absolute;
                                     top: 0;
                                     height: 100%;
-                                    margin-left: -95px;
+                                    margin-left: -50px;
                                     filter: drop-shadow(8px 8px 10px #000);
                                 "
                             >
