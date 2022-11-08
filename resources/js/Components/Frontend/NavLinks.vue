@@ -6,9 +6,30 @@
                 child: menu.children.length,
                 'router-link-active': pathname == menu.link,
             }"
-            :href="menu.type === 'external_link' ? menu.link : '/' + menu.link"
+            :href="'/' + menu.link"
+            v-if="!menu.children.length && menu.type === 'internal_link'"
+            >{{ menu.name }}</a
+        >
+        <a
+            class="home home--custom"
+            :class="{
+                child: menu.children.length,
+                'router-link-active': pathname == menu.link,
+            }"
+            :href="'/' + menu.page_slug"
             :target="menu.type === 'external_link' ? '_blank' : '_self'"
-            v-if="!menu.children.length"
+            v-else-if="!menu.children.length && menu.type === 'page_link'"
+            >{{ menu.name }}</a
+        >
+        <a
+            class="home home--custom"
+            :class="{
+                child: menu.children.length,
+                'router-link-active': pathname == menu.link,
+            }"
+            :href="menu.link"
+            target="_blank"
+            v-else-if="!menu.children.length && menu.type === 'external_link'"
             >{{ menu.name }}</a
         >
         <a
