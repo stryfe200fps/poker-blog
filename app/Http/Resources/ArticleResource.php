@@ -11,8 +11,9 @@ class ArticleResource extends JsonResource
     public function toArray($request)
     {
 
+        $img = $this->getMedia('article');
+        $images =   is_countable($img) && count($img) > 0 ? new ImageResource( $this->getMedia('article')[0]) : '' ;
      
-        // dd('a');
         return [
             'title' => googleTranslateExclude($this->title)[0] ?? '',
             'title_tab' => $this->title ?? '',
@@ -23,7 +24,7 @@ class ArticleResource extends JsonResource
             'tags' => $this->tags,
             'date' => Carbon::parse($this->published_date)->toFormattedDateString(),
             'formattedDate' => Carbon::parse($this->published_date)->diffForHumans(),
-            'image_set' => ImageResource::collection($this->media),
+            'image_set' => $images,
             'main_image' => $this->getFirstMediaUrl('article', 'main-image'),
             'thumb_image' => $this->getFirstMediaUrl('article', 'main-thumb'),
             $this->mergeWhen($this->author !== null, [

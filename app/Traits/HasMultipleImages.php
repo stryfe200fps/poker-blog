@@ -7,14 +7,11 @@ use Spatie\Image\Manipulations;
 trait HasMultipleImages
 {
 
-    // protected array $extraMediaConversions = [];
-
     public function hasMediaCollectionMultipleImages()
     {
 
         $this->addMediaCollection(app()->make(get_class($this))->firstOrFail()->mediaCollection)
             ->registerMediaConversions(function () {
-
                 $this->addMediaConversion('xs-image')
                     ->width(200)
                     ->height(200);
@@ -34,14 +31,6 @@ trait HasMultipleImages
                 $this->addMediaConversion('xl-image')
                     ->width(1600)
                     ->height(900);
-
-
-                // collect($this->extraMediaConversions)->map(fn ($item, $key) =>
-                //     $this->addMediaConversion($key)
-                //     ->width($item[0] ?? 1600)
-                //     ->height($item[1] ?? 900)
-                // );
-
-            });
+        });
     }
 }

@@ -39,16 +39,6 @@ class Event extends Model implements HasMedia
     public $mediaCollection = 'event';
     use HasMediaCollection, HasMultipleImages;
 
-    // public function __construct()
-    // {
-    //     $this->extraMediaConversions = [
-    //         'big-image' => [1200,630],
-    //         'main-image' => [424,285],
-    //         'main-thumb' => [337,225],
-    //         'main-gallery-thumb' => [130,86],
-    //         'main-gallery' => [],
-    //     ] ?? [];
-    // }
 
 public function registerMediaConversions(?Media $media = null): void
     {
@@ -91,8 +81,6 @@ public function registerMediaConversions(?Media $media = null): void
         parent::boot();
         self::observe(new DefaultModelObserver);
     }
-
-    // public $extraMediaConversions = ['buligit'];
 
 
     public function getScheduleAttribute()

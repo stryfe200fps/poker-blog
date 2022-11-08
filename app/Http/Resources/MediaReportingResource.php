@@ -16,7 +16,7 @@ class MediaReportingResource extends JsonResource
     {
         $img = $this->getMedia('media-reporting');
         $images =   is_countable($img) && count($img) > 0 ? new ImageResource( $this->getMedia('media-reporting')[0]) : '' ;
-  
+
         return [
             'title' => $this->title,
             'description' => $this->description,

@@ -14,6 +14,9 @@ class TournamentResource extends JsonResource
         $dateStart = Carbon::parse($this->date_start);
         $dateEnd = Carbon::parse($this->date_end);
 
+        $img = $this->getMedia('tournament');
+        $images =   is_countable($img) && count($img) > 0 ? new ImageResource( $this->getMedia('tournament')[0]) : '' ;
+
         return [
             'id' => $this->id,
             'slug' => $this->slug,
@@ -23,6 +26,7 @@ class TournamentResource extends JsonResource
             'description' => $this->description,
             'poker_tour' => $this->tour->title,
             'poker_tour_slug' => $this->tour->slug,
+            'image_set' => $images,
             'main_image' => $this->getFirstMediaUrl('tournament', 'main-image'),
             'main_thumb' => $this->getFirstMediaUrl('tournament', 'main-thumb'),
             'currency' => $this->currency,
