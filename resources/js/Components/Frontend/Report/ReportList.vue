@@ -297,7 +297,7 @@
                 <div class="grid-box">
                     <div id="my-gallery" class="row">
                         <div
-                            class="col-xs-2"
+                            class="col-xs-12 col-sm-4 col-md-2"
                             v-for="(image, index) in gallery"
                             :key="index"
                         >
