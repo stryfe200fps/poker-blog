@@ -12,11 +12,13 @@
             >{{ menu.name }}</a
         >
         <a
+            type="button"
             class="home home--custom"
             :class="{
                 child: menu.children.length,
             }"
-            href="#"
+            style="cursor: default"
+            disabled
             v-else
         >
             {{ menu.name }}
