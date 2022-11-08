@@ -3,7 +3,6 @@
         <Head>
             <title>{{ article.title_tab }}</title>
         </Head>
-        <!-- {{ getArticle(slug) }} -->
         <div class="block-content">
             <label
                 id="table-of-contents"
@@ -303,7 +302,7 @@ function onScrollContents() {
         // adding scroll-padding-top
         document.documentElement.style.setProperty(
             "--scroll-padding",
-            tableOfContents.offsetHeight + 80 + "px"
+            tableOfContents.offsetHeight + 150 + "px"
         );
     }
 }
@@ -458,6 +457,7 @@ ul.post-tags {
     position: sticky;
     top: 0;
     left: 0;
+    z-index: 1;
     display: none;
     width: 100%;
     margin-bottom: 0;
@@ -517,10 +517,8 @@ ul.post-tags {
 }
 
 .table-menu li {
-    padding: 10px 20px;
     border-bottom: 1px solid #fff;
     cursor: pointer;
-    white-space: nowrap;
 }
 
 .table-menu li:hover {
@@ -530,6 +528,7 @@ ul.post-tags {
 .table-menu li a {
     display: block;
     width: 100%;
+    padding: 10px 20px;
     text-decoration: none;
     color: #fff;
 }
