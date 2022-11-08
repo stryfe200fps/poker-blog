@@ -1,42 +1,26 @@
 <template>
-
-    <!-- <li class="drop" @click="toggleDropdown"> -->
-
-<span style="color:red"> <Link :href="`/${menu.page_slug ?? menu.link}`"> {{ menu.name }} </Link></span>
-
-<div v-for="adi in menu.children " :key="adi.id">
-    <br>
-    <br> 
-    <br> 
-    <br> 
-  <Link :href="`/${adi.link}`"> {{ adi.name }}</Link>  
-</div>
-
-
-
-    <!-- <li class="drop" @click="toggleDropdown">
-        <Link
+    <li class="drop" @click="toggleDropdown">
+        <a
             class="home home--custom"
             :class="{
                 child: menu.children.length,
                 'router-link-active': pathname == menu.link,
             }"
-            :href="'/' + menu.link"
+            :href="menu.type === 'external_link' ? menu.link : '/' + menu.link"
+            :target="menu.type === 'external_link' ? '_blank' : '_self'"
             v-if="!menu.children.length"
+            >{{ menu.name }}</a
         >
-            {{ menu.name }}
-        </Link>
-        <Link
+        <a
             class="home home--custom"
             :class="{
                 child: menu.children.length,
             }"
             href="#"
-            preserve-state
             v-else
         >
             {{ menu.name }}
-        </Link>
+        </a>
         <span
             class="dropdown-arrow"
             :class="{ show: toggleSubMenu }"
@@ -50,10 +34,33 @@
         >
             <li v-for="children in menu.children" :key="children.id">
                 <Link
-                    v-if="menu.link !== children.link"
+                    v-if="
+                        menu.link !== children.link &&
+                        children.type === 'internal_link'
+                    "
                     :href="'/' + menu.link + '/' + children.link"
                     style="background: rgb(239, 239, 239)"
                     >{{ children.name }}</Link
+                >
+                <Link
+                    v-else-if="
+                        menu.link !== children.link &&
+                        children.type === 'page_link'
+                    "
+                    :href="'/' + children.page_slug"
+                    style="background: rgb(239, 239, 239)"
+                    >{{ children.name }}</Link
+                >
+                <a
+                    v-else-if="
+                        menu.link !== children.link &&
+                        children.type === 'external_link'
+                    "
+                    :href="children.link"
+                    style="background: rgb(239, 239, 239)"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >{{ children.name }}</a
                 >
                 <Link
                     v-else
@@ -62,9 +69,8 @@
                     >{{ children.name }}</Link
                 >
             </li>
-        </ul> -->
-
-    <!-- </li> -->
+        </ul>
+    </li>
 </template>
 
 <script setup>

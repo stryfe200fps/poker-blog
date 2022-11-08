@@ -44,8 +44,9 @@
 <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-L913NS2HT0'); </script>
 {!! (new \App\Presenters\WebsitePresenter)->website() !!}
 {!! (new \App\Presenters\WebsitePresenter)->organization() !!}
+{!! (new \App\Presenters\WebsitePresenter)->webpage() !!}
 {!! $page['props']['json-ld-article'] ?? '' !!}
-{!! $page['props']['json-ld-webpage'] ?? '' !!}
+
     </head>
     <body class="font-sans antialiased">
 

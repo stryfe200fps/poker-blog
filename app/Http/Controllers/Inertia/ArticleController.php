@@ -13,8 +13,8 @@ class ArticleController extends Controller
     {
        return Inertia::render('Categories/CategoryPage', [
                         'title' => ' LifeOfPoker',
-                        'description' => 'test',
-                        'page_title' => 'txest',
+                        'description' => 'News',
+                        'page_title' => 'News',
                         // 'json-ld-webpage' => 'test',
                     ]);
     }
