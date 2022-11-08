@@ -63,9 +63,9 @@ defineProps({
                             >live now</span
                         >
                         <img
-                            v-if="report.main_thumb"
-                            :src="report.main_thumb"
-                            :alt="report.main_thumb"
+                            v-if="report.image_set"
+                            :src="report.image_set.md_image"
+                            :alt="report.image_set.md_image"
                         />
                         <img v-else :src="defaultImg" :alt="defaultImg" />
                         <Link
@@ -137,9 +137,9 @@ defineProps({
                     <div class="col-sm-6">
                         <div class="post-gallery">
                             <img
-                                v-if="news.thumb_image.length"
-                                :src="news.thumb_image"
-                                :alt="news.thumb_image"
+                                v-if="news.image_set"
+                                :src="news.image_set.md_image"
+                                :alt="news.image_set.md_image"
                             />
                             <img v-else :src="defaultImg" :alt="defaultImg" />
 

@@ -91,9 +91,9 @@
             <div class="col-sm-5">
                 <div class="post-gallery">
                     <img
-                        v-if="event.main_thumb"
-                        :src="event.main_thumb"
-                        :alt="event.main_thumb"
+                        v-if="event.image_set"
+                        :src="event.image_set.md_image"
+                        :alt="event.image_set.md_image"
                     />
                     <img v-else :src="defaultImg" :alt="defaultImg" />
                 </div>

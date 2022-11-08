@@ -57,9 +57,9 @@
                             >
                                 <div class="post-gallery">
                                     <img
-                                        v-if="category.thumb_image"
-                                        :src="category.thumb_image"
-                                        :alt="category.thumb_image"
+                                        v-if="category.image_set"
+                                        :src="category.image_set.sm_image"
+                                        :alt="category.image_set.sm_image"
                                     />
                                     <img
                                         v-else

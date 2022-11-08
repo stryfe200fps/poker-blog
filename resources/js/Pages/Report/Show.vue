@@ -1,7 +1,7 @@
 <template>
     <FrontLayout title="">
         <Head>
-            <title>{{ report.data.title }}</title>
+            <title>{{ report.data.title_tab }}</title>
             <meta name="description" content="Your page description" />
             <meta property="og:title=" :content="report.data.title" />
             <meta property="og:description" :content="report.data.content" />
@@ -29,7 +29,7 @@
                     ><br />
                 </div> -->
                 <div class="title-post">
-                    <h1 class="text-capitalize">{{ report.data.title }}</h1>
+                    <h1 class="text-capitalize" v-html="report.data.title"></h1>
                     <div
                         style="
                             display: flex;
@@ -181,21 +181,20 @@
                         </div>
                     </div>
                 </div> -->
-
                 <div
                     :class="
-                        report.data.main_image ? 'post-content-min-height' : ''
+                        report.data.image_set ? 'post-content-min-height' : ''
                     "
                     class="post-content"
                 >
                     <div
                         class="post-gallery float-img"
-                        v-if="report.data.main_image"
+                        v-if="report.data.image_set"
                         style="float: left; margin: 0px 15px 5px 0px"
                     >
                         <div style="position: relative">
                             <img
-                                :src="report.data.main_image"
+                                :src="report.data.image_set.lg_image"
                                 alt=""
                                 style="margin-bottom: unset"
                                 :style="[

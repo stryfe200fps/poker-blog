@@ -141,8 +141,11 @@
                         </div>
                     </div>
                 </div>
-                <div v-if="article.main_image" class="post-gallery">
-                    <img :src="article.main_image" :alt="article.main_image" />
+                <div v-if="article.image_set" class="post-gallery">
+                    <img
+                        :src="article.image_set.lg_image"
+                        :alt="article.image_set.lg_image"
+                    />
                     <span class="image-caption">{{ article.caption }}</span>
                 </div>
                 <div v-if="article.content?.length > 1">
@@ -200,9 +203,9 @@
                             @click="showArticle(relate.date, relate.slug)"
                         >
                             <img
-                                :src="relate.main_image"
-                                alt=""
-                                v-if="relate.main_image.length"
+                                v-if="relate.image_set"
+                                :src="relate.image_set.sm_image"
+                                :alt="relate.image_set.sm_image"
                             />
                             <img v-else :src="defaultImg" alt="" />
                             <div class="hover-box">

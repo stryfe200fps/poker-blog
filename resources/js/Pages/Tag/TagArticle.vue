@@ -23,9 +23,9 @@
                             @click="showArticle(tag.date, tag.slug)"
                         >
                             <img
-                                v-if="tag.thumb_image"
-                                :src="tag.thumb_image"
-                                :alt="tag.thumb_image"
+                                v-if="tag.image_set"
+                                :src="tag.image_set.sm_image"
+                                :alt="tag.image_set.sm_image"
                             />
                             <img v-else :src="defaultImg" :alt="defaultImg" />
                             <div class="hover-box">

@@ -5,9 +5,9 @@
                 <div class="col-sm-5">
                     <div class="post-gallery">
                         <img
-                            v-if="tournament.main_thumb"
-                            :src="tournament.main_thumb"
-                            :alt="tournament.main_thumb"
+                            v-if="tournament.image_set.md_image"
+                            :src="tournament.image_set.md_image"
+                            :alt="tournament.image_set.md_image"
                         />
                         <img v-else :src="defaultImg" :alt="defaultImg" />
                     </div>

@@ -23,9 +23,9 @@
                 </div>
                 <div class="post-gallery">
                     <img
-                        v-if="series.data.main_image"
-                        :src="series.data.main_image"
-                        :alt="series.data.main_image"
+                        v-if="series.data.image_set"
+                        :src="series.data.image_set.lg_image"
+                        :alt="series.data.image_set.lg_image"
                     />
                     <img v-else :src="defaultImg" :alt="defaultImg" />
                 </div>

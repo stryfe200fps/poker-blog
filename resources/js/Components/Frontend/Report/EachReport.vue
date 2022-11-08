@@ -76,7 +76,7 @@
                                 >
                                     <a
                                         target="_blank"
-                                        :href="`https://twitter.com/intent/tweet?text=${url}/tours/${event.tour_slug}/${event.tournament_slug}/${event.slug}/update-${item.id}/update-${item.id}`"
+                                        :href="`https://twitter.com/intent/tweet?text=${url}/tours/${event.tour_slug}/${event.tournament_slug}/${event.slug}/update-${item.id}`"
                                         ><i
                                             class="fa fa-twitter"
                                             style="margin-right: 0; color: #fff"
@@ -112,17 +112,17 @@
         </div>
 
         <div
-            :class="item?.main_image ? 'post-content-min-height' : ''"
+            :class="item?.image_set ? 'post-content-min-height' : ''"
             class="post-content"
         >
             <div
                 class="post-gallery float-img"
-                v-if="item.main_image"
+                v-if="item.image_set"
                 style="float: left; margin: 0px 15px 5px 0px"
             >
                 <div style="position: relative">
                     <img
-                        :src="item.main_image"
+                        :src="item.image_set.md_image"
                         alt=""
                         style="margin-bottom: unset"
                         :style="[
