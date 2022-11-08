@@ -28,12 +28,12 @@ Route::get('/tag/articles/{slug}', [ArticleController::class, 'tag'])->name('art
 Route::prefix('news')->group(function () {
 
     Route::get('/', [ArticleController::class, 'index'])->name('article');
-    Route::get('/{slug}', function () {
-                    return Inertia::render('Categories/CategoryPage', [
-                        'title' => ' LifeOfPoker',
-                        'description' => 'test',
-                        'page_title' => 'txest',
-                        // 'json-ld-webpage' => 'test',
+    Route::get('/{slug}', function ($slug) {
+ 
+        return Inertia::render('Categories/CategoryPage', [
+                        'title' => ucfirst(str_replace('-', ' ', $slug)) . ' | LifeOfPoker',
+                        'description' => ucfirst(str_replace('-', ' ', $slug)),
+                        'page_title' => ucfirst(str_replace('-', ' ', $slug)),
                     ]);
     });
     Route::get('/category', [ArticleController::class, 'index'])->name('article-category');

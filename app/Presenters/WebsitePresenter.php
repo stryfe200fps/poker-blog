@@ -12,9 +12,7 @@ class WebsitePresenter
     public function webpage($page = 'Home', $url = '/')
     {
         return \JsonLd\Context::create('web_page', [
-            'headline' => $page,
-            'description' => $page.' page',
-            'url' => config('app.url').$url,
+            'url' => request()->url(),
         ]);
     }
 

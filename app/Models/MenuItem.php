@@ -55,12 +55,12 @@ class MenuItem extends Model
 
 
 
-                        if ( $menu_item->link  ===  $menu_subitem->link) { 
-                            $menu_subitem->link = $menu_item->link;
-                        } else {
+                        // if ( $menu_item->link  ===  $menu_subitem->link) { 
+                        //     $menu_subitem->link = $menu_item->link;
+                        // } else {
 
-                            $menu_subitem->link =  $menu_item->link . '/' . $menu_subitem->link;
-                        }
+                        //     $menu_subitem->link =  $menu_item->link . '/' . $menu_subitem->link;
+                        // }
 
 
                         
