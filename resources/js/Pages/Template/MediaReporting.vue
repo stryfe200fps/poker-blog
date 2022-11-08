@@ -1,5 +1,9 @@
 <template>
-    <div class="room-card" @click="showMedia(media.link)">
+    <div
+        class="room-card"
+        v-if="media.type == mediaType"
+        @click="showMedia(media.link)"
+    >
         <div class="news-post standard-post2">
             <div class="post-gallery">
                 <img
@@ -49,6 +53,10 @@ import defaultImg from "/public/default-img.png";
 const props = defineProps({
     media: {
         type: Object,
+    },
+    mediaType: {
+        type: String,
+        default: "video",
     },
 });
 

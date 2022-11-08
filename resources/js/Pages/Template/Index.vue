@@ -144,6 +144,9 @@
                         v-for="(media, index) in medias"
                         :key="index"
                         :media="media"
+                        :mediaType="
+                            page.slug === 'podcast' ? 'podcast' : 'video'
+                        "
                     />
                 </div>
                 <div

@@ -46,13 +46,19 @@
                                         <i class="fas fa-mobile-android-alt"></i
                                         >{{ room.phone }}
                                     </li>
-                                    <li v-if="room.email">
+                                    <li
+                                        class="text-lowercase"
+                                        v-if="room.email"
+                                    >
                                         <a :href="`mailto:${room.email}`"
                                             ><i class="fas fa-envelope"></i
                                             >{{ room.email }}</a
                                         >
                                     </li>
-                                    <li v-if="room.website">
+                                    <li
+                                        class="text-lowercase"
+                                        v-if="room.website"
+                                    >
                                         <a
                                             :href="`${room.website}`"
                                             target="_blank"
