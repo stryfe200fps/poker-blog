@@ -2,8 +2,6 @@
 
 namespace App\Http\Resources;
 
-use Carbon\Carbon;
-use App\Http\Resources\LOFApiEventIndexResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class TournamentCollection extends ResourceCollection
@@ -17,27 +15,20 @@ class TournamentCollection extends ResourceCollection
     public function toArray($request)
     {
 
-        $series = $this->collection;
+        if ($request->get('status') == null) {
+            return;
+        }
 
-
-        $reducedCollection = $this->collection->groupBy(function ($date) {
-            return Carbon::parse($date->date_start->format('F-Y'));
-        })->reduce(function ($result, $item) {
-            $result[] = [
-                'date' =>  $item->first()->date_start->format('F-Y'),
-                'collection' => collect($item)->map(function ($i) {
-                    return new LOFApiTournamentResource($i);
-                }) ?? []
-            ];
-
-            return $result;
-        }, collect([]))->toArray();
-
-        // dd('series: ', $series, 'reduced: ', $reducedCollection);
-
+        $tournamentList = $this->collection->map(function ($tourna) use ($request) {
+            $tourna->events = $tourna->events->filter(fn ($event) => $event->status() == $request->get('status')
+            );
+            return $tourna;
+        })->filter(function ($tourna) {
+            return count($tourna->events);
+        });
 
         return [
-            'data' => $reducedCollection 
+            'data' => TournamentResource::collection($tournamentList),
         ];
     }
 }

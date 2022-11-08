@@ -24,7 +24,7 @@ export const useEventStore = defineStore("event", {
     actions: {
         async getMainEvents() {
             try {
-                const { data } = await axios.get("/api/lof-event/");
+                const { data } = await axios.get("/api/event/");
 
                 this.mainEvents = data;
             } catch (error) {
@@ -33,7 +33,7 @@ export const useEventStore = defineStore("event", {
         },
         async getEventData(id) {
             // if (this.eventData.length) return;
-            const { data } = await axios.get("/api/lof-event/" + id);
+            const { data } = await axios.get("/api/event/" + id);
             this.eventData = data;
         },
         async getLiveReport(page, day) {

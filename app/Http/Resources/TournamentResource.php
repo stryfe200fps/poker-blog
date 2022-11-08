@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class LOFApiTournamentResource extends JsonResource
+class TournamentResource extends JsonResource
 {
     public function toArray($request)
     {

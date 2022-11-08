@@ -21,7 +21,7 @@ class GalleryController extends Controller
 
         foreach ($day->event_reports as $report) {
             if ($path = $report->getFirstMediaPath('event-report', 'main-thumb2')) { 
-                if (File::exists($path)?true:false) { 
+                if (File::exists($path)) { 
                 $imgResource[] = [
                 'thumbnail' => $report->getFirstMediaUrl('event-report', 'main-thumb2'),
                 'main' => $report->getFirstMediaUrl('event-report', 'main-image')

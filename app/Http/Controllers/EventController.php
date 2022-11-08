@@ -2,12 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\LOFApiEventIndexResource;
-use App\Models\Event;
 use Carbon\Carbon;
+use App\Models\Event;
+use App\Models\Tournament;
 use Illuminate\Http\Request;
+use App\Http\Filters\DateFilter;
+use App\Http\Filters\GameFilter;
+use App\Http\Filters\TourFilter;
+use Illuminate\Pipeline\Pipeline;
+use App\Http\Filters\LocationFilter;
+use App\Http\Resources\CalendarTournamentCollection;
+use App\Http\Resources\LOFApiEventIndexResource;
 
-class LOFApiEventsController extends Controller
+class EventController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -55,37 +62,21 @@ class LOFApiEventsController extends Controller
         return new LOFApiEventIndexResource(Event::with(['event_reports'])->where('slug', $slug)->first());
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function calendar()
     {
-        //
-    }
+        $series = Tournament::with('tour')->orderBy('date_start', 'ASC');
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+        $pipeLine = app(Pipeline::class)
+            ->send($series)
+            ->through([
+                DateFilter::class,
+                LocationFilter::class,
+                GameFilter::class,
+                TourFilter::class
+            ])
+            ->thenReturn()
+            ->paginate(3);
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return new CalendarTournamentCollection($pipeLine);
     }
 }

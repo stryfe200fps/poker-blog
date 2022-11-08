@@ -25,11 +25,10 @@ use App\Http\Controllers\SocialMediaController;
 use App\Http\Controllers\Api\EventApiController;
 use App\Http\Controllers\Api\levelApiController;
 use App\Http\Controllers\EventReportsController;
-use App\Http\Controllers\LOFApiEventsController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\Api\LiveReportController;
 use App\Http\Controllers\Api\ReportsApiController;
 use App\Http\Controllers\ArticleCategoryController;
-use App\Http\Controllers\LOFApiEventIndexController;
 use App\Http\Controllers\Api\TournamentApiController;
 use App\Http\Controllers\TournamentController;
 use App\Http\Controllers\Api\MediaReportingController;
@@ -59,19 +58,17 @@ Route::post('events/gallery/upload', [EventApiController::class, 'upload']);
 
 Route::get('events/gallery/fetch/{dayId}', [EventApiController::class, 'fetchGallery']);
 Route::delete('events/gallery/delete/{dayId}', [EventApiController::class, 'deleteImage']);
-Route::get('events/{id}', [EventApiController::class, 'show']);
-Route::post('events/{id}', [EventApiController::class, 'show']);
+// Route::get('events/{id}', [EventApiController::class, 'show']);
+// Route::post('events/{id}', [EventApiController::class, 'show']);
 Route::resource('reports', ReportsApiController::class);
 Route::resource('lof-tournament', TournamentController::class);
 
-Route::resource('lof-event', LOFApiEventsController::class);
+Route::get('event', [EventController::class, 'index' ]);
+Route::get('event/calendar', [EventController::class, 'calendar']);
+Route::get('event/{slug}', [EventController::class, 'show' ]);
+// Route::resource('event/{slug}/payout', EventController::class);
 
-Route::resource('lof-event/{slug}/payout', LOFApiEventsController::class);
 
-// Route::get('lof-event/{slug}/chipcount', [LOFApiEventIndexController::class, 'chipCounts']);
-// Route::get('lof-event/{slug}/whatsapp', [LOFApiEventIndexController::class, 'whatsapp']);
-
-Route::resource('lof-event-index', LOFApiEventIndexController::class);
 Route::resource('lof-live-report', EventReportsController::class);
 Route::resource('page', PageManagerController::class);
 
@@ -81,7 +78,6 @@ Route::post('contact', [ContactUsController::class, 'store']);
 Route::post('subscribe', [NewsletterController::class, 'store']);
 
 Route::get('payout/player/{player_id}/event/{event}', [PayoutController::class, 'player']);
-
 Route::get('payout/event/{slug}', [PayoutController::class, 'event_payout']);
 
 

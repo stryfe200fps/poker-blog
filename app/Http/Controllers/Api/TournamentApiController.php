@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Resources\LOFApiTournamentResource;
 use App\Http\Resources\TournamentResource;
 use App\Models\Tournament;
 use Illuminate\Routing\Controller;
@@ -16,6 +15,6 @@ class TournamentApiController extends Controller
 
     public function show($slug)
     {
-        return new LOFApiTournamentResource(Tournament::where('slug', $slug)->first());
+        return new TournamentResource(Tournament::where('slug', $slug)->first());
     }
 }

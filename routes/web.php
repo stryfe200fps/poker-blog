@@ -14,7 +14,7 @@ use App\Http\Controllers\Inertia\TournamentController;
 use App\Http\Controllers\Admin\Utilities\ExcelUploadController;
 use App\Http\Controllers\Inertia\RoomController;
 use App\Models\Tournament;
-use App\Http\Resources\LOFApiTournamentResource;
+use App\Http\Resources\TournamentResource;
 Route::get('/', [HomeController::class, 'index']);
 // Route::get('/tournament', [TournamentController::class , 'index'] );
 
@@ -57,7 +57,7 @@ $tournament = Tournament::with('events')->where('slug', $seriesSlug)->firstOrFai
 
 return Inertia::render('Series/Show', [
     'title' => 'Events Calendar | LifeOfPoker',
-    'series' => new LOFApiTournamentResource($tournament),
+    'series' => new TournamentResource($tournament),
     'page_title' => 'Event Calendar',
     // 'json-ld-webpage' => 'testsssss',
  ]);

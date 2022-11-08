@@ -45,7 +45,7 @@ export const useEventCalendarStore = defineStore("eventCalendar", {
             date_start,
         }) {
             try {
-                let { data } = await axios.get(`/api/lof-event-index`, {
+                let { data } = await axios.get(`/api/event/calendar`, {
                     params: { page, country, tour, game, date_start },
                 });
                 this.series = data;
