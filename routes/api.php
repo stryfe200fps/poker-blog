@@ -44,36 +44,28 @@ Route::get('article/{slug}', [ArticleController::class, 'article']);
 Route::get('article/category/{slug}', [ArticleController::class, 'articleCategory']);
 
 Route::get('category/article', [ArticleCategoryController::class, 'index']);
-// Route::get('article/category/all', [ArticleController::class, 'category']);
 Route::get('tag/articles/{slug}', [TagController::class, 'articles']);
 Route::get('tag/reports/{slug}', [TagController::class, 'reports']);
-// Route::resource('live-report', LiveReportController::class);
 
 
 Route::resource('series', TournamentApiController::class);
 Route::resource('level', levelApiController::class);
-// Route::get('live-report/view/{id}', [LiveReportController::class, 'view']);
 Route::get('events', [EventApiController::class, 'index']);
 
 Route::post('events/gallery/upload', [EventApiController::class, 'upload']);
 
 Route::get('events/gallery/fetch/{dayId}', [EventApiController::class, 'fetchGallery']);
 Route::delete('events/gallery/delete/{dayId}', [EventApiController::class, 'deleteImage']);
-// Route::get('events/{id}', [EventApiController::class, 'show']);
-// Route::post('events/{id}', [EventApiController::class, 'show']);
-Route::resource('reports', ReportsApiController::class);
 Route::resource('tournaments', TournamentController::class);
 
 Route::get('event', [EventController::class, 'index' ]);
 Route::get('event/calendar', [EventController::class, 'calendar']);
 Route::get('event/{slug}', [EventController::class, 'show' ]);
-// Route::resource('event/{slug}/payout', EventController::class);
 
 Route::get('tours', [TourApiController::class, 'index']);
 Route::get('tours/{slug}', [TourApiController::class, 'show']);
 
-
-Route::resource('report', EventReportsController::class);
+Route::resource('report', EventReportsController::class)->middleware('image.cache');
 Route::resource('page', PageManagerController::class);
 
 Route::get('twitter', [SocialMediaController::class, 'fetchTwitter']);
@@ -89,7 +81,6 @@ Route::get('chip/day/{id}', [ChipController::class, 'event_chip']);
 Route::get('chip/day/{id}/whatsapp', [ChipController::class, 'whatsapp']);
 
 Route::get('gallery/day/{id}', [GalleryController::class, 'gallery']);
-// Route::get('whatsapp/day/{id}', [WhatsappController::class, 'whatsapp_chip']);
 
 Route::get('admin/attach-image/{id}', function ($id) {
     return ImageTheme::find($id)->image ?? '';

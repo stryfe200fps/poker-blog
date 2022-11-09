@@ -16,14 +16,6 @@ class EventReportsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    // public function index()
-    // {
-
-    //     // return LOFApiEventReportsResource::collection(EventReport::all());
-
-    //     return LOFApiEventReportsResource::collection(EventReport::with(['player', 'author', 'level', 'event_chips', 'event_chips.player', 'event_chips.player.country'])->latest()->where('event_id', request()->all()['event'])->paginate(10));
-    // }
-
     public function index(Request $request)
     {
         $day = Day::find($request->only('day')['day']);
@@ -33,22 +25,7 @@ class EventReportsController extends Controller
             ->paginate(10));
     }
 
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
+    
     /**
      * Display the specified resource.
      *

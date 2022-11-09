@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Traits\HasMultipleImages;
 use Spatie\MediaLibrary\HasMedia;
 use App\Traits\HasMediaCollection;
+use Illuminate\Support\Facades\File;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -115,6 +116,25 @@ class Day extends Model implements HasMedia
         return Carbon::parse($value)->setTimezone(session()->get('timezone'));
     }
 
- 
+    public function hasImage() 
+    {
+       return $this->lastImage() !== null;
+    }
+
+    public function hasImageInStorage()
+    {
+        $media =collect($this->lastImage()->media); 
+
+        if ($media->count())
+            return File::exists($this->lastImage()->media[0]->getPath('xs-image'));
+       
+        return false;
+    }
+
+    public function lastImage() 
+    {
+       return $this->event_reports()->latest('published_date')->first();
+    }
+
 
 }

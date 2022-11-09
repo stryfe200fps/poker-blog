@@ -3,19 +3,20 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use App\Traits\Prunable;
 use Illuminate\Support\Str;
 use Spatie\Sluggable\HasSlug;
 use App\Traits\HasMultipleImages;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\Sluggable\SlugOptions;
 use App\Traits\HasMediaCollection;
+use Illuminate\Support\Facades\File;
 use App\Observers\EventReportObserver;
 use App\Observers\DefaultModelObserver;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use App\Traits\Prunable;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class EventReport extends Model implements HasMedia
@@ -69,6 +70,24 @@ class EventReport extends Model implements HasMedia
     public function day()
     {
         return $this->belongsTo(Day::class);
+    }
+
+    public function hasImage()
+    {
+        if ($this->media->count())
+            return File::exists($this->media[0]->getPath('xs-image'));
+
+        return false;
+    }
+
+    public function hasOriginalImage()
+    {
+
+        if ($this->media->count())
+            return File::exists($this->media[0]->getPath());
+
+        return false;
+
     }
 
     public function image_theme()
