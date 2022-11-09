@@ -76,7 +76,7 @@ const props = defineProps({
 });
 
 function goBack() {
-    Inertia.visit("/events-calendar");
+    Inertia.visit("/event-calendar");
 }
 </script>
 
