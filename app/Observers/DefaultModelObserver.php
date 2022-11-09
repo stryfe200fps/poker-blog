@@ -2,7 +2,9 @@
 
 namespace App\Observers;
 
+
 use Illuminate\Support\Str;
+use App\Services\ImageService;
 use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 
 class DefaultModelObserver
@@ -32,31 +34,7 @@ class DefaultModelObserver
 
     public function saved($model) {
 
-        $value = request()->only('image')['image'] ?? '';
-
-        if ($value == null) {
-            $model->media()->delete();
-            return false;
-        }
-
-        if (preg_match("/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).base64,.*/", $value) == 0) {
-            return false;
-        }
-
-        $path = public_path(). '/tmp/' . $model->mediaCollection . '-'. $model->id . '.jpg';
-        $image = \Image::make($value)->encode('jpg', 100)->save($path);
-
-        if ( isset($model?->shouldResizeImage) && $model?->shouldResizeImage) { 
-            $image->resize(1600,900)->save($path);
-        }
-
-        $model->media()->delete();
-        $model->addMedia($path)
-        ->toMediaCollection($model->mediaCollection);
-
-        if (isset($model?->shouldOptimizeImage) && $model?->shouldOptimizeImage)  { 
-            $media = $model->media()->get()[0]->getPath();
-            ImageOptimizer::optimize($media);
-        }
+        $service = app()->make(ImageService::class);
+        $service->imageUpload($model);
     }
 }

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\TournamentCollection;
-use App\Http\Resources\TournamentResource;
+use App\Http\Resources\TournamentEventResource;
 use App\Models\Tournament;
 use Illuminate\Http\Request;
 
@@ -22,6 +22,6 @@ class TournamentController extends Controller
 
     public function show($id)
     {
-        return new TournamentResource(Tournament::with('media')->where('id', $id)->first());
+        return new TournamentEventResource(Tournament::with('media')->where('id', $id)->first());
     }
 }

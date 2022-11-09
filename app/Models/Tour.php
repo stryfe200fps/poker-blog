@@ -4,8 +4,10 @@ namespace App\Models;
 
 use Illuminate\Support\Str;
 use Spatie\Sluggable\HasSlug;
+use App\Traits\HasMultipleImages;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\Sluggable\SlugOptions;
+use App\Traits\HasMediaCollection;
 use App\Observers\DefaultModelObserver;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -16,8 +18,9 @@ class Tour extends Model implements HasMedia
 {
     use \Backpack\CRUD\app\Models\Traits\CrudTrait;
     use HasFactory;
-    use InteractsWithMedia;
     use HasSlug;
+
+    use HasMediaCollection, HasMultipleImages;
 
     public $mediaCollection = 'tour';
 
@@ -37,22 +40,22 @@ class Tour extends Model implements HasMedia
             ->doNotGenerateSlugsOnUpdate();
     }
 
-    public function registerMediaConversions(?Media $media = null): void
-    {
-        $this->addMediaConversion('big-image')
-            ->width(1200)
-            ->height(630)
-            ->nonQueued();
-        $this->addMediaConversion('main-image')
-            ->width(424)
-            ->height(285)
-            ->nonQueued();
+    // public function registerMediaConversions(?Media $media = null): void
+    // {
+    //     $this->addMediaConversion('big-image')
+    //         ->width(1200)
+    //         ->height(630)
+    //         ->nonQueued();
+    //     $this->addMediaConversion('main-image')
+    //         ->width(424)
+    //         ->height(285)
+    //         ->nonQueued();
 
-        $this->addMediaConversion('main-thumb')
-            ->width(337)
-            ->height(225)
-            ->nonQueued();
-    }
+    //     $this->addMediaConversion('main-thumb')
+    //         ->width(337)
+    //         ->height(225)
+    //         ->nonQueued();
+    // }
 
     public function tournaments()
     {

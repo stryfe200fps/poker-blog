@@ -27,6 +27,8 @@ class EventReport extends Model implements HasMedia
     use HasMediaCollection, HasMultipleImages;
     use \Znck\Eloquent\Traits\BelongsToThrough;
 
+    public $shouldCacheImage = true;
+
     public function registerMediaConversions(?Media $media = null): void
     {
         $this->addMediaConversion('big-image')

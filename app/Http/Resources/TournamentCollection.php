@@ -28,7 +28,7 @@ class TournamentCollection extends ResourceCollection
         });
 
         return [
-            'data' => TournamentResource::collection($tournamentList),
+            'data' => TournamentEventResource::collection($tournamentList),
         ];
     }
 }

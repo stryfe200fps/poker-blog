@@ -3,22 +3,31 @@
 use Inertia\Inertia;
 use App\Models\MenuItem;
 use App\Models\EventChip;
+use App\Models\Tournament;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
+use App\Http\Resources\TournamentEventResource;
 use App\Http\Controllers\Inertia\HomeController;
 use App\Http\Controllers\Inertia\PageController;
+use App\Http\Controllers\Inertia\RoomController;
 use App\Http\Controllers\Inertia\EventController;
 use App\Http\Controllers\Inertia\ReportController;
 use App\Http\Controllers\Inertia\ArticleController;
 use App\Http\Controllers\Inertia\MenuItemController;
 use App\Http\Controllers\Inertia\TournamentController;
 use App\Http\Controllers\Admin\Utilities\ExcelUploadController;
-use App\Http\Controllers\Inertia\RoomController;
-use App\Models\Tournament;
-use App\Http\Resources\TournamentResource;
 Route::get('/', [HomeController::class, 'index']);
 // Route::get('/tournament', [TournamentController::class , 'index'] );
 
+Route::get('cacheboy', function () {
+    Cache::put('keybag', 'valueburutoy', $seconds = 10);
 
+});
+
+Route::get('cacheget', function () {
+   $dd= Cache::get('keybag');
+   dd($dd);
+});
 
 // Route::get('/event/{slug}/{page?}', [EventController::class, 'show']);
 // Route::get('/event/{eventSlug}/report/{reportSlug}', [ReportController::class, 'show']);
@@ -57,7 +66,7 @@ $tournament = Tournament::with('events')->where('slug', $seriesSlug)->firstOrFai
 
 return Inertia::render('Series/Show', [
     'title' => 'Events Calendar | LifeOfPoker',
-    'series' => new TournamentResource($tournament),
+    'series' => new TournamentEventResource($tournament),
     'page_title' => 'Event Calendar',
     // 'json-ld-webpage' => 'testsssss',
  ]);

@@ -83,4 +83,15 @@ trait PageTemplates
         ]);
     }
 
+
+    private function tours()
+    {
+        $this->crud->addField([
+            'name' => 'content',
+            'label' => trans('backpack::pagemanager.content'),
+            'type' => 'ckeditor',
+            'extra_plugins' => ['widget', 'autocomplete', 'textmatch', 'toolbar', 'wysiwygarea', 'image', 'sourcearea'],
+        ]);
+    }
+
 }

@@ -39,11 +39,8 @@ class FixMediaImages extends Command
         $allIconsInsideFolder =  File::directories($icons);
         foreach ($allIconsInsideFolder as $directory) { 
            $file = File::files($directory);
-        //    rename( $file[0]->getLinkTarget(), str_replace('.jpg', '', $file[0]->getLinkTarget()));
            rename( $file[0]->getLinkTarget(), $file[0]->getLinkTarget(). '.jpg');
-        //    dd($file[0]->getLinkTarget());
-        //    dd($file[0]->getFilename());
-        //    $file->
+
         }
 
 

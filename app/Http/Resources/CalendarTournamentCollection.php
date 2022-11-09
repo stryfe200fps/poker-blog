@@ -23,7 +23,7 @@ class CalendarTournamentCollection extends ResourceCollection
             $result[] = [
                 'date' =>  $item->first()->date_start->format('F-Y'),
                 'collection' => collect($item)->map(function ($i) {
-                    return new TournamentResource($i);
+                    return new TournamentEventResource($i);
                 }) ?? []
             ];
 

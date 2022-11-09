@@ -5,10 +5,15 @@ namespace App\Http\Resources;
 use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class TournamentResource extends JsonResource
+class TournamentEventResource extends JsonResource
 {
     public function toArray($request)
     {
+        $dateNow = Carbon::now();
+
+        $dateStart = Carbon::parse($this->date_start);
+        $dateEnd = Carbon::parse($this->date_end);
+
         return [
             'id' => $this->id,
             'slug' => $this->slug,
@@ -19,12 +24,17 @@ class TournamentResource extends JsonResource
             'poker_tour' => $this->tour->title,
             'poker_tour_slug' => $this->tour->slug,
             'image_set' => $this->allMedia(),
+            'main_image' => $this->getFirstMediaUrl('tournament', 'main-image'),
+            'main_thumb' => $this->getFirstMediaUrl('tournament', 'main-thumb'),
             'currency' => $this->currency,
             'timezone' => $this->word_timezone,
             'number_timezone' => $this->minimized_timezone,
-            'country' => new CountryResource($this->country),
+            'country' => $this->country,
             'realtime_date_start' => Carbon::parse($this->date_start)->setTimezone($this->word_timezone)->format(config('app.carbon_date_format')),
             'realtime_date_end' => Carbon::parse($this->date_start)->setTimezone($this->word_timezone)->format(config('app.carbon_date_format')),
+            'date_start' => Carbon::parse($this->date_start)->toFormattedDateString(),
+            'date_end' => Carbon::parse($this->date_end)->toFormattedDateString(),
+            'events' => new LOFApiEventsCollection($this->events),
         ];
     }
 }

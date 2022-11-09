@@ -8,6 +8,7 @@ use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 
 
 use App\Http\Resources\ImageResource;
+use Illuminate\Support\Facades\Cache;
 
 trait HasMediaCollection
 {
@@ -25,6 +26,15 @@ trait HasMediaCollection
     public function allMedia()
     {
         $img = $this->getMedia($this->mediaCollection);
+
+        // if ($this->shouldCacheImage !== null) {
+        //     if (!Cache::has($img[0]->name)) {
+        //         $id = $img[0]->id;
+        //         \Artisan::call("media-library:regenerate --ids=$id");
+        //         Cache::put($img[0]->name, $img[0]->uuid, 37000);
+        //     }
+        // }
+
         $images =   is_countable($img) && count($img) 
         > 0 ? new ImageResource( $img[0]) : '' ;
 
