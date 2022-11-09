@@ -33,7 +33,7 @@ async function submitEmail() {
 </script>
 
 <template>
-    <footer style="background-color: #2d3436">
+    <footer style="position: relative; background-color: #2d3436">
         <div class="container">
             <div class="footer-widgets-part">
                 <div class="row">
