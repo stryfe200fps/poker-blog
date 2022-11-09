@@ -298,11 +298,11 @@
                     <div id="my-gallery" class="row">
                         <div
                             class="col-xs-12 col-sm-4 col-md-2"
-                            v-for="(image, index) in gallery"
+                            v-for="(image, index) in gallery.data"
                             :key="index"
                         >
                             <a
-                                :href="image.main"
+                                :href="image.og_image"
                                 :data-pswp-width="900"
                                 :data-pswp-height="640"
                                 target="_blank"
@@ -316,8 +316,8 @@
                                         margin-right: 10px;
                                         margin-bottom: 10px;
                                     "
-                                    :src="image.thumbnail"
-                                    :alt="image.thumbnail"
+                                    :src="image.md_image"
+                                    :alt="image.md_image"
                                 />
                             </a>
                         </div>

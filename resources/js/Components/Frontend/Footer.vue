@@ -142,19 +142,21 @@ async function submitEmail() {
                             </h1>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <ul class="category-list">
+                                    <ul
+                                        class="category-list category-list--first"
+                                    >
                                         <li>
                                             <Link href="/news"
                                                 >News & Info</Link
                                             >
                                         </li>
                                         <li>
-                                            <Link href="/tournament"
+                                            <Link href="/tours"
                                                 >Live Reporting</Link
                                             >
                                         </li>
                                         <li>
-                                            <Link href="/event-calendar"
+                                            <Link href="/events-calendar"
                                                 >Event Calendar</Link
                                             >
                                         </li>
@@ -283,5 +285,13 @@ footer .categories-widget ul.category-list li:nth-child(2n) {
 footer .categories-widget ul.category-list li {
     width: auto;
     float: none;
+}
+
+@media screen and (max-width: 991px) {
+    footer .categories-widget ul.category-list--first {
+        margin-bottom: 25px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid rgb(153, 153, 153);
+    }
 }
 </style>
