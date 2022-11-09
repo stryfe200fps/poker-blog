@@ -6,7 +6,7 @@
                 :class="{ active: currentTab == 'live' }"
             >
                 <Link
-                    href="/tours/live"
+                    href="/live-reporting"
                     data-toggle="tab"
                     preserve-state
                     style="cursor: pointer"
@@ -18,7 +18,10 @@
                 @click.prevent="changeTab(currentTab)"
                 :class="{ active: currentTab == 'past' }"
             >
-                <Link href="/tours/past" data-toggle="tab" preserve-state
+                <Link
+                    href="/live-reporting/past"
+                    data-toggle="tab"
+                    preserve-state
                     ><span class="hidden-xs">past events</span
                     ><span class="visible-xs">past</span>
                 </Link>

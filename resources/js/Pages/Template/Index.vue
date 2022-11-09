@@ -154,6 +154,19 @@
                     v-observe-visibility="handleScrolledToBottomMedia"
                 ></div>
             </div>
+            <div v-if="page.template === 'tours'">
+                <div class="grid">
+                    <PokerTours
+                        v-for="(tour, index) in tours"
+                        :key="index"
+                        :tour="tour"
+                    />
+                </div>
+                <div
+                    v-if="tours?.length"
+                    v-observe-visibility="handleScrolledToBottomTours"
+                ></div>
+            </div>
         </div>
     </FrontLayout>
 </template>
@@ -161,6 +174,7 @@
 <script setup>
 import { Head } from "@inertiajs/inertia-vue3";
 import { useRoomStore } from "@/Stores/pokerRoom.js";
+import { useTourStore } from "@/Stores/pokerTour.js";
 import { useMediaStore } from "@/Stores/mediaReports.js";
 import { onMounted, ref, computed, watch } from "@vue/runtime-core";
 import axios from "axios";
@@ -169,6 +183,7 @@ import "mosha-vue-toastify/dist/style.css";
 
 import FrontLayout from "@/Layouts/FrontLayout.vue";
 import PokerRooms from "./PokerRooms.vue";
+import PokerTours from "./PokerTours.vue";
 import MediaReporting from "./MediaReporting.vue";
 
 const name = ref(null);
@@ -178,12 +193,14 @@ const message = ref(null);
 const countries = ref([]);
 const selectedCountry = ref("");
 const rooms = ref([]);
+const tours = ref([]);
 const medias = ref([]);
 const authors = ref([]);
 const selectedAuthor = ref("");
 const currentPage = ref(1);
 const lastPage = ref(1);
 const pokerRoomStore = useRoomStore();
+const pokerTourStore = useTourStore();
 const mediaStore = useMediaStore();
 
 const props = defineProps({
@@ -232,6 +249,20 @@ async function handleScrolledToBottomMedia(isVisible) {
     });
     medias.value.push(...mediaStore.media.data);
     lastPage.value = mediaStore.media.meta.last_page;
+}
+
+async function handleScrolledToBottomTours(isVisible) {
+    if (!isVisible) return;
+
+    currentPage.value++;
+
+    if (currentPage.value > lastPage.value) return;
+
+    await pokerTourStore.getTours({
+        page: currentPage.value,
+    });
+    tours.value.push(...pokerTourStore.tours.data);
+    lastPage.value = pokerTourStore.tours.meta.last_page;
 }
 
 function resetFilter() {
@@ -283,6 +314,13 @@ onMounted(async () => {
         lastPage.value = mediaStore.media.meta.last_page;
         await mediaStore.getMediaAuthors();
         authors.value = mediaStore.authors.data;
+    }
+    if (props.page.template === "tours") {
+        await pokerTourStore.getTours({
+            page: 1,
+        });
+        tours.value = pokerTourStore.tours.data;
+        lastPage.value = pokerTourStore.tours.meta.last_page;
     }
 });
 

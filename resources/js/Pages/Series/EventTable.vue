@@ -8,7 +8,8 @@
             <h2>{{ event.title }}</h2>
         </div>
         <div class="third-col" style="width: 25%">
-            <h2>{{ event.buyin }}</h2>
+            <h2 v-if="event.buyin">{{ event.buyin }}</h2>
+            <h2 v-else>0</h2>
         </div>
     </div>
 </template>

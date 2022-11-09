@@ -12,7 +12,7 @@
                                 class="fa fa-chevron-left"
                                 aria-hidden="true"
                             ></i>
-                            to event calendar</span
+                            back</span
                         >
                     </h1>
                 </div>
@@ -76,7 +76,9 @@ const props = defineProps({
 });
 
 function goBack() {
-    Inertia.visit("/event-calendar");
+    history.back();
+    return false;
+    // Inertia.visit("/event-calendar");
 }
 </script>
 

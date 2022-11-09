@@ -55,7 +55,7 @@ Route::prefix('news')->group(function () {
 Route::get('live-reporting/{page?}', [TournamentController::class, 'index']);
 Route::prefix('tours')->group(function () {
 
-    Route::get('/', [TournamentController::class, 'index']);
+    // Route::get('/', [TournamentController::class, 'index']);
  
     // Route::get('/{page?}', [TournamentController::class, 'index']);
     Route::get('/{tour}/{series}/{eventSlug}', [EventController::class, 'show']);
@@ -75,12 +75,12 @@ return Inertia::render('Series/Show', [
 });
 
 
-Route::get('tours/{tourSlug}', function ($tourSlug,$seriesSlug) {
-$tour = new TourResource(Tour::with('events')->where('slug', $seriesSlug)->firstOrFail()) ;
+Route::get('tours/{tourSlug}', function ($tourSlug) {
+$tour = new TourResource(Tour::where('slug', $tourSlug)->firstOrFail()) ;
 
 return Inertia::render('Template/PokerTour', [
     'title' => $tour->title. ' | LifeOfPoker',
-    'series' => $tour,
+    'tour' => $tour,
     'page_title' => $tour->title,
  ]);
 });

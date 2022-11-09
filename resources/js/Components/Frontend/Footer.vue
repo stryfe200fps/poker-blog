@@ -151,7 +151,7 @@ async function submitEmail() {
                                             >
                                         </li>
                                         <li>
-                                            <Link href="/tours"
+                                            <Link href="/live-reporting"
                                                 >Live Reporting</Link
                                             >
                                         </li>

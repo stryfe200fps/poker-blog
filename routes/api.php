@@ -122,7 +122,7 @@ Route::get('rooms/select/countries', function () {
 });
 
 
-Route::get('tour/{slug}/select/years', function ($slug) {
+Route::get('tours/{slug}/select/years', function ($slug) {
     return [ 'data' => Tournament::selectYearFilter($slug) ?? [] ];
 });
 
