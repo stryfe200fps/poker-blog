@@ -177,13 +177,13 @@ async function reportViewing() {
 
     if (props.type === "whatsapp") {
         await eventStore.getWhatsappData(selectDay.value);
-        whatsappData.value = eventStore.whatsapp;
+        whatsappData.value = eventStore.whatsapp.data;
         return;
     }
 
     if (props.type === "gallery") {
         await eventStore.getGalleryData(selectDay.value);
-        galleryData.value = eventStore.galleryData;
+        galleryData.value = eventStore.galleryData.data;
         return;
     }
 

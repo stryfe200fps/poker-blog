@@ -204,8 +204,8 @@
                         >
                             <img
                                 v-if="relate.image_set"
-                                :src="relate.image_set.sm_image"
-                                :alt="relate.image_set.sm_image"
+                                :src="relate.image_set.md_image"
+                                :alt="relate.image_set.md_image"
                             />
                             <img v-else :src="defaultImg" alt="" />
                             <div class="hover-box">

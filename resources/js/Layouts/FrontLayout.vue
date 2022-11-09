@@ -36,7 +36,7 @@ function acceptAllCookies() {
 }
 
 function visitBanner(url) {
-    window.open(url, "_blank");
+    if (url) window.open(url, "_blank");
 }
 
 function savePreferenceCookie() {
@@ -79,6 +79,7 @@ onMounted(async () => {
                     v-if="banner"
                     :style="{
                         position: 'fixed',
+                        inset: '0',
                         width: '100%',
                         minHeight: '100vh',
                         backgroundImage: `url(${banner.image_set?.og_image})`,
@@ -86,7 +87,7 @@ onMounted(async () => {
                         backgroundPosition: 'top center',
                         backgroundAttachment: 'fixed',
                         imageRendering: '-webkit-optimize-contrast',
-                        cursor: 'pointer',
+                        cursor: banner.url ? 'pointer' : 'auto',
                     }"
                     @click="visitBanner(banner.url)"
                 ></div>

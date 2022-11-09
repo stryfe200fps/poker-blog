@@ -28,7 +28,7 @@ function showArticle(date, slug) {
 }
 
 function visitBanner(url) {
-    window.open(url, "_blank");
+    if (url) window.open(url, "_blank");
 }
 
 defineProps({
@@ -98,7 +98,7 @@ defineProps({
             <div
                 class="advertisement"
                 v-if="banner"
-                style="cursor: pointer"
+                :style="{ cursor: banner.url ? 'pointer' : 'auto' }"
                 @click="visitBanner(banner.url)"
             >
                 <div class="desktop-advert">
@@ -142,11 +142,11 @@ defineProps({
                                 :alt="news.image_set.md_image"
                             />
                             <img v-else :src="defaultImg" :alt="defaultImg" />
-
                             <Link
                                 v-if="news.categories.length"
                                 class="category-post food"
-                                :href="news.categories[0]?.slug"
+                                :href="`/news/${news.categories[0]?.slug}`"
+                                @click.stop
                                 >{{ news.categories[0]?.title }}</Link
                             >
                         </div>

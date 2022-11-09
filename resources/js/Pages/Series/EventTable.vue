@@ -2,6 +2,7 @@
     <div class="table-row">
         <div class="first-col" style="width: 25%">
             <h2 v-if="event.schedule.date_start">{{ formattedDate }}</h2>
+            <h2 v-else>{{ event.schedule }}</h2>
         </div>
         <div class="second-col" style="width: 50%">
             <h2>{{ event.title }}</h2>

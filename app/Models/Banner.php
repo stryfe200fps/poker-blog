@@ -14,8 +14,8 @@ class Banner extends Model implements HasMedia
     use \Backpack\CRUD\app\Models\Traits\CrudTrait;
     use HasFactory;
 
-    public bool $shouldOptimizeImage = true;
-    public bool $shouldResizeImage = true;
+    public bool $shouldOptimizeImage = false;
+    public bool $shouldResizeImage = false;
 
     protected $guarded = ['id'];
     use HasMediaCollection, HasMultipleImages;

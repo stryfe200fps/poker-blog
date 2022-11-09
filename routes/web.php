@@ -49,12 +49,12 @@ Route::prefix('news')->group(function () {
     Route::get('/{year}/{month}/{slug}', [ArticleController::class, 'show'])->name('article-show');
 
 });
-
+Route::get('live-reporting/{page?}', [TournamentController::class, 'index']);
 Route::prefix('tours')->group(function () {
 
     Route::get('/', [TournamentController::class, 'index']);
  
-    Route::get('/{page?}', [TournamentController::class, 'index']);
+    // Route::get('/{page?}', [TournamentController::class, 'index']);
     Route::get('/{tour}/{series}/{eventSlug}', [EventController::class, 'show']);
     Route::get('/{tour}/{series}/{eventSlug}/{reportId}', [ReportController::class, 'show'])->where('reportId', '(\w+\-\d+)');
     Route::get('/{tour}/{series}/{eventSlug}/{day?}/{type?}', [EventController::class, 'show']);
@@ -134,7 +134,7 @@ Route::post('upload_excel', [ExcelUploadController::class, 'upload']);
 // } catch (Exception $e) {
 // }
 
-Route::get('/events-calendar', function () {
+Route::get('/event-calendar', function () {
  return Inertia::render('Event/EventCalendar', [
     'title' => 'Events Calendar | LifeOfPoker',
     // 'description' => 'desc',

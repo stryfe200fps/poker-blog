@@ -24,8 +24,8 @@
                         >
                             <img
                                 v-if="tag.image_set"
-                                :src="tag.image_set.sm_image"
-                                :alt="tag.image_set.sm_image"
+                                :src="tag.image_set.md_image"
+                                :alt="tag.image_set.md_image"
                             />
                             <img v-else :src="defaultImg" :alt="defaultImg" />
                             <div class="hover-box">
