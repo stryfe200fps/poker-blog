@@ -58,7 +58,7 @@
         <div
             class="advertisement"
             v-if="banner"
-            style="cursor: pointer"
+            :style="{ cursor: banner.url ? 'pointer' : 'auto' }"
             @click="visitBanner(banner.url)"
         >
             <div class="desktop-advert">
@@ -158,7 +158,7 @@ const igLink = computed(() => {
 });
 
 function visitBanner(url) {
-    window.open(url, "_blank");
+    if (url) window.open(url, "_blank");
 }
 
 onMounted(async () => {
