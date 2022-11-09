@@ -16,6 +16,9 @@ use App\Http\Controllers\Inertia\ArticleController;
 use App\Http\Controllers\Inertia\MenuItemController;
 use App\Http\Controllers\Inertia\TournamentController;
 use App\Http\Controllers\Admin\Utilities\ExcelUploadController;
+use App\Http\Resources\TourResource;
+use App\Models\Tour;
+
 Route::get('/', [HomeController::class, 'index']);
 // Route::get('/tournament', [TournamentController::class , 'index'] );
 
@@ -68,12 +71,21 @@ return Inertia::render('Series/Show', [
     'title' => 'Events Calendar | LifeOfPoker',
     'series' => new TournamentEventResource($tournament),
     'page_title' => 'Event Calendar',
-    // 'json-ld-webpage' => 'testsssss',
+ ]);
+});
+
+
+Route::get('tours/{tourSlug}', function ($tourSlug,$seriesSlug) {
+$tour = new TourResource(Tour::with('events')->where('slug', $seriesSlug)->firstOrFail()) ;
+
+return Inertia::render('Template/PokerTour', [
+    'title' => $tour->title. ' | LifeOfPoker',
+    'series' => $tour,
+    'page_title' => $tour->title,
  ]);
 });
 
 Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
-
 Route::post('prepare', [ExcelUploadController::class, 'prepare']);
 Route::post('upload_excel', [ExcelUploadController::class, 'upload']);
 

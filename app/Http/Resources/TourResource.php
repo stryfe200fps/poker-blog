@@ -21,7 +21,6 @@ class TourResource extends JsonResource
             'description' => $this->description,
             'content' => $this->content,
             'tournaments' => TournamentResource::collection($this->tournaments)
-
         ];
     }
 }

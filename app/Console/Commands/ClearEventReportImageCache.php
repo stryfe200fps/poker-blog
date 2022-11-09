@@ -56,7 +56,6 @@ class ClearEventReportImageCache extends Command
                     $replace = str_replace('/'. $name.'.jpg', '' , $media->getPath() );
                     File::deleteDirectory($replace. '/conversions');
 
-                // } 
 
                 $cache->where('key', $cache->key)->delete();
 

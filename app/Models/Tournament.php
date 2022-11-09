@@ -177,5 +177,15 @@ class Tournament extends Model implements HasMedia
         return EventGameTable::select(['title', 'code'])->orderBy('title')->withCount('events')
             ->having('events_count', '>', 0 )->get();
     }
-    
+
+    public static function selectYearFilter()
+    {
+        $ad = Tournament::withCount('events')
+            ->having('events_count', '>=', 0 )->get();
+        $things = $ad->groupBy(function ($item) {
+            return Carbon::parse($item->date_start)->format('Y');
+        });
+
+        return $things->keys()->toArray() ;
+    }
 }

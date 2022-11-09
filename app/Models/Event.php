@@ -39,41 +39,6 @@ class Event extends Model implements HasMedia
     public $mediaCollection = 'event';
     use HasMediaCollection, HasMultipleImages;
 
-    public function registerMediaConversions(?Media $media = null): void
-    {
-        $this->addMediaConversion('big-image')
-            ->width(1200)
-            ->height(630)
-            ->nonQueued();
-
-        $this->addMediaConversion('main-thumb')
-            ->width(300)
-            ->height(300)
-            ->nonQueued();
-
-        $this->addMediaConversion('main-thumb2')
-            ->width(130)
-            ->height(86);
-
-        $this->addMediaConversion('main-image')
-            ->width(424)
-            ->height(285)
-            ->nonQueued();
-
-                            $this->addMediaConversion('main-gallery-thumb')
-                    ->width(200)
-                    ->height(200);
-
-                             $this->addMediaConversion('main-gallery')
-                    ->width(200)
-                    ->height(200);
-
-
-                $this->addMediaConversion('big-image')
-                    ->width(200)
-                    ->height(200);
-    }
-
 
     public static function boot()
     {

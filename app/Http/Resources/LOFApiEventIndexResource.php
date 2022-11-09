@@ -15,11 +15,6 @@ class LOFApiEventIndexResource extends JsonResource
     public function toArray($request)
     {
 
-
-        $img = $this->getMedia('event');
-      $images =   is_countable($img) && count($img) > 0 ? new ImageResource( $this->getMedia('event')[0]) : '' ;
-
-
         return [
             'id' => $this->id,
             'slug' => $this->slug,
@@ -27,7 +22,7 @@ class LOFApiEventIndexResource extends JsonResource
             'title_tab' => $this->title ?? '',
             'status' => $this->status(),
             'date_range' => $this->schedule,
-            'image_set' => $images,
+            'image_set' => $this->allMedia(),
             'main_image' => $this->getFirstMediaUrl('event', 'main-image'),
             'main_thumb' => $this->getFirstMediaUrl('event', 'main-thumb'),
             'tournament' => $this->tournament->title,

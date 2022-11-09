@@ -24,13 +24,13 @@ class Tour extends Model implements HasMedia
 
     public $mediaCollection = 'tour';
 
+    protected $guarded = ['id'];
+
     public static function boot()
     {
         parent::boot();
         self::observe(new DefaultModelObserver);
     }
-
-    protected $guarded = ['id'];
 
     public function getSlugOptions(): SlugOptions
     {
@@ -39,23 +39,6 @@ class Tour extends Model implements HasMedia
             ->saveSlugsTo('slug')
             ->doNotGenerateSlugsOnUpdate();
     }
-
-    // public function registerMediaConversions(?Media $media = null): void
-    // {
-    //     $this->addMediaConversion('big-image')
-    //         ->width(1200)
-    //         ->height(630)
-    //         ->nonQueued();
-    //     $this->addMediaConversion('main-image')
-    //         ->width(424)
-    //         ->height(285)
-    //         ->nonQueued();
-
-    //     $this->addMediaConversion('main-thumb')
-    //         ->width(337)
-    //         ->height(225)
-    //         ->nonQueued();
-    // }
 
     public function tournaments()
     {
@@ -77,13 +60,13 @@ class Tour extends Model implements HasMedia
             $model->slug = Str::slug($model->slug);
         });
 
-            static::updating(function ($model) {
+        static::updating(function ($model) {
 
             $findModel = Tour::find($model->id);
              if ($model->slug !== $findModel->slug) {
                 $model->slug = Str::slug($model->slug);
             } 
         });
-         
     }
+
 }

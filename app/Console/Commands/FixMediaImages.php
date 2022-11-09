@@ -30,19 +30,14 @@ class FixMediaImages extends Command
      */
     public function handle()
     {
-        // // $files = Directory::(storage_path(). '/app/public');
-        // $storage =  Storage::disk('public');
-        // dd($storage);
 
         $icons = storage_path('app/public');
-        // dd($icons);
         $allIconsInsideFolder =  File::directories($icons);
         foreach ($allIconsInsideFolder as $directory) { 
            $file = File::files($directory);
            rename( $file[0]->getLinkTarget(), $file[0]->getLinkTarget(). '.jpg');
 
         }
-
 
         return Command::SUCCESS;
     }

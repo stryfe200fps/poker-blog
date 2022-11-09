@@ -9,10 +9,6 @@ class TournamentEventResource extends JsonResource
 {
     public function toArray($request)
     {
-        $dateNow = Carbon::now();
-
-        $dateStart = Carbon::parse($this->date_start);
-        $dateEnd = Carbon::parse($this->date_end);
 
         return [
             'id' => $this->id,
@@ -24,8 +20,6 @@ class TournamentEventResource extends JsonResource
             'poker_tour' => $this->tour->title,
             'poker_tour_slug' => $this->tour->slug,
             'image_set' => $this->allMedia(),
-            'main_image' => $this->getFirstMediaUrl('tournament', 'main-image'),
-            'main_thumb' => $this->getFirstMediaUrl('tournament', 'main-thumb'),
             'currency' => $this->currency,
             'timezone' => $this->word_timezone,
             'number_timezone' => $this->minimized_timezone,

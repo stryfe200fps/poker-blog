@@ -42,17 +42,6 @@ class EventApiController extends Controller
     public function fetchGallery($dayId)
     {
         $day = Day::where('id', $dayId)->first();
-
-        // $imgResource = [];
-
-        // foreach ($day->getMedia('event_gallery') as $media) {
-        //     $imgResource[] = [
-        //         'id' => $media->id,
-        //         'thumbnail' => $media->getUrl('main-gallery-thumb'),
-        //         'main' => $media->getUrl('main-gallery'),
-        //     ];
-        // }
-
         return $day->allCollectionMedia();
     }
 

@@ -24,19 +24,6 @@ class Day extends Model implements HasMedia
         'id',
     ];
 
-    // public function registerMediaConversions(?Media $media = null): void
-    // {
-    //     $this->addMediaConversion('big-image')
-    //         ->width(1200)
-    //         ->height(630)
-    //         ->nonQueued();
-    //     $this->addMediaConversion('main-gallery-thumb')
-    //         ->width(130)
-    //         ->height(86);
-
-    //     $this->addMediaConversion('main-gallery');
-    // }
-
     public function openReport($crud = false)
     {
         return '<a class="btn btn-sm btn-link"  href="report?day='.urlencode($this->attributes['id']).'&event='.urlencode($this->attributes['event_id']).'" data-toggle="tooltip" title="Days"><i class="fa fa-search"></i> Report  </a>';

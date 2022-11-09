@@ -22,9 +22,6 @@ class Kernel extends ConsoleKernel
         $schedule->command('instagram-feed:refresh-token')->monthly();
     }
 
-    protected $commands = [
-        // \jdavidbakr\LaravelCacheGarbageCollector\LaravelCacheGarbageCollector::class
-    ];
     /**
      * Register the commands for the application.
      *

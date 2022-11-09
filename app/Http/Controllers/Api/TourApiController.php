@@ -11,6 +11,12 @@ class TourApiController extends Controller
 {
     public function index()
     {
+
+        $tours = Tour::latest()->paginate(10);
+
+
+        
+
         return TourResource::collection(Tour::latest()->paginate(10));
     }
 

@@ -138,7 +138,6 @@
     async fetchGallery()
     {
     await axios.get('/api/events/gallery/fetch/' + {{ $widget['dayId'] }}  ).then((res) => {
-      // console.log(res.data.data);
       this.gallery = res.data.data
       })
     },
