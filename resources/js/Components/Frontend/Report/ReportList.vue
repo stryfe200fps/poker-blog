@@ -298,7 +298,7 @@
                     <div id="my-gallery" class="row">
                         <div
                             class="col-xs-12 col-sm-4 col-md-2"
-                            v-for="(image, index) in gallery.data"
+                            v-for="(image, index) in gallery"
                             :key="index"
                         >
                             <a
