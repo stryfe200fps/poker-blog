@@ -12,13 +12,15 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use App\Traits\HasMultipleImages;
+use App\Traits\HasMediaCollection;
 
 class Tournament extends Model implements HasMedia
 {
     use \Backpack\CRUD\app\Models\Traits\CrudTrait;
     use HasFactory;
-    use InteractsWithMedia;
     use HasSlug;
+    use HasMediaCollection, HasMultipleImages;
 
     public $mediaCollection = 'tournament';
 
@@ -59,10 +61,12 @@ class Tournament extends Model implements HasMedia
             ->nonQueued();
     }
 
-    public function getImageAttribute($value)
-    {
-        return $this->getFirstMediaUrl('tournament', 'main-image');
-    }
+    
+
+    // public function getImageAttribute($value)
+    // {
+    //     return $this->getFirstMediaUrl('tournament', 'main-image');
+    // }
 
 
     public function getMinimizedTimezoneAttribute()

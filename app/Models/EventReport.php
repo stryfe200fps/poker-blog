@@ -14,6 +14,8 @@ use App\Observers\DefaultModelObserver;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\Prunable;
+
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class EventReport extends Model implements HasMedia
@@ -21,7 +23,7 @@ class EventReport extends Model implements HasMedia
     // use InteractsWithMedia;
     use \Backpack\CRUD\app\Models\Traits\CrudTrait;
     use HasFactory;
-
+    use Prunable;
     use HasMediaCollection, HasMultipleImages;
     use \Znck\Eloquent\Traits\BelongsToThrough;
 

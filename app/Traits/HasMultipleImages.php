@@ -9,8 +9,7 @@ trait HasMultipleImages
 
     public function hasMediaCollectionMultipleImages()
     {
-
-        $this->addMediaCollection(app()->make(get_class($this))->firstOrFail()->mediaCollection)
+        $this->addMediaCollection($this->mediaCollection)
             ->registerMediaConversions(function () {
                 $this->addMediaConversion('xs-image')
                     ->width(200)
