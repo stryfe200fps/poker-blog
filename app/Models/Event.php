@@ -39,8 +39,7 @@ class Event extends Model implements HasMedia
     public $mediaCollection = 'event';
     use HasMediaCollection, HasMultipleImages;
 
-
-public function registerMediaConversions(?Media $media = null): void
+    public function registerMediaConversions(?Media $media = null): void
     {
         $this->addMediaConversion('big-image')
             ->width(1200)

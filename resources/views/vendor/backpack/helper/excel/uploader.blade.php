@@ -39,7 +39,7 @@
   <div class="d-flex  flex-wrap" >
   <div class="p-1 container" v-for="(img, index) in gallery" >
     <i @click.prevent="deleteImage(img.id)"  class="d-flex rounded" style="cursor:pointer; background:#7c69ef; color:white; margin-left:5px; margin-top:5px;  padding:0px 4px; z-index:50000; font-size:15px; font-weight:bold; position: absolute;">x</i>
-  <img  v-scope="lightBox()"  @mouseover="mounted($el)" @mouseleave="unmounted($el)" class="rounded image thumbnail" :src="img.thumbnail" /> 
+  <img  v-scope="lightBox()"  @mouseover="mounted($el)" @mouseleave="unmounted($el)" class="rounded image thumbnail" :src="img.xs_image" /> 
 </div>
 
   </div>
@@ -138,8 +138,8 @@
     async fetchGallery()
     {
     await axios.get('/api/events/gallery/fetch/' + {{ $widget['dayId'] }}  ).then((res) => {
-      console.log(res);
-      this.gallery = res.data
+      // console.log(res.data.data);
+      this.gallery = res.data.data
       })
     },
     mounted() {

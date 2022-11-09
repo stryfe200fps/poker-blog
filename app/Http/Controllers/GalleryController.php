@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ImageResource;
 use App\Models\Day;
 use Illuminate\Support\Facades\File;
 
@@ -11,26 +12,30 @@ class GalleryController extends Controller
     {
         $day = Day::find($id);
 
-        $imgResource = [];
+        // dd($day->allMedia());
+
+        $mediaArray = [];
         foreach ($day->getMedia('event_gallery') as $media) {
-            $imgResource[] = [
-                'thumbnail' => $media->getUrl('main-gallery-thumb'),
-                'main' => $media->getUrl('main-gallery'),
-            ];
+            $mediaArray[] = $media;
+            // $imgResource[] = [
+            //     'thumbnail' => $media->getUrl('main-gallery-thumb'),
+            //     'main' => $media->getUrl('main-gallery'),
+            // ];
         }
 
         foreach ($day->event_reports as $report) {
-            if ($path = $report->getFirstMediaPath('event-report', 'main-thumb2')) { 
+            if ($path = $report->getFirstMediaPath('event-report', 'xs-image')) { 
                 if (File::exists($path)) { 
-                $imgResource[] = [
-                'thumbnail' => $report->getFirstMediaUrl('event-report', 'main-thumb2'),
-                'main' => $report->getFirstMediaUrl('event-report', 'main-image')
-                ];
+                    $mediaArray[] = $report->media[0];
+                // $imgResource[] = [
+                // 'thumbnail' => $report->getFirstMediaUrl('event-report', 'main-thumb2'),
+                // 'main' => $report->getFirstMediaUrl('event-report', 'main-image')
+                // ];
             }
             }
         }
 
-
-        return $imgResource;
+       return ImageResource::collection($mediaArray);
+        // return $imgResource;
     }
 }

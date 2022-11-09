@@ -28,7 +28,15 @@ trait HasMediaCollection
         $images =   is_countable($img) && count($img) 
         > 0 ? new ImageResource( $img[0]) : '' ;
 
-        // dd($images);
+        return $images;
+    }
+
+    public function allCollectionMedia()
+    {
+        $img = $this->getMedia($this->mediaCollection);
+        $images =   is_countable($img) && count($img) 
+        > 0 ?  ImageResource::collection($img) : '' ;
+
         return $images;
     }
 

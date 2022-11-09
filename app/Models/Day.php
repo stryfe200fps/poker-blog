@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use App\Traits\HasMultipleImages;
 use Spatie\MediaLibrary\HasMedia;
+use App\Traits\HasMediaCollection;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,26 +13,29 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Day extends Model implements HasMedia
 {
-    use InteractsWithMedia;
+    // use InteractsWithMedia;
     use \Backpack\CRUD\app\Models\Traits\CrudTrait;
     use HasFactory;
+
+    public $mediaCollection = 'event_gallery';
+    use HasMediaCollection, HasMultipleImages;
 
     protected $guarded = [
         'id',
     ];
 
-    public function registerMediaConversions(?Media $media = null): void
-    {
-        $this->addMediaConversion('big-image')
-            ->width(1200)
-            ->height(630)
-            ->nonQueued();
-        $this->addMediaConversion('main-gallery-thumb')
-            ->width(130)
-            ->height(86);
+    // public function registerMediaConversions(?Media $media = null): void
+    // {
+    //     $this->addMediaConversion('big-image')
+    //         ->width(1200)
+    //         ->height(630)
+    //         ->nonQueued();
+    //     $this->addMediaConversion('main-gallery-thumb')
+    //         ->width(130)
+    //         ->height(86);
 
-        $this->addMediaConversion('main-gallery');
-    }
+    //     $this->addMediaConversion('main-gallery');
+    // }
 
     public function openReport($crud = false)
     {

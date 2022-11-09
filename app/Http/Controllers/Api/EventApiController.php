@@ -43,17 +43,17 @@ class EventApiController extends Controller
     {
         $day = Day::where('id', $dayId)->first();
 
-        $imgResource = [];
+        // $imgResource = [];
 
-        foreach ($day->getMedia('event_gallery') as $media) {
-            $imgResource[] = [
-                'id' => $media->id,
-                'thumbnail' => $media->getUrl('main-gallery-thumb'),
-                'main' => $media->getUrl('main-gallery'),
-            ];
-        }
+        // foreach ($day->getMedia('event_gallery') as $media) {
+        //     $imgResource[] = [
+        //         'id' => $media->id,
+        //         'thumbnail' => $media->getUrl('main-gallery-thumb'),
+        //         'main' => $media->getUrl('main-gallery'),
+        //     ];
+        // }
 
-        return $imgResource;
+        return $day->allCollectionMedia();
     }
 
     public function deleteImage($id)
