@@ -142,11 +142,11 @@ defineProps({
                                 :alt="news.image_set.md_image"
                             />
                             <img v-else :src="defaultImg" :alt="defaultImg" />
-
                             <Link
                                 v-if="news.categories.length"
                                 class="category-post food"
-                                :href="news.categories[0]?.slug"
+                                :href="`/news/${news.categories[0]?.slug}`"
+                                @click.stop
                                 >{{ news.categories[0]?.title }}</Link
                             >
                         </div>

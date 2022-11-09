@@ -58,8 +58,8 @@
                                 <div class="post-gallery">
                                     <img
                                         v-if="category.image_set"
-                                        :src="category.image_set.sm_image"
-                                        :alt="category.image_set.sm_image"
+                                        :src="category.image_set.md_image"
+                                        :alt="category.image_set.md_image"
                                     />
                                     <img
                                         v-else
@@ -68,14 +68,12 @@
                                     />
                                     <Link
                                         class="category-post food"
-                                        v-for="item in category.categories"
-                                        :key="item.id"
-                                        :href="
-                                            item.slug === 'news'
-                                                ? item.slug
-                                                : `/news/${item.slug}`
-                                        "
-                                        >{{ item.title }}</Link
+                                        v-if="category.categories.length"
+                                        :href="`/news/${category.categories[0]?.slug}`"
+                                        @click.stop
+                                        >{{
+                                            category.categories[0]?.title
+                                        }}</Link
                                     >
                                 </div>
                                 <div class="post-title" style="flex-grow: 1">
