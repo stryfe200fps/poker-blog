@@ -22,7 +22,7 @@ const preferences = ref([
 ]);
 const selectedPreference = ref(["Necessary"]);
 const bannerStore = useBannerStore();
-const banners = ref([]);
+const banner = ref([]);
 
 function openPreference() {
     isOpen.value = !isOpen.value;
@@ -33,6 +33,10 @@ function acceptAllCookies() {
     if (document.cookie) {
         isSetCookie.value = true;
     }
+}
+
+function visitBanner(url) {
+    window.open(url, "_blank");
 }
 
 function savePreferenceCookie() {
@@ -62,29 +66,34 @@ onMounted(async () => {
         window.scrollTo({ top: 0, behavior: "smooth" });
     }, 100);
     await bannerStore.getBanners();
-    banners.value = await bannerStore.getSingleBanner();
+    banner.value = await bannerStore.getSingleBanner();
 });
 </script>
 
 <template>
-    <div
-        class="active"
-        :style="
-            banners
-                ? {
-                      backgroundImage: `url(${banners.image_set?.og_image})`,
-                      backgroundRepeat: 'no-repeat',
-                      backgroundPosition: 'top center',
-                      backgroundAttachment: 'fixed',
-                      imageRendering: '-webkit-optimize-contrast',
-                  }
-                : ''
-        "
-    >
+    <div class="active">
         <Header />
         <main>
             <section class="block-wrapper">
-                <div class="container" style="background-color: #fff">
+                <div
+                    v-if="banner"
+                    :style="{
+                        position: 'fixed',
+                        width: '100%',
+                        minHeight: '100vh',
+                        backgroundImage: `url(${banner.image_set?.og_image})`,
+                        backgroundRepeat: 'no-repeat',
+                        backgroundPosition: 'top center',
+                        backgroundAttachment: 'fixed',
+                        imageRendering: '-webkit-optimize-contrast',
+                        cursor: 'pointer',
+                    }"
+                    @click="visitBanner(banner.url)"
+                ></div>
+                <div
+                    class="container"
+                    style="position: relative; background-color: #fff"
+                >
                     <div class="row">
                         <div class="col-md-9 col-sm-8">
                             <slot />
