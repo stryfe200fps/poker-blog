@@ -122,8 +122,8 @@ Route::get('rooms/select/countries', function () {
 });
 
 
-Route::get('tournament/select/years', function () {
-    return [ 'data' => Tournament::selectYearFilter() ?? [] ];
+Route::get('tour/{slug}/select/years', function ($slug) {
+    return [ 'data' => Tournament::selectYearFilter($slug) ?? [] ];
 });
 
 Route::get('rooms', [RoomController::class, 'index']);

@@ -178,9 +178,11 @@ class Tournament extends Model implements HasMedia
             ->having('events_count', '>', 0 )->get();
     }
 
-    public static function selectYearFilter()
+    public static function selectYearFilter($slug)
     {
-        $ad = Tournament::withCount('events')
+        $ad = Tournament::whereHas('tour', function ($query) use ($slug) {
+            $query->where('slug', $slug);
+        })->withCount('events')
             ->having('events_count', '>=', 0 )->get();
         $things = $ad->groupBy(function ($item) {
             return Carbon::parse($item->date_start)->format('Y');
