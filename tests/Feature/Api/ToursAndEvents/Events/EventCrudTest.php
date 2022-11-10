@@ -58,3 +58,14 @@ it('can delete events if authenticated', function () {
     $this->get('admin/events')->assertStatus(200);
     $this->delete('admin/events/1');
 });
+
+it('it validates when insert wrong data', function () {
+    superAdminAuthenticate();
+
+    $this->get('admin/events/create')->assertStatus(200);
+    $postedEmpty = $this->post('/admin/events', []);
+
+    $postedEmpty->assertSessionHasErrors('title');
+    $postedEmpty->assertSessionHasErrors('description');
+    $postedEmpty->assertSessionHasErrors('event_game_table');
+});

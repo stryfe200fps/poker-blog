@@ -65,3 +65,14 @@ it('can delete tournament if authenticated', function () {
     $this->get('admin/series')->assertStatus(200);
     $this->delete('admin/series/1');
 });
+
+
+it('it validates when insert wrong data', function () {
+    superAdminAuthenticate();
+
+    $this->get('admin/series/create')->assertStatus(200);
+    $postedEmpty = $this->post('/admin/series', []);
+
+    $postedEmpty->assertSessionHasErrors('title');
+    $postedEmpty->assertSessionHasErrors('description');
+});

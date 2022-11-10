@@ -26,14 +26,20 @@ trait HasMediaCaching
 
     public function getImageAttribute()
     {
+        $img = $this->getMedia($this->mediaCollection);
+        $image =   is_countable($img) && count($img) 
+        > 0 ? $img[0] : '' ;
+        return $image;
+    }
+
+    public function getSocialImageAttribute()
+    {
 
         $img = $this->getMedia($this->mediaCollection);
-
         $image =   is_countable($img) && count($img) 
         > 0 ? $img[0] : '' ;
 
-        return $image;
-
+        $urlPath = config('app.url') . "/api/images/$$image->id";
+        return  $urlPath . '?w='.config('app.md-image')[0].'&h='. config('app.md-image')[1];
     }
-  
 }

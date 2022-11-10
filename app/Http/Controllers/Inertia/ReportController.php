@@ -28,11 +28,12 @@ class ReportController extends Controller
         $webPage = \JsonLd\Context::create('web_page', [
             'url' => request()->url()
         ]);
+
         return Inertia::render('Report/Show', [
             'report' => $report,
             'title' => $report->title.' | LifeOfPoker',
             'slug' => $reportId,
-            'image' => $report->image,
+            'image' => $report->socialImage,
             'description' => \Illuminate\Support\Str::limit($report->title, 100, $end = '...'),
             'json-ld-webpage' => $webPage,
         ]);
