@@ -26,7 +26,14 @@ trait HasMediaCaching
 
     public function getImageAttribute()
     {
-        return $this?->getFirstMediaUrl($this->mediaCollection);
+
+        $img = $this->getMedia($this->mediaCollection);
+
+        $image =   is_countable($img) && count($img) 
+        > 0 ? $img[0] : '' ;
+
+        return $image;
+
     }
   
 }

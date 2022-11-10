@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CachedImageResource;
 use App\Http\Resources\ImageResource;
 use App\Models\Day;
 use Illuminate\Support\Facades\File;
@@ -18,13 +19,18 @@ class GalleryController extends Controller
         }
 
         foreach ($day->event_reports as $report) {
-            if ($path = $report->getFirstMediaPath('event-report', 'xs-image')) { 
+
+            if (is_string($report->image))
+                continue;
+
+            if ($path = $report->image->getPath()){ 
+
                 if (File::exists($path)) { 
-                    $mediaArray[] = $report->media[0];
+                    $mediaArray[] = $report->image;
             }
             }
         }
 
-       return ImageResource::collection($mediaArray);
+       return CachedImageResource::collection($mediaArray);
     }
 }
