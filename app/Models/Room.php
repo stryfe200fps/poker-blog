@@ -34,6 +34,14 @@ class Room extends Model implements HasMedia
             ->doNotGenerateSlugsOnUpdate();
     }
 
+    public function registerMediaConversions(Media $media = null): void
+    {
+        $this->addMediaConversion('main-thumb')
+              ->width(640)
+              ->height(425)
+              ->sharpen(10);
+    }
+
     protected $guarded = [
         'id'
     ];
