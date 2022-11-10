@@ -114,7 +114,10 @@ class Event extends Model implements HasMedia
 
         $statuses = $this->daysStatus()->toArray() ?? [];
 
-        if (in_array('live', $statuses))
+        if (!count($statuses))
+            return 'upcoming';
+
+            if (in_array('live', $statuses))
             return 'live';
         
         return  in_array('upcoming', $statuses) ? 'upcoming' : 'end';

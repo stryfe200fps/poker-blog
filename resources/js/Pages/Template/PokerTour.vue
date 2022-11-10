@@ -16,24 +16,30 @@
                         >
                     </h1>
                 </div>
-                <div class="title-post">
-                    <h1>
-                        {{ tour.data.title }}
-                    </h1>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="post-content">
+                            <h2
+                                class="text-capitalize"
+                                style="margin-bottom: 15px"
+                            >
+                                <span>{{ tour.data.title }}</span>
+                            </h2>
+                            <p>{{ tour.data.description }}</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="post-gallery">
+                            <img
+                                v-if="tour.data.image_set"
+                                :src="tour.data.image_set.lg_image"
+                                :alt="tour.data.image_set.lg_image"
+                            />
+                            <img v-else :src="defaultImg" :alt="defaultImg" />
+                        </div>
+                    </div>
                 </div>
-                <div class="post-gallery">
-                    <img
-                        v-if="tour.data.image_set"
-                        :src="tour.data.image_set.lg_image"
-                        :alt="tour.data.image_set.lg_image"
-                    />
-                    <img v-else :src="defaultImg" :alt="defaultImg" />
-                </div>
-                <div class="post-content">
-                    <div class="well">{{ tour.data.description }}</div>
-                </div>
-
-                <div class="grid-box filters">
+                <div class="grid-box filters" v-if="seriesList.length">
                     <h4>View Series By Year</h4>
                     <div>
                         <select class="form-control" v-model="selectedYear">
@@ -57,7 +63,7 @@
                         Reset
                     </button>
                 </div>
-                <div class="forum-table" v-if="tour.data.tournaments.length">
+                <div class="forum-table" v-if="seriesList.length">
                     <div
                         class="table-head"
                         style="background-color: rgb(45, 52, 54) !important"
@@ -124,7 +130,6 @@ onMounted(async () => {
     await pokerTourStore.getYears(props.tour.data.slug);
     years.value = pokerTourStore.years.data;
     await pokerTourStore.getSeriesList(filteredYear.value);
-    // currentPage.value = 1;
     seriesList.value = pokerTourStore.seriesList.tournaments.data;
 });
 
@@ -134,9 +139,7 @@ watch(
         await pokerTourStore.getSeriesList({
             ...value,
         });
-        // currentPage.value = 1;
         seriesList.value = pokerTourStore.seriesList.tournaments.data;
-        // lastPage.value = pokerRoomStore.rooms.meta.last_page;
     }
 );
 </script>

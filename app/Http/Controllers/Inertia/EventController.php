@@ -10,6 +10,7 @@ class EventController extends Controller
 {
     public function show($tour, $series, $eventSlug, $day = null, $type = null )
     {
+        if ($eventSlug === 'undefined' || $eventSlug === 'null') return;
 
         $webPage = \JsonLd\Context::create('web_page', [
             'url' => request()->url(),
@@ -21,6 +22,9 @@ class EventController extends Controller
         // return redirect('/tours/'. $event->tournament->tour->slug . '/'. $event->tournament->slug  . '/'. $eventSlug );
         // }
 
+        if ($event->getLastSchedule() === null)
+            return redirect()->back();
+            
         return Inertia::render('Event/Index', [
             'slug' => $eventSlug,
             'page' => $page ?? 'reports',

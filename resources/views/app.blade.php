@@ -15,7 +15,7 @@
         <meta property="og:title" content="{!! $page['props']['title'] ?? 'Life Of Poker' !!}" >
         <meta property="og:type" content="website"/>
         <meta property="og:url" content="{{ url()->current() }}" />
-        <meta property="og:image" content="{{ $page['props']['image'] ?? config('app.url'). '/lop_logo_small.png' }}" >
+        <meta property="og:image" content="{{ $page['props']['image'] ?? config('app.url'). '/default_og-image.png' }}" >
         <meta property="og:image:type" content="image/jpeg" />
         <meta property="og:image:width" content="900">
         <meta property="og:image:height" content="600">
@@ -26,7 +26,7 @@
         <meta name="twitter:site" content="@lifeofpoker" />
         <meta name="twitter:title"  content="{!! $page['props']['title'] ?? 'Life Of Poker'  !!}">
     
-        <meta name="twitter:image" content="{{ $page['props']['image'] ?? config('app.url'). '/lop_logo_small.png'  }}" />
+        <meta name="twitter:image" content="{{ $page['props']['image'] ?? config('app.url'). '/default_og-image.png'  }}" />
 
         <meta name="twitter:description" content="{!! $page['props']['description'] ?? 'Life Of Poker'  !!}" />
 

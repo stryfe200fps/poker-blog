@@ -25,7 +25,7 @@ class TournamentEventResource extends JsonResource
             'number_timezone' => $this->minimized_timezone,
             'country' => $this->country,
             'realtime_date_start' => Carbon::parse($this->date_start)->setTimezone($this->word_timezone)->format(config('app.carbon_date_format')),
-            'realtime_date_end' => Carbon::parse($this->date_start)->setTimezone($this->word_timezone)->format(config('app.carbon_date_format')),
+            'realtime_date_end' => Carbon::parse($this->date_end)->setTimezone($this->word_timezone)->format(config('app.carbon_date_format')),
             'date_start' => Carbon::parse($this->date_start)->toFormattedDateString(),
             'date_end' => Carbon::parse($this->date_end)->toFormattedDateString(),
             'events' => new LOFApiEventsCollection($this->events),

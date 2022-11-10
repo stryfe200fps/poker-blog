@@ -156,7 +156,7 @@ async function submitEmail() {
                                             >
                                         </li>
                                         <li>
-                                            <Link href="/events-calendar"
+                                            <Link href="/event-calendar"
                                                 >Event Calendar</Link
                                             >
                                         </li>

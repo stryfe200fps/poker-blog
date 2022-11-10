@@ -1,5 +1,5 @@
 <template>
-    <div class="tour-card" @click="showTour(tour.slug)">
+    <div class="tour-card" @click="showTour">
         <div class="news-post standard-post2">
             <div class="post-gallery">
                 <img
@@ -34,8 +34,8 @@ const props = defineProps({
     },
 });
 
-function showTour(slug) {
-    Inertia.visit(`/tours/${slug}`);
+function showTour() {
+    Inertia.visit(`/tours/${props.tour.slug}`);
 }
 </script>
 

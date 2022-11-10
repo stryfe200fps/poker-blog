@@ -24,7 +24,7 @@ class TournamentResource extends JsonResource
             'number_timezone' => $this->minimized_timezone,
             'country' => new CountryResource($this->country),
             'realtime_date_start' => Carbon::parse($this->date_start)->setTimezone($this->word_timezone),
-            'realtime_date_end' => Carbon::parse($this->date_start)->setTimezone($this->word_timezone),
+            'realtime_date_end' => Carbon::parse($this->date_end)->setTimezone($this->word_timezone),
         ];
     }
 }

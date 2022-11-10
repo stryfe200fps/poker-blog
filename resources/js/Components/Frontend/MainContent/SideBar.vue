@@ -57,28 +57,60 @@
         </div>
         <div
             class="advertisement"
-            v-if="banner"
-            :style="{ cursor: banner.url ? 'pointer' : 'auto' }"
-            @click="visitBanner(banner.url)"
+            v-if="
+                reportingSideBanner &&
+                (url.includes('live-reporting') ||
+                    currentComponent === 'Event/Index')
+            "
+            :style="{ cursor: reportingSideBanner.url ? 'pointer' : 'auto' }"
+            @click="visitBanner(reportingSideBanner.url)"
         >
             <div class="desktop-advert">
                 <img
-                    :src="banner.image_set?.og_image"
-                    :alt="banner.image_set?.og_image"
+                    :src="reportingSideBanner.image_set?.og_image"
+                    :alt="reportingSideBanner.image_set?.og_image"
                     class="img-responsive"
                 />
             </div>
             <div class="tablet-advert">
                 <img
-                    :src="banner.image_set?.og_image"
-                    :alt="banner.image_set?.og_image"
+                    :src="reportingSideBanner.image_set?.og_image"
+                    :alt="reportingSideBanner.image_set?.og_image"
                     class="img-responsive"
                 />
             </div>
             <div class="mobile-advert">
                 <img
-                    :src="banner.image_set?.og_image"
-                    :alt="banner.image_set?.og_image"
+                    :src="reportingSideBanner.image_set?.og_image"
+                    :alt="reportingSideBanner.image_set?.og_image"
+                    class="img-responsive"
+                />
+            </div>
+        </div>
+        <div
+            class="advertisement"
+            v-if="homeSideBanner && url === '/' && currentComponent === 'Index'"
+            :style="{ cursor: homeSideBanner.url ? 'pointer' : 'auto' }"
+            @click="visitBanner(homeSideBanner.url)"
+        >
+            <div class="desktop-advert">
+                <img
+                    :src="homeSideBanner.image_set?.og_image"
+                    :alt="homeSideBanner.image_set?.og_image"
+                    class="img-responsive"
+                />
+            </div>
+            <div class="tablet-advert">
+                <img
+                    :src="homeSideBanner.image_set?.og_image"
+                    :alt="homeSideBanner.image_set?.og_image"
+                    class="img-responsive"
+                />
+            </div>
+            <div class="mobile-advert">
+                <img
+                    :src="homeSideBanner.image_set?.og_image"
+                    :alt="homeSideBanner.image_set?.og_image"
                     class="img-responsive"
                 />
             </div>
@@ -140,21 +172,36 @@
 </template>
 
 <script setup>
+import { usePage } from "@inertiajs/inertia-vue3";
 import Tweet from "vue-tweet";
 import { useTwitterStore } from "@/Stores/twitter.js";
 import { useIGStore } from "@/Stores/instagram.js";
-import { useBannerStore } from "@/Stores/banner.js";
 import { computed, onMounted, ref, watch } from "@vue/runtime-core";
+
+const props = defineProps({
+    homeSideBanner: {
+        type: Object,
+    },
+    reportingSideBanner: {
+        type: Object,
+    },
+});
 
 const twitterStore = useTwitterStore();
 const tweetIDs = ref(null);
 const igStore = useIGStore();
 const igFeed = ref(null);
-const bannerStore = useBannerStore();
-const banner = ref([]);
 
 const igLink = computed(() => {
     return igFeed.value?.find((ig) => ig.permalink).permalink;
+});
+
+const url = computed(() => {
+    return usePage().url.value;
+});
+
+const currentComponent = computed(() => {
+    return usePage().component.value;
 });
 
 function visitBanner(url) {
@@ -164,8 +211,6 @@ function visitBanner(url) {
 onMounted(async () => {
     await twitterStore.getTweetID();
     await igStore.getIGFeed();
-    await bannerStore.getBanners();
-    banner.value = await bannerStore.getSideBanner();
 });
 
 watch(

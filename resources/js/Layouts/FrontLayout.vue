@@ -22,7 +22,10 @@ const preferences = ref([
 ]);
 const selectedPreference = ref(["Necessary"]);
 const bannerStore = useBannerStore();
-const banner = ref([]);
+const homeFullBanner = ref([]);
+const homeSideBanner = ref([]);
+const reportingFullBanner = ref([]);
+const reportingSideBanner = ref([]);
 
 function openPreference() {
     isOpen.value = !isOpen.value;
@@ -60,13 +63,24 @@ const getCookie = computed(() => {
     return false;
 });
 
+const url = computed(() => {
+    return usePage().url.value;
+});
+
+const currentComponent = computed(() => {
+    return usePage().component.value;
+});
+
 onMounted(async () => {
     document.body.style.overflow = "auto";
     setTimeout(() => {
         window.scrollTo({ top: 0, behavior: "smooth" });
     }, 100);
     await bannerStore.getBanners();
-    banner.value = await bannerStore.getSingleBanner();
+    homeFullBanner.value = await bannerStore.getHomeFullBanner();
+    homeSideBanner.value = await bannerStore.getHomeSideBanner();
+    reportingFullBanner.value = await bannerStore.getReportingFullBanner();
+    reportingSideBanner.value = await bannerStore.getReportingSideBanner();
 });
 </script>
 
@@ -76,20 +90,44 @@ onMounted(async () => {
         <main>
             <section class="block-wrapper">
                 <div
-                    v-if="banner"
+                    v-if="
+                        reportingFullBanner &&
+                        (url.includes('live-reporting') ||
+                            currentComponent === 'Event/Index')
+                    "
                     :style="{
                         position: 'fixed',
                         inset: '0',
                         width: '100%',
                         minHeight: '100vh',
-                        backgroundImage: `url(${banner.image_set?.og_image})`,
+                        backgroundImage: `url(${reportingFullBanner.image_set?.og_image})`,
                         backgroundRepeat: 'no-repeat',
                         backgroundPosition: 'top center',
                         backgroundAttachment: 'fixed',
                         imageRendering: '-webkit-optimize-contrast',
-                        cursor: banner.url ? 'pointer' : 'auto',
+                        cursor: reportingFullBanner.url ? 'pointer' : 'auto',
                     }"
-                    @click="visitBanner(banner.url)"
+                    @click="visitBanner(reportingFullBanner.url)"
+                ></div>
+                <div
+                    v-if="
+                        homeFullBanner &&
+                        currentComponent === 'Index' &&
+                        url === '/'
+                    "
+                    :style="{
+                        position: 'fixed',
+                        inset: '0',
+                        width: '100%',
+                        minHeight: '100vh',
+                        backgroundImage: `url(${homeFullBanner.image_set?.og_image})`,
+                        backgroundRepeat: 'no-repeat',
+                        backgroundPosition: 'top center',
+                        backgroundAttachment: 'fixed',
+                        imageRendering: '-webkit-optimize-contrast',
+                        cursor: homeFullBanner.url ? 'pointer' : 'auto',
+                    }"
+                    @click="visitBanner(homeFullBanner.url)"
                 ></div>
                 <div
                     class="container"
@@ -100,7 +138,10 @@ onMounted(async () => {
                             <slot />
                         </div>
                         <div class="col-md-3 col-sm-4" style="overflow: none">
-                            <SideBar />
+                            <SideBar
+                                :homeSideBanner="homeSideBanner"
+                                :reportingSideBanner="reportingSideBanner"
+                            />
                         </div>
                     </div>
                 </div>

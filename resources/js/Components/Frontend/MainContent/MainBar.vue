@@ -11,12 +11,11 @@ import moment from "moment";
 const articleStore = useArticleStore();
 const eventStore = useEventStore();
 const bannerStore = useBannerStore();
-const banner = ref([]);
+const mainBanner = ref([]);
 
 onMounted(async () => {
     await eventStore.getMainEvents();
-    await bannerStore.getBanners();
-    banner.value = await bannerStore.getMainBanner();
+    mainBanner.value = await bannerStore.getMainBanner();
 });
 
 function showArticle(date, slug) {
@@ -97,28 +96,28 @@ defineProps({
             </div>
             <div
                 class="advertisement"
-                v-if="banner"
-                :style="{ cursor: banner.url ? 'pointer' : 'auto' }"
-                @click="visitBanner(banner.url)"
+                v-if="mainBanner"
+                :style="{ cursor: mainBanner.url ? 'pointer' : 'auto' }"
+                @click="visitBanner(mainBanner.url)"
             >
                 <div class="desktop-advert">
                     <img
-                        :src="banner.image_set?.og_image"
-                        :alt="banner.image_set?.lg_image"
+                        :src="mainBanner.image_set?.og_image"
+                        :alt="mainBanner.image_set?.og_image"
                         class="img-responsive"
                     />
                 </div>
                 <div class="tablet-advert">
                     <img
-                        :src="banner.image_set?.og_image"
-                        :alt="banner.image_set?.og_image"
+                        :src="mainBanner.image_set?.og_image"
+                        :alt="mainBanner.image_set?.og_image"
                         class="img-responsive"
                     />
                 </div>
                 <div class="mobile-advert">
                     <img
-                        :src="banner.image_set?.og_image"
-                        :alt="banner.image_set?.og_image"
+                        :src="mainBanner.image_set?.og_image"
+                        :alt="mainBanner.image_set?.og_image"
                         class="img-responsive"
                     />
                 </div>

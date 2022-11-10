@@ -62,6 +62,7 @@
                         :currentTab="type"
                         :day="day"
                         :url="url"
+                        :reportingBanner="reportingBanner"
                         @loadMore="loadMoreReports"
                     />
                 </div>
@@ -89,6 +90,7 @@ import TournamentList from "../../Components/Frontend/Tournament/List.vue";
 
 import { useEventStore } from "@/Stores/event.js";
 import { useTournamentStore } from "@/Stores/tournament.js";
+import { useBannerStore } from "@/Stores/banner.js";
 import { onMounted, ref, watch, computed, onUpdated } from "@vue/runtime-core";
 import { Inertia } from "@inertiajs/inertia";
 const eventStore = useEventStore();
@@ -125,6 +127,8 @@ const payoutsData = ref([]);
 const loadPage = ref(1);
 const lastPage = ref(1);
 const isActive = ref(false);
+const bannerStore = useBannerStore();
+const reportingBanner = ref([]);
 
 const eventDays = computed(() => {
     return Object.keys(eventData?.value?.available_days ?? {});
@@ -166,6 +170,7 @@ async function reportViewing() {
         await eventStore.getLiveReport(1, selectDay.value);
         liveReport.value = eventStore.liveReportList.data;
         lastPage.value = eventStore.liveReportList.meta.last_page;
+        reportingBanner.value = await bannerStore.getReportingBanner();
         return;
     }
 
@@ -214,7 +219,7 @@ function scrollToTop() {
 
 onMounted(async () => {
     await eventStore.getEventData(props.slug);
-    if (props.day === "" || props.day === props.type) {
+    if (props.day !== "" || props.day === props.type) {
         selectDay.value = highestDay();
     } else {
         selectDay.value = Object.keys(eventData.value.available_days).find(

@@ -91,13 +91,15 @@ return Inertia::render('Series/Show', [
 
 
 Route::get('tours/{tourSlug}', function ($tourSlug) {
-$tour = new TourResource(Tour::where('slug', $tourSlug)->firstOrFail()) ;
+    if ($tourSlug !== 'undefined') { 
+        $tour = new TourResource(Tour::where('slug', $tourSlug)->firstOrFail()) ;
 
-return Inertia::render('Template/PokerTour', [
-    'title' => $tour->title. ' | LifeOfPoker',
-    'tour' => $tour,
-    'page_title' => $tour->title,
- ]);
+        return Inertia::render('Template/PokerTour', [
+            'title' => $tour->title. ' | LifeOfPoker',
+            'tour' => $tour,
+            'page_title' => $tour->title,
+        ]);
+    }
 });
 
 Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);

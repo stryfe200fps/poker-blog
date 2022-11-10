@@ -70,6 +70,36 @@
         <div class="tab-content">
             <div v-show="currentTab == null && reports.length" id="liveReport">
                 <div
+                    class="advertisement"
+                    v-if="reportingBanner"
+                    :style="{
+                        cursor: reportingBanner.url ? 'pointer' : 'auto',
+                    }"
+                    @click="visitBanner(reportingBanner.url)"
+                >
+                    <div class="desktop-advert">
+                        <img
+                            :src="reportingBanner.image_set?.xl_image"
+                            :alt="reportingBanner.image_set?.xl_image"
+                            class="img-responsive"
+                        />
+                    </div>
+                    <div class="tablet-advert">
+                        <img
+                            :src="reportingBanner.image_set?.xl_image"
+                            :alt="reportingBanner.image_set?.xl_image"
+                            class="img-responsive"
+                        />
+                    </div>
+                    <div class="mobile-advert">
+                        <img
+                            :src="reportingBanner.image_set?.xl_image"
+                            :alt="reportingBanner.image_set?.xl_image"
+                            class="img-responsive"
+                        />
+                    </div>
+                </div>
+                <div
                     v-for="(report, index) in reports"
                     :key="index"
                     class="single-post-box round"
@@ -131,13 +161,18 @@
                                         v-else
                                         :src="defaultAvatar"
                                     />
-                                    <span style="white-space: nowrap"
+                                    <span
+                                        style="white-space: nowrap"
+                                        v-if="stack.player"
                                         >{{ stack?.player?.name }}
                                         <span v-if="stack.player?.pseudonym"
                                             >({{
                                                 stack.player?.pseudonym
                                             }})</span
                                         ></span
+                                    >
+                                    <span style="white-space: nowrap" v-else
+                                        >-</span
                                     >
                                 </td>
                                 <td
@@ -150,12 +185,9 @@
                                     />
                                 </td>
                                 <td class="text-center hide-on-tablet" v-else>
-                                    ?
+                                    -
                                 </td>
-                                <td
-                                    v-if="stack.report_id == null"
-                                    class="text-right"
-                                >
+                                <td v-if="stack.report_id" class="text-right">
                                     {{ stack.current_chips.toLocaleString() }}
                                 </td>
                                 <td v-else class="text-right">
@@ -227,13 +259,18 @@
                                         v-else
                                         :src="defaultAvatar"
                                     />
-                                    <span style="white-space: nowrap"
+                                    <span
+                                        style="white-space: nowrap"
+                                        v-if="stack.player"
                                         >{{ stack?.player?.name }}
                                         <span v-if="stack.player?.pseudonym"
                                             >({{
                                                 stack.player?.pseudonym
                                             }})</span
                                         ></span
+                                    >
+                                    <span v-else style="white-space: nowrap"
+                                        >-</span
                                     >
                                 </td>
                                 <td
@@ -246,12 +283,9 @@
                                     />
                                 </td>
                                 <td class="text-center hide-on-tablet" v-else>
-                                    ?
+                                    -
                                 </td>
-                                <td
-                                    v-if="stack.report_id == null"
-                                    class="text-right"
-                                >
+                                <td v-if="stack.report_id" class="text-right">
                                     {{ stack.current_chips.toLocaleString() }}
                                 </td>
                                 <td v-else class="text-right">
@@ -361,7 +395,7 @@
                                             :iso="payout.player?.flag"
                                         />
                                     </span>
-                                    <span v-else>?</span>
+                                    <span v-else>-</span>
                                 </td>
                                 <td class="text-right">
                                     <span v-html="event.currency.prefix">
@@ -442,6 +476,9 @@ const props = defineProps({
     url: {
         type: String,
     },
+    reportingBanner: {
+        type: Object,
+    },
 });
 const emit = defineEmits(["loadMore"]);
 
@@ -463,6 +500,10 @@ function handleScrolledToBottom(isVisible) {
 
 const tab = ref(0);
 const id = ref(null);
+
+function visitBanner(url) {
+    if (url) window.open(url, "_blank");
+}
 
 function stickyScroll() {
     const cookie = document.querySelector(".cookie.hide");

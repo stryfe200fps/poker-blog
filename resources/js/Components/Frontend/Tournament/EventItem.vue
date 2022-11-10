@@ -33,7 +33,7 @@
                                 font-size: 12px;
                                 font-style: italic;
                             "
-                            v-if="event.buyin !== 0"
+                            v-if="event.buyin"
                         >
                             Buy In: {{ event.buyin }}
                         </p>
@@ -43,7 +43,7 @@
                                 font-size: 12px;
                                 font-style: italic;
                             "
-                            v-if="event.fee !== 0"
+                            v-if="event.fee"
                         >
                             Fee: {{ event.fee }}
                         </p>
@@ -109,14 +109,14 @@
                 <div class="post-content">
                     <h2 style="margin-bottom: 15px">
                         <span
-                            v-if="event.date_start.length"
+                            v-if="event.schedule?.date_start"
                             class="label text-uppercase"
                             :class="labelClass"
                         >
                             {{ labelText }}</span
                         >
                         <span v-else class="label label-warning text-uppercase">
-                            tba</span
+                            {{ event.schedule }}</span
                         >
                     </h2>
                     <div
@@ -128,9 +128,39 @@
                     >
                         <h2 class="text-capitalize">
                             {{ event.title }}
+                            <p
+                                style="
+                                    margin-top: 5px;
+                                    font-size: 12px;
+                                    font-style: italic;
+                                "
+                                v-if="event.game_table"
+                            >
+                                Event Game: {{ event.game_table }}dd
+                            </p>
+                            <p
+                                style="
+                                    margin-top: -15px;
+                                    font-size: 12px;
+                                    font-style: italic;
+                                "
+                                v-if="event.buyin"
+                            >
+                                Buy In: {{ event.buyin }}
+                            </p>
+                            <p
+                                style="
+                                    margin-top: -15px;
+                                    font-size: 12px;
+                                    font-style: italic;
+                                "
+                                v-if="event.fee"
+                            >
+                                Fee: {{ event.fee }}
+                            </p>
                         </h2>
                         <p
-                            v-if="event.date_start.length"
+                            v-if="event.schedule?.date_start"
                             class="text-uppercase"
                             style="color: #333"
                         >
@@ -177,12 +207,12 @@ const labelText = computed(() => {
 });
 
 const formattedDate = computed(() => {
-    const startYear = moment(props.event.date_start).format("YYYY");
-    const endYear = moment(props.event.date_end).format("YYYY");
-    const startMonth = moment(props.event.date_start).format("MMMM");
-    const endMonth = moment(props.event.date_end).format("MMMM");
-    const startDay = moment(props.event.date_start).format("D");
-    const endDay = moment(props.event.date_end).format("D");
+    const startYear = moment(props.event.schedule?.date_start).format("YYYY");
+    const endYear = moment(props.event.schedule?.date_end).format("YYYY");
+    const startMonth = moment(props.event.schedule?.date_start).format("MMMM");
+    const endMonth = moment(props.event.schedule?.date_end).format("MMMM");
+    const startDay = moment(props.event.schedule?.date_start).format("D");
+    const endDay = moment(props.event.schedule?.date_end).format("D");
     if (
         startYear === endYear &&
         startMonth === endMonth &&

@@ -122,8 +122,8 @@
             >
                 <div style="position: relative">
                     <img
-                        :src="item.image_set.md_image"
-                        alt=""
+                        :src="item.image_set?.md_image"
+                        :alt="item.image_set?.md_image"
                         style="margin-bottom: unset"
                         :style="[
                             item.theme ? { filter: 'brightness(0.8)' } : {},
@@ -146,7 +146,7 @@
             <CustomeTable>
                 <template v-slot:table-body>
                     <tr v-for="(item, index) in item.event_chips" :key="index">
-                        <td v-if="item.player?.name != null">
+                        <td v-if="item.player?.name">
                             <img
                                 class="hide-on-mobile"
                                 v-if="item.player?.avatar"
@@ -160,6 +160,7 @@
                             {{ item.player?.name }}
                             <span style="white-space: nowrap"></span>
                         </td>
+                        <td class="text-center hide-on-tablet" v-else>-</td>
                         <td
                             class="text-center hide-on-tablet"
                             v-if="item.player?.name && item.player?.country"
@@ -169,16 +170,17 @@
                                 :iso="item.player?.flag"
                             />
                         </td>
-                        <td class="text-center hide-on-tablet" v-else>?</td>
-                        <td v-if="item.player?.name != null" class="text-right">
+                        <td class="text-center hide-on-tablet" v-else>-</td>
+                        <td v-if="item.player?.name" class="text-right">
                             {{
                                 item.current_chips === 0
                                     ? "BUSTED"
                                     : item.current_chips.toLocaleString()
                             }}
                         </td>
+                        <td class="text-center hide-on-tablet" v-else>-</td>
                         <td
-                            v-if="item.player?.name != null"
+                            v-if="item.player?.name"
                             class="text-right hide-on-mobile"
                         >
                             {{
@@ -201,25 +203,20 @@
                                 ></i
                             ></span>
                         </td>
+                        <td class="text-center hide-on-tablet" v-else>-</td>
                     </tr>
                 </template>
             </CustomeTable>
         </div>
-
         <div
             class="post-tags-box margin-top"
             v-if="item.event_chips.length"
             style="border: none"
         >
             <ul class="tags-box">
-                <li>
-                    <i class="fa fa-tags"></i><span>Tags:</span
-                    ><a
-                        href="#"
-                        v-for="tag in item.event_chips"
-                        :key="tag.id"
-                        >{{ tag?.player?.name }}</a
-                    >
+                <li><i class="fa fa-tags"></i><span>Tags:</span></li>
+                <li v-for="tag in item.event_chips" :key="tag.id">
+                    <a href="#" v-if="tag?.player">{{ tag?.player?.name }}</a>
                 </li>
             </ul>
         </div>

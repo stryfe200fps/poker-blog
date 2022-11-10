@@ -5,7 +5,15 @@
             <h2 v-else>{{ event.schedule }}</h2>
         </div>
         <div class="second-col" style="width: 50%">
-            <h2>{{ event.title }}</h2>
+            <h2 v-if="event.schedule.date_start">
+                <Link
+                    :href="`/tours/${event.tour_slug}/${event.tournament_slug}/${event.slug}`"
+                    >{{ event.title }}</Link
+                >
+            </h2>
+            <h2 v-else>
+                {{ event.title }}
+            </h2>
         </div>
         <div class="third-col" style="width: 25%">
             <h2 v-if="event.buyin">{{ event.buyin }}</h2>
@@ -15,6 +23,7 @@
 </template>
 
 <script setup>
+import { Link } from "@inertiajs/inertia-vue3";
 import { computed } from "@vue/runtime-core";
 import moment from "moment";
 
