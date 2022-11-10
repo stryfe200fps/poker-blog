@@ -73,39 +73,82 @@ class Event extends Model implements HasMedia
             ->doNotGenerateSlugsOnUpdate();
     }
 
+    // public function scopeCurrentStatus($query)
+    // {
+
+    // }
+    public function daysStatus()
+    {
+        return $this->days->map->status();
+    }
+
+    public function latestDay()
+    {
+        return $this->hasOne(Day::class)->orderBy('date_start', 'DESC');
+    }
+
+    public static function getLiveEvents()
+    {
+        $date = Carbon::now()->toDateTime();
+
+        return self::orWhereHas('days', 
+        fn ($q) => $q->whereDate('date_start', '<=' , $date )
+            ->whereDate('date_end', '>=' ,  $date)
+        );
+    }
+
+    public function scopeShowLatest($query) {
+        $date = Carbon::now()->toDateTime();
+
+      return $query->addSelect([
+        'last_date_start' => Day::select('date_start')->whereColumn('event_id', 'events.id')
+            ->whereDate('date_start', '<=' , $date )
+            ->whereDate('date_end', '>=' ,  $date)
+            ->orderBy('date_start', 'desc')->limit(1),
+      ])->orderByDesc('last_date_start');
+    }
 
     public function status()
     {
-        $dateNow = Carbon::now();
 
-        $schedule = $this->load(['days'])->days->toArray() ?? [];
 
-        if (count($schedule) === 0) {
-            return 'upcoming';
-        }
+        $statuses = $this->daysStatus()->toArray() ?? [];
 
-        foreach ($schedule as $sched) {
-            if ($dateNow >= Carbon::parse($sched['date_start']) && $dateNow <= Carbon::parse($sched['date_end'])) {
-                return 'live';
-            }
-        }
+        if (in_array('live', $statuses))
+            return 'live';
+        
+        return  in_array('upcoming', $statuses) ? 'upcoming' : 'end';
+        
 
-        if (Carbon::parse($schedule[0]['date_start']) > $dateNow) {
-            return 'upcoming';
-        }
+        // $nice = Event::first()->eventFunc();
 
-        if (Carbon::parse($schedule[count($schedule) - 1]['date_end']) < $dateNow) {
-            return 'end';
-        }
+        // $dateNow = Carbon::now();
+
+        // $schedule = $this->load(['days'])->days->toArray() ?? [];
+
+        // if (count($schedule) === 0) {
+        //     return 'upcoming';
+        // }
+
+        // foreach ($schedule as $sched) {
+        //     if ($dateNow >= Carbon::parse($sched['date_start']) && $dateNow <= Carbon::parse($sched['date_end'])) {
+        //         return 'live';
+        //     }
+        // }
+
+        // if (Carbon::parse($schedule[0]['date_start']) > $dateNow) {
+        //     return 'upcoming';
+        // }
+
+        // if (Carbon::parse($schedule[count($schedule) - 1]['date_end']) < $dateNow) {
+        //     return 'end';
+        // }
     }
 
     public function getSchedule()
     {
-        $sched = $this->days->filter(function ($item) {
-            return $item->report_count();
-        })->sortBy('lft')->pluck('name', 'id');
-
-        return $sched;
+        return $this->days()->orderByDesc('lft')->withCount('event_reports')
+            ->having('event_reports_count', '>', 0 )->pluck('name', 'id');
     }
 
     public function getLastSchedule() 

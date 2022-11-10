@@ -21,13 +21,14 @@ class EventController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
-        $dateNow = Carbon::now();
+        return LOFApiEventIndexResource::collection(Event::getLiveEvents()->showLatest()->take(2)->get());
 
-        return  LOFApiEventIndexResource::collection(Event::latest()->get()->filter(function ($item) {
-            return $item->status() == 'live';
-        })->slice(0, 2));
+        // return  LOFApiEventIndexResource::collection(Event::latest()->get()->filter(function ($item) {
+        //     return $item->status() == 'live';
+        // })->slice(0, 2));
         //
     }
 

@@ -23,8 +23,6 @@ class LOFApiEventIndexResource extends JsonResource
             'status' => $this->status(),
             'date_range' => $this->schedule,
             'image_set' => $this->allMedia(),
-            'main_image' => $this->getFirstMediaUrl('event', 'main-image'),
-            'main_thumb' => $this->getFirstMediaUrl('event', 'main-thumb'),
             'tournament' => $this->tournament->title,
             'country' => $this->tournament->load('country')->country,
             'currency' => $this->tournament->currency,

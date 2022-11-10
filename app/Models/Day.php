@@ -7,6 +7,7 @@ use App\Traits\HasMultipleImages;
 use Spatie\MediaLibrary\HasMedia;
 use App\Traits\HasMediaCollection;
 use Illuminate\Support\Facades\File;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -136,5 +137,32 @@ class Day extends Model implements HasMedia
        return $this->event_reports()->latest('published_date')->first();
     }
 
+    public function status()
+    {
+        $dateNow = Carbon::now();
+        if ($dateNow >= Carbon::parse($this->date_start) && $dateNow <= Carbon::parse($this->date_end)) 
+            return 'live';
+        
+        if (Carbon::parse($this->date_start) >= $dateNow) 
+            return 'upcoming';
 
+        if (Carbon::parse($this->date_end) <= $dateNow) 
+            return 'end';
+
+        return 'upcoming';
+    }
+
+    public function scopeCurrentStatus($query)
+    {
+         return $query
+            ->whereDate('date_start', '>=' , Carbon::parse(Carbon::now())->toDateString() )
+            ->whereDate('date_end', '<=' , Carbon::parse(Carbon::now())->toDateString() );
+    }
+
+    public function scopeLive($query)
+    {
+        return $query->where(function ($q) {
+            $q->currentStatus();
+        });
+    }
 }

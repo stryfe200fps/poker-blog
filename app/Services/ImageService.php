@@ -40,7 +40,7 @@ class ImageService
 
           $arrayMedia = $model->media->toArray();
             if (is_array($arrayMedia) && count($arrayMedia) > 0) {
-              Cache::put($model->media[0]->collection_name. '-'. $model->media[0]->model_id,  $model->media[0]->uuid , 36000 );
+              Cache::put($model->media[0]->collection_name. '-'. $model->media[0]->model_id,  $model->media[0]->uuid , config('app.image_cache_lifetime') );
             }
           }
         } 

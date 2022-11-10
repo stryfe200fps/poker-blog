@@ -20,7 +20,7 @@ return [
     */
 
     'name' => env('APP_NAME', 'LifeOfPoker'),
-    'image_cache_lifetime' => 3600,
+    'image_cache_lifetime' => 10,
     'date_format' => 'MMM DD, OY,  h:mm a, ddd',
     'carbon_date_format' => 'M d, Y h:m a, D',
     'supported_locales' => ['zh', 'ko', 'ja', 'es', 'de'],

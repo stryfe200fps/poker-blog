@@ -24,12 +24,10 @@ Route::get('/', [HomeController::class, 'index']);
 
 Route::get('cacheboy', function () {
     Cache::put('keybag', 'valueburutoy', $seconds = 10);
-
 });
 
 Route::get('cacheget', function () {
    $dd= Cache::get('keybag');
-   dd($dd);
 });
 
 // Route::get('/event/{slug}/{page?}', [EventController::class, 'show']);
