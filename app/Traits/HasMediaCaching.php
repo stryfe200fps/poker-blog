@@ -39,6 +39,9 @@ trait HasMediaCaching
         $image =   is_countable($img) && count($img) 
         > 0 ? $img[0] : '' ;
 
+        if ($image === '')
+            return '';
+
         $urlPath = config('app.url') . "/api/images/$image->id";
         return  $urlPath . '?w='.config('app.md-image')[0].'&h='. config('app.md-image')[1];
     }
