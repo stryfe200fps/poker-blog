@@ -13,6 +13,7 @@ use App\Traits\HasMediaCollection;
 use Illuminate\Support\Facades\File;
 use App\Observers\EventReportObserver;
 use App\Observers\DefaultModelObserver;
+use App\Traits\HasMediaCaching;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
@@ -25,42 +26,12 @@ class EventReport extends Model implements HasMedia
     use \Backpack\CRUD\app\Models\Traits\CrudTrait;
     use HasFactory;
     use Prunable;
-    use HasMediaCollection, HasMultipleImages;
+    use HasMediaCaching;
     use \Znck\Eloquent\Traits\BelongsToThrough;
 
     public $shouldCacheImage = true;
-
-    public function registerMediaConversions(?Media $media = null): void
-    {
-        $this->addMediaConversion('big-image')
-            ->width(1200)
-            ->height(630)
-            ->nonQueued();
-
-        $this->addMediaConversion('main-thumb')
-            ->width(300)
-            ->height(300)
-            ->nonQueued();
-
-        $this->addMediaConversion('main-thumb2')
-            ->width(130)
-            ->height(86);
-
-        $this->addMediaConversion('main-image')
-            ->width(424)
-            ->height(285)
-            ->nonQueued();
-    }
-
-
     protected $guarded = ['id'];
 
-
-
-    // public function getImageAttribute($value)
-    // {
-    //     return $this->getFirstMediaUrl('event-report', 'main-image');
-    // }
 
     public function event()
     {

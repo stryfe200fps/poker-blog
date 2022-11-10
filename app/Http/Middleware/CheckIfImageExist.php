@@ -23,19 +23,22 @@ class CheckIfImageExist
         if (! $day->hasImageInStorage()) {
 
           $ids = [];
-          foreach ($day->event_reports()->get()->filter(function ($item) {
-            return $item->hasOriginalImage() && !$item->hasImage();
-          }) as $report) {
-            $ids[] = $report->media[0]->id;
+          // look for reports media that has no image conversions
+          $currentReports = $day->event_reports()->get()->filter(function ($item) {
+            return $item->hasOriginalImage() && !$item->hasImage(); });
 
+          foreach ($currentReports as $report) {
+            $ids[] = $report->media[0]->id;
             Cache::put('event-report-'.$report->id, $report->media[0]->uuid , config('app.image_cache_lifetime') );
           }
-            $datx=  collect($ids)->map(function ($data) {
 
+            // Manipulate ids from [0=>200, 1=>300] to --ids=200 --ids=300
+            $formattedIds=  collect($ids)->map(function ($data) {
             return '--ids='.$data ;
             })->toArray() ;
 
-            \Artisan::call("media-library:regenerate ". implode(' ', $datx) );
+            //artisan command to restore the deleted image conversion
+            // \Artisan::call("media-library:regenerate ". implode(' ', $formattedIds) );
         }
 
         return $next($request);

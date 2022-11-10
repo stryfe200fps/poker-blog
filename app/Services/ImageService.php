@@ -2,18 +2,23 @@
 
 namespace App\Services;
 
+use Exception;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Cache;
 use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 
 class ImageService 
 {
+
   public function imageUpload($model)
   {
      $value = request()->only('image')['image'] ?? '';
 
         if ($value == null) {
             $model->media()->delete();
+          try { 
+            \Artisan::call('media-library:clean --force');
+            } catch (Exception $e) { } 
             return false;
         }
 
@@ -26,24 +31,18 @@ class ImageService
 
         if ( isset($model?->shouldResizeImage) && $model?->shouldResizeImage) 
             $image->resize(1600,900)->save($path);
-        
 
         $model->media()->delete();
 
-        \Artisan::call('media-library:clean');
+        try { 
+        \Artisan::call('media-library:clean --force');
+        } catch (Exception $e) { } 
 
-        $saveImage = $model->addMedia($path)
+         $model->addMedia($path)
         ->toMediaCollection($model->mediaCollection);
 
-        if (isset($model?->shouldCacheImage) && $model?->shouldCacheImage)  { 
-          if ($saveImage) {
-
-          $arrayMedia = $model->media->toArray();
-            if (is_array($arrayMedia) && count($arrayMedia) > 0) {
-              Cache::put($model->media[0]->collection_name. '-'. $model->media[0]->model_id,  $model->media[0]->uuid , config('app.image_cache_lifetime') );
-            }
-          }
-        } 
+        if (file_exists($path))
+          unlink($path);
 
         if (isset($model?->shouldOptimizeImage) && $model?->shouldOptimizeImage)  { 
           if (is_array($model->media) && count($model->media) > 0) {

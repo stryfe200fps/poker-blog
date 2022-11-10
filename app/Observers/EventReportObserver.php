@@ -28,8 +28,6 @@ class EventReportObserver
                     'current_chips' => $eventChipPlayer['current_chips'],
                 ]);
 
-                // dd($eventChipPlayer);
-
                 if ($eventChipPlayer['payout'] ?? null !== null) {
 
                     if (EventPayout::where('event_id', $model->event->id)->where('player_id', $eventChipPlayer['player_id'])->count() > 0) {

@@ -13,7 +13,6 @@ class ImageThemeObserver
 
         if ($value == null) {
             $model->media()->delete();
-
             return false;
         }
 

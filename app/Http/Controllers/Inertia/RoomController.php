@@ -32,7 +32,7 @@ class RoomController extends Controller
             'title' => 'Room: ' .$room->title.  ' | LifeOfPoker',
             'slug' => $room->slug,
             'room' => $room,
-            'image' =>  $room->getFirstMediaUrl('room', 'big-image'),
+            'image' =>  $room->getFirstMediaUrl('room', 'md-image'),
             'json-ld-webpage' => $webPage,
         ]);
 

@@ -23,6 +23,23 @@ Route::get('/', [HomeController::class, 'index']);
 // Route::get('/tournament', [TournamentController::class , 'index'] );
 
 Route::get('cacheboy', function () {
+    $server = '127.0.0.1';
+$port = 11211;
+  
+// Initiate a new object of memcache
+$memcacheD = new \Memcached();
+
+if ($memcacheD->addServer($server, $port)) {
+    echo "**  server added ** \n";
+    $d = $memcacheD->getAllKeys();
+    dd($d);
+}
+else {
+    echo "** issue while creating a server **\n";
+}
+  
+
+
     Cache::put('keybag', 'valueburutoy', $seconds = 10);
 });
 

@@ -22,7 +22,7 @@ class LiveReportResource extends JsonResource
             'event' => $this->poker_event,
             'author' => $this->author,
             'date' => Carbon::parse($this->published_date)->toFormattedDateString(),
-            'image' => $this->getFirstMediaUrl('logo', 'main-image'),
+            'image' => $this->image,
             'caption' => $this->image_caption,
             'theme' => $this->image_theme,
             'day' => $this->day,

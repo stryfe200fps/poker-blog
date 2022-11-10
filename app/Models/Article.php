@@ -36,21 +36,6 @@ class Article extends Model implements HasMedia
         self::observe(new DefaultModelObserver);
     }
 
-    public function registerMediaConversions(?Media $media = null): void
-    {
-        $this->addMediaConversion('big-image')
-            ->width(1200)
-            ->height(630)
-            ->nonQueued();
-        $this->addMediaConversion('main-image')
-            ->width(847)
-            ->height(563);
-
-        $this->addMediaConversion('main-thumb')
-            ->width(337)
-            ->height(225);
-    }
-
     public function resetContentHtml($content) 
     {
         $pattern = '/<span translate="no">/i';
@@ -126,11 +111,6 @@ public function shareTwitter()
     public function getPublishedDateAttribute($value)
     {
         return Carbon::parse($value)->setTimezone(session()->get('timezone') ?? 'UTC');
-    }
-
-    public function getImageAttribute($value)
-    {
-        return $this->getFirstMediaUrl('article', 'main-image');
     }
 
     public function article_tags()

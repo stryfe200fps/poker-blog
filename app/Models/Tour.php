@@ -45,11 +45,6 @@ class Tour extends Model implements HasMedia
         return $this->hasMany(Tournament::class);
     }
 
-    public function getImageAttribute($value)
-    {
-        return $this->getFirstMediaUrl('tour', 'main-image');
-    }
-
     protected static function booted()
     {
         static::creating(function ($model) {

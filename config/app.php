@@ -19,6 +19,12 @@ return [
     |
     */
 
+    'xs-image' => [200, 200], //width, height
+    'sm-image' => [300,250],
+    'md-image' => [640,480],
+    'lg-image' => [900,600],
+    'xl-image' => [1600,900],
+
     'name' => env('APP_NAME', 'LifeOfPoker'),
     'image_cache_lifetime' => 10,
     'date_format' => 'MMM DD, OY,  h:mm a, ddd',

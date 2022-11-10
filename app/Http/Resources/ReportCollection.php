@@ -14,9 +14,6 @@ class ReportCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        // dd($this->collection);
-
-        // dd($this->collection);
         $reducedCollection = $this->collection->groupBy('level')->reduce(function ($result, $item) {
             $level = $item->first()->level;
             $result[] = [
@@ -28,8 +25,6 @@ class ReportCollection extends ResourceCollection
 
             return $result;
         }, collect([]))->toArray();
-
-        // dd($reducedCollection);
 
         return [
             'data' => $reducedCollection,

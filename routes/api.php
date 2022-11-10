@@ -33,6 +33,7 @@ use App\Http\Controllers\Api\ReportsApiController;
 use App\Http\Controllers\ArticleCategoryController;
 use App\Http\Controllers\Api\TournamentApiController;
 use App\Http\Controllers\Api\MediaReportingController;
+use App\Http\Controllers\ImageController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -65,7 +66,7 @@ Route::get('event/{slug}', [EventController::class, 'show' ]);
 Route::get('tours', [TourApiController::class, 'index']);
 Route::get('tours/{slug}', [TourApiController::class, 'show']);
 
-Route::resource('report', EventReportsController::class)->middleware('image.cache');
+Route::resource('report', EventReportsController::class);
 Route::resource('page', PageManagerController::class);
 
 Route::get('twitter', [SocialMediaController::class, 'fetchTwitter']);
@@ -121,5 +122,7 @@ Route::get('rooms', [RoomController::class, 'index']);
 Route::get('rooms/{slug}', [RoomController::class, 'show']);
 Route::get('banners', [BannerController::class, 'index']);
 Route::get('media-reports', [MediaReportingController::class, 'index']);
+
+Route::get('images/{media}', [ ImageController::class, 'show' ])->where('path', '.*');
 
 

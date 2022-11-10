@@ -26,7 +26,7 @@ class TourRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|min:5|max:255',
+            'title' => 'required',
             'description' => 'required',
             'slug' =>  Rule::unique('tours')->ignore(request()->get('id')), 
         ];

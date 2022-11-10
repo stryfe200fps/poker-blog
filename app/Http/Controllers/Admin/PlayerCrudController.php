@@ -93,7 +93,7 @@ class PlayerCrudController extends CrudController
         CRUD::field('country_id');
 
 $this->crud->addField([
-            'name' => 'avatar',
+            'name' => 'image',
             'label' => 'Image',
             'type' => 'image',
             'aspect_ratio' => 1,

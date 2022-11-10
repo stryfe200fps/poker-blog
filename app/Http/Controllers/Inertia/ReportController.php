@@ -32,7 +32,7 @@ class ReportController extends Controller
             'report' => $report,
             'title' => $report->title.' | LifeOfPoker',
             'slug' => $reportId,
-            'image' => $report->getFirstMediaUrl('event-report', 'big-image'),
+            'image' => $report->image,
             'description' => \Illuminate\Support\Str::limit($report->title, 100, $end = '...'),
             'json-ld-webpage' => $webPage,
         ]);

@@ -63,7 +63,22 @@ class BannerCrudController extends CrudController
         CRUD::field('name');
 
         CRUD::field('url');
-        CRUD::field('location');
+        $this->crud->addField([
+                'label' => 'Location',
+                'name' => 'location',
+                'type' => 'select2_from_array',
+                'options' => [
+                    'home-background-full' => 'home-background-full',
+                    'home-top-landscape' => 'home-top-landscape',
+                    'home-column-square' => 'home-column-square',
+                    'reporting-background-full' => 'reporting-background-full',
+                    'reporting-top-landscape' => 'reporting-top-landscape',
+                    'reporting-column-square' => 'reporting-column-square'
+                ],
+                'wrapper' => [
+                    'class' => 'form-group col-md-12',
+                ],
+        ]);
 
         $this->crud->addField(
 
