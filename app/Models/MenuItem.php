@@ -63,7 +63,6 @@ class MenuItem extends Model
                         // }
 
 
-                        
 
                         $menu_item->children->push($menu_subitem);
 

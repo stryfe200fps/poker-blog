@@ -53,7 +53,7 @@
                     for="{{ $field['name']['page_id'] }}"
                     required
                     >
-                    @foreach ($field['pages'] as $page)
+                    @foreach ($field['pages']->sortBy('name') as $page)
                         <option value="{{ $page->id }}"
                             @if (isset($entry) && $page->id === $entry->{$field['name']['page_id']})
                                 selected

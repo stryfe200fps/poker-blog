@@ -46,7 +46,6 @@ class TourCrudController extends CrudController
     {
         $this->crud->disableResponsiveTable();
         CRUD::column('title');
-        CRUD::column('slug');
         CRUD::column('description');
 
 

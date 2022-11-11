@@ -49,7 +49,6 @@ class TournamentCrudController extends CrudController
     {
         $this->crud->disableResponsiveTable();
         CRUD::column('title');
-        CRUD::column('slug');
         CRUD::column('tour_id');
 
         $this->crud->addColumns([

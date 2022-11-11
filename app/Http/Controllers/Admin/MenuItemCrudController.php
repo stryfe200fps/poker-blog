@@ -56,7 +56,7 @@ class MenuItemCrudController extends CrudController
                 'name' => ['type', 'link', 'page_id'],
                 'label' => 'Type',
                 'type' => 'page_or_link',
-                'page_model' => '\Backpack\PageManager\app\Models\Page',
+                'page_model' => 'app\Models\Page',
                 'view_namespace' => file_exists(resource_path('views/vendor/backpack/crud/fields/page_or_link.blade.php')) ? null : 'menucrud::fields',
             ]);
         });
