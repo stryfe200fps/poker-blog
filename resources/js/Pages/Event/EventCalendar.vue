@@ -195,7 +195,7 @@ async function handleScrolledToBottom(isVisible) {
                 index
             ].collection.concat(data.collection);
         } else {
-            seriesList.value.push(...eventCalendarStore.series.data);
+            seriesList.value.push(data);
         }
     });
     lastPage.value = eventCalendarStore.series.meta.last_page;
