@@ -93,8 +93,8 @@ Route::get('select/games', function () {
 });
 
 
-Route::get('media-reports/select/authors', function () {
-    return [ 'data' => MediaReporting::selectAvailableAuthors() ];
+Route::get('media-reports/select/categories', function () {
+    return [ 'data' => MediaReporting::selectAvailableCategories() ];
 });
 
 Route::get('select/games', function () {
@@ -113,6 +113,10 @@ Route::get('rooms/select/countries', function () {
     return [ 'data' => Room::selectAvailableCountries() ?? [] ];
 });
 
+
+Route::get('tours/{slug}/select/years', function ($slug) {
+    return [ 'data' => Tournament::selectYearFilter($slug) ?? [] ];
+});
 
 Route::get('tours/{slug}/select/years', function ($slug) {
     return [ 'data' => Tournament::selectYearFilter($slug) ?? [] ];

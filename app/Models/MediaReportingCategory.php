@@ -23,7 +23,7 @@ class MediaReportingCategory extends Model
     }
 
 
-    public function media_reporting()
+    public function media_reportings()
     {
         return $this->belongsToMany(MediaReporting::class);
     }
