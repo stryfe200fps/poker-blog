@@ -12,7 +12,7 @@
                                 class="fa fa-chevron-left"
                                 aria-hidden="true"
                             ></i>
-                            to poker tour</span
+                            to poker tours</span
                         >
                     </h1>
                 </div>
