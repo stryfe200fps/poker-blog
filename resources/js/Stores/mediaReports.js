@@ -5,25 +5,25 @@ export const useMediaStore = defineStore("media", {
     state: () => {
         return {
             media: [],
-            authors: [],
+            categories: [],
         };
     },
 
     actions: {
-        async getMediaAuthors() {
+        async getMediaCategories() {
             try {
                 let { data } = await axios.get(
-                    `/api/media-reports/select/authors`
+                    `/api/media-reports/select/categories`
                 );
-                this.authors = data;
+                this.categories = data;
             } catch (error) {
                 console.error(error);
             }
         },
-        async getMedia({ page, author_id = null }) {
+        async getMedia({ page, category = null, date_start }) {
             try {
                 let { data } = await axios.get(`/api/media-reports`, {
-                    params: { page, author_id },
+                    params: { page, category, date_start },
                 });
                 this.media = data;
             } catch (error) {
