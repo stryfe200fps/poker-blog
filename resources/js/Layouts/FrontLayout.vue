@@ -95,10 +95,10 @@ onMounted(async () => {
     }, 100);
     window.addEventListener("scroll", showScrollTopBtn);
     await bannerStore.getBanners();
-    homeFullBanner.value = await bannerStore.getHomeFullBanner();
-    homeSideBanner.value = await bannerStore.getHomeSideBanner();
-    reportingFullBanner.value = await bannerStore.getReportingFullBanner();
-    reportingSideBanner.value = await bannerStore.getReportingSideBanner();
+    homeFullBanner.value = bannerStore.getHomeFullBanner();
+    homeSideBanner.value = bannerStore.getHomeSideBanner();
+    reportingFullBanner.value = bannerStore.getReportingFullBanner();
+    reportingSideBanner.value = bannerStore.getReportingSideBanner();
 });
 
 onBeforeUnmount(() => {

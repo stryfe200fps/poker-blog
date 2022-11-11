@@ -2,20 +2,18 @@
 import defaultImg from "/public/default-img.png";
 import { Inertia } from "@inertiajs/inertia";
 import { Head, Link } from "@inertiajs/inertia-vue3";
-import { useArticleStore } from "@/Stores/article.js";
-import { useEventStore } from "@/Stores/event.js";
-import { useBannerStore } from "@/Stores/banner.js";
-import { onMounted, ref } from "@vue/runtime-core";
 import moment from "moment";
 
-const articleStore = useArticleStore();
-const eventStore = useEventStore();
-const bannerStore = useBannerStore();
-const mainBanner = ref([]);
-
-onMounted(async () => {
-    await eventStore.getMainEvents();
-    mainBanner.value = await bannerStore.getMainBanner();
+const props = defineProps({
+    liveEvents: {
+        type: Object,
+    },
+    mainBanner: {
+        type: Object,
+    },
+    articleList: {
+        type: Object,
+    },
 });
 
 function showArticle(date, slug) {
@@ -29,13 +27,6 @@ function showArticle(date, slug) {
 function visitBanner(url) {
     if (url) window.open(url, "_blank");
 }
-
-defineProps({
-    articleList: {
-        type: Object,
-        default: {},
-    },
-});
 </script>
 
 <template>
@@ -43,14 +34,14 @@ defineProps({
         <title>Home</title>
     </Head>
     <div class="block-content">
-        <div class="grid-box" v-if="eventStore.mainEvents.data?.length">
+        <div class="grid-box" v-if="liveEvents?.length">
             <div class="title-section">
                 <h1><span>live reporting</span></h1>
             </div>
             <div class="row">
                 <div
                     class="col-md-6"
-                    v-for="(report, index) in eventStore.mainEvents.data"
+                    v-for="(report, index) in liveEvents"
                     :key="index"
                 >
                     <div
@@ -124,7 +115,7 @@ defineProps({
             </div>
             <div
                 class="news-post article-post"
-                v-for="news in articleList.data"
+                v-for="news in articleList"
                 :key="news.id"
                 style="margin-bottom: 30px"
             >
@@ -185,6 +176,7 @@ defineProps({
                                     src="https://www.youtube.com/embed/S2SSslc8wBs"
                                     title="APT Philippines 2022 Main Event Highlights"
                                     frameborder="0"
+                                    loading="lazy"
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                     allowfullscreen
                                 ></iframe>
@@ -196,6 +188,7 @@ defineProps({
                             <iframe
                                 class="embed-responsive-item"
                                 src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FPokerStarsAsia%2Fvideos%2F1775890926121412%2F&show_text=false&width=560&t=0"
+                                loading="lazy"
                                 frameborder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                 allowfullscreen
@@ -208,6 +201,7 @@ defineProps({
                             <iframe
                                 class="embed-responsive-item"
                                 src="https://www.youtube.com/embed/bNZd_JIKNKE"
+                                loading="lazy"
                                 title="WPT Prime Vietnam - Day 1 highlights"
                                 frameborder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
