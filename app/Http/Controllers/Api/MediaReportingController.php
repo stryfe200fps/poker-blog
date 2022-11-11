@@ -19,6 +19,14 @@ class MediaReportingController extends Controller
             $q->where('published_date','>=' , request()->get('date_start'));
             });
        }
+
+       if (request()->has('category')) {
+            $mediaReporting->whereHas('media_reporting_categories', function ($country) {
+            $country->where('id', request()->get('category'));
+        });
+       }
+
+
         return MediaReportingResource::collection($mediaReporting->paginate(5));
     }
 }

@@ -77,7 +77,7 @@ public function setup()
      * @return void
      */
 
-    public function fetchMediaReportingCategory()
+    public function fetchMediaReportingCategories()
     {
         return $this->fetch(
 
