@@ -76,7 +76,7 @@ class TournamentCrudController extends CrudController
             'label' => 'Tours',
         ],
             function () {
-                return Tour::all()->pluck('title', 'id')->toArray();
+                return Tour::all()->sortBy('title')->pluck('title', 'id')->toArray();
             },
             function ($values) {
                 $this->crud->query = $this->crud->query->whereHas('tour', function ($query) use ($values) {

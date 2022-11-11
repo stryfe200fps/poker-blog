@@ -101,7 +101,7 @@ class ArticleCrudController extends CrudController
             'label' => 'Category',
         ],
             function () {
-                return ArticleCategory::all()->pluck('title', 'id')->toArray();
+                return ArticleCategory::all()->sortBy('title')->pluck('title', 'id')->toArray();
             },
             function ($values) {
                 $this->crud->query = $this->crud->query->whereHas('article_categories', function ($query) use ($values) {

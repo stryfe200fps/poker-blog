@@ -76,7 +76,7 @@ class EventCrudController extends CrudController
     'type'  => 'select2',
     'label' => 'Series'
     ], function() {
-        return Tournament::all()->pluck('title', 'id')->toArray();
+        return Tournament::all()->sortBy('title')->pluck('title', 'id')->toArray();
     }, function($value) { // if the filter is active
         $this->crud->addClause('where', 'tournament_id', $value);
     });
