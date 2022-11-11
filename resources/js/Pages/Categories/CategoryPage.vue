@@ -37,69 +37,85 @@
                         </select>
                     </div>
                 </div>
-                <div v-if="articleCategories?.length">
-                    <div class="grid">
-                        <div
-                            v-for="(category, index) in articleCategories"
-                            :key="index"
-                        >
-                            <div
-                                class="news-post standard-post2"
-                                style="
-                                    display: flex;
-                                    flex-direction: column;
-                                    height: 100%;
-                                    cursor: pointer;
-                                "
-                                @click="
-                                    showArticle(category.date, category.slug)
-                                "
-                            >
-                                <div class="post-gallery">
-                                    <img
-                                        v-if="category.image_set"
-                                        :src="category.image_set.md_image"
-                                        :alt="category.image_set.md_image"
-                                    />
-                                    <img
-                                        v-else
-                                        :src="defaultImg"
-                                        :alt="defaultImg"
-                                    />
-                                    <Link
-                                        class="category-post food"
-                                        v-if="category.categories.length"
-                                        :href="`/news/${category.categories[0]?.slug}`"
-                                        @click.stop
-                                        >{{
-                                            category.categories[0]?.title
-                                        }}</Link
-                                    >
-                                </div>
-                                <div class="post-title" style="flex-grow: 1">
-                                    <h2>
-                                        <Link
-                                            :href="`/news/${moment(
-                                                new Date(category.date)
-                                            ).format('YYYY')}/${moment(
-                                                new Date(category.date)
-                                            ).format('MM')}/${category.slug}`"
-                                            v-html="category.title"
-                                        ></Link>
-                                    </h2>
-                                </div>
-                            </div>
-                        </div>
-                        <div
-                            v-if="articleCategories?.length"
-                            v-observe-visibility="handleScrolledToBottom"
-                        ></div>
-                    </div>
+                <div v-if="isLoading">
+                    <span class="loader"></span>
+                    <p class="text-center" style="font-size: 20px">
+                        Loading...
+                    </p>
                 </div>
                 <div v-else>
-                    <h4 class="text-capitalize">
-                        No {{ page_title }} available
-                    </h4>
+                    <div v-if="articleCategories?.length">
+                        <div class="grid">
+                            <div
+                                v-for="(category, index) in articleCategories"
+                                :key="index"
+                            >
+                                <div
+                                    class="news-post standard-post2"
+                                    style="
+                                        display: flex;
+                                        flex-direction: column;
+                                        height: 100%;
+                                        cursor: pointer;
+                                    "
+                                    @click="
+                                        showArticle(
+                                            category.date,
+                                            category.slug
+                                        )
+                                    "
+                                >
+                                    <div class="post-gallery">
+                                        <img
+                                            v-if="category.image_set"
+                                            :src="category.image_set.md_image"
+                                            :alt="category.image_set.md_image"
+                                        />
+                                        <img
+                                            v-else
+                                            :src="defaultImg"
+                                            :alt="defaultImg"
+                                        />
+                                        <Link
+                                            class="category-post food"
+                                            v-if="category.categories.length"
+                                            :href="`/news/${category.categories[0]?.slug}`"
+                                            @click.stop
+                                            >{{
+                                                category.categories[0]?.title
+                                            }}</Link
+                                        >
+                                    </div>
+                                    <div
+                                        class="post-title"
+                                        style="flex-grow: 1"
+                                    >
+                                        <h2>
+                                            <Link
+                                                :href="`/news/${moment(
+                                                    new Date(category.date)
+                                                ).format('YYYY')}/${moment(
+                                                    new Date(category.date)
+                                                ).format('MM')}/${
+                                                    category.slug
+                                                }`"
+                                                v-html="category.title"
+                                            ></Link>
+                                        </h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                v-if="articleCategories?.length"
+                                v-observe-visibility="handleScrolledToBottom"
+                            ></div>
+                        </div>
+                    </div>
+                    <div v-else>
+                        <h4 class="text-capitalize">
+                            No {{ page_title }} available
+                        </h4>
+                    </div>
                 </div>
             </div>
         </div>
@@ -138,6 +154,7 @@ const currentPage = ref(1);
 const lastPage = ref(1);
 const selectCategory = ref("categories");
 const pathname = ref(window.location.pathname.split("/")[2]);
+const isLoading = ref(true);
 
 async function handleScrolledToBottom(isVisible) {
     if (!isVisible) return;
@@ -170,6 +187,10 @@ onMounted(async () => {
     categories.value.push(...articleCategoryStore.categoryLists.data);
     await articleCategoryStore.getArticleCategoryLists(pathname.value, 1);
     lastPage.value = articleCategoryStore.articleCategoryLists.meta.last_page;
+
+    if (articleCategories.value) {
+        isLoading.value = false;
+    }
 });
 
 watch(
@@ -202,5 +223,38 @@ watch(
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
     gap: 30px;
+}
+
+.loader {
+    display: block;
+    transform: translateZ(1px);
+}
+
+.loader:after {
+    content: "";
+    display: block;
+    width: 48px;
+    height: 48px;
+    margin: 8px auto;
+    background-color: #f44336;
+    border-radius: 50%;
+    animation: coin-flip 2.4s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+
+@keyframes coin-flip {
+    0%,
+    100% {
+        animation-timing-function: cubic-bezier(0.5, 0, 1, 0.5);
+    }
+    0% {
+        transform: rotateY(0deg);
+    }
+    50% {
+        transform: rotateY(1800deg);
+        animation-timing-function: cubic-bezier(0, 0.5, 0.5, 1);
+    }
+    100% {
+        transform: rotateY(3600deg);
+    }
 }
 </style>

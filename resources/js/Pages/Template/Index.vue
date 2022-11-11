@@ -115,29 +115,63 @@
                 ></div>
             </div>
             <div v-if="page.template === 'videos'">
-                <div class="grid-box filters">
-                    <h4>Find media reports</h4>
-                    <div>
-                        <select class="form-control" v-model="selectedAuthor">
-                            <option value="" selected disabled>
-                                Select Authors
-                            </option>
-                            <option
-                                v-for="(author, index) in authors"
-                                :key="index"
-                                :value="author.id"
+                <div class="row" style="margin-bottom: 25px">
+                    <div class="col-md-6">
+                        <div class="filters left-filters">
+                            <button
+                                type="button"
+                                class="btn btn-default"
+                                @click="getDateToday()"
                             >
-                                {{ author.first_name }}
-                            </option>
-                        </select>
+                                Today
+                            </button>
+                            <div class="custom-date-picker">
+                                <div
+                                    class="custom-date-picker__btn"
+                                    @click="openDatePicker"
+                                    @blur="isOpen = false"
+                                    tabindex="0"
+                                >
+                                    <span>{{ datePlaceholder }}</span>
+                                    <i
+                                        class="fas fa-angle-down custom-date-picker__icon"
+                                        :class="{ up: isOpen }"
+                                    ></i>
+                                </div>
+                                <div>
+                                    <input
+                                        type="date"
+                                        v-model="selectedDate"
+                                        class="custom-date-picker__input"
+                                        id="custom-date"
+                                        @change="changeDate"
+                                    />
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <button
-                        class="btn btn-default"
-                        v-if="selectedAuthor !== ''"
-                        @click="resetFilter()"
-                    >
-                        Reset
-                    </button>
+                    <div class="col-md-6">
+                        <div class="filters right-filters">
+                            <h5>Find By:</h5>
+                            <div>
+                                <select
+                                    class="form-control"
+                                    v-model="selectedCategory"
+                                >
+                                    <option value="" selected disabled>
+                                        Select Category
+                                    </option>
+                                    <option
+                                        v-for="(category, index) in categories"
+                                        :key="index"
+                                        :value="category.slug"
+                                    >
+                                        {{ category.title }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="grid">
                     <MediaReporting
@@ -180,6 +214,7 @@ import { onMounted, ref, computed, watch } from "@vue/runtime-core";
 import axios from "axios";
 import { createToast } from "mosha-vue-toastify";
 import "mosha-vue-toastify/dist/style.css";
+import moment from "moment";
 
 import FrontLayout from "@/Layouts/FrontLayout.vue";
 import PokerRooms from "./PokerRooms.vue";
@@ -195,13 +230,15 @@ const selectedCountry = ref("");
 const rooms = ref([]);
 const tours = ref([]);
 const medias = ref([]);
-const authors = ref([]);
-const selectedAuthor = ref("");
+const categories = ref([]);
+const selectedCategory = ref("");
 const currentPage = ref(1);
 const lastPage = ref(1);
 const pokerRoomStore = useRoomStore();
 const pokerTourStore = useTourStore();
 const mediaStore = useMediaStore();
+const selectedDate = ref(moment().format("YYYY-MM-DD"));
+const isOpen = ref(false);
 
 const props = defineProps({
     page: {
@@ -216,11 +253,32 @@ const filteredLocation = computed(() => {
     };
 });
 
-const filteredAuthor = computed(() => {
+const filteredMedia = computed(() => {
     return {
-        author_id: selectedAuthor.value || null,
+        category: selectedCategory.value || null,
+        date_start: selectedDate.value,
     };
 });
+
+const datePlaceholder = computed(() => {
+    return selectedDate.value === moment().format("YYYY-MM-DD")
+        ? "Upcoming"
+        : `${moment(new Date(selectedDate.value)).format("MMMM D")} onwards`;
+});
+
+function getDateToday() {
+    selectedDate.value = moment().format("YYYY-MM-DD");
+    selectedCategory.value = "";
+}
+
+function openDatePicker() {
+    document.getElementById("custom-date").showPicker();
+    isOpen.value = !isOpen.value;
+}
+
+function changeDate() {
+    isOpen.value = false;
+}
 
 async function handleScrolledToBottom(isVisible) {
     if (!isVisible) return;
@@ -246,6 +304,8 @@ async function handleScrolledToBottomMedia(isVisible) {
 
     await mediaStore.getMedia({
         page: currentPage.value,
+        category: selectedCategory.value || null,
+        date_start: selectedDate.value,
     });
     medias.value.push(...mediaStore.media.data);
     lastPage.value = mediaStore.media.meta.last_page;
@@ -267,7 +327,6 @@ async function handleScrolledToBottomTours(isVisible) {
 
 function resetFilter() {
     selectedCountry.value = "";
-    selectedAuthor.value = "";
 }
 
 async function submitMessage() {
@@ -309,11 +368,12 @@ onMounted(async () => {
     if (props.page.template === "videos") {
         await mediaStore.getMedia({
             page: 1,
+            date_start: selectedDate.value,
         });
         medias.value = mediaStore.media.data;
         lastPage.value = mediaStore.media.meta.last_page;
-        await mediaStore.getMediaAuthors();
-        authors.value = mediaStore.authors.data;
+        await mediaStore.getMediaCategories();
+        categories.value = mediaStore.categories.data;
     }
     if (props.page.template === "tours") {
         await pokerTourStore.getTours({
@@ -337,7 +397,7 @@ watch(
     }
 );
 watch(
-    () => filteredAuthor.value,
+    () => filteredMedia.value,
     async function (value) {
         await mediaStore.getMedia({
             page: 1,
@@ -408,11 +468,68 @@ watch(
 
 .filters {
     display: flex;
-    justify-content: flex-start;
+    justify-content: flex-end;
     align-items: center;
     gap: 15px;
     margin-bottom: 40px;
     font-family: "Lato", sans-serif;
+}
+
+.left-filters {
+    justify-content: flex-start;
+    margin-bottom: 15px;
+}
+
+.right-filters {
+    display: block;
+}
+
+.right-filters select:not(:last-child) {
+    margin-bottom: 15px;
+}
+
+.custom-date-picker {
+    position: relative;
+}
+
+.custom-date-picker__btn {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.custom-date-picker__icon {
+    transition: transform 0.5s ease;
+}
+
+.custom-date-picker__icon.up {
+    transform: rotate(180deg);
+}
+
+.custom-date-picker__input {
+    position: absolute;
+    top: -15px;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0;
+}
+
+@media (min-width: 992px) {
+    .left-filters {
+        margin-bottom: 0;
+    }
+}
+
+@media (min-width: 768px) {
+    .right-filters {
+        display: flex;
+    }
+
+    .right-filters select:not(:last-child) {
+        margin-bottom: 0;
+    }
 }
 
 .grid {
