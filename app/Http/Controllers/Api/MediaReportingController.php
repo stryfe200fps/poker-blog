@@ -22,7 +22,7 @@ class MediaReportingController extends Controller
 
        if (request()->has('category')) {
             $mediaReporting->whereHas('media_reporting_categories', function ($country) {
-            $country->where('id', request()->get('category'));
+            $country->where('slug', request()->get('category'));
         });
        }
 

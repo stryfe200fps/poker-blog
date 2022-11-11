@@ -91,7 +91,6 @@ public function setup()
 
     protected function setupCreateOperation()
     {
-
         CRUD::setValidation(MediaReportingRequest::class);
 
         CRUD::addField('title');
