@@ -16,6 +16,7 @@ class TourResource extends JsonResource
     {
         return [
             'title' => googleTranslateExclude($this->title),
+            'title_tab' => $this->title ?? '',
             'slug' => $this->slug,
             'image_set' => $this->allMedia(),
             'description' => $this->description,

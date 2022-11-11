@@ -18,6 +18,7 @@ class LiveReportResource extends JsonResource
     {
         return [
             'title' => googleTranslateExclude($this->title),
+            'title_tab' => $this->title ?? '',
             'description' => googleTranslateExclude($this->content),
             'event' => $this->poker_event,
             'author' => $this->author,
