@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Event;
+use App\Models\Tournament;
 use App\Traits\LimitUserPermissions;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
@@ -66,11 +67,28 @@ class LiveCrudController extends CrudController
     {
         $this->crud->disableResponsiveTable();
         CRUD::column('title')->limit(100);
+        CRUD::column('tournament.title')->label('Series')->limit(100);
+
 
         $this->crud->addButtonFromModelFunction('line', 'openLevel', 'openLevel', 'beginning');
         $this->crud->addButtonFromModelFunction('line', 'open_payout', 'openPayout', 'beginning');
         // $this->crud->addButtonFromModelFunction('line', 'open_chip_count', 'openChipCount', 'beginning');
         // TODO: Chips should be part of days
+           $this->crud->addFilter([
+            'type' => 'select2',
+            'name' => 'tournament',
+            'label' => 'Series',
+        ],
+            function () {
+                return Tournament::all()->pluck('title', 'id')->toArray();
+            },
+            function ($values) {
+                $this->crud->query = $this->crud->query->whereHas('tournament', function ($query) use ($values) {
+                    $query->where('id', $values);
+                });
+            });
+
+
         $this->crud->addButtonFromModelFunction('line', 'days', 'openDay', 'beginning');
     }
 
