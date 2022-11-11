@@ -91,7 +91,7 @@ defineProps({
         <div class="grid-box">
             <div class="title-section">
                 <h1>
-                    <span>Lates news</span>
+                    <span>Latest news</span>
                 </h1>
             </div>
             <div
