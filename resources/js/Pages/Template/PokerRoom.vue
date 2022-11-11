@@ -60,7 +60,7 @@
                                         v-if="room.website"
                                     >
                                         <a
-                                            :href="`${room.website}`"
+                                            :href="`${formattedWebsite}`"
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             ><i class="fas fa-globe"></i
@@ -125,7 +125,7 @@
 <script setup>
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import { useRoomStore } from "@/Stores/pokerRoom.js";
-import { onMounted, ref } from "@vue/runtime-core";
+import { onMounted, ref, computed } from "@vue/runtime-core";
 import { Inertia } from "@inertiajs/inertia";
 
 import FrontLayout from "@/Layouts/FrontLayout.vue";
@@ -140,6 +140,21 @@ const props = defineProps({
 
 const room = ref([]);
 const pokerRoomStore = useRoomStore();
+
+const formattedWebsite = computed(() => {
+    const conditions = ["https://", "htpp://"];
+    const properWebsite = conditions.some((el) =>
+        props.room.website.includes(el)
+    );
+
+    if (properWebsite) {
+        return props.room.website;
+    } else {
+        return props.room.website.includes("http://")
+            ? props.room.website.replace("http://", "https://")
+            : `https://${props.room.website}`;
+    }
+});
 
 function goBack() {
     Inertia.visit("/poker-rooms");
@@ -157,7 +172,13 @@ onMounted(async () => {
     font-size: 16px;
 }
 
-:deep(.room-content h2) {
+:deep(.room-content h1),
+:deep(.room-content h2),
+:deep(.room-content h3),
+:deep(.room-content h4),
+:deep(.room-content h5),
+:deep(.room-content h6) {
+    font-size: 16px;
     padding: 0;
 }
 

@@ -2,8 +2,8 @@
 import Header from "../Components/Frontend/Header.vue";
 import Footer from "../Components/Frontend/Footer.vue";
 import SideBar from "../Components/Frontend/MainContent/SideBar.vue";
-import { Head, Link, usePage } from "@inertiajs/inertia-vue3";
 
+import { Head, Link, usePage } from "@inertiajs/inertia-vue3";
 import { onMounted, onBeforeUnmount, ref, computed } from "@vue/runtime-core";
 import { useBannerStore } from "@/Stores/banner.js";
 import Echo from "laravel-echo";
