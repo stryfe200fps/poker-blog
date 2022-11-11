@@ -39,6 +39,16 @@
     </li>
 @endif
 
+<li class="nav-item nav-dropdown">
+        <a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon la la-newspaper"></i> Media Reporting</a>
+        <ul class="nav-dropdown-items">
+
+        <li class="nav-item"><a class="nav-link" href="{{ backpack_url('media-reporting') }}"><i class="nav-icon la la-list"></i> Manage</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ backpack_url('media-reporting-category') }}"><i class="nav-icon la la-list"></i> Categories</a></li>
+
+        </ul>
+    </li>
+
 @if(backpack_user()->can('event.list') || backpack_user()->can('series.list') || backpack_user()->can('tour.list') || backpack_user()->role('super-admin') )
     <li class="nav-item nav-dropdown">
         <a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon la la-globe-europe"></i> Tours & Events</a>
@@ -100,15 +110,6 @@
 
 
 
-<li class="nav-item nav-dropdown">
-        <a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon la la-newspaper"></i> Media Reporting</a>
-        <ul class="nav-dropdown-items">
-
-        <li class="nav-item"><a class="nav-link" href="{{ backpack_url('media-reporting') }}"><i class="nav-icon la la-list"></i> Manage</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{ backpack_url('media-reporting-category') }}"><i class="nav-icon la la-list"></i> Categories</a></li>
-
-        </ul>
-    </li>
 
 <li class="nav-item nav-dropdown">
     <a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon la la-newspaper"></i> <span>Miscellaneous</span></a>
