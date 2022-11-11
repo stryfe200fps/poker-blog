@@ -80,7 +80,7 @@ class LiveCrudController extends CrudController
             'label' => 'Series',
         ],
             function () {
-                return Tournament::all()->pluck('title', 'id')->toArray();
+                return Tournament::all()->sortBy('title')->pluck('title', 'id')->toArray();
             },
             function ($values) {
                 $this->crud->query = $this->crud->query->whereHas('tournament', function ($query) use ($values) {
