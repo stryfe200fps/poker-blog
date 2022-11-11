@@ -1,6 +1,6 @@
 <template>
     <Head>
-        <title>{{ tour.data.title }}</title>
+        <title>{{ tour.data.title_tab }}</title>
     </Head>
     <FrontLayout>
         <div class="block-content">
@@ -23,9 +23,9 @@
                                 class="text-capitalize"
                                 style="margin-bottom: 15px"
                             >
-                                <span>{{ tour.data.title }}</span>
+                                <span v-html="tour.data.title"></span>
                             </h2>
-                            <p>{{ tour.data.description }}</p>
+                            <p v-html="tour.data.content"></p>
                         </div>
                     </div>
                     <div class="col-sm-6">

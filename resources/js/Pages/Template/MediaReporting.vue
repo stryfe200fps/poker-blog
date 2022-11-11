@@ -4,8 +4,8 @@
         v-if="media.type == mediaType"
         @click="showMedia(media.link)"
     >
-        <div class="news-post standard-post2">
-            <div class="post-gallery">
+        <div class="news-post standard-post2 custom-post">
+            <div class="post-gallery" style="flex-grow: 1">
                 <img
                     v-if="media.image_set"
                     :src="media.image_set.md_image"
@@ -23,16 +23,6 @@
                         >{{ media.title }}</a
                     >
                 </h2>
-                <!-- <ul class="post-tags">
-                    <li v-if="room.country">
-                        <i
-                            ><CountryFlag
-                                :title="room.country?.name"
-                                :iso="room.country?.code"
-                        /></i>
-                        {{ room.country?.name }}
-                    </li>
-                </ul> -->
                 <ul class="post-tags">
                     <li>
                         {{ media.description }}
@@ -67,7 +57,14 @@ function showMedia(link) {
 
 <style scoped>
 .room-card {
+    background-color: #fafafa;
     cursor: pointer;
+}
+
+.custom-post {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .post-gallery {
@@ -77,11 +74,14 @@ function showMedia(link) {
 }
 
 .post-gallery img {
+    height: 100%;
+    object-fit: cover;
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
 }
 
 .post-title {
+    width: 100%;
     padding-inline: 10px !important;
     background-color: #fafafa;
     border-radius: 5px;

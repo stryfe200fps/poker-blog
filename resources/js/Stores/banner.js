@@ -11,37 +11,37 @@ export const useBannerStore = defineStore("banner", {
     getters: {
         getHomeFullBanner: (state) => {
             return (slug) =>
-                state.banners.data.find(
+                state.banners.data?.find(
                     (banner) => banner.location === "home-background-full"
                 );
         },
         getMainBanner: (state) => {
             return (slug) =>
-                state.banners.data.find(
+                state.banners.data?.find(
                     (banner) => banner.location === "home-top-landscape"
                 );
         },
         getHomeSideBanner: (state) => {
             return (slug) =>
-                state.banners.data.find(
+                state.banners.data?.find(
                     (banner) => banner.location === "home-column-square"
                 );
         },
         getReportingFullBanner: (state) => {
             return (slug) =>
-                state.banners.data.find(
+                state.banners.data?.find(
                     (banner) => banner.location === "reporting-background-full"
                 );
         },
         getReportingSideBanner: (state) => {
             return (slug) =>
-                state.banners.data.find(
+                state.banners.data?.find(
                     (banner) => banner.location === "reporting-column-square"
                 );
         },
         getReportingBanner: (state) => {
             return (slug) =>
-                state.banners.data.find(
+                state.banners.data?.find(
                     (banner) => banner.location === "reporting-top-landscape"
                 );
         },

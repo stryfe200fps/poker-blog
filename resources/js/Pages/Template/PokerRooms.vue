@@ -1,7 +1,7 @@
 <template>
     <div class="room-card" @click="showRoom(room.slug)">
-        <div class="news-post standard-post2">
-            <div class="post-gallery">
+        <div class="news-post standard-post2 custom-post">
+            <div class="post-gallery" style="flex-grow: 1">
                 <img v-if="room.image" :src="room.image" :alt="room.image" />
                 <img v-else :src="defaultImg" :alt="defaultImg" />
             </div>
@@ -56,6 +56,12 @@ function showRoom(slug) {
     cursor: pointer;
 }
 
+.custom-post {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
 .post-gallery {
     float: none !important;
     margin-inline: 0 !important;
@@ -63,11 +69,14 @@ function showRoom(slug) {
 }
 
 .post-gallery img {
+    height: 100%;
+    object-fit: cover;
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
 }
 
 .post-title {
+    width: 100%;
     padding-inline: 10px !important;
     background-color: #fafafa;
     border-radius: 5px;

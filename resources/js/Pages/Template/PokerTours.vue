@@ -1,7 +1,7 @@
 <template>
     <div class="tour-card" @click="showTour">
-        <div class="news-post standard-post2">
-            <div class="post-gallery">
+        <div class="news-post standard-post2 custom-post">
+            <div class="post-gallery" style="flex-grow: 1">
                 <img
                     v-if="tour.image_set"
                     :src="tour.image_set?.md_image"
@@ -14,8 +14,8 @@
                     <Link
                         :href="`/tours/${tour.slug}`"
                         class="text-capitalize"
-                        >{{ tour.title }}</Link
-                    >
+                        v-html="tour.title"
+                    ></Link>
                 </h2>
             </div>
         </div>
@@ -44,6 +44,12 @@ function showTour() {
     cursor: pointer;
 }
 
+.custom-post {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
 .post-gallery {
     float: none !important;
     margin-inline: 0 !important;
@@ -51,11 +57,14 @@ function showTour() {
 }
 
 .post-gallery img {
+    height: 100%;
+    object-fit: cover;
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
 }
 
 .post-title {
+    width: 100%;
     padding-inline: 10px !important;
     background-color: #fafafa;
     border-radius: 5px;
