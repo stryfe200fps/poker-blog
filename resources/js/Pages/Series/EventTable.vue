@@ -1,6 +1,6 @@
 <template>
     <div class="table-row">
-        <div class="first-col" style="width: 25%">
+        <div class="first-col" style="width: 20%">
             <h2 v-if="event.schedule.date_start">{{ formattedDate }}</h2>
             <h2 v-else>{{ event.schedule }}</h2>
         </div>
@@ -15,9 +15,13 @@
                 {{ event.title }}
             </h2>
         </div>
-        <div class="third-col" style="width: 25%">
+        <div class="third-col" style="width: 15%">
             <h2 v-if="event.buyin">{{ event.buyin }}</h2>
-            <h2 v-else>0</h2>
+            <h2 v-else>-</h2>
+        </div>
+        <div class="third-col" style="width: 15%">
+            <h2 v-if="event.fee">{{ event.fee }}</h2>
+            <h2 v-else>-</h2>
         </div>
     </div>
 </template>

@@ -60,14 +60,17 @@
                         class="table-head"
                         style="background-color: rgb(45, 52, 54) !important"
                     >
-                        <div class="first-col" style="width: 25%">
+                        <div class="first-col" style="width: 20%">
                             <span>Date</span>
                         </div>
                         <div class="second-col" style="width: 50%">
                             <span>event</span>
                         </div>
-                        <div class="third-col" style="width: 25%">
+                        <div class="third-col" style="width: 15%">
                             <span>buy in</span>
+                        </div>
+                        <div class="third-col" style="width: 15%">
+                            <span>fee</span>
                         </div>
                     </div>
                     <EventTable
