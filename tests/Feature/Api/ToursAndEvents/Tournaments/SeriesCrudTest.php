@@ -57,13 +57,18 @@ it('can update article if authenticated', function () {
     $this->assertDatabaseCount('tournaments', 1);
 });
 
-it('can delete tournament if authenticated', function () {
+
+
+it('can delete series if authenticated', function () {
+
+    $this->withoutExceptionHandling();
+
     superAdminAuthenticate();
 
-    Tournament::factory()->create();
+    $series = Tournament::factory()->create();
+    $this->delete('admin/series/'.$series->id);
 
-    $this->get('admin/series')->assertStatus(200);
-    $this->delete('admin/series/1');
+    expect(Tournament::all()->count())->toBe(0);
 });
 
 

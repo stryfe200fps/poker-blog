@@ -19,13 +19,14 @@ class MediaReportingCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
      * 
      * @return void
      */
-    public function setup()
+public function setup()
     {
         CRUD::setModel(\App\Models\MediaReporting::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/media-reporting');
@@ -75,6 +76,19 @@ class MediaReportingCrudController extends CrudController
      * @see https://backpackforlaravel.com/docs/crud-operation-create
      * @return void
      */
+
+    public function fetchMediaReportingCategory()
+    {
+        return $this->fetch(
+
+            [
+                'model' => \App\Models\MediaReportingCategory::class,
+                'paginate' => 10,
+                'searchOperator' => 'LIKE',
+            ]
+        );
+    }
+
     protected function setupCreateOperation()
     {
 
@@ -97,32 +111,38 @@ class MediaReportingCrudController extends CrudController
             'name' => 'description',
             'type' => 'textarea'
         ]);
+
+        // CRUD::addField(
+        //              [
+        //             'name' => 'media_reporting_categories',
+        //             'type' => 'select2_multiple',
+        //             'attribute' => 'title',
+        //             'label' => 'Categories',
+        //             'wrapper' => [
+        //                 'class' => 'form-group col-md-12',
+        //             ],
+        //         ]
+        //     );
+
+        CRUD::addField(      [
+                'label' => 'Categories',
+                'type' => 'relationship',
+                'name' => 'media_reporting_categories', // the method that defines the relationship in your Model
+                'attribute' => 'title', // foreign key attribute that is shown to user
+                'pivot' => true, // on create&update, do you need to add/delete pivot table entries?
+                'inline_create' => ['entity' => 'media-reporting-category'],
+                'ajax' => true,
+                'minimum_input_length' => 0,
+                'allows_null' => true,
+                // 'value' => $this->crud->getCurrentOperation() === 'update' ? $this->crud->getCurrentEntry()->level->id : $lastLevelId,
+                'wrapper' => [
+                    'class' => 'form-group col-md-12',
+                ],
+            ]);
+
         CRUD::addField('link');
 
         $author = Author::where('user_id', backpack_user()->id)->first();
-
-        if ($author !== null) {
-            $this->crud->addField([
-                'name' => 'author_id',
-                'type' => 'select2',
-                'attribute' => 'fullname',
-                'value' => $author->id,
-                'label' => 'Author',
-                'wrapper' => [
-                    'class' => 'form-group col-md-12',
-                ],
-            ]);
-        } else {
-            $this->crud->addField([
-                'name' => 'author_id',
-                'type' => 'select2',
-                'attribute' => 'fullname',
-                'label' => 'Author',
-                'wrapper' => [
-                    'class' => 'form-group col-md-12',
-                ],
-            ]);
-        }
 
         $this->crud->addField(
 

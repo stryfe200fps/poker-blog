@@ -99,7 +99,17 @@
 @endrole
 
 
-<li class="nav-item"><a class="nav-link" href="{{ backpack_url('media-reporting') }}"><i class="nav-icon la la-list"></i> Media reporting</a></li>
+
+<li class="nav-item nav-dropdown">
+        <a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon la la-newspaper"></i> Media Reporting</a>
+        <ul class="nav-dropdown-items">
+
+        <li class="nav-item"><a class="nav-link" href="{{ backpack_url('media-reporting') }}"><i class="nav-icon la la-list"></i> Manage</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ backpack_url('media-reporting-category') }}"><i class="nav-icon la la-list"></i> Categories</a></li>
+
+        </ul>
+    </li>
+
 <li class="nav-item nav-dropdown">
     <a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon la la-newspaper"></i> <span>Miscellaneous</span></a>
     <ul class="nav-dropdown-items">

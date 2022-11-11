@@ -117,25 +117,6 @@ class Tournament extends Model implements HasMedia
         return $this->hasMany(Event::class);
     }
 
-    // protected static function booted()
-    // {
-    //     static::creating(function ($model) {
-    //         if ($model->slug == '') {
-    //             return;
-    //         }
-
-    //         $model->slug = Str::slug($model->slug);
-    //     });
-    //        static::updating(function ($model) {
-
-    //         $findModel = Tournament::find($model->id);
-    //          if ($model->slug !== $findModel->slug) {
-    //             $model->slug = Str::slug($model->slug);
-    //         } 
-    //     });
-
-    // }
-
     public static function selectAvailableTours()
     {
         return Tour::select('slug', 'title')->orderBy('title')->withCount('tournaments')

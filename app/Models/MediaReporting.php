@@ -27,11 +27,11 @@ class MediaReporting extends Model implements HasMedia
         self::observe(new DefaultModelObserver);
     }
 
-    public function author()
-    {
-        return $this->belongsTo(Author::class);
-    }
 
+    public function media_reporting_categories()
+    {
+        return $this->belongsToMany(MediaReportingCategory::class);
+    } 
 
     public static function selectAvailableAuthors()
     {

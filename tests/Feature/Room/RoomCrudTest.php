@@ -43,11 +43,15 @@ it('can update room if authenticated', function () {
 });
 
 
-it('can delete article if authenticated', function () {
+it('can delete room if authenticated', function () {
+
+    $this->withoutExceptionHandling();
+
     superAdminAuthenticate();
+
     $room = Room::factory()->create();
-    $this->get('admin/room')->assertStatus(200);
-    $datas = $this->delete('admin/room/1');
+    $this->delete('admin/room/'.$room->id);
+
     expect(Room::all()->count())->toBe(0);
 });
 

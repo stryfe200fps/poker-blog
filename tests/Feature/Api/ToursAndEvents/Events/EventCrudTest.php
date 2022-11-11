@@ -53,10 +53,15 @@ it('can update event if authenticated', function () {
 });
 
 it('can delete events if authenticated', function () {
+
+    $this->withoutExceptionHandling();
+
     superAdminAuthenticate();
+
     $event = Event::factory()->create();
-    $this->get('admin/events')->assertStatus(200);
-    $this->delete('admin/events/1');
+    $this->delete('admin/events/'.$event->id);
+
+    expect(Event::all()->count())->toBe(0);
 });
 
 it('it validates when insert wrong data', function () {

@@ -46,16 +46,7 @@ class Article extends Model implements HasMedia
     public function setContentAttribute($content)
     {
         $new = collect($content)->map(function ($item, $key) {
-
-            $glossary = Glossary::all()->pluck('word')->toArray();
-            // foreach ($glossary as $word) { 
-            // $pattern = '/ '.$word.'/i';
-            // $item['body'] = preg_replace($pattern, '<span translate="no">'.$word.'</span>' , $item['body']);
-            // $item['title'] = preg_replace($pattern, '<span translate="no">'.$word.'</span>' , $item['title']);
-            // }
-
-            // dd($item['body']);
-
+            // $glossary = Glossary::all()->pluck('word')->toArray();
             $item['body'] = '<div class="content" id="content'.$key.'">'.$item['body'].'</div>';
             return $item;
         });
@@ -80,28 +71,14 @@ class Article extends Model implements HasMedia
 
 public function shareFacebook()
 {
-    $event = Event::find($this->event_id);
-
     return '<a class="btn btn-sm btn-link"  href="https://www.facebook.com/sharer/sharer.php?u='.config('app.url').'/news/year/month/'.$this->slug.'" data-toggle="tooltip" target="_blank" title="Share to facebook"><i class="la la-facebook"></i>    </a>';
 }
 
 public function shareTwitter()
 {
-    $event = Event::find($this->event_id);
-
     return '<a class="btn btn-sm btn-link"  href="https://twitter.com/intent/tweet?text='.config('app.url').'/news/year/month/'.$this->slug.'" data-toggle="tooltip" target="_blank" title="Share to facebook"><i class="la la-twitter"></i>    </a>';
 }
 
-    public function categoryArticles($number = 5)
-    {
-        // dd('asd');
-        // return  Article::where('id', '!=', $this->id )->whereHas('article_categories', function ($query)  {
-        //     $query->whereIn('slug', $this->article_categories()->get()->pluck('slug')->toArray());
-        // })
-        // ->inRandomOrder()
-        // ->limit(3)
-        // ->get();
-    }
 
     public function setPublishedDateAttribute($value)
     {

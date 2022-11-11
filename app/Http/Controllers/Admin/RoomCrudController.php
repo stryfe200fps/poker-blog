@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Country;
 use App\Http\Requests\RoomRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
@@ -40,11 +41,24 @@ class RoomCrudController extends CrudController
     protected function setupListOperation()
     {
         CRUD::column('title');
-        CRUD::column('slug');
         CRUD::column('country_id');
         CRUD::column('address');
         CRUD::column('phone');
         CRUD::column('website');
+
+        $this->crud->addFilter([
+            'type' => 'select2',
+            'name' => 'country_filter',
+            'label' => 'Country',
+        ],
+            function () {
+                return Country::all()->pluck('name', 'id')->toArray();
+            },
+            function ($values) {
+                $this->crud->query = $this->crud->query->whereHas('country', function ($query) use ($values) {
+                    $query->where('id', $values);
+                });
+            });
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:

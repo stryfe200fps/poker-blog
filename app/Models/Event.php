@@ -73,10 +73,7 @@ class Event extends Model implements HasMedia
             ->doNotGenerateSlugsOnUpdate();
     }
 
-    // public function scopeCurrentStatus($query)
-    // {
 
-    // }
     public function daysStatus()
     {
         return $this->days->map->status();
@@ -122,30 +119,6 @@ class Event extends Model implements HasMedia
         
         return  in_array('upcoming', $statuses) ? 'upcoming' : 'end';
         
-
-        // $nice = Event::first()->eventFunc();
-
-        // $dateNow = Carbon::now();
-
-        // $schedule = $this->load(['days'])->days->toArray() ?? [];
-
-        // if (count($schedule) === 0) {
-        //     return 'upcoming';
-        // }
-
-        // foreach ($schedule as $sched) {
-        //     if ($dateNow >= Carbon::parse($sched['date_start']) && $dateNow <= Carbon::parse($sched['date_end'])) {
-        //         return 'live';
-        //     }
-        // }
-
-        // if (Carbon::parse($schedule[0]['date_start']) > $dateNow) {
-        //     return 'upcoming';
-        // }
-
-        // if (Carbon::parse($schedule[count($schedule) - 1]['date_end']) < $dateNow) {
-        //     return 'end';
-        // }
     }
 
     public function getSchedule()

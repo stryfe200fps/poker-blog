@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
+use App\Observers\DefaultModelObserver;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Tag extends Model
 {
@@ -20,6 +21,12 @@ class Tag extends Model
             ->generateSlugsFrom('title')
             ->saveSlugsTo('slug')
             ->doNotGenerateSlugsOnUpdate();
+    }
+
+       public static function boot()
+    {
+        parent::boot();
+        self::observe(new DefaultModelObserver);
     }
 
     protected $guarded = [
@@ -36,28 +43,4 @@ class Tag extends Model
         return $this->morphedByMany(EventReport::class, 'taggable');
     }
 
-        protected static function booted()
-        {
-            static::creating(function ($model) {
-                if ($model->slug == '') {
-                    return;
-                }
-
-                $model->slug = Str::slug($model->slug);
-            });
-
-                    static::updating(function ($model) {
-
-            $findModel = Tag::find($model->id);
-             if ($model->slug !== $findModel->slug) {
-                $model->slug = Str::slug($model->slug);
-            } 
-        });
-            
-        }
-
-    // public function tags()
-    // {
-    //     return $this->morphToMany(Tag::class, 'taggable');
-    // }
 }

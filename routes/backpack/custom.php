@@ -39,4 +39,5 @@ Route::crud('article', 'ArticleCrudController');
     Route::crud('room', 'RoomCrudController');
     Route::crud('banner', 'BannerCrudController');
     Route::crud('media-reporting', 'MediaReportingCrudController');
+    Route::crud('media-reporting-category', 'MediaReportingCategoryCrudController');
 }); // this should be the absolute last line of this file

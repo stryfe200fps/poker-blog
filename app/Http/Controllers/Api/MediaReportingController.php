@@ -14,12 +14,11 @@ class MediaReportingController extends Controller
 
         $mediaReporting = MediaReporting::orderByDesc('published_date');
 
-       if (request()->has('author_id')) {
-        $mediaReporting->whereHas('author', function ($author) {
-            $author->where('id', request()->get('author_id'));
-        });
+        if (request()->has('date_start')) {
+            $equals = $mediaReporting->where(function ($q) {
+            $q->where('published_date','>=' , request()->get('date_start'));
+            });
        }
-
         return MediaReportingResource::collection($mediaReporting->paginate(5));
     }
 }

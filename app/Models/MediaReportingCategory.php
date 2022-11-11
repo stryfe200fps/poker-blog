@@ -2,14 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Support\Str;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use App\Observers\DefaultModelObserver;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class ArticleCategory extends Model
+class MediaReportingCategory extends Model
 {
     use \Backpack\CRUD\app\Models\Traits\CrudTrait;
     use HasFactory;
@@ -23,38 +22,17 @@ class ArticleCategory extends Model
             ->doNotGenerateSlugsOnUpdate();
     }
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $table = 'article_categories';
 
-    protected $fillable = [
-        'title',
-        'slug',
-    ];
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'id' => 'integer',
-    ];
-
-    public function articles()
+    public function media_reporting()
     {
-        return $this->belongsToMany(Article::class);
+        return $this->belongsToMany(MediaReporting::class);
     }
+
+    protected $guarded = ['id'];
 
     public static function boot()
     {
         parent::boot();
         self::observe(new DefaultModelObserver);
     }
-
-
-    
 }

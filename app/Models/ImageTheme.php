@@ -30,10 +30,6 @@ class ImageTheme extends Model implements HasMedia
 
     public $timestamps = false;
 
-    public function registerMediaConversions(?Media $media = null): void
-    {
-    }
-
     public function getImageAttribute($value)
     {
         return $this->getFirstMediaUrl('image-theme');

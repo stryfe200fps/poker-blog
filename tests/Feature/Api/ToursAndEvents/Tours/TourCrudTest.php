@@ -56,11 +56,17 @@ it('can update tours if authenticated', function () {
     $this->assertDatabaseCount('tours', 1);
 });
 
+
 it('can delete tours if authenticated', function () {
+
+    $this->withoutExceptionHandling();
+
     superAdminAuthenticate();
+
     $tour = Tour::factory()->create();
-    $this->get('admin/poker-tour')->assertStatus(200);
-    $this->delete('admin/poker-tour/1');
+    $this->delete('admin/poker-tour/'.$tour->id);
+
+    expect(Tour::all()->count())->toBe(0);
 });
 
 it('it validates when insert wrong data', function () {

@@ -13,8 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('media_reportings', function (Blueprint $table) {
-            $table->dropColumn('author_id');
+        Schema::create('media_reporting_media_reporting_category', function (Blueprint $table) {
+            $table->foreignId('media_reporting_id');
+            $table->foreignId('media_reporting_category_id');
         });
     }
 
@@ -25,9 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('media_reportings', function (Blueprint $table) {
-            //
-            $table->foreignId('author_id');
-        });
+        Schema::dropIfExists('media_reporting_media_reporting_category');
     }
 };
