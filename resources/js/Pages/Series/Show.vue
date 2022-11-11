@@ -80,7 +80,7 @@
                     />
                 </div>
                 <div v-if="series.data.content.length">
-                    <p v-html="series.data.content"></p>
+                    <p class="series-content" v-html="series.data.content"></p>
                 </div>
             </div>
         </div>
@@ -113,5 +113,47 @@ function goBack() {
     float: none !important;
     margin-inline: 0 !important;
     margin-block-end: 0 !important;
+}
+
+:deep(.series-content h1),
+:deep(.series-content h2),
+:deep(.series-content h3),
+:deep(.series-content h4),
+:deep(.series-content h5),
+:deep(.series-content h6) {
+    font-size: 16px;
+    padding: series;
+}
+
+:deep(.series-content p) {
+    padding: unset !important;
+    font-size: 16px;
+}
+
+:deep(.series-content ol li) {
+    font-size: 16px;
+    list-style: decimal;
+}
+
+:deep(.series-content ul li) {
+    font-size: 16px;
+    list-style: disc;
+}
+
+:deep(.series-content ol li a) {
+    color: #f44336;
+}
+
+:deep(.series-content table) {
+    width: 100%;
+    margin-bottom: 10px;
+    border: 1px solid #95a5a662;
+}
+
+:deep(.series-content table tr td) {
+    padding: 5px 10px;
+    font-family: Lato, sans-serif;
+    font-size: 14px;
+    background-color: #fbfbfb;
 }
 </style>
