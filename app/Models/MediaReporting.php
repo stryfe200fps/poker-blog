@@ -35,7 +35,7 @@ class MediaReporting extends Model implements HasMedia
 
     public static function selectAvailableCategories()
     {
-        return MediaReportingCategory::select(['title', 'id'])->orderBy('title')->withCount('media_reportings')
+        return MediaReportingCategory::select(['title', 'slug'])->orderBy('title')->withCount('media_reportings')
             ->having('media_reportings_count', '>', 0 )->get();
     }
 
