@@ -2,23 +2,34 @@
 
 namespace App\Models;
 
-use App\Observers\DefaultModelObserver;
 use Spatie\Sluggable\HasSlug;
+use App\Traits\HasMultipleImages;
+use Spatie\MediaLibrary\HasMedia;
 use Spatie\Sluggable\SlugOptions;
+use App\Traits\HasMediaCollection;
+use App\Observers\DefaultModelObserver;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Room extends Model implements HasMedia
 {
     use \Backpack\CRUD\app\Models\Traits\CrudTrait;
     use HasFactory;
-    use InteractsWithMedia;
     use HasSlug;
 
     public $mediaCollection = 'room';
+
+    protected $guarded = [
+        'id'
+    ];
+
+    protected $casts = [
+        'features' => 'json',
+    ];
+
+    use HasMediaCollection, HasMultipleImages;
 
     public static function boot()
     {
@@ -34,26 +45,7 @@ class Room extends Model implements HasMedia
             ->doNotGenerateSlugsOnUpdate();
     }
 
-    public function registerMediaConversions(Media $media = null): void
-    {
-        $this->addMediaConversion('main-thumb')
-              ->width(640)
-              ->height(425)
-              ->sharpen(10);
-    }
-
-    protected $guarded = [
-        'id'
-    ];
-
-    protected $casts = [
-        'features' => 'json',
-    ];
-
-    public function getImageThumbAttribute($value)
-    {
-        return $this->getFirstMediaUrl('room', 'main-thumb');
-    }
+    
 
     public function country()
     {

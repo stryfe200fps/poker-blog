@@ -2,6 +2,8 @@
 
 use App\Models\Event;
 use App\Models\Country;
+use App\Models\EventReport;
+
 use function DI\factory;
 use App\Models\Tournament;
 
@@ -16,16 +18,9 @@ test('lof tournamnet api works', function () {
 
 
     $this->withExceptionHandling();
-    $this->seed(CountrySeeder::class);
+    // $this->seed(CountrySeeder::class);
 
-    $countrySeeder = Country::inRandomOrder()->first();
-
-
-    $event = Event::factory()->create();
-
-    // dd(Tournament::all());
-    // dd($tournamentApi)
-
+    $report = EventReport::factory()->create();
 
     $tournamentApi = $this->get('api/tournaments?status=live');
     $tournamentApi->assertStatus(200);

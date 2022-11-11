@@ -25,7 +25,7 @@ class RoomResource extends JsonResource
             'phone' => $this->phone,
             'website' => $this->website,
             'email' => $this->email,
-            'image' => $this->imageThumb
+            'image_set' => $this->allMedia()
         ];
     }
 }
