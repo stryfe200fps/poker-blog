@@ -4,7 +4,7 @@ import Footer from "../Components/Frontend/Footer.vue";
 import SideBar from "../Components/Frontend/MainContent/SideBar.vue";
 import { Head, Link, usePage } from "@inertiajs/inertia-vue3";
 
-import { onMounted, ref, computed } from "@vue/runtime-core";
+import { onMounted, onBeforeUnmount, ref, computed } from "@vue/runtime-core";
 import { useBannerStore } from "@/Stores/banner.js";
 import Echo from "laravel-echo";
 
@@ -49,6 +49,23 @@ function savePreferenceCookie() {
     }
 }
 
+function scrollToTop() {
+    window.scroll({ top: 0, behavior: "smooth" });
+}
+
+function showScrollTopBtn() {
+    const cookie = document.querySelector(".cookie.hide");
+    const scrollTopBtn = document.querySelector(".scroll-top");
+
+    if (window.scrollY > 200) {
+        if (cookie) {
+            scrollTopBtn.style.display = "block";
+        }
+        return;
+    }
+    scrollTopBtn.style.display = "none";
+}
+
 const getCookie = computed(() => {
     const cookieArr = document.cookie.split(";");
 
@@ -76,11 +93,16 @@ onMounted(async () => {
     setTimeout(() => {
         window.scrollTo({ top: 0, behavior: "smooth" });
     }, 100);
+    window.addEventListener("scroll", showScrollTopBtn);
     await bannerStore.getBanners();
     homeFullBanner.value = await bannerStore.getHomeFullBanner();
     homeSideBanner.value = await bannerStore.getHomeSideBanner();
     reportingFullBanner.value = await bannerStore.getReportingFullBanner();
     reportingSideBanner.value = await bannerStore.getReportingSideBanner();
+});
+
+onBeforeUnmount(() => {
+    window.removeEventListener("scroll", showScrollTopBtn);
 });
 </script>
 
@@ -205,9 +227,31 @@ onMounted(async () => {
             </div>
         </div>
     </div>
+    <div class="scroll-top">
+        <button @click="scrollToTop" class="btn btn-danger scroll-top-btn">
+            <i class="fa-sharp fa-solid fa-chevron-up"></i>
+        </button>
+    </div>
 </template>
 
 <style>
+.scroll-top {
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+    z-index: 999;
+    display: none;
+    transition: all 0.5s ease;
+}
+
+.scroll-top-btn {
+    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.scroll-top-btn:focus {
+    outline: none;
+}
+
 .cookie {
     position: fixed;
     left: 0;
