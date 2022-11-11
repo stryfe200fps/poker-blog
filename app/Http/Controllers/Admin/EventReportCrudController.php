@@ -254,24 +254,7 @@ class EventReportCrudController extends CrudController
                 ],
             ],
 
-            [
-                'name' => 'image_caption',
-                'type' => 'text',
-                'wrapper' => [
-                    'class' => 'form-group col-md-6 image_caption  ',
-                ],
-            ],
-            [
-                'label' => 'Theme',
-                'name' => 'image_theme',
-                'type' => 'relationship',
-                'attributes' => [
-                    'id' => 'image-theme',
-                ],
-                'wrapper' => [
-                    'class' => 'form-group col-md-6 image_theme ',
-                ],
-            ],
+         
             [
                 'label' => 'Tags',
                 'type' => 'relationship',
@@ -387,6 +370,25 @@ class EventReportCrudController extends CrudController
                     'id' => 'image',
                 ],
             ],
+            [
+                'name' => 'image_caption',
+                'type' => 'text',
+                'wrapper' => [
+                    'class' => 'form-group col-md-6 image_caption  ',
+                ],
+            ],
+            [
+                'label' => 'Theme',
+                'name' => 'image_theme',
+                'type' => 'relationship',
+                'attributes' => [
+                    'id' => 'image-theme',
+                ],
+                'wrapper' => [
+                    'class' => 'form-group col-md-6 image_theme ',
+                ],
+            ],
+
         ]);
 
         if ($this->crud->getCurrentOperation() === 'create') {
@@ -415,7 +417,7 @@ public function fetchTags()
     {
         $this->setupCreateOperation();
         Widget::add()->type('script')->content('assets/js/admin/forms/repeatable_chips.js');
-        Widget::add()->type('script')->content('assets/js/admin/update-admin-image-theme-attach.js');
+        // Widget::add()->type('script')->content('assets/js/admin/update-admin-image-theme-attach.js');
     }
 
     public function fetchLevel()

@@ -29,7 +29,9 @@ trait HasMediaCaching
         $img = $this->getMedia($this->mediaCollection);
         $image =   is_countable($img) && count($img) 
         > 0 ? $img[0] : '' ;
-        return $image !== '' ? $image->getUrl() : '';
+
+        $urlPath = config('app.url') . "/api/images/$image->id";
+        return  $urlPath . '?w=250&h='. config('app.md-image')[1];
     }
 
     public function getMediaModelAttribute()
