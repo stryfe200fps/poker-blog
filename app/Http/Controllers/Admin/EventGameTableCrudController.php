@@ -28,7 +28,7 @@ class EventGameTableCrudController extends CrudController
     {
         CRUD::setModel(\App\Models\EventGameTable::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/event-game-table');
-        CRUD::setEntityNameStrings('event game table', 'event game tables');
+        CRUD::setEntityNameStrings('game', 'games');
     }
 
     /**
