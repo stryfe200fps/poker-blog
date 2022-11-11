@@ -15,13 +15,13 @@
     "file": "assets/happybirthday.37ab3cad.png",
     "src": "resources/js/photo_templates/happybirthday.png"
   },
-  "resources/js/photo_templates/icecubes.png": {
-    "file": "assets/icecubes.4847c814.png",
-    "src": "resources/js/photo_templates/icecubes.png"
-  },
   "resources/js/photo_templates/pocketaces.png": {
     "file": "assets/pocketaces.d3dd592f.png",
     "src": "resources/js/photo_templates/pocketaces.png"
+  },
+  "resources/js/photo_templates/icecubes.png": {
+    "file": "assets/icecubes.4847c814.png",
+    "src": "resources/js/photo_templates/icecubes.png"
   },
   "resources/js/photo_templates/sunrays.png": {
     "file": "assets/sunrays.53587eea.png",
@@ -35,13 +35,13 @@
     "file": "assets/water-leaves.45e550fb.png",
     "src": "resources/js/photo_templates/water-leaves.png"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/ad.e15ddeab.svg": {
-    "file": "assets/ad.e15ddeab.5f301eee.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/ad.e15ddeab.svg"
-  },
   "node_modules/vue3-country-flag-icon/dist/img/ad.d4227482.svg": {
     "file": "assets/ad.d4227482.af21bc50.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/ad.d4227482.svg"
+  },
+  "node_modules/vue3-country-flag-icon/dist/img/ad.e15ddeab.svg": {
+    "file": "assets/ad.e15ddeab.5f301eee.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/ad.e15ddeab.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/ae.9fd1fcbf.svg": {
     "file": "assets/ae.9fd1fcbf.660f6001.svg",
@@ -51,13 +51,13 @@
     "file": "assets/ae.7847726d.09943e35.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/ae.7847726d.svg"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/af.fa735e43.svg": {
-    "file": "assets/af.fa735e43.f0fe67d6.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/af.fa735e43.svg"
-  },
   "node_modules/vue3-country-flag-icon/dist/img/af.008dc322.svg": {
     "file": "assets/af.008dc322.c7bfd83d.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/af.008dc322.svg"
+  },
+  "node_modules/vue3-country-flag-icon/dist/img/af.fa735e43.svg": {
+    "file": "assets/af.fa735e43.f0fe67d6.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/af.fa735e43.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/ag.5c33e55d.svg": {
     "file": "assets/ag.5c33e55d.322605fc.svg",
@@ -331,10 +331,6 @@
     "file": "assets/ca.c976442e.5bda9056.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/ca.c976442e.svg"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/bz.e6b5e204.svg": {
-    "file": "assets/bz.e6b5e204.1d05349d.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/bz.e6b5e204.svg"
-  },
   "node_modules/vue3-country-flag-icon/dist/img/ca.8678fc67.svg": {
     "file": "assets/ca.8678fc67.85ee89fa.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/ca.8678fc67.svg"
@@ -343,33 +339,37 @@
     "file": "assets/cc.2da4bb97.d49eb373.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/cc.2da4bb97.svg"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/cc.12b2a484.svg": {
-    "file": "assets/cc.12b2a484.7c46b5f3.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/cc.12b2a484.svg"
+  "node_modules/vue3-country-flag-icon/dist/img/bz.e6b5e204.svg": {
+    "file": "assets/bz.e6b5e204.1d05349d.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/bz.e6b5e204.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/cd.cd346cdc.svg": {
     "file": "assets/cd.cd346cdc.3e5799ff.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/cd.cd346cdc.svg"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/cd.b43f872e.svg": {
-    "file": "assets/cd.b43f872e.600e7369.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/cd.b43f872e.svg"
+  "node_modules/vue3-country-flag-icon/dist/img/cc.12b2a484.svg": {
+    "file": "assets/cc.12b2a484.7c46b5f3.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/cc.12b2a484.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/cg.c8c05bfe.svg": {
     "file": "assets/cg.c8c05bfe.12aa4576.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/cg.c8c05bfe.svg"
   },
+  "node_modules/vue3-country-flag-icon/dist/img/cd.b43f872e.svg": {
+    "file": "assets/cd.b43f872e.600e7369.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/cd.b43f872e.svg"
+  },
   "node_modules/vue3-country-flag-icon/dist/img/cf.667c7a42.svg": {
     "file": "assets/cf.667c7a42.b42f45e5.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/cf.667c7a42.svg"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/cg.8373836c.svg": {
-    "file": "assets/cg.8373836c.20a742a2.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/cg.8373836c.svg"
-  },
   "node_modules/vue3-country-flag-icon/dist/img/cf.1bc217dc.svg": {
     "file": "assets/cf.1bc217dc.b3a61e22.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/cf.1bc217dc.svg"
+  },
+  "node_modules/vue3-country-flag-icon/dist/img/cg.8373836c.svg": {
+    "file": "assets/cg.8373836c.20a742a2.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/cg.8373836c.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/ch.9c26f60a.svg": {
     "file": "assets/ch.9c26f60a.4e94e5c3.svg",
@@ -491,13 +491,13 @@
     "file": "assets/de.4d7bac3b.d7cc619b.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/de.4d7bac3b.svg"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/dj.0c386d22.svg": {
-    "file": "assets/dj.0c386d22.ffd9ebcb.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/dj.0c386d22.svg"
-  },
   "node_modules/vue3-country-flag-icon/dist/img/dj.3cf620d9.svg": {
     "file": "assets/dj.3cf620d9.8276b1b9.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/dj.3cf620d9.svg"
+  },
+  "node_modules/vue3-country-flag-icon/dist/img/dj.0c386d22.svg": {
+    "file": "assets/dj.0c386d22.ffd9ebcb.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/dj.0c386d22.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/dk.eb1416e0.svg": {
     "file": "assets/dk.eb1416e0.c29517b4.svg",
@@ -507,17 +507,13 @@
     "file": "assets/dk.d046fb5b.feeb2768.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/dk.d046fb5b.svg"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/dm.ebd12835.svg": {
-    "file": "assets/dm.ebd12835.7823755d.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/dm.ebd12835.svg"
-  },
   "node_modules/vue3-country-flag-icon/dist/img/dm.664bf042.svg": {
     "file": "assets/dm.664bf042.e5d72576.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/dm.664bf042.svg"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/dz.4be984a3.svg": {
-    "file": "assets/dz.4be984a3.6a1e2abb.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/dz.4be984a3.svg"
+  "node_modules/vue3-country-flag-icon/dist/img/dm.ebd12835.svg": {
+    "file": "assets/dm.ebd12835.7823755d.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/dm.ebd12835.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/dz.b03e5aec.svg": {
     "file": "assets/dz.b03e5aec.75568129.svg",
@@ -526,6 +522,10 @@
   "node_modules/vue3-country-flag-icon/dist/img/do.3959cf40.svg": {
     "file": "assets/do.3959cf40.d7f75ad4.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/do.3959cf40.svg"
+  },
+  "node_modules/vue3-country-flag-icon/dist/img/dz.4be984a3.svg": {
+    "file": "assets/dz.4be984a3.6a1e2abb.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/dz.4be984a3.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/do.07d2b1ed.svg": {
     "file": "assets/do.07d2b1ed.2af33aac.svg",
@@ -555,13 +555,13 @@
     "file": "assets/eg.2ea321dd.6234c774.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/eg.2ea321dd.svg"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/eh.2a0e164e.svg": {
-    "file": "assets/eh.2a0e164e.15abbba2.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/eh.2a0e164e.svg"
-  },
   "node_modules/vue3-country-flag-icon/dist/img/eh.1782a8e9.svg": {
     "file": "assets/eh.1782a8e9.fb36123e.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/eh.1782a8e9.svg"
+  },
+  "node_modules/vue3-country-flag-icon/dist/img/eh.2a0e164e.svg": {
+    "file": "assets/eh.2a0e164e.15abbba2.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/eh.2a0e164e.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/er.e5e5e397.svg": {
     "file": "assets/er.e5e5e397.4c576859.svg",
@@ -571,6 +571,10 @@
     "file": "assets/er.bdfbf04c.29ca0e1f.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/er.bdfbf04c.svg"
   },
+  "node_modules/vue3-country-flag-icon/dist/img/et.6260d578.svg": {
+    "file": "assets/et.6260d578.ad0099d7.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/et.6260d578.svg"
+  },
   "node_modules/vue3-country-flag-icon/dist/img/et.1d986679.svg": {
     "file": "assets/et.1d986679.59795d6d.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/et.1d986679.svg"
@@ -578,10 +582,6 @@
   "node_modules/vue3-country-flag-icon/dist/img/es.50623e6a.svg": {
     "file": "assets/es.50623e6a.ab3d4388.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/es.50623e6a.svg"
-  },
-  "node_modules/vue3-country-flag-icon/dist/img/et.6260d578.svg": {
-    "file": "assets/et.6260d578.ad0099d7.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/et.6260d578.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/es.afff2473.svg": {
     "file": "assets/es.afff2473.bfe2d95a.svg",
@@ -623,17 +623,17 @@
     "file": "assets/fo.b08620b3.122de4fb.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/fo.b08620b3.svg"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/fr.b1156355.svg": {
-    "file": "assets/fr.b1156355.63667b36.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/fr.b1156355.svg"
+  "node_modules/vue3-country-flag-icon/dist/img/fr.f8952213.svg": {
+    "file": "assets/fr.f8952213.5d247ee3.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/fr.f8952213.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/fo.329cbed5.svg": {
     "file": "assets/fo.329cbed5.5910fc80.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/fo.329cbed5.svg"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/fr.f8952213.svg": {
-    "file": "assets/fr.f8952213.5d247ee3.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/fr.f8952213.svg"
+  "node_modules/vue3-country-flag-icon/dist/img/fr.b1156355.svg": {
+    "file": "assets/fr.b1156355.63667b36.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/fr.b1156355.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/ga.29f203bb.svg": {
     "file": "assets/ga.29f203bb.6cf1908e.svg",
@@ -675,13 +675,13 @@
     "file": "assets/gf.cabf9781.7e25c5fd.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/gf.cabf9781.svg"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/gg.98f67a6f.svg": {
-    "file": "assets/gg.98f67a6f.7a521b07.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/gg.98f67a6f.svg"
-  },
   "node_modules/vue3-country-flag-icon/dist/img/gg.357e1e33.svg": {
     "file": "assets/gg.357e1e33.e01d6706.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/gg.357e1e33.svg"
+  },
+  "node_modules/vue3-country-flag-icon/dist/img/gg.98f67a6f.svg": {
+    "file": "assets/gg.98f67a6f.7a521b07.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/gg.98f67a6f.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/gh.caedb912.svg": {
     "file": "assets/gh.caedb912.120554a5.svg",
@@ -699,13 +699,13 @@
     "file": "assets/gi.b0015a50.7283b9d6.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/gi.b0015a50.svg"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/gl.2490aa08.svg": {
-    "file": "assets/gl.2490aa08.1149b6b3.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/gl.2490aa08.svg"
-  },
   "node_modules/vue3-country-flag-icon/dist/img/gl.48bf3e4e.svg": {
     "file": "assets/gl.48bf3e4e.5e6efacd.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/gl.48bf3e4e.svg"
+  },
+  "node_modules/vue3-country-flag-icon/dist/img/gl.2490aa08.svg": {
+    "file": "assets/gl.2490aa08.1149b6b3.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/gl.2490aa08.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/gm.f06a98cd.svg": {
     "file": "assets/gm.f06a98cd.e7b412d8.svg",
@@ -719,13 +719,13 @@
     "file": "assets/gn.1ce64523.255e2c29.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/gn.1ce64523.svg"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/gp.fa4cab3e.svg": {
-    "file": "assets/gp.fa4cab3e.b9c50994.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/gp.fa4cab3e.svg"
-  },
   "node_modules/vue3-country-flag-icon/dist/img/gn.36a3e9a3.svg": {
     "file": "assets/gn.36a3e9a3.735109ba.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/gn.36a3e9a3.svg"
+  },
+  "node_modules/vue3-country-flag-icon/dist/img/gp.fa4cab3e.svg": {
+    "file": "assets/gp.fa4cab3e.b9c50994.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/gp.fa4cab3e.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/gp.c2c4da0e.svg": {
     "file": "assets/gp.c2c4da0e.8bf5d31f.svg",
@@ -735,13 +735,13 @@
     "file": "assets/gq.30ed019c.52b8daea.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/gq.30ed019c.svg"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/gq.80b56bda.svg": {
-    "file": "assets/gq.80b56bda.f4a44fd2.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/gq.80b56bda.svg"
-  },
   "node_modules/vue3-country-flag-icon/dist/img/gr.471d733a.svg": {
     "file": "assets/gr.471d733a.d22330d2.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/gr.471d733a.svg"
+  },
+  "node_modules/vue3-country-flag-icon/dist/img/gq.80b56bda.svg": {
+    "file": "assets/gq.80b56bda.f4a44fd2.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/gq.80b56bda.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/gr.0bed56a8.svg": {
     "file": "assets/gr.0bed56a8.565e017f.svg",
@@ -827,21 +827,29 @@
     "file": "assets/ht.34eb5f59.092fc65d.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/ht.34eb5f59.svg"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/id.17b99676.svg": {
-    "file": "assets/id.17b99676.c9871d91.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/id.17b99676.svg"
-  },
   "node_modules/vue3-country-flag-icon/dist/img/hu.0d7409f8.svg": {
     "file": "assets/hu.0d7409f8.470431d1.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/hu.0d7409f8.svg"
+  },
+  "node_modules/vue3-country-flag-icon/dist/img/id.17b99676.svg": {
+    "file": "assets/id.17b99676.c9871d91.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/id.17b99676.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/hu.e5e334fd.svg": {
     "file": "assets/hu.e5e334fd.ac2bf428.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/hu.e5e334fd.svg"
   },
+  "node_modules/vue3-country-flag-icon/dist/img/id.9f708fe5.svg": {
+    "file": "assets/id.9f708fe5.b4e34342.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/id.9f708fe5.svg"
+  },
   "node_modules/vue3-country-flag-icon/dist/img/il.f62b32f0.svg": {
     "file": "assets/il.f62b32f0.26eeed9a.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/il.f62b32f0.svg"
+  },
+  "node_modules/vue3-country-flag-icon/dist/img/il.c36a011d.svg": {
+    "file": "assets/il.c36a011d.343c0403.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/il.c36a011d.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/ie.798a56e0.svg": {
     "file": "assets/ie.798a56e0.e8a2121f.svg",
@@ -850,14 +858,6 @@
   "node_modules/vue3-country-flag-icon/dist/img/ie.c68ff961.svg": {
     "file": "assets/ie.c68ff961.4d73eedf.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/ie.c68ff961.svg"
-  },
-  "node_modules/vue3-country-flag-icon/dist/img/id.9f708fe5.svg": {
-    "file": "assets/id.9f708fe5.b4e34342.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/id.9f708fe5.svg"
-  },
-  "node_modules/vue3-country-flag-icon/dist/img/il.c36a011d.svg": {
-    "file": "assets/il.c36a011d.343c0403.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/il.c36a011d.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/im.d1bb9c38.svg": {
     "file": "assets/im.d1bb9c38.9980f2e1.svg",
@@ -879,13 +879,13 @@
     "file": "assets/io.d38b034a.fd3b819a.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/io.d38b034a.svg"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/iq.be991997.svg": {
-    "file": "assets/iq.be991997.4b13b016.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/iq.be991997.svg"
-  },
   "node_modules/vue3-country-flag-icon/dist/img/io.a45231d4.svg": {
     "file": "assets/io.a45231d4.5b124813.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/io.a45231d4.svg"
+  },
+  "node_modules/vue3-country-flag-icon/dist/img/iq.be991997.svg": {
+    "file": "assets/iq.be991997.4b13b016.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/iq.be991997.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/iq.8d936728.svg": {
     "file": "assets/iq.8d936728.4a529e76.svg",
@@ -907,13 +907,13 @@
     "file": "assets/is.ae44c07e.74bbf9d0.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/is.ae44c07e.svg"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/it.8d15de04.svg": {
-    "file": "assets/it.8d15de04.2d46fd7f.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/it.8d15de04.svg"
-  },
   "node_modules/vue3-country-flag-icon/dist/img/it.22b99ae7.svg": {
     "file": "assets/it.22b99ae7.28a4339b.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/it.22b99ae7.svg"
+  },
+  "node_modules/vue3-country-flag-icon/dist/img/it.8d15de04.svg": {
+    "file": "assets/it.8d15de04.2d46fd7f.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/it.8d15de04.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/je.0d480b99.svg": {
     "file": "assets/je.0d480b99.67962947.svg",
@@ -943,21 +943,21 @@
     "file": "assets/jp.99bcc1d7.dec05412.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/jp.99bcc1d7.svg"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/jp.16a568ca.svg": {
-    "file": "assets/jp.16a568ca.0573d020.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/jp.16a568ca.svg"
-  },
   "node_modules/vue3-country-flag-icon/dist/img/ke.dd8a91b8.svg": {
     "file": "assets/ke.dd8a91b8.c6390bd1.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/ke.dd8a91b8.svg"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/kg.5908392a.svg": {
-    "file": "assets/kg.5908392a.059ee944.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/kg.5908392a.svg"
+  "node_modules/vue3-country-flag-icon/dist/img/jp.16a568ca.svg": {
+    "file": "assets/jp.16a568ca.0573d020.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/jp.16a568ca.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/ke.87900162.svg": {
     "file": "assets/ke.87900162.3cc6fb77.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/ke.87900162.svg"
+  },
+  "node_modules/vue3-country-flag-icon/dist/img/kg.5908392a.svg": {
+    "file": "assets/kg.5908392a.059ee944.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/kg.5908392a.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/kg.f33d1ced.svg": {
     "file": "assets/kg.f33d1ced.10baf9aa.svg",
@@ -979,13 +979,13 @@
     "file": "assets/ki.cdeef8df.210537cc.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/ki.cdeef8df.svg"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/km.0f12d30c.svg": {
-    "file": "assets/km.0f12d30c.813580df.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/km.0f12d30c.svg"
-  },
   "node_modules/vue3-country-flag-icon/dist/img/km.eb69abb6.svg": {
     "file": "assets/km.eb69abb6.a6a46732.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/km.eb69abb6.svg"
+  },
+  "node_modules/vue3-country-flag-icon/dist/img/km.0f12d30c.svg": {
+    "file": "assets/km.0f12d30c.813580df.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/km.0f12d30c.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/kn.b0fd5e10.svg": {
     "file": "assets/kn.b0fd5e10.09e0c3ec.svg",
@@ -999,37 +999,37 @@
     "file": "assets/kp.07ebeb5c.0923e326.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/kp.07ebeb5c.svg"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/kp.f08daf33.svg": {
-    "file": "assets/kp.f08daf33.d0cb4408.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/kp.f08daf33.svg"
-  },
   "node_modules/vue3-country-flag-icon/dist/img/kr.7fb0181b.svg": {
     "file": "assets/kr.7fb0181b.3f72f5b1.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/kr.7fb0181b.svg"
+  },
+  "node_modules/vue3-country-flag-icon/dist/img/kp.f08daf33.svg": {
+    "file": "assets/kp.f08daf33.d0cb4408.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/kp.f08daf33.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/kw.0d0ac54c.svg": {
     "file": "assets/kw.0d0ac54c.1f583477.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/kw.0d0ac54c.svg"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/kw.33b3292e.svg": {
-    "file": "assets/kw.33b3292e.c874c334.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/kw.33b3292e.svg"
-  },
   "node_modules/vue3-country-flag-icon/dist/img/kr.eb55e63b.svg": {
     "file": "assets/kr.eb55e63b.7f2f1170.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/kr.eb55e63b.svg"
+  },
+  "node_modules/vue3-country-flag-icon/dist/img/kw.33b3292e.svg": {
+    "file": "assets/kw.33b3292e.c874c334.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/kw.33b3292e.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/ky.5814c5a9.svg": {
     "file": "assets/ky.5814c5a9.fcecffb0.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/ky.5814c5a9.svg"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/kz.740ef4bf.svg": {
-    "file": "assets/kz.740ef4bf.8214283b.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/kz.740ef4bf.svg"
-  },
   "node_modules/vue3-country-flag-icon/dist/img/ky.ef1f6537.svg": {
     "file": "assets/ky.ef1f6537.707d019e.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/ky.ef1f6537.svg"
+  },
+  "node_modules/vue3-country-flag-icon/dist/img/kz.740ef4bf.svg": {
+    "file": "assets/kz.740ef4bf.8214283b.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/kz.740ef4bf.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/kz.a19240f6.svg": {
     "file": "assets/kz.a19240f6.af4496d2.svg",
@@ -1059,13 +1059,13 @@
     "file": "assets/lc.c056c2a7.c4afe173.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/lc.c056c2a7.svg"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/li.748d1f99.svg": {
-    "file": "assets/li.748d1f99.956ad507.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/li.748d1f99.svg"
-  },
   "node_modules/vue3-country-flag-icon/dist/img/li.fb5437d3.svg": {
     "file": "assets/li.fb5437d3.c97f90de.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/li.fb5437d3.svg"
+  },
+  "node_modules/vue3-country-flag-icon/dist/img/li.748d1f99.svg": {
+    "file": "assets/li.748d1f99.956ad507.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/li.748d1f99.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/lk.497ee5b9.svg": {
     "file": "assets/lk.497ee5b9.599de52b.svg",
@@ -1083,13 +1083,13 @@
     "file": "assets/lr.039251e3.eaed4e27.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/lr.039251e3.svg"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/ls.533cb320.svg": {
-    "file": "assets/ls.533cb320.80ad805e.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/ls.533cb320.svg"
-  },
   "node_modules/vue3-country-flag-icon/dist/img/ls.c0799ebf.svg": {
     "file": "assets/ls.c0799ebf.28553445.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/ls.c0799ebf.svg"
+  },
+  "node_modules/vue3-country-flag-icon/dist/img/ls.533cb320.svg": {
+    "file": "assets/ls.533cb320.80ad805e.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/ls.533cb320.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/lt.c3aeac0d.svg": {
     "file": "assets/lt.c3aeac0d.9012691c.svg",
@@ -1151,13 +1151,13 @@
     "file": "assets/me.76c434a6.29052367.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/me.76c434a6.svg"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/mf.487f7bd7.svg": {
-    "file": "assets/mf.487f7bd7.bf59a29b.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/mf.487f7bd7.svg"
-  },
   "node_modules/vue3-country-flag-icon/dist/img/me.2d0c8f78.svg": {
     "file": "assets/me.2d0c8f78.551e531e.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/me.2d0c8f78.svg"
+  },
+  "node_modules/vue3-country-flag-icon/dist/img/mf.487f7bd7.svg": {
+    "file": "assets/mf.487f7bd7.bf59a29b.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/mf.487f7bd7.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/mf.5b9ff36c.svg": {
     "file": "assets/mf.5b9ff36c.a07c29d6.svg",
@@ -1167,29 +1167,29 @@
     "file": "assets/mg.67f5922d.9e1ecee8.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/mg.67f5922d.svg"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/mg.91e10ba0.svg": {
-    "file": "assets/mg.91e10ba0.e87135a4.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/mg.91e10ba0.svg"
-  },
   "node_modules/vue3-country-flag-icon/dist/img/mh.8f1f9134.svg": {
     "file": "assets/mh.8f1f9134.ab6f5513.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/mh.8f1f9134.svg"
-  },
-  "node_modules/vue3-country-flag-icon/dist/img/mk.ed091b88.svg": {
-    "file": "assets/mk.ed091b88.3c703508.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/mk.ed091b88.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/mh.6d60cee3.svg": {
     "file": "assets/mh.6d60cee3.4785fd64.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/mh.6d60cee3.svg"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/ml.e6f097f9.svg": {
-    "file": "assets/ml.e6f097f9.e8326589.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/ml.e6f097f9.svg"
+  "node_modules/vue3-country-flag-icon/dist/img/mg.91e10ba0.svg": {
+    "file": "assets/mg.91e10ba0.e87135a4.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/mg.91e10ba0.svg"
+  },
+  "node_modules/vue3-country-flag-icon/dist/img/mk.ed091b88.svg": {
+    "file": "assets/mk.ed091b88.3c703508.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/mk.ed091b88.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/mk.2413b107.svg": {
     "file": "assets/mk.2413b107.ebcd71d6.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/mk.2413b107.svg"
+  },
+  "node_modules/vue3-country-flag-icon/dist/img/ml.e6f097f9.svg": {
+    "file": "assets/ml.e6f097f9.e8326589.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/ml.e6f097f9.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/ml.204b0da4.svg": {
     "file": "assets/ml.204b0da4.0f990fac.svg",
@@ -1199,10 +1199,6 @@
     "file": "assets/mm.92e9f832.f7ef4a34.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/mm.92e9f832.svg"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/mm.8d6d26bc.svg": {
-    "file": "assets/mm.8d6d26bc.f4df9e4b.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/mm.8d6d26bc.svg"
-  },
   "node_modules/vue3-country-flag-icon/dist/img/mn.9ebe47eb.svg": {
     "file": "assets/mn.9ebe47eb.00649cb5.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/mn.9ebe47eb.svg"
@@ -1210,6 +1206,10 @@
   "node_modules/vue3-country-flag-icon/dist/img/mn.933606d5.svg": {
     "file": "assets/mn.933606d5.ff5ea681.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/mn.933606d5.svg"
+  },
+  "node_modules/vue3-country-flag-icon/dist/img/mm.8d6d26bc.svg": {
+    "file": "assets/mm.8d6d26bc.f4df9e4b.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/mm.8d6d26bc.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/mo.e1178856.svg": {
     "file": "assets/mo.e1178856.62610131.svg",
@@ -1255,13 +1255,13 @@
     "file": "assets/mu.896330b7.e3ce67e6.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/mu.896330b7.svg"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/mt.a816f3a2.svg": {
-    "file": "assets/mt.a816f3a2.fd6a6cbf.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/mt.a816f3a2.svg"
-  },
   "node_modules/vue3-country-flag-icon/dist/img/mt.f6e3733c.svg": {
     "file": "assets/mt.f6e3733c.b841b8cd.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/mt.f6e3733c.svg"
+  },
+  "node_modules/vue3-country-flag-icon/dist/img/mt.a816f3a2.svg": {
+    "file": "assets/mt.a816f3a2.fd6a6cbf.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/mt.a816f3a2.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/mu.67c8f362.svg": {
     "file": "assets/mu.67c8f362.9e4e19a6.svg",
@@ -1303,6 +1303,10 @@
     "file": "assets/mz.e56398c5.73e150aa.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/mz.e56398c5.svg"
   },
+  "node_modules/vue3-country-flag-icon/dist/img/mz.e99caf39.svg": {
+    "file": "assets/mz.e99caf39.cbc5741e.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/mz.e99caf39.svg"
+  },
   "node_modules/vue3-country-flag-icon/dist/img/na.825237ef.svg": {
     "file": "assets/na.825237ef.9786da04.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/na.825237ef.svg"
@@ -1311,21 +1315,17 @@
     "file": "assets/na.74257fb2.37d8c89f.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/na.74257fb2.svg"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/mz.e99caf39.svg": {
-    "file": "assets/mz.e99caf39.cbc5741e.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/mz.e99caf39.svg"
-  },
-  "node_modules/vue3-country-flag-icon/dist/img/nc.b8c9f5e4.svg": {
-    "file": "assets/nc.b8c9f5e4.b0c095d3.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/nc.b8c9f5e4.svg"
+  "node_modules/vue3-country-flag-icon/dist/img/nc.d393b8fa.svg": {
+    "file": "assets/nc.d393b8fa.d7a07223.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/nc.d393b8fa.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/ne.e56edd30.svg": {
     "file": "assets/ne.e56edd30.bee088c4.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/ne.e56edd30.svg"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/nc.d393b8fa.svg": {
-    "file": "assets/nc.d393b8fa.d7a07223.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/nc.d393b8fa.svg"
+  "node_modules/vue3-country-flag-icon/dist/img/nc.b8c9f5e4.svg": {
+    "file": "assets/nc.b8c9f5e4.b0c095d3.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/nc.b8c9f5e4.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/ne.b7369ec7.svg": {
     "file": "assets/ne.b7369ec7.54d7076d.svg",
@@ -1383,21 +1383,21 @@
     "file": "assets/np.27f0f4e7.d81adac4.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/np.27f0f4e7.svg"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/nr.2ef5b7c8.svg": {
-    "file": "assets/nr.2ef5b7c8.6e66f805.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/nr.2ef5b7c8.svg"
-  },
   "node_modules/vue3-country-flag-icon/dist/img/nu.c90cf054.svg": {
     "file": "assets/nu.c90cf054.19da67f5.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/nu.c90cf054.svg"
+  },
+  "node_modules/vue3-country-flag-icon/dist/img/nu.1db5a99d.svg": {
+    "file": "assets/nu.1db5a99d.1bfa55a9.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/nu.1db5a99d.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/nz.d478762a.svg": {
     "file": "assets/nz.d478762a.6b2ae854.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/nz.d478762a.svg"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/nu.1db5a99d.svg": {
-    "file": "assets/nu.1db5a99d.1bfa55a9.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/nu.1db5a99d.svg"
+  "node_modules/vue3-country-flag-icon/dist/img/nr.2ef5b7c8.svg": {
+    "file": "assets/nr.2ef5b7c8.6e66f805.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/nr.2ef5b7c8.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/nz.7dab6e5e.svg": {
     "file": "assets/nz.7dab6e5e.b93a77fe.svg",
@@ -1411,21 +1411,21 @@
     "file": "assets/om.eeba5214.0fc8d466.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/om.eeba5214.svg"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/pa.beb40ab6.svg": {
-    "file": "assets/pa.beb40ab6.6e0e2719.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/pa.beb40ab6.svg"
-  },
   "node_modules/vue3-country-flag-icon/dist/img/om.b9b7d0bc.svg": {
     "file": "assets/om.b9b7d0bc.20669c3a.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/om.b9b7d0bc.svg"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/pf.06579c69.svg": {
-    "file": "assets/pf.06579c69.94171ba4.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/pf.06579c69.svg"
+  "node_modules/vue3-country-flag-icon/dist/img/pa.beb40ab6.svg": {
+    "file": "assets/pa.beb40ab6.6e0e2719.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/pa.beb40ab6.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/pf.2a69c581.svg": {
     "file": "assets/pf.2a69c581.d68e024f.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/pf.2a69c581.svg"
+  },
+  "node_modules/vue3-country-flag-icon/dist/img/pf.06579c69.svg": {
+    "file": "assets/pf.06579c69.94171ba4.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/pf.06579c69.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/pe.ea95116f.svg": {
     "file": "assets/pe.ea95116f.3fddfd9a.svg",
@@ -1447,13 +1447,13 @@
     "file": "assets/ph.12f36eed.fd167a43.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/ph.12f36eed.svg"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/ph.6ae85442.svg": {
-    "file": "assets/ph.6ae85442.2f9dd37f.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/ph.6ae85442.svg"
-  },
   "node_modules/vue3-country-flag-icon/dist/img/pk.6f3a3f18.svg": {
     "file": "assets/pk.6f3a3f18.dea75425.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/pk.6f3a3f18.svg"
+  },
+  "node_modules/vue3-country-flag-icon/dist/img/ph.6ae85442.svg": {
+    "file": "assets/ph.6ae85442.2f9dd37f.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/ph.6ae85442.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/pk.b67f80e0.svg": {
     "file": "assets/pk.b67f80e0.637994c8.svg",
@@ -1499,10 +1499,6 @@
     "file": "assets/ps.2992f9b9.31a06ee8.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/ps.2992f9b9.svg"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/pw.da816eab.svg": {
-    "file": "assets/pw.da816eab.853c8170.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/pw.da816eab.svg"
-  },
   "node_modules/vue3-country-flag-icon/dist/img/pt.b908edae.svg": {
     "file": "assets/pt.b908edae.62137f64.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/pt.b908edae.svg"
@@ -1510,6 +1506,10 @@
   "node_modules/vue3-country-flag-icon/dist/img/pt.04fa443d.svg": {
     "file": "assets/pt.04fa443d.2fc8fb37.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/pt.04fa443d.svg"
+  },
+  "node_modules/vue3-country-flag-icon/dist/img/pw.da816eab.svg": {
+    "file": "assets/pw.da816eab.853c8170.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/pw.da816eab.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/pw.78aaead2.svg": {
     "file": "assets/pw.78aaead2.21a677b7.svg",
@@ -1539,13 +1539,13 @@
     "file": "assets/ro.625aca9e.854593a6.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/ro.625aca9e.svg"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/ro.22278e13.svg": {
-    "file": "assets/ro.22278e13.da9e0ce1.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/ro.22278e13.svg"
-  },
   "node_modules/vue3-country-flag-icon/dist/img/re.01fea3b6.svg": {
     "file": "assets/re.01fea3b6.37be9dc3.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/re.01fea3b6.svg"
+  },
+  "node_modules/vue3-country-flag-icon/dist/img/ro.22278e13.svg": {
+    "file": "assets/ro.22278e13.da9e0ce1.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/ro.22278e13.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/ru.e3ee3b09.svg": {
     "file": "assets/ru.e3ee3b09.bb2782a9.svg",
@@ -1563,13 +1563,13 @@
     "file": "assets/rs.d00d37d2.04c759a5.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/rs.d00d37d2.svg"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/rw.997fe41b.svg": {
-    "file": "assets/rw.997fe41b.8c27cde7.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/rw.997fe41b.svg"
-  },
   "node_modules/vue3-country-flag-icon/dist/img/rw.7fe5146b.svg": {
     "file": "assets/rw.7fe5146b.aeb9bc73.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/rw.7fe5146b.svg"
+  },
+  "node_modules/vue3-country-flag-icon/dist/img/rw.997fe41b.svg": {
+    "file": "assets/rw.997fe41b.8c27cde7.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/rw.997fe41b.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/sa.c066c8fc.svg": {
     "file": "assets/sa.c066c8fc.27c79e9f.svg",
@@ -1583,13 +1583,13 @@
     "file": "assets/sa.135d0c86.639ee1c1.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/sa.135d0c86.svg"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/sb.c23eab6d.svg": {
-    "file": "assets/sb.c23eab6d.0fb8fdce.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/sb.c23eab6d.svg"
-  },
   "node_modules/vue3-country-flag-icon/dist/img/sc.ad1bcb4c.svg": {
     "file": "assets/sc.ad1bcb4c.90424aaf.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/sc.ad1bcb4c.svg"
+  },
+  "node_modules/vue3-country-flag-icon/dist/img/sb.c23eab6d.svg": {
+    "file": "assets/sb.c23eab6d.0fb8fdce.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/sb.c23eab6d.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/sc.30759b7a.svg": {
     "file": "assets/sc.30759b7a.e176d138.svg",
@@ -1615,10 +1615,6 @@
     "file": "assets/sg.9eb47fe7.f6f8ecdd.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/sg.9eb47fe7.svg"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/sg.199f925b.svg": {
-    "file": "assets/sg.199f925b.1804e458.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/sg.199f925b.svg"
-  },
   "node_modules/vue3-country-flag-icon/dist/img/sh.6560d76b.svg": {
     "file": "assets/sh.6560d76b.e7b5e4dc.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/sh.6560d76b.svg"
@@ -1626,6 +1622,10 @@
   "node_modules/vue3-country-flag-icon/dist/img/sh.487ef1c8.svg": {
     "file": "assets/sh.487ef1c8.c3a06107.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/sh.487ef1c8.svg"
+  },
+  "node_modules/vue3-country-flag-icon/dist/img/sg.199f925b.svg": {
+    "file": "assets/sg.199f925b.1804e458.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/sg.199f925b.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/si.ffe9e7a4.svg": {
     "file": "assets/si.ffe9e7a4.3eb4334b.svg",
@@ -1647,13 +1647,13 @@
     "file": "assets/sk.b84444bf.4ca76c92.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/sk.b84444bf.svg"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/sl.ddbd1d9b.svg": {
-    "file": "assets/sl.ddbd1d9b.d8106777.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/sl.ddbd1d9b.svg"
-  },
   "node_modules/vue3-country-flag-icon/dist/img/sk.a5af0a28.svg": {
     "file": "assets/sk.a5af0a28.48d976a9.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/sk.a5af0a28.svg"
+  },
+  "node_modules/vue3-country-flag-icon/dist/img/sl.ddbd1d9b.svg": {
+    "file": "assets/sl.ddbd1d9b.d8106777.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/sl.ddbd1d9b.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/sl.f6315f74.svg": {
     "file": "assets/sl.f6315f74.9b4b8d18.svg",
@@ -1671,13 +1671,13 @@
     "file": "assets/sn.5b654e1a.e8f288fc.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/sn.5b654e1a.svg"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/so.c1561217.svg": {
-    "file": "assets/so.c1561217.74f68a59.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/so.c1561217.svg"
-  },
   "node_modules/vue3-country-flag-icon/dist/img/sn.d2bec7ef.svg": {
     "file": "assets/sn.d2bec7ef.1e2477f3.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/sn.d2bec7ef.svg"
+  },
+  "node_modules/vue3-country-flag-icon/dist/img/so.c1561217.svg": {
+    "file": "assets/so.c1561217.74f68a59.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/so.c1561217.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/so.28889c60.svg": {
     "file": "assets/so.28889c60.35422962.svg",
@@ -1687,21 +1687,21 @@
     "file": "assets/sr.788f3e2a.04f64ba6.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/sr.788f3e2a.svg"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/st.1f545eb9.svg": {
-    "file": "assets/st.1f545eb9.ebb813a8.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/st.1f545eb9.svg"
-  },
   "node_modules/vue3-country-flag-icon/dist/img/sr.be27d1ae.svg": {
     "file": "assets/sr.be27d1ae.e146a0cc.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/sr.be27d1ae.svg"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/ss.e3933b44.svg": {
-    "file": "assets/ss.e3933b44.15466776.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/ss.e3933b44.svg"
+  "node_modules/vue3-country-flag-icon/dist/img/st.1f545eb9.svg": {
+    "file": "assets/st.1f545eb9.ebb813a8.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/st.1f545eb9.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/ss.67001d2a.svg": {
     "file": "assets/ss.67001d2a.d0545941.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/ss.67001d2a.svg"
+  },
+  "node_modules/vue3-country-flag-icon/dist/img/ss.e3933b44.svg": {
+    "file": "assets/ss.e3933b44.15466776.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/ss.e3933b44.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/st.d0a56dbb.svg": {
     "file": "assets/st.d0a56dbb.a866043a.svg",
@@ -1723,13 +1723,13 @@
     "file": "assets/sx.a7248001.ac716ddb.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/sx.a7248001.svg"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/sy.64f0d2d7.svg": {
-    "file": "assets/sy.64f0d2d7.3b78773e.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/sy.64f0d2d7.svg"
-  },
   "node_modules/vue3-country-flag-icon/dist/img/sy.73690f50.svg": {
     "file": "assets/sy.73690f50.fdec8ea0.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/sy.73690f50.svg"
+  },
+  "node_modules/vue3-country-flag-icon/dist/img/sy.64f0d2d7.svg": {
+    "file": "assets/sy.64f0d2d7.3b78773e.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/sy.64f0d2d7.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/sz.5419df5b.svg": {
     "file": "assets/sz.5419df5b.f0fb9d75.svg",
@@ -1739,13 +1739,13 @@
     "file": "assets/tc.d40761f2.c3e7a86e.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/tc.d40761f2.svg"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/tc.47c82761.svg": {
-    "file": "assets/tc.47c82761.d91ac6bc.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/tc.47c82761.svg"
-  },
   "node_modules/vue3-country-flag-icon/dist/img/sz.dc2faeb7.svg": {
     "file": "assets/sz.dc2faeb7.ad977a6b.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/sz.dc2faeb7.svg"
+  },
+  "node_modules/vue3-country-flag-icon/dist/img/tc.47c82761.svg": {
+    "file": "assets/tc.47c82761.d91ac6bc.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/tc.47c82761.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/tf.4ab43cc9.svg": {
     "file": "assets/tf.4ab43cc9.0681ec54.svg",
@@ -1755,13 +1755,13 @@
     "file": "assets/td.a0923ddc.b6ce40af.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/td.a0923ddc.svg"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/tf.2e7dc1af.svg": {
-    "file": "assets/tf.2e7dc1af.90ad184c.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/tf.2e7dc1af.svg"
-  },
   "node_modules/vue3-country-flag-icon/dist/img/td.f37a395c.svg": {
     "file": "assets/td.f37a395c.ef115b39.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/td.f37a395c.svg"
+  },
+  "node_modules/vue3-country-flag-icon/dist/img/tf.2e7dc1af.svg": {
+    "file": "assets/tf.2e7dc1af.90ad184c.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/tf.2e7dc1af.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/tg.e602a907.svg": {
     "file": "assets/tg.e602a907.16bef45b.svg",
@@ -1855,10 +1855,6 @@
     "file": "assets/tz.d02545a1.ad4c35de.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/tz.d02545a1.svg"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/tw.556e4915.svg": {
-    "file": "assets/tw.556e4915.2a7719e9.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/tw.556e4915.svg"
-  },
   "node_modules/vue3-country-flag-icon/dist/img/tz.d3df42da.svg": {
     "file": "assets/tz.d3df42da.f41fb5fe.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/tz.d3df42da.svg"
@@ -1867,13 +1863,17 @@
     "file": "assets/tw.26cc9d59.06af22c3.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/tw.26cc9d59.svg"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/ua.841d259d.svg": {
-    "file": "assets/ua.841d259d.79092de6.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/ua.841d259d.svg"
+  "node_modules/vue3-country-flag-icon/dist/img/tw.556e4915.svg": {
+    "file": "assets/tw.556e4915.2a7719e9.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/tw.556e4915.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/ua.a8b13525.svg": {
     "file": "assets/ua.a8b13525.fbbf0f0e.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/ua.a8b13525.svg"
+  },
+  "node_modules/vue3-country-flag-icon/dist/img/ua.841d259d.svg": {
+    "file": "assets/ua.841d259d.79092de6.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/ua.841d259d.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/ug.6e9366a6.svg": {
     "file": "assets/ug.6e9366a6.63f845c8.svg",
@@ -1887,13 +1887,13 @@
     "file": "assets/um.05615112.e6f73973.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/um.05615112.svg"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/us.ae656592.svg": {
-    "file": "assets/us.ae656592.c70ba1cb.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/us.ae656592.svg"
-  },
   "node_modules/vue3-country-flag-icon/dist/img/um.3d347682.svg": {
     "file": "assets/um.3d347682.9674c828.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/um.3d347682.svg"
+  },
+  "node_modules/vue3-country-flag-icon/dist/img/us.ae656592.svg": {
+    "file": "assets/us.ae656592.c70ba1cb.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/us.ae656592.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/us.8ec58318.svg": {
     "file": "assets/us.8ec58318.c4ffd045.svg",
@@ -1931,13 +1931,13 @@
     "file": "assets/va.90e9f73a.bcc69d5a.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/va.90e9f73a.svg"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/ve.b2cd5a9a.svg": {
-    "file": "assets/ve.b2cd5a9a.3079fd19.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/ve.b2cd5a9a.svg"
-  },
   "node_modules/vue3-country-flag-icon/dist/img/ve.9f23d962.svg": {
     "file": "assets/ve.9f23d962.2fe0f692.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/ve.9f23d962.svg"
+  },
+  "node_modules/vue3-country-flag-icon/dist/img/ve.b2cd5a9a.svg": {
+    "file": "assets/ve.b2cd5a9a.3079fd19.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/ve.b2cd5a9a.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/vg.03583eec.svg": {
     "file": "assets/vg.03583eec.e2298f80.svg",
@@ -1999,13 +1999,13 @@
     "file": "assets/yt.f06d254d.b1e78ed9.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/yt.f06d254d.svg"
   },
-  "node_modules/vue3-country-flag-icon/dist/img/yt.b6042b9c.svg": {
-    "file": "assets/yt.b6042b9c.79459783.svg",
-    "src": "node_modules/vue3-country-flag-icon/dist/img/yt.b6042b9c.svg"
-  },
   "node_modules/vue3-country-flag-icon/dist/img/za.67ff2e10.svg": {
     "file": "assets/za.67ff2e10.3985889b.svg",
     "src": "node_modules/vue3-country-flag-icon/dist/img/za.67ff2e10.svg"
+  },
+  "node_modules/vue3-country-flag-icon/dist/img/yt.b6042b9c.svg": {
+    "file": "assets/yt.b6042b9c.79459783.svg",
+    "src": "node_modules/vue3-country-flag-icon/dist/img/yt.b6042b9c.svg"
   },
   "node_modules/vue3-country-flag-icon/dist/img/za.70a290af.svg": {
     "file": "assets/za.70a290af.d34d07ba.svg",
@@ -2120,7 +2120,7 @@
     "src": "resources/css/fonts/fontawesome-webfont.svg"
   },
   "resources/js/app.js": {
-    "file": "assets/app.75422e4a.js",
+    "file": "assets/app.0261685a.js",
     "src": "resources/js/app.js",
     "isEntry": true,
     "dynamicImports": [
@@ -2693,119 +2693,119 @@
     ]
   },
   "resources/js/Pages/API/Index.vue": {
-    "file": "assets/Index.2c757dc6.js",
+    "file": "assets/Index.a1dd5e56.js",
     "src": "resources/js/Pages/API/Index.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/Pages/API/Partials/ApiTokenManager.vue",
-      "_AppLayout.0d1127de.js",
+      "_AppLayout.7ec9e518.js",
       "resources/js/app.js",
-      "_ActionMessage.6ee9b4ca.js",
-      "_DialogModal.ae58e651.js",
-      "_SectionTitle.32c56e65.js",
+      "_ActionMessage.ed78a8d9.js",
+      "_DialogModal.326a18bb.js",
+      "_SectionTitle.062f2e95.js",
       "__plugin-vue_export-helper.cdc0426e.js",
-      "_Checkbox.cafa1652.js",
-      "_DangerButton.6f07876c.js",
-      "_FormSection.7b3a5e28.js",
-      "_TextInput.b4b184e0.js",
-      "_InputLabel.e4eef0dd.js",
-      "_PrimaryButton.4b1fcf55.js",
-      "_SecondaryButton.68a82598.js",
-      "_SectionBorder.f4973ce4.js"
+      "_Checkbox.7e0b5a8b.js",
+      "_DangerButton.17702576.js",
+      "_FormSection.fe3560fc.js",
+      "_TextInput.e84e0ccb.js",
+      "_InputLabel.5e727d0b.js",
+      "_PrimaryButton.0d62d8a9.js",
+      "_SecondaryButton.c07f9504.js",
+      "_SectionBorder.7512f342.js"
     ]
   },
   "resources/js/Pages/API/Partials/ApiTokenManager.vue": {
-    "file": "assets/ApiTokenManager.99963cb2.js",
+    "file": "assets/ApiTokenManager.b46e845a.js",
     "src": "resources/js/Pages/API/Partials/ApiTokenManager.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_ActionMessage.6ee9b4ca.js",
-      "_DialogModal.ae58e651.js",
-      "_Checkbox.cafa1652.js",
-      "_DangerButton.6f07876c.js",
-      "_FormSection.7b3a5e28.js",
-      "_TextInput.b4b184e0.js",
-      "_InputLabel.e4eef0dd.js",
-      "_PrimaryButton.4b1fcf55.js",
-      "_SecondaryButton.68a82598.js",
-      "_SectionBorder.f4973ce4.js",
-      "_SectionTitle.32c56e65.js",
+      "_ActionMessage.ed78a8d9.js",
+      "_DialogModal.326a18bb.js",
+      "_Checkbox.7e0b5a8b.js",
+      "_DangerButton.17702576.js",
+      "_FormSection.fe3560fc.js",
+      "_TextInput.e84e0ccb.js",
+      "_InputLabel.5e727d0b.js",
+      "_PrimaryButton.0d62d8a9.js",
+      "_SecondaryButton.c07f9504.js",
+      "_SectionBorder.7512f342.js",
+      "_SectionTitle.062f2e95.js",
       "__plugin-vue_export-helper.cdc0426e.js"
     ]
   },
-  "_AppLayout.0d1127de.js": {
-    "file": "assets/AppLayout.0d1127de.js",
+  "_AppLayout.7ec9e518.js": {
+    "file": "assets/AppLayout.7ec9e518.js",
     "imports": [
       "resources/js/app.js",
       "__plugin-vue_export-helper.cdc0426e.js"
     ]
   },
-  "_ActionMessage.6ee9b4ca.js": {
-    "file": "assets/ActionMessage.6ee9b4ca.js",
+  "_ActionMessage.ed78a8d9.js": {
+    "file": "assets/ActionMessage.ed78a8d9.js",
     "imports": [
       "resources/js/app.js"
     ]
   },
-  "_DialogModal.ae58e651.js": {
-    "file": "assets/DialogModal.ae58e651.js",
+  "_DialogModal.326a18bb.js": {
+    "file": "assets/DialogModal.326a18bb.js",
     "imports": [
-      "_SectionTitle.32c56e65.js",
+      "_SectionTitle.062f2e95.js",
       "resources/js/app.js"
     ]
   },
-  "_Checkbox.cafa1652.js": {
-    "file": "assets/Checkbox.cafa1652.js",
-    "imports": [
-      "resources/js/app.js"
-    ]
-  },
-  "_DangerButton.6f07876c.js": {
-    "file": "assets/DangerButton.6f07876c.js",
+  "_Checkbox.7e0b5a8b.js": {
+    "file": "assets/Checkbox.7e0b5a8b.js",
     "imports": [
       "resources/js/app.js"
     ]
   },
-  "_FormSection.7b3a5e28.js": {
-    "file": "assets/FormSection.7b3a5e28.js",
+  "_DangerButton.17702576.js": {
+    "file": "assets/DangerButton.17702576.js",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "_FormSection.fe3560fc.js": {
+    "file": "assets/FormSection.fe3560fc.js",
     "imports": [
       "resources/js/app.js",
-      "_SectionTitle.32c56e65.js"
+      "_SectionTitle.062f2e95.js"
     ]
   },
-  "_TextInput.b4b184e0.js": {
-    "file": "assets/TextInput.b4b184e0.js",
+  "_TextInput.e84e0ccb.js": {
+    "file": "assets/TextInput.e84e0ccb.js",
     "imports": [
       "resources/js/app.js"
     ]
   },
-  "_InputLabel.e4eef0dd.js": {
-    "file": "assets/InputLabel.e4eef0dd.js",
+  "_InputLabel.5e727d0b.js": {
+    "file": "assets/InputLabel.5e727d0b.js",
     "imports": [
       "resources/js/app.js"
     ]
   },
-  "_PrimaryButton.4b1fcf55.js": {
-    "file": "assets/PrimaryButton.4b1fcf55.js",
+  "_PrimaryButton.0d62d8a9.js": {
+    "file": "assets/PrimaryButton.0d62d8a9.js",
     "imports": [
       "resources/js/app.js"
     ]
   },
-  "_SecondaryButton.68a82598.js": {
-    "file": "assets/SecondaryButton.68a82598.js",
+  "_SecondaryButton.c07f9504.js": {
+    "file": "assets/SecondaryButton.c07f9504.js",
     "imports": [
       "resources/js/app.js"
     ]
   },
-  "_SectionBorder.f4973ce4.js": {
-    "file": "assets/SectionBorder.f4973ce4.js",
+  "_SectionBorder.7512f342.js": {
+    "file": "assets/SectionBorder.7512f342.js",
     "imports": [
       "__plugin-vue_export-helper.cdc0426e.js",
       "resources/js/app.js"
     ]
   },
-  "_SectionTitle.32c56e65.js": {
-    "file": "assets/SectionTitle.32c56e65.js",
+  "_SectionTitle.062f2e95.js": {
+    "file": "assets/SectionTitle.062f2e95.js",
     "imports": [
       "__plugin-vue_export-helper.cdc0426e.js",
       "resources/js/app.js"
@@ -2815,15 +2815,15 @@
     "file": "assets/_plugin-vue_export-helper.cdc0426e.js"
   },
   "resources/js/Pages/Article/Index.vue": {
-    "file": "assets/Index.8bf173f5.js",
+    "file": "assets/Index.5a45b1b2.js",
     "src": "resources/js/Pages/Article/Index.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_FrontLayout.96a54004.js",
-      "_CountryFlag.common.64b6a3a3.js",
+      "_FrontLayout.2cbe4061.js",
+      "_CountryFlag.common.d10e6604.js",
       "_moment.9709ab41.js",
-      "_article.b1b547f3.js",
+      "_article.3e490555.js",
       "__plugin-vue_export-helper.cdc0426e.js"
     ],
     "css": [
@@ -2832,8 +2832,8 @@
       "assets/List.7506a25e.css"
     ]
   },
-  "_FrontLayout.96a54004.js": {
-    "file": "assets/FrontLayout.96a54004.js",
+  "_FrontLayout.2cbe4061.js": {
+    "file": "assets/FrontLayout.2cbe4061.js",
     "imports": [
       "resources/js/app.js",
       "__plugin-vue_export-helper.cdc0426e.js",
@@ -2846,8 +2846,8 @@
       "assets/header-card.3617907f.png"
     ]
   },
-  "_CountryFlag.common.64b6a3a3.js": {
-    "file": "assets/CountryFlag.common.64b6a3a3.js",
+  "_CountryFlag.common.d10e6604.js": {
+    "file": "assets/CountryFlag.common.d10e6604.js",
     "imports": [
       "resources/js/app.js"
     ]
@@ -2855,23 +2855,23 @@
   "_moment.9709ab41.js": {
     "file": "assets/moment.9709ab41.js"
   },
-  "_article.b1b547f3.js": {
-    "file": "assets/article.b1b547f3.js",
+  "_article.3e490555.js": {
+    "file": "assets/article.3e490555.js",
     "imports": [
       "resources/js/app.js"
     ]
   },
   "resources/js/Pages/Article/Show.vue": {
-    "file": "assets/Show.e3c2d8c1.js",
+    "file": "assets/Show.f082d3fb.js",
     "src": "resources/js/Pages/Article/Show.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_FrontLayout.96a54004.js",
-      "_CountryFlag.common.64b6a3a3.js",
+      "_FrontLayout.2cbe4061.js",
+      "_CountryFlag.common.d10e6604.js",
       "_moment.9709ab41.js",
       "_default-img.f9de1402.js",
-      "_article.b1b547f3.js",
+      "_article.3e490555.js",
       "__plugin-vue_export-helper.cdc0426e.js"
     ],
     "css": [
@@ -2888,125 +2888,125 @@
     ]
   },
   "resources/js/Pages/Auth/ConfirmPassword.vue": {
-    "file": "assets/ConfirmPassword.ba2d0926.js",
+    "file": "assets/ConfirmPassword.363190e9.js",
     "src": "resources/js/Pages/Auth/ConfirmPassword.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_AuthenticationCard.e804fe6c.js",
-      "_AuthenticationCardLogo.b0e4071a.js",
-      "_TextInput.b4b184e0.js",
-      "_InputLabel.e4eef0dd.js",
-      "_PrimaryButton.4b1fcf55.js",
+      "_AuthenticationCard.c7fdebc5.js",
+      "_AuthenticationCardLogo.d0628e8a.js",
+      "_TextInput.e84e0ccb.js",
+      "_InputLabel.5e727d0b.js",
+      "_PrimaryButton.0d62d8a9.js",
       "__plugin-vue_export-helper.cdc0426e.js"
     ]
   },
-  "_AuthenticationCard.e804fe6c.js": {
-    "file": "assets/AuthenticationCard.e804fe6c.js",
+  "_AuthenticationCard.c7fdebc5.js": {
+    "file": "assets/AuthenticationCard.c7fdebc5.js",
     "imports": [
       "__plugin-vue_export-helper.cdc0426e.js",
       "resources/js/app.js"
     ]
   },
-  "_AuthenticationCardLogo.b0e4071a.js": {
-    "file": "assets/AuthenticationCardLogo.b0e4071a.js",
+  "_AuthenticationCardLogo.d0628e8a.js": {
+    "file": "assets/AuthenticationCardLogo.d0628e8a.js",
     "imports": [
       "resources/js/app.js"
     ]
   },
   "resources/js/Pages/Auth/ForgotPassword.vue": {
-    "file": "assets/ForgotPassword.98e7488a.js",
+    "file": "assets/ForgotPassword.bdb2ce4e.js",
     "src": "resources/js/Pages/Auth/ForgotPassword.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_AuthenticationCard.e804fe6c.js",
-      "_AuthenticationCardLogo.b0e4071a.js",
-      "_TextInput.b4b184e0.js",
-      "_InputLabel.e4eef0dd.js",
-      "_PrimaryButton.4b1fcf55.js",
+      "_AuthenticationCard.c7fdebc5.js",
+      "_AuthenticationCardLogo.d0628e8a.js",
+      "_TextInput.e84e0ccb.js",
+      "_InputLabel.5e727d0b.js",
+      "_PrimaryButton.0d62d8a9.js",
       "__plugin-vue_export-helper.cdc0426e.js"
     ]
   },
   "resources/js/Pages/Auth/Login.vue": {
-    "file": "assets/Login.bcce071f.js",
+    "file": "assets/Login.367f8809.js",
     "src": "resources/js/Pages/Auth/Login.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_AuthenticationCard.e804fe6c.js",
-      "_Checkbox.cafa1652.js",
-      "_TextInput.b4b184e0.js",
-      "_InputLabel.e4eef0dd.js",
-      "_PrimaryButton.4b1fcf55.js",
+      "_AuthenticationCard.c7fdebc5.js",
+      "_Checkbox.7e0b5a8b.js",
+      "_TextInput.e84e0ccb.js",
+      "_InputLabel.5e727d0b.js",
+      "_PrimaryButton.0d62d8a9.js",
       "__plugin-vue_export-helper.cdc0426e.js"
     ]
   },
   "resources/js/Pages/Auth/Register.vue": {
-    "file": "assets/Register.60aa4435.js",
+    "file": "assets/Register.b2efff67.js",
     "src": "resources/js/Pages/Auth/Register.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_AuthenticationCard.e804fe6c.js",
-      "_AuthenticationCardLogo.b0e4071a.js",
-      "_Checkbox.cafa1652.js",
-      "_TextInput.b4b184e0.js",
-      "_InputLabel.e4eef0dd.js",
-      "_PrimaryButton.4b1fcf55.js",
+      "_AuthenticationCard.c7fdebc5.js",
+      "_AuthenticationCardLogo.d0628e8a.js",
+      "_Checkbox.7e0b5a8b.js",
+      "_TextInput.e84e0ccb.js",
+      "_InputLabel.5e727d0b.js",
+      "_PrimaryButton.0d62d8a9.js",
       "__plugin-vue_export-helper.cdc0426e.js"
     ]
   },
   "resources/js/Pages/Auth/ResetPassword.vue": {
-    "file": "assets/ResetPassword.04c8178a.js",
+    "file": "assets/ResetPassword.a67273b4.js",
     "src": "resources/js/Pages/Auth/ResetPassword.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_AuthenticationCard.e804fe6c.js",
-      "_AuthenticationCardLogo.b0e4071a.js",
-      "_TextInput.b4b184e0.js",
-      "_InputLabel.e4eef0dd.js",
-      "_PrimaryButton.4b1fcf55.js",
+      "_AuthenticationCard.c7fdebc5.js",
+      "_AuthenticationCardLogo.d0628e8a.js",
+      "_TextInput.e84e0ccb.js",
+      "_InputLabel.5e727d0b.js",
+      "_PrimaryButton.0d62d8a9.js",
       "__plugin-vue_export-helper.cdc0426e.js"
     ]
   },
   "resources/js/Pages/Auth/TwoFactorChallenge.vue": {
-    "file": "assets/TwoFactorChallenge.860ce555.js",
+    "file": "assets/TwoFactorChallenge.b9f3642b.js",
     "src": "resources/js/Pages/Auth/TwoFactorChallenge.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_AuthenticationCard.e804fe6c.js",
-      "_AuthenticationCardLogo.b0e4071a.js",
-      "_TextInput.b4b184e0.js",
-      "_InputLabel.e4eef0dd.js",
-      "_PrimaryButton.4b1fcf55.js",
+      "_AuthenticationCard.c7fdebc5.js",
+      "_AuthenticationCardLogo.d0628e8a.js",
+      "_TextInput.e84e0ccb.js",
+      "_InputLabel.5e727d0b.js",
+      "_PrimaryButton.0d62d8a9.js",
       "__plugin-vue_export-helper.cdc0426e.js"
     ]
   },
   "resources/js/Pages/Auth/VerifyEmail.vue": {
-    "file": "assets/VerifyEmail.e9821b3a.js",
+    "file": "assets/VerifyEmail.6d44ff99.js",
     "src": "resources/js/Pages/Auth/VerifyEmail.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_AuthenticationCard.e804fe6c.js",
-      "_AuthenticationCardLogo.b0e4071a.js",
-      "_PrimaryButton.4b1fcf55.js",
+      "_AuthenticationCard.c7fdebc5.js",
+      "_AuthenticationCardLogo.d0628e8a.js",
+      "_PrimaryButton.0d62d8a9.js",
       "__plugin-vue_export-helper.cdc0426e.js"
     ]
   },
   "resources/js/Pages/Calendar/Index.vue": {
-    "file": "assets/Index.ccd5bcb2.js",
+    "file": "assets/Index.2b485d18.js",
     "src": "resources/js/Pages/Calendar/Index.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_FrontLayout.96a54004.js",
-      "_CountryFlag.common.64b6a3a3.js",
+      "_FrontLayout.2cbe4061.js",
+      "_CountryFlag.common.d10e6604.js",
       "_moment.9709ab41.js",
-      "_article.b1b547f3.js",
+      "_article.3e490555.js",
       "__plugin-vue_export-helper.cdc0426e.js"
     ],
     "css": [
@@ -3016,12 +3016,12 @@
     ]
   },
   "resources/js/Pages/Categories/CategoryPage.vue": {
-    "file": "assets/CategoryPage.8f90d5bb.js",
+    "file": "assets/CategoryPage.58dd0984.js",
     "src": "resources/js/Pages/Categories/CategoryPage.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_FrontLayout.96a54004.js",
+      "_FrontLayout.2cbe4061.js",
       "_default-img.f9de1402.js",
       "_moment.9709ab41.js",
       "__plugin-vue_export-helper.cdc0426e.js"
@@ -3031,37 +3031,37 @@
     ]
   },
   "resources/js/Pages/Dashboard.vue": {
-    "file": "assets/Dashboard.7761ec4f.js",
+    "file": "assets/Dashboard.37b00723.js",
     "src": "resources/js/Pages/Dashboard.vue",
     "isDynamicEntry": true,
     "imports": [
-      "_AppLayout.0d1127de.js",
+      "_AppLayout.7ec9e518.js",
       "__plugin-vue_export-helper.cdc0426e.js",
       "resources/js/app.js"
     ]
   },
   "resources/js/Pages/Error/404.vue": {
-    "file": "assets/404.f11140fd.js",
+    "file": "assets/404.2990c321.js",
     "src": "resources/js/Pages/Error/404.vue",
     "isDynamicEntry": true,
     "imports": [
-      "_FrontLayout.96a54004.js",
+      "_FrontLayout.2cbe4061.js",
       "resources/js/app.js",
       "__plugin-vue_export-helper.cdc0426e.js",
       "_moment.9709ab41.js"
     ]
   },
   "resources/js/Pages/Event/EventCalendar.vue": {
-    "file": "assets/EventCalendar.cd0915f8.js",
+    "file": "assets/EventCalendar.d99c1c35.js",
     "src": "resources/js/Pages/Event/EventCalendar.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
       "_moment.9709ab41.js",
-      "_FrontLayout.96a54004.js",
+      "_FrontLayout.2cbe4061.js",
       "resources/js/Pages/Event/EventCalendarItem.vue",
       "__plugin-vue_export-helper.cdc0426e.js",
-      "_CountryFlag.common.64b6a3a3.js",
+      "_CountryFlag.common.d10e6604.js",
       "_default-img.f9de1402.js"
     ],
     "css": [
@@ -3069,45 +3069,45 @@
     ]
   },
   "resources/js/Pages/Event/EventCalendarItem.vue": {
-    "file": "assets/EventCalendarItem.5cbd1117.js",
+    "file": "assets/EventCalendarItem.bc3232dd.js",
     "src": "resources/js/Pages/Event/EventCalendarItem.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_CountryFlag.common.64b6a3a3.js",
+      "_CountryFlag.common.d10e6604.js",
       "_moment.9709ab41.js",
       "_default-img.f9de1402.js"
     ]
   },
   "resources/js/Pages/Event/Index.vue": {
-    "file": "assets/Index.242d3307.js",
+    "file": "assets/Index.4322bae9.js",
     "src": "resources/js/Pages/Event/Index.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_FrontLayout.96a54004.js",
-      "_ReportList.79bb1d55.js",
+      "_FrontLayout.2cbe4061.js",
+      "_ReportList.b2c255e9.js",
       "__plugin-vue_export-helper.cdc0426e.js",
       "_moment.9709ab41.js",
-      "_event.498eaa9a.js",
-      "_tournament.3e061310.js",
-      "_default-avatar.d706a489.js",
-      "_CountryFlag.common.64b6a3a3.js"
+      "_event.ede5d1b5.js",
+      "_tournament.1c445472.js",
+      "_default-avatar.aa39ed91.js",
+      "_CountryFlag.common.d10e6604.js"
     ],
     "css": [
-      "assets/Index.6e650a02.css",
+      "assets/Index.f5df3083.css",
       "assets/List.7506a25e.css",
       "assets/CustomeTable.d36cb47f.css",
       "assets/ReportList.f24f2e22.css"
     ]
   },
-  "_ReportList.79bb1d55.js": {
-    "file": "assets/ReportList.79bb1d55.js",
+  "_ReportList.b2c255e9.js": {
+    "file": "assets/ReportList.b2c255e9.js",
     "imports": [
       "resources/js/app.js",
-      "_default-avatar.d706a489.js",
-      "_CountryFlag.common.64b6a3a3.js",
-      "_FrontLayout.96a54004.js",
+      "_default-avatar.aa39ed91.js",
+      "_CountryFlag.common.d10e6604.js",
+      "_FrontLayout.2cbe4061.js",
       "_moment.9709ab41.js",
       "__plugin-vue_export-helper.cdc0426e.js"
     ],
@@ -3118,20 +3118,20 @@
       "assets/ReportList.f24f2e22.css"
     ]
   },
-  "_event.498eaa9a.js": {
-    "file": "assets/event.498eaa9a.js",
+  "_event.ede5d1b5.js": {
+    "file": "assets/event.ede5d1b5.js",
     "imports": [
       "resources/js/app.js"
     ]
   },
-  "_tournament.3e061310.js": {
-    "file": "assets/tournament.3e061310.js",
+  "_tournament.1c445472.js": {
+    "file": "assets/tournament.1c445472.js",
     "imports": [
       "resources/js/app.js"
     ]
   },
-  "_default-avatar.d706a489.js": {
-    "file": "assets/default-avatar.d706a489.js",
+  "_default-avatar.aa39ed91.js": {
+    "file": "assets/default-avatar.aa39ed91.js",
     "imports": [
       "__plugin-vue_export-helper.cdc0426e.js",
       "resources/js/app.js"
@@ -3141,16 +3141,16 @@
     ]
   },
   "resources/js/Pages/Index.vue": {
-    "file": "assets/Index.31877a33.js",
+    "file": "assets/Index.92d7d13c.js",
     "src": "resources/js/Pages/Index.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_FrontLayout.96a54004.js",
+      "_FrontLayout.2cbe4061.js",
       "_moment.9709ab41.js",
       "_default-img.f9de1402.js",
-      "_article.b1b547f3.js",
-      "_event.498eaa9a.js",
+      "_article.3e490555.js",
+      "_event.ede5d1b5.js",
       "__plugin-vue_export-helper.cdc0426e.js"
     ],
     "css": [
@@ -3158,16 +3158,16 @@
     ]
   },
   "resources/js/Pages/Life/About.vue": {
-    "file": "assets/About.dfabc10b.js",
+    "file": "assets/About.6d721fc0.js",
     "src": "resources/js/Pages/Life/About.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_FrontLayout.96a54004.js",
+      "_FrontLayout.2cbe4061.js",
       "__plugin-vue_export-helper.cdc0426e.js",
-      "_CountryFlag.common.64b6a3a3.js",
+      "_CountryFlag.common.d10e6604.js",
       "_moment.9709ab41.js",
-      "_article.b1b547f3.js"
+      "_article.3e490555.js"
     ],
     "css": [
       "assets/About.a6dc656e.css",
@@ -3177,15 +3177,15 @@
     ]
   },
   "resources/js/Pages/Life/Index.vue": {
-    "file": "assets/Index.f6f4bdab.js",
+    "file": "assets/Index.44f4f86b.js",
     "src": "resources/js/Pages/Life/Index.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_FrontLayout.96a54004.js",
-      "_CountryFlag.common.64b6a3a3.js",
+      "_FrontLayout.2cbe4061.js",
+      "_CountryFlag.common.d10e6604.js",
       "_moment.9709ab41.js",
-      "_article.b1b547f3.js",
+      "_article.3e490555.js",
       "__plugin-vue_export-helper.cdc0426e.js"
     ],
     "css": [
@@ -3195,127 +3195,127 @@
     ]
   },
   "resources/js/Pages/PrivacyPolicy.vue": {
-    "file": "assets/PrivacyPolicy.3650fe04.js",
+    "file": "assets/PrivacyPolicy.89bd9812.js",
     "src": "resources/js/Pages/PrivacyPolicy.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_AuthenticationCardLogo.b0e4071a.js"
+      "_AuthenticationCardLogo.d0628e8a.js"
     ]
   },
   "resources/js/Pages/Profile/Partials/DeleteUserForm.vue": {
-    "file": "assets/DeleteUserForm.13cf8022.js",
+    "file": "assets/DeleteUserForm.5e7e8615.js",
     "src": "resources/js/Pages/Profile/Partials/DeleteUserForm.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_DialogModal.ae58e651.js",
-      "_DangerButton.6f07876c.js",
-      "_TextInput.b4b184e0.js",
-      "_SecondaryButton.68a82598.js",
-      "_SectionTitle.32c56e65.js",
+      "_DialogModal.326a18bb.js",
+      "_DangerButton.17702576.js",
+      "_TextInput.e84e0ccb.js",
+      "_SecondaryButton.c07f9504.js",
+      "_SectionTitle.062f2e95.js",
       "__plugin-vue_export-helper.cdc0426e.js"
     ]
   },
   "resources/js/Pages/Profile/Partials/LogoutOtherBrowserSessionsForm.vue": {
-    "file": "assets/LogoutOtherBrowserSessionsForm.3f0a2be7.js",
+    "file": "assets/LogoutOtherBrowserSessionsForm.d45970d3.js",
     "src": "resources/js/Pages/Profile/Partials/LogoutOtherBrowserSessionsForm.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_ActionMessage.6ee9b4ca.js",
-      "_DialogModal.ae58e651.js",
-      "_TextInput.b4b184e0.js",
-      "_PrimaryButton.4b1fcf55.js",
-      "_SecondaryButton.68a82598.js",
-      "_SectionTitle.32c56e65.js",
+      "_ActionMessage.ed78a8d9.js",
+      "_DialogModal.326a18bb.js",
+      "_TextInput.e84e0ccb.js",
+      "_PrimaryButton.0d62d8a9.js",
+      "_SecondaryButton.c07f9504.js",
+      "_SectionTitle.062f2e95.js",
       "__plugin-vue_export-helper.cdc0426e.js"
     ]
   },
   "resources/js/Pages/Profile/Partials/TwoFactorAuthenticationForm.vue": {
-    "file": "assets/TwoFactorAuthenticationForm.a9b9fc84.js",
+    "file": "assets/TwoFactorAuthenticationForm.a1249257.js",
     "src": "resources/js/Pages/Profile/Partials/TwoFactorAuthenticationForm.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_DialogModal.ae58e651.js",
-      "_TextInput.b4b184e0.js",
-      "_PrimaryButton.4b1fcf55.js",
-      "_SecondaryButton.68a82598.js",
-      "_DangerButton.6f07876c.js",
-      "_InputLabel.e4eef0dd.js",
-      "_SectionTitle.32c56e65.js",
+      "_DialogModal.326a18bb.js",
+      "_TextInput.e84e0ccb.js",
+      "_PrimaryButton.0d62d8a9.js",
+      "_SecondaryButton.c07f9504.js",
+      "_DangerButton.17702576.js",
+      "_InputLabel.5e727d0b.js",
+      "_SectionTitle.062f2e95.js",
       "__plugin-vue_export-helper.cdc0426e.js"
     ]
   },
   "resources/js/Pages/Profile/Partials/UpdatePasswordForm.vue": {
-    "file": "assets/UpdatePasswordForm.33a9162d.js",
+    "file": "assets/UpdatePasswordForm.c835f3d5.js",
     "src": "resources/js/Pages/Profile/Partials/UpdatePasswordForm.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_ActionMessage.6ee9b4ca.js",
-      "_FormSection.7b3a5e28.js",
-      "_TextInput.b4b184e0.js",
-      "_InputLabel.e4eef0dd.js",
-      "_PrimaryButton.4b1fcf55.js",
-      "_SectionTitle.32c56e65.js",
+      "_ActionMessage.ed78a8d9.js",
+      "_FormSection.fe3560fc.js",
+      "_TextInput.e84e0ccb.js",
+      "_InputLabel.5e727d0b.js",
+      "_PrimaryButton.0d62d8a9.js",
+      "_SectionTitle.062f2e95.js",
       "__plugin-vue_export-helper.cdc0426e.js"
     ]
   },
   "resources/js/Pages/Profile/Partials/UpdateProfileInformationForm.vue": {
-    "file": "assets/UpdateProfileInformationForm.daceacf2.js",
+    "file": "assets/UpdateProfileInformationForm.fa24a9b3.js",
     "src": "resources/js/Pages/Profile/Partials/UpdateProfileInformationForm.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_ActionMessage.6ee9b4ca.js",
-      "_FormSection.7b3a5e28.js",
-      "_TextInput.b4b184e0.js",
-      "_InputLabel.e4eef0dd.js",
-      "_PrimaryButton.4b1fcf55.js",
-      "_SecondaryButton.68a82598.js",
-      "_SectionTitle.32c56e65.js",
+      "_ActionMessage.ed78a8d9.js",
+      "_FormSection.fe3560fc.js",
+      "_TextInput.e84e0ccb.js",
+      "_InputLabel.5e727d0b.js",
+      "_PrimaryButton.0d62d8a9.js",
+      "_SecondaryButton.c07f9504.js",
+      "_SectionTitle.062f2e95.js",
       "__plugin-vue_export-helper.cdc0426e.js"
     ]
   },
   "resources/js/Pages/Profile/Show.vue": {
-    "file": "assets/Show.4a46f8af.js",
+    "file": "assets/Show.1aff5dac.js",
     "src": "resources/js/Pages/Profile/Show.vue",
     "isDynamicEntry": true,
     "imports": [
-      "_AppLayout.0d1127de.js",
+      "_AppLayout.7ec9e518.js",
       "resources/js/Pages/Profile/Partials/DeleteUserForm.vue",
       "resources/js/Pages/Profile/Partials/LogoutOtherBrowserSessionsForm.vue",
-      "_SectionBorder.f4973ce4.js",
+      "_SectionBorder.7512f342.js",
       "resources/js/Pages/Profile/Partials/TwoFactorAuthenticationForm.vue",
       "resources/js/Pages/Profile/Partials/UpdatePasswordForm.vue",
       "resources/js/Pages/Profile/Partials/UpdateProfileInformationForm.vue",
       "resources/js/app.js",
       "__plugin-vue_export-helper.cdc0426e.js",
-      "_DialogModal.ae58e651.js",
-      "_SectionTitle.32c56e65.js",
-      "_DangerButton.6f07876c.js",
-      "_TextInput.b4b184e0.js",
-      "_SecondaryButton.68a82598.js",
-      "_ActionMessage.6ee9b4ca.js",
-      "_PrimaryButton.4b1fcf55.js",
-      "_InputLabel.e4eef0dd.js",
-      "_FormSection.7b3a5e28.js"
+      "_DialogModal.326a18bb.js",
+      "_SectionTitle.062f2e95.js",
+      "_DangerButton.17702576.js",
+      "_TextInput.e84e0ccb.js",
+      "_SecondaryButton.c07f9504.js",
+      "_ActionMessage.ed78a8d9.js",
+      "_PrimaryButton.0d62d8a9.js",
+      "_InputLabel.5e727d0b.js",
+      "_FormSection.fe3560fc.js"
     ]
   },
   "resources/js/Pages/Report/Index.vue": {
-    "file": "assets/Index.6f58ffb4.js",
+    "file": "assets/Index.d215dacc.js",
     "src": "resources/js/Pages/Report/Index.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_FrontLayout.96a54004.js",
-      "_ReportList.79bb1d55.js",
+      "_FrontLayout.2cbe4061.js",
+      "_ReportList.b2c255e9.js",
       "__plugin-vue_export-helper.cdc0426e.js",
       "_moment.9709ab41.js",
-      "_default-avatar.d706a489.js",
-      "_CountryFlag.common.64b6a3a3.js"
+      "_default-avatar.aa39ed91.js",
+      "_CountryFlag.common.d10e6604.js"
     ],
     "css": [
       "assets/Index.4bb5dbcd.css",
@@ -3324,16 +3324,16 @@
     ]
   },
   "resources/js/Pages/Report/Show.vue": {
-    "file": "assets/Show.eb2701fc.js",
+    "file": "assets/Show.28e095ae.js",
     "src": "resources/js/Pages/Report/Show.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_FrontLayout.96a54004.js",
-      "_default-avatar.d706a489.js",
-      "_CountryFlag.common.64b6a3a3.js",
+      "_FrontLayout.2cbe4061.js",
+      "_default-avatar.aa39ed91.js",
+      "_CountryFlag.common.d10e6604.js",
       "_moment.9709ab41.js",
-      "_event.498eaa9a.js",
+      "_event.ede5d1b5.js",
       "__plugin-vue_export-helper.cdc0426e.js"
     ],
     "css": [
@@ -3353,7 +3353,7 @@
     ]
   },
   "resources/js/Pages/Series/EventTable.vue": {
-    "file": "assets/EventTable.3b55576c.js",
+    "file": "assets/EventTable.2f55cda4.js",
     "src": "resources/js/Pages/Series/EventTable.vue",
     "isDynamicEntry": true,
     "imports": [
@@ -3362,22 +3362,22 @@
     ]
   },
   "resources/js/Pages/Series/SeriesTable.vue": {
-    "file": "assets/SeriesTable.0f3d48f2.js",
+    "file": "assets/SeriesTable.02f379d7.js",
     "src": "resources/js/Pages/Series/SeriesTable.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
       "_moment.9709ab41.js",
-      "_CountryFlag.common.64b6a3a3.js"
+      "_CountryFlag.common.d10e6604.js"
     ]
   },
   "resources/js/Pages/Series/Show.vue": {
-    "file": "assets/Show.70ec1277.js",
+    "file": "assets/Show.9d55e33d.js",
     "src": "resources/js/Pages/Series/Show.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_FrontLayout.96a54004.js",
+      "_FrontLayout.2cbe4061.js",
       "resources/js/Pages/Series/EventTable.vue",
       "_default-img.f9de1402.js",
       "__plugin-vue_export-helper.cdc0426e.js",
@@ -3388,11 +3388,11 @@
     ]
   },
   "resources/js/Pages/Tag/TagArticle.vue": {
-    "file": "assets/TagArticle.fb7df722.js",
+    "file": "assets/TagArticle.61ada758.js",
     "src": "resources/js/Pages/Tag/TagArticle.vue",
     "isDynamicEntry": true,
     "imports": [
-      "_FrontLayout.96a54004.js",
+      "_FrontLayout.2cbe4061.js",
       "_default-img.f9de1402.js",
       "resources/js/app.js",
       "_moment.9709ab41.js",
@@ -3400,45 +3400,45 @@
     ]
   },
   "resources/js/Pages/Template/Index.vue": {
-    "file": "assets/Index.1a6fd385.js",
+    "file": "assets/Index.aad84454.js",
     "src": "resources/js/Pages/Template/Index.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_pokerRoom.ce5d597d.js",
-      "_pokerTour.2e00e142.js",
-      "_FrontLayout.96a54004.js",
+      "_pokerRoom.26638387.js",
+      "_pokerTour.060237d5.js",
+      "_FrontLayout.2cbe4061.js",
       "resources/js/Pages/Template/PokerRooms.vue",
       "resources/js/Pages/Template/PokerTours.vue",
       "resources/js/Pages/Template/MediaReporting.vue",
       "__plugin-vue_export-helper.cdc0426e.js",
       "_moment.9709ab41.js",
-      "_CountryFlag.common.64b6a3a3.js",
+      "_CountryFlag.common.d10e6604.js",
       "_default-img.f9de1402.js"
     ],
     "css": [
       "assets/Index.0ccb4b94.css"
     ]
   },
-  "_pokerRoom.ce5d597d.js": {
-    "file": "assets/pokerRoom.ce5d597d.js",
+  "_pokerRoom.26638387.js": {
+    "file": "assets/pokerRoom.26638387.js",
     "imports": [
       "resources/js/app.js"
     ]
   },
-  "_pokerTour.2e00e142.js": {
-    "file": "assets/pokerTour.2e00e142.js",
+  "_pokerTour.060237d5.js": {
+    "file": "assets/pokerTour.060237d5.js",
     "imports": [
       "resources/js/app.js"
     ]
   },
   "resources/js/Pages/Template/PokerRooms.vue": {
-    "file": "assets/PokerRooms.be772c54.js",
+    "file": "assets/PokerRooms.7a2ba314.js",
     "src": "resources/js/Pages/Template/PokerRooms.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_CountryFlag.common.64b6a3a3.js",
+      "_CountryFlag.common.d10e6604.js",
       "_default-img.f9de1402.js",
       "__plugin-vue_export-helper.cdc0426e.js"
     ],
@@ -3447,7 +3447,7 @@
     ]
   },
   "resources/js/Pages/Template/PokerTours.vue": {
-    "file": "assets/PokerTours.56e69291.js",
+    "file": "assets/PokerTours.b8b94d40.js",
     "src": "resources/js/Pages/Template/PokerTours.vue",
     "isDynamicEntry": true,
     "imports": [
@@ -3460,12 +3460,12 @@
     ]
   },
   "resources/js/Pages/Template/MediaReporting.vue": {
-    "file": "assets/MediaReporting.e778ccff.js",
+    "file": "assets/MediaReporting.a70eb8fd.js",
     "src": "resources/js/Pages/Template/MediaReporting.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_CountryFlag.common.64b6a3a3.js",
+      "_CountryFlag.common.d10e6604.js",
       "_default-img.f9de1402.js",
       "__plugin-vue_export-helper.cdc0426e.js"
     ],
@@ -3474,14 +3474,14 @@
     ]
   },
   "resources/js/Pages/Template/PokerRoom.vue": {
-    "file": "assets/PokerRoom.809e2550.js",
+    "file": "assets/PokerRoom.fe249148.js",
     "src": "resources/js/Pages/Template/PokerRoom.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_pokerRoom.ce5d597d.js",
-      "_FrontLayout.96a54004.js",
-      "_CountryFlag.common.64b6a3a3.js",
+      "_pokerRoom.26638387.js",
+      "_FrontLayout.2cbe4061.js",
+      "_CountryFlag.common.d10e6604.js",
       "_default-img.f9de1402.js",
       "__plugin-vue_export-helper.cdc0426e.js",
       "_moment.9709ab41.js"
@@ -3491,44 +3491,44 @@
     ]
   },
   "resources/js/Pages/Template/PokerTour.vue": {
-    "file": "assets/PokerTour.01b4503b.js",
+    "file": "assets/PokerTour.6857c6dd.js",
     "src": "resources/js/Pages/Template/PokerTour.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_pokerTour.2e00e142.js",
-      "_FrontLayout.96a54004.js",
+      "_pokerTour.060237d5.js",
+      "_FrontLayout.2cbe4061.js",
       "resources/js/Pages/Series/SeriesTable.vue",
       "_default-img.f9de1402.js",
       "__plugin-vue_export-helper.cdc0426e.js",
       "_moment.9709ab41.js",
-      "_CountryFlag.common.64b6a3a3.js"
+      "_CountryFlag.common.d10e6604.js"
     ],
     "css": [
       "assets/PokerTour.76575bba.css"
     ]
   },
   "resources/js/Pages/TermsOfService.vue": {
-    "file": "assets/TermsOfService.3a07d01d.js",
+    "file": "assets/TermsOfService.cf8c8e19.js",
     "src": "resources/js/Pages/TermsOfService.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_AuthenticationCardLogo.b0e4071a.js"
+      "_AuthenticationCardLogo.d0628e8a.js"
     ]
   },
   "resources/js/Pages/Tournament/Index.vue": {
-    "file": "assets/Index.b2d986d4.js",
+    "file": "assets/Index.c0eac22f.js",
     "src": "resources/js/Pages/Tournament/Index.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_FrontLayout.96a54004.js",
-      "_CountryFlag.common.64b6a3a3.js",
+      "_FrontLayout.2cbe4061.js",
+      "_CountryFlag.common.d10e6604.js",
       "_moment.9709ab41.js",
       "_default-img.f9de1402.js",
       "__plugin-vue_export-helper.cdc0426e.js",
-      "_tournament.3e061310.js"
+      "_tournament.1c445472.js"
     ],
     "css": [
       "assets/CustomeTable.d36cb47f.css",
@@ -3537,7 +3537,7 @@
     ]
   },
   "resources/js/Pages/Welcome.vue": {
-    "file": "assets/Welcome.63f1d4ad.js",
+    "file": "assets/Welcome.31e875d1.js",
     "src": "resources/js/Pages/Welcome.vue",
     "isDynamicEntry": true,
     "imports": [
@@ -3549,49 +3549,41 @@
     "src": "node_modules/photoswipe/dist/photoswipe.esm.js",
     "isDynamicEntry": true
   },
-  "CustomeTable.css": {
-    "file": "assets/CustomeTable.d36cb47f.css",
-    "src": "CustomeTable.css"
-  },
   "ReportList.css": {
     "file": "assets/ReportList.f24f2e22.css",
     "src": "ReportList.css"
   },
-  "resources/js/Pages/Event/EventCalendar.css": {
-    "file": "assets/EventCalendar.4be484d8.css",
-    "src": "resources/js/Pages/Event/EventCalendar.css"
+  "CustomeTable.css": {
+    "file": "assets/CustomeTable.d36cb47f.css",
+    "src": "CustomeTable.css"
+  },
+  "resources/js/Pages/Event/Index.css": {
+    "file": "assets/Index.f5df3083.css",
+    "src": "resources/js/Pages/Event/Index.css"
   },
   "List.css": {
     "file": "assets/List.7506a25e.css",
     "src": "List.css"
   },
+  "resources/js/Pages/Life/About.css": {
+    "file": "assets/About.a6dc656e.css",
+    "src": "resources/js/Pages/Life/About.css"
+  },
   "resources/js/Pages/Article/Show.css": {
     "file": "assets/Show.91fddee3.css",
     "src": "resources/js/Pages/Article/Show.css"
-  },
-  "FrontLayout.css": {
-    "file": "assets/FrontLayout.1dfa4924.css",
-    "src": "FrontLayout.css"
-  },
-  "resources/js/Pages/Categories/CategoryPage.css": {
-    "file": "assets/CategoryPage.5a54e747.css",
-    "src": "resources/js/Pages/Categories/CategoryPage.css"
-  },
-  "resources/js/Pages/Event/Index.css": {
-    "file": "assets/Index.6e650a02.css",
-    "src": "resources/js/Pages/Event/Index.css"
   },
   "resources/js/Pages/Index.css": {
     "file": "assets/Index.b1636df6.css",
     "src": "resources/js/Pages/Index.css"
   },
+  "resources/js/Pages/Categories/CategoryPage.css": {
+    "file": "assets/CategoryPage.5a54e747.css",
+    "src": "resources/js/Pages/Categories/CategoryPage.css"
+  },
   "resources/js/Pages/Report/Index.css": {
     "file": "assets/Index.4bb5dbcd.css",
     "src": "resources/js/Pages/Report/Index.css"
-  },
-  "resources/js/Pages/Life/About.css": {
-    "file": "assets/About.a6dc656e.css",
-    "src": "resources/js/Pages/Life/About.css"
   },
   "resources/js/Pages/Report/Show.css": {
     "file": "assets/Show.be0cf5e9.css",
@@ -3605,13 +3597,13 @@
     "file": "assets/Index.0ccb4b94.css",
     "src": "resources/js/Pages/Template/Index.css"
   },
+  "resources/js/Pages/Event/EventCalendar.css": {
+    "file": "assets/EventCalendar.4be484d8.css",
+    "src": "resources/js/Pages/Event/EventCalendar.css"
+  },
   "resources/js/Pages/Template/PokerRooms.css": {
     "file": "assets/PokerRooms.c3dc3c10.css",
     "src": "resources/js/Pages/Template/PokerRooms.css"
-  },
-  "resources/js/Pages/Template/PokerRoom.css": {
-    "file": "assets/PokerRoom.f4e66b5e.css",
-    "src": "resources/js/Pages/Template/PokerRoom.css"
   },
   "resources/js/Pages/Template/PokerTours.css": {
     "file": "assets/PokerTours.91974310.css",
@@ -3621,9 +3613,17 @@
     "file": "assets/MediaReporting.b1d8e7f2.css",
     "src": "resources/js/Pages/Template/MediaReporting.css"
   },
+  "resources/js/Pages/Template/PokerRoom.css": {
+    "file": "assets/PokerRoom.f4e66b5e.css",
+    "src": "resources/js/Pages/Template/PokerRoom.css"
+  },
   "resources/js/Pages/Template/PokerTour.css": {
     "file": "assets/PokerTour.76575bba.css",
     "src": "resources/js/Pages/Template/PokerTour.css"
+  },
+  "FrontLayout.css": {
+    "file": "assets/FrontLayout.1dfa4924.css",
+    "src": "FrontLayout.css"
   },
   "resources/js/app.css": {
     "file": "assets/app.4537743c.css",

@@ -27,6 +27,7 @@ trait HasMediaCollection
     {
         $img = $this->getMedia($this->mediaCollection);
 
+
         // if ($this->shouldCacheImage !== null) {
         //     if (!Cache::has($img[0]->name)) {
         //         $id = $img[0]->id;

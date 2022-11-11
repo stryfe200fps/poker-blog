@@ -29,12 +29,19 @@ trait HasMediaCaching
         $img = $this->getMedia($this->mediaCollection);
         $image =   is_countable($img) && count($img) 
         > 0 ? $img[0] : '' ;
-        return $image;
+        return $image !== '' ? $image->getUrl() : '';
+    }
+
+    public function getMediaModelAttribute()
+    {
+        $img = $this->getMedia($this->mediaCollection);
+        $image =   is_countable($img) && count($img) 
+        > 0 ? $img[0] : '' ;
+        return $image !== '' ? $image : '';
     }
 
     public function getSocialImageAttribute()
     {
-
         $img = $this->getMedia($this->mediaCollection);
         $image =   is_countable($img) && count($img) 
         > 0 ? $img[0] : '' ;

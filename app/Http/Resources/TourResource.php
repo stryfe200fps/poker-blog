@@ -15,11 +15,11 @@ class TourResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'title' => $this->title,
+            'title' => googleTranslateExclude($this->title),
             'slug' => $this->slug,
             'image_set' => $this->allMedia(),
             'description' => $this->description,
-            'content' => $this->content,
+            'content' => googleTranslateExclude($this->content),
             'tournaments' => TournamentResource::collection($this->tournaments)
         ];
     }

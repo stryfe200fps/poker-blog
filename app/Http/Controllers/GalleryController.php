@@ -20,13 +20,13 @@ class GalleryController extends Controller
 
         foreach ($day->event_reports as $report) {
 
-            if (is_string($report->image))
+            if (is_string($report->mediaModel))
                 continue;
 
-            if ($path = $report->image->getPath()){ 
+            if ($path = $report->mediaModel->getPath()){ 
 
                 if (File::exists($path)) { 
-                    $mediaArray[] = $report->image;
+                    $mediaArray[] = $report->mediaModel;
             }
             }
         }

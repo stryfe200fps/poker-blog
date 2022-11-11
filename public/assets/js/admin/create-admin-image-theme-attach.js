@@ -4,6 +4,8 @@ let imageWhenValidated = $( "#image" ).find('.row').find('.col-sm-6').find('img'
 $(document).ready(function () {
 
 
+
+
 let value = $('#image-theme').val()
 
 if (value) { 
@@ -22,16 +24,17 @@ if (value) {
 
 } 
 
-let selectImage = $('#image-theme').on('change', function (value) {
+let selectImage = $('#image-theme').on('change', function (value = null) {
+
+  if (value.target.value == '') 
+    return;
 
   $.ajax({
     'url' : `/api/admin/attach-image/${value.target.value}`,
     'type' : 'get'
   }).then((image) => {
-
   imageWhenValidated.after("<div class='imageFrameCreate'> </div>");
   $('.imageFrameCreate').css("background-image", "url('"+image+"')");
-
   });
 
 });
@@ -49,6 +52,9 @@ let img = $( ".preview-lg" );
 let parentImage = $( "#image" ).find('.row').find('.col-sm-6');
 
 let selectImage = $('#image-theme').on('change', function (value) {
+
+  if (value.target.value == '') 
+    return;
 
   $.ajax({
     'url' : `/api/admin/attach-image/${value.target.value}`,

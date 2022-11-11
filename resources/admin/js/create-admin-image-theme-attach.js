@@ -4,6 +4,7 @@ let imageWhenValidated = $( "#image" ).find('.row').find('.col-sm-6').find('img'
 $(document).ready(function () {
 
 
+
 let value = $('#image-theme').val()
 
 if (value) { 

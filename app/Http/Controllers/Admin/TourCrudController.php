@@ -49,6 +49,9 @@ class TourCrudController extends CrudController
         CRUD::column('slug');
         CRUD::column('description');
 
+
+
+
         /**
          * Columns can be defined using the fluent syntax or array syntax:
          * - CRUD::column('price')->type('number');
@@ -78,7 +81,19 @@ class TourCrudController extends CrudController
         ]);
 
         CRUD::field('description');
+        $this->crud->addFields([
+    [   // CKEditor
+        'name' => 'content',
+        'label' => 'Content',
+        'type' => 'ckeditor',
+        'extra_plugins' => ['widget', 'autocomplete', 'textmatch', 'toolbar', 'wysiwygarea', 'image', 'sourcearea'],
 
+        'options' => [
+            'autoGrow_minHeight' => 200,
+            'autoGrow_bottomSpace' => 50,
+            'removePlugins' => 'resize,maximize',
+        ],
+    ], ]);
         $this->crud->addFields([[
             'label' => 'Image',
             'name' => 'image',

@@ -17,8 +17,8 @@ class LiveReportResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'title' => $this->title,
-            'description' => $this->content,
+            'title' => googleTranslateExclude($this->title),
+            'description' => googleTranslateExclude($this->content),
             'event' => $this->poker_event,
             'author' => $this->author,
             'date' => Carbon::parse($this->published_date)->toFormattedDateString(),

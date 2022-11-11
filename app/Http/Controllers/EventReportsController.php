@@ -18,11 +18,19 @@ class EventReportsController extends Controller
      */
     public function index(Request $request)
     {
+
+        // dd('asd');
         $day = Day::find($request->only('day')['day']);
-        return new ReportCollection($day->event_reports()
-            ->with(['level', 'image_theme', 'author', 'event_chips', 'event_chips.player', 'event_chips.player.country'])
+
+        $reports = $day->event_reports()
+            ->with(['level', 'image_theme', 'author', 'event_chips', 'event_chips.player', 'event_chips.player.country', 'media'])
             ->orderBy('published_date', 'DESC')
-            ->paginate(10));
+            ->paginate(10);
+
+            
+
+        // return $reports;
+        return new ReportCollection($reports);
     }
 
     

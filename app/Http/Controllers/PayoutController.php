@@ -13,7 +13,6 @@ class PayoutController extends Controller
     {
         try {
             $payout = EventPayout::where('player_id', $player_id)->where('event_id', $event)->firstOrFail();
-
             return $payout ?? '';
         } catch (Exception $e) {
             return '';
@@ -22,6 +21,6 @@ class PayoutController extends Controller
 
     public function event_payout($slug)
     {
-        return EventPayoutResource::collection(EventPayout::where('event_id', Event::where('slug', $slug)->first()->id)->paginate(20));
+        return EventPayoutResource::collection(EventPayout::orderBy('position', 'asc')->where('event_id', Event::where('slug', $slug)->first()->id)->paginate(20));
     }
 }
