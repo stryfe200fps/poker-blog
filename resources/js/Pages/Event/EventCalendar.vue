@@ -85,7 +85,7 @@
                         </div>
                     </div>
                 </div>
-                <div v-for="(series, index) in mergeSeriesList" :key="index">
+                <div v-for="(series, index) in seriesList" :key="index">
                     <div class="panel panel-default">
                         <div
                             class="panel-heading text-center"
@@ -105,7 +105,7 @@
                     />
                 </div>
                 <div
-                    v-if="mergeSeriesList?.length"
+                    v-if="seriesList?.length"
                     v-observe-visibility="handleScrolledToBottom"
                 ></div>
             </div>
@@ -150,26 +150,6 @@ const filteredSeries = computed(() => {
     };
 });
 
-const mergeSeriesList = computed(() => {
-    const mergedList = [];
-
-    seriesList.value.forEach((item) => {
-        const list = mergedList.filter((val) => val.date === item.date);
-
-        if (list.length) {
-            var existingIndex = mergedList.indexOf(list[0]);
-
-            mergedList[existingIndex].collection = mergedList[
-                existingIndex
-            ].collection.concat(item.collection);
-        } else {
-            mergedList.push(item);
-        }
-    });
-
-    return mergedList;
-});
-
 const datePlaceholder = computed(() => {
     return selectedDate.value === moment().format("YYYY-MM-DD")
         ? "Upcoming"
@@ -206,7 +186,18 @@ async function handleScrolledToBottom(isVisible) {
         tour: selectedTour.value || null,
         date_start: selectedDate.value,
     });
-    seriesList.value.push(...eventCalendarStore.series.data);
+    eventCalendarStore.series.data.forEach((data) => {
+        const list = seriesList.value.filter((val) => val.date === data.date);
+        if (list.length) {
+            const index = seriesList.value.indexOf(list[0]);
+
+            seriesList.value[index].collection = seriesList.value[
+                index
+            ].collection.concat(data.collection);
+        } else {
+            seriesList.value.push(...eventCalendarStore.series.data);
+        }
+    });
     lastPage.value = eventCalendarStore.series.meta.last_page;
 }
 
@@ -215,7 +206,6 @@ onMounted(async () => {
         page: 1,
         date_start: selectedDate.value,
     });
-    seriesList.value = eventCalendarStore.series.data;
     lastPage.value = eventCalendarStore.series.meta.last_page;
     await eventCalendarStore.getTours();
     tours.value = eventCalendarStore.tours.data;
@@ -232,10 +222,11 @@ watch(
             page: 1,
             ...value,
         });
-        currentPage.value = 1;
         seriesList.value = eventCalendarStore.series.data;
+        currentPage.value = 1;
         lastPage.value = eventCalendarStore.series.meta.last_page;
-    }
+    },
+    { immediate: true }
 );
 </script>
 

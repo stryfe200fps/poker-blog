@@ -156,6 +156,7 @@ watch(
     justify-content: flex-start;
     align-items: center;
     gap: 15px;
+    margin-top: 40px;
     margin-bottom: 40px;
     font-family: "Lato", sans-serif;
 }
