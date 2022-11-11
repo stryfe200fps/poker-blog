@@ -42,11 +42,17 @@ class LiveCrudController extends CrudController
             ->filter(fn ($arr) => $arr->status() == 'live'
             );
 
-        foreach ($allLiveEvents as $live) {
-            $this->crud->addClause('orWhere', function ($query) use ($live) {
-                $query->orWhere('id', $live->id);
+        if (!count($allLiveEvents))
+            $this->crud->addClause('where', function ($q) {
+                $q->where('id', 0);
             });
-        } 
+
+            foreach ($allLiveEvents as $live) {
+                $this->crud->addClause('orWhere', function ($query) use ($live) {
+                    $query->orWhere('id', $live->id);
+                });
+            } 
+
     }
 
     /**
