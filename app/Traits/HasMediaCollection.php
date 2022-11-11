@@ -27,16 +27,7 @@ trait HasMediaCollection
     {
         $img = $this->getMedia($this->mediaCollection);
 
-
-        // if ($this->shouldCacheImage !== null) {
-        //     if (!Cache::has($img[0]->name)) {
-        //         $id = $img[0]->id;
-        //         \Artisan::call("media-library:regenerate --ids=$id");
-        //         Cache::put($img[0]->name, $img[0]->uuid, 37000);
-        //     }
-        // }
-
-        $images =   is_countable($img) && count($img) 
+       $images =   is_countable($img) && count($img) 
         > 0 ? new ImageResource( $img[0]) : '' ;
 
         return $images;
