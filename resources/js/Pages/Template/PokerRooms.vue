@@ -2,7 +2,11 @@
     <div class="room-card" @click="showRoom(room.slug)">
         <div class="news-post standard-post2 custom-post">
             <div class="post-gallery" style="flex-grow: 1">
-                <img v-if="room.image" :src="room.image" :alt="room.image" />
+                <img
+                    v-if="room.image_set"
+                    :src="room.image_set?.sm_image"
+                    :alt="room.image_set?.sm_image"
+                />
                 <img v-else :src="defaultImg" :alt="defaultImg" />
             </div>
             <div class="post-title">

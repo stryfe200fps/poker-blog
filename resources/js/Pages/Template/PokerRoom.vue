@@ -12,7 +12,7 @@
                                 class="fa fa-chevron-left"
                                 aria-hidden="true"
                             ></i>
-                            to poker room</span
+                            to poker rooms</span
                         >
                     </h1>
                 </div>
@@ -78,9 +78,9 @@
                         <div class="col-sm-6">
                             <div class="post-gallery">
                                 <img
-                                    v-if="room.image"
-                                    :src="room.image"
-                                    :alt="room.image"
+                                    v-if="room.image_set"
+                                    :src="room.image_set?.md_image"
+                                    :alt="room.image_set?.md_image"
                                 />
                                 <img
                                     v-else
