@@ -75,7 +75,7 @@ function showMedia(link) {
 
 .post-gallery img {
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
 }
