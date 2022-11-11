@@ -128,24 +128,24 @@ class PayoutCrudController extends CrudController
 
         Widget::add()->to('after_content')->type('view')->view('vendor.backpack.helper.payout')->eventId(session()->get('payout_event_id')); // widgets to show the ordering card
 
-        $this->crud->addFilter([
-            'type' => 'select2',
-            'name' => 'player',
-            'label' => 'Country',
-        ],
+        // $this->crud->addFilter([
+        //     'type' => 'select2',
+        //     'name' => 'player',
+        //     'label' => 'Country',
+        // ],
 
-            function () {
-                return Country::all()->pluck('name', 'id')->toArray();
-            },
-            function ($values) {
-                $this->crud->query = $this->crud->query->where('event_id', session()->get('payout_event_id'))->whereHas('player', function ($query) use ($values) {
-                    $query->whereHas('country', function ($countryQuery) use ($values) {
-                        $countryQuery->where('id', $values);
-                    });
-                    // $query->where('id', $values);
-                });
-            }
-        );
+        //     function () {
+        //         return Country::all()->pluck('name', 'id')->toArray();
+        //     },
+        //     function ($values) {
+        //         $this->crud->query = $this->crud->query->where('event_id', session()->get('payout_event_id'))->whereHas('player', function ($query) use ($values) {
+        //             $query->whereHas('country', function ($countryQuery) use ($values) {
+        //                 $countryQuery->where('id', $values);
+        //             });
+        //             // $query->where('id', $values);
+        //         });
+        //     }
+        // );
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
