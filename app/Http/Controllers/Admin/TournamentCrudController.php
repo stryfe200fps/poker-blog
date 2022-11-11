@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\TournamentRequest;
+use App\Models\Tour;
 use App\Traits\LimitUserPermissions;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
@@ -68,6 +69,20 @@ class TournamentCrudController extends CrudController
                 'format' => config('app.date_format'),
             ],
         ]);
+
+        $this->crud->addFilter([
+            'type' => 'select2',
+            'name' => 'tour_filter',
+            'label' => 'Tours',
+        ],
+            function () {
+                return Tour::all()->pluck('title', 'id')->toArray();
+            },
+            function ($values) {
+                $this->crud->query = $this->crud->query->whereHas('tour', function ($query) use ($values) {
+                    $query->where('id', $values);
+                });
+            });
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
