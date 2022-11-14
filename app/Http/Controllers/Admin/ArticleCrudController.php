@@ -219,7 +219,7 @@ class ArticleCrudController extends CrudController
                         ],
 
                     ],
-                    'init_rows' => 1,
+                    'init_rows' => 0,
                 ],
 
                 [
@@ -334,14 +334,16 @@ public function fetchTags()
 
 public function store(Request $request)
 {
-    $arrayMerge = [ 0 =>  
+    $content = [ 0 =>  
     [
         'title' => $request['title'],
         'body' => $request['main_content']
     ]
     ];
 
-    $content = array_merge($arrayMerge, $request['content']);
+    if ($request['content'] !== null)
+        $content = array_merge($content, $request['content']);
+
     $request['content'] = $content;
 
      return $this->traitStore();
@@ -350,14 +352,18 @@ public function store(Request $request)
  public function update(Request $request)
     {
 
-    $arrayMerge = [ 0 =>  
+    $content = [ 0 =>  
     [
         'title' => $request['title'],
         'body' => $request['main_content']
     ]
     ];
 
-    $content = array_merge($arrayMerge, $request['content']);
+    if ($request['content'] !== null)
+        $content = array_merge($content, $request['content']);
+
+    $request['content'] = $content;
+
     $request['content'] = $content;
 
         return $this->traitUpdate();

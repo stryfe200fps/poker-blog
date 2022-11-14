@@ -347,6 +347,7 @@ class EventReportCrudController extends CrudController
             'type' => 'select2_from_array',
             'options' => [
                 'report' => 'report',
+                'stack' => 'stack',
                 'level' => 'level',
                 'content' => 'content',
             ],
