@@ -58,7 +58,6 @@ class EventCrudController extends CrudController
 
         CRUD::column('tournament')->label('Series');
 
-                    // 'format' => 'MMM D, YYYY hh:mm a',
         CRUD::column('schedule.date_start')->type('datetime')->format('MMM D, YYYY hh:mm a')->label('Start');
         CRUD::column('schedule.date_end')->type('datetime')->format('MMM D, YYYY hh:mm a')->label('End');
         CRUD::column('tournament.minimized_timezone')->label('Timezone');

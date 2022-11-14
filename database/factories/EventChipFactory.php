@@ -26,22 +26,11 @@ class EventChipFactory extends Factory
      */
     public function definition()
     {
-        //  $table->id();
-//             $table->string('name');
-//             $table->foreignId('player_id');
-//             $table->foreignId('event_id')->nullable();
-//             $table->foreignId('event_report_id');
-//             $table->integer('current_chips')->default(0);
-//             $table->float('payout', 15, 2)->default(0);
-//             $table->integer('rank')->default(0);
-//             $table->integer('chips_before')->default(0);
-
-// dd(EventReport::factory()->create());
-
+        $player = Player::factory()->create();
         return [
-            'player_id' => Player::factory()->create()->id,
+            'player_id' => $player->id,
+            'player' => $player->id,
             'event_report_id' => EventReport::factory()->create()->id,
-            'event_id' => Event::factory()->create()->id,
             'current_chips' => 2000,
             'day_id' => Day::factory()->create()->id,
             'published_date' => Carbon::now()
