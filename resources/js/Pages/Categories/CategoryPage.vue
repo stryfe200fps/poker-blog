@@ -38,10 +38,7 @@
                     </div>
                 </div>
                 <div v-if="isLoading">
-                    <span class="loader"></span>
-                    <p class="text-center" style="font-size: 20px">
-                        Loading...
-                    </p>
+                    <LoadingBar />
                 </div>
                 <div v-else>
                     <div v-if="articleCategories?.length">
@@ -124,6 +121,7 @@
 
 <script setup>
 import FrontLayout from "@/Layouts/FrontLayout.vue";
+import LoadingBar from "@/Components/LoadingBar.vue";
 import defaultImg from "/public/default-img.png";
 import { Inertia } from "@inertiajs/inertia";
 import { Head, Link } from "@inertiajs/inertia-vue3";
@@ -188,9 +186,7 @@ onMounted(async () => {
     await articleCategoryStore.getArticleCategoryLists(pathname.value, 1);
     lastPage.value = articleCategoryStore.articleCategoryLists.meta.last_page;
 
-    if (articleCategories.value) {
-        isLoading.value = false;
-    }
+    if (articleCategories.value) isLoading.value = false;
 });
 
 watch(
@@ -223,38 +219,5 @@ watch(
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
     gap: 30px;
-}
-
-.loader {
-    display: block;
-    transform: translateZ(1px);
-}
-
-.loader:after {
-    content: "";
-    display: block;
-    width: 48px;
-    height: 48px;
-    margin: 8px auto;
-    background-color: #f44336;
-    border-radius: 50%;
-    animation: coin-flip 2.4s cubic-bezier(0, 0.2, 0.8, 1) infinite;
-}
-
-@keyframes coin-flip {
-    0%,
-    100% {
-        animation-timing-function: cubic-bezier(0.5, 0, 1, 0.5);
-    }
-    0% {
-        transform: rotateY(0deg);
-    }
-    50% {
-        transform: rotateY(1800deg);
-        animation-timing-function: cubic-bezier(0, 0.5, 0.5, 1);
-    }
-    100% {
-        transform: rotateY(3600deg);
-    }
 }
 </style>

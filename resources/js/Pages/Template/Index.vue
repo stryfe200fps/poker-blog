@@ -102,17 +102,25 @@
                         Reset
                     </button>
                 </div>
-                <div class="grid">
-                    <PokerRooms
-                        v-for="(room, index) in rooms"
-                        :key="index"
-                        :room="room"
-                    />
+                <div v-if="isLoading">
+                    <LoadingBar />
                 </div>
-                <div
-                    v-if="rooms?.length"
-                    v-observe-visibility="handleScrolledToBottom"
-                ></div>
+                <div v-else>
+                    <div class="grid" v-if="rooms?.length">
+                        <PokerRooms
+                            v-for="(room, index) in rooms"
+                            :key="index"
+                            :room="room"
+                        />
+                    </div>
+                    <div
+                        v-if="rooms?.length"
+                        v-observe-visibility="handleScrolledToBottom"
+                    ></div>
+                    <div v-else>
+                        <h4>There are no poker rooms at the moment.</h4>
+                    </div>
+                </div>
             </div>
             <div v-if="page.template === 'videos'">
                 <div class="row" style="margin-bottom: 25px">
@@ -173,33 +181,53 @@
                         </div>
                     </div>
                 </div>
-                <div class="grid">
-                    <MediaReporting
-                        v-for="(media, index) in medias"
-                        :key="index"
-                        :media="media"
-                        :mediaType="
-                            page.slug === 'podcast' ? 'podcast' : 'video'
-                        "
-                    />
+                <div v-if="isLoading">
+                    <LoadingBar />
                 </div>
-                <div
-                    v-if="medias?.length"
-                    v-observe-visibility="handleScrolledToBottomMedia"
-                ></div>
+                <div v-else>
+                    <div class="grid" v-if="medias?.length">
+                        <MediaReporting
+                            v-for="(media, index) in medias"
+                            :key="index"
+                            :media="media"
+                            :mediaType="
+                                page.slug === 'podcast' ? 'podcast' : 'video'
+                            "
+                        />
+                    </div>
+                    <div
+                        v-if="medias?.length"
+                        v-observe-visibility="handleScrolledToBottomMedia"
+                    ></div>
+                    <div v-else>
+                        <h4>
+                            There are no
+                            <span class="text-lowercase">{{ page.title }}</span>
+                            at the moment.
+                        </h4>
+                    </div>
+                </div>
             </div>
             <div v-if="page.template === 'tours'">
-                <div class="grid">
-                    <PokerTours
-                        v-for="(tour, index) in tours"
-                        :key="index"
-                        :tour="tour"
-                    />
+                <div v-if="isLoading">
+                    <LoadingBar />
                 </div>
-                <div
-                    v-if="tours?.length"
-                    v-observe-visibility="handleScrolledToBottomTours"
-                ></div>
+                <div v-else>
+                    <div class="grid" v-if="tours?.length">
+                        <PokerTours
+                            v-for="(tour, index) in tours"
+                            :key="index"
+                            :tour="tour"
+                        />
+                    </div>
+                    <div
+                        v-if="tours?.length"
+                        v-observe-visibility="handleScrolledToBottomTours"
+                    ></div>
+                    <div v-else>
+                        <h4>There are no poker tours at the moment.</h4>
+                    </div>
+                </div>
             </div>
         </div>
     </FrontLayout>
@@ -217,6 +245,7 @@ import "mosha-vue-toastify/dist/style.css";
 import moment from "moment";
 
 import FrontLayout from "@/Layouts/FrontLayout.vue";
+import LoadingBar from "@/Components/LoadingBar.vue";
 import PokerRooms from "./PokerRooms.vue";
 import PokerTours from "./PokerTours.vue";
 import MediaReporting from "./MediaReporting.vue";
@@ -239,6 +268,7 @@ const pokerTourStore = useTourStore();
 const mediaStore = useMediaStore();
 const selectedDate = ref(moment().format("YYYY-MM-DD"));
 const isOpen = ref(false);
+const isLoading = ref(true);
 
 const props = defineProps({
     page: {
@@ -357,6 +387,7 @@ async function submitMessage() {
 
 onMounted(async () => {
     if (props.page.template === "rooms") {
+        isLoading.value = true;
         await pokerRoomStore.getRooms({
             page: 1,
         });
@@ -364,8 +395,11 @@ onMounted(async () => {
         lastPage.value = pokerRoomStore.rooms.meta.last_page;
         await pokerRoomStore.getCountries();
         countries.value = pokerRoomStore.countries.data;
+
+        if (rooms.value) isLoading.value = false;
     }
     if (props.page.template === "videos") {
+        isLoading.value = true;
         await mediaStore.getMedia({
             page: 1,
             date_start: selectedDate.value,
@@ -374,19 +408,25 @@ onMounted(async () => {
         lastPage.value = mediaStore.media.meta.last_page;
         await mediaStore.getMediaCategories();
         categories.value = mediaStore.categories.data;
+
+        if (medias.value) isLoading.value = false;
     }
     if (props.page.template === "tours") {
+        isLoading.value = true;
         await pokerTourStore.getTours({
             page: 1,
         });
         tours.value = pokerTourStore.tours.data;
         lastPage.value = pokerTourStore.tours.meta.last_page;
+
+        if (tours.value) isLoading.value = false;
     }
 });
 
 watch(
     () => filteredLocation.value,
     async function (value) {
+        isLoading.value = true;
         await pokerRoomStore.getRooms({
             page: 1,
             ...value,
@@ -394,11 +434,14 @@ watch(
         currentPage.value = 1;
         rooms.value = pokerRoomStore.rooms.data;
         lastPage.value = pokerRoomStore.rooms.meta.last_page;
+
+        if (rooms.value) isLoading.value = false;
     }
 );
 watch(
     () => filteredMedia.value,
     async function (value) {
+        isLoading.value = true;
         await mediaStore.getMedia({
             page: 1,
             ...value,
@@ -406,6 +449,8 @@ watch(
         currentPage.value = 1;
         medias.value = mediaStore.media.data;
         lastPage.value = mediaStore.media.meta.last_page;
+
+        if (medias.value) isLoading.value = false;
     }
 );
 </script>

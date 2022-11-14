@@ -13,6 +13,7 @@ const bannerStore = useBannerStore();
 const mainBanner = ref([]);
 const articleStore = useArticleStore();
 const articleList = ref([]);
+const isLoading = ref(true);
 
 onMounted(async () => {
     await eventStore.getMainEvents();
@@ -21,6 +22,10 @@ onMounted(async () => {
     mainBanner.value = bannerStore.getMainBanner();
     await articleStore.getList();
     articleList.value = articleStore.list.data;
+
+    if (articleList.value && (liveEvents.value || mainBanner.value)) {
+        isLoading.value = false;
+    }
 });
 </script>
 
@@ -30,6 +35,7 @@ onMounted(async () => {
             :liveEvents="liveEvents"
             :mainBanner="mainBanner"
             :articleList="articleList"
+            :isLoading="isLoading"
         />
     </FrontLayout>
 </template>

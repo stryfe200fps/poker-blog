@@ -85,29 +85,39 @@
                         </div>
                     </div>
                 </div>
-                <div v-for="(series, index) in seriesList" :key="index">
-                    <div class="panel panel-default">
-                        <div
-                            class="panel-heading text-center"
-                            style="font-family: 'Lato', sans-serif"
-                        >
-                            {{
-                                moment(new Date(series.date)).format(
-                                    "MMMM YYYY"
-                                )
-                            }}
-                        </div>
-                    </div>
-                    <EventCalendarItem
-                        v-for="event in series.collection"
-                        :key="event.id"
-                        :event="event"
-                    />
+                <div v-if="isLoading">
+                    <LoadingBar />
                 </div>
-                <div
-                    v-if="seriesList?.length"
-                    v-observe-visibility="handleScrolledToBottom"
-                ></div>
+                <div v-else>
+                    <div v-if="seriesList?.length">
+                        <div v-for="(series, index) in seriesList" :key="index">
+                            <div class="panel panel-default">
+                                <div
+                                    class="panel-heading text-center"
+                                    style="font-family: 'Lato', sans-serif"
+                                >
+                                    {{
+                                        moment(new Date(series.date)).format(
+                                            "MMMM YYYY"
+                                        )
+                                    }}
+                                </div>
+                            </div>
+                            <EventCalendarItem
+                                v-for="event in series.collection"
+                                :key="event.id"
+                                :event="event"
+                            />
+                        </div>
+                        <div
+                            v-if="seriesList?.length"
+                            v-observe-visibility="handleScrolledToBottom"
+                        ></div>
+                    </div>
+                    <div v-else style="margin-top: 45px">
+                        <h4>There are no events at the moment.</h4>
+                    </div>
+                </div>
             </div>
         </div>
     </FrontLayout>
@@ -119,6 +129,7 @@ import { computed, onMounted, ref, watch } from "@vue/runtime-core";
 import moment from "moment";
 
 import FrontLayout from "@/Layouts/FrontLayout.vue";
+import LoadingBar from "@/Components/LoadingBar.vue";
 import EventCalendarItem from "./EventCalendarItem.vue";
 import { useEventCalendarStore } from "@/Stores/eventCalendar.js";
 
@@ -140,6 +151,7 @@ const selectedDate = ref(moment().format("YYYY-MM-DD"));
 const currentPage = ref(1);
 const lastPage = ref(1);
 const isOpen = ref(false);
+const isLoading = ref(true);
 
 const filteredSeries = computed(() => {
     return {
@@ -218,6 +230,7 @@ onMounted(async () => {
 watch(
     () => filteredSeries.value,
     async function (value) {
+        isLoading.value = true;
         await eventCalendarStore.getSeries({
             page: 1,
             ...value,
@@ -225,6 +238,8 @@ watch(
         seriesList.value = eventCalendarStore.series.data;
         currentPage.value = 1;
         lastPage.value = eventCalendarStore.series.meta.last_page;
+
+        if (seriesList.value) isLoading.value = false;
     },
     { immediate: true }
 );

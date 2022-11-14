@@ -3,20 +3,16 @@
         <ul class="nav nav-tabs custom-tabs">
             <li
                 @click.prevent="changeTab(currentTab)"
-                :class="{ active: currentTab == 'live' }"
+                :class="{ active: currentTab === 'live' }"
             >
-                <Link
-                    href="/live-reporting"
-                    data-toggle="tab"
-                    preserve-state
-                    style="cursor: pointer"
+                <Link href="/live-reporting" data-toggle="tab" preserve-state
                     ><span class="hidden-xs">live & upcoming events</span
                     ><span class="visible-xs">live & upcoming</span></Link
                 >
             </li>
             <li
                 @click.prevent="changeTab(currentTab)"
-                :class="{ active: currentTab == 'past' }"
+                :class="{ active: currentTab === 'past' }"
             >
                 <Link
                     href="/live-reporting/past"
@@ -26,101 +22,82 @@
                     ><span class="visible-xs">past</span>
                 </Link>
             </li>
-            <!-- <li
-                @click.prevent="changeTab(currentTab)"
-                :class="{ active: currentTab == 'upcoming' }"
-            >
-                <Link
-                    href="/tournament/upcoming"
-                    data-toggle="tab"
-                    preserve-state
-                    ><span class="hidden-xs">upcoming events</span
-                    ><span class="visible-xs">upcoming</span>
-                </Link>
-            </li> -->
         </ul>
         <div class="tab-content">
-            <div class="block-content" v-show="currentTab == 'live'">
-                <div class="article-box" v-if="live?.length">
-                    <TournamentItem
-                        v-for="main in live"
-                        :key="main.id"
-                        :tournament="main"
-                    />
+            <div class="block-content" v-show="currentTab === 'live'">
+                <div v-if="isLoading">
+                    <LoadingBar />
                 </div>
-                <div
-                    v-if="live?.length"
-                    v-observe-visibility="handleScrolledToBottom"
-                ></div>
                 <div v-else>
-                    <h4>There are no live or upcoming events at the moment.</h4>
+                    <div class="article-box" v-if="live?.length">
+                        <TournamentItem
+                            v-for="main in live"
+                            :key="main.id"
+                            :tournament="main"
+                        />
+                    </div>
+                    <div
+                        v-if="live?.length"
+                        v-observe-visibility="handleScrolledToBottom"
+                    ></div>
+                    <div v-else>
+                        <h4>
+                            There are no live or upcoming events at the moment.
+                        </h4>
+                    </div>
                 </div>
             </div>
-            <div class="block-content" v-show="currentTab == 'past'">
-                <div class="article-box" v-if="past?.length">
-                    <TournamentItem
-                        v-for="main in past"
-                        :key="main.id"
-                        :tournament="main"
-                    />
+            <div class="block-content" v-show="currentTab === 'past'">
+                <div v-if="isLoading">
+                    <LoadingBar />
                 </div>
-                <div
-                    v-if="past?.length"
-                    v-observe-visibility="handleScrolledToBottom"
-                ></div>
                 <div v-else>
-                    <h4>There are no past events at the moment.</h4>
+                    <div class="article-box" v-if="past?.length">
+                        <TournamentItem
+                            v-for="main in past"
+                            :key="main.id"
+                            :tournament="main"
+                        />
+                    </div>
+                    <div
+                        v-if="past?.length"
+                        v-observe-visibility="handleScrolledToBottom"
+                    ></div>
+                    <div v-else>
+                        <h4>There are no past events at the moment.</h4>
+                    </div>
                 </div>
             </div>
-            <!-- <div class="block-content" v-show="currentTab == 'upcoming'">
-                <div class="article-box" v-if="upcoming?.length">
-                    <TournamentItem
-                        v-for="main in upcoming"
-                        :key="main.id"
-                        :tournament="main"
-                    />
-                </div>
-                <div
-                    v-if="upcoming?.length"
-                    v-observe-visibility="handleScrolledToBottom"
-                ></div>
-                <div v-else>
-                    <h4>No upcoming event...</h4>
-                </div>
-            </div> -->
         </div>
     </div>
 </template>
 
 <script setup>
-import { onMounted, onBeforeUnmount, ref, watch } from "@vue/runtime-core";
-import defaultImg from "/public/default-img.png";
-import { Head, Link } from "@inertiajs/inertia-vue3";
-import moment from "moment";
+import { onMounted, onBeforeUnmount, ref } from "@vue/runtime-core";
+import { Link } from "@inertiajs/inertia-vue3";
 
 import TournamentItem from "./TournamentItem.vue";
+import LoadingBar from "@/Components/LoadingBar.vue";
 
 const props = defineProps({
     live: Object,
     past: Object,
-    upcoming: Object,
     currentTab: {
         type: String,
         default: "live",
     },
+    isLoading: {
+        type: Boolean,
+        default: true,
+    },
 });
 
-const tab = ref(0);
-
-const changeTab = (currentTab) => {
-    tab.value = currentTab;
-};
-
-// const liveEventCollection = ref([]);
-// const pastEventCollection = ref([]);
-// const upcomingEventCollection = ref([]);
-
 const emit = defineEmits(["loadMore"]);
+const tab = ref("");
+
+function changeTab(currentTab) {
+    tab.value = currentTab;
+}
 
 function handleScrolledToBottom(isVisible) {
     if (!isVisible) return;
@@ -149,24 +126,10 @@ function stickyScroll() {
 onMounted(() => {
     window.addEventListener("scroll", stickyScroll);
 });
+
 onBeforeUnmount(() => {
     window.removeEventListener("scroll", stickyScroll);
 });
-
-// watch(
-//     () => props.tournamentList.data,
-//     (first) => {
-//         upcomingEventCollection.value = first.filter(
-//             ({ status }) => status === "upcoming"
-//         );
-//         pastEventCollection.value = first.filter(
-//             ({ status }) => status === "past"
-//         );
-//         liveEventCollection.value = first.filter(
-//             ({ status }) => status === "live"
-//         );
-//     }
-// );
 </script>
 
 <style scoped>
