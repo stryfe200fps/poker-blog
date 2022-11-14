@@ -26,7 +26,7 @@ it('optimizes the image', function () {
     $article = Article::find(1);
     $media = $article->media()->get()[0]->getPath();
 
-    dd($media);
+    // dd($media);
 
     ImageOptimizer::optimize($media);
     $size = filesize($media);

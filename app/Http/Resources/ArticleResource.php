@@ -11,11 +11,11 @@ class ArticleResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'title' => googleTranslateExclude($this->title)[0] ?? '',
+            'title' => $this->title,
             'title_tab' => $this->title ?? '',
             'description' => $this->description,
             'categories' => $this->article_categories,
-            'content' => googleTranslateExclude($this->content),
+            'content' => articleContentFormatter($this->customContent),
             'slug' => $this->slug,
             'tags' => $this->tags,
             'date' => Carbon::parse($this->published_date)->toFormattedDateString(),

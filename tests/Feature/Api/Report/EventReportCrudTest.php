@@ -54,14 +54,11 @@ it('can update reports if authenticated', function () {
     $eventChip2 = EventChip::factory()->create([
         'player_id' => Player::factory()->create()->id,
         'is_whatsapp' => 1,
-        'event_id' => $event->id,
     ]);
 
+    $event_id = Day::find($eventChip2->day_id)->event_id;
 
-    $page = $this->get('admin/report/create?event='.$eventChip2->event_id.'&day='.$eventChip2->day_id)->assertStatus(200);
-
-    // $page = $this->get('admin/report/create')->assertStatus(200);
-    // $page = $this->get('admin/report/create?day='.$eventChip2->day_id)->assertStatus(200);
+    $page = $this->get('admin/report/create?event='.$event_id.'&day='.$eventChip2->day_id)->assertStatus(200);
 
     // $data = [
     //     'title' => 'A report',

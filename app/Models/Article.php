@@ -21,7 +21,6 @@ class Article extends Model implements HasMedia
     use \Backpack\CRUD\app\Models\Traits\CrudTrait;
     use HasFactory;
     use HasSlug;
-
     use HasMediaCollection, HasMultipleImages;
 
     protected $casts = [
@@ -43,16 +42,39 @@ class Article extends Model implements HasMedia
         $reset1 = preg_replace($pattern, '' , $content);
         $reset2 = preg_replace($fPattern, '' , $content);
     }
-    public function setContentAttribute($content)
-    {
-        $new = collect($content)->map(function ($item, $key) {
-            // $glossary = Glossary::all()->pluck('word')->toArray();
-            $item['body'] = '<div class="content" id="content'.$key.'">'.$item['body'].'</div>';
-            return $item;
-        });
 
-        $this->attributes['content'] = json_encode($new->toArray());
+    public function getContentAttribute($content)
+    {
+        $array = json_decode($content);
+        array_shift($array);
+        return $array; 
     }
+
+    public function getCustomContentAttribute()
+    {
+        return json_decode($this->attributes['content']);
+    }
+
+    public function getMainContentAttribute()
+    {
+        $array = json_decode($this->attributes['content']);
+        return $array[0]->body;
+    }
+
+    public function stripContent()
+    {
+        return 'bobo ka adi';
+    }
+
+    // public function setContentAttribute($content)
+    // {
+    //     $new = collect($content)->map(function ($item, $key) {
+    //         $item['body'] = '<div class="content" id="content'.$key.'">'.$item['body'].'</div>';
+    //         return $item;
+    //     });
+
+    //     $this->attributes['content'] = json_encode($new->toArray());
+    // }
 
     public function tags()
     {

@@ -45,3 +45,13 @@ function googleTranslateExclude($content) {
 
     return $content[0];
 }
+
+function articleContentFormatter($content)
+{
+    $new = collect($content)->map(function ($item, $key) {
+        $item->body = '<div class="content" id="content'.$key.'">'.$item->body.'</div>';
+        return $item;
+    });
+
+    return $new;
+}
