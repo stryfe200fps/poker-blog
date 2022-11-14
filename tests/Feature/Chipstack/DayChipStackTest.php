@@ -16,8 +16,10 @@ test('it cannot inserts chip stack without authentication', function () {
 test('it can insert in event chips', function () {
     superAdminAuthenticate();
 
+    $player = Player::factory()->create();
     $data = EventChip::factory()->make([
         'event_report_id' => null,
+        'player' => $player
     ])->attributesToArray();
 
     $id = $data['day_id'];
@@ -27,7 +29,7 @@ test('it can insert in event chips', function () {
     $this->post('admin/chip-count', $data);
 
     $this->assertDatabaseHas('event_chips', [
-        'player_id' => $data['player_id'],
+        'player_id' => $player->id,
         'current_chips' => $data['current_chips']
     ]);
 });
@@ -35,9 +37,10 @@ test('it can insert in event chips', function () {
 it('it validates when insert wrong data', function () {
     superAdminAuthenticate();
 
+    $player = Player::factory()->create();
     $data = EventChip::factory()->make([
         'event_report_id' => null,
-        'player' => Player::factory()->create()
+        'player' => $player->id
     ])->attributesToArray();
 
     $id = $data['day_id'];

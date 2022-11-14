@@ -61,7 +61,7 @@ class DayCrudController extends CrudController
             //     return $m->report_count();
             // }));
 
-            CRUD::setEntityNameStrings('day', $getEvent?->title);
+            CRUD::setEntityNameStrings('day','Days: ' . $getEvent?->title);
         } else {
             $this->crud->denyAccess('create');
         }

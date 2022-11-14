@@ -34,7 +34,6 @@ test('if the "stacks before" is updating on next report ', function () {
     ]);
 
     $r1Chip = EventChip::factory()->create([
-        'event_id' => $event->id,
         'event_report_id' => $r1->id
     ]);
 
@@ -49,7 +48,6 @@ test('if the "stacks before" is updating on next report ', function () {
     ]);
 
     $r2Chip = EventChip::factory()->create([
-        'event_id' => $event->id,
         'event_report_id' => $r2->id
     ]);
 
@@ -64,7 +62,6 @@ test('if the "stacks before" is updating on next report ', function () {
     ]);
 
     $r3Chip = EventChip::factory()->create([
-        'event_id' => $event->id,
         'event_report_id' => $r3->id
     ]);
 

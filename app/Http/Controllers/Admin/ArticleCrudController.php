@@ -21,8 +21,8 @@ use Illuminate\Support\Facades\Validator;
 class ArticleCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation { store as traitStore; }
+     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation { update as traitUpdate; }
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
@@ -168,14 +168,26 @@ class ArticleCrudController extends CrudController
                     ],
                     'tab' => 'Basic',
                 ],
-
-
-                [   // CKEditor
+     [   // CKEditor
                     'name' => 'description',
                     'label' => 'Description',
                     'type' => 'textarea',
                     'tab' => 'Basic',
                 ],
+                        [   // CKEditor
+                            'name' => 'main_content',
+                            'label' => 'Main Content',
+                            'type' => 'ckeditor',
+
+                            'extra_plugins' => ['widget', 'autocomplete', 'textmatch', 'toolbar', 'wysiwygarea', 'image', 'sourcearea'],
+                    'tab' => 'Basic',
+                            'options' => [
+                                'autoGrow_minHeight' => 200,
+                                'autoGrow_bottomSpace' => 50,
+                                'removePlugins' => 'resize,maximize',
+                            ],
+                        ],
+           
 
                 [
                     'name' => 'content',
@@ -192,19 +204,6 @@ class ArticleCrudController extends CrudController
                                 'class' => 'form-group col-md-12',
                             ],
                         ],
-
-                        // [   // CKEditor
-                        //     'name' => 'title',
-                        //     'label' => 'Title',
-                        //     'type' => 'ckeditor',
-                        //     'extra_plugins' => ['widget', 'autocomplete', 'textmatch', 'toolbar', 'wysiwygarea', 'image', 'sourcearea'],
-                        //     'options' => [
-                        //     'height' => '80px',
-                        //         'autoGrow_minHeight' => 200,
-                        //         'autoGrow_bottomSpace' => 50,
-                        //         'removePlugins' => 'resize,maximize',
-                        //     ],
-                        // ],
 
                         [   // CKEditor
                             'name' => 'body',
@@ -326,7 +325,6 @@ class ArticleCrudController extends CrudController
                 ],
             );
 
-        // Widget::add()->type('script')->content('assets/js/admin/date/modify_datepicker.js');
     }
 
 public function fetchTags()
@@ -336,88 +334,34 @@ public function fetchTags()
 
 public function store(Request $request)
 {
-    $this->crud->hasAccessOrFail('create');
+    $arrayMerge = [ 0 =>  
+    [
+        'title' => $request['title'],
+        'body' => $request['main_content']
+    ]
+    ];
 
-    if ($request->get('content') != null) {
-        foreach ($request->get('content')  as $content) {
-            Validator::make($content,
-                ['title' => 'required',
-                    'body' => 'required',
-                ],
-                [
-                    'title' => 'title is required',
-                    'body' => 'body is required',
-                ])->validate();
-        }
-    } 
-    // execute the FormRequest authorization and validation, if one is required
-    $request = $this->crud->validateRequest();
+    $content = array_merge($arrayMerge, $request['content']);
+    $request['content'] = $content;
 
-    // $date  = \Carbon\Carbon::parse($request->get('published_date'), $request->get('timezone')) ?? 'UTC' ;
-    // $request['published_date'] = $date->setTimezone('UTC');
+     return $this->traitStore();
+}
 
-    // register any Model Events defined on fields
-    $this->crud->registerFieldEvents();
-
-    $item = $this->crud->create($this->crud->getStrippedSaveRequest($request));
-
-    // dd($request->get('published_date'), $request->get('timezone'));
-    // $this->attributes['published_date'] = $date->setTimezone('UTC');
-    // $item->setAttribute('timezone', $request['timezone']);
-
-    $this->data['entry'] = $this->crud->entry = $item;
-
-    // session()->put('new_article', 'a new article');
-
-    session()->flash('new_article', ['id' => $item->id]);
-
-    \Alert::success(trans('backpack::crud.insert_success'))->flash();
-
-    $this->crud->setSaveAction();
-
-    return $this->crud->performSaveAction($item->getKey());
-    }
-
-    public function update(Request $request)
+ public function update(Request $request)
     {
-        $this->crud->hasAccessOrFail('update');
 
+    $arrayMerge = [ 0 =>  
+    [
+        'title' => $request['title'],
+        'body' => $request['main_content']
+    ]
+    ];
 
-    if ($request->get('content') != null) {
-        foreach ($request->get('content')  as $content) {
-            Validator::make($content,
-                ['title' => 'required',
-                    'body' => 'required',
-                ],
-                [
-                    'title' => 'title is required',
-                    'body' => 'body is required',
-                ])->validate();
-        }
-    } 
+    $content = array_merge($arrayMerge, $request['content']);
+    $request['content'] = $content;
 
-        // execute the FormRequest authorization and validation, if one is required
-        $request = $this->crud->validateRequest();
-
-        // register any Model Events defined on fields
-        $this->crud->registerFieldEvents();
-
-        // update the row in the db
-        $item = $this->crud->update(
-            $request->get($this->crud->model->getKeyName()),
-            $this->crud->getStrippedSaveRequest($request)
-        );
-        $this->data['entry'] = $this->crud->entry = $item;
-
-        // show a success message
-        \Alert::success(trans('backpack::crud.update_success'))->flash();
-
-        // save the redirect choice for next time
-        $this->crud->setSaveAction();
-
-        return $this->crud->performSaveAction($item->getKey());
+        return $this->traitUpdate();
     }
-
 
 
     protected function setupUpdateOperation()

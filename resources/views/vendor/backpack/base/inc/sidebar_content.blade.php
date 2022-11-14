@@ -165,5 +165,15 @@
 .cke_reset {
     /* display:none!important; */
 }
+
+.bootstrap-datetimepicker-widget .picker-switch td span, .bootstrap-datetimepicker-widget .picker-switch td i {
+color: #fff;
+background-color: #f44336;
+}
+
+.bootstrap-datetimepicker-widget .picker-switch td span, .bootstrap-datetimepicker-widget .picker-switch td i:hover {
+color: #fff;
+background-color: #f44336;
+}
 </style>
 <!-- <li class="nav-item"><a class="nav-link" href="{{ backpack_url('day') }}"><i class="nav-icon la la-question"></i> Days</a></li> -->
