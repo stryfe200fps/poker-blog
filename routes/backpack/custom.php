@@ -23,7 +23,6 @@ Route::crud('article', 'ArticleCrudController');
     Route::crud('poker-tour', 'TourCrudController');
     Route::crud('series', 'TournamentCrudController');
     Route::crud('article-category', 'ArticleCategoryCrudController');
-    Route::crud('live-report-player', 'EventChipCrudController');
     Route::crud('country', 'CountryCrudController');
     Route::crud('player', 'PlayerCrudController');
     Route::crud('chip-count', 'ChipCountCrudController');

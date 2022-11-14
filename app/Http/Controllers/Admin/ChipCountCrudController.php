@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\ChipCountRequest;
+use App\Http\Requests\EventChipRequest;
 use App\Models\Day;
 use App\Models\Event;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
@@ -178,7 +179,7 @@ class ChipCountCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(ChipCountRequest::class);
+        CRUD::setValidation(EventChipRequest::class);
 
         $this->crud->addField([
             'type' => 'switch',
@@ -203,7 +204,7 @@ class ChipCountCrudController extends CrudController
         $this->crud->addField([
             'name' => 'current_chips',
             'type' => 'text',
-            'label' => 'chips',
+            'label' => 'Chips',
         ]);
 
         CRUD::addField(

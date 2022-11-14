@@ -29,7 +29,6 @@ class EventChipFactory extends Factory
         $player = Player::factory()->create();
         return [
             'player_id' => $player->id,
-            'player' => $player->id,
             'event_report_id' => EventReport::factory()->create()->id,
             'current_chips' => 2000,
             'day_id' => Day::factory()->create()->id,

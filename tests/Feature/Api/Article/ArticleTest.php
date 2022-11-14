@@ -48,13 +48,6 @@ it('can update article if authenticated', function () {
         'article_categories' => collect(ArticleCategory::factory()->times(2)->create())->pluck('id')->toArray(),
     ])->attributesToArray();
 
-    // $data = [
-    //     'title' => 'things I hate',
-    //     'description' => 'description',
-    //     'body' => 'body',
-    //     'published_date' => '2020-04-17',
-    //     'author_id' => Author::factory()->create()->id,
-    // ];
 
     $datas = $this->put('admin/article/update', $data);
     $this->assertDatabaseHas('articles', ['title' => 'things I hate']);

@@ -37,6 +37,7 @@ it('it validates when insert wrong data', function () {
 
     $data = EventChip::factory()->make([
         'event_report_id' => null,
+        'player' => Player::factory()->create()
     ])->attributesToArray();
 
     $id = $data['day_id'];
@@ -45,10 +46,8 @@ it('it validates when insert wrong data', function () {
     $this->get("admin/chip-count/create?day=$id&event=$event")->assertStatus(200);
 
    $postedEmpty =  $this->post('admin/chip-count', []);
-
-    $postedEmpty->assertSessionHasErrors('player_id');
     $postedEmpty->assertSessionHasErrors('current_chips');
-    $postedEmpty->assertSessionHasErrors('day_id');
+    $postedEmpty->assertSessionHasErrors('player');
 });
 
 
