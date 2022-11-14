@@ -16,6 +16,7 @@ it('optimizes the image', function () {
     // dd(base64_encode(file_get_contents('https://www.fillmurray.com/640/360')));
     $data = Article::factory()->make([
         'title' => 'Things I do',
+        'main_content' => 'main',
         'article_categories' => collect(ArticleCategory::factory()->times(2)->create())->pluck('id')->toArray(),
     ])->attributesToArray();
 

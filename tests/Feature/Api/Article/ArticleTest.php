@@ -21,14 +21,17 @@ it('cannot create articles if unauthenticated', function () {
 });
 
 it('can insert article if authenticated', function () {
+    $this->withoutExceptionHandling();
     superAdminAuthenticate();
 
     $this->get('admin/article/create')->assertStatus(200);
 
     $data = Article::factory()->make([
         'title' => 'Things I do',
+        'main_content' => 'main content',
         'article_categories' => collect(ArticleCategory::factory()->times(2)->create())->pluck('id')->toArray(),
     ])->attributesToArray();
+
 
     $datas = $this->post('admin/article', $data);
     $this->assertDatabaseHas('articles', ['title' => 'Things I do',
@@ -45,9 +48,9 @@ it('can update article if authenticated', function () {
     $data = Article::factory()->make([
         'id' => $article->id,
         'title' => 'things I hate',
+        'main_content' => 'main content',
         'article_categories' => collect(ArticleCategory::factory()->times(2)->create())->pluck('id')->toArray(),
     ])->attributesToArray();
-
 
     $datas = $this->put('admin/article/update', $data);
     $this->assertDatabaseHas('articles', ['title' => 'things I hate']);
