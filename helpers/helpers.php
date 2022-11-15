@@ -48,6 +48,11 @@ function googleTranslateExclude($content) {
 
 function articleContentFormatter($content)
 {
+    if (! is_array($content) ) {
+        $content->body = '<div class="content" id="content0">'.$content->body.'</div>';
+        return $content;
+    }
+
     $new = collect($content)->map(function ($item, $key) {
         $item->body = '<div class="content" id="content'.$key.'">'.$item->body.'</div>';
         return $item;

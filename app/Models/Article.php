@@ -50,6 +50,22 @@ class Article extends Model implements HasMedia
         return $array; 
     }
 
+    public function getFirstContentAttribute()
+    {
+        $array = json_decode($this->attributes['content']);
+        return $array[0];
+    }
+
+    public function getOptionalContentAttribute()
+    {
+        $array = json_decode($this->attributes['content']);
+        if (count($array) <= 1)
+            return [];
+
+        return array_shift($array);
+        
+    }
+
     public function getCustomContentAttribute()
     {
         return json_decode($this->attributes['content']);
@@ -59,11 +75,6 @@ class Article extends Model implements HasMedia
     {
         $array = json_decode($this->attributes['content']);
         return $array[0]->body;
-    }
-
-    public function stripContent()
-    {
-        return 'bobo ka adi';
     }
 
     // public function setContentAttribute($content)

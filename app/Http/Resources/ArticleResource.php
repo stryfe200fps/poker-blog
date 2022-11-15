@@ -10,12 +10,14 @@ class ArticleResource extends JsonResource
 {
     public function toArray($request)
     {
+        // dd($this->firstContent);
         return [
             'title' => $this->title,
             'title_tab' => $this->title ?? '',
             'description' => $this->description,
             'categories' => $this->article_categories,
-            'content' => articleContentFormatter($this->customContent),
+            'main_content' => articleContentFormatter($this->firstContent),
+            'content' => articleContentFormatter($this->optionalContent),
             'slug' => $this->slug,
             'tags' => $this->tags,
             'date' => Carbon::parse($this->published_date)->toFormattedDateString(),
