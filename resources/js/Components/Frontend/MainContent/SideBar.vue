@@ -97,21 +97,21 @@
                 <img
                     :src="homeSideBanner.image_set?.og_image"
                     :alt="homeSideBanner.image_set?.og_image"
-                    class="img-responsive"
+                    style="max-width: 100%; height: auto"
                 />
             </div>
             <div class="tablet-advert">
                 <img
                     :src="homeSideBanner.image_set?.og_image"
                     :alt="homeSideBanner.image_set?.og_image"
-                    class="img-responsive"
+                    style="max-width: 100%; height: auto"
                 />
             </div>
             <div class="mobile-advert">
                 <img
                     :src="homeSideBanner.image_set?.og_image"
                     :alt="homeSideBanner.image_set?.og_image"
-                    class="img-responsive"
+                    style="max-width: 100%; height: auto"
                 />
             </div>
         </div>

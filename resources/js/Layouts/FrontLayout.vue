@@ -3,7 +3,7 @@ import Header from "../Components/Frontend/Header.vue";
 import Footer from "../Components/Frontend/Footer.vue";
 import SideBar from "../Components/Frontend/MainContent/SideBar.vue";
 
-import { Head, Link, usePage } from "@inertiajs/inertia-vue3";
+import { usePage } from "@inertiajs/inertia-vue3";
 import { onMounted, onBeforeUnmount, ref, computed } from "@vue/runtime-core";
 import { useBannerStore } from "@/Stores/banner.js";
 import Echo from "laravel-echo";
@@ -23,8 +23,10 @@ const preferences = ref([
 const selectedPreference = ref(["Necessary"]);
 const bannerStore = useBannerStore();
 const homeFullBanner = ref([]);
+const homeSemiFullBanner = ref([]);
 const homeSideBanner = ref([]);
 const reportingFullBanner = ref([]);
+const reportingSemiFullBanner = ref([]);
 const reportingSideBanner = ref([]);
 
 function openPreference() {
@@ -88,6 +90,26 @@ const currentComponent = computed(() => {
     return usePage().component.value;
 });
 
+const formattedHomeBanner = computed(() => {
+    const width = document.body.clientWidth;
+
+    if (width >= 1920) {
+        return homeFullBanner.value;
+    } else {
+        return homeSemiFullBanner.value;
+    }
+});
+
+const formattedReportingBanner = computed(() => {
+    const width = document.documentElement.clientWidth;
+
+    if (width >= 1920) {
+        return reportingFullBanner.value;
+    } else {
+        return reportingSemiFullBanner.value;
+    }
+});
+
 onMounted(async () => {
     document.body.style.overflow = "auto";
     setTimeout(() => {
@@ -96,8 +118,10 @@ onMounted(async () => {
     window.addEventListener("scroll", showScrollTopBtn);
     await bannerStore.getBanners();
     homeFullBanner.value = bannerStore.getHomeFullBanner();
+    homeSemiFullBanner.value = bannerStore.getHomeSemiFullBanner();
     homeSideBanner.value = bannerStore.getHomeSideBanner();
     reportingFullBanner.value = bannerStore.getReportingFullBanner();
+    reportingSemiFullBanner.value = bannerStore.getReportingSemiFullBanner();
     reportingSideBanner.value = bannerStore.getReportingSideBanner();
 });
 
@@ -112,44 +136,32 @@ onBeforeUnmount(() => {
         <main>
             <section class="block-wrapper">
                 <div
+                    class="home-banner"
                     v-if="
-                        reportingFullBanner &&
+                        formattedReportingBanner &&
                         (url.includes('live-reporting') ||
                             currentComponent === 'Event/Index')
                     "
                     :style="{
-                        position: 'fixed',
-                        inset: '0',
-                        width: '100%',
-                        minHeight: '100vh',
-                        backgroundImage: `url(${reportingFullBanner.image_set?.og_image})`,
-                        backgroundRepeat: 'no-repeat',
-                        backgroundPosition: 'top center',
-                        backgroundAttachment: 'fixed',
-                        imageRendering: '-webkit-optimize-contrast',
-                        cursor: reportingFullBanner.url ? 'pointer' : 'auto',
+                        backgroundImage: `url(${formattedReportingBanner.image_set?.og_image})`,
+                        cursor: formattedReportingBanner.url
+                            ? 'pointer'
+                            : 'auto',
                     }"
-                    @click="visitBanner(reportingFullBanner.url)"
+                    @click="visitBanner(formattedReportingBanner.url)"
                 ></div>
                 <div
+                    class="home-banner"
                     v-if="
-                        homeFullBanner &&
+                        formattedHomeBanner &&
                         currentComponent === 'Index' &&
                         url === '/'
                     "
                     :style="{
-                        position: 'fixed',
-                        inset: '0',
-                        width: '100%',
-                        minHeight: '100vh',
-                        backgroundImage: `url(${homeFullBanner.image_set?.og_image})`,
-                        backgroundRepeat: 'no-repeat',
-                        backgroundPosition: 'top center',
-                        backgroundAttachment: 'fixed',
-                        imageRendering: '-webkit-optimize-contrast',
-                        cursor: homeFullBanner.url ? 'pointer' : 'auto',
+                        backgroundImage: `url(${formattedHomeBanner.image_set?.og_image})`,
+                        cursor: formattedHomeBanner.url ? 'pointer' : 'auto',
                     }"
-                    @click="visitBanner(homeFullBanner.url)"
+                    @click="visitBanner(formattedHomeBanner.url)"
                 ></div>
                 <div
                     class="container"
@@ -235,6 +247,17 @@ onBeforeUnmount(() => {
 </template>
 
 <style>
+.home-banner {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    min-height: 100vh;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: top center;
+    image-rendering: -webkit-optimize-contrast;
+}
+
 .scroll-top {
     position: fixed;
     bottom: 50px;
@@ -608,6 +631,19 @@ button.social-btn {
 @media (min-width: 992px) {
     .unset-padding-right {
         padding-right: unset;
+    }
+}
+
+@media (max-width: 1599px) {
+    .home-banner {
+        display: none;
+    }
+}
+
+@media (max-width: 452px) {
+    .scroll-top {
+        bottom: 20px;
+        right: 20px;
     }
 }
 

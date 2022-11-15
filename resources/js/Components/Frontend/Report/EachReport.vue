@@ -1,6 +1,7 @@
 <template>
-    <div class="single-post-box" v-if="item.type === 'report'">
+    <div class="single-post-box">
         <div
+            v-if="item.type !== 'level' && item.type !== 'content'"
             class="title-post"
             style="padding-top: 20px; border-top: 1px solid #d3d3d3"
         >
@@ -29,7 +30,7 @@
                     <ul class="post-tags">
                         <li>
                             <i class="fa fa-user"></i>by
-                            <a href="#">{{ item.author?.name }} </a>
+                            <a href="#">{{ item.author?.name }}</a>
                         </li>
                         <li>
                             <i class="fa fa-clock-o"></i
@@ -112,13 +113,17 @@
         </div>
 
         <div
+            v-if="item.type === 'report' || item.type === 'content'"
             :class="item?.image_set ? 'post-content-min-height' : ''"
             class="post-content"
         >
             <div
                 class="post-gallery float-img"
                 v-if="item.image_set"
-                style="float: left; margin: 0px 15px 5px 0px"
+                style="
+                    float: left !important;
+                    margin: 0px 15px 5px 0px !important;
+                "
             >
                 <div style="position: relative">
                     <img
@@ -130,6 +135,7 @@
                         ]"
                     />
                     <div
+                        v-if="item.theme"
                         class="imageFrame"
                         :style="{
                             'background-image': 'url(' + item.theme + ')',
@@ -142,7 +148,12 @@
             </div>
             <div class="remove-padding" v-html="item.content"></div>
         </div>
-        <div v-if="item.event_chips">
+        <div
+            v-if="
+                item.event_chips &&
+                (item.type === 'report' || item.type === 'stack')
+            "
+        >
             <CustomeTable>
                 <template v-slot:table-body>
                     <tr v-for="(item, index) in item.event_chips" :key="index">
@@ -210,7 +221,10 @@
         </div>
         <div
             class="post-tags-box margin-top"
-            v-if="item.event_chips.length"
+            v-if="
+                item.event_chips.length &&
+                (item.type === 'report' || item.type === 'stack')
+            "
             style="border: none"
         >
             <ul class="tags-box">
@@ -318,6 +332,34 @@ function getFrame(theme) {
 
 :deep(.remove-padding p) {
     padding-left: unset;
+}
+
+:deep(.remove-padding h1),
+:deep(.remove-padding h2),
+:deep(.remove-padding h3),
+:deep(.remove-padding h4),
+:deep(.remove-padding h5),
+:deep(.remove-padding h6) {
+    font-size: 16px;
+    padding: 0;
+}
+
+:deep(.remove-padding ol li) {
+    font-family: Lato, sans-serif;
+    font-size: 16px;
+    list-style: decimal;
+    color: #666666;
+}
+
+:deep(.remove-padding ul li) {
+    font-family: Lato, sans-serif;
+    font-size: 16px;
+    list-style: disc;
+    color: #666666;
+}
+
+:deep(.remove-padding ol li a) {
+    color: #f44336;
 }
 
 .single-post-box .post-tags-box ul.tags-box li a {

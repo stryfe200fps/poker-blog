@@ -97,6 +97,7 @@ Route::get('tours/{tourSlug}', function ($tourSlug) {
         return Inertia::render('Template/PokerTour', [
             'title' => $tour->title. ' | LifeOfPoker',
             'tour' => $tour,
+            'description' => $tour->description,
             'page_title' => $tour->title,
         ]);
     }

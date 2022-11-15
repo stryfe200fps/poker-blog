@@ -75,7 +75,7 @@
                             :src="mainBanner.image_set?.og_image"
                             :alt="mainBanner.image_set?.og_image"
                             loading="lazy"
-                            class="img-responsive"
+                            style="max-width: 100%; height: auto"
                         />
                     </div>
                     <div class="tablet-advert">
@@ -83,7 +83,7 @@
                             :src="mainBanner.image_set?.og_image"
                             :alt="mainBanner.image_set?.og_image"
                             loading="lazy"
-                            class="img-responsive"
+                            style="max-width: 100%; height: auto"
                         />
                     </div>
                     <div class="mobile-advert">
@@ -91,7 +91,7 @@
                             :src="mainBanner.image_set?.og_image"
                             :alt="mainBanner.image_set?.og_image"
                             loading="lazy"
-                            class="img-responsive"
+                            style="max-width: 100%; height: auto"
                         />
                     </div>
                 </div>

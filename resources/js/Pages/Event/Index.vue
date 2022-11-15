@@ -1,7 +1,7 @@
 <template>
     <FrontLayout title="Event">
         <div v-if="eventData">
-            <div class="block-content" v-if="1">
+            <div class="block-content">
                 <div class="title-section">
                     <h1>
                         <span>{{ eventData.tournament }}</span>
@@ -56,6 +56,7 @@
                         :event="eventData"
                         :reports="liveReport"
                         :chipCounts="chipCountsData"
+                        :whatsappContent="whatsappContent"
                         :whatsapp="whatsappData"
                         :gallery="galleryData"
                         :payouts="payoutsData"
@@ -122,6 +123,7 @@ const selectDay = ref(null);
 const liveReport = ref([]);
 const chipCountsData = ref([]);
 const whatsappData = ref([]);
+const whatsappContent = ref([]);
 const galleryData = ref([]);
 const payoutsData = ref([]);
 const loadPage = ref(1);
@@ -183,6 +185,8 @@ async function reportViewing() {
     if (props.type === "whatsapp") {
         await eventStore.getWhatsappData(selectDay.value);
         whatsappData.value = eventStore.whatsapp.data;
+        await eventStore.getWhatsappContent();
+        whatsappContent.value = eventStore.whatsappContent;
         return;
     }
 
@@ -243,7 +247,6 @@ onMounted(async () => {
             }
         }
     );
-    // await tournamentStore.getList();
 });
 
 onUpdated(() => {
@@ -278,17 +281,7 @@ const fetchLiveReports = () => {
             .toLowerCase()}/${props.type}`,
         { preserveState: true }
     );
-
-    // await eventStore.getLiveReport(1, selectDay.value);
-    // liveReport.value = eventStore.liveReportList.data;
-    // lastPage.value = eventStore.liveReportList.meta.last_page;
-    // await eventStore.getGalleryData(selectDay.value);
-    // galleryData.value = eventStore.galleryData;
 };
-
-// const fetchPage = async () => {
-//     await eventStore.fetchWithPaginate(props.id,days.value)
-// }
 
 watch(
     () => eventStore.eventData.data,
@@ -296,13 +289,6 @@ watch(
         eventData.value = eventStore.eventData.data;
     }
 );
-
-// watch(
-//     () => eventStore.liveReportList,
-//     function () {
-//         liveReport.value = eventStore.liveReportList.data;
-//     }
-// );
 </script>
 
 <style scoped>
