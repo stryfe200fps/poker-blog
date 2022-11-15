@@ -12,12 +12,12 @@ class ArticleResource extends JsonResource
     {
         // dd($this->firstContent);
         return [
-            'title' => $this->title,
+            'title' => googleTranslateExclude($this->title)[0],
             'title_tab' => $this->title ?? '',
             'description' => $this->description,
             'categories' => $this->article_categories,
-            'main_content' => $this->firstContent,
-            'content' => articleContentFormatter($this->optionalContent),
+            'main_content' => googleTranslateExclude($this->firstContent),
+            'content' => googleTranslateExclude(articleContentFormatter($this->optionalContent[0])),
             'slug' => $this->slug,
             'tags' => $this->tags,
             'date' => Carbon::parse($this->published_date)->toFormattedDateString(),
