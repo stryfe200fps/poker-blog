@@ -33,6 +33,7 @@ use App\Http\Controllers\Api\ReportsApiController;
 use App\Http\Controllers\ArticleCategoryController;
 use App\Http\Controllers\Api\TournamentApiController;
 use App\Http\Controllers\Api\MediaReportingController;
+use App\Http\Controllers\ContentController;
 use App\Http\Controllers\ImageController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -128,5 +129,7 @@ Route::get('banners', [BannerController::class, 'index']);
 Route::get('media-reports', [MediaReportingController::class, 'index']);
 
 Route::get('images/{media}', [ ImageController::class, 'show' ])->where('path', '.*');
+
+Route::get('content/{slug}', [ContentController::class, 'show']);
 
 

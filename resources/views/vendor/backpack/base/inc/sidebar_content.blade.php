@@ -86,9 +86,9 @@
     @if(backpack_user()->can('menu-item.list') || backpack_user()->role('super-admin'))
     <li class='nav-item'><a class='nav-link' href='{{ backpack_url('menu-item') }}'><i class='nav-icon la la-list'></i> <span>Navigation</span></a></li>
     @endif
-
-
     <li class="nav-item"><a class="nav-link" href="{{ backpack_url('banner') }}"><i class="nav-icon la la-list"></i> Banners</a></li>
+
+    <li class="nav-item"><a class="nav-link" href="{{ backpack_url('content') }}"><i class="nav-icon la la-list"></i> Contents</a></li>
 
     </ul>
 </li>
