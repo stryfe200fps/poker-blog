@@ -15,6 +15,12 @@ export const useBannerStore = defineStore("banner", {
                     (banner) => banner.location === "home-background-full"
                 );
         },
+        getHomeSemiFullBanner: (state) => {
+            return (slug) =>
+                state.banners.data?.find(
+                    (banner) => banner.location === "home-background-full-1600"
+                );
+        },
         getMainBanner: (state) => {
             return (slug) =>
                 state.banners.data?.find(
@@ -31,6 +37,13 @@ export const useBannerStore = defineStore("banner", {
             return (slug) =>
                 state.banners.data?.find(
                     (banner) => banner.location === "reporting-background-full"
+                );
+        },
+        getReportingSemiFullBanner: (state) => {
+            return (slug) =>
+                state.banners.data?.find(
+                    (banner) =>
+                        banner.location === "reporting-background-full-1600"
                 );
         },
         getReportingSideBanner: (state) => {

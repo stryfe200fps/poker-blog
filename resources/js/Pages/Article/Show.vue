@@ -7,7 +7,7 @@
             <label
                 id="table-of-contents"
                 class="table-contents"
-                v-if="article.content?.length > 1"
+                v-if="article.content?.length"
             >
                 <div @click="isPull = !isPull" class="table-header">
                     Table of Contents
@@ -143,14 +143,25 @@
                 </div>
                 <div v-if="article.image_set" class="post-gallery">
                     <img
-                        :src="article.image_set.lg_image"
-                        :alt="article.image_set.lg_image"
+                        :src="article.image_set.xl_image"
+                        :alt="article.image_set.xl_image"
                     />
                     <span class="image-caption">{{ article.caption }}</span>
                 </div>
-                <div v-if="article.content?.length > 1">
-                    <h4 class="text-uppercase">Table of Contents</h4>
-                    <ul style="padding-inline-start: 20px; font-size: 16px">
+                <div v-if="article.content?.length" style="margin-bottom: 24px">
+                    <h4
+                        class="text-uppercase"
+                        style="font-family: Lato, sans-serif"
+                    >
+                        Table of Contents
+                    </h4>
+                    <ul
+                        style="
+                            padding-inline-start: 20px;
+                            font-family: Lato, sans-serif;
+                            font-size: 16px;
+                        "
+                    >
                         <li
                             v-for="(content, index) in article.content"
                             :key="index"
@@ -165,6 +176,11 @@
                         </li>
                     </ul>
                 </div>
+                <div
+                    v-if="article.main_content"
+                    class="main-content"
+                    v-html="article.main_content?.body"
+                ></div>
                 <div
                     v-for="(content, index) in article.content"
                     :key="index"
@@ -343,16 +359,51 @@ watch(
 </script>
 
 <style>
-:deep(.remove-padding p) {
-    padding-left: unset;
+.main-content p {
+    font-size: 16px;
 }
 
+.main-content h1,
+.main-content h2,
+.main-content h3,
+.main-content h4,
+.main-content h5,
+.main-content h6,
+.content h1,
+.content h2,
+.content h3,
+.content h4,
+.content h5,
+.content h6 {
+    font-size: 16px;
+    padding: 0;
+}
+
+.main-content ol li,
+.content ol li {
+    font-size: 16px;
+    list-style: decimal;
+}
+
+.main-content ul li,
+.content ul li {
+    font-size: 16px;
+    list-style: disc;
+}
+
+.main-content ol li a,
+.content ol li a {
+    color: #f44336;
+}
+
+.main-content table,
 .content table {
     width: 100%;
     margin-bottom: 10px;
     border: 1px solid #95a5a662;
 }
 
+.main-content table tr td,
 .content table tr td {
     padding: 5px 10px;
     font-family: Lato, sans-serif;
@@ -366,6 +417,7 @@ watch(
     margin-left: 0 !important;
 }
 
+.main-content p,
 .content p {
     padding-left: 0 !important;
 }

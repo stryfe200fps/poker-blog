@@ -79,23 +79,23 @@
                 >
                     <div class="desktop-advert">
                         <img
-                            :src="reportingBanner.image_set?.xl_image"
-                            :alt="reportingBanner.image_set?.xl_image"
-                            class="img-responsive"
+                            :src="reportingBanner.image_set?.og_image"
+                            :alt="reportingBanner.image_set?.og_image"
+                            style="max-width: 100%; height: auto"
                         />
                     </div>
                     <div class="tablet-advert">
                         <img
-                            :src="reportingBanner.image_set?.xl_image"
-                            :alt="reportingBanner.image_set?.xl_image"
-                            class="img-responsive"
+                            :src="reportingBanner.image_set?.og_image"
+                            :alt="reportingBanner.image_set?.og_image"
+                            style="max-width: 100%; height: auto"
                         />
                     </div>
                     <div class="mobile-advert">
                         <img
-                            :src="reportingBanner.image_set?.xl_image"
-                            :alt="reportingBanner.image_set?.xl_image"
-                            class="img-responsive"
+                            :src="reportingBanner.image_set?.og_image"
+                            :alt="reportingBanner.image_set?.og_image"
+                            style="max-width: 100%; height: auto"
                         />
                     </div>
                 </div>
@@ -230,6 +230,7 @@
                 </div>
             </div>
             <div v-show="currentTab == 'whatsapp'">
+                <div v-html="whatsappContent.content"></div>
                 <div class="margin-top">
                     <CustomeTable v-if="whatsapp?.length">
                         <template v-slot:table-head>
@@ -450,6 +451,9 @@ const props = defineProps({
         type: Object,
     },
     chipCounts: {
+        type: Object,
+    },
+    whatsappContent: {
         type: Object,
     },
     whatsapp: {

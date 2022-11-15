@@ -11,6 +11,7 @@ export const useEventStore = defineStore("event", {
             payouts: [],
             chipCounts: [],
             whatsapp: [],
+            whatsappContent: [],
         };
     },
 
@@ -58,6 +59,14 @@ export const useEventStore = defineStore("event", {
                 // if (this.chipCounts.length) return;
                 const { data } = await axios.get("/api/chip/day/" + day);
                 this.chipCounts = data;
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        async getWhatsappContent() {
+            try {
+                const { data } = await axios.get("/api/content/whatsapp");
+                this.whatsappContent = data;
             } catch (error) {
                 console.error(error);
             }
