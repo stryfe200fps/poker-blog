@@ -47,17 +47,6 @@
                     </div>
                     <div class="col-md-6">
                         <div class="filters right-filters">
-                            <button
-                                class="btn btn-default reset-btn"
-                                v-if="
-                                    selectedTour !== '' ||
-                                    selectedCountry !== '' ||
-                                    selectedGame !== ''
-                                "
-                                @click="resetFilter()"
-                            >
-                                Reset
-                            </button>
                             <select class="form-control" v-model="selectedTour">
                                 <option value="" selected disabled>Tour</option>
                                 <option
@@ -93,6 +82,17 @@
                                     {{ game.title }}
                                 </option>
                             </select>
+                            <button
+                                class="btn btn-default reset-btn"
+                                v-if="
+                                    selectedTour !== '' ||
+                                    selectedCountry !== '' ||
+                                    selectedGame !== ''
+                                "
+                                @click="resetFilter()"
+                            >
+                                Reset
+                            </button>
                         </div>
                     </div>
                 </div>
