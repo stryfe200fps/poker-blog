@@ -17,7 +17,7 @@ class ArticleResource extends JsonResource
             'description' => $this->description,
             'categories' => $this->article_categories,
             'main_content' => googleTranslateExclude($this->firstContent),
-            'content' =>  $this->optionalContent,
+            'content' =>  googleTranslateExclude($this->optionalContent),
             'slug' => $this->slug,
             'tags' => $this->tags,
             'date' => Carbon::parse($this->published_date)->toFormattedDateString(),
