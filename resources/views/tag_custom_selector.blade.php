@@ -1,8 +1,8 @@
 Tags 
 <link rel="stylesheet" href="/css/bootstrap-tagsinput.css" />
-        <div class="bs-example">
-              <input name="fake_tags" value="{{implode(',', collect($crud->entry->tags ?? [])->map->only('title')->pluck('title')->toArray())}} " type="text"  data-role="tagsinput" />
-        </div>
+  <div class="bs-example">
+        <input name="fake_tags" value="{{implode(',', collect($crud->entry->tags ?? [])->map->only('title')->pluck('title')->toArray())}} " type="text"  data-role="tagsinput" />
+  </div>
 
 <script src="/js/jquery.min.js"> </script>
 

@@ -80,7 +80,6 @@ class EventCrudController extends CrudController
         $this->crud->addClause('where', 'tournament_id', $value);
     });
 
-
     $this->crud->addFilter([
     'name'  => 'timezone_filter',
     'type'  => 'select2',

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Author;
 use App\Http\Requests\MediaReportingRequest;
+use App\Models\MediaReportingCategory;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -51,14 +52,14 @@ public function setup()
 
         $this->crud->addFilter([
             'type' => 'select2',
-            'name' => 'author',
-            'label' => 'Author',
+            'name' => 'filter_type',
+            'label' => 'Type',
         ],
             function () {
-                return Author::all()->pluck('full_name', 'id')->toArray();
+                return MediaReportingCategory::all()->pluck('title', 'id')->toArray();
             },
             function ($values) {
-                $this->crud->query = $this->crud->query->whereHas('author', function ($query) use ($values) {
+                $this->crud->query = $this->crud->query->whereHas('media_reporting_categories', function ($query) use ($values) {
                     $query->where('id', $values);
                 });
             });

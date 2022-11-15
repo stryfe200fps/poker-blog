@@ -177,5 +177,14 @@ background-color: #f44336;
 color: #fff;
 background-color: #f44336;
 }
+
+
+.select2-container{
+    width:500px!important;
+}
+.select2-dropdown{
+    width:500px!important;
+}
+
 </style>
 <!-- <li class="nav-item"><a class="nav-link" href="{{ backpack_url('day') }}"><i class="nav-icon la la-question"></i> Days</a></li> -->
