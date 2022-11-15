@@ -44,7 +44,7 @@ class ChipCountCrudController extends CrudController
 
             $getEvent = Event::where('id', session()->get('event_id'))->first();
             $getDay = Day::where('id', session()->get('event_day'))->first();
-            CRUD::setEntityNameStrings('report', $getEvent?->title.' - Day: '.$getDay?->name);
+            CRUD::setEntityNameStrings('chip count', $getEvent?->title.' - Day: '.$getDay?->name);
 
             if ($getEvent === null) {
                 \Alert::error('Dates is incorrect')->flash();
