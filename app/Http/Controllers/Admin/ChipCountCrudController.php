@@ -126,21 +126,6 @@ class ChipCountCrudController extends CrudController
         //     'label' => 'chips'
         // ]);
 
-        CRUD::addColumn([
-            'name' => 'report',
-            'type' => 'custom_html',
-            'value' => function ($chip) {
-                return $chip->event_report_id == null ? '' : '<a  href="/admin/report/'.$chip->event_report_id.'/edit">report</a>' ;
-            } 
-        ]);
-
-        CRUD::addColumn([
-            'name' => 'view',
-            'type' => 'custom_html',
-            'value' => function ($chip) {
-                return $chip->event_report_id == null ? '' : '<a  href="/tours/view/view/view/update-'.$chip->event_report_id.'/">view</a>' ;
-            } 
-        ]);
 
 
 
@@ -179,6 +164,16 @@ class ChipCountCrudController extends CrudController
             'name' => 'published_date',
             'type' => 'datetime',
             'label' => 'Date',
+        ]);
+
+      CRUD::addColumn([
+            'name' => 'view',
+            'type' => 'custom_html',
+            'label' => 'Report',
+            'value' => function ($chip) {
+                return 
+                $chip->event_report_id == null ? '' : '<a  href="/tours/view/view/view/update-'.$chip->event_report_id.'/">view</a> | <a  href="/admin/report/'.$chip->event_report_id.'/edit">edit</a>' ;
+            } 
         ]);
 
         /**
@@ -243,6 +238,9 @@ class ChipCountCrudController extends CrudController
                 ],
             ]
         );
+
+      
+
 
         // $this->crud->addField([
         //     'name' =>  'current_chips',
