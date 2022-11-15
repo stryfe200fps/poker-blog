@@ -193,7 +193,7 @@ class ArticleCrudController extends CrudController
                     'name' => 'content',
                     'label' => 'Content',
                     'type' => 'repeatable',
-                    'new_item_label' => 'add page',
+                    'new_item_label' => 'add section',
                     'tab' => 'Basic',
                     'subfields' => [
                         [

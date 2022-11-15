@@ -133,3 +133,5 @@ Route::get('images/{media}', [ ImageController::class, 'show' ])->where('path', 
 Route::get('content/{slug}', [ContentController::class, 'show']);
 
 
+
+Route::get('fetch/tag', [TagController::class, 'fetch']);

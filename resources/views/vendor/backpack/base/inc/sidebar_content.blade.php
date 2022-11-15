@@ -179,10 +179,10 @@ background-color: #f44336;
 }
 
 
-.select2-container{
+.navbar-collapse .select2-container{
     width:500px!important;
 }
-.select2-dropdown{
+.navbar-collapse .select2-dropdown{
     width:500px!important;
 }
 
