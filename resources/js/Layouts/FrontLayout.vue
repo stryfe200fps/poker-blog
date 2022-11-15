@@ -91,7 +91,7 @@ const currentComponent = computed(() => {
 });
 
 const formattedHomeBanner = computed(() => {
-    const width = document.body.clientWidth;
+    const width = window.innerWidth;
 
     if (width >= 1920) {
         return homeFullBanner.value;
@@ -101,7 +101,7 @@ const formattedHomeBanner = computed(() => {
 });
 
 const formattedReportingBanner = computed(() => {
-    const width = document.documentElement.clientWidth;
+    const width = window.innerWidth;
 
     if (width >= 1920) {
         return reportingFullBanner.value;
