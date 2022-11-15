@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Traits\Prunable;
 use Illuminate\Support\Str;
 use Spatie\Sluggable\HasSlug;
+use App\Traits\HasMediaCaching;
 use App\Traits\HasMultipleImages;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\Sluggable\SlugOptions;
@@ -13,10 +14,10 @@ use App\Traits\HasMediaCollection;
 use Illuminate\Support\Facades\File;
 use App\Observers\EventReportObserver;
 use App\Observers\DefaultModelObserver;
-use App\Traits\HasMediaCaching;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\MediaLibrary\InteractsWithMedia;
+use App\Observers\ModelTaggableObserver;
 
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
@@ -122,6 +123,7 @@ class EventReport extends Model implements HasMedia
         parent::boot();
         self::observe(new DefaultModelObserver);
         self::observe(new EventReportObserver);
+        self::observe(new ModelTaggableObserver);
     }
 
     public function getEventChipPlayersAttribute($value)

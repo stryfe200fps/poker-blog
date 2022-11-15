@@ -261,27 +261,35 @@ class ArticleCrudController extends CrudController
                         'class' => 'form-group col-md-12',
                     ],
                 ],
-                [
-                    'label' => 'Tags',
-                    'type' => 'relationship',
-                    'name' => 'tags', // the method that defines the relationship in your Model
-                    'entity' => 'tags', // the method that defines the relationship in your Model
-                    'attribute' => 'title', // foreign key attribute that is shown to user
-                    'pivot' => true, // on create&update, do you need to add/delete pivot table entries?
-                    'inline_create' => ['entity' => 'tag'],
-                    'ajax' => true,
-                    'minimum_input_length' => 0,
-                    'allows_null' => true,
-                    'tab' => 'Basic',
-                    // 'value' => $this->crud->getCurrentOperation() === 'update' ? $this->crud->getCurrentEntry()->level->id : $lastLevelId,
-                    'wrapper' => [
-                        'class' => 'form-group col-md-12',
-                    ],
-                ],
-
-
+                // [
+                //     'label' => 'Tags',
+                //     'type' => 'relationship',
+                //     'name' => 'tags', // the method that defines the relationship in your Model
+                //     'entity' => 'tags', // the method that defines the relationship in your Model
+                //     'attribute' => 'title', // foreign key attribute that is shown to user
+                //     'pivot' => true, // on create&update, do you need to add/delete pivot table entries?
+                //     'inline_create' => ['entity' => 'tag'],
+                //     'ajax' => true,
+                //     'minimum_input_length' => 0,
+                //     'allows_null' => true,
+                //     'tab' => 'Basic',
+                //     // 'value' => $this->crud->getCurrentOperation() === 'update' ? $this->crud->getCurrentEntry()->level->id : $lastLevelId,
+                //     'wrapper' => [
+                //         'class' => 'form-group col-md-12',
+                //     ],
+                // ],
             ]
         );
+
+        $this->crud->addField(
+            [
+            'name' => 'fake_tags',
+            'type' => 'view',
+            'tab' => 'Basic',
+            'view' => 'tag_custom_selector',
+            ]
+        );
+
 
         $author = Author::where('user_id', backpack_user()->id)->first();
 
@@ -324,12 +332,17 @@ class ArticleCrudController extends CrudController
                     ],
                 ],
             );
-
     }
 
 public function fetchTags()
 {
-    return $this->fetch(\App\Models\Tag::class);
+      return $this->fetch(
+
+            [
+                'model' => \App\Models\Tag::class,
+                'paginate' => 3,
+            ]
+        );
 }
 
 public function store(Request $request)
@@ -346,6 +359,7 @@ public function store(Request $request)
 
     $request['content'] = $content;
 
+
      return $this->traitStore();
 }
 
@@ -361,14 +375,10 @@ public function store(Request $request)
 
     if ($request['content'] !== null)
         $content = array_merge($content, $request['content']);
-
-    $request['content'] = $content;
-
-    $request['content'] = $content;
+        $request['content'] = $content;
 
         return $this->traitUpdate();
     }
-
 
     protected function setupUpdateOperation()
     {

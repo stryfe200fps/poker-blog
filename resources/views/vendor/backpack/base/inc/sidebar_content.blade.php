@@ -140,6 +140,8 @@
 <!-- <li class="nav-item"><a class="nav-link" href="{{ backpack_url('event-schedule') }}"><i class="nav-icon la la-question"></i> Event schedules</a></li> -->
 
 
+
+
 <style>
 .imageFrame {
     position: absolute;
