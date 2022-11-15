@@ -331,12 +331,8 @@
             </div>
             <div v-show="currentTab == 'gallery'">
                 <div class="grid-box">
-                    <div id="my-gallery" class="row">
-                        <div
-                            class="col-xs-12 col-sm-4 col-md-2"
-                            v-for="(image, index) in gallery"
-                            :key="index"
-                        >
+                    <div id="my-gallery" class="grid-gallery">
+                        <div v-for="(image, index) in gallery" :key="index">
                             <a
                                 :href="image.og_image"
                                 :data-pswp-width="900"
@@ -345,15 +341,10 @@
                                 rel="noreferrer"
                             >
                                 <img
-                                    style="
-                                        max-width: 100%;
-                                        height: auto;
-                                        object-fit: cover;
-                                        margin-right: 10px;
-                                        margin-bottom: 10px;
-                                    "
                                     :src="image.md_image"
                                     :alt="image.md_image"
+                                    loading="lazy"
+                                    class="img-responsive"
                                 />
                             </a>
                         </div>
@@ -581,6 +572,11 @@ onUpdated(() => {
 </script>
 
 <style scoped>
+.grid-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+    gap: 10px;
+}
 .custom-tabs {
     position: sticky;
     position: -webkit-sticky;
