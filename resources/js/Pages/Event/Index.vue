@@ -228,8 +228,14 @@ onMounted(async () => {
     } else {
         selectDay.value = Object.keys(eventData.value.available_days).find(
             (key) =>
-                JSON.stringify(eventData.value.available_days[key]) ===
-                JSON.stringify(props.day)
+                JSON.stringify(
+                    eventData.value.available_days[key]
+                        .replace(/[^A-Z0-9]+/gi, "-")
+                        .toLowerCase()
+                ) ===
+                JSON.stringify(
+                    props.day.replace(/[^A-Z0-9]+/gi, "-").toLowerCase()
+                )
         );
     }
     reportViewing();
