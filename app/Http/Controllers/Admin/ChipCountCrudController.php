@@ -54,8 +54,8 @@ class ChipCountCrudController extends CrudController
             $this->crud->query = $this->crud->query
             ->where('day_id', session()->get('event_day'))
             ->orderByDesc('published_date');
+            customHeading('day?event='. $getEvent->id, 'Chip Counts', $getEvent?->title);
 
-            CRUD::setEntityNameStrings('chips', $getEvent->title);
         } else {
             $this->crud->denyAccess('create');
         }

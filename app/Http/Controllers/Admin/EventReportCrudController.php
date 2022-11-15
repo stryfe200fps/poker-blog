@@ -54,8 +54,9 @@ class EventReportCrudController extends CrudController
             $getDay = Day::where('id', session()->get('event_day'))->first();
             CRUD::setEntityNameStrings('report',
             'Report');
-            CRUD::setHeading('Reports: <a href="/admin/day?event='.$getEvent->id.'">'.  $getEvent?->title.'</a> - 
-            Day '.$getDay?->name);
+            // CRUD::setHeading('Reports: <a href="/admin/day?event='.$getEvent->id.'">'.  $getEvent?->title.'</a> - 
+            // Day '.$getDay?->name);
+            customHeading('day?event='. $getEvent->id, 'Day', $getEvent?->title);
             CRUD::setTitle($getEvent?->title);
         } else {
             $this->crud->denyAccess('create');

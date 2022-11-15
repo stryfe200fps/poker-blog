@@ -43,8 +43,10 @@ class PayoutCrudController extends CrudController
 
             $getEvent = Event::where('id', session()->get('payout_event_id'))->first();
 
+
+                CRUD::setEntityNameStrings('payouts', 'payouts');
             if ($getEvent?->title !== null) {
-                CRUD::setEntityNameStrings('payouts', $getEvent->title);
+                customHeading('events', 'Payouts', $getEvent?->title);
             }
 
         // $this->crud->addFilter($options, $values, $filter_logic);

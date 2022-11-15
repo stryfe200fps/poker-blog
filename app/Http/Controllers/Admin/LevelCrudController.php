@@ -39,7 +39,8 @@ class LevelCrudController extends CrudController
             }
 
             $getEvent = Event::where('id', session()->get('event_id'))->first();
-            CRUD::setEntityNameStrings('day', $getEvent?->title.' Levels');
+            CRUD::setEntityNameStrings('level', $getEvent?->title.' Levels');
+            customHeading('events', 'Levels', $getEvent?->title);
         } else {
             $this->crud->denyAccess('create');
         }

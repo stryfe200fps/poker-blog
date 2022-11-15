@@ -56,7 +56,7 @@ class DayCrudController extends CrudController
 
 
             CRUD::setEntityNameStrings('day','day');
-            CRUD::setHeading('<a style="font-size:20px;" href="/admin/events">back</a> | '. '   Days: ' . $getEvent?->title. '');
+            customHeading('events', 'Day', $getEvent?->title);
         } else {
             $this->crud->denyAccess('create');
         }
