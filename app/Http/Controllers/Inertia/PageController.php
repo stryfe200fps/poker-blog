@@ -16,10 +16,20 @@ class PageController extends Controller
                 'url' => config('app.url').'/'.$page->slug,
             ]);
 
+
+            $description = '';
+
+            if ($page->extras != null)  { 
+                if (array_key_exists('description', $page->extras))  
+                    $description = $page->extras['description'] ;
+            } else {
+                $description = \Illuminate\Support\Str::limit($page->name, 100, $end = '...');
+            }
+
             return Inertia::render('Template/Index', [
                 'title' => $page->title.' | LifeOfPoker',
                 'json-ld-webpage' => $webPage,
-                'description' => \Illuminate\Support\Str::limit($page->name, 100, $end = '...'),
+                'description' =>  $description,
                 'page' => $page,
             ]);
         } else {

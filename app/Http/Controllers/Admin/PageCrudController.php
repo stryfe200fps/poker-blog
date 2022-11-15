@@ -120,6 +120,14 @@ class PageCrudController extends CrudController
             'hint' => trans('backpack::pagemanager.page_slug_hint'),
             // 'disabled' => 'disabled'
         ]);
+
+        $this->crud->addField([
+            'name' => 'description',
+            'label' => 'Description',
+            'type' => 'textarea',
+            'fake' => true,
+            'store_in' => 'extras',
+        ]);
     }
 
     /**

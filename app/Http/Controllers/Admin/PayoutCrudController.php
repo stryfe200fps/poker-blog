@@ -80,7 +80,7 @@ class PayoutCrudController extends CrudController
         CRUD::addColumn([
             'name' => 'prize',
             'type' => 'editable_text',
-            'label' => 'prize',
+            'label' => 'Prize',
 
             // Optionals
             'underlined' => true, // show a dotted line under the editable column for differentiation? default: true
@@ -103,7 +103,7 @@ class PayoutCrudController extends CrudController
         CRUD::addColumn([
             'name' => 'position',
             'type' => 'editable_text',
-            'label' => 'position',
+            'label' => 'Position',
 
             // Optionals
             'underlined' => true, // show a dotted line under the editable column for differentiation? default: true

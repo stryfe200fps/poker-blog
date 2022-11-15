@@ -18,6 +18,14 @@ use Tests\TestCase;
 
 uses(TestCase::class, RefreshDatabase::class)->in('Feature');
 
+
+use Tests\DuskTestCase;
+
+uses(DuskTestCase::class)->in('Browser');
+
+
+
+
 /*
 |--------------------------------------------------------------------------
 | Expectations

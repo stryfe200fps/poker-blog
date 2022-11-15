@@ -13,9 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
+        try{ 
         Schema::table('levels', function (Blueprint $table) {
             $table->dropColumn(['name']);
         });
+    } catch (Exception $e) { }
     }
 
     /**
@@ -27,7 +29,6 @@ return new class extends Migration
     {
         Schema::table('levels', function (Blueprint $table) {
             //
-            $table->
         });
     }
 };

@@ -62,17 +62,8 @@ class EventChip extends Model
 
     public function getPreviousReportAttribute($value)
     {
-            // ->leftJoin('bookings', function($join) use ($param)
-            //  {
-            //      $join->on('rooms.id', '=', 'bookings.room_type_id')
-            //           ->where('arrival','=', $param);
-            //  })
-
         $q = $this->where('player_id', $this->player_id);
-
-        $q->leftJoin('event_reports', function ($join) {
-            $join->on('event_chips.event_report_id', '=', 'event_reports.id');
-        });
+        $q->where('day_id', $this->day_id);
 
         return $q->where('event_chips.id', '!=', $this->id)
             ->where('event_chips.published_date', '<', $this->published_date)

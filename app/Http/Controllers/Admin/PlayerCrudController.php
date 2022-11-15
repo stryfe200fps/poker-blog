@@ -117,9 +117,12 @@ $this->crud->addField([
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
+
         $this->crud->addField([
             'name' => 'status',
-            'type' => 'switch'
+            'type' => 'switch',
+            'hint' => 'When enabled, player will be shown in all selection lists in the backend. When disabled it won\'t 
+            show up in the backend anymore as option, just front where it is still being used'
         ]);
     }
 
