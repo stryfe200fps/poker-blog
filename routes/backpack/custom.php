@@ -19,7 +19,6 @@ Route::group([
 Route::crud('article', 'ArticleCrudController');
     Route::crud('events', 'EventCrudController');
     Route::crud('report', 'EventReportCrudController');
-    Route::crud('all-reports', 'AllReportsCrudController');
     Route::crud('poker-tour', 'TourCrudController');
     Route::crud('series', 'TournamentCrudController');
     Route::crud('article-category', 'ArticleCategoryCrudController');
