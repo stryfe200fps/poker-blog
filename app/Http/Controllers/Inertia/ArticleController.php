@@ -12,8 +12,7 @@ class ArticleController extends Controller
     public function index()
     {
        return Inertia::render('Categories/CategoryPage', [
-                        'title' => ' LifeOfPoker',
-                        'description' => 'News',
+                        'title' => 'News | LifeOfPoker',
                         'page_title' => 'News',
                         // 'json-ld-webpage' => 'test',
                     ]);

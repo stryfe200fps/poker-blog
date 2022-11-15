@@ -21,9 +21,9 @@ class PageController extends Controller
 
             if ($page->extras != null)  { 
                 if (array_key_exists('description', $page->extras))  
-                    $description = $page->extras['description'] ;
+                    $description = $page->extras['description'];
             } else {
-                $description = \Illuminate\Support\Str::limit($page->name, 100, $end = '...');
+                $description = null;
             }
 
             return Inertia::render('Template/Index', [

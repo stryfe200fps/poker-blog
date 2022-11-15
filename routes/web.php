@@ -56,10 +56,8 @@ Route::prefix('news')->group(function () {
 
     Route::get('/', [ArticleController::class, 'index'])->name('article');
     Route::get('/{slug}', function ($slug) {
- 
         return Inertia::render('Categories/CategoryPage', [
                         'title' => ucfirst(str_replace('-', ' ', $slug)) . ' | LifeOfPoker',
-                        'description' => ucfirst(str_replace('-', ' ', $slug)),
                         'page_title' => ucfirst(str_replace('-', ' ', $slug)),
                     ]);
     });
@@ -166,7 +164,7 @@ Route::post('upload_excel', [ExcelUploadController::class, 'upload']);
 
 Route::get('/event-calendar', function () {
  return Inertia::render('Event/EventCalendar', [
-    'title' => 'Events Calendar | LifeOfPoker',
+    'title' => 'Event Calendar | LifeOfPoker',
     // 'description' => 'desc',
     // 'page' => 'tests',
     'page_title' => 'Event Calendar',

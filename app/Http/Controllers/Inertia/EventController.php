@@ -24,14 +24,14 @@ class EventController extends Controller
 
         if ($event->getLastSchedule() === null)
             return redirect()->back();
-            
+
         return Inertia::render('Event/Index', [
             'slug' => $eventSlug,
             'page' => $page ?? 'reports',
             'day' => $day == null && $type == null ?  $event->getLastSchedule()->name :  $day,
             'type' => in_array($day, ['whatsapp', 'chip-stack', 'gallery', 'payouts', 'live-updates']) ? $day : $type  ,
             'title' => $event->tournament->title.' | '.$event->title.' | LifeOfPoker',
-            'description' => $event->tournament->description,
+            'description' => $event->description,
             'json-ld-webpage' => $type === 'payouts' ? \JsonLd\Context::create('web_page', [
                 'url' => config('app.url'). '/tours/'. $event->tournament->tour->slug . '/'. $event->tournament->slug. '/'. $eventSlug . '/payouts',
             ]) :   $webPage,

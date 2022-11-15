@@ -15,8 +15,7 @@ class HomeController extends Controller
         ]);
 
         return Inertia::render('Index', [
-            'title' => 'Life of poker',
-            'description' => 'life of poker',
+            'title' => 'LifeOfPoker',
             'json-ld-webpage' => $webPage,
         ]);
     }

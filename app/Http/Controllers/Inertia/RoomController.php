@@ -29,10 +29,10 @@ class RoomController extends Controller
         ]);
 
         return Inertia::render('Template/PokerRoom', [
-            'title' => 'Room: ' .$room->title.  ' | LifeOfPoker',
+            'title' => $room->title. ' | LifeOfPoker',
             'slug' => $room->slug,
             'room' => $room,
-            'image' =>  $room->image,
+            'description' => $room->description,
             'json-ld-webpage' => $webPage,
         ]);
 

@@ -20,7 +20,7 @@
                                 eventData.title
                             }}</span>
                         </h1>
-                        <div v-show="props.type !== 'payouts'">
+                        <div :class="type !== 'payouts' ? 'visible' : 'hide'">
                             <p v-if="eventDays?.length > 1">
                                 <select
                                     class="form-control custom-form-control"
@@ -292,6 +292,17 @@ watch(
 </script>
 
 <style scoped>
+.hide {
+    display: inline !important;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.visible {
+    opacity: 1;
+    pointer-events: all;
+}
+
 .custom-form-control {
     width: auto !important;
 }

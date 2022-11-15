@@ -459,17 +459,25 @@ watch(
 :deep(.post-content p) {
     padding: unset !important;
 }
-
-:deep(.post-content h2) {
+:deep(.post-content h1),
+:deep(.post-content h2),
+:deep(.post-content h3),
+:deep(.post-content h4),
+:deep(.post-content h5),
+:deep(.post-content h6) {
+    font-family: Lato, sans-serif;
+    font-size: 16px;
     padding: 0;
 }
 
 :deep(.post-content ol li) {
+    font-family: Lato, sans-serif;
     font-size: 16px;
     list-style: decimal;
 }
 
 :deep(.post-content ul li) {
+    font-family: Lato, sans-serif;
     font-size: 16px;
     list-style: disc;
 }

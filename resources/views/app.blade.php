@@ -7,28 +7,25 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link rel="icon" sizes="16x16" href="/favicon.ico" />
 
-      
-
-        <meta name="description" content="{!! $page['props']['description'] ?? 'Life Of Poker'  !!}" >
+        <meta name="description" content="{!! $page['props']['description'] ?? 'Life of poker is a one stop shop for all your poker needs. We are here to bring the action to your doorstep. Live event coverage, interviews, videos, podcasts and much more.' !!}" >
 
         <meta property="og:locale" content="en_PH">
-        <meta property="og:title" content="{!! $page['props']['title'] ?? 'Life Of Poker' !!}" >
+        <meta property="og:title" content="{!! $page['props']['title'] ?? 'LifeOfPoker' !!}" >
         <meta property="og:type" content="website"/>
         <meta property="og:url" content="{{ url()->current() }}" />
         <meta property="og:image" content="{{ $page['props']['image'] ?? config('app.url'). '/default_og-image.png' }}" >
         <meta property="og:image:type" content="image/jpeg" />
         <meta property="og:image:width" content="900">
         <meta property="og:image:height" content="600">
-        <meta property="og:site_name" content="Life of poker">
-        <meta property="og:description" content="{!! $page['props']['description'] ?? 'Life Of Poker'  !!}" />
+        <meta property="og:site_name" content="LifeOfPoker">
+        <meta property="og:description" content="{!! $page['props']['description'] ?? 'Life of poker is a one stop shop for all your poker needs. We are here to bring the action to your doorstep. Live event coverage, interviews, videos, podcasts and much more.'  !!}" />
         
-        <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:site" content="@lifeofpoker" />
-        <meta name="twitter:title"  content="{!! $page['props']['title'] ?? 'Life Of Poker'  !!}">
-    
-        <meta name="twitter:image" content="{{ $page['props']['image'] ?? config('app.url'). '/default_og-image.png'  }}" />
-
-        <meta name="twitter:description" content="{!! $page['props']['description'] ?? 'Life Of Poker'  !!}" />
+        <meta property="twitter:card" content="summary_large_image">
+        <meta property="twitter:url" content="{{ url()->current() }}">
+        <meta property="twitter:site" content="@lifeofpoker" />
+        <meta property="twitter:title"  content="{!! $page['props']['title'] ?? 'LifeOfPoker'  !!}">
+        <meta property="twitter:image" content="{{ $page['props']['image'] ?? config('app.url'). '/default_og-image.png'  }}" />
+        <meta property="twitter:description" content="{!! $page['props']['description'] ?? 'Life of poker is a one stop shop for all your poker needs. We are here to bring the action to your doorstep. Live event coverage, interviews, videos, podcasts and much more.'  !!}" />
 
 
         @routes

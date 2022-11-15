@@ -25,7 +25,10 @@
                             >
                                 <span v-html="tour.data.title"></span>
                             </h2>
-                            <p v-html="tour.data.content"></p>
+                            <p
+                                class="tour-description"
+                                v-html="tour.data.content"
+                            ></p>
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -145,6 +148,49 @@ watch(
 </script>
 
 <style scoped>
+:deep(.tour-description p) {
+    padding: unset !important;
+}
+:deep(.tour-description h1),
+:deep(.tour-description h2),
+:deep(.tour-description h3),
+:deep(.tour-description h4),
+:deep(.tour-description h5),
+:deep(.tour-description h6) {
+    font-family: Lato, sans-serif;
+    font-size: 16px;
+    padding: 0;
+}
+
+:deep(.tour-description ol li) {
+    font-family: Lato, sans-serif;
+    font-size: 16px;
+    list-style: decimal;
+}
+
+:deep(.tour-description ul li) {
+    font-family: Lato, sans-serif;
+    font-size: 16px;
+    list-style: disc;
+}
+
+:deep(.tour-description ol li a) {
+    color: #f44336;
+}
+
+:deep(.tour-description table) {
+    width: 100%;
+    margin-bottom: 10px;
+    border: 1px solid #95a5a662;
+}
+
+:deep(.tour-description table tr td) {
+    padding: 5px 10px;
+    font-family: Lato, sans-serif;
+    font-size: 14px;
+    background-color: #fbfbfb;
+}
+
 .post-gallery {
     float: none !important;
     margin-inline: 0 !important;
