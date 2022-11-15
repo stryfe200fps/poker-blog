@@ -47,6 +47,17 @@
                     </div>
                     <div class="col-md-6">
                         <div class="filters right-filters">
+                            <button
+                                class="btn btn-default reset-btn"
+                                v-if="
+                                    selectedTour !== '' ||
+                                    selectedCountry !== '' ||
+                                    selectedGame !== ''
+                                "
+                                @click="resetFilter()"
+                            >
+                                Reset
+                            </button>
                             <select class="form-control" v-model="selectedTour">
                                 <option value="" selected disabled>Tour</option>
                                 <option
@@ -170,6 +181,9 @@ const datePlaceholder = computed(() => {
 
 function getDateToday() {
     selectedDate.value = moment().format("YYYY-MM-DD");
+}
+
+function resetFilter() {
     selectedCountry.value = "";
     selectedGame.value = "";
     selectedTour.value = "";
@@ -306,6 +320,10 @@ watch(
     opacity: 0;
 }
 
+.reset-btn {
+    margin-bottom: 15px;
+}
+
 @media (min-width: 992px) {
     .left-filters {
         margin-bottom: 0;
@@ -318,6 +336,10 @@ watch(
     }
 
     .right-filters select:not(:last-child) {
+        margin-bottom: 0;
+    }
+
+    .reset-btn {
         margin-bottom: 0;
     }
 }
