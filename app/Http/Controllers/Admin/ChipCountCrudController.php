@@ -127,6 +127,24 @@ class ChipCountCrudController extends CrudController
         // ]);
 
         CRUD::addColumn([
+            'name' => 'report',
+            'type' => 'custom_html',
+            'value' => function ($chip) {
+                return $chip->event_report_id == null ? '' : '<a  href="/admin/report/'.$chip->event_report_id.'/edit">report</a>' ;
+            } 
+        ]);
+
+        CRUD::addColumn([
+            'name' => 'view',
+            'type' => 'custom_html',
+            'value' => function ($chip) {
+                return $chip->event_report_id == null ? '' : '<a  href="/tours/view/view/view/update-'.$chip->event_report_id.'/">view</a>' ;
+            } 
+        ]);
+
+
+
+        CRUD::addColumn([
             'name' => 'current_chips',
             'type' => 'editable_text',
             'label' => 'Chips',
