@@ -30,7 +30,6 @@ class EventReportRequest extends FormRequest
                 'required',
             ],
             'slug' => 'unique:event_reports,slug,'.\Request::get('id'),
-            'content' => 'required',
             'type' => 'required',
 
             'level' => 'required',
@@ -65,11 +64,11 @@ class EventReportRequest extends FormRequest
      *
      * @return array
      */
+
     public function messages()
     {
         return [
             'title.required' => 'Title is required',
-            'content.required' => 'Content is required',
             'level.required' => 'Level is required',
         ];
     }
