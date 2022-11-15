@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\DayRequest;
 use App\Models\Day;
 use App\Models\Event;
+use Illuminate\Http\Request;
+use App\Http\Requests\DayRequest;
+use Backpack\CRUD\app\Library\Widget;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
-use Backpack\CRUD\app\Library\Widget;
+use Carbon\Carbon;
 
 /**
  * Class DayCrudController
@@ -17,8 +19,8 @@ use Backpack\CRUD\app\Library\Widget;
 class DayCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
+        use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation { store as traitStore; }
+     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation { update as traitUpdate; }
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ReorderOperation { reorder as traitReorder; }
@@ -50,12 +52,8 @@ class DayCrudController extends CrudController
             }
 
             $getEvent = Event::where('id', session()->get('event_id'))->first();
-
-            // dd($getEvent->getTree());
-
             $day = Day::where('event_id', $getEvent->id);
 
-            // dd($getEvent->getSchedule());
 
             // dd($day->get()->map(function ($m) {
             //     return $m->report_count();
@@ -141,12 +139,39 @@ class DayCrudController extends CrudController
     {
         if ($this->crud->getCurrentEntry()->event_reports()->count()) {
             return \Alert::error('This day has reports inside')->flash();
+
         }
 
         $this->crud->hasAccessOrFail('delete');
         $id = $this->crud->getCurrentEntryId() ?? $id;
 
         return $this->crud->delete($id);
+    }
+
+    public function store(Request $request)
+    {
+        $dateStart = Carbon::parse( $request->get('date_start'));
+        $dateEnd = Carbon::parse($request->get('date_end'));
+
+        if ($dateStart >= $dateEnd) { 
+             \Alert::add('error', 'Schedule is not valid')->flash();
+             return back();
+        }
+
+        return $this->traitStore();
+    }
+
+    public function update(Request $request)
+    {
+        $dateStart = Carbon::parse( $request->get('date_start'));
+        $dateEnd = Carbon::parse($request->get('date_end'));
+
+        if ($dateStart >= $dateEnd) { 
+             \Alert::add('error', 'Schedule is not valid')->flash();
+             return back();
+        }
+
+        return $this->traitUpdate();
     }
 
 }

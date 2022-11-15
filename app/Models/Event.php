@@ -123,10 +123,8 @@ class Event extends Model implements HasMedia
 
     public function getSchedule()
     {
-        return $this->days()->orderBy('lft')->withCount('event_reports')
-            ->having('event_reports_count', '>', 0 )->pluck('name', 'id');
+        return $this->days()->orderBy('lft')->pluck('name', 'id');
     }
-
 
     public function getLastSchedule() 
     {
