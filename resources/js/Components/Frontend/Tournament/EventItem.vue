@@ -50,6 +50,36 @@
                     </h2>
                     <h2 v-else>
                         {{ event.title }}
+                        <p
+                            style="
+                                margin-top: 5px;
+                                font-size: 12px;
+                                font-style: italic;
+                            "
+                            v-if="event.game_table"
+                        >
+                            Event Game: {{ event.game_table }}dd
+                        </p>
+                        <p
+                            style="
+                                margin-top: -15px;
+                                font-size: 12px;
+                                font-style: italic;
+                            "
+                            v-if="event.buyin"
+                        >
+                            Buy In: {{ event.buyin }}
+                        </p>
+                        <p
+                            style="
+                                margin-top: -15px;
+                                font-size: 12px;
+                                font-style: italic;
+                            "
+                            v-if="event.fee"
+                        >
+                            Fee: {{ event.fee }}
+                        </p>
                     </h2>
                     <ul class="post-tags" v-if="event.date_start.length">
                         <li>

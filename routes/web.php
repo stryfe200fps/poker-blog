@@ -81,9 +81,10 @@ Route::get('tour/{tourSlug}/{seriesSlug}', function ($tourSlug,$seriesSlug) {
 $tournament = Tournament::with('events')->where('slug', $seriesSlug)->firstOrFail() ;
 
 return Inertia::render('Series/Show', [
-    'title' => 'Events Calendar | LifeOfPoker',
+    'title' => $tournament->title.' | LifeOfPoker',
     'series' => new TournamentEventResource($tournament),
     'page_title' => 'Event Calendar',
+    'description' => $tournament->description,
  ]);
 });
 

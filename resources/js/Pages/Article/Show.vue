@@ -49,7 +49,11 @@
                             <ul class="post-tags">
                                 <li>
                                     <i class="fa fa-clock-o"></i
-                                    >{{ article.date }}
+                                    >{{
+                                        moment(new Date(article.date)).format(
+                                            "MMMM D, YYYY"
+                                        )
+                                    }}
                                 </li>
                                 <li>
                                     <i class="fa fa-user"></i>by

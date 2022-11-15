@@ -5,7 +5,7 @@
             <h2 v-else>{{ event.schedule }}</h2>
         </div>
         <div class="second-col" style="width: 50%">
-            <h2 v-if="event.schedule.date_start">
+            <h2 v-if="event.schedule.date_start && event.status !== 'upcoming'">
                 <Link
                     :href="`/tours/${event.tour_slug}/${event.tournament_slug}/${event.slug}`"
                     >{{ event.title }}</Link

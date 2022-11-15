@@ -39,22 +39,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- <div class="title-post">
-                    <h1>
-                        {{ series.data.title }}
-                    </h1>
-                </div>
-                <div class="post-gallery">
-                    <img
-                        v-if="series.data.image_set"
-                        :src="series.data.image_set.lg_image"
-                        :alt="series.data.image_set.lg_image"
-                    />
-                    <img v-else :src="defaultImg" :alt="defaultImg" />
-                </div>
-                <div class="post-content">
-                    <div class="well">{{ series.data.description }}</div>
-                </div> -->
                 <div class="forum-table" v-if="series.data.events.data.length">
                     <div
                         class="table-head"
