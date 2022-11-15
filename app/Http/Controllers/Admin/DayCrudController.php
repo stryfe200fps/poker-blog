@@ -54,9 +54,8 @@ class DayCrudController extends CrudController
             $getEvent = Event::where('id', session()->get('event_id'))->first();
             $day = Day::where('event_id', $getEvent->id);
 
-
             CRUD::setEntityNameStrings('day','day');
-            customHeading('events', 'Day', $getEvent?->title);
+            customHeading('events', 'Days', $getEvent?->title);
         } else {
             $this->crud->denyAccess('create');
         }

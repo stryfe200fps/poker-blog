@@ -63,5 +63,5 @@ function articleContentFormatter($content)
 
 function customHeading($link,  $title, $other)
 {
-    Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade::setHeading("<a href='/admin/$link'>back</a> | $title : $other");
+    Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade::setHeading("<a href='/admin/$link'>«</a> $title : $other");
 }
