@@ -62,8 +62,8 @@ class Article extends Model implements HasMedia
         if (count($array) <= 1)
             return [];
 
-        return array_shift($array);
-        
+        array_shift($array);
+        return $array;
     }
 
     public function getCustomContentAttribute()

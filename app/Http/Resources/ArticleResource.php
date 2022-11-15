@@ -16,7 +16,7 @@ class ArticleResource extends JsonResource
             'title_tab' => $this->title ?? '',
             'description' => $this->description,
             'categories' => $this->article_categories,
-            'main_content' => articleContentFormatter($this->firstContent),
+            'main_content' => $this->firstContent,
             'content' => articleContentFormatter($this->optionalContent),
             'slug' => $this->slug,
             'tags' => $this->tags,
