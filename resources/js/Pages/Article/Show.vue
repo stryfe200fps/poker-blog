@@ -193,6 +193,10 @@
                     <h3 style="margin-bottom: 20px" v-html="content.title"></h3>
                     <div v-html="content.body"></div>
                 </div>
+                <p style="margin-bottom: 25px">
+                    &copy; 2021-{{ currentDate }} Life of poker. All rights
+                    reserved.
+                </p>
                 <div class="post-tags-box" v-if="article.tags?.length">
                     <ul class="tags-box">
                         <li><i class="fa fa-tags"></i><span>Tags:</span></li>
@@ -250,10 +254,6 @@
                         </div>
                     </div>
                 </div>
-                <p>
-                    &copy; 2021-{{ currentDate }} Life of poker. All rights
-                    reserved.
-                </p>
             </div>
         </div>
     </FrontLayout>
@@ -365,6 +365,7 @@ watch(
 <style>
 .main-content p {
     font-size: 16px;
+    line-height: 24px;
 }
 
 .main-content h1,
