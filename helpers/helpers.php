@@ -21,22 +21,21 @@ function googleTranslateExclude($content) {
             foreach ($glossary as $word) { 
             $pattern = '/'.$word.'/i';
             $item['body'] = preg_replace($pattern, '<span translate="no">'.$word.'</span>' , $item['body']);
-            $item['body'] = tableReplacement($item['body']);
+            $item['body'] = tableReplacement ($item['body']);
+            $item['body'] = imageResponsiveReplacement ($item['body']);
             $item['title'] = preg_replace($pattern, '<span translate="no">'.$word.'</span>' , $item['title']);
             }
         } else {
-
            $glossary = Glossary::all()->pluck('word')->toArray();
             foreach ($glossary as $word) { 
             $pattern = '/'.$word.'/i';
             $item = preg_replace($pattern, '<span translate="no">'.$word.'</span>' , $item);
-            $item = tableReplacement($item);
+            $item = tableReplacement ($item);
+            $item = imageResponsiveReplacement ($item);
             }
 
         }
-
         return $item;
-
     });
 
 
@@ -71,5 +70,11 @@ function tableReplacement($content)
 {
     $pattern = '/(<table[^>]*>(?:.|\n)*<\/table>)/';
     $replacement = '<div class="forum-table">${1}</div>';
+    return preg_replace($pattern, $replacement, $content);
+}
+function imageResponsiveReplacement($content)
+{
+    $pattern = '/(<img)/'; 
+    $replacement = '<img class="img-responsive" ';
     return preg_replace($pattern, $replacement, $content);
 }
