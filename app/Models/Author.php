@@ -2,37 +2,42 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Traits\HasMultipleImages;
 use Spatie\MediaLibrary\HasMedia;
+use App\Traits\HasMediaCollection;
+use App\Observers\DefaultModelObserver;
+use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Author extends Model implements HasMedia
 {
-    use InteractsWithMedia;
+    // use InteractsWithMedia;
     use \Backpack\CRUD\app\Models\Traits\CrudTrait;
     use HasFactory;
 
     public function registerMediaConversions(?Media $media = null): void
     {
         $this->addMediaConversion('avatar-img')
-            ->width(50)
-            ->height(50);
+            ->width(100)
+            ->height(100);
     }
 
-    public function getAvatarAttribute($value)
+    public $mediaCollection = 'avatar';
+    use HasMediaCollection, HasMultipleImages;
+
+
+    public static function boot()
     {
-        return $this->getFirstMediaUrl('avatar', 'avatar-img');
+        parent::boot();
+        self::observe(new DefaultModelObserver);
     }
 
-    public function setAvatarAttribute($value)
+
+    public function getThumbImageAttribute($value)
     {
-        if ($value == null || preg_match("/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).base64,.*/", $value) == 0) {
-            return false;
-        }
-        $this->addMediaFromBase64($value)
-            ->toMediaCollection('avatar');
+        return $this->getFirstMediaUrl($this->mediaCollection, 'avatar-img');
     }
 
     public function getFullNameAttribute()

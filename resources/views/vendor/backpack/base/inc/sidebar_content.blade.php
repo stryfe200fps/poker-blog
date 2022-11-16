@@ -99,7 +99,7 @@
         <ul class="nav-dropdown-items">
 
             @if(backpack_user()->can('author.list') || backpack_user()->role('super-admin'))
-            <li class="nav-item"><a class="nav-link" href="{{ backpack_url('article-author') }}"><i class="nav-icon la la-user"></i> <span>Authors</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ backpack_url('author') }}"><i class="nav-icon la la-user"></i> <span>Authors</span></a></li>
             @endif
             <li class="nav-item"><a class="nav-link" href="{{ backpack_url('user') }}"><i class="nav-icon la la-user"></i> <span>Users</span></a></li>
             <li class="nav-item"><a class="nav-link" href="{{ backpack_url('role') }}"><i class="nav-icon la la-id-badge"></i> <span>Roles</span></a></li>
@@ -119,6 +119,9 @@
     @if(backpack_user()->can('tag.list') || backpack_user()->role('super-admin'))
     <li class="nav-item"><a class="nav-link" href="{{ backpack_url('tag') }}"><i class="nav-icon la la-list"></i> <span>Tags</span></a></li>
     @endif
+
+
+    <li class="nav-item"><a class="nav-link" href="{{ backpack_url('elfinder') }}"><i class="nav-icon la la-files-o"></i> <span>{{ trans('backpack::crud.file_manager') }}</span></a></li>
 
     @if(backpack_user()->can('image-theme.list') || backpack_user()->role('super-admin'))
     <li class="nav-item"><a class="nav-link" href="{{ backpack_url('image-theme') }}"><i class="nav-icon la la-image"></i> <span>Image themes</span></a></li>
@@ -189,4 +192,3 @@ background-color: #f44336;
 
 </style>
 <!-- <li class="nav-item"><a class="nav-link" href="{{ backpack_url('day') }}"><i class="nav-icon la la-question"></i> Days</a></li> -->
-<li class="nav-item"><a class="nav-link" href="{{ backpack_url('elfinder') }}"><i class="nav-icon la la-files-o"></i> <span>{{ trans('backpack::crud.file_manager') }}</span></a></li>

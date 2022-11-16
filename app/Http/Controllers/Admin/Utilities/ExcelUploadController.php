@@ -66,7 +66,6 @@ class ExcelUploadController extends Controller
 
                 $player = $line[$headerPlayerId[0]['player_id']];
                 $playerArray = explode(' ', trim($player));
-
              
 
                 if (is_countable($playerArray)) {

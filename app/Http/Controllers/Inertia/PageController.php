@@ -16,6 +16,7 @@ class PageController extends Controller
                 'url' => config('app.url').'/'.$page->slug,
             ]);
 
+            $page->content = tableReplacement($page->content);
 
             $description = '';
 

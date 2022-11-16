@@ -33,7 +33,7 @@ class AuthorCrudController extends CrudController
     {
         $this->crud->denyAccess('show');
         CRUD::setModel(\App\Models\Author::class);
-        CRUD::setRoute(config('backpack.base.route_prefix').'/article-author');
+        CRUD::setRoute(config('backpack.base.route_prefix').'/author');
         CRUD::setEntityNameStrings('author', 'authors');
         $this->denyAccessIfNoPermission();
     }
@@ -51,7 +51,7 @@ class AuthorCrudController extends CrudController
         $this->crud->addColumn([
 
             'label' => 'Image',
-            'name' => 'avatar',
+            'name' => 'thumbImage',
             'type' => 'image',
             'crop' => false,
 
@@ -122,7 +122,7 @@ class AuthorCrudController extends CrudController
 
        $this->crud->addField([
             'label' => 'Image',
-            'name' => 'avatar',
+            'name' => 'image',
             'type' => 'image',
             'crop' => 'true',
             'aspect_ratio' => 1,

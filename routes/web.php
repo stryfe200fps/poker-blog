@@ -20,35 +20,8 @@ use App\Http\Resources\TourResource;
 use App\Models\Tour;
 
 Route::get('/', [HomeController::class, 'index']);
-// Route::get('/tournament', [TournamentController::class , 'index'] );
-
-Route::get('cacheboy', function () {
-    $server = '127.0.0.1';
-$port = 11211;
-  
-// Initiate a new object of memcache
-$memcacheD = new \Memcached();
-
-if ($memcacheD->addServer($server, $port)) {
-    echo "**  server added ** \n";
-    $d = $memcacheD->getAllKeys();
-    dd($d);
-}
-else {
-    echo "** issue while creating a server **\n";
-}
-  
 
 
-    Cache::put('keybag', 'valueburutoy', $seconds = 10);
-});
-
-Route::get('cacheget', function () {
-   $dd= Cache::get('keybag');
-});
-
-// Route::get('/event/{slug}/{page?}', [EventController::class, 'show']);
-// Route::get('/event/{eventSlug}/report/{reportSlug}', [ReportController::class, 'show']);
 
 Route::get('/tag/articles/{slug}', [ArticleController::class, 'tag'])->name('article');
 
@@ -67,10 +40,7 @@ Route::prefix('news')->group(function () {
 });
 Route::get('live-reporting/{page?}', [TournamentController::class, 'index']);
 Route::prefix('tours')->group(function () {
-
-    // Route::get('/', [TournamentController::class, 'index']);
  
-    // Route::get('/{page?}', [TournamentController::class, 'index']);
     Route::get('/{tour}/{series}/{eventSlug}', [EventController::class, 'show']);
     Route::get('/{tour}/{series}/{eventSlug}/{reportId}', [ReportController::class, 'show'])->where('reportId', '(\w+\-\d+)');
     Route::get('/{tour}/{series}/{eventSlug}/{day?}/{type?}', [EventController::class, 'show']);

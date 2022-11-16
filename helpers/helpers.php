@@ -21,15 +21,16 @@ function googleTranslateExclude($content) {
             foreach ($glossary as $word) { 
             $pattern = '/'.$word.'/i';
             $item['body'] = preg_replace($pattern, '<span translate="no">'.$word.'</span>' , $item['body']);
+            $item['body'] = tableReplacement($item['body']);
             $item['title'] = preg_replace($pattern, '<span translate="no">'.$word.'</span>' , $item['title']);
             }
-
         } else {
 
            $glossary = Glossary::all()->pluck('word')->toArray();
             foreach ($glossary as $word) { 
             $pattern = '/'.$word.'/i';
             $item = preg_replace($pattern, '<span translate="no">'.$word.'</span>' , $item);
+            $item = tableReplacement($item);
             }
 
         }
@@ -64,4 +65,11 @@ function articleContentFormatter($content)
 function customHeading($link,  $title, $other)
 {
     Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade::setHeading("<a href='/admin/$link'>«</a> $title : $other");
+}
+
+function tableReplacement($content)
+{
+    $pattern = '/(<table[^>]*>(?:.|\n)*<\/table>)/';
+    $replacement = '<div class="forum-table">${1}</div>';
+    return preg_replace($pattern, $replacement, $content);
 }
