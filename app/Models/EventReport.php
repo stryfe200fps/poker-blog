@@ -151,15 +151,17 @@ class EventReport extends Model implements HasMedia
     //     return Carbon::parse($value);
     // }
 
-    // public function handleDatePublish($date)
-    // {
+    public function handleDatePublish($date)
+    {
 
-    //     $from = Carbon::parse($date);
-    //     $diffInDays = now()->diffInDays($from);
+        $timezone = $this->event->tournament->minimizedTimezone;
+        $date =  Carbon::parse($date)->setTimezone($this->event->tournament->word_timezone);
+        $from = Carbon::parse($date);
+        $diffInDays = now()->diffInDays($from);
 
-    //     if ($diffInDays > 7)
-    //         return $date->format(config('app.carbon_date_format')) ;
+        if ($diffInDays > 7)
+            return $date->format(config('app.carbon_date_format')) . $timezone;
 
-    //     return $date->diffForHumans();
-    // }
+        return $date->diffForHumans(null, ['long' => true, 'parts' =>2])  . ' '. $date->format('T') .  $timezone;
+    }
 }

@@ -28,7 +28,7 @@ return [
     'name' => env('APP_NAME', 'LifeOfPoker'),
     'image_cache_lifetime' => 10,
     'date_format' => 'MMM DD, OY,  h:mm a, ddd',
-    'carbon_date_format' => 'M d, Y h:m a, D',
+    'carbon_date_format' => 'm-d-y h:ma T ',
     'supported_locales' => ['zh', 'ko', 'ja', 'es', 'de'],
     'slug_placeholder' => 'Slug will autogenerate if leave empty',
     'badges' => [
