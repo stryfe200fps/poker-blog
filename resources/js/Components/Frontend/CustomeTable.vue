@@ -1,5 +1,5 @@
 <template>
-    <div class=" table-responsive py-5">
+    <div class="table-responsive">
         <table class="c-table table">
             <slot name="table-head"></slot>
             <slot name="table-body"></slot>
@@ -40,7 +40,7 @@
 }
 
 .c-table tr {
-    font-family: 'Lato', sans-serif;
+    font-family: "Lato", sans-serif;
     font-size: 14px;
 }
 
