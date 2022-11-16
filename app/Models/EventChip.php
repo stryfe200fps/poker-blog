@@ -86,14 +86,15 @@ class EventChip extends Model
         static::creating(function ($createdChipCount) {
             if ($createdChipCount?->event_report_id !== null) {
                 \Alert::add('success', 'Player added');
-            } else {
-                $eventChip = EventChip::where('player_id', $createdChipCount->player_id)->whereNull('event_report_id')->where('day_id', $createdChipCount->day_id);
-                if ($eventChip->count()) {
-                    \Alert::add('error', 'Oops. This player is already added');
+            } 
+            // else {
+            //     $eventChip = EventChip::where('player_id', $createdChipCount->player_id)->whereNull('event_report_id')->where('day_id', $createdChipCount->day_id);
+            //     if ($eventChip->count()) {
+            //         \Alert::add('error', 'Oops. This player is already added');
 
-                    return false;
-                }
-            }
+            //         return false;
+            //     }
+            // }
 
             \Alert::add('success', 'Success');
         });

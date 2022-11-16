@@ -52,10 +52,7 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
-{
-    // ..
-}
+
 
 function superAdminAuthenticate()
 {
@@ -68,4 +65,52 @@ function superAdminAuthenticate()
     backpack_user()->assignRole('super-admin');
 
     return $u;
+}
+
+function insert($route, array $attributes, $returnDefault = true)
+{
+    //authenticate user
+    test()->superAdminAuthenticate();
+    test()->get("admin/$route/create")->assertStatus(200);
+    $post = test()->post("/admin/$route", $attributes);
+
+    if (!$returnDefault)
+        return $post;
+
+    return test();
+}
+
+function delete($route, string $model)
+{
+
+    test()->superAdminAuthenticate();
+
+    $abstractModel = getModel($model) ;
+    $create = $abstractModel->factory()->create();
+    test()->delete("admin/$route/$create->id");
+
+    expect($abstractModel->count())->toBe(0);
+    return test();
+}
+
+function update($route, string $model , array $attributes)
+{
+    test()->superAdminAuthenticate();
+
+    //create new data
+    $create = getModel($model)->factory()->create();
+    $id = $create->id;
+    //go to the edit page
+    test()->get("admin/$route/$id/edit")->assertStatus(200);
+    $attributes['id'] = $id;
+    //save update
+    test()->put("/admin/$route/update", $attributes);
+
+    return test();
+}
+
+
+function getModel(string $model)
+{
+    return test()->app()->make("App\Models\\$model");
 }
