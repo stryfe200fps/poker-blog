@@ -182,6 +182,13 @@
                             />
                         </td>
                         <td class="text-center hide-on-tablet" v-else>-</td>
+                        <td v-if="item.player?.badge">
+                            <img
+                                :src="item.player?.badge"
+                                :alt="item.player?.badge"
+                            />
+                        </td>
+                        <td v-else></td>
                         <td v-if="item.player?.name" class="text-right">
                             {{
                                 item.current_chips === 0
