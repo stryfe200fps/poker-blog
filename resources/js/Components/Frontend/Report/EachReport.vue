@@ -186,7 +186,6 @@
                             <img
                                 :src="item.player?.badge"
                                 :alt="item.player?.badge"
-                                class="img-responsive"
                             />
                         </td>
                         <td v-else></td>

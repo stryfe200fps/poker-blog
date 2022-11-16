@@ -193,7 +193,6 @@
                                     <img
                                         :src="stack.player?.badge"
                                         :alt="stack.player?.badge"
-                                        class="img-responsive"
                                     />
                                 </td>
                                 <td v-else></td>
