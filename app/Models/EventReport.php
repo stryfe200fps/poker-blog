@@ -151,5 +151,15 @@ class EventReport extends Model implements HasMedia
     //     return Carbon::parse($value);
     // }
 
+    public function handleDatePublish($date)
+    {
 
+        $from = Carbon::parse($date);
+        $diffInDays = now()->diffInDays($from);
+
+        if ($diffInDays > 7)
+            return $date->toDateTimeLocalString() ;
+
+        return $date->diffForHumans();
+    }
 }
