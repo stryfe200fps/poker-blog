@@ -41,32 +41,55 @@ class ExcelUploadController extends Controller
             EventPayout::where('event_id', request()->all()['event_id'])->delete();
         }
 
-        try {
+        // try {
             $realName = request()->all()['file']->getClientOriginalName();
             request()->all()['file']->move('uploads', $realName);
             $currentHeader = json_decode(request()->all()['headers'], true);
             // dd(array_values(collect($currentHeader)->filter(fn ($a) => array_key_first($a) === 'prize')->toArray())[0]['prize']);
             $check = (new FastExcel())->import('uploads/'.$realName, function ($line) use ($currentHeader) {
-                $player = $line[array_values(collect($currentHeader)->filter(fn ($a) => array_key_first($a) === 'player_id')->toArray())[0]['player_id']];
 
+                $headerPlayerId = array_values(collect($currentHeader)->filter(fn ($a) => array_key_first($a) === 'player_id')->toArray());
+
+                $arr = array_values(collect($currentHeader)->filter(fn ($a) => array_key_first($a) === 'position')->toArray());
+                        $arrPos = $arr[0]['position'];
+                        $position = $line[$arrPos];
+
+                if (!count($headerPlayerId)) { 
+                    EventPayout::create([
+                            'prize' => $line[array_values(collect($currentHeader)->filter(fn ($a) => array_key_first($a) === 'prize')->toArray())[0]['prize']],
+                            'position' => $position,
+                            'event_id' => request()->all()['event_id'],
+                    ]);
+
+                    return;
+                }
+
+
+                $player = $line[$headerPlayerId[0]['player_id']];
                 $playerArray = explode(' ', trim($player));
+
+             
 
                 if (is_countable($playerArray)) {
                     $player = Player::where('name', implode(' ', $playerArray))->first();
                     if ($player !== null) {
-                        $save = EventPayout::create([
+                     
+                        EventPayout::create([
                             'prize' => $line[array_values(collect($currentHeader)->filter(fn ($a) => array_key_first($a) === 'prize')->toArray())[0]['prize']],
-                            'position' => $line[array_values(collect($currentHeader)->filter(fn ($a) => array_key_first($a) === 'position')->toArray())[0]['position']],
+                            'position' => $position,
                             'event_id' => request()->all()['event_id'],
                             'player_id' => $player->id,
                         ]);
                     }
                 }
+                    
+
+                
             });
 
             return 1;
-        } catch (Exception $e) {
-            return 0;
-        }
+        // } catch (Exception $e) {
+        //     return 0;
+        // }
     }
 }
