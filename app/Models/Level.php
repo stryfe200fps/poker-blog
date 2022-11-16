@@ -27,6 +27,12 @@ class Level extends Model
         return 'Level '.$this->attributes['level'].' - Blinds '.$this->attributes['small_blinds'].' - '.$this->attributes['big_blinds'].', '.$this->attributes['ante'].' ante';
     }
 
+    public function getBlindsAttribute()
+    {
+        return $this->attributes['small_blinds'].'/'.$this->attributes['big_blinds'];
+    }
+
+
     // public function getNameAttribute()
     // {
     //     return  $this->attributes['name'];

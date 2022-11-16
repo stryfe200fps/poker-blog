@@ -62,7 +62,6 @@ class LevelCrudController extends CrudController
         $this->crud->addColumn([
             'name' => 'level',
             'type' => 'number',
-
         ]);
         CRUD::column('blinds');
         CRUD::column('ante');
