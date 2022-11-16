@@ -91,7 +91,7 @@
                   </div>
                 </div>
                 <div v-else class="alert alert-error">Upload failed. Please check your excel</div>
-                      <a href="#" @click.prevent="resetPayoutUpload" v-if="retryUploadVisibility" >retry</a>
+                     
               </div>
             </div>
           </div>

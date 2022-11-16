@@ -24,6 +24,8 @@ class ExcelUploadController extends Controller
             $collection = (new FastExcel)->import('uploads/'.$realName);
             $header = array_values(collect(Schema::getColumnListing('event_payouts'))->filter(fn ($z) => $z == 'player_id' || $z == 'prize' || $z == 'position')->toArray());
 
+
+            unlink('uploads/'. $realName);
             return [
                 'excel_header' => array_keys($collection[0]),
                 'main_header' => $header,
@@ -45,7 +47,7 @@ class ExcelUploadController extends Controller
             $realName = request()->all()['file']->getClientOriginalName();
             request()->all()['file']->move('uploads', $realName);
             $currentHeader = json_decode(request()->all()['headers'], true);
-            $check = (new FastExcel())->import('uploads/'.$realName, function ($line) use ($currentHeader) {
+            $check = (new FastExcel())->import('uploads/'.$realName, function ($line) use ($currentHeader, $realName)  {
 
                 $headerPlayerId = array_values(collect($currentHeader)->filter(fn ($a) => array_key_first($a) === 'player_id')->toArray());
 
@@ -60,6 +62,7 @@ class ExcelUploadController extends Controller
                             'event_id' => request()->all()['event_id'],
                     ]);
 
+                    unlink('uploads/'. $realName);
                     return;
                 }
 
@@ -83,6 +86,8 @@ class ExcelUploadController extends Controller
                 
             });
 
+
+            unlink('uploads/'. $realName);
             return 1;
         } catch (Exception $e) {
             return 0;
