@@ -34,11 +34,7 @@
                         </li>
                         <li>
                             <i class="fa fa-clock-o"></i
-                            >{{
-                                moment(new Date(item.published_date)).format(
-                                    "MMMM D, YYYY"
-                                )
-                            }}
+                            >{{ item.date_for_humans }}
                         </li>
                         <li>
                             <i class="fa fa-bookmark"></i

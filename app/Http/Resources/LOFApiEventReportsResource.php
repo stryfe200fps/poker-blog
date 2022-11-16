@@ -21,9 +21,7 @@ class LOFApiEventReportsResource extends JsonResource
             'content' => googleTranslateExclude($this->content),
             'published_date' => Carbon::parse($this->published_date)->toDayDateTimeString(),
             'realtime_published_date' => Carbon::parse($this->published_date)->setTimezone($this->event->tournament->word_timezone)->format(config('app.carbon_date_format')),
-            'date_for_humans' => 
-            $this->handleDatePublish($this->published_date)
-            ,
+            'date_for_humans' => Carbon::parse($this->published_date)->setTimezone($this->event->tournament->word_timezone)->diffForHumans(),
             'image_set' => $this->getMediaWithCaching(),
             'caption' => $this->image_caption,
             'theme' => $this->image_theme?->image,
