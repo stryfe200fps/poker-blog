@@ -17,7 +17,7 @@ class TagController extends Controller
     public function fetch(Request $request)
     {
         $query = $request->get('query');
-        return Tag::where('title', 'like', "%{$query}%" )->limit(3)->get();
+        return Tag::where('title', 'like', "%{$query}%" )->get()->map->only('title')->pluck('title');
     }
 
     public function articles($slug)
