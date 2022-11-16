@@ -41,11 +41,10 @@ class ExcelUploadController extends Controller
             EventPayout::where('event_id', request()->all()['event_id'])->delete();
         }
 
-        // try {
+        try {
             $realName = request()->all()['file']->getClientOriginalName();
             request()->all()['file']->move('uploads', $realName);
             $currentHeader = json_decode(request()->all()['headers'], true);
-            // dd(array_values(collect($currentHeader)->filter(fn ($a) => array_key_first($a) === 'prize')->toArray())[0]['prize']);
             $check = (new FastExcel())->import('uploads/'.$realName, function ($line) use ($currentHeader) {
 
                 $headerPlayerId = array_values(collect($currentHeader)->filter(fn ($a) => array_key_first($a) === 'player_id')->toArray());
@@ -82,14 +81,12 @@ class ExcelUploadController extends Controller
                         ]);
                     }
                 }
-                    
-
                 
             });
 
             return 1;
-        // } catch (Exception $e) {
-        //     return 0;
-        // }
+        } catch (Exception $e) {
+            return 0;
+        }
     }
 }
