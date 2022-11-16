@@ -35,7 +35,7 @@
                                     position: absolute;
                                     top: 0;
                                     height: 100%;
-                                    margin-left: -50px;
+                                    margin-left: -100px;
                                     filter: drop-shadow(8px 8px 10px #000);
                                 "
                             >
@@ -53,13 +53,20 @@
                             >
                                 <div class="desktop-advert">
                                     <div class="header-actions">
+                                        <div
+                                            class="loader"
+                                            v-if="isLoading"
+                                        ></div>
                                         <!-- <i
                                         class="fa fa-search header-actions__icon"
                                     ></i>
                                     <h6 class="header-actions__icon">|</h6> -->
-                                        <div
-                                            id="google_translate_element"
-                                        ></div>
+                                        <div class="translate-container">
+                                            <div
+                                                id="google_translate_element"
+                                            ></div>
+                                        </div>
+
                                         <!-- <label class="dropdown">
                                         <div class="dd-button">ENG</div>
                                         <input
@@ -134,6 +141,7 @@ const toggleMenu = ref(false);
 const windowTop = ref(0);
 const sticky = ref(null);
 const pathname = ref(window.location.pathname.split("/")[1]);
+const isLoading = ref(true);
 
 function toggleBtn() {
     toggleMenu.value = !toggleMenu.value;
@@ -203,6 +211,7 @@ function googleTranslateElementInit() {
                 window.location.reload();
             }
         });
+        isLoading.value = false;
     }
 }
 onMounted(() => {
@@ -250,11 +259,38 @@ onBeforeUnmount(() => {
 }
 
 .header-actions {
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: baseline;
     gap: 10px;
     color: #fff;
+}
+
+.translate-container {
+    position: absolute;
+    right: 0;
+}
+
+.loader {
+    position: absolute;
+    right: 30px;
+    width: 26px;
+    height: 26px;
+    border: 2px solid #fff;
+    border-left-color: transparent;
+    border-radius: 50%;
+    animation: spin89345 1s linear infinite;
+}
+
+@keyframes spin89345 {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 .dropdown {
@@ -528,6 +564,16 @@ header.active .nav-list-container {
         to {
             opacity: 1;
         }
+    }
+
+    .translate-container {
+        position: static;
+        right: unset;
+    }
+
+    .loader {
+        right: 10px;
+        bottom: 0;
     }
 }
 
