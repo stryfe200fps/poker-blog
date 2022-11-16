@@ -85,6 +85,11 @@ class Player extends Model implements HasMedia
         return ucwords($value);
     }
 
+    public function badge()
+    {
+        return $this->belongsTo(Badge::class);
+    } 
+
     // protected static function booted()
     // {
         

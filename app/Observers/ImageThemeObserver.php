@@ -9,6 +9,27 @@ class ImageThemeObserver
 
     public function saved($model)
     {
+
+        if ($model->mediaCollection === 'badge') { 
+
+            $value = request()->only('image')['image'] ?? '';
+
+        if ($value == '')
+            return false;
+
+        if ($value == null) {
+            $model->media()->delete();
+            return false;
+        }
+
+        $model->media()->delete();
+        // dd($value);
+        // $path = public_path(). '/tmp/' . $model->mediaCollection . '-'. $model->id . '.jpg';
+        // $image = \Image::make($value)->encode('jpg', 100)->save($path);
+        $model->addMedia($value)
+            ->toMediaCollection($model->mediaCollection);
+    } else { 
+
         $value = request()->only('image')['image'] ?? '';
 
         if ($value == null) {
@@ -22,7 +43,9 @@ class ImageThemeObserver
 
         $model->media()->delete();
         $model->addMediaFromBase64($value)
-            ->toMediaCollection('image-theme');
+            ->toMediaCollection($model->mediaCollection);
+
     }
 
+    }
 }

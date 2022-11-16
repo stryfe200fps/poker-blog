@@ -31,6 +31,12 @@ return [
     'carbon_date_format' => 'M d, Y h:m a, D',
     'supported_locales' => ['zh', 'ko', 'ja', 'es', 'de'],
     'slug_placeholder' => 'Slug will autogenerate if leave empty',
+    'badges' => [
+        'label' => 'apt champion', 'badge' => '/uploads/badges/apt-champion-badge.png',
+        'label' => 'apt champion', 'badge' => '/uploads/badges/apt-champion-badge.png',
+        'label' => 'apt champion', 'badge' => '/uploads/badges/apt-champion-badge.png',
+    ],
+
 
     /*
     |--------------------------------------------------------------------------

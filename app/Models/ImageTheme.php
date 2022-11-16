@@ -16,6 +16,9 @@ class ImageTheme extends Model implements HasMedia
     use \Backpack\CRUD\app\Models\Traits\CrudTrait;
     use HasFactory;
 
+
+    public $mediaCollection = 'image-theme';
+
     public static function boot()
     {
         parent::boot();
@@ -32,7 +35,7 @@ class ImageTheme extends Model implements HasMedia
 
     public function getImageAttribute($value)
     {
-        return $this->getFirstMediaUrl('image-theme');
+        return $this->getFirstMediaUrl($this->mediaCollection);
     }
 
     public function live_report()

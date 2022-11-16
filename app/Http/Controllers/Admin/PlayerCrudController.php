@@ -92,13 +92,15 @@ class PlayerCrudController extends CrudController
         CRUD::field('pseudonym');
         CRUD::field('country_id');
 
-$this->crud->addField([
+        $this->crud->addField([
             'name' => 'image',
             'label' => 'Image',
             'type' => 'image',
             'aspect_ratio' => 1,
             'crop' => true,
         ]);
+        
+        CRUD::field('badge');
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:

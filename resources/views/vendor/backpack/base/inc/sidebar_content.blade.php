@@ -126,6 +126,7 @@
 
     <li class="nav-item"><a class="nav-link" href="{{ backpack_url('room') }}"><i class="nav-icon la la-list"></i> Rooms</a></li>
     <li class="nav-item"><a class="nav-link" href="{{ backpack_url('event-game-table') }}"><i class="nav-icon la la-list"></i>  Games </a></li>
+    <li class="nav-item"><a class="nav-link" href="{{ backpack_url('badge') }}"><i class="nav-icon la la-list"></i> Badges</a></li>
     <li class="nav-item"><a class="nav-link" href="{{ backpack_url('glossary') }}"><i class="nav-icon la la-list"></i> Glossaries</a></li>
     <li class='nav-item'><a class='nav-link' href='{{ backpack_url('setting') }}'><i class='nav-icon la la-cog'></i> <span>Settings</span></a></li>
 

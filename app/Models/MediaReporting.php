@@ -16,6 +16,7 @@ class MediaReporting extends Model implements HasMedia
     use HasFactory;
 
     use PublishedDateConvert;
+
     protected $guarded = ['id'];
     use HasMediaCollection, HasMultipleImages;
 
