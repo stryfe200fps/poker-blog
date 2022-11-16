@@ -139,6 +139,7 @@
                                 <th class="text-center hide-on-tablet">
                                     Country
                                 </th>
+                                <th></th>
                                 <th class="text-right">Chips</th>
                                 <th class="text-right hide-on-mobile">
                                     Progress
@@ -188,6 +189,14 @@
                                 <td class="text-center hide-on-tablet" v-else>
                                     -
                                 </td>
+                                <td v-if="stack.player?.badge">
+                                    <img
+                                        :src="stack.player?.badge"
+                                        :alt="stack.player?.badge"
+                                        class="img-responsive"
+                                    />
+                                </td>
+                                <td v-else></td>
                                 <td v-if="stack.report_id" class="text-right">
                                     {{ stack.current_chips.toLocaleString() }}
                                 </td>
