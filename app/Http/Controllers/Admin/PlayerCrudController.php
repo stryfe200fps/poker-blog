@@ -90,7 +90,14 @@ class PlayerCrudController extends CrudController
         CRUD::field('name');
         
         CRUD::field('pseudonym');
-        CRUD::field('country_id');
+        $this->crud->addField([
+            'name' => 'country_id',
+            'label' => 'Country',
+            'type' => 'select2_from_ajax',
+            'allows_null' => false,
+            'attribute' => 'name',
+            'data_source' => url('api/fetch/countries')
+        ]);
 
         $this->crud->addField([
             'name' => 'image',

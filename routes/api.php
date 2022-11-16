@@ -22,6 +22,7 @@ use App\Http\Controllers\Api\BannerController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\TournamentController;
 use App\Http\Controllers\Api\ArticleController;
+use App\Http\Controllers\Api\CountryController;
 use App\Http\Controllers\Api\TourApiController;
 use App\Http\Controllers\PageManagerController;
 use App\Http\Controllers\SocialMediaController;
@@ -135,3 +136,4 @@ Route::get('content/{slug}', [ContentController::class, 'show']);
 
 
 Route::get('fetch/tag', [TagController::class, 'fetch']);
+Route::get('fetch/countries', [CountryController::class, 'index']);

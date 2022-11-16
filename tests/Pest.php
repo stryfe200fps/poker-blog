@@ -73,7 +73,6 @@ function insert($route, array $attributes, $returnDefault = true)
     test()->superAdminAuthenticate();
     test()->get("admin/$route/create")->assertStatus(200);
     $post = test()->post("/admin/$route", $attributes);
-
     if (!$returnDefault)
         return $post;
 
@@ -89,7 +88,8 @@ function delete($route, string $model)
     $create = $abstractModel->factory()->create();
     test()->delete("admin/$route/$create->id");
 
-    expect($abstractModel->count())->toBe(0);
+    $count = $abstractModel->where('id', $create->id)->count();
+    expect($count)->toBe(0);
     return test();
 }
 

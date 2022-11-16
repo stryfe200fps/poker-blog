@@ -26,10 +26,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/corejs-typeahead/1.3.1/typeahead.bundle.js" integrity="sha512-4hPOi7CoTBuZdApqBMe475jm2uuzC7dvUGCSDFkPMyfBWZHulaw4JmJVl4plJAtKVGmonz7YvB9j1aT0ayqsqQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.js" integrity="sha512-VvWznBcyBJK71YKEKDMpZ0pCVxjNuKwApp4zLF3ul+CiflQi6aIJR+aZCP/qWsoFBA28avL5T5HA+RE+zrGQYg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
+
+ 
 	var countries = new Bloodhound({
 	  datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
 	  queryTokenizer: Bloodhound.tokenizers.whitespace,
 	  prefetch: {
+    cache: false,
 		url: '/api/fetch/tag',
 		filter: function(list) {
 		  return $.map(list, function(name) {
@@ -40,7 +43,6 @@
 	countries.initialize();
 
 	let test = countries;
-	console.log(test);
 
 	let data= {
 		name: 'countries',
@@ -48,7 +50,10 @@
 		valueKey: 'name',
 		source: countries.ttAdapter() 
   };
+
 	$('#tags-input').tagsinput({
 	  typeaheadjs: data,
 	});
+
+
 </script>

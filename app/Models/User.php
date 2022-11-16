@@ -17,7 +17,7 @@ class User extends Authenticatable
     use HasRoles; // <------ and this
     use HasApiTokens;
     use HasFactory;
-    use HasProfilePhoto;
+    // use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
 
@@ -58,9 +58,9 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $appends = [
-        'profile_photo_url',
-    ];
+    // protected $appends = [
+    //     'profile_photo_url',
+    // ];
 
     public function author()
     {
