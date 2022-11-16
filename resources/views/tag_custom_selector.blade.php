@@ -1,6 +1,12 @@
   Tags
 
-<input type="text" name="fake_tags" value="{{implode(',', collect($crud->entry->tags ?? [])->map->only('title')->pluck('title')->toArray())}}" id="tags-input" data-role="tagsinput"/>
+	<input type="text" name="fake_tags" 
+			value="{{ 
+			old_empty_or_null($field['name'], '') ??  implode(',', collect($crud->entry->tags 
+			?? [])
+			->map->only('title')
+			->pluck('title')
+			->toArray()) ?? $field['default'] ?? ''   }} " id="tags-input" data-role="tagsinput"/>
 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js-bootstrap-css/1.2.1/typeaheadjs.min.css" integrity="sha512-jG7NmK8Pm8iKEjw8aIWc+GVFBM33O/Ow4U0Xw34D5yyST0fgmlcV6shsghOXexDsAqtE2TCM6WwNy35qX8E6ng==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css" integrity="sha512-xmGTNt20S0t62wHLmQec2DauG9T+owP9e6VU8GigI0anN7OXLip9i7IwEhelasml2osdxX71XcYm6BQunTQeQg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
