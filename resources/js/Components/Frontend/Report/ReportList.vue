@@ -686,11 +686,12 @@ onBeforeUnmount(() => {
 onMounted(() => {
     id.value = window.location.hash.substring(1);
     window.addEventListener("scroll", stickyScroll);
-    lightbox.init();
+    if (!props.isLoading) lightbox.init();
 });
 
 onUpdated(() => {
     document.getElementById(id.value)?.scrollIntoView();
+    if (!props.isLoading) lightbox.init();
 });
 </script>
 
