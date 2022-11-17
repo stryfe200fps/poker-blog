@@ -67,11 +67,11 @@ function superAdminAuthenticate()
     return $u;
 }
 
-function insert($route, array $attributes, $returnDefault = true)
+function insert($route, array $attributes, $returnDefault = true, $routeParameters = [])
 {
     //authenticate user
     test()->superAdminAuthenticate();
-    test()->get("admin/$route/create")->assertStatus(200);
+    $test = test()->get("/admin/$route/create?".http_build_query($routeParameters))->assertStatus(200);
     $post = test()->post("/admin/$route", $attributes);
     if (!$returnDefault)
         return $post;
@@ -93,18 +93,17 @@ function delete($route, string $model)
     return test();
 }
 
-function update($route, string $model , array $attributes)
+function update($route, string $model , array $attributes, $routeParameters = [])
 {
     test()->superAdminAuthenticate();
 
     //create new data
-    $create = getModel($model)->factory()->create();
+    $create = getModel($model)->factory()->create($attributes);
     $id = $create->id;
     //go to the edit page
-    test()->get("admin/$route/$id/edit")->assertStatus(200);
-    $attributes['id'] = $id;
+    $visit =  test()->get("admin/$route/$id/edit?".http_build_query($routeParameters) )->assertStatus(200);
     //save update
-    test()->put("/admin/$route/update", $attributes);
+    $test = test()->put("/admin/$route/update", $attributes);
 
     return test();
 }

@@ -33,6 +33,7 @@ class EventResource extends JsonResource
 'country' => $this->tournament->load('country')->country,
 'currency' => $this->tournament->currency,
 'available_days' => $this->getSchedule(),
+'available_day_with_reports' => $this->getScheduleWithReports(),
 'tour_slug' => $this->tournament->tour->slug,
 'tournament_slug' => $this->tournament->slug,
 'buyin' => $this->buyin,

@@ -245,7 +245,7 @@ class EventReportCrudController extends CrudController
             [
                 'label' => 'Levels',
                 'type' => 'relationship',
-                'name' => 'level', // the method that defines the relationship in your Model
+                'name' => 'level_id', // the method that defines the relationship in your Model
                 'entity' => 'level', // the method that defines the relationship in your Model
                 'attribute' => 'level_value', // foreign key attribute that is shown to user
                 'pivot' => true, // on create&update, do you need to add/delete pivot table entries?

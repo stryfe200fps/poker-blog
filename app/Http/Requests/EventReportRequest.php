@@ -31,8 +31,7 @@ class EventReportRequest extends FormRequest
             ],
             'slug' => 'unique:event_reports,slug,'.\Request::get('id'),
             'type' => 'required',
-
-            'level' => 'required',
+            'level_id' => 'required',
         ];
     }
 
@@ -69,7 +68,7 @@ class EventReportRequest extends FormRequest
     {
         return [
             'title.required' => 'Title is required',
-            'level.required' => 'Level is required',
+            'level_id.required' => 'Level is required',
         ];
     }
 }
