@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class LOFApiEventsCollection extends ResourceCollection
+class EventInTournamentCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
@@ -21,12 +21,15 @@ class LOFApiEventsCollection extends ResourceCollection
                 'status' => $result->status(), 
                 'events' => collect($result->days->sortByDesc('lft')
                     ->map(fn ($item) => $item->load(['event_reports'])->event_reports
+                    ->where('type','!=' ,'level')
+                    ->where('type','!=' ,'content')
+                    ->load('day')
                     ->sortByDesc('published_date')))
                     ->flatten()
                     ->take(2)
                     ->toArray()
             ]
-            ,collect(new LOFApiEventsResource($result))->toArray());
+            ,collect(new EventResource($result))->toArray());
         })->sortByDesc('id');
 
 

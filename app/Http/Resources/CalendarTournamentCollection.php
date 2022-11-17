@@ -3,7 +3,7 @@
 namespace App\Http\Resources;
 
 use Carbon\Carbon;
-use App\Http\Resources\LOFApiEventIndexResource;
+use App\Http\Resources\EventResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class CalendarTournamentCollection extends ResourceCollection

@@ -25,7 +25,7 @@ class EventCollection extends ResourceCollection
         }
 
         return [
-            'data' => LOFApiEventIndexResource::collection($events)
+            'data' => EventResource::collection($events)
         ];
     }
 }

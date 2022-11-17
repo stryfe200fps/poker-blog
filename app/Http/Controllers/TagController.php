@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\ArticleResource;
-use App\Http\Resources\LOFApiEventReportsResource;
+use App\Http\Resources\EventReportResource;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 
@@ -31,6 +31,6 @@ class TagController extends Controller
     {
         $tag = Tag::where('slug', $slug)->firstOrFail();
 
-        return LOFApiEventReportsResource::collection($tag->event_reports()->paginate(10));
+        return EventReportResource::collection($tag->event_reports()->paginate(10));
     }
 }
