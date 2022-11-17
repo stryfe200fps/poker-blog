@@ -74,7 +74,9 @@
                         :day="day"
                         :url="url"
                         :reportingBanner="reportingBanner"
+                        :isLoading="isLoading"
                         @loadMore="loadMoreReports"
+                        @showLoading="showLoading"
                     />
                 </div>
             </div>
@@ -142,6 +144,7 @@ const isActive = ref(false);
 const bannerStore = useBannerStore();
 const reportingBanner = ref([]);
 const daySlug = ref(window.location.pathname.split("/")[5]);
+const isLoading = ref(true);
 
 const eventDays = computed(() => {
     return Object.keys(eventData?.value?.available_day_with_reports ?? {});
@@ -178,18 +181,24 @@ async function loadMoreReports() {
     lastPage.value = eventStore.liveReportList.meta.last_page;
 }
 
+function showLoading() {
+    isLoading.value = true;
+}
+
 async function reportViewing() {
     if (props.type === null) {
         await eventStore.getLiveReport(1, selectDay.value);
         liveReport.value = eventStore.liveReportList.data;
         lastPage.value = eventStore.liveReportList.meta.last_page;
         reportingBanner.value = bannerStore.getReportingBanner();
+        isLoading.value = false;
         return;
     }
 
     if (props.type === "chip-stack") {
         await eventStore.getChipCountsData(selectDay.value);
         chipCountsData.value = eventStore.chipCounts.data;
+        isLoading.value = false;
         return;
     }
 
@@ -198,18 +207,21 @@ async function reportViewing() {
         whatsappData.value = eventStore.whatsapp.data;
         await eventStore.getWhatsappContent();
         whatsappContent.value = eventStore.whatsappContent;
+        isLoading.value = false;
         return;
     }
 
     if (props.type === "gallery") {
         await eventStore.getGalleryData(selectDay.value);
         galleryData.value = eventStore.galleryData.data;
+        isLoading.value = false;
         return;
     }
 
     if (props.type === "payouts") {
         await eventStore.getPayoutsData(eventData.value.slug);
         payoutsData.value = eventStore.payouts.data;
+        isLoading.value = false;
         return;
     }
 }
@@ -275,6 +287,7 @@ onUpdated(() => {
 });
 
 const fetchLiveReports = () => {
+    isLoading.value = true;
     loadPage.value = 1;
     lastPage.value = 1;
     reportViewing();

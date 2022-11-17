@@ -129,7 +129,9 @@ class Event extends Model implements HasMedia
     public function getScheduleWithReports()
     {
         return $this->days()->orderBy('lft')->withCount('event_reports')
-            ->having('event_reports_count', '>', 0 )->get()->map->only('id', 'name');
+            ->having('event_reports_count', '>', 0 )->pluck('name', 'id');
+            // ->having('event_reports_count', '>', 0 )->get()->map->only('id', 'name');
+            
 
     }
 
