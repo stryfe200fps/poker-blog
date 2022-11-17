@@ -162,6 +162,6 @@ class EventReport extends Model implements HasMedia
         if ($diffInDays > 7)
             return $date->format(config('app.carbon_date_format')) . $timezone;
 
-        return $date->diffForHumans(null, ['long' => true, 'parts' =>2])  . ' '. $date->format('T') .  $timezone;
+        return $date->diffForHumans(null, ['long' => true, 'parts' =>2]);
     }
 }
