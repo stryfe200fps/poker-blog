@@ -25,7 +25,8 @@ class ImageThemeRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'name' => 'required|min:5|max:255'
+            'name' => 'required',
+            'image' => 'required',
         ];
     }
 
@@ -37,7 +38,6 @@ class ImageThemeRequest extends FormRequest
     public function attributes()
     {
         return [
-            //
         ];
     }
 
@@ -49,7 +49,8 @@ class ImageThemeRequest extends FormRequest
     public function messages()
     {
         return [
-            //
+            'name' => 'title is required',
+            'image' => 'image is required',
         ];
     }
 }

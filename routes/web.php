@@ -1,155 +1,158 @@
 <?php
 
 use Inertia\Inertia;
-use App\Models\Payout;
-use App\Models\Player;
-use App\Models\Article;
+use App\Models\MenuItem;
 use App\Models\EventChip;
-use App\Models\EventPayout;
-use App\Models\EventReport;
-use Rap2hpoutre\FastExcel\FastExcel;
+use App\Models\Tournament;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Schema;
-use App\Http\Controllers\HomeController;
-use Backpack\PageManager\app\Models\Page;
-use App\Http\Resources\LOFApiEventReportsResource;
+use App\Http\Resources\TournamentEventResource;
+use App\Http\Controllers\Inertia\HomeController;
+use App\Http\Controllers\Inertia\PageController;
+use App\Http\Controllers\Inertia\RoomController;
+use App\Http\Controllers\Inertia\EventController;
+use App\Http\Controllers\Inertia\ReportController;
+use App\Http\Controllers\Inertia\ArticleController;
+use App\Http\Controllers\Inertia\MenuItemController;
+use App\Http\Controllers\Inertia\TournamentController;
+use App\Http\Controllers\Admin\Utilities\ExcelUploadController;
+use App\Http\Resources\TourResource;
+use App\Models\Tour;
+
+Route::get('/', [HomeController::class, 'index']);
 
 
-Route::get('/', function () {
 
-    return Inertia::render('Index',[  
-        'title' => 'Life of poker',
-        'description' =>'life of poker' 
-    ]);
+Route::get('/tag/articles/{slug}', [ArticleController::class, 'tag'])->name('article');
+
+Route::prefix('news')->group(function () {
+
+    Route::get('/', [ArticleController::class, 'index'])->name('article');
+    Route::get('/{slug}', function ($slug) {
+        return Inertia::render('Categories/CategoryPage', [
+                        'title' => ucfirst(str_replace('-', ' ', $slug)) . ' | LifeOfPoker',
+                        'page_title' => ucfirst(str_replace('-', ' ', $slug)),
+                    ]);
+    });
+    Route::get('/category', [ArticleController::class, 'index'])->name('article-category');
+    Route::get('/{year}/{month}/{slug}', [ArticleController::class, 'show'])->name('article-show');
+
+});
+Route::get('live-reporting/{page?}', [TournamentController::class, 'index']);
+Route::prefix('tours')->group(function () {
+ 
+    Route::get('/{tour}/{series}/{eventSlug}', [EventController::class, 'show']);
+    Route::get('/{tour}/{series}/{eventSlug}/{reportId}', [ReportController::class, 'show'])->where('reportId', '(\w+\-\d+)');
+    Route::get('/{tour}/{series}/{eventSlug}/{day?}/{type?}', [EventController::class, 'show']);
 });
 
-Route::get('/event/{id}', function ($id) {
-    return Inertia::render('Event/Index', [
-        'id' => $id
-    ]);
-})->name('event');
 
-Route::get('/report/{slug}', function ($slug) {
-    $report = new LOFApiEventReportsResource(EventReport::where('slug', $slug)->first());
-      return Inertia::render('Report/Show', [
-        'report' => $report,
-        'title' => $report->title,
-        'slug' => $slug,
-         'image' => $report->getFirstMediaUrl('event-report', 'main-image'),
-        'description' => \Illuminate\Support\Str::limit($report->title, 100, $end='...') 
-    ]);
-})->name('event');
+Route::get('tour/{tourSlug}/{seriesSlug}', function ($tourSlug,$seriesSlug) {
+$tournament = Tournament::with('events')->where('slug', $seriesSlug)->firstOrFail() ;
 
-
-
-Route::get('/tournament', function () {
-    return Inertia::render('Tournament/Index');
-})->name('tournament');
-
-Route::get('/article', function () {
-    return Inertia::render('Article/Index');
-})->name('article');
-
-
-Route::get('/article/show/{slug}', function ($slug) {
-$article = Article::where('slug', $slug)->first();
-
-    return Inertia::render('Article/Show', 
-    [
-        'title' => $article->title,
-        'slug' => $slug,
-        'image' => $article->image,
-        'description' => \Illuminate\Support\Str::limit($article->description, 100, $end='...') 
-    ]);
-})->name('article-show');
-
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-])->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
+return Inertia::render('Series/Show', [
+    'title' => $tournament->title.' | LifeOfPoker',
+    'series' => new TournamentEventResource($tournament),
+    'page_title' => 'Event Calendar',
+    'description' => $tournament->description,
+ ]);
 });
 
+
+Route::get('tours/{tourSlug}', function ($tourSlug) {
+    if ($tourSlug !== 'undefined') { 
+        $tour = new TourResource(Tour::where('slug', $tourSlug)->firstOrFail()) ;
+
+        return Inertia::render('Template/PokerTour', [
+            'title' => $tour->title. ' | LifeOfPoker',
+            'tour' => $tour,
+            'description' => $tour->description,
+            'page_title' => $tour->title,
+        ]);
+    }
+});
 
 Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
-Route::get('admin/live_events', function () {
-    return view('vendor.backpack.page.live_events');
+Route::post('prepare', [ExcelUploadController::class, 'prepare']);
+Route::post('upload_excel', [ExcelUploadController::class, 'upload']);
+
+
+
+
+//  Route::get('news/{slug}', function () use ($slug) {
+//                     $webPage = \JsonLd\Context::create('web_page', [
+//                         'url' => request()->url()
+//                     ]);
+//                     return Inertia::render('Categories/CategoryPage', [
+//                         // 'title' => $item->name.' | LifeOfPoker',
+//                         // 'description' => $item->name,
+//                         // 'page' => $item->link,
+//                         // 'page_title' => $child->name,
+//                         // 'json-ld-webpage' => $webPage,
+//                     ]);
+// });
+                
+// app(MenuItemController::class)->index();
+
+// try {
+//     foreach (MenuItem::getTree() as $item) {
+//         if ($item->link == null) {
+//             return;
+//         }
+
+//         foreach ($item->children as $child) {
+//             if ($item->link === $child->link) {
+//                 Route::get($item->link, function () use ($item, $child) {
+//                     $webPage = \JsonLd\Context::create('web_page', [
+//                         'url' => request()->url()
+//                     ]);
+//                     return Inertia::render('Categories/CategoryPage', [
+//                         'title' => $item->name.' | LifeOfPoker',
+//                         'description' => $item->name,
+//                         'page' => $item->link,
+//                         'page_title' => $child->name,
+//                         'json-ld-webpage' => $webPage,
+//                     ]);
+//                 });
+//             }
+
+//             Route::get($item->link.'/'.$child->link, function () use ($child) {
+//                 $webPage = \JsonLd\Context::create('web_page', [
+//                     'url' => request()->url()
+//                 ]);
+//                 return Inertia::render('Categories/CategoryPage', [
+//                     'title' => $child->name.' | LifeOfPoker',
+//                     'description' => $child->name,
+//                     'page' => $child->link,
+//                     'page_title' => $child->name,
+//                     'json-ld-webpage' => $webPage,
+//                 ]);
+//             });
+//         }
+//     }
+// } catch (Exception $e) {
+// }
+
+Route::get('/event-calendar', function () {
+ return Inertia::render('Event/EventCalendar', [
+    'title' => 'Event Calendar | LifeOfPoker',
+    // 'description' => 'desc',
+    // 'page' => 'tests',
+    'page_title' => 'Event Calendar',
+    // 'json-ld-webpage' => 'testsssss',
+ ]);
 });
 
+
+// Route::get('/rooms', [ RoomController::class, 'index' ]);
+Route::get('/rooms/{slug}', [ RoomController::class, 'show' ]);
+
+Route::get('/{page}/{other?}', [PageController::class, 'index']);
+
+
+//for dev
 Route::get('admin/player_history/{id}', function ($id) {
     return view('vendor.backpack.page.player_chips_history', [
-        'chips' => EventChip::with('event')->orderByDesc('updated_at')->where('player_id', $id)->limit(10)->get()
+        'chips' => EventChip::with('event')->orderByDesc('updated_at')->where('player_id', $id)->limit(10)->get(),
     ]);
 });
-
-Route::post('filepond', function () {
-});
-
-Route::post('prepare', function () {
-    try {
-        $realName = request()->all()['file']->getClientOriginalName();
-        request()->all()['file']->move('uploads', $realName);
-        $collection = (new FastExcel)->import('uploads/'.$realName);
-        $header = array_values(collect(Schema::getColumnListing('event_payouts'))->filter(fn ($z) => $z == 'player_id' || $z == 'prize' || $z == 'country')->toArray());
-
-        return [
-            'excel_header' => array_keys($collection[0]),
-            'main_header' => $header,
-        ];
-
-        return 1;
-    } catch (Exception $e) {
-        return 0;
-    }
-});
-
-Route::post('upload_excel', function () {
-
-    if (!request()->all()['checkbox_overwrite']) {
-        EventPayout::where('event_id', request()->all()['event_id'])->delete();
-    }
-
-    try {
-        $realName = request()->all()['file']->getClientOriginalName();
-        request()->all()['file']->move('uploads', $realName);
-        $currentHeader = json_decode(request()->all()['headers'], true);
-        // dd(array_values(collect($currentHeader)->filter(fn ($a) => array_key_first($a) === 'prize')->toArray())[0]['prize']);
-        $check = (new FastExcel())->import('uploads/'.$realName, function ($line) use ($currentHeader) {
-            $player = $line[array_values(collect($currentHeader)->filter(fn ($a) => array_key_first($a) === 'player_id')->toArray())[0]['player_id']];
-
-            $playerArray = explode(' ', trim($player));
-
-            if (is_countable($playerArray) && count($playerArray) === 2) {
-                $player = Player::where('name', $playerArray[0].' '.$playerArray[1])->first();
-                if ($player !== null) {
-                    $save = EventPayout::create([
-                        'prize' => $line[array_values(collect($currentHeader)->filter(fn ($a) => array_key_first($a) === 'prize')->toArray())[0]['prize']],
-                        'event_id' => request()->all()['event_id'],
-                        'player_id' => $player->id,
-                    ]);
-                }
-            }
-        });
-
-        return 1;
-    } catch (Exception $e) {
-        return 0;
-    }
-});
-
-Route::get('/{page}', function ($page) {
-    if ($page = Page::findBySlug($page)) {
-        return Inertia::render('Template/Index', [
-            'title' => $page->name,
-            'description' => \Illuminate\Support\Str::limit($page->name, 100, $end='...') ,
-            'page' => $page
-        ]);
-    } else {
-            return Inertia::render('Error/404');    
-    }
-});
-

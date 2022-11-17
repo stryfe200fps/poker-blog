@@ -1,149 +1,590 @@
 <template>
-    <header ref="sticky" class="clearfix">
-        <!-- Bootstrap navbar -->
-        <nav class="navbar navbar-default navbar-static-top" role="navigation">
-            <!-- Logo & advertisement -->
-            <div class="logo-advertisement">
+    <header ref="sticky" class="clearfix" style="z-index: auto !important">
+        <nav
+            class="navbar navbar-default navbar-static-top custom-header--bg"
+            role="navigation"
+        >
+            <div class="logo-advertisement custom-header--bg">
+                <div class="container">
+                    <div class="custom-header--flex">
+                        <div class="navbar-header">
+                            <Link
+                                class="navbar-brand"
+                                href="/"
+                                style="padding: 0"
+                            >
+                                <img
+                                    class="header-logo"
+                                    src="/lop_logo_white.svg"
+                                    alt="Logo"
+                                />
+                            </Link>
+                        </div>
+                        <div
+                            class="advertisement"
+                            style="align-self: center; padding: 0"
+                        >
+                            <div class="desktop-advert">
+                                <img :src="slogan" alt="slogan" />
+                            </div>
+                        </div>
+                        <div class="advertisement" style="height: 100%">
+                            <div
+                                class="desktop-advert"
+                                style="
+                                    position: absolute;
+                                    top: 0;
+                                    height: 100%;
+                                    margin-left: -100px;
+                                    filter: drop-shadow(8px 8px 10px #000);
+                                "
+                            >
+                                <img
+                                    :src="card"
+                                    alt="card"
+                                    style="width: 155px; padding-top: 8px"
+                                />
+                            </div>
+                        </div>
+                        <div class="button-actions">
+                            <div
+                                class="advertisement google-translate"
+                                style="overflow: visible; padding: 0"
+                            >
+                                <div class="desktop-advert">
+                                    <div class="header-actions">
+                                        <div
+                                            class="loader"
+                                            v-if="isLoading"
+                                        ></div>
+                                        <!-- <i
+                                        class="fa fa-search header-actions__icon"
+                                    ></i>
+                                    <h6 class="header-actions__icon">|</h6> -->
+                                        <div class="translate-container">
+                                            <div
+                                                id="google_translate_element"
+                                            ></div>
+                                        </div>
+
+                                        <!-- <label class="dropdown">
+                                        <div class="dd-button">ENG</div>
+                                        <input
+                                            type="checkbox"
+                                            class="dd-input"
+                                            id="test"
+                                        />
+                                        <ul class="dd-menu">
+                                            <li>Action</li>
+                                            <li>Another action</li>
+                                            <li>Something else here</li>
+                                        </ul>
+                                    </label> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <button
+                                class="hamburger hamburger--spin"
+                                :class="{ 'is-active': toggleMenu }"
+                                type="button"
+                                @click="toggleBtn"
+                            >
+                                <span class="hamburger-box">
+                                    <span class="hamburger-inner"></span>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-list-container" style="border: 0">
                 <div class="container">
                     <div
-                        style="display: flex; justify-content: space-between; align-items: flex-start; padding: 3rem 0;">
-                        <Link class="pull-left"  href="/">
-                            <img src="/lop_logo_small.png" alt="" style="width: 150px">  </Link>
-                        <button @click="toggleBtn" type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                            data-target="#bs-example-navbar-collapse-1">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <div class="advertisement" style="align-self: center; padding: 0">
-                            <div class="desktop-advert">
-                                <h4 style="color: white">“BRINGING THE ACTION TO YOUR DOORSTEP”</h4>
-                            </div>
-                        </div>
-                        <div class="advertisement" style="padding: 0; font-size: 12px">
-                            <div class="desktop-advert" style="color: white">
-                                <!-- <i class="fa fa-search" style="margin-right: 0.5rem"></i>
-                                <span style="
-                                    display: inline-block;
-                                    margin-right: 0.5rem;
-                                    font-size: 12px;
-                                    color: white;
-                                ">|</span>
-                                <span style="display: inline-block; font-size: 12px; color: white">ENG<i
-                                        class="fa fa-angle-down"
-                                        style="margin-left: 1rem; font-size: 12px; color: #666"></i></span> -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- End Logo & advertisement -->
-
-            <!-- navbar list container -->
-            <div class="nav-list-container navbar navbar-default" >
-                <div class="container">
-                    <!-- Collect the nav links, forms, and other content for toggling -->
-                    <div class="collapse navbar-collapse" :class="{in: toggleMenu}" id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav navbar-left custome-nav">
-
-                            <li class="drop"><a  style="cursor:pointer; "  class="home" >News & Info</a>
-                                <ul class="dropdown" >
-                                    <li ><Link style="cursor:pointer; background: #efefef;"  href="/">News</Link></li>
-                                </ul>
+                        class="collapse navbar-collapse navbar-collapse--custom"
+                        :class="{ pull: toggleMenu }"
+                        id="bs-example-navbar-collapse-1"
+                    >
+                        <ul
+                            class="nav navbar-nav navbar-left navbar-nav--custom"
+                        >
+                            <li class="drop drop-img">
+                                <Link href="/">
+                                    <img
+                                        class="drop-logo"
+                                        src="/lop_logo_white.svg"
+                                        alt="Logo"
+                                    />
+                                </Link>
                             </li>
-                            
-                            <li><Link :class="{ 'router-link-active': route().current() === 'tournament' }"  href="/tournament">Live reporting</Link></li>
-                            <li><Link :class="{ 'router-link-active': calendar === '/event-calendar'  }"  href="/event-calendar">Event Calendar</Link></li>
-                            <!-- <li><a class="tech" href="#">rankings & leaderboards</a></li>
-
-                            <li><a class="fashion" href="#">packages</a></li>
-
-                            <li><a class="video" href="#">store</a></li> -->
-
-                            <li ><Link :class="{ 'router-link-active': contact === '/contact' }"  href="/contact">contact</Link></li>
+                            <NavLinks
+                                v-for="menu in $page['props']['menu']"
+                                :key="menu.id"
+                                :menu="menu"
+                            />
                         </ul>
                     </div>
-                    <!-- /.navbar-collapse -->
                 </div>
             </div>
-            <!-- End navbar list container -->
         </nav>
-        <!-- End Bootstrap navbar -->
     </header>
 </template>
 
 <script setup>
-import { onMounted, ref, watch } from 'vue'
-import { Link, InertiaApp } from '@inertiajs/inertia-vue3';
-import logo from '/public/lop_logo_small.png'
+import { onBeforeUnmount, onMounted, ref } from "vue";
+import { Link } from "@inertiajs/inertia-vue3";
+import logo from "/public/lop_logo_small.png";
+import card from "/public/header-card.png";
+import slogan from "/public/header-slogan.png";
+import NavLinks from "./NavLinks.vue";
+
 const toggleMenu = ref(false);
 const windowTop = ref(0);
+const sticky = ref(null);
+const pathname = ref(window.location.pathname.split("/")[1]);
+const isLoading = ref(true);
 
 function toggleBtn() {
     toggleMenu.value = !toggleMenu.value;
+    if (toggleMenu.value) {
+        document.body.style.overflow = "hidden";
+        return;
+    }
+    document.body.style.overflow = "auto";
 }
-
-const contact = ref('')
-const calendar = ref('')
-const sticky = ref(null)
-onMounted(()=> {
-    contact.value = window.location.pathname
-    calendar.value = window.location.pathname
-    window.addEventListener("scroll", onScroll);
-})
 
 function onScroll(e) {
-    
     windowTop.value = e.target.documentElement.scrollTop;
     var width = document.body.clientWidth;
+    const navImg = document.querySelector(".drop-img");
 
-    
+    if (width < 769) return;
 
-    if (width < 769)
-        return
-
-    if(windowTop.value >= sticky.value.offsetTop + 100) {
-        sticky.value.classList.add("active")
+    if (windowTop.value >= sticky.value.offsetTop + 100) {
+        sticky.value.classList.add("active");
+        navImg.classList.add("scroll");
     } else {
-        sticky.value.classList.remove("active")
+        sticky.value.classList.remove("active");
+        navImg.classList.remove("scroll");
     }
 }
+
+function googleTranslateElementInit() {
+    new google.translate.TranslateElement(
+        {
+            pageLanguage: "en",
+            includedLanguages: "zh-CN,zh-TW,en,ko,ja,es,nl",
+        },
+        "google_translate_element"
+    );
+    const targetElement = document.getElementById("google_translate_element");
+    const select = document.getElementsByClassName("goog-te-combo");
+    if (targetElement && select) {
+        targetElement.addEventListener("DOMNodeInserted", () => {
+            const options = select[0].options;
+            Array.prototype.forEach.call(options, (element) => {
+                switch (element.value) {
+                    case "zh-CN":
+                        element.text = "中文 (简体)";
+                        break;
+                    case "zh-TW":
+                        element.text = "中文 (繁体)";
+                        break;
+                    case "nl":
+                        element.text = "Nederlands";
+                        break;
+                    case "ja":
+                        element.text = "にほんご";
+                        break;
+                    case "ko":
+                        element.text = "한국어";
+                        break;
+                    case "es":
+                        element.text = "Español";
+                        break;
+                    default:
+                        element.text = "English";
+                }
+            });
+        });
+        select[0].addEventListener("change", function () {
+            if (select[0].value === "en") {
+                window.location.reload();
+            }
+        });
+        isLoading.value = false;
+    }
+}
+onMounted(() => {
+    if (pathname.value !== "news") window.addEventListener("scroll", onScroll);
+
+    let targetElement = document.getElementById("google_translate_element");
+    if (targetElement) {
+        targetElement.innerHTML = "";
+        const script = document.createElement("script");
+        script.type = "text/javascript";
+        script.src =
+            "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+        document.head.appendChild(script);
+        setTimeout(() => {
+            googleTranslateElementInit();
+        }, 1500);
+        return;
+    }
+});
+
+onBeforeUnmount(() => {
+    window.removeEventListener("scroll", onScroll);
+});
 </script>
 
 <style scoped>
-.navbar-nav > li:nth-child(2) > a:after,
-.navbar-nav > li:nth-child(3) > a:after,
-.navbar-nav > li:nth-child(4) > a:after {
+.custom-header--bg {
+    background-image: url("/background-black.jpg");
+    background-color: #2d3436;
+}
+
+.header-logo {
+    width: 150px;
+}
+
+.drop-logo {
+    width: 80px;
+}
+
+.custom-header--flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 3rem 0;
+}
+
+.header-actions {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 10px;
+    color: #fff;
+}
+
+.translate-container {
+    position: absolute;
+    right: 0;
+}
+
+.loader {
+    position: absolute;
+    right: 30px;
+    width: 26px;
+    height: 26px;
+    border: 2px solid #fff;
+    border-left-color: transparent;
+    border-radius: 50%;
+    animation: spin89345 1s linear infinite;
+}
+
+@keyframes spin89345 {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: 400;
+    color: #fff;
+}
+
+.dd-button {
+    display: inline-block;
+    padding-right: 30px;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.dd-button:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #fff;
+    transform: translateY(-50%);
+}
+
+.dd-input {
     display: none;
 }
 
-.navbar-nav > li:nth-child(2) > a,
-.navbar-nav > li:nth-child(3) > a,
-.navbar-nav > li:nth-child(4) > a {
-    padding-left: 12px;
-    padding-right: 12px;
+.dd-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin: 2px 0 0 0;
+    padding: 0;
+    text-align: start;
+    list-style-type: none;
+    background-color: #ffffff;
+    color: #222;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.1);
 }
 
-.router-link-active, .router-link-exact-active{
-    background-color: #f44336 !important;
-    color: white;
+.dd-input + .dd-menu {
+    display: none;
 }
+
+.dd-input:checked + .dd-menu {
+    display: block;
+}
+
+.dd-menu li {
+    padding: 10px 20px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.dd-menu li:hover {
+    background-color: #f6f6f6;
+}
+
 header.active .nav-list-container {
-    border-radius: unset;
+    background-image: url("/background-black.jpg");
+    background-color: #2d3436;
 }
 
-a.router-link-active:hover {
-    color: white !important;
-    background-color: #f44336 !important;
+.collapse {
+    display: block;
 }
 
-.navbar-nav>li>a.router-link-active:hover {
-    color: white !important;
+.navbar-collapse--custom {
+    scrollbar-width: none;
 }
 
-.navbar-nav>li>a:hover, .navbar-nav>li>a:hover::after {
-    color: #f44336 !important;
+.navbar-collapse--custom::-webkit-scrollbar {
+    display: none;
 }
 
+.navbar-nav .drop-img a {
+    padding-left: 0 !important;
+}
+
+.drop-img {
+    display: none;
+}
+
+.drop-img.scroll {
+    display: block;
+}
+
+.drop-img a::after {
+    opacity: 0;
+}
+
+.navbar-nav--custom > li > a:before {
+    display: none;
+}
+
+.hamburger {
+    overflow: visible;
+    display: none;
+    font: inherit;
+    text-transform: none;
+    color: inherit;
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+    transition-property: opacity, filter;
+    transition-duration: 0.15s;
+    transition-timing-function: linear;
+}
+
+.hamburger:hover {
+    opacity: 0.7;
+}
+
+.hamburger.is-active:hover {
+    opacity: 0.7;
+}
+
+.hamburger.is-active .hamburger-inner,
+.hamburger.is-active .hamburger-inner::before,
+.hamburger.is-active .hamburger-inner::after {
+    background-color: #fff;
+}
+
+.hamburger-box {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 24px;
+}
+
+.hamburger-inner {
+    top: 50%;
+    display: block;
+    margin-top: -2px;
+}
+
+.hamburger-inner,
+.hamburger-inner::before,
+.hamburger-inner::after {
+    position: absolute;
+    width: 35px;
+    height: 3px;
+    background-color: #fff;
+    border-radius: 4px;
+    transition: transform 0.15s ease;
+}
+
+.hamburger-inner::before,
+.hamburger-inner::after {
+    content: "";
+    display: block;
+}
+
+.hamburger-inner::before {
+    top: -10px;
+}
+
+.hamburger-inner::after {
+    bottom: -10px;
+}
+
+.hamburger--spin .hamburger-inner {
+    transition-duration: 0.22s;
+    transition-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
+
+.hamburger--spin .hamburger-inner::before {
+    transition: top 0.1s 0.25s ease-in, opacity 0.1s ease-in;
+}
+
+.hamburger--spin .hamburger-inner::after {
+    transition: bottom 0.1s 0.25s ease-in,
+        transform 0.22s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
+
+.hamburger--spin.is-active .hamburger-inner {
+    transform: rotate(225deg);
+    transition-delay: 0.12s;
+    transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.hamburger--spin.is-active .hamburger-inner::before {
+    top: 0;
+    opacity: 0;
+    transition: top 0.1s ease-out, opacity 0.1s 0.12s ease-out;
+}
+
+.hamburger--spin.is-active .hamburger-inner::after {
+    bottom: 0;
+    transform: rotate(-90deg);
+    transition: bottom 0.1s ease-out,
+        transform 0.22s 0.12s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+@media screen and (max-width: 1199px) {
+    .drop-img {
+        padding-right: 15px;
+    }
+
+    .navbar-nav--custom > li > a {
+        padding-inline-start: 20px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .drop-img {
+        display: none;
+    }
+
+    .custom-header--flex {
+        padding-block: 1rem;
+    }
+
+    .navbar-header {
+        align-self: center;
+    }
+
+    .header-logo {
+        width: 100px;
+    }
+
+    .hamburger {
+        display: inline-block;
+    }
+
+    .advertisement .desktop-advert {
+        display: block !important;
+    }
+
+    .button-actions {
+        display: flex;
+        align-items: center;
+        align-self: center;
+        gap: 20px;
+    }
+
+    .google-translate {
+        display: block !important;
+        margin-top: 20px;
+    }
+
+    .navbar-nav--custom {
+        margin-block: 0;
+    }
+
+    .navbar-collapse--custom {
+        display: none;
+        min-height: 100vh;
+        background-color: #2a2828;
+    }
+
+    .navbar-collapse--custom.pull {
+        display: block;
+        animation: fadeIn 1s ease;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    .translate-container {
+        position: static;
+        right: unset;
+    }
+
+    .loader {
+        right: 10px;
+        bottom: 0;
+    }
+}
+
+@media screen and (min-width: 769px) {
+    .navbar-nav--custom {
+        display: flex;
+        align-items: center;
+    }
+
+    .navbar-nav--custom > li > a {
+        padding-block: 15px;
+    }
+}
 </style>

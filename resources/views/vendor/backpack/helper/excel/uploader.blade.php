@@ -39,7 +39,7 @@
   <div class="d-flex  flex-wrap" >
   <div class="p-1 container" v-for="(img, index) in gallery" >
     <i @click.prevent="deleteImage(img.id)"  class="d-flex rounded" style="cursor:pointer; background:#7c69ef; color:white; margin-left:5px; margin-top:5px;  padding:0px 4px; z-index:50000; font-size:15px; font-weight:bold; position: absolute;">x</i>
-  <img  v-scope="lightBox()"  @mouseover="mounted($el)" @mouseleave="unmounted($el)" class="rounded image thumbnail" :src="img.thumbnail" /> 
+  <img  v-scope="lightBox()"  @mouseover="mounted($el)" @mouseleave="unmounted($el)" class="rounded image thumbnail" :src="img.xs_image" /> 
 </div>
 
   </div>
@@ -59,6 +59,8 @@
 
 
 <script defer src="https://unpkg.com/filepond-plugin-image-crop/dist/filepond-plugin-image-crop.js"></script>
+
+<script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
 <script defer src="https://unpkg.com/filepond-plugin-image-transform/dist/filepond-plugin-image-transform.js"></script>
 <script defer src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
 <script defer src="https://unpkg.com/filepond/dist/filepond.js"></script>
@@ -129,18 +131,20 @@
       },
     async changeTab(tab)
     {
+
       this.tab= tab
+
     },
     async fetchGallery()
     {
-    await axios.get('/api/events/gallery/fetch/' + {{ $widget['eventId'] }}).then((res) => {
-      this.gallery = res.data
+    await axios.get('/api/events/gallery/fetch/' + {{ $widget['dayId'] }}  ).then((res) => {
+      this.gallery = res.data.data
       })
     },
     mounted() {
     this.tab = 0
 
-  // FilePond.registerPlugin(FilePondPluginImagePreview)
+  FilePond.registerPlugin(FilePondPluginFileValidateType)
     // FilePond.registerPlugin(FilePondPluginImageCrop);
     // FilePond.registerPlugin(FilePondPluginImageTransform);
 
@@ -156,40 +160,59 @@
      
     this.filepond.setOptions({
       allowRevert: false,
+      acceptedFileTypes: ['image/png', 'image/jpg', 'image/jpeg'],
 
         server: {
-        
           process: (fieldName, file, metadata, load, error, progress, abort, transfer, options) => {
 
-           
             const formData = new FormData();
 
             formData.append('event_id',  {{ $widget['eventId'] }} ) 
+            formData.append('day_id',  {{ $widget['dayId'] }} ) 
 
             formData.append(fieldName, file, file.name);
 
             const request = new XMLHttpRequest();
             request.open('POST', '/api/events/gallery/upload');
 
+            request.timeout = 20000
+
             request.upload.onprogress = (e) => {
               progress(e.lengthComputable, e.loaded, e.total);
-              
             };
+
+  
             request.onload =  () => {
               if (request.status >= 199 && request.status < 300) {
                 load(request.responseText);
                 this.fetchGallery()
-              } 
+              } else if (request.status >= 400)  {
+                error('nothing')
+              }
             };
+
+            // request.onerror = () => {
+            //   alert('error')
+            // }
+
+         
+
             request.send(formData);
             return {
               abort: () => {
+
+                alert('error')
+                console.log(request)
                 request.abort();
-                abort
+
+                // alert('wrong')
+                // abort
               }
             }
 
-          }
+          },
+
+          timeout: 6000
        
         } 
       });

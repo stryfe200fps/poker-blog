@@ -2,29 +2,149 @@
 
 namespace App\Models;
 
-use Cocur\Slugify\Slugify;
+use Carbon\Carbon;
+use App\Models\Day;
+use Spatie\Image\Image;
+use App\Traits\ImageUpload;
+use Illuminate\Support\Str;
 use Spatie\Sluggable\HasSlug;
+use App\Traits\BackpackSlugify;
+use App\Traits\LOPDefaultTrait;
+use App\Traits\HasMultipleImages;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\Sluggable\SlugOptions;
+use App\Traits\HasMediaCollection;
+use App\Observers\DefaultModelObserver;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\ImageOptimizer\OptimizerChain;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\ImageOptimizer\Optimizers\Optipng;
+use Spatie\ImageOptimizer\Optimizers\Pngquant;
+use Spatie\ImageOptimizer\Optimizers\Jpegoptim;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 
 class Event extends Model implements HasMedia
 {
     use \Backpack\CRUD\app\Models\Traits\CrudTrait;
     use HasFactory;
-    use InteractsWithMedia;
     use HasSlug;
+    use \Znck\Eloquent\Traits\BelongsToThrough;
+
+    public $shouldOptimize = false;
 
     protected $guarded = ['id'];
+
+    public $mediaCollection = 'event';
+    use HasMediaCollection, HasMultipleImages;
+
+
+    public static function boot()
+    {
+        parent::boot();
+        self::observe(new DefaultModelObserver);
+    }
+
+
+    public function getScheduleAttribute()
+    {
+        $schedule = $this->load('days')->getSchedule()->toArray() ?? [];
+
+        if (!count($schedule))
+            return 'TBA';
+
+        $newSched = [
+            'date_start' => Carbon::parse( Day::find(array_key_first($schedule))->date_start, 'UTC' )
+                ->setTimezone(session()->get('timezone'))->toDateTimeString(),
+
+            'date_end' => Carbon::parse(Day::find(array_key_last($schedule))->date_end, 'UTC')
+                ->setTimezone(session()->get('timezone'))->toDateTimeString(),
+        ];
+
+        return $newSched;
+    }
 
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
             ->generateSlugsFrom('title')
-            ->saveSlugsTo('slug');
+            ->saveSlugsTo('slug')
+            ->doNotGenerateSlugsOnUpdate();
+    }
+
+
+    public function daysStatus()
+    {
+        return $this->days->map->status();
+    }
+
+    public function latestDay()
+    {
+        return $this->hasOne(Day::class)->orderBy('date_start', 'DESC');
+    }
+
+    public static function getLiveEvents()
+    {
+        $date = Carbon::now()->toDateTime();
+
+        return self::orWhereHas('days', 
+        fn ($q) => $q->whereDate('date_start', '<=' , $date )
+            ->whereDate('date_end', '>=' ,  $date)
+        );
+    }
+
+    public function scopeShowLatest($query) {
+        $date = Carbon::now()->toDateTime();
+
+      return $query->addSelect([
+        'last_date_start' => Day::select('date_start')->whereColumn('event_id', 'events.id')
+            ->whereDate('date_start', '<=' , $date )
+            ->whereDate('date_end', '>=' ,  $date)
+            ->orderBy('date_start', 'desc')->limit(1),
+      ])->orderByDesc('last_date_start');
+    }
+
+    public function status()
+    {
+
+
+        $statuses = $this->daysStatus()->toArray() ?? [];
+
+        if (!count($statuses))
+            return 'upcoming';
+
+            if (in_array('live', $statuses))
+            return 'live';
+        
+        return  in_array('upcoming', $statuses) ? 'upcoming' : 'end';
+        
+    }
+
+    public function getSchedule()
+    {
+        return $this->days()->orderBy('lft')->pluck('name', 'id');
+    }
+
+    public function getLastSchedule() 
+    {
+        return $this->days()->orderByDesc('lft')->withCount('event_reports')
+            ->having('event_reports_count', '>', 0 )->first();
+    }
+
+    public function days()
+    {
+        return $this->hasMany(Day::class);
+    }
+
+    public function descendingDays()
+    {
+        return $this->hasMany(Day::class)->orderByDesc('lft');
+    }
+
+    public function eventSchedules()
+    {
+        return collect()->pluck('day', 'day');
     }
 
     public function getSlugAttribute($value)
@@ -34,53 +154,14 @@ class Event extends Model implements HasMedia
 
     public function setSlugAttribute($value)
     {
-        if ($value !== null) 
-        {
+        if ($value !== null) {
             $this->attributes['slug'] = $value;
         }
     }
-    // use HasSlug;
 
-    // public function getSlugOptions(): SlugOptions
-    // {
-    //     return SlugOptions::create()
-    //         ->generateSlugsFrom('title')
-    //         ->saveSlugsTo('slug');
-    // }
-
-  
-
-    public function registerMediaConversions(?Media $media = null): void
+    public function event_game_table()
     {
-        $this->addMediaConversion('main-image')
-            ->width(424)
-            ->height(285);
-
-        $this->addMediaConversion('main-thumb')
-            ->width(337)
-            ->height(225);
-
-    $this->addMediaConversion('main-gallery-thumb')
-            ->width(130)
-            ->height(86);
-
-    }
-
-    public function getImageAttribute($value)
-    {
-        return $this->getFirstMediaUrl('event', 'main-image');
-    }
-
-    public function setImageAttribute($value)
-    {
-
-        if ($value == null || preg_match("/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).base64,.*/", $value) == 0) {
-            // $this->media()->delete();
-            return false;
-        }
-        $this->media()->delete();
-        $this->addMediaFromBase64($value)
-            ->toMediaCollection('event');
+        return $this->belongsTo(EventGameTable::class);
     }
 
     public function getParentAttribute($value)
@@ -95,7 +176,10 @@ class Event extends Model implements HasMedia
 
     public function latest_event_chips()
     {
-        return $this->hasMany(EventChip::class)->orderByDesc('created_at');
+        $reduced = collect($this->descendingDays()->get())->map(function ($day) {
+            return $day->event_chips()->orderBy('published_date', 'DESC')->get();
+        });
+        return $reduced->flatten()->unique('player_id')->sortByDesc('current_chips');
     }
 
     public function tournament()
@@ -103,9 +187,14 @@ class Event extends Model implements HasMedia
         return $this->belongsTo(Tournament::class);
     }
 
+    public function tour()
+    {
+        return $this->belongsToThrough(Tour::class, Tournament::class);
+    }
+
     public function event_reports()
     {
-        return $this->hasMany(EventReport::class);
+        return $this->hasManyThrough(EventReport::class, Day::class);
     }
 
     public function event_payouts()
@@ -115,11 +204,17 @@ class Event extends Model implements HasMedia
 
     public function getAvailableDays()
     {
-        $days = collect(EventReport::where('event_id', $this->id)->get()->groupBy('day')->toArray())->map(function ($item) {
-            return $item[0]['day'];
-        });
+        $dateNow = Carbon::now();
+        $schedule = $this->attributes['schedule'];
 
-        return $days;
+        $days = [];
+        foreach (collect(json_decode($schedule, true))->toArray() as $sched) {
+            if ($dateNow >= Carbon::parse($sched['date_start'])) {
+                $days[] = ['day' => $sched['day']];
+            }
+        }
+
+        return collect($days)->pluck('day', 'day');
     }
 
     public function openLiveReporting($crud = false)
@@ -134,7 +229,17 @@ class Event extends Model implements HasMedia
 
     public function openChipCount($crud = false)
     {
-        return '<a class="btn btn-sm btn-link"  href="chip-count?event='.urlencode($this->attributes['id']).'" data-toggle="tooltip" title="Chip  Count"><i class="fa fa-search"></i> Chip Counts  </a>';
+        return '<a class="btn btn-sm btn-link"  href="chip-count?event='.urlencode($this->attributes['id']).'" data-toggle="tooltip" title="Chip Counts"><i class="fa fa-search"></i> Chips  </a>';
+    }
+
+    public function openDay($crud = false)
+    {
+        return '<a class="btn btn-sm btn-link"  href="day?event='.urlencode($this->attributes['id']).'" data-toggle="tooltip" title="Days"><i class="fa fa-search"></i> Days  </a>';
+    }
+
+    public function openLevel($crud = false)
+    {
+        return '<a class="btn btn-sm btn-link"  href="level?event='.urlencode($this->attributes['id']).'" data-toggle="tooltip" title="Days"><i class="fa fa-search"></i> Levels  </a>';
     }
 
 

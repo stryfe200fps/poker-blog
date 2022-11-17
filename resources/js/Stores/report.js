@@ -23,7 +23,7 @@ export const useReportStore = defineStore('report', {
 
   actions: {  
    async getList() {
-    await axios.get('/api/lof-tournament/')
+    await axios.get('/api/tournaments/')
       .then((res) => {
         this.list = res.data
       })
