@@ -20,7 +20,10 @@ class EventInTournamentCollection extends ResourceCollection
             [
                 'status' => $result->status(), 
                 'events' => collect($result->days->sortByDesc('lft')
-                    ->map(fn ($item) => $item->load(['event_reports'])->event_reports->load('day')
+                    ->map(fn ($item) => $item->load(['event_reports'])->event_reports
+                    ->where('type','!=' ,'level')
+                    ->where('type','!=' ,'content')
+                    ->load('day')
                     ->sortByDesc('published_date')))
                     ->flatten()
                     ->take(2)
