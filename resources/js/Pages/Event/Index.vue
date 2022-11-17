@@ -34,7 +34,13 @@
                                         :value="data"
                                         :checked="data == selectDay"
                                     >
-                                        Day {{ eventData.available_days[data] }}
+                                        Day
+                                        {{
+                                            eventData
+                                                .available_day_with_reports[
+                                                data
+                                            ]
+                                        }}
                                     </option>
                                 </select>
                             </p>
@@ -45,7 +51,11 @@
                             >
                                 Day:
                                 <span class="text-uppercase">
-                                    {{ eventData.available_days[data] }}</span
+                                    {{
+                                        eventData.available_day_with_reports[
+                                            data
+                                        ]
+                                    }}</span
                                 >
                             </p>
                         </div>
@@ -134,12 +144,12 @@ const reportingBanner = ref([]);
 const daySlug = ref(window.location.pathname.split("/")[5]);
 
 const eventDays = computed(() => {
-    return Object.keys(eventData?.value?.available_days ?? {});
+    return Object.keys(eventData?.value?.available_day_with_reports ?? {});
 });
 
 const highestDay = () => {
-    let { available_days } = eventData.value;
-    let days = Object.keys(available_days);
+    let { available_day_with_reports } = eventData.value;
+    let days = Object.keys(available_day_with_reports);
     return days[days.length - 1];
 };
 
@@ -210,9 +220,9 @@ function scrollToTop() {
         Inertia.visit(
             `/tours/${eventData.value.tour_slug}/${
                 eventData.value.tournament_slug
-            }/${eventData.value.slug}/${eventData.value.available_days[
-                selectDay.value
-            ]
+            }/${
+                eventData.value.slug
+            }/${eventData.value.available_day_with_reports[selectDay.value]
                 .replace(/[^A-Z0-9]+/gi, "-")
                 .toLowerCase()}`,
             { preserveState: true }
@@ -228,10 +238,12 @@ onMounted(async () => {
     if (daySlug.value === undefined || daySlug.value === props.type) {
         selectDay.value = highestDay();
     } else {
-        selectDay.value = Object.keys(eventData.value.available_days).find(
+        selectDay.value = Object.keys(
+            eventData.value.available_day_with_reports
+        ).find(
             (key) =>
                 JSON.stringify(
-                    eventData.value.available_days[key]
+                    eventData.value.available_day_with_reports[key]
                         .replace(/[^A-Z0-9]+/gi, "-")
                         .toLowerCase()
                 ) ===
@@ -271,9 +283,9 @@ const fetchLiveReports = () => {
         Inertia.visit(
             `/tours/${eventData.value.tour_slug}/${
                 eventData.value.tournament_slug
-            }/${eventData.value.slug}/${eventData.value.available_days[
-                selectDay.value
-            ]
+            }/${
+                eventData.value.slug
+            }/${eventData.value.available_day_with_reports[selectDay.value]
                 .replace(/[^A-Z0-9]+/gi, "-")
                 .toLowerCase()}`,
             { preserveState: true }
@@ -283,7 +295,7 @@ const fetchLiveReports = () => {
     Inertia.visit(
         `/tours/${eventData.value.tour_slug}/${
             eventData.value.tournament_slug
-        }/${eventData.value.slug}/${eventData.value.available_days[
+        }/${eventData.value.slug}/${eventData.value.available_day_with_reports[
             selectDay.value
         ]
             .replace(/[^A-Z0-9]+/gi, "-")
