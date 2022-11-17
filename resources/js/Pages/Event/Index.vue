@@ -137,6 +137,12 @@ const eventDays = computed(() => {
     return Object.keys(eventData?.value?.available_days ?? {});
 });
 
+const highestDay = () => {
+    let { available_days } = eventData.value;
+    let days = Object.keys(available_days);
+    return days[days.length - 1];
+};
+
 async function loadMoreReports() {
     if (loadPage.value >= lastPage.value) return;
     loadPage.value++;
@@ -219,18 +225,8 @@ function scrollToTop() {
 onMounted(async () => {
     await eventStore.getEventData(props.slug);
 
-    if (daySlug.value === undefined) {
-        selectDay.value = Object.keys(eventData.value.available_days).find(
-            (key) =>
-                JSON.stringify(
-                    eventData.value.available_days[key]
-                        .replace(/[^A-Z0-9]+/gi, "-")
-                        .toLowerCase()
-                ) ===
-                JSON.stringify(
-                    props.day.replace(/[^A-Z0-9]+/gi, "-").toLowerCase()
-                )
-        );
+    if (daySlug.value === undefined || daySlug.value === props.type) {
+        selectDay.value = highestDay();
     } else {
         selectDay.value = Object.keys(eventData.value.available_days).find(
             (key) =>
@@ -240,7 +236,7 @@ onMounted(async () => {
                         .toLowerCase()
                 ) ===
                 JSON.stringify(
-                    daySlug.value.replace(/[^A-Z0-9]+/gi, "-").toLowerCase()
+                    props.day.replace(/[^A-Z0-9]+/gi, "-").toLowerCase()
                 )
         );
     }
