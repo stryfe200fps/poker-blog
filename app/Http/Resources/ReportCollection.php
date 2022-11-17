@@ -19,7 +19,7 @@ class ReportCollection extends ResourceCollection
             $result[] = [
                 'level' => $level->level_value,
                 'collection' => collect($item)->map(function ($i) {
-                    return new LOFApiEventReportsResource($i);
+                    return new EventReportResource($i);
                 }),
             ];
 

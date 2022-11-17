@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Inertia;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\LOFApiEventReportsResource;
+use App\Http\Resources\EventReportResource;
 use App\Models\EventReport;
 use Inertia\Inertia;
 
@@ -16,7 +16,7 @@ class ReportController extends Controller
             return redirect('/');
         }
         $findReport = EventReport::find($newId[1]);
-        $report = new LOFApiEventReportsResource($findReport);
+        $report = new EventReportResource($findReport);
 
         $reportEventSlug = $report->event->slug;
         $reportTourSlug = $report->event->tournament->tour->slug;

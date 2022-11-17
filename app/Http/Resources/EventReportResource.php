@@ -5,15 +5,10 @@ namespace App\Http\Resources;
 use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class LOFApiEventReportsResource extends JsonResource
+class EventReportResource extends JsonResource
 {
     public function toArray($request)
     {
-
-
-        // $img = $this->getMedia('event-report');
-        // $images =   is_countable($img) && count($img) > 0 ? new ImageResource( $this->getMedia('event-report')[0]) : '' ;
-
         return [
             'id' => $this->id,
             'title' => googleTranslateExclude($this->title)[0] ?? '' ,

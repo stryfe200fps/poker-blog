@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\LOFApiEventReportsResource;
+use App\Http\Resources\EventReportResource;
 use App\Http\Resources\ReportCollection;
 use App\Models\Day;
 use App\Models\Event;
@@ -42,7 +42,7 @@ class EventReportsController extends Controller
      */
     public function show($slug)
     {
-        return  new LOFApiEventReportsResource(EventReport::where('slug', $slug)->first());
+        return  new EventReportResource(EventReport::where('slug', $slug)->first());
     }
 
     /**
