@@ -2,8 +2,10 @@
 
 namespace Database\Factories;
 
+use App\Models\Country;
 use App\Models\Tour;
 use App\Models\Tournament;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class TournamentFactory extends Factory
@@ -22,13 +24,17 @@ class TournamentFactory extends Factory
      */
     public function definition()
     {
+        $dateStart = Carbon::now();
+        $dateEnd = Carbon::now()->addDays(30);
+        $country = Country::factory()->create();
+
         return [
             'title' => $this->faker->name,
             'description' => $this->faker->text,
-            'date_start' => $this->faker->dateTimeThisCentury(),
-            'date_end' => $this->faker->dateTimeThisCentury(),
-            'timezone' => 'timezone',
-            'country_id' => 1,
+            'date_start' => $dateStart,
+            'date_end' => $dateEnd,
+            'timezone' => '(GMT+8:00) Asia/Manila',
+            'country_id' => $country->id,
             'tour_id' => Tour::factory()->create()->id,
             'currency_id' => $this->faker->numberBetween(1, 3),
         ];

@@ -22,7 +22,7 @@ class ChipCountFactory extends Factory
     public function definition()
     {
         return [
-            //
+
         ];
     }
 }

@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
-use Spatie\MediaLibrary\HasMedia;
-use Illuminate\Database\Eloquent\Model;
-use Spatie\MediaLibrary\InteractsWithMedia;
+use App\Observers\DefaultModelObserver;
+use App\Observers\ImageThemeObserver;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class ImageTheme extends Model implements HasMedia
@@ -14,36 +16,33 @@ class ImageTheme extends Model implements HasMedia
     use \Backpack\CRUD\app\Models\Traits\CrudTrait;
     use HasFactory;
 
+
+    public $mediaCollection = 'image-theme';
+
+    public static function boot()
+    {
+        parent::boot();
+        self::observe(new ImageThemeObserver);
+    }
+
     protected $guarded = [
         'id',
     ];
 
-    public $timestamps = false;
+    protected $appends = ['image'];
 
-    public function registerMediaConversions(?Media $media = null): void
-    {
-      
-    }
+    public $timestamps = false;
 
     public function getImageAttribute($value)
     {
-        return $this->getFirstMediaUrl('image-theme');
+        return $this->getFirstMediaUrl($this->mediaCollection);
     }
 
-    public function setImageAttribute($value)
+    public function live_report()
     {
-        if ($value == null || preg_match("/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).base64,.*/", $value) == 0) {
-            // $this->media('image-theme')->delete();
-            return false;
-        }
-        $this->addMediaFromBase64($value)
-            ->toMediaCollection('image-theme');
-    }
-
-    public function live_report() {
         return $this->belongsTo(EventReport::class);
     }
+
+    
+
 }
-
-
-

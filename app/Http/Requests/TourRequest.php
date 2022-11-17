@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class TourRequest extends FormRequest
@@ -25,8 +26,9 @@ class TourRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|min:5|max:255',
+            'title' => 'required',
             'description' => 'required',
+            'slug' =>  Rule::unique('tours')->ignore(request()->get('id')), 
         ];
     }
 
@@ -53,6 +55,7 @@ class TourRequest extends FormRequest
             //
             'title.required' => 'Title is required',
             'description.required' => 'Description is required',
+            'slug.unique' => 'Slug should be unique',
         ];
     }
 }

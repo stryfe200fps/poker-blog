@@ -34,4 +34,6 @@ id / player_id / event_id / report_id / place / prize / created_at / updated_at
 
 
 
+if hindi malink ung image
 
+ln -s /var/www/vhosts/staging.lifeofpoker.com/httpdocs/storage/app/public /var/www/vhosts/staging.lifeofpoker.com/httpdocs/public/storage

@@ -17,12 +17,13 @@ class LiveReportResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'title' => $this->title,
-            'description' => $this->content,
+            'title' => googleTranslateExclude($this->title),
+            'title_tab' => $this->title ?? '',
+            'description' => googleTranslateExclude($this->content),
             'event' => $this->poker_event,
-            'author' => $this->article_author,
-            'date' => Carbon::parse($this->date_added)->toFormattedDateString(),
-            'image' => $this->getFirstMediaUrl('logo', 'main-image'),
+            'author' => $this->author,
+            'date' => Carbon::parse($this->published_date)->toFormattedDateString(),
+            'image' => $this->image,
             'caption' => $this->image_caption,
             'theme' => $this->image_theme,
             'day' => $this->day,

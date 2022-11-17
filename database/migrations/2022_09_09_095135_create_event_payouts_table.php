@@ -17,12 +17,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('player_id');
             $table->foreignId('event_id')->nullable();
-            $table->foreignId('event_report_id')->nullable();
-            $table->foreignId('place')->nullable();
-            $table->string('source')->nullable();
             $table->integer('position')->nullable();
             $table->integer('prize')->nullable();
-            
+
             $table->timestamps();
         });
     }

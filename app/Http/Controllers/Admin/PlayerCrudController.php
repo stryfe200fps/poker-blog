@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\PlayerRequest;
+use App\Models\EventChip;
+use App\Models\Player;
+use App\Traits\LimitUserPermissions;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -19,6 +22,7 @@ class PlayerCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\InlineCreateOperation;
+    use LimitUserPermissions;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -27,11 +31,13 @@ class PlayerCrudController extends CrudController
      */
     public function setup()
     {
-
         $this->crud->denyAccess('show');
         CRUD::setModel(\App\Models\Player::class);
         CRUD::setRoute(config('backpack.base.route_prefix').'/player');
         CRUD::setEntityNameStrings('player', 'players');
+
+        $this->crud->orderBy('name');
+        $this->denyAccessIfNoPermission();
     }
 
     /**
@@ -43,11 +49,26 @@ class PlayerCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        $this->crud->disableResponsiveTable();
+        $this->crud->orderBy('name');
         CRUD::column('name');
         CRUD::column('pseudonym');
         CRUD::column('country_id');
-        $this->crud->addButtonFromModelFunction('line', 'open_history', 'openHistory', 'beginning');
+        // $this->crud->addButtonFromModelFunction('line', 'open_history', 'openHistory', 'beginning');
 
+        $this->crud->addFilter([
+            'type' => 'select2',
+            'name' => 'player',
+            'label' => 'Country',
+        ],
+
+            function () {
+                return Player::all()->pluck('country.name', 'country.id')->toArray();
+            },
+            function ($values) {
+                $this->crud->query = $this->crud->query->where('country_id', $values);
+            }
+        );
         /**
          * Columns can be defined using the fluent syntax or array syntax:
          * - CRUD::column('price')->type('number');
@@ -67,15 +88,26 @@ class PlayerCrudController extends CrudController
         CRUD::setValidation(PlayerRequest::class);
 
         CRUD::field('name');
+        
+        CRUD::field('pseudonym');
         $this->crud->addField([
-            'name' => 'avatar',
+            'name' => 'country_id',
+            'label' => 'Country',
+            'type' => 'select2_from_ajax',
+            'allows_null' => false,
+            'attribute' => 'name',
+            'data_source' => url('api/fetch/countries')
+        ]);
+
+        $this->crud->addField([
+            'name' => 'image',
             'label' => 'Image',
             'type' => 'image',
             'aspect_ratio' => 1,
             'crop' => true,
         ]);
-        CRUD::field('pseudonym');
-        CRUD::field('country_id');
+        
+        CRUD::field('badge');
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:
@@ -94,5 +126,26 @@ class PlayerCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
+
+        $this->crud->addField([
+            'name' => 'status',
+            'type' => 'switch',
+            'hint' => 'When enabled, player will be shown in all selection lists in the backend. When disabled it won\'t 
+            show up in the backend anymore as option, just front where it is still being used'
+        ]);
+    }
+
+    public function destroy($id)
+    {
+        $getChips = EventChip::where('player_id', $id)->count();
+
+        if ($getChips) {
+            return \Alert::error('This payer has event chips inside')->flash();
+        }
+
+        $this->crud->hasAccessOrFail('delete');
+        $id = $this->crud->getCurrentEntryId() ?? $id;
+
+        return $this->crud->delete($id);
     }
 }
