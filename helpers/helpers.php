@@ -74,7 +74,7 @@ function tableReplacement($content)
 }
 function imageResponsiveReplacement($content)
 {
-    $pattern = '/(<img)/'; 
+    $pattern = '/(<img) alt=""/'; 
     $replacement = '<img class="img-responsive" ';
     return preg_replace($pattern, $replacement, $content);
 }

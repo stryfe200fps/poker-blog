@@ -28,7 +28,7 @@ class EventResource extends JsonResource
 'schedule' => $this->schedule,
 'date_range' => $this->schedule,
 'image' => $this->image,
-'image_set' => $this->image,
+'image_set' => $this->allMedia(),
 'tournament' => $this->tournament->title,
 'country' => $this->tournament->load('country')->country,
 'currency' => $this->tournament->currency,
