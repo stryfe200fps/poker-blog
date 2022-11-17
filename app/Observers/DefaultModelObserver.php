@@ -32,12 +32,12 @@ class DefaultModelObserver
             } 
     }
 
-    public function saved($model) {
+    // public function saved($model) {
 
-        if ($model?->image === null)
-            return;
+    //     if ($model?->image === null)
+    //         return;
 
-        $service = app()->make(ImageService::class);
-        $service->imageUpload($model);
-    }
+    //     $service = app()->make(ImageService::class);
+    //     $service->imageUpload($model);
+    // }
 }

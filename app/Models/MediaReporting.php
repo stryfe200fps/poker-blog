@@ -6,6 +6,8 @@ use App\Traits\HasMultipleImages;
 use App\Traits\HasMediaCollection;
 use App\Traits\PublishedDateConvert;
 use App\Observers\DefaultModelObserver;
+use App\Observers\ImageSavedObserver;
+use App\Services\ImageService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\MediaLibrary\HasMedia;
@@ -26,6 +28,7 @@ class MediaReporting extends Model implements HasMedia
     {
         parent::boot();
         self::observe(new DefaultModelObserver);
+        self::observe(new ImageSavedObserver);
     }
 
 

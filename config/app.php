@@ -2,6 +2,7 @@
 
 use App\Helpers\Timezone;
 use App\Providers\TimezoneProvider;
+use App\Services\ImageService;
 use Illuminate\Support\Facades\Facade;
 use Webpatser\Countries\CountriesFacade;
 use Webpatser\Countries\CountriesServiceProvider;
@@ -222,7 +223,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\FortifyServiceProvider::class,
         App\Providers\JetstreamServiceProvider::class,
-        Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
+        Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class
 
     ],
 

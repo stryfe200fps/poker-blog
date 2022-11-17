@@ -7,58 +7,107 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Cache;
 use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 
-class ImageService 
+final class ImageService 
 {
 
-  public function imageUploadByRequest($model, $url)
-  {
-     $value = $url;
-     dd($value);
-  }
+  protected $currentModel = null;
+
+  protected $currentImage = null;
+
+  protected $currentImagePath = '';
+
 
   public function imageUpload($model)
   {
-        $value = request()->only('image')['image'] ?? $model->image ?? '';
 
-        dd($value);
+        $this->currentModel = $model;
 
-        if ($value == null) {
+        $value = request()->only('image')['image'] ?? $model->getAttributes()['image'] ?? '';
+
+        if ($value == null || $value == '') { 
             $model->media()->delete();
-
-          // try { 
-          //   \Artisan::call('media-library:clean --force');
-          //   } catch (Exception $e) { } 
-          //   return false;
-          // }
-
-        if (preg_match("/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).base64,.*/", $value) == 0) {
-            dd('this is a url');
             return false;
         }
 
-        $path = public_path(). '/tmp/' . $model->mediaCollection . '-'. $model->id . '.jpg';
-        $image = \Image::make($value)->encode('jpg', 100)->save($path);
+        // CHECK if image is base64 or URL
+        $this->validateUploadedImage($value);
 
-        if ( isset($model?->shouldResizeImage) && $model?->shouldResizeImage) 
-            $image->resize(1600,900)->save($path);
+        $this->imageResize($this->currentImagePath, $this->currentImage);
+        $this->saveMediaPath($this->currentImagePath);
+        $this->imageOptimize();
+        
+  }
 
-        $model->media()->delete();
+  private function encodeImageAsJpg($value)
+  {
+    $this->currentImage = \Image::make($value)->encode('jpg', 100)->save($this->getCurrentImagePath());
+  }
 
-        // try { 
-        // \Artisan::call('media-library:clean --force');
-        // } catch (Exception $e) { } 
+  private function getCurrentImagePath()
+  {
+    return $this->currentImagePath = public_path(). '/tmp/' . $this->currentModel->mediaCollection . '-'. $this->currentModel->id . '.jpg';
+  }
 
-         $model->addMedia($path)
-        ->toMediaCollection($model->mediaCollection);
+  private function saveImageFromUrl($value)
+  {
+    $this->currentImage = \Image::make($value)->save($this->getCurrentImagePath());
+  } 
 
-        if (file_exists($path))
-          unlink($path);
+  private function imageResize($path, $image)
+  {
+      if ( isset($this->currentModel?->shouldResizeImage) && $this->currentModel?->shouldResizeImage) 
+      $image->resize(1600,900)->save($path);
+  }
 
-        if (isset($model?->shouldOptimizeImage) && $model?->shouldOptimizeImage)  { 
-          if (is_array($model->media) && count($model->media) > 0) {
-            $media = $model->media()->get()[0]->getPath();
+  private function imageOptimize()
+  {
+      if (isset($this->currentModel?->shouldOptimizeImage) && $this->currentModel?->shouldOptimizeImage)  { 
+          if (is_array($this->currentModel?->media) && count($this->currentModel?->media) > 0) {
+            $media = $this->currentModel?->media()->get()[0]->getPath();
             ImageOptimizer::optimize($media);
           }
-        }
+    }
   }
+
+  private function deleteImagePath($path)
+  {
+      if (file_exists($path))
+          unlink($path);
+  }
+
+  private function saveMediaPath($path) 
+  {
+      $this->deleteOldMedia();
+      $this->currentModel->addMedia($path)
+        ->toMediaCollection($this->currentModel->mediaCollection);
+      $this->deleteImagePath($path);
+  }
+
+  private function deleteOldMedia()
+  {
+      $this->currentModel->media()->delete();
+  }
+
+  //check what type of image is being uploaded
+  public function validateUploadedImage($value)
+  {
+
+    if (preg_match("/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).base64,.*/", $value) == 1)
+        return $this->imageBase64Upload($value);
+    else if (filter_var($value, FILTER_VALIDATE_URL))
+        return $this->imageUrlUpload($value);
+  }
+
+  public function imageBase64Upload($value)
+  {
+    $this->encodeImageAsJpg($value);
+  }
+
+  public function imageUrlUpload($link)
+  {
+    $this->saveImageFromUrl($link);
+  }
+
+
 }
+

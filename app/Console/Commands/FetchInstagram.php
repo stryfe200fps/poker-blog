@@ -36,11 +36,13 @@ class FetchInstagram extends Command
             SocialMedia::where('type', 'instagram')->delete();
             foreach ($profile as $image) { 
 
-                dd($image);
-                SocialMedia::create([
+                if ($image->type === 'video')
+                    continue;
+
+                $social = SocialMedia::create([
                     'content' => $image->caption,
                     'type' => 'instagram',
-                    'image' => '',
+                    'image' => $image->url,
                 ]);
             }
 
