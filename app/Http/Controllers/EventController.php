@@ -12,7 +12,7 @@ use App\Http\Filters\TourFilter;
 use Illuminate\Pipeline\Pipeline;
 use App\Http\Filters\LocationFilter;
 use App\Http\Resources\CalendarTournamentCollection;
-use App\Http\Resources\LOFApiEventIndexResource;
+use App\Http\Resources\EventResource;
 
 class EventController extends Controller
 {
@@ -24,9 +24,9 @@ class EventController extends Controller
 
     public function index()
     {
-        return LOFApiEventIndexResource::collection(Event::getLiveEvents()->showLatest()->take(2)->get());
+        return EventResource::collection(Event::getLiveEvents()->showLatest()->take(2)->get());
 
-        // return  LOFApiEventIndexResource::collection(Event::latest()->get()->filter(function ($item) {
+        // return  EventResource::collection(Event::latest()->get()->filter(function ($item) {
         //     return $item->status() == 'live';
         // })->slice(0, 2));
         //
@@ -60,7 +60,7 @@ class EventController extends Controller
      */
     public function show($slug)
     {
-        return new LOFApiEventIndexResource(Event::with(['event_reports'])->where('slug', $slug)->first());
+        return new EventResource(Event::with(['event_reports'])->where('slug', $slug)->first());
     }
 
     public function calendar()

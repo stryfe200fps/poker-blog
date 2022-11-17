@@ -26,7 +26,7 @@ class LOFApiEventsCollection extends ResourceCollection
                     ->take(2)
                     ->toArray()
             ]
-            ,collect(new LOFApiEventsResource($result))->toArray());
+            ,collect(new EventResource($result))->toArray());
         })->sortByDesc('id');
 
 
