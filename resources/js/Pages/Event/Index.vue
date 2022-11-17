@@ -131,16 +131,11 @@ const lastPage = ref(1);
 const isActive = ref(false);
 const bannerStore = useBannerStore();
 const reportingBanner = ref([]);
+const daySlug = ref(window.location.pathname.split("/")[5]);
 
 const eventDays = computed(() => {
     return Object.keys(eventData?.value?.available_days ?? {});
 });
-
-const highestDay = () => {
-    let { available_days } = eventData.value;
-    let days = Object.keys(available_days);
-    return days[days.length - 1];
-};
 
 async function loadMoreReports() {
     if (loadPage.value >= lastPage.value) return;
@@ -223,9 +218,8 @@ function scrollToTop() {
 
 onMounted(async () => {
     await eventStore.getEventData(props.slug);
-    if (props.day === "" || props.day === props.type) {
-        selectDay.value = highestDay();
-    } else {
+
+    if (daySlug.value === undefined) {
         selectDay.value = Object.keys(eventData.value.available_days).find(
             (key) =>
                 JSON.stringify(
@@ -237,7 +231,20 @@ onMounted(async () => {
                     props.day.replace(/[^A-Z0-9]+/gi, "-").toLowerCase()
                 )
         );
+    } else {
+        selectDay.value = Object.keys(eventData.value.available_days).find(
+            (key) =>
+                JSON.stringify(
+                    eventData.value.available_days[key]
+                        .replace(/[^A-Z0-9]+/gi, "-")
+                        .toLowerCase()
+                ) ===
+                JSON.stringify(
+                    daySlug.value.replace(/[^A-Z0-9]+/gi, "-").toLowerCase()
+                )
+        );
     }
+
     reportViewing();
 
     window.Echo.channel("report").listen(
@@ -264,7 +271,7 @@ const fetchLiveReports = () => {
     lastPage.value = 1;
     reportViewing();
 
-    if (props.type === null || props.day === "") {
+    if (props.type === null) {
         Inertia.visit(
             `/tours/${eventData.value.tour_slug}/${
                 eventData.value.tournament_slug
