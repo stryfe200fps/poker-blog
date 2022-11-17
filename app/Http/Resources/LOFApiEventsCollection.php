@@ -20,7 +20,7 @@ class LOFApiEventsCollection extends ResourceCollection
             [
                 'status' => $result->status(), 
                 'events' => collect($result->days->sortByDesc('lft')
-                    ->map(fn ($item) => $item->load(['event_reports'])->event_reports
+                    ->map(fn ($item) => $item->load(['event_reports'])->event_reports->load('day')
                     ->sortByDesc('published_date')))
                     ->flatten()
                     ->take(2)
