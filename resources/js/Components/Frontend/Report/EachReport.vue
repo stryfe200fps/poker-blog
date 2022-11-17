@@ -5,14 +5,14 @@
             class="title-post"
             style="padding-top: 20px; border-top: 1px solid #d3d3d3"
         >
-            <h1 v-if="id == 1" :id="item.id" class="text-capitalize">
+            <!-- <h1 v-if="id == 1" :id="item.id" class="text-capitalize">
                 <Link
                     class="default-text-color"
                     :href="`/tours/${event.tour_slug}/${event.tournament_slug}/${event.slug}/update-${item.id}`"
                     v-html="item.title"
                 ></Link>
-            </h1>
-            <h1 v-else class="text-capitalize">
+            </h1> -->
+            <h1 :id="item.id" class="text-capitalize">
                 <Link
                     class="default-text-color"
                     :href="`/tours/${event.tour_slug}/${event.tournament_slug}/${event.slug}/update-${item.id}`"
