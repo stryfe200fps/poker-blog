@@ -103,7 +103,11 @@
                             <Link
                                 class="text-capitalize link--custom"
                                 v-if="index == 1"
-                                :href="`/tours/${event.tour_slug}/${event.tournament_slug}/${event.slug}#${report.id}`"
+                                :href="`/tours/${event.tour_slug}/${
+                                    event.tournament_slug
+                                }/${event.slug}/${report.day?.name
+                                    .replace(/[^A-Z0-9]+/gi, '-')
+                                    .toLowerCase()}#${report.id}`"
                                 ><i
                                     class="fa-solid fa-angle-right link-icon--custom"
                                 ></i
@@ -112,7 +116,11 @@
                             <Link
                                 v-else
                                 class="text-capitalize link--custom"
-                                :href="`/tours/${event.tour_slug}/${event.tournament_slug}/${event.slug}`"
+                                :href="`/tours/${event.tour_slug}/${
+                                    event.tournament_slug
+                                }/${event.slug}/${report.day?.name
+                                    .replace(/[^A-Z0-9]+/gi, '-')
+                                    .toLowerCase()}`"
                                 ><i
                                     class="fa-solid fa-angle-right link-icon--custom"
                                 ></i

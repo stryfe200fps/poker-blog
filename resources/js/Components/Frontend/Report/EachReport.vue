@@ -34,7 +34,7 @@
                         </li>
                         <li>
                             <i class="fa fa-clock-o"></i
-                            >{{ item.date_for_humans }}
+                            >{{ item.realtime_published_date }}
                         </li>
                         <li>
                             <i class="fa fa-bookmark"></i
