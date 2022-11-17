@@ -10,6 +10,7 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\Sluggable\SlugOptions;
 use App\Traits\HasMediaCollection;
 use App\Observers\DefaultModelObserver;
+use App\Observers\ImageSavedObserver;
 use App\Observers\ModelTaggableObserver;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -34,6 +35,7 @@ class Article extends Model implements HasMedia
     {
         parent::boot();
         self::observe(new DefaultModelObserver);
+        self::observe(new ImageSavedObserver);
         self::observe(new ModelTaggableObserver);
     }
 

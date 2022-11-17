@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\HasMultipleImages;
 use Spatie\MediaLibrary\HasMedia;
 use App\Traits\HasMediaCollection;
+use App\Observers\ImageSavedObserver;
 use App\Observers\DefaultModelObserver;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -32,6 +33,7 @@ class Author extends Model implements HasMedia
     {
         parent::boot();
         self::observe(new DefaultModelObserver);
+        self::observe(new ImageSavedObserver);
     }
 
 

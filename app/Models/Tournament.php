@@ -5,15 +5,16 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Spatie\Sluggable\HasSlug;
+use App\Traits\HasMultipleImages;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\Sluggable\SlugOptions;
+use App\Traits\HasMediaCollection;
+use App\Observers\ImageSavedObserver;
 use App\Observers\DefaultModelObserver;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
-use App\Traits\HasMultipleImages;
-use App\Traits\HasMediaCollection;
 
 class Tournament extends Model implements HasMedia
 {
@@ -28,6 +29,7 @@ class Tournament extends Model implements HasMedia
     {
         parent::boot();
         self::observe(new DefaultModelObserver);
+        self::observe(new ImageSavedObserver);
     }
 
     protected $appends = [

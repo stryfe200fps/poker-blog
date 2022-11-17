@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Support\Str;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
+use App\Observers\ImageSavedObserver;
 use App\Observers\DefaultModelObserver;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -27,6 +28,7 @@ class Tag extends Model
     {
         parent::boot();
         self::observe(new DefaultModelObserver);
+        self::observe(new ImageSavedObserver);
     }
 
     protected $guarded = [
