@@ -10,21 +10,31 @@ use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 class ImageService 
 {
 
+  public function imageUploadByRequest($model, $url)
+  {
+     $value = $url;
+     dd($value);
+  }
+
   public function imageUpload($model)
   {
-     $value = request()->only('image')['image'] ?? '';
+        $value = request()->only('image')['image'] ?? $model->image ?? '';
+
+        dd($value);
 
         if ($value == null) {
             $model->media()->delete();
-          try { 
-            \Artisan::call('media-library:clean --force');
-            } catch (Exception $e) { } 
+
+          // try { 
+          //   \Artisan::call('media-library:clean --force');
+          //   } catch (Exception $e) { } 
+          //   return false;
+          // }
+
+        if (preg_match("/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).base64,.*/", $value) == 0) {
+            dd('this is a url');
             return false;
         }
-
-        // if (preg_match("/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).base64,.*/", $value) == 0) {
-        //     return false;
-        // }
 
         $path = public_path(). '/tmp/' . $model->mediaCollection . '-'. $model->id . '.jpg';
         $image = \Image::make($value)->encode('jpg', 100)->save($path);
@@ -34,9 +44,9 @@ class ImageService
 
         $model->media()->delete();
 
-        try { 
-        \Artisan::call('media-library:clean --force');
-        } catch (Exception $e) { } 
+        // try { 
+        // \Artisan::call('media-library:clean --force');
+        // } catch (Exception $e) { } 
 
          $model->addMedia($path)
         ->toMediaCollection($model->mediaCollection);
