@@ -594,14 +594,13 @@ const emit = defineEmits(["loadMore", "showLoading"]);
 
 const dayValue = computed(() => {
     if (props.day === props.currentTab) {
-        const dayValues = Object.values(
-            props?.event?.available_day_with_reports ?? {}
-        );
-
-        if (dayValues.length)
-            return dayValues[dayValues.length - 1]
+        let { available_day_with_reports } = props.event;
+        if (available_day_with_reports) {
+            let days = available_day_with_reports.map((day) => day.name);
+            return days[days.length - 1]
                 .replace(/[^A-Z0-9]+/gi, "-")
                 .toLowerCase();
+        }
     }
     return props.day.replace(/[^A-Z0-9]+/gi, "-").toLowerCase();
 });

@@ -21,7 +21,12 @@
                             }}</span>
                         </h1>
                         <div :class="type !== 'payouts' ? 'visible' : 'hide'">
-                            <p v-if="eventDays?.length > 1">
+                            <p
+                                v-if="
+                                    eventData?.available_day_with_reports
+                                        ?.length > 1
+                                "
+                            >
                                 <select
                                     class="form-control custom-form-control"
                                     v-model="selectDay"
@@ -29,33 +34,28 @@
                                 >
                                     <option
                                         class="text-start text-uppercase"
-                                        v-for="(data, index) in eventDays"
+                                        v-for="(
+                                            data, index
+                                        ) in eventData?.available_day_with_reports"
                                         :key="index"
-                                        :value="data"
-                                        :checked="data == selectDay"
+                                        :value="data.id"
+                                        :checked="data.id == selectDay"
                                     >
                                         Day
-                                        {{
-                                            eventData
-                                                .available_day_with_reports[
-                                                data
-                                            ]
-                                        }}
+                                        {{ data.name }}
                                     </option>
                                 </select>
                             </p>
                             <p
                                 v-else
-                                v-for="(data, index) in eventDays"
+                                v-for="(
+                                    data, index
+                                ) in eventData?.available_day_with_reports"
                                 :key="index"
                             >
                                 Day:
                                 <span class="text-uppercase">
-                                    {{
-                                        eventData.available_day_with_reports[
-                                            data
-                                        ]
-                                    }}</span
+                                    {{ data.name }}</span
                                 >
                             </p>
                         </div>
@@ -146,13 +146,9 @@ const reportingBanner = ref([]);
 const daySlug = ref(window.location.pathname.split("/")[5]);
 const isLoading = ref(true);
 
-const eventDays = computed(() => {
-    return Object.keys(eventData?.value?.available_day_with_reports ?? {});
-});
-
 const highestDay = () => {
     let { available_day_with_reports } = eventData.value;
-    let days = Object.keys(available_day_with_reports);
+    let days = available_day_with_reports.map((day) => day.id);
     return days[days.length - 1];
 };
 
@@ -162,22 +158,19 @@ async function loadMoreReports() {
 
     await eventStore.getLiveReport(loadPage.value, selectDay.value);
     liveReport.value.push(...eventStore.liveReportList.data);
-    // const newLevel = eventStore.liveReportList.data
-    //     .map((data) => data.level)
-    //     .toString();
+    // eventStore.liveReportList.data.forEach((data) => {
+    //     const list = liveReport.value.filter((val) => val.level === data.level);
 
-    // for (const report of liveReport.value) {
-    //     if (report.level === newLevel) {
-    //         const index = eventStore.liveReportList.data.findIndex(
-    //             (data) => data.level === report.level
-    //         );
-    //         const newCollection = report.collection.concat(
-    //             eventStore.liveReportList.data[index].collection
-    //         );
-    //         report.collection = newCollection;
-    //         return;
+    //     if (list.length) {
+    //         const index = liveReport.value.indexOf(list[0]);
+
+    //         liveReport.value[index].collection = liveReport.value[
+    //             index
+    //         ].collection.concat(data.collection);
+    //     } else {
+    //         liveReport.value.push(data);
     //     }
-    // }
+    // });
     lastPage.value = eventStore.liveReportList.meta.last_page;
 }
 
@@ -250,19 +243,16 @@ onMounted(async () => {
     if (daySlug.value === undefined || daySlug.value === props.type) {
         selectDay.value = highestDay();
     } else {
-        selectDay.value = Object.keys(
-            eventData.value.available_day_with_reports
-        ).find(
-            (key) =>
+        const { id } = eventData.value.available_day_with_reports.find(
+            ({ name }) =>
                 JSON.stringify(
-                    eventData.value.available_day_with_reports[key]
-                        .replace(/[^A-Z0-9]+/gi, "-")
-                        .toLowerCase()
+                    name.replace(/[^A-Z0-9]+/gi, "-").toLowerCase()
                 ) ===
                 JSON.stringify(
                     props.day.replace(/[^A-Z0-9]+/gi, "-").toLowerCase()
                 )
         );
+        selectDay.value = id;
     }
 
     reportViewing();
@@ -290,15 +280,18 @@ const fetchLiveReports = () => {
     isLoading.value = true;
     loadPage.value = 1;
     lastPage.value = 1;
+
     reportViewing();
+
+    const { name } = eventData.value.available_day_with_reports.find(
+        ({ id }) => id == selectDay.value
+    );
 
     if (props.type === null) {
         Inertia.visit(
             `/tours/${eventData.value.tour_slug}/${
                 eventData.value.tournament_slug
-            }/${
-                eventData.value.slug
-            }/${eventData.value.available_day_with_reports[selectDay.value]
+            }/${eventData.value.slug}/${name
                 .replace(/[^A-Z0-9]+/gi, "-")
                 .toLowerCase()}`,
             { preserveState: true }
@@ -308,9 +301,7 @@ const fetchLiveReports = () => {
     Inertia.visit(
         `/tours/${eventData.value.tour_slug}/${
             eventData.value.tournament_slug
-        }/${eventData.value.slug}/${eventData.value.available_day_with_reports[
-            selectDay.value
-        ]
+        }/${eventData.value.slug}/${name
             .replace(/[^A-Z0-9]+/gi, "-")
             .toLowerCase()}/${props.type}`,
         { preserveState: true }
