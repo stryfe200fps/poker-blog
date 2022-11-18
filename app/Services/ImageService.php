@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Backpack\Settings\app\Models\Setting;
 use Exception;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Cache;
@@ -28,18 +29,14 @@ final class ImageService
 
         // check if the image is already existing
         $url = preg_replace('/http[?s]:\/\//','' , config('app.url'));
-        if ( preg_match("/$url\/storage\/\d*\/\w*[?-]?\w*[?-]\w*.jpg/", $this->imageInput))
-          return false;
-
-
-
+        if ( preg_match("/$url\/storage\/\d*\/\w*[?-]?\w*[?-]\w*.\w*/", $this->imageInput)) {
+            return false;
+        }
 
         if ($this->imageInput == null || $this->imageInput == '') { 
             $this->currentModel->media()->delete();
             return false;
         }
-
-
 
         // CHECK if image is base64 or URL
         if ($this->validateUploadedImage($this->imageInput)) { 
@@ -56,10 +53,8 @@ final class ImageService
 
   private function getImageExtensionName()
   {
-
     $extension = explode('/', mime_content_type($this->imageInput))[1];
     return $extension ?? 'jpg';
-
   }
 
   private function getCurrentImagePath()
@@ -130,7 +125,7 @@ final class ImageService
   private function imageResize($path, $image)
   {
       if ( isset($this->currentModel?->shouldResizeImage) && $this->currentModel?->shouldResizeImage) 
-        $image->resize(1600,900)->save($path);
+        $image->resize( Setting::get('default_image_width') ?? 1600 ,Setting::get('default_image_height') ?? 900)->save($path);
   }
 
   private function imageOptimize()

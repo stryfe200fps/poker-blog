@@ -20,10 +20,7 @@ use App\Http\Resources\TourResource;
 use App\Models\Tour;
 
 Route::get('/', [HomeController::class, 'index']);
-
-
 Route::get('/tag/articles/{slug}', [ArticleController::class, 'tag'])->name('article');
-
 Route::prefix('news')->group(function () {
 
     Route::get('/', [ArticleController::class, 'index'])->name('article');

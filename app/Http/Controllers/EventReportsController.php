@@ -40,9 +40,9 @@ class EventReportsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($slug)
+    public function show($id)
     {
-        return  new EventReportResource(EventReport::where('slug', $slug)->first());
+        return  new EventReportResource(EventReport::where('id', $id)->first());
     }
 
     /**

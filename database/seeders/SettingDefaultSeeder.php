@@ -37,7 +37,7 @@ class SettingDefaultSeeder extends Seeder
             'key' => 'website_description',
             'name' => 'Website Description',
             'description' => '',
-            'value' => 'Life of poker description',
+            'value' => 'Life of poker is a one stop shop for all your poker needs. We are here to bring the action to your doorstep. Live event coverage, interviews, videos, podcasts and much more.',
             'field' => $this->fieldType('textarea'),
             'active' => 1
         ]);

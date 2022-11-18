@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use Backpack\CRUD\app\Library\Widget;
 use Illuminate\Support\Facades\Config;
 
 class SettingCrudController extends CrudController
@@ -22,6 +23,11 @@ class SettingCrudController extends CrudController
 
     public function setupListOperation()
     {
+
+        Widget::add()->to('before_content')
+             ->type('view')
+             ->view('setting_button');
+             
         // only show settings which are marked as active
         CRUD::addClause('where', 'active', 1);
 
