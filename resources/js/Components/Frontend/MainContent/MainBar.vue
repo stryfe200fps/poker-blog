@@ -20,10 +20,7 @@
                         <div
                             class="news-post image-post"
                             style="margin-bottom: 30px"
-                            v-if="
-                                report.status === 'live' ||
-                                report.status === 'upcoming'
-                            "
+                            v-if="report.status === 'live'"
                         >
                             <span class="custom-label text-uppercase"
                                 >live now</span

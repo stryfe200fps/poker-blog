@@ -147,55 +147,28 @@
             </div>
         </div>
         <div class="row" v-else>
-            <div v-if="event.events.length">
-                <div class="col-sm-5">
-                    <div class="post-content">
-                        <h2 style="margin-bottom: 15px">
-                            <span
-                                class="label text-uppercase"
-                                :class="labelClass"
-                            >
-                                {{ labelText }}</span
-                            >
-                        </h2>
-                        <h2 v-if="event.events.length">
-                            <Link
-                                class="text-capitalize link--custom"
-                                :href="`/tours/${event.tour_slug}/${event.tournament_slug}/${event.slug}`"
-                                >{{ event.title }}
-                            </Link>
-                            <p
-                                style="
-                                    margin-top: 5px;
-                                    font-size: 12px;
-                                    font-style: italic;
-                                "
-                                v-if="event.game_table"
-                            >
-                                Event Game: {{ event.game_table }}
-                            </p>
-                            <p
-                                style="
-                                    margin-top: -15px;
-                                    font-size: 12px;
-                                    font-style: italic;
-                                "
-                                v-if="event.buyin"
-                            >
-                                Buy In: {{ event.buyin }}
-                            </p>
-                            <p
-                                style="
-                                    margin-top: -15px;
-                                    font-size: 12px;
-                                    font-style: italic;
-                                "
-                                v-if="event.fee"
-                            >
-                                Fee: {{ event.fee }}
-                            </p>
-                        </h2>
-                        <h2 v-else>
+            <div class="col-sm-12">
+                <div class="post-content">
+                    <h2 style="margin-bottom: 15px">
+                        <span
+                            v-if="event.schedule?.date_start"
+                            class="label text-uppercase"
+                            :class="labelClass"
+                        >
+                            {{ labelText }}</span
+                        >
+                        <span v-else class="label label-warning text-uppercase">
+                            {{ event.schedule }}</span
+                        >
+                    </h2>
+                    <div
+                        style="
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: baseline;
+                        "
+                    >
+                        <h2 class="text-capitalize">
                             {{ event.title }}
                             <p
                                 style="
@@ -228,137 +201,13 @@
                                 Fee: {{ event.fee }}
                             </p>
                         </h2>
-                        <ul
-                            class="post-tags"
-                            style="margin-top: -15px"
-                            v-if="event.schedule.date_start"
+                        <p
+                            v-if="event.schedule?.date_start"
+                            class="text-uppercase"
+                            style="color: #333"
                         >
-                            <li>
-                                <i class="fa fa-clock-o"></i>
-                                {{ formattedDate }}
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <p class="text-uppercase" style="color: #333">
-                        <strong>latest updates</strong>
-                    </p>
-                    <div class="post-content" v-if="event.events.length">
-                        <ul
-                            class="post-tags post-tags--custom"
-                            v-for="(report, index) in event.events"
-                            :key="report.id"
-                        >
-                            <li>
-                                <Link
-                                    class="text-capitalize link--custom"
-                                    v-if="index == 1"
-                                    :href="`/tours/${event.tour_slug}/${
-                                        event.tournament_slug
-                                    }/${event.slug}/${report.day?.name
-                                        .replace(/[^A-Z0-9]+/gi, '-')
-                                        .toLowerCase()}#${report.id}`"
-                                    ><i
-                                        class="fa-solid fa-angle-right link-icon--custom"
-                                    ></i
-                                    >{{ report.title }}</Link
-                                >
-                                <Link
-                                    v-else
-                                    class="text-capitalize link--custom"
-                                    :href="`/tours/${event.tour_slug}/${
-                                        event.tournament_slug
-                                    }/${event.slug}/${report.day?.name
-                                        .replace(/[^A-Z0-9]+/gi, '-')
-                                        .toLowerCase()}`"
-                                    ><i
-                                        class="fa-solid fa-angle-right link-icon--custom"
-                                    ></i
-                                    >{{ report.title }}</Link
-                                >
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="post-content" v-else>
-                        <h5>
-                            <small>
-                                <i
-                                    class="fas fa-file-edit"
-                                    style="margin-right: 5px"
-                                ></i
-                                >No reports yet</small
-                            >
-                        </h5>
-                    </div>
-                </div>
-            </div>
-            <div v-else>
-                <div class="col-sm-12">
-                    <div class="post-content">
-                        <h2 style="margin-bottom: 15px">
-                            <span
-                                v-if="event.schedule?.date_start"
-                                class="label text-uppercase"
-                                :class="labelClass"
-                            >
-                                {{ labelText }}</span
-                            >
-                            <span
-                                v-else
-                                class="label label-warning text-uppercase"
-                            >
-                                {{ event.schedule }}</span
-                            >
-                        </h2>
-                        <div
-                            style="
-                                display: flex;
-                                justify-content: space-between;
-                                align-items: baseline;
-                            "
-                        >
-                            <h2 class="text-capitalize">
-                                {{ event.title }}
-                                <p
-                                    style="
-                                        margin-top: 5px;
-                                        font-size: 12px;
-                                        font-style: italic;
-                                    "
-                                    v-if="event.game_table"
-                                >
-                                    Event Game: {{ event.game_table }}
-                                </p>
-                                <p
-                                    style="
-                                        margin-top: -15px;
-                                        font-size: 12px;
-                                        font-style: italic;
-                                    "
-                                    v-if="event.buyin"
-                                >
-                                    Buy In: {{ event.buyin }}
-                                </p>
-                                <p
-                                    style="
-                                        margin-top: -15px;
-                                        font-size: 12px;
-                                        font-style: italic;
-                                    "
-                                    v-if="event.fee"
-                                >
-                                    Fee: {{ event.fee }}
-                                </p>
-                            </h2>
-                            <p
-                                v-if="event.schedule?.date_start"
-                                class="text-uppercase"
-                                style="color: #333"
-                            >
-                                {{ formattedDate }}
-                            </p>
-                        </div>
+                            {{ formattedDate }}
+                        </p>
                     </div>
                 </div>
             </div>

@@ -94,6 +94,15 @@ class Event extends Model implements HasMedia
         );
     }
 
+    public function getCurrentLiveEvent()
+    {
+        $date = Carbon::now()->toDateTime();
+        return $this->where('id', $this->id)->whereHas('days', 
+        fn ($q) => $q->whereDate('date_start', '<=' , $date )
+            ->whereDate('date_end', '>=' ,  $date)
+        );
+    }
+
     public function scopeShowLatest($query) {
         $date = Carbon::now()->toDateTime();
 
@@ -113,6 +122,10 @@ class Event extends Model implements HasMedia
 
         if (!count($statuses))
             return 'upcoming';
+
+            //ouput 'live' from start of day and end of day
+            if ($this->getCurrentLiveEvent()->count())
+                return 'live';
 
             if (in_array('live', $statuses))
             return 'live';
