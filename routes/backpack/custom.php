@@ -40,4 +40,5 @@ Route::crud('article', 'ArticleCrudController');
     Route::crud('media-reporting-category', 'MediaReportingCategoryCrudController');
     Route::crud('content', 'ContentCrudController');
     Route::crud('badge', 'BadgeCrudController');
+    Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
 }); // this should be the absolute last line of this file

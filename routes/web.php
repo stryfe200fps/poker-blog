@@ -22,7 +22,6 @@ use App\Models\Tour;
 Route::get('/', [HomeController::class, 'index']);
 
 
-
 Route::get('/tag/articles/{slug}', [ArticleController::class, 'tag'])->name('article');
 
 Route::prefix('news')->group(function () {
@@ -72,66 +71,10 @@ Route::get('tours/{tourSlug}', function ($tourSlug) {
     }
 });
 
-Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
+
+
 Route::post('prepare', [ExcelUploadController::class, 'prepare']);
 Route::post('upload_excel', [ExcelUploadController::class, 'upload']);
-
-
-
-
-//  Route::get('news/{slug}', function () use ($slug) {
-//                     $webPage = \JsonLd\Context::create('web_page', [
-//                         'url' => request()->url()
-//                     ]);
-//                     return Inertia::render('Categories/CategoryPage', [
-//                         // 'title' => $item->name.' | LifeOfPoker',
-//                         // 'description' => $item->name,
-//                         // 'page' => $item->link,
-//                         // 'page_title' => $child->name,
-//                         // 'json-ld-webpage' => $webPage,
-//                     ]);
-// });
-                
-// app(MenuItemController::class)->index();
-
-// try {
-//     foreach (MenuItem::getTree() as $item) {
-//         if ($item->link == null) {
-//             return;
-//         }
-
-//         foreach ($item->children as $child) {
-//             if ($item->link === $child->link) {
-//                 Route::get($item->link, function () use ($item, $child) {
-//                     $webPage = \JsonLd\Context::create('web_page', [
-//                         'url' => request()->url()
-//                     ]);
-//                     return Inertia::render('Categories/CategoryPage', [
-//                         'title' => $item->name.' | LifeOfPoker',
-//                         'description' => $item->name,
-//                         'page' => $item->link,
-//                         'page_title' => $child->name,
-//                         'json-ld-webpage' => $webPage,
-//                     ]);
-//                 });
-//             }
-
-//             Route::get($item->link.'/'.$child->link, function () use ($child) {
-//                 $webPage = \JsonLd\Context::create('web_page', [
-//                     'url' => request()->url()
-//                 ]);
-//                 return Inertia::render('Categories/CategoryPage', [
-//                     'title' => $child->name.' | LifeOfPoker',
-//                     'description' => $child->name,
-//                     'page' => $child->link,
-//                     'page_title' => $child->name,
-//                     'json-ld-webpage' => $webPage,
-//                 ]);
-//             });
-//         }
-//     }
-// } catch (Exception $e) {
-// }
 
 Route::get('/event-calendar', function () {
  return Inertia::render('Event/EventCalendar', [
@@ -144,15 +87,6 @@ Route::get('/event-calendar', function () {
 });
 
 
-// Route::get('/rooms', [ RoomController::class, 'index' ]);
 Route::get('/rooms/{slug}', [ RoomController::class, 'show' ]);
-
 Route::get('/{page}/{other?}', [PageController::class, 'index']);
 
-
-//for dev
-Route::get('admin/player_history/{id}', function ($id) {
-    return view('vendor.backpack.page.player_chips_history', [
-        'chips' => EventChip::with('event')->orderByDesc('updated_at')->where('player_id', $id)->limit(10)->get(),
-    ]);
-});

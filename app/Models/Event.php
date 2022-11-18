@@ -9,7 +9,6 @@ use App\Traits\ImageUpload;
 use Illuminate\Support\Str;
 use Spatie\Sluggable\HasSlug;
 use App\Traits\BackpackSlugify;
-use App\Traits\LOPDefaultTrait;
 use App\Traits\HasMultipleImages;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\Sluggable\SlugOptions;
