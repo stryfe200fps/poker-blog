@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use Backpack\Settings\app\Models\Setting;
 use Spatie\Image\Manipulations;
 
 trait HasMultipleImages
@@ -13,8 +14,8 @@ trait HasMultipleImages
             ->registerMediaConversions(function () {
 
                 $this->addMediaConversion('xs-image')
-                    ->width(config('app.xs-image')[0])
-                    ->height(config('app.xs-image')[1]);
+                    ->width(Setting::get('xs_image_width') ?? config('app.xs-image')[0])
+                    ->height(Setting::get('xs_image_height') ?? config('app.xs-image')[1]);
 
                 $this->addMediaConversion('sm-image')
                     ->width(config('app.sm-image')[0])
