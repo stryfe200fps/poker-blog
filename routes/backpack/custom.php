@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\ImageController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ImageController;
+use App\Http\Controllers\Admin\Utilities\ExcelUploadController;
 
 // --------------------------
 // Custom Backpack Routes
@@ -43,4 +44,6 @@ Route::crud('article', 'ArticleCrudController');
     Route::crud('badge', 'BadgeCrudController');
     Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
     Route::get('image/regenerate', [ ImageController::class, 'regenerate' ]);
+    Route::post('prepare', [ExcelUploadController::class, 'prepare']);
+    Route::post('upload_excel', [ExcelUploadController::class, 'upload']);
 }); // this should be the absolute last line of this file

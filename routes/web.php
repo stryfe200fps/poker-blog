@@ -70,8 +70,7 @@ Route::get('tours/{tourSlug}', function ($tourSlug) {
 
 
 
-Route::post('prepare', [ExcelUploadController::class, 'prepare']);
-Route::post('upload_excel', [ExcelUploadController::class, 'upload']);
+
 
 Route::get('/event-calendar', function () {
  return Inertia::render('Event/EventCalendar', [
