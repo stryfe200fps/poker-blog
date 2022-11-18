@@ -23,6 +23,42 @@ class SettingDefaultSeeder extends Seeder
     {
         Setting::truncate();
 
+        Setting::create([
+            'key' => 'youtube_1',
+            'name' => 'Youtube 1',
+            'description' => 'Output youtube',
+            'value' => 'youtube.com',
+            'field' => $this->fieldType('text'),
+            'active' => 1
+        ]);
+
+        Setting::create([
+            'key' => 'youtube_2',
+            'name' => 'Youtube 2',
+            'description' => 'Output youtube',
+            'value' => 'youtube.com',
+            'field' => $this->fieldType('text'),
+            'active' => 1
+        ]);
+
+        Setting::create([
+            'key' => 'youtube_3',
+            'name' => 'Youtube 3',
+            'description' => 'Output youtube',
+            'value' => 'youtube.com',
+            'field' => $this->fieldType('text'),
+            'active' => 1
+        ]);
+
+        Setting::create([
+            'key' => 'website_description',
+            'name' => 'Website Description',
+            'description' => '',
+            'value' => 'Life of poker is a one stop shop for all your poker needs. We are here to bring the action to your doorstep. Live event coverage, interviews, videos, podcasts and much more.',
+            'field' => $this->fieldType('textarea'),
+            'active' => 1
+        ]);
+
         //images
         Setting::create([
             'key' => 'admin_email',
