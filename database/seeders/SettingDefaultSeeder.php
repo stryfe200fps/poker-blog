@@ -42,12 +42,13 @@ class SettingDefaultSeeder extends Seeder
             'active' => 1
         ]);
 
+
         // DEFAULT IMAGE SIZE
         Setting::create([
             'key' => 'default_image_width',
             'name' => 'Default Image Width',
             'description' => '',
-            'value' => 200,
+            'value' => 1600,
             'field' => $this->fieldType('number'),
             'active' => 1
         ]);
@@ -55,13 +56,12 @@ class SettingDefaultSeeder extends Seeder
             'key' => 'default_image_height',
             'name' => 'Default Image Height',
             'description' => '',
-            'value' => 200,
+            'value' => 900,
             'field' => $this->fieldType('number'),
             'active' => 1
         ]);
         //END DEFAULT IMAGE SIZE
         
-
         //EXTRA SMALL IMAGE
         Setting::create([
             'key' => 'xs_image_width',
@@ -81,12 +81,15 @@ class SettingDefaultSeeder extends Seeder
         ]);
         //END EXTRA SMALL IMAGE
 
+
+
+
         //SMALL IMAGE
         Setting::create([
             'key' => 'sm_image_width',
             'name' => 'Small Image Width',
             'description' => '',
-            'value' => 200,
+            'value' => 300,
             'field' => $this->fieldType('number'),
             'active' => 1
         ]);
@@ -94,7 +97,7 @@ class SettingDefaultSeeder extends Seeder
             'key' => 'sm_image_height',
             'name' => 'Small Image Height',
             'description' => '',
-            'value' => 200,
+            'value' => 250,
             'field' => $this->fieldType('number'),
             'active' => 1
         ]);
@@ -105,7 +108,7 @@ class SettingDefaultSeeder extends Seeder
             'key' => 'md_image_width',
             'name' => 'Medium Image Width',
             'description' => '',
-            'value' => 200,
+            'value' => 640,
             'field' => $this->fieldType('number'),
             'active' => 1
         ]);
@@ -113,18 +116,20 @@ class SettingDefaultSeeder extends Seeder
             'key' => 'md_image_height',
             'name' => 'Medium Image Height',
             'description' => '',
-            'value' => 200,
+            'value' => 480,
             'field' => $this->fieldType('number'),
             'active' => 1
         ]);
         //END MEDIUM IMAGE
+
+
 
         //LARGE IMAGE
         Setting::create([
             'key' => 'lg_image_width',
             'name' => 'Large Image Width',
             'description' => '',
-            'value' => 200,
+            'value' => 900,
             'field' => $this->fieldType('number'),
             'active' => 1
         ]);
@@ -132,7 +137,7 @@ class SettingDefaultSeeder extends Seeder
             'key' => 'lg_image_height',
             'name' => 'Large Image Height',
             'description' => '',
-            'value' => 200,
+            'value' => 600,
             'field' => $this->fieldType('number'),
             'active' => 1
         ]);
@@ -143,7 +148,7 @@ class SettingDefaultSeeder extends Seeder
             'key' => 'xl_image_width',
             'name' => 'Extra Large Image',
             'description' => '',
-            'value' => 200,
+            'value' => 1600,
             'field' => $this->fieldType('number'),
             'active' => 1
         ]);
@@ -151,13 +156,11 @@ class SettingDefaultSeeder extends Seeder
             'key' => 'xl_image_height',
             'name' => 'Extra Large Image Height',
             'description' => '',
-            'value' => 200,
+            'value' => 900,
             'field' => $this->fieldType('number'),
             'active' => 1
         ]);
         //END EXTRA LARGE IMAGE
-
-
 
     }
 }

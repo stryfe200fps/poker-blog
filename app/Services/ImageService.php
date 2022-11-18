@@ -27,7 +27,7 @@ final class ImageService
 
 
         // check if the image is already existing
-        $url = preg_replace('/http?:\/\//','' , config('app.url'));
+        $url = preg_replace('/http[?s]:\/\//','' , config('app.url'));
         if ( preg_match("/$url\/storage\/\d*\/\w*[?-]?\w*[?-]\w*.jpg/", $this->imageInput))
           return false;
 
