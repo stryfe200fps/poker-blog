@@ -6,6 +6,7 @@ use App\Http\Requests\ChipCountRequest;
 use App\Http\Requests\EventChipRequest;
 use App\Models\Day;
 use App\Models\Event;
+use App\Traits\LimitUserPermissions;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use Illuminate\Http\Request;
@@ -23,6 +24,7 @@ class ChipCountCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
     use \Backpack\EditableColumns\Http\Controllers\Operations\MinorUpdateOperation;
+    use LimitUserPermissions;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -35,6 +37,7 @@ class ChipCountCrudController extends CrudController
         CRUD::setModel(\App\Models\EventChip::class);
         CRUD::setRoute(config('backpack.base.route_prefix').'/chip-count');
         CRUD::setEntityNameStrings('chip count', 'chip counts');
+        $this->denyAccessIfNoPermission();
 
         if (request()->get('event') || session()->get('event_id')) {
             if (request()->get('event') !== null && request()->get('day') !== null) {

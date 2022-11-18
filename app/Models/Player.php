@@ -5,7 +5,8 @@ namespace App\Models;
 use App\Traits\HasMultipleImages;
 use Spatie\MediaLibrary\HasMedia;
 use App\Traits\HasMediaCollection;
-use App\Observers\DefaultModelObserver;
+use App\Observers\MediaObserver;
+use App\Observers\SlugObserver;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -31,7 +32,8 @@ class Player extends Model implements HasMedia
     public static function boot()
     {
         parent::boot();
-        self::observe(new DefaultModelObserver);
+        self::observe(new SlugObserver);
+        self::observe(new MediaObserver);
 
         static::deleting(function ($deletePlayer) {
             $eventChip = EventChip::where('player_id', $deletePlayer->id)->get();

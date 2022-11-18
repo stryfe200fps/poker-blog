@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\MediaReportingCategoryRequest;
+use App\Traits\LimitUserPermissions;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -19,6 +20,7 @@ class MediaReportingCategoryCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\InlineCreateOperation;
+    use LimitUserPermissions;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -30,6 +32,7 @@ class MediaReportingCategoryCrudController extends CrudController
         CRUD::setModel(\App\Models\MediaReportingCategory::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/media-reporting-category');
         CRUD::setEntityNameStrings('media reporting category', 'media reporting categories');
+        $this->denyAccessIfNoPermission();
     }
 
     /**

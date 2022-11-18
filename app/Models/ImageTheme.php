@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use App\Observers\DefaultModelObserver;
+use App\Observers\SlugObserver;
 use App\Observers\ImageThemeObserver;
+use App\Observers\MediaObserver;
+use App\Traits\HasMediaCaching;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
@@ -12,17 +14,16 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class ImageTheme extends Model implements HasMedia
 {
-    use InteractsWithMedia;
     use \Backpack\CRUD\app\Models\Traits\CrudTrait;
     use HasFactory;
-
+    use HasMediaCaching;
 
     public $mediaCollection = 'image-theme';
 
     public static function boot()
     {
         parent::boot();
-        self::observe(new ImageThemeObserver);
+        self::observe(new MediaObserver);
     }
 
     protected $guarded = [
@@ -42,7 +43,5 @@ class ImageTheme extends Model implements HasMedia
     {
         return $this->belongsTo(EventReport::class);
     }
-
-    
 
 }

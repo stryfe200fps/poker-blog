@@ -9,7 +9,8 @@ use App\Traits\HasMultipleImages;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\Sluggable\SlugOptions;
 use App\Traits\HasMediaCollection;
-use App\Observers\DefaultModelObserver;
+use App\Observers\SlugObserver;
+use App\Observers\MediaObserver;
 use App\Observers\ModelTaggableObserver;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -33,7 +34,8 @@ class Article extends Model implements HasMedia
     public static function boot()
     {
         parent::boot();
-        self::observe(new DefaultModelObserver);
+        self::observe(new SlugObserver);
+        self::observe(new MediaObserver);
         self::observe(new ModelTaggableObserver);
     }
 
@@ -123,11 +125,6 @@ public function shareTwitter()
     public function getPublishedDateAttribute($value)
     {
         return Carbon::parse($value)->setTimezone(session()->get('timezone') ?? 'UTC');
-    }
-
-    public function article_tags()
-    {
-        return $this->belongsToMany(ArticleTag::class);
     }
 
     public function getDiffAttribute($value)
