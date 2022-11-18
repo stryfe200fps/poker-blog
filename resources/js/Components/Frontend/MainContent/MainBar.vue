@@ -161,8 +161,8 @@
                                 >
                                     <iframe
                                         class="embed-responsive-item"
-                                        src="https://www.youtube.com/embed/S2SSslc8wBs"
-                                        title="APT Philippines 2022 Main Event Highlights"
+                                        src="https://www.youtube.com/embed/xakdmqqqc5A"
+                                        title="Life of Poker is at the APT Manila"
                                         frameborder="0"
                                         loading="lazy"
                                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -177,12 +177,12 @@
                             >
                                 <iframe
                                     class="embed-responsive-item"
-                                    src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FPokerStarsAsia%2Fvideos%2F1775890926121412%2F&show_text=false&width=560&t=0"
+                                    src="https://www.youtube.com/embed/jXg6z3RCWRk"
                                     loading="lazy"
+                                    title="Will Florencio Campomanes take done another MTT?"
                                     frameborder="0"
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                     allowfullscreen
-                                    style="aspect-ratio: 16 / 9"
                                 ></iframe>
                             </div>
                         </div>
@@ -192,12 +192,13 @@
                             >
                                 <iframe
                                     class="embed-responsive-item"
-                                    src="https://www.youtube.com/embed/bNZd_JIKNKE"
+                                    src="https://www.youtube.com/embed/S2SSslc8wBs"
                                     loading="lazy"
-                                    title="WPT Prime Vietnam - Day 1 highlights"
+                                    title="Here’s what the players think of APT, from the horse’s mouth"
                                     frameborder="0"
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                     allowfullscreen
+                                    style="aspect-ratio: 16 / 9"
                                 ></iframe>
                             </div>
                         </div>
