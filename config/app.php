@@ -19,7 +19,33 @@ return [
     | any other location as required by the application or its packages.
     |
     */
-
+    'crud_entities' => [
+        'article-category',
+        'article',
+        'author',
+        'badge',
+        'banner',
+        'chip count',
+        'content',
+        'day',
+        'event',
+        'report',
+        'game',
+        'glossary',
+        'image-theme',
+        'level',
+        'live-report',
+        'media reporting category',
+        'media reporting',
+        'menu-item',
+        'page',
+        'payouts',
+        'player',
+        'room',
+        'tag',
+        'tour',
+        'series',
+    ],
     'xs-image' => [200, 200], //width, height
     'sm-image' => [300,250],
     'md-image' => [640,480],

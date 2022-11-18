@@ -6,6 +6,7 @@ use App\Http\Requests\PayoutRequest;
 use App\Models\Country;
 use App\Models\Event;
 use App\Models\EventPayout;
+use App\Traits\LimitUserPermissions;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use Backpack\CRUD\app\Library\Widget;
@@ -24,6 +25,7 @@ class PayoutCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
     use \Backpack\EditableColumns\Http\Controllers\Operations\MinorUpdateOperation;
+    use LimitUserPermissions;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -53,6 +55,7 @@ class PayoutCrudController extends CrudController
         } else {
             $this->crud->denyAccess('create');
         }
+        $this->denyAccessIfNoPermission();
     }
 
     /**

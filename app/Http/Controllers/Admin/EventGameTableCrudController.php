@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\EventGameTableRequest;
+use App\Traits\LimitUserPermissions;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -18,6 +19,7 @@ class EventGameTableCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    use LimitUserPermissions;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -29,6 +31,7 @@ class EventGameTableCrudController extends CrudController
         CRUD::setModel(\App\Models\EventGameTable::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/event-game-table');
         CRUD::setEntityNameStrings('game', 'games');
+        $this->denyAccessIfNoPermission();
     }
 
     /**

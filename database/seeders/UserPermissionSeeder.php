@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Http\Controllers\Admin\ArticleCrudController;
 use Backpack\PermissionManager\app\Models\Permission;
 use Exception;
 use Illuminate\Database\Seeder;
@@ -15,10 +16,8 @@ class UserPermissionSeeder extends Seeder
      */
     public function run()
     {
-        $permissions = ['report', 'article', 'tour', 'event',
-            'tour', 'article-category', 'author', 'player', 'tag', 'image-theme',
-            'page', 'menu-item', 'series',
-        ];
+
+        $permissions = config('app.crud_entities');
 
         foreach ($permissions as $permission) {
             try {
