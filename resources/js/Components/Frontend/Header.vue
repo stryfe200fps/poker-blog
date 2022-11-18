@@ -226,7 +226,7 @@ function googleTranslateElementInit() {
     }
 }
 onMounted(() => {
-    if (pathname.value !== "news") window.addEventListener("scroll", onScroll);
+    window.addEventListener("scroll", onScroll);
 
     let targetElement = document.getElementById("google_translate_element");
     if (targetElement) {
