@@ -64,7 +64,7 @@ class ArticleCrudController extends CrudController
         $this->crud->addColumn([
             'name' => 'title',
             'type' => 'text',
-            'limit' => 200,
+            'limit' => 50,
             'wrapper' => [
                 'href' => function ($entry, $column, $crud) {
                     return '/news/day/day/'.$crud->slug;

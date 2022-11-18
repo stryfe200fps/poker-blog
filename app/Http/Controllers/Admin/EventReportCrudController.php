@@ -105,7 +105,7 @@ class EventReportCrudController extends CrudController
                     return '/tours/rep/rep/asd/update-'.$crud->id;
                 },
             ],
-            'limit' => 100
+            'limit' => 50
 
         ]);
 
