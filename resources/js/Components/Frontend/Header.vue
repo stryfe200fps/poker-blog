@@ -1,7 +1,7 @@
 <template>
     <header ref="sticky" class="clearfix" style="z-index: auto !important">
         <nav
-            class="navbar navbar-default navbar-static-top custom-header--bg"
+            class="navbar navbar-default navbar-static-top custom-header--bg mobile-header"
             role="navigation"
         >
             <div class="logo-advertisement custom-header--bg">
@@ -156,6 +156,17 @@ function onScroll(e) {
     windowTop.value = e.target.documentElement.scrollTop;
     var width = document.body.clientWidth;
     const navImg = document.querySelector(".drop-img");
+
+    if (width <= 767 && window.scrollY > 20) {
+        document.querySelector(".mobile-header").style.position = "fixed";
+        document.querySelector(".mobile-header").style.top = 0;
+        document.querySelector(".mobile-header").style.left = 0;
+        document.querySelector(".mobile-header").style.width = 100 + "%";
+    } else {
+        document.querySelector(".mobile-header").style.position = "relative";
+        document.querySelector(".mobile-header").style.top = "unset";
+        document.querySelector(".mobile-header").style.left = "unset";
+    }
 
     if (width < 769) return;
 
@@ -547,6 +558,8 @@ header.active .nav-list-container {
 
     .navbar-collapse--custom {
         display: none;
+        position: fixed;
+        width: 100%;
         min-height: 100vh;
         background-color: #2a2828;
     }

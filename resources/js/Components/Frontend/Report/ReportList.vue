@@ -619,11 +619,20 @@ function visitBanner(url) {
 
 function stickyScroll() {
     const tabs = document.querySelector(".custom-tabs");
+    const mobileHeader = document.querySelector(".mobile-header");
     const nav = document.querySelector(".nav-list-container");
     const { top } = tabs.getBoundingClientRect();
     const width = document.body.clientWidth;
 
-    if (top <= nav.offsetHeight) {
+    if (top <= mobileHeader.offsetHeight && width <= 767) {
+        tabs.style.top = `${mobileHeader.offsetHeight}px`;
+        tabs.style.border = "none";
+        tabs.style.backgroundColor = "white";
+        tabs.style.boxShadow = "0px 8px 40px rgba(0, 0, 0, 0.20)";
+        return;
+    }
+
+    if (top <= nav.offsetHeight && width >= 768) {
         tabs.style.top = width === 768 ? "0px" : `${nav.offsetHeight}px`;
         tabs.style.border = "none";
         tabs.style.backgroundColor = "white";
@@ -643,6 +652,7 @@ function stickyScroll() {
 }
 
 const changeTab = (currentTab) => {
+    window.scroll({ top: 0 });
     tab.value = currentTab;
     emit("showLoading");
 };
