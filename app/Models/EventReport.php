@@ -13,7 +13,8 @@ use Spatie\Sluggable\SlugOptions;
 use App\Traits\HasMediaCollection;
 use Illuminate\Support\Facades\File;
 use App\Observers\EventReportObserver;
-use App\Observers\DefaultModelObserver;
+use App\Observers\MediaObserver;
+use App\Observers\SlugObserver;
 use Illuminate\Database\Eloquent\Model;
 use App\Observers\ModelTaggableObserver;
 
@@ -121,7 +122,8 @@ class EventReport extends Model implements HasMedia
     public static function boot()
     {
         parent::boot();
-        self::observe(new DefaultModelObserver);
+        self::observe(new SlugObserver);
+        self::observe(new MediaObserver);
         self::observe(new EventReportObserver);
         self::observe(new ModelTaggableObserver);
     }

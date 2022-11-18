@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 use App\Services\ImageService;
 use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 
-class ImageSavedObserver
+class MediaObserver
 {
     public $afterCommit = true;
 
@@ -16,7 +16,12 @@ class ImageSavedObserver
         if ($model?->image === null)
             return;
 
-        $service = app()->make(ImageService::class);
-        $service->imageUpload($model);
+        if (!request()->has('image'))
+            return;
+
+        $image = request()->input('image')  ?? request()->all()['image'] ?? $model->getAttributes()['image'] ?? '';
+
+
+        (new ImageService($image, $model))->imageUpload();
     }
 }

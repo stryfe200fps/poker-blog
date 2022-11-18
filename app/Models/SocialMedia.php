@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Observers\ImageSavedObserver;
+use App\Observers\MediaObserver;
 use App\Traits\HasMediaCaching;
 use App\Traits\HasMediaCollection;
 use App\Traits\HasMultipleImages;
@@ -23,6 +23,6 @@ class SocialMedia extends Model implements HasMedia
     public static function boot()
     {
         parent::boot();
-        self::observe(new ImageSavedObserver);
+        self::observe(new MediaObserver);
     }
 }

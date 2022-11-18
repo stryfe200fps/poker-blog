@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 use App\Services\ImageService;
 use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 
-class DefaultModelObserver
+class SlugObserver
 {
     public $afterCommit = true;
 

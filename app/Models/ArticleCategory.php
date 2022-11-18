@@ -5,8 +5,8 @@ namespace App\Models;
 use Illuminate\Support\Str;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
-use App\Observers\ImageSavedObserver;
-use App\Observers\DefaultModelObserver;
+use App\Observers\MediaObserver;
+use App\Observers\SlugObserver;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -53,8 +53,8 @@ class ArticleCategory extends Model
     public static function boot()
     {
         parent::boot();
-        self::observe(new DefaultModelObserver);
-        self::observe(new ImageSavedObserver);
+        self::observe(new SlugObserver);
+        self::observe(new MediaObserver);
     }
 
 

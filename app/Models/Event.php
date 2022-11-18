@@ -14,8 +14,8 @@ use App\Traits\HasMultipleImages;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\Sluggable\SlugOptions;
 use App\Traits\HasMediaCollection;
-use App\Observers\ImageSavedObserver;
-use App\Observers\DefaultModelObserver;
+use App\Observers\MediaObserver;
+use App\Observers\SlugObserver;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\ImageOptimizer\OptimizerChain;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -40,14 +40,12 @@ class Event extends Model implements HasMedia
     public $mediaCollection = 'event';
     use HasMediaCollection, HasMultipleImages;
 
-
     public static function boot()
     {
         parent::boot();
-        self::observe(new DefaultModelObserver);
-             self::observe(new ImageSavedObserver);
+        self::observe(new SlugObserver);
+        self::observe(new MediaObserver);
     }
-
 
     public function getScheduleAttribute()
     {
