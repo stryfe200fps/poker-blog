@@ -7,7 +7,8 @@ use App\Traits\HasMultipleImages;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\Sluggable\SlugOptions;
 use App\Traits\HasMediaCollection;
-use App\Observers\DefaultModelObserver;
+use App\Observers\MediaObserver;
+use App\Observers\SlugObserver;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -34,7 +35,8 @@ class Room extends Model implements HasMedia
     public static function boot()
     {
         parent::boot();
-        self::observe(new DefaultModelObserver);
+        self::observe(new SlugObserver);
+        self::observe(new MediaObserver);
     }
 
     public function getSlugOptions(): SlugOptions

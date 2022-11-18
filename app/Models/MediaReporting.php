@@ -5,7 +5,9 @@ namespace App\Models;
 use App\Traits\HasMultipleImages;
 use App\Traits\HasMediaCollection;
 use App\Traits\PublishedDateConvert;
-use App\Observers\DefaultModelObserver;
+use App\Observers\SlugObserver;
+use App\Observers\MediaObserver;
+use App\Services\ImageService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\MediaLibrary\HasMedia;
@@ -25,7 +27,8 @@ class MediaReporting extends Model implements HasMedia
     public static function boot()
     {
         parent::boot();
-        self::observe(new DefaultModelObserver);
+        self::observe(new SlugObserver);
+        self::observe(new MediaObserver);
     }
 
 

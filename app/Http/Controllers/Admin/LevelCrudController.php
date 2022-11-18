@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\LevelRequest;
 use App\Models\Event;
+use App\Traits\LimitUserPermissions;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -20,6 +21,7 @@ class LevelCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\InlineCreateOperation;
+    use LimitUserPermissions;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -32,6 +34,7 @@ class LevelCrudController extends CrudController
         CRUD::setModel(\App\Models\Level::class);
         CRUD::setRoute(config('backpack.base.route_prefix').'/level');
         CRUD::setEntityNameStrings('level', 'levels');
+        $this->denyAccessIfNoPermission();
 
         if (request()->get('event') || session()->get('event_id')) {
             if (request()->get('event') !== null) {

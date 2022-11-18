@@ -90,7 +90,7 @@
                     <span style="color:white;">Upload successfully! </span>
                   </div>
                 </div>
-                <div v-else class="alert alert-error">Upload failed. Please check your excel</div>
+                <div v-else class="alert alert-success">Successfully forced upload</div>
                      
               </div>
             </div>
@@ -164,7 +164,7 @@
       const headers = {
         'Content-Type': 'multipart/form-data'
       };
-      await axios.post('/prepare', formData, {
+      await axios.post('/admin/prepare', formData, {
         headers
       }).then((res) => {
 
@@ -205,7 +205,7 @@
       const headers = {
         'Content-Type': 'multipart/form-data'
       };
-      await axios.post('/upload_excel', formData, {
+      await axios.post('/admin/upload_excel', formData, {
         headers
       }).then((res) => {
         this.uploadStatus = res.data

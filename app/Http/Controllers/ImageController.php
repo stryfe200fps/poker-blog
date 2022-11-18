@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use League\Glide\ServerFactory;
 use Illuminate\Contracts\Filesystem\Filesystem;
+use Illuminate\Log\Logger;
 use League\Glide\Responses\LaravelResponseFactory;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
@@ -17,6 +18,13 @@ class ImageController extends Controller
     // 'response' => new LaravelResponseFactory(app('request'))
     // ]);
     //     }
+
+    public function regenerate()
+    {
+        \Artisan::call("media-library:regenerate --force ");
+        Logger('Regenerated Sucessfully');
+        return redirect()->back();
+    }
 
     public function show(Filesystem $filesystem, Media $media)
     {

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\EventPayout;
 use App\Models\Player;
 use Exception;
+use Illuminate\Log\Logger;
 use Illuminate\Support\Facades\Schema;
 use Rap2hpoutre\FastExcel\FastExcel;
 
@@ -33,6 +34,7 @@ class ExcelUploadController extends Controller
 
             return 1;
         } catch (Exception $e) {
+            Logger($e);
             return 0;
         }
     }
@@ -85,12 +87,11 @@ class ExcelUploadController extends Controller
                 }
                 
             });
-
-
             unlink('uploads/'. $realName);
             return 1;
         } catch (Exception $e) {
             return 0;
+            Logger($e);
         }
     }
 }

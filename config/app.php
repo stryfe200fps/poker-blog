@@ -2,6 +2,7 @@
 
 use App\Helpers\Timezone;
 use App\Providers\TimezoneProvider;
+use App\Services\ImageService;
 use Illuminate\Support\Facades\Facade;
 use Webpatser\Countries\CountriesFacade;
 use Webpatser\Countries\CountriesServiceProvider;
@@ -18,7 +19,33 @@ return [
     | any other location as required by the application or its packages.
     |
     */
-
+    'crud_entities' => [
+        'article-category',
+        'article',
+        'author',
+        'badge',
+        'banner',
+        'chip count',
+        'content',
+        'day',
+        'event',
+        'report',
+        'game',
+        'glossary',
+        'image-theme',
+        'level',
+        'live-report',
+        'media reporting category',
+        'media reporting',
+        'menu-item',
+        'page',
+        'payouts',
+        'player',
+        'room',
+        'tag',
+        'tour',
+        'series',
+    ],
     'xs-image' => [200, 200], //width, height
     'sm-image' => [300,250],
     'md-image' => [640,480],
@@ -222,7 +249,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\FortifyServiceProvider::class,
         App\Providers\JetstreamServiceProvider::class,
-        Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
+        Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class
 
     ],
 

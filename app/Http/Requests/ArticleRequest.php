@@ -35,7 +35,7 @@ class ArticleRequest extends FormRequest
             'slug' =>  [ Rule::unique('articles')->ignore(request()->get('id'))], 
             'content' => function($attribute, $value, $fail) {
                   $fieldGroups = $value;
-                  if ($fieldGroups === null || count($fieldGroups) == 0) 
+                  if ($fieldGroups === null || count($fieldGroups) == 1) 
                     return true;
 
                   foreach ($fieldGroups as $key => $group) {

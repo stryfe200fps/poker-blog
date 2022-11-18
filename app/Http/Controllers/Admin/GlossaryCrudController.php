@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\GlossaryRequest;
+use App\Traits\LimitUserPermissions;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -18,6 +19,7 @@ class GlossaryCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    use LimitUserPermissions;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -29,6 +31,7 @@ class GlossaryCrudController extends CrudController
         CRUD::setModel(\App\Models\Glossary::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/glossary');
         CRUD::setEntityNameStrings('glossary', 'glossaries');
+        $this->denyAccessIfNoPermission();
     }
 
     /**
