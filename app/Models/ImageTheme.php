@@ -30,7 +30,7 @@ class ImageTheme extends Model implements HasMedia
         'id',
     ];
 
-    protected $appends = ['image'];
+    // protected $appends = ['image'];
 
     public $timestamps = false;
 
