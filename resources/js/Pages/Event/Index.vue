@@ -224,13 +224,16 @@ async function reportViewing() {
 function scrollToTop() {
     hasNewReport.value = false;
     isActive.value = false;
+    const { name } = eventData.value.available_day_with_reports.find(
+        ({ id }) => id == selectDay.value
+    );
     if (props.type) {
         Inertia.visit(
             `/tours/${eventData.value.tour_slug}/${
                 eventData.value.tournament_slug
             }/${
                 eventData.value.slug
-            }/${eventData.value.available_day_with_reports[selectDay.value]
+            }/${name
                 .replace(/[^A-Z0-9]+/gi, "-")
                 .toLowerCase()}`,
             { preserveState: true }
