@@ -6,7 +6,7 @@ use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
-use Stichoza\GoogleTranslate\GoogleTranslate;
+// use Stichoza\GoogleTranslate\GoogleTranslate;
 
 
 class CreateJsonTranslationFileCommand extends Command
@@ -36,7 +36,7 @@ class CreateJsonTranslationFileCommand extends Command
         $directories = $storage->directories();
 
         $supportedLocales = config('app.supported_locales');
-            $tr = new GoogleTranslate(); // Translates to 'en' from auto-detected language by default
+            // $tr = new GoogleTranslate(); // Translates to 'en' from auto-detected language by default
            foreach ($directories as $directory) {
             $files = $storage->allFiles($directory);
 
