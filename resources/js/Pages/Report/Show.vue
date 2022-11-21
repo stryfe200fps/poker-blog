@@ -355,7 +355,7 @@ const url = ref(window.location.href);
 const formattedTitle = computed(() => {
     return (
         props.report.data?.title.charAt(0).toUpperCase() +
-        props.report.data?.title.slice(1).toLowerCase()
+        props.report.data?.title.slice(1)
     );
 });
 
