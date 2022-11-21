@@ -25,7 +25,7 @@ class MediaReportingCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'name' => 'required|min:5|max:255'
+            'title' => 'required'
         ];
     }
 
@@ -49,7 +49,7 @@ class MediaReportingCategoryRequest extends FormRequest
     public function messages()
     {
         return [
-            //
+            'title.required' => 'Title is required'
         ];
     }
 }
