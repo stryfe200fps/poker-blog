@@ -75,6 +75,7 @@
 <script setup>
 import { onMounted, onBeforeUnmount, ref } from "@vue/runtime-core";
 import { Link } from "@inertiajs/inertia-vue3";
+import { Inertia } from "@inertiajs/inertia";
 
 import TournamentItem from "./TournamentItem.vue";
 import LoadingBar from "@/Components/LoadingBar.vue";
@@ -95,8 +96,11 @@ const props = defineProps({
 const emit = defineEmits(["loadMore"]);
 const tab = ref("");
 
-function changeTab(currentTab) {
+Inertia.on("success", () => {
     window.scrollTo({ top: 0 });
+});
+
+function changeTab(currentTab) {
     tab.value = currentTab;
 }
 

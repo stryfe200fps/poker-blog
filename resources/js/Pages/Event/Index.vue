@@ -30,7 +30,7 @@
                                 <select
                                     class="form-control custom-form-control"
                                     v-model="selectDay"
-                                    @change="fetchLiveReports"
+                                    @change="fetchLiveReports(true)"
                                 >
                                     <option
                                         class="text-start text-uppercase"
@@ -75,6 +75,7 @@
                         :url="url"
                         :reportingBanner="reportingBanner"
                         :isLoading="isLoading"
+                        :hasNewReport="hasNewReport"
                         @loadMore="loadMoreReports"
                         @showLoading="showLoading"
                     />
@@ -145,6 +146,7 @@ const bannerStore = useBannerStore();
 const reportingBanner = ref([]);
 const daySlug = ref(window.location.pathname.split("/")[5]);
 const isLoading = ref(true);
+const hasNewReport = ref(false);
 
 const highestDay = () => {
     let { available_day_with_reports } = eventData.value;
@@ -261,10 +263,12 @@ onMounted(async () => {
         "NewReport",
         ({ eventSlug, dayid }) => {
             if (props.slug === eventSlug && selectDay.value == dayid) {
-                fetchLiveReports();
+                hasNewReport.value = true;
+                fetchLiveReports(false);
                 isActive.value = true;
 
                 setTimeout(() => {
+                    hasNewReport.value = false;
                     isActive.value = false;
                 }, 5000);
             }
@@ -276,8 +280,8 @@ onUpdated(() => {
     reportViewing();
 });
 
-const fetchLiveReports = () => {
-    isLoading.value = true;
+const fetchLiveReports = (value) => {
+    isLoading.value = value;
     loadPage.value = 1;
     lastPage.value = 1;
 

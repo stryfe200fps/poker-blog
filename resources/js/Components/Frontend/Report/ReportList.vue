@@ -519,6 +519,7 @@
 </template>
 
 <script setup>
+import { Inertia } from "@inertiajs/inertia";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import { ref } from "@vue/reactivity";
 import {
@@ -588,6 +589,9 @@ const props = defineProps({
     isLoading: {
         type: Boolean,
     },
+    hasNewReport: {
+        type: Boolean,
+    },
 });
 
 const emit = defineEmits(["loadMore", "showLoading"]);
@@ -651,8 +655,11 @@ function stickyScroll() {
     );
 }
 
+Inertia.on("success", () => {
+    if (!props.hasNewReport) window.scrollTo({ top: 0 });
+});
+
 const changeTab = (currentTab) => {
-    window.scroll({ top: 0 });
     tab.value = currentTab;
     emit("showLoading");
 };
