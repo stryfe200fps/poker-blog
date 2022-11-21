@@ -27,11 +27,17 @@ final class ImageService
   {
 
 
+
+
+        try { 
+
+        $url = preg_replace('/^https?:\/\//','' , config('app.url'));
         // check if the image is already existing
-        $url = preg_replace('/http[?s]:\/\//','' , config('app.url'));
         if ( preg_match("/$url\/storage\/\d*\/\w*[?-]?\w*[?-]\w*.\w*/", $this->imageInput)) {
             return false;
         }
+        } catch (Exception $e) { }
+
 
         if ($this->imageInput == null || $this->imageInput == '') { 
             $this->currentModel->media()->delete();
