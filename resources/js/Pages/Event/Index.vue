@@ -222,6 +222,7 @@ async function reportViewing() {
 }
 
 function scrollToTop() {
+    hasNewReport.value = false;
     isActive.value = false;
     if (props.type) {
         Inertia.visit(
