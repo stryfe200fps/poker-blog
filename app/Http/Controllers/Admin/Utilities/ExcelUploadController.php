@@ -64,7 +64,6 @@ class ExcelUploadController extends Controller
                             'event_id' => request()->all()['event_id'],
                     ]);
 
-                    unlink('uploads/'. $realName);
                     return;
                 }
 
