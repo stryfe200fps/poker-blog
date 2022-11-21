@@ -50,15 +50,6 @@ class SettingDefaultSeeder extends Seeder
             'active' => 1
         ]);
 
-        Setting::create([
-            'key' => 'website_description',
-            'name' => 'Website Description',
-            'description' => '',
-            'value' => 'Life of poker is a one stop shop for all your poker needs. We are here to bring the action to your doorstep. Live event coverage, interviews, videos, podcasts and much more.',
-            'field' => $this->fieldType('textarea'),
-            'active' => 1
-        ]);
-
         //images
         Setting::create([
             'key' => 'admin_email',
