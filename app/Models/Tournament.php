@@ -32,11 +32,11 @@ class Tournament extends Model implements HasMedia
         self::observe(new MediaObserver);
     }
 
-    protected $appends = [
-        'minimized_timezone',
-        'word_timezone'
+    // protected $appends = [
+    //     'minimized_timezone',
+    //     'word_timezone'
 
-    ];
+    // ];
 
     public function getSlugOptions(): SlugOptions
     {

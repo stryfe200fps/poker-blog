@@ -17,7 +17,9 @@ class BannerFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name' => 'name',
+            'location' => 'location',
+            'url' => 'https://adi.com'
         ];
     }
 }
