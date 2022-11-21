@@ -96,7 +96,7 @@ const emit = defineEmits(["loadMore"]);
 const tab = ref("");
 
 function changeTab(currentTab) {
-    window.scroll({ top: 0 });
+    window.scrollTo({ top: 0 });
     tab.value = currentTab;
 }
 

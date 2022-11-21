@@ -29,7 +29,7 @@
                     ><br />
                 </div> -->
                 <div class="title-post">
-                    <h1 class="text-capitalize" v-html="report.data.title"></h1>
+                    <h1 v-html="formattedTitle"></h1>
                     <div
                         style="
                             display: flex;
@@ -351,6 +351,13 @@ const props = defineProps({
 
 const isOpen = ref(false);
 const url = ref(window.location.href);
+
+const formattedTitle = computed(() => {
+    return (
+        props.report.data?.title.charAt(0).toUpperCase() +
+        props.report.data?.title.slice(1).toLowerCase()
+    );
+});
 
 const currentDate = computed(() => {
     return moment().format("YYYY");
