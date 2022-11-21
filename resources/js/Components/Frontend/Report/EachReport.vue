@@ -12,11 +12,11 @@
                     v-html="item.title"
                 ></Link>
             </h1> -->
-            <h1 :id="item.id" class="text-capitalize">
+            <h1 :id="item.id">
                 <Link
                     class="default-text-color"
                     :href="`/tours/${event.tour_slug}/${event.tournament_slug}/${event.slug}/update-${item.id}`"
-                    v-html="item.title"
+                    v-html="formattedTitle"
                 ></Link>
             </h1>
             <div
@@ -247,7 +247,7 @@
 <script setup>
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import { ref } from "@vue/reactivity";
-import { onMounted } from "@vue/runtime-core";
+import { computed, onMounted } from "@vue/runtime-core";
 import CustomeTable from "../CustomeTable.vue";
 import CountryFlag from "vue3-country-flag-icon";
 import defaultAvatar from "@/default-avatar.png";
@@ -270,19 +270,19 @@ const props = defineProps({
 
 // const items = ref([]);
 
+const formattedTitle = computed(() => {
+    return (
+        props.item?.title.charAt(0).toUpperCase() +
+        props.item?.title.slice(1).toLowerCase()
+    );
+});
+
 function onClickOutside(event) {
     if (event.target.localName !== "a") {
         isOpen.value = false;
         return;
     }
 }
-
-const getDate = (date) => {
-    let eventEndDate = props.item.event.date_end;
-    let dateNow = moment().format("MMM D YYYY");
-    if (dateNow > eventEndDate) return moment(date).format("MMM DD YYYY");
-    return moment(date).fromNow();
-};
 
 // const newItem = ref(null);
 
