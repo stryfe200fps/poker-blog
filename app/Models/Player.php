@@ -58,7 +58,7 @@ class Player extends Model implements HasMedia
 
     public function getAvatarAttribute($value)
     {
-        return $this->getFirstMediaUrl('player', 'avatar');
+        return $this->getFirstMediaUrl('player', 'xs-image');
     }
 
     public function getStatusAttribute($value)
