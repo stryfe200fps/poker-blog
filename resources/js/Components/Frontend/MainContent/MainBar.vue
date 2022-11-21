@@ -148,58 +148,32 @@
                     </div>
                 </div>
             </div>
-            <div class="grid-box">
+            <div class="grid-box" v-if="youtubeId.length">
                 <div class="title-section">
                     <h1><span>video</span></h1>
                 </div>
                 <div class="news-post article-post">
                     <div class="row">
-                        <div class="col-md-4" style="margin-bottom: 20px">
+                        <div
+                            class="col-md-4"
+                            style="margin-bottom: 20px"
+                            v-for="(youtube, index) in youtubeId"
+                            :key="index"
+                        >
                             <div class="new-post standard-post2">
                                 <div
                                     class="embed-responsive embed-responsive-16by9"
                                 >
                                     <iframe
                                         class="embed-responsive-item"
-                                        src="https://www.youtube.com/embed/xakdmqqqc5A"
-                                        title="Life of Poker is at the APT Manila"
+                                        :src="`https://www.youtube.com/embed/${youtube}`"
+                                        title="YouTube video player"
                                         frameborder="0"
                                         loading="lazy"
                                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                         allowfullscreen
                                     ></iframe>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4" style="margin-bottom: 20px">
-                            <div
-                                class="embed-responsive embed-responsive-16by9"
-                            >
-                                <iframe
-                                    class="embed-responsive-item"
-                                    src="https://www.youtube.com/embed/jXg6z3RCWRk"
-                                    loading="lazy"
-                                    title="Will Florencio Campomanes take done another MTT?"
-                                    frameborder="0"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                    allowfullscreen
-                                ></iframe>
-                            </div>
-                        </div>
-                        <div class="col-md-4" style="margin-bottom: 20px">
-                            <div
-                                class="embed-responsive embed-responsive-16by9"
-                            >
-                                <iframe
-                                    class="embed-responsive-item"
-                                    src="https://www.youtube.com/embed/S2SSslc8wBs"
-                                    loading="lazy"
-                                    title="Here’s what the players think of APT, from the horse’s mouth"
-                                    frameborder="0"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                    allowfullscreen
-                                    style="aspect-ratio: 16 / 9"
-                                ></iframe>
                             </div>
                         </div>
                     </div>
@@ -215,6 +189,7 @@ import defaultImg from "/public/default-img.png";
 import { Inertia } from "@inertiajs/inertia";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import moment from "moment";
+import { computed } from "@vue/runtime-core";
 
 const props = defineProps({
     liveEvents: {
@@ -226,10 +201,22 @@ const props = defineProps({
     articleList: {
         type: Object,
     },
+    ytLinks: {
+        type: Object,
+    },
     isLoading: {
         type: Boolean,
         default: true,
     },
+});
+
+const youtubeId = computed(() => {
+    const mergedLinks = [];
+    for (const key in props.ytLinks) {
+        mergedLinks.push(props.ytLinks[key].split("/")[3]);
+    }
+
+    return mergedLinks;
 });
 
 function showArticle(date, slug) {
