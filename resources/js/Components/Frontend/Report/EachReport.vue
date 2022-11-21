@@ -272,8 +272,7 @@ const props = defineProps({
 
 const formattedTitle = computed(() => {
     return (
-        props.item?.title.charAt(0).toUpperCase() +
-        props.item?.title.slice(1).toLowerCase()
+        props.item?.title.charAt(0).toUpperCase() + props.item?.title.slice(1)
     );
 });
 
