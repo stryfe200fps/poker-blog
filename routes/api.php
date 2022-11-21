@@ -14,8 +14,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\ChipController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\PayoutController;
+use App\Http\Controllers\ContentController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\Api\RoomController;
 use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\Api\BannerController;
@@ -34,8 +37,6 @@ use App\Http\Controllers\Api\ReportsApiController;
 use App\Http\Controllers\ArticleCategoryController;
 use App\Http\Controllers\Api\TournamentApiController;
 use App\Http\Controllers\Api\MediaReportingController;
-use App\Http\Controllers\ContentController;
-use App\Http\Controllers\ImageController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -137,3 +138,4 @@ Route::get('content/{slug}', [ContentController::class, 'show']);
 
 Route::get('fetch/tag', [TagController::class, 'fetch']);
 Route::get('fetch/countries', [CountryController::class, 'index']);
+Route::get('settings', [SettingController::class, 'index']);
