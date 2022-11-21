@@ -21,6 +21,6 @@ class PayoutController extends Controller
 
     public function event_payout($slug)
     {
-        return EventPayoutResource::collection(EventPayout::orderBy('position', 'asc')->where('event_id', Event::where('slug', $slug)->first()->id)->paginate(20));
+        return EventPayoutResource::collection(EventPayout::orderBy('position', 'asc')->where('event_id', Event::where('slug', $slug)->first()->id)->paginate(100));
     }
 }
