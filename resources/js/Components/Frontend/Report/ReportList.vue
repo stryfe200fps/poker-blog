@@ -549,7 +549,6 @@ import "mosha-vue-toastify/dist/style.css";
 
 // components
 import EachReport from "./EachReport.vue";
-import AlertMessage from "@/photo_templates/AlertMessage.vue";
 
 const props = defineProps({
     event: {

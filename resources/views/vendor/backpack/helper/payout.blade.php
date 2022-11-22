@@ -72,7 +72,7 @@
                   </div>
                   <label v-if="uploadExcelButtonVisibility" style="display:block" class="ml-2 mt-1">
                     <input type="checkbox" v-model="overwriteCheckbox" value="overwrite" />
-                    Overwrite data?
+                    Delete old data?
                   </label>
                   <div >
                     <input v-if="uploadExcelButtonVisibility" class="btn btn-success" type="submit" value="upload excel" />
