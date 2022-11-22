@@ -232,7 +232,7 @@
                                 v-for="(item, index) in report.data.event_chips"
                                 :key="index"
                             >
-                                <td>
+                                <td v-if="item.player?.name">
                                     <img
                                         class="hide-on-mobile"
                                         v-if="item.player?.avatar"
@@ -246,9 +246,15 @@
                                     {{ item.player?.name }}
                                     <span style="white-space: nowrap"></span>
                                 </td>
+                                <td class="text-center hide-on-tablet" v-else>
+                                    -
+                                </td>
                                 <td
                                     class="text-center hide-on-tablet"
-                                    v-if="item.player?.country"
+                                    v-if="
+                                        item.player?.name &&
+                                        item.player?.country
+                                    "
                                 >
                                     <CountryFlag
                                         :title="item.player?.country"
@@ -256,16 +262,29 @@
                                     />
                                 </td>
                                 <td class="text-center hide-on-tablet" v-else>
-                                    ?
+                                    -
                                 </td>
-                                <td class="text-right">
+                                <td v-if="item.player?.badge">
+                                    <img
+                                        :src="item.player?.badge"
+                                        :alt="item.player?.badge"
+                                    />
+                                </td>
+                                <td v-else></td>
+                                <td v-if="item.player?.name" class="text-right">
                                     {{
                                         item.current_chips === 0
                                             ? "BUSTED"
                                             : item.current_chips.toLocaleString()
                                     }}
                                 </td>
-                                <td class="text-right hide-on-mobile">
+                                <td class="text-center hide-on-tablet" v-else>
+                                    -
+                                </td>
+                                <td
+                                    v-if="item.player?.name"
+                                    class="text-right hide-on-mobile"
+                                >
                                     {{
                                         item.current_chips === 0
                                             ? ""
@@ -285,6 +304,9 @@
                                             class="fa-sharp fa-solid fa-caret-down text-red"
                                         ></i
                                     ></span>
+                                </td>
+                                <td class="text-center hide-on-tablet" v-else>
+                                    -
                                 </td>
                             </tr>
                         </template>

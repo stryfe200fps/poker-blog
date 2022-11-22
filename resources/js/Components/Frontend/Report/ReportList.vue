@@ -149,7 +149,7 @@
                                         <th class="text-center hide-on-tablet">
                                             Country
                                         </th>
-                                        <th></th>
+                                        <th class="hide-on-tablet"></th>
                                         <th class="text-right">Chips</th>
                                         <th class="text-right hide-on-mobile">
                                             Progress
@@ -180,6 +180,7 @@
                                                 v-if="stack.player"
                                                 >{{ stack?.player?.name }}
                                                 <span
+                                                    class="hide-on-tablet"
                                                     v-if="
                                                         stack.player?.pseudonym
                                                     "
@@ -209,13 +210,16 @@
                                         >
                                             -
                                         </td>
-                                        <td v-if="stack.player?.badge">
+                                        <td
+                                            class="hide-on-tablet"
+                                            v-if="stack.player?.badge"
+                                        >
                                             <img
                                                 :src="stack.player?.badge"
                                                 :alt="stack.player?.badge"
                                             />
                                         </td>
-                                        <td v-else></td>
+                                        <td class="hide-on-tablet" v-else></td>
                                         <td
                                             v-if="stack.report_id"
                                             class="text-right"
@@ -290,6 +294,7 @@
                                         <th class="text-center hide-on-tablet">
                                             Country
                                         </th>
+                                        <th class="hide-on-tablet"></th>
                                         <th class="text-right">Chips</th>
                                         <th class="text-right hide-on-mobile">
                                             Progress
@@ -320,6 +325,7 @@
                                                 v-if="stack.player"
                                                 >{{ stack?.player?.name }}
                                                 <span
+                                                    class="hide-on-tablet"
                                                     v-if="
                                                         stack.player?.pseudonym
                                                     "
@@ -349,6 +355,16 @@
                                         >
                                             -
                                         </td>
+                                        <td
+                                            class="hide-on-tablet"
+                                            v-if="stack.player?.badge"
+                                        >
+                                            <img
+                                                :src="stack.player?.badge"
+                                                :alt="stack.player?.badge"
+                                            />
+                                        </td>
+                                        <td class="hide-on-tablet" v-else></td>
                                         <td
                                             v-if="stack.report_id"
                                             class="text-right"
