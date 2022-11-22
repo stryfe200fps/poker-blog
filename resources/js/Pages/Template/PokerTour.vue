@@ -2,95 +2,85 @@
     <Head>
         <title>{{ tour.data.title_tab }}</title>
     </Head>
-    <FrontLayout>
-        <div class="block-content">
-            <div class="single-post-box">
-                <div class="title-section">
-                    <h1 class="text-primary">
-                        <span style="cursor: pointer" @click="goBack"
-                            ><i
-                                class="fa fa-chevron-left"
-                                aria-hidden="true"
-                            ></i>
-                            to poker tours</span
-                        >
-                    </h1>
-                </div>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="post-content">
-                            <h2
-                                class="text-capitalize"
-                                style="margin-bottom: 15px"
-                            >
-                                <span v-html="tour.data.title"></span>
-                            </h2>
-                            <p
-                                class="tour-description"
-                                v-html="tour.data.content"
-                            ></p>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="post-gallery">
-                            <img
-                                v-if="tour.data.image_set"
-                                :src="tour.data.image_set.lg_image"
-                                :alt="tour.data.image_set.lg_image"
-                            />
-                            <img v-else :src="defaultImg" :alt="defaultImg" />
-                        </div>
-                    </div>
-                </div>
-                <div class="grid-box filters" v-if="seriesList.length">
-                    <h4>View Series By Year</h4>
-                    <div>
-                        <select class="form-control" v-model="selectedYear">
-                            <option value="" selected disabled>
-                                Select Year
-                            </option>
-                            <option
-                                v-for="(year, index) in years"
-                                :key="index"
-                                :value="year"
-                            >
-                                {{ year }}
-                            </option>
-                        </select>
-                    </div>
-                    <button
-                        class="btn btn-default"
-                        v-if="selectedYear !== ''"
-                        @click="resetFilter()"
+    <div class="block-content">
+        <div class="single-post-box">
+            <div class="title-section">
+                <h1 class="text-primary">
+                    <span style="cursor: pointer" @click="goBack"
+                        ><i class="fa fa-chevron-left" aria-hidden="true"></i>
+                        to poker tours</span
                     >
-                        Reset
-                    </button>
-                </div>
-                <div class="forum-table" v-if="seriesList.length">
-                    <div
-                        class="table-head"
-                        style="background-color: rgb(45, 52, 54) !important"
-                    >
-                        <div class="first-col" style="width: 50%">
-                            <span>Series</span>
-                        </div>
-                        <div class="second-col" style="width: 20%">
-                            <span>Date</span>
-                        </div>
-                        <div class="third-col" style="width: 25%">
-                            <span>Location</span>
-                        </div>
+                </h1>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="post-content">
+                        <h2 class="text-capitalize" style="margin-bottom: 15px">
+                            <span v-html="tour.data.title"></span>
+                        </h2>
+                        <p
+                            class="tour-description"
+                            v-html="tour.data.content"
+                        ></p>
                     </div>
-                    <SeriesTable
-                        v-for="series in seriesList"
-                        :key="series.id"
-                        :series="series"
-                        :tourSlug="tour.data.slug"
-                    />
+                </div>
+                <div class="col-sm-6">
+                    <div class="post-gallery">
+                        <img
+                            v-if="tour.data.image_set"
+                            :src="tour.data.image_set.lg_image"
+                            :alt="tour.data.image_set.lg_image"
+                        />
+                        <img v-else :src="defaultImg" :alt="defaultImg" />
+                    </div>
                 </div>
             </div>
+            <div class="grid-box filters" v-if="seriesList.length">
+                <h4>View Series By Year</h4>
+                <div>
+                    <select class="form-control" v-model="selectedYear">
+                        <option value="" selected disabled>Select Year</option>
+                        <option
+                            v-for="(year, index) in years"
+                            :key="index"
+                            :value="year"
+                        >
+                            {{ year }}
+                        </option>
+                    </select>
+                </div>
+                <button
+                    class="btn btn-default"
+                    v-if="selectedYear !== ''"
+                    @click="resetFilter()"
+                >
+                    Reset
+                </button>
+            </div>
+            <div class="forum-table" v-if="seriesList.length">
+                <div
+                    class="table-head"
+                    style="background-color: rgb(45, 52, 54) !important"
+                >
+                    <div class="first-col" style="width: 50%">
+                        <span>Series</span>
+                    </div>
+                    <div class="second-col" style="width: 20%">
+                        <span>Date</span>
+                    </div>
+                    <div class="third-col" style="width: 25%">
+                        <span>Location</span>
+                    </div>
+                </div>
+                <SeriesTable
+                    v-for="series in seriesList"
+                    :key="series.id"
+                    :series="series"
+                    :tourSlug="tour.data.slug"
+                />
+            </div>
         </div>
-    </FrontLayout>
+    </div>
 </template>
 
 <script setup>
@@ -99,8 +89,7 @@ import { Inertia } from "@inertiajs/inertia";
 import { useTourStore } from "@/Stores/pokerTour.js";
 import { onMounted, ref, computed, watch } from "@vue/runtime-core";
 
-import FrontLayout from "@/Layouts/FrontLayout.vue";
-import SeriesTable from "../Series/SeriesTable.vue";
+import SeriesTable from "@/Components/Frontend/SeriesTable.vue";
 import defaultImg from "/public/default-img.png";
 
 const props = defineProps({

@@ -1,114 +1,105 @@
 <template>
-    <FrontLayout title="Event">
-        <div v-if="eventData">
-            <div class="block-content">
-                <div class="title-section">
+    <div v-if="eventData">
+        <div class="block-content">
+            <div class="title-section">
+                <h1>
+                    <span>{{ eventData.tournament }}</span>
+                </h1>
+            </div>
+            <div class="title-section hide-underline">
+                <div
+                    style="
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                    "
+                >
                     <h1>
-                        <span>{{ eventData.tournament }}</span>
+                        <span class="text-capitalize">{{
+                            eventData.title
+                        }}</span>
                     </h1>
-                </div>
-                <div class="title-section hide-underline">
-                    <div
-                        style="
-                            display: flex;
-                            justify-content: space-between;
-                            align-items: center;
-                        "
-                    >
-                        <h1>
-                            <span class="text-capitalize">{{
-                                eventData.title
-                            }}</span>
-                        </h1>
-                        <div :class="type !== 'payouts' ? 'visible' : 'hide'">
-                            <p
-                                v-if="
-                                    eventData?.available_day_with_reports
-                                        ?.length > 1
-                                "
+                    <div :class="type !== 'payouts' ? 'visible' : 'hide'">
+                        <p
+                            v-if="
+                                eventData?.available_day_with_reports?.length >
+                                1
+                            "
+                        >
+                            <select
+                                class="form-control custom-form-control"
+                                v-model="selectDay"
+                                @change="fetchLiveReports(true)"
                             >
-                                <select
-                                    class="form-control custom-form-control"
-                                    v-model="selectDay"
-                                    @change="fetchLiveReports(true)"
+                                <option
+                                    class="text-start text-uppercase"
+                                    v-for="(
+                                        data, index
+                                    ) in eventData?.available_day_with_reports"
+                                    :key="index"
+                                    :value="data.id"
+                                    :checked="data.id == selectDay"
                                 >
-                                    <option
-                                        class="text-start text-uppercase"
-                                        v-for="(
-                                            data, index
-                                        ) in eventData?.available_day_with_reports"
-                                        :key="index"
-                                        :value="data.id"
-                                        :checked="data.id == selectDay"
-                                    >
-                                        Day
-                                        {{ data.name }}
-                                    </option>
-                                </select>
-                            </p>
-                            <p
-                                v-else
-                                v-for="(
-                                    data, index
-                                ) in eventData?.available_day_with_reports"
-                                :key="index"
-                            >
-                                Day:
-                                <span class="text-uppercase">
-                                    {{ data.name }}</span
-                                >
-                            </p>
-                        </div>
+                                    Day
+                                    {{ data.name }}
+                                </option>
+                            </select>
+                        </p>
+                        <p
+                            v-else
+                            v-for="(
+                                data, index
+                            ) in eventData?.available_day_with_reports"
+                            :key="index"
+                        >
+                            Day:
+                            <span class="text-uppercase"> {{ data.name }}</span>
+                        </p>
                     </div>
                 </div>
-                <div class="single-post-box">
-                    <ReportList
-                        :event="eventData"
-                        :reports="liveReport"
-                        :chipCounts="chipCountsData"
-                        :whatsappContent="whatsappContent"
-                        :whatsapp="whatsappData"
-                        :gallery="galleryData"
-                        :payouts="payoutsData"
-                        :currentTab="type"
-                        :day="day"
-                        :url="url"
-                        :reportingBanner="reportingBanner"
-                        :isLoading="isLoading"
-                        :hasNewReport="hasNewReport"
-                        @loadMore="loadMoreReports"
-                        @showLoading="showLoading"
-                    />
-                </div>
+            </div>
+            <div class="single-post-box">
+                <ReportList
+                    :event="eventData"
+                    :reports="liveReport"
+                    :chipCounts="chipCountsData"
+                    :whatsappContent="whatsappContent"
+                    :whatsapp="whatsappData"
+                    :gallery="galleryData"
+                    :payouts="payoutsData"
+                    :currentTab="type"
+                    :day="day"
+                    :url="url"
+                    :reportingBanner="reportingBanner"
+                    :isLoading="isLoading"
+                    :hasNewReport="hasNewReport"
+                    @loadMore="loadMoreReports"
+                    @showLoading="showLoading"
+                />
             </div>
         </div>
-        <div class="toast" :class="{ active: isActive }" @click="scrollToTop">
-            <div class="toast-content">
-                <i class="fas fa-info-circle info"></i>
+    </div>
+    <div class="toast" :class="{ active: isActive }" @click="scrollToTop">
+        <div class="toast-content">
+            <i class="fas fa-info-circle info"></i>
 
-                <div class="message">
-                    <span class="text text-1">New post - click here</span>
-                </div>
+            <div class="message">
+                <span class="text text-1">New post - click here</span>
             </div>
-            <div class="progress" :class="{ active: isActive }"></div>
         </div>
-    </FrontLayout>
+        <div class="progress" :class="{ active: isActive }"></div>
+    </div>
 </template>
 
 <script setup>
 import { Head, Link } from "@inertiajs/inertia-vue3";
-import FrontLayout from "@/Layouts/FrontLayout.vue";
-import ReportList from "../../Components/Frontend/Report/ReportList.vue";
-import SideBar from "../../Components/Frontend/MainContent/SideBar.vue";
-import TournamentList from "../../Components/Frontend/Tournament/List.vue";
-
 import { useEventStore } from "@/Stores/event.js";
 import { useTournamentStore } from "@/Stores/tournament.js";
 import { useBannerStore } from "@/Stores/banner.js";
-import { onMounted, ref, watch, computed, onUpdated } from "@vue/runtime-core";
+import { onMounted, ref, watch, onUpdated } from "@vue/runtime-core";
 import { Inertia } from "@inertiajs/inertia";
-const eventStore = useEventStore();
-const tournamentStore = useTournamentStore();
+
+import ReportList from "../../Components/Frontend/Report/ReportList.vue";
 
 const props = defineProps({
     slug: {
@@ -131,6 +122,9 @@ const props = defineProps({
     },
 });
 
+const eventStore = useEventStore();
+const tournamentStore = useTournamentStore();
+const bannerStore = useBannerStore();
 const eventData = ref([]);
 const selectDay = ref(null);
 const liveReport = ref([]);
@@ -142,7 +136,6 @@ const payoutsData = ref([]);
 const loadPage = ref(1);
 const lastPage = ref(1);
 const isActive = ref(false);
-const bannerStore = useBannerStore();
 const reportingBanner = ref([]);
 const daySlug = ref(window.location.pathname.split("/")[5]);
 const isLoading = ref(true);
@@ -231,9 +224,7 @@ function scrollToTop() {
         Inertia.visit(
             `/tours/${eventData.value.tour_slug}/${
                 eventData.value.tournament_slug
-            }/${
-                eventData.value.slug
-            }/${name
+            }/${eventData.value.slug}/${name
                 .replace(/[^A-Z0-9]+/gi, "-")
                 .toLowerCase()}`,
             { preserveState: true }

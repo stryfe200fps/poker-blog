@@ -2,32 +2,28 @@
     <Head>
         <title>Live Reporting</title>
     </Head>
-    <FrontLayout>
-        <div class="block-content">
-            <div class="title-section">
-                <h1><span>Live reporting</span></h1>
-            </div>
-            <div class="single-post-box">
-                <TournamentList
-                    :live="liveEventCollection"
-                    :past="pastEventCollection"
-                    :currentTab="page"
-                    :isLoading="isLoading"
-                    @loadMore="loadMoreReports"
-                />
-            </div>
+    <div class="block-content">
+        <div class="title-section">
+            <h1><span>Live reporting</span></h1>
         </div>
-    </FrontLayout>
+        <div class="single-post-box">
+            <TournamentList
+                :live="liveEventCollection"
+                :past="pastEventCollection"
+                :currentTab="page"
+                :isLoading="isLoading"
+                @loadMore="loadMoreReports"
+            />
+        </div>
+    </div>
 </template>
 
 <script setup>
 import { Head } from "@inertiajs/inertia-vue3";
-
-import FrontLayout from "@/Layouts/FrontLayout.vue";
-import TournamentList from "../../Components/Frontend/Tournament/List.vue";
-
 import { useTournamentStore } from "@/Stores/tournament.js";
 import { onMounted, onUpdated, ref } from "@vue/runtime-core";
+
+import TournamentList from "../../Components/Frontend/Tournament/List.vue";
 
 const props = defineProps({
     page: {
@@ -97,8 +93,8 @@ onMounted(() => {
     eventViewing(pathname.value);
 });
 
-onUpdated(() => {
-    pathname.value = window.location.pathname.split("/")[2];
-    eventViewing(pathname.value);
-});
+// onUpdated(() => {
+//     pathname.value = window.location.pathname.split("/")[2];
+//     eventViewing(pathname.value);
+// });
 </script>
