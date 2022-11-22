@@ -49,7 +49,7 @@
                                         >{{ report.data.author.name }}
                                     </a>
                                 </li>
-                                <li>
+                                <li v-if="report.data.level">
                                     <i class="fa fa-bookmark"></i>
                                     {{ report.data.level.level_value }}
                                 </li>

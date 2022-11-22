@@ -36,7 +36,7 @@
                             <i class="fa fa-clock-o"></i
                             >{{ item.realtime_published_date }}
                         </li>
-                        <li>
+                        <li v-if="item.level">
                             <i class="fa fa-bookmark"></i
                             >{{ item.level.level_value }}
                         </li>
