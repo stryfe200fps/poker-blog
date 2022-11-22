@@ -149,7 +149,7 @@
                                         <th class="text-center hide-on-tablet">
                                             Country
                                         </th>
-                                        <th class="hide-on-tablet"></th>
+                                        <th></th>
                                         <th class="text-right">Chips</th>
                                         <th class="text-right hide-on-mobile">
                                             Progress
@@ -210,16 +210,13 @@
                                         >
                                             -
                                         </td>
-                                        <td
-                                            class="hide-on-tablet"
-                                            v-if="stack.player?.badge"
-                                        >
+                                        <td v-if="stack.player?.badge">
                                             <img
                                                 :src="stack.player?.badge"
                                                 :alt="stack.player?.badge"
                                             />
                                         </td>
-                                        <td class="hide-on-tablet" v-else></td>
+                                        <td v-else></td>
                                         <td
                                             v-if="stack.report_id"
                                             class="text-right"
@@ -294,7 +291,7 @@
                                         <th class="text-center hide-on-tablet">
                                             Country
                                         </th>
-                                        <th class="hide-on-tablet"></th>
+                                        <th></th>
                                         <th class="text-right">Chips</th>
                                         <th class="text-right hide-on-mobile">
                                             Progress
@@ -355,16 +352,13 @@
                                         >
                                             -
                                         </td>
-                                        <td
-                                            class="hide-on-tablet"
-                                            v-if="stack.player?.badge"
-                                        >
+                                        <td v-if="stack.player?.badge">
                                             <img
                                                 :src="stack.player?.badge"
                                                 :alt="stack.player?.badge"
                                             />
                                         </td>
-                                        <td class="hide-on-tablet" v-else></td>
+                                        <td v-else></td>
                                         <td
                                             v-if="stack.report_id"
                                             class="text-right"

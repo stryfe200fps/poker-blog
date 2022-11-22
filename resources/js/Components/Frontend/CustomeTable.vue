@@ -26,11 +26,11 @@
 }
 
 .c-table tr th {
-    padding: 10px;
+    padding: 10px 5px;
 }
 
 .c-table tr td {
-    padding: 10px;
+    padding: 10px 5px;
 }
 
 .c-table tr td img {
