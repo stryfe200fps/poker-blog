@@ -79,6 +79,7 @@ final class ImageService
     //check what type of image is being uploaded
     public function validateUploadedImage($value): bool
     {
+    // dd(filter_var($value, FILTER_VALIDATE_URL));
         if (preg_match("/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).base64,.*/", $value) == 1) {
             $this->imageExtension = explode('/', mime_content_type($this->imageInput))[1];
             $this->setCurrentImagePath();
