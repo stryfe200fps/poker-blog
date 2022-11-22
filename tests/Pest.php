@@ -1,9 +1,12 @@
 <?php
 
-use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Spatie\Permission\Models\Role;
 use Tests\TestCase;
+use App\Models\User;
+use Tests\DuskTestCase;
+
+use Spatie\Permission\Models\Role;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Services\ImageService;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,10 +20,6 @@ use Tests\TestCase;
 */
 
 uses(TestCase::class, RefreshDatabase::class)->in('Feature');
-
-
-use Tests\DuskTestCase;
-
 uses(DuskTestCase::class)->in('Browser');
 
 
@@ -112,4 +111,14 @@ function update($route, string $model , array $attributes, $routeParameters = []
 function getModel(string $model)
 {
     return test()->app()->make("App\Models\\$model");
+}
+
+ function getFileType($value)
+  {
+    return  (new \ReflectionClass(get_class($value)))->getShortName() ;
+  }
+
+  function uploadImage($image, $model )
+{
+    return (new ImageService($image, $model))->imageUpload();
 }

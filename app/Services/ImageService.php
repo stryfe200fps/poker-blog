@@ -4,6 +4,8 @@ namespace App\Services;
 
 use Backpack\Settings\app\Models\Setting;
 use Exception;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Cache;
 use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
@@ -11,24 +13,16 @@ use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 final class ImageService 
 {
 
-  public function __construct($image, $model)
+  public function __construct(protected UploadedFile|string $imageInput, protected Model $currentModel)
   {
-    $this->imageInput = $image;
-    $this->currentModel = $model;
+
   }
 
-  protected $currentModel = null;
-  protected $imageInput = null;
   protected $currentImage = null;
   protected $currentImagePath = '';
 
-
   public function imageUpload()
   {
-
-
-
-
         try { 
 
         $url = preg_replace('/^https?:\/\//','' , config('app.url'));
@@ -48,33 +42,39 @@ final class ImageService
         if ($this->validateUploadedImage($this->imageInput)) { 
 
         $this->imageResize($this->currentImagePath, $this->currentImage);
-        $this->saveMediaPath($this->currentImagePath);
+        $this->saveMediaPath();
         $this->imageOptimize();
 
         }
 
-        return false;
+        return $this->currentImage ?? $this->currentImagePath;
   }
 
 
   private function getImageExtensionName()
   {
-    $extension = explode('/', mime_content_type($this->imageInput))[1];
-    return $extension ?? 'jpg';
+    $extension = 'jpg';
+
+    if ($this->getImageType($this->imageInput) === 'UploadedFile')
+      $extension = explode('/', mime_content_type($this->imageInput))[1];
+
+    return $extension ;
   }
 
   private function getCurrentImagePath()
   {
-    return $this->currentImagePath = public_path(). '/tmp/' . $this->currentModel->mediaCollection . '-'. $this->currentModel->id . '.'. $this->getImageExtensionName();
+    if ($this->getImageType($this->imageInput) !== 'UploadedFile')
+      return $this->currentImagePath = public_path(). '/tmp/' . $this->currentModel->mediaCollection . '-'. $this->currentModel->id . '.'. $this->getImageExtensionName();
+
+      return;
   }
 
-  private function saveMediaPath($path) 
+  private function saveMediaPath() : void
   {
-
       $this->deleteOldMedia();
-      $this->currentModel->addMedia($path)
+      $this->currentModel->addMedia($this->currentImagePath)
         ->toMediaCollection($this->currentModel->mediaCollection);
-      $this->deleteImagePath($path);
+      $this->deleteImagePath($this->currentImagePath);
   }
 
   private function deleteOldMedia()
@@ -91,18 +91,27 @@ final class ImageService
   //check what type of image is being uploaded
   public function validateUploadedImage($value)
   {
+    // dd(filter_var($value, FILTER_VALIDATE_URL));
 
     if (preg_match("/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).base64,.*/", $value) == 1)
         return $this->imageBase64Upload($value);
     else if (filter_var($value, FILTER_VALIDATE_URL))
         return $this->imageUrlUpload($value);
-    else if (gettype($value) === 'object' && (new \ReflectionClass(get_class($value)))->getShortName() === 'UploadedFile') 
+    else if (gettype($value) === 'object' &&  $this->getImageType($value) === 'UploadedFile') 
         return $this->imageFileUpload($value);
+    
   }
 
+  private function getImageType($value)
+  {
+    if (gettype($value) === 'object')
+      return  (new \ReflectionClass(get_class($value)))->getShortName();
+
+    return false;
+
+  }
 
   // Uploading different image source
-
   public function imageBase64Upload($value, $extension = null)
   {
     $this->currentImage = \Image::make($value)->encode($this->getImageExtensionName(), 100)->save($this->getCurrentImagePath());
@@ -117,7 +126,6 @@ final class ImageService
 
   public function imageUrlUpload($link)
   {
-
     if (checkUrlCode($link) === 200) { 
       $this->currentImage = \Image::make($link)->save($this->getCurrentImagePath());
       return true;
