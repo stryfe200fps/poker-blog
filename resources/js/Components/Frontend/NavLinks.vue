@@ -8,6 +8,7 @@
             }"
             :href="'/' + menu.link"
             v-if="!menu.children.length && menu.type === 'internal_link'"
+            @click.prevent="closeMenu"
             >{{ menu.name }}</Link
         >
         <Link
@@ -20,6 +21,7 @@
             }"
             :href="'/' + menu.page_slug"
             v-else-if="!menu.children.length && menu.type === 'page_link'"
+            @click.prevent="closeMenu"
             >{{ menu.name }}</Link
         >
         <a
@@ -30,6 +32,7 @@
             :href="menu.link"
             target="_blank"
             v-else-if="!menu.children.length && menu.type === 'external_link'"
+            @click.prevent="closeMenu"
             >{{ menu.name }}</a
         >
         <a
@@ -63,6 +66,7 @@
                     "
                     :href="'/' + menu.link + '/' + children.link"
                     style="background: rgb(239, 239, 239)"
+                    @click.prevent="closeMenu"
                     >{{ children.name }}</Link
                 >
                 <Link
@@ -72,6 +76,7 @@
                     "
                     :href="'/' + children.page_slug"
                     style="background: rgb(239, 239, 239)"
+                    @click.prevent="closeMenu"
                     >{{ children.name }}</Link
                 >
                 <a
@@ -83,12 +88,14 @@
                     style="background: rgb(239, 239, 239)"
                     target="_blank"
                     rel="noopener noreferrer"
+                    @click.prevent="closeMenu"
                     >{{ children.name }}</a
                 >
                 <Link
                     v-else
                     :href="'/' + children.link"
                     style="background: rgb(239, 239, 239)"
+                    @click.prevent="closeMenu"
                     >{{ children.name }}</Link
                 >
             </li>
@@ -104,10 +111,16 @@ const props = defineProps({
     menu: Object,
 });
 
+const emit = defineEmits(["closeMenu"]);
+
 const toggleSubMenu = ref(false);
 
 function toggleDropdown() {
     toggleSubMenu.value = !toggleSubMenu.value;
+}
+
+function closeMenu() {
+    emit("closeMenu");
 }
 </script>
 
