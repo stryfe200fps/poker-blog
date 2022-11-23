@@ -217,30 +217,32 @@ function googleTranslateElementInit() {
                 }
             });
         });
-        select[0].addEventListener("change", function () {
-            if (select[0].value === "en") {
-                window.location.reload();
-            }
-        });
+        // select[0].addEventListener("change", function () {
+        //     if (select[0].value === "en") {
+        //         window.location.reload();
+        //     }
+        // });
         isLoading.value = false;
     }
 }
 onMounted(() => {
     window.addEventListener("scroll", onScroll);
-
-    let targetElement = document.getElementById("google_translate_element");
-    if (targetElement) {
-        targetElement.innerHTML = "";
-        const script = document.createElement("script");
-        script.type = "text/javascript";
-        script.src =
-            "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
-        document.head.appendChild(script);
-        setTimeout(() => {
-            googleTranslateElementInit();
-        }, 1500);
-        return;
-    }
+    setTimeout(() => {
+        googleTranslateElementInit();
+    }, 1500);
+    // let targetElement = document.getElementById("google_translate_element");
+    // if (targetElement) {
+    //     targetElement.innerHTML = "";
+    //     const script = document.createElement("script");
+    //     script.type = "text/javascript";
+    //     script.src =
+    //         "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+    //     document.head.appendChild(script);
+    //     setTimeout(() => {
+    //         googleTranslateElementInit();
+    //     }, 1500);
+    //     return;
+    // }
 });
 
 onBeforeUnmount(() => {
