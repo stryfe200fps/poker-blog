@@ -16,7 +16,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Article extends Model implements HasMedia
 {
-    // use InteractsWithMedia;
     use \Backpack\CRUD\app\Models\Traits\CrudTrait;
     use HasFactory;
     use HasSlug;
@@ -80,17 +79,7 @@ class Article extends Model implements HasMedia
     {
         $array = json_decode($this->attributes['content']);
         return $array[0]->body;
-    }
-
-    // public function setContentAttribute($content)
-    // {
-    //     $new = collect($content)->map(function ($item, $key) {
-    //         $item['body'] = '<div class="content" id="content'.$key.'">'.$item['body'].'</div>';
-    //         return $item;
-    //     });
-
-    //     $this->attributes['content'] = json_encode($new->toArray());
-    // }
+   }
 
     public function tags()
     {
@@ -142,7 +131,6 @@ class Article extends Model implements HasMedia
             ->saveSlugsTo('slug')
             ->doNotGenerateSlugsOnUpdate();
     }
-
 
 
     public function user()
