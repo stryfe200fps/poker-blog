@@ -74,7 +74,7 @@
 
 <script setup>
 import { onMounted, onBeforeUnmount, ref } from "@vue/runtime-core";
-import { Link, usePage } from "@inertiajs/inertia-vue3";
+import { Link } from "@inertiajs/inertia-vue3";
 import { Inertia } from "@inertiajs/inertia";
 
 import TournamentItem from "./TournamentItem.vue";

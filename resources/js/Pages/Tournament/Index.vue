@@ -26,8 +26,6 @@ import { Inertia } from "@inertiajs/inertia";
 
 import TournamentList from "../../Components/Frontend/Tournament/List.vue";
 
-import TournamentList from "../../Components/Frontend/Tournament/List.vue";
-
 const props = defineProps({
     page: {
         type: String,
