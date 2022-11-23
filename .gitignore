@@ -1,5 +1,5 @@
 /node_modules
-/public/build
+/public/build/manifest.json
 /public/build/*
 /public/hot
 /public/storage
@@ -17,5 +17,4 @@ yarn-error.log
 /.vscode
 .DS_STORE
 /storage/media-library
-/public/build/manifest.json
 /public/uploads
