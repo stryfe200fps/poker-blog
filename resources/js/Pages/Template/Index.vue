@@ -2,235 +2,233 @@
     <Head>
         <title>{{ page.title }}</title>
     </Head>
-    <FrontLayout>
-        <div class="block-content">
-            <div class="contact-info-box">
-                <div class="title-section">
-                    <h1>
-                        <span>{{ page.title }}</span>
-                    </h1>
+    <div class="block-content">
+        <div class="contact-info-box">
+            <div class="title-section">
+                <h1>
+                    <span>{{ page.title }}</span>
+                </h1>
+            </div>
+            <div class="single-post-box">
+                <div
+                    v-html="page.content"
+                    class="post-content"
+                    style="white-wrap: wrap; word-wrap: break-word"
+                ></div>
+            </div>
+        </div>
+        <div class="contact-form-box" v-if="page.template === 'contact'">
+            <div class="title-section">
+                <h1><span>Talk to us</span></h1>
+            </div>
+            <form id="contact-form" @submit.prevent="submitMessage">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="name">Name*</label>
+                        <input type="text" v-model="name" required />
+                    </div>
+                    <div class="col-md-4">
+                        <label for="mail">E-mail*</label>
+                        <input
+                            type="email"
+                            class="contact-email"
+                            v-model="email"
+                            required
+                        />
+                    </div>
+                    <div class="col-md-4">
+                        <label for="subject">Subject*</label>
+                        <select
+                            class="contact-subject"
+                            v-model="subject"
+                            required
+                        >
+                            <option
+                                value=""
+                                :selected="subject === ''"
+                                disabled
+                            >
+                                Select Subject
+                            </option>
+                            <option value="General Inquiry">
+                                General Inquiry
+                            </option>
+                            <option value="Partnership Inquiry">
+                                Partnership Inquiry
+                            </option>
+                            <option value="Advertising Inquiry">
+                                Advertising Inquiry
+                            </option>
+                            <option value="Report mistakes">
+                                Report mistakes
+                            </option>
+                            <option value="Report Bug">Report Bug</option>
+                            <option value="Report Violations">
+                                Report Violations
+                            </option>
+                        </select>
+                    </div>
                 </div>
-                <div class="single-post-box">
-                    <div
-                        v-html="page.content"
-                        class="post-content"
-                        style="white-wrap: wrap; word-wrap: break-word"
-                    ></div>
+                <label for="comment">Your Message*</label>
+                <textarea v-model="message" required></textarea>
+                <button type="submit">
+                    <i class="fa fa-paper-plane"></i> Send Message
+                </button>
+            </form>
+        </div>
+        <div v-if="page.template === 'rooms'">
+            <div class="grid-box filters">
+                <h4>Find poker rooms near me</h4>
+                <div>
+                    <select class="form-control" v-model="selectedCountry">
+                        <option value="" selected disabled>
+                            Select Location
+                        </option>
+                        <option
+                            v-for="(country, index) in countries"
+                            :key="index"
+                            :value="country.iso_3166_2"
+                        >
+                            {{ country.name }}
+                        </option>
+                    </select>
+                </div>
+                <button
+                    class="btn btn-default"
+                    v-if="selectedCountry !== ''"
+                    @click="resetFilter()"
+                >
+                    Reset
+                </button>
+            </div>
+            <div v-if="isLoading">
+                <LoadingBar />
+            </div>
+            <div v-else>
+                <div class="grid" v-if="rooms?.length">
+                    <PokerRooms
+                        v-for="(room, index) in rooms"
+                        :key="index"
+                        :room="room"
+                    />
+                </div>
+                <div
+                    v-if="rooms?.length"
+                    v-observe-visibility="handleScrolledToBottom"
+                ></div>
+                <div v-else>
+                    <h4>There are no poker rooms at the moment.</h4>
                 </div>
             </div>
-            <div class="contact-form-box" v-if="page.template === 'contact'">
-                <div class="title-section">
-                    <h1><span>Talk to us</span></h1>
-                </div>
-                <form id="contact-form" @submit.prevent="submitMessage">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <label for="name">Name*</label>
-                            <input type="text" v-model="name" required />
-                        </div>
-                        <div class="col-md-4">
-                            <label for="mail">E-mail*</label>
-                            <input
-                                type="email"
-                                class="contact-email"
-                                v-model="email"
-                                required
-                            />
-                        </div>
-                        <div class="col-md-4">
-                            <label for="subject">Subject*</label>
-                            <select
-                                class="contact-subject"
-                                v-model="subject"
-                                required
+        </div>
+        <div v-if="page.template === 'videos'">
+            <div class="row" style="margin-bottom: 25px">
+                <div class="col-md-6">
+                    <div class="filters left-filters">
+                        <button
+                            type="button"
+                            class="btn btn-default"
+                            @click="getDateToday()"
+                        >
+                            Today
+                        </button>
+                        <div class="custom-date-picker">
+                            <div
+                                class="custom-date-picker__btn"
+                                @click="openDatePicker"
+                                @blur="isOpen = false"
+                                tabindex="0"
                             >
+                                <span>{{ datePlaceholder }}</span>
+                                <i
+                                    class="fas fa-angle-down custom-date-picker__icon"
+                                    :class="{ up: isOpen }"
+                                ></i>
+                            </div>
+                            <div>
+                                <input
+                                    type="date"
+                                    v-model="selectedDate"
+                                    class="custom-date-picker__input"
+                                    id="custom-date"
+                                    @change="changeDate"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="filters right-filters">
+                        <h5>Find By:</h5>
+                        <div>
+                            <select
+                                class="form-control"
+                                v-model="selectedCategory"
+                            >
+                                <option value="" selected disabled>
+                                    Select Category
+                                </option>
                                 <option
-                                    value=""
-                                    :selected="subject === ''"
-                                    disabled
+                                    v-for="(category, index) in categories"
+                                    :key="index"
+                                    :value="category.slug"
                                 >
-                                    Select Subject
-                                </option>
-                                <option value="General Inquiry">
-                                    General Inquiry
-                                </option>
-                                <option value="Partnership Inquiry">
-                                    Partnership Inquiry
-                                </option>
-                                <option value="Advertising Inquiry">
-                                    Advertising Inquiry
-                                </option>
-                                <option value="Report mistakes">
-                                    Report mistakes
-                                </option>
-                                <option value="Report Bug">Report Bug</option>
-                                <option value="Report Violations">
-                                    Report Violations
+                                    {{ category.title }}
                                 </option>
                             </select>
                         </div>
                     </div>
-                    <label for="comment">Your Message*</label>
-                    <textarea v-model="message" required></textarea>
-                    <button type="submit">
-                        <i class="fa fa-paper-plane"></i> Send Message
-                    </button>
-                </form>
-            </div>
-            <div v-if="page.template === 'rooms'">
-                <div class="grid-box filters">
-                    <h4>Find poker rooms near me</h4>
-                    <div>
-                        <select class="form-control" v-model="selectedCountry">
-                            <option value="" selected disabled>
-                                Select Location
-                            </option>
-                            <option
-                                v-for="(country, index) in countries"
-                                :key="index"
-                                :value="country.iso_3166_2"
-                            >
-                                {{ country.name }}
-                            </option>
-                        </select>
-                    </div>
-                    <button
-                        class="btn btn-default"
-                        v-if="selectedCountry !== ''"
-                        @click="resetFilter()"
-                    >
-                        Reset
-                    </button>
-                </div>
-                <div v-if="isLoading">
-                    <LoadingBar />
-                </div>
-                <div v-else>
-                    <div class="grid" v-if="rooms?.length">
-                        <PokerRooms
-                            v-for="(room, index) in rooms"
-                            :key="index"
-                            :room="room"
-                        />
-                    </div>
-                    <div
-                        v-if="rooms?.length"
-                        v-observe-visibility="handleScrolledToBottom"
-                    ></div>
-                    <div v-else>
-                        <h4>There are no poker rooms at the moment.</h4>
-                    </div>
                 </div>
             </div>
-            <div v-if="page.template === 'videos'">
-                <div class="row" style="margin-bottom: 25px">
-                    <div class="col-md-6">
-                        <div class="filters left-filters">
-                            <button
-                                type="button"
-                                class="btn btn-default"
-                                @click="getDateToday()"
-                            >
-                                Today
-                            </button>
-                            <div class="custom-date-picker">
-                                <div
-                                    class="custom-date-picker__btn"
-                                    @click="openDatePicker"
-                                    @blur="isOpen = false"
-                                    tabindex="0"
-                                >
-                                    <span>{{ datePlaceholder }}</span>
-                                    <i
-                                        class="fas fa-angle-down custom-date-picker__icon"
-                                        :class="{ up: isOpen }"
-                                    ></i>
-                                </div>
-                                <div>
-                                    <input
-                                        type="date"
-                                        v-model="selectedDate"
-                                        class="custom-date-picker__input"
-                                        id="custom-date"
-                                        @change="changeDate"
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="filters right-filters">
-                            <h5>Find By:</h5>
-                            <div>
-                                <select
-                                    class="form-control"
-                                    v-model="selectedCategory"
-                                >
-                                    <option value="" selected disabled>
-                                        Select Category
-                                    </option>
-                                    <option
-                                        v-for="(category, index) in categories"
-                                        :key="index"
-                                        :value="category.slug"
-                                    >
-                                        {{ category.title }}
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div v-if="isLoading">
-                    <LoadingBar />
-                </div>
-                <div v-else>
-                    <div class="grid" v-if="medias?.length">
-                        <MediaReporting
-                            v-for="(media, index) in medias"
-                            :key="index"
-                            :media="media"
-                            :mediaType="
-                                page.slug === 'podcast' ? 'podcast' : 'video'
-                            "
-                        />
-                    </div>
-                    <div
-                        v-if="medias?.length"
-                        v-observe-visibility="handleScrolledToBottomMedia"
-                    ></div>
-                    <div v-else>
-                        <h4>
-                            There are no
-                            <span class="text-lowercase">{{ page.title }}</span>
-                            at the moment.
-                        </h4>
-                    </div>
-                </div>
+            <div v-if="isLoading">
+                <LoadingBar />
             </div>
-            <div v-if="page.template === 'tours'">
-                <div v-if="isLoading">
-                    <LoadingBar />
+            <div v-else>
+                <div class="grid" v-if="medias?.length">
+                    <MediaReporting
+                        v-for="(media, index) in medias"
+                        :key="index"
+                        :media="media"
+                        :mediaType="
+                            page.slug === 'podcast' ? 'podcast' : 'video'
+                        "
+                    />
                 </div>
+                <div
+                    v-if="medias?.length"
+                    v-observe-visibility="handleScrolledToBottomMedia"
+                ></div>
                 <div v-else>
-                    <div class="grid" v-if="tours?.length">
-                        <PokerTours
-                            v-for="(tour, index) in tours"
-                            :key="index"
-                            :tour="tour"
-                        />
-                    </div>
-                    <div
-                        v-if="tours?.length"
-                        v-observe-visibility="handleScrolledToBottomTours"
-                    ></div>
-                    <div v-else>
-                        <h4>There are no poker tours at the moment.</h4>
-                    </div>
+                    <h4>
+                        There are no
+                        <span class="text-lowercase">{{ page.title }}</span>
+                        at the moment.
+                    </h4>
                 </div>
             </div>
         </div>
-    </FrontLayout>
+        <div v-if="page.template === 'tours'">
+            <div v-if="isLoading">
+                <LoadingBar />
+            </div>
+            <div v-else>
+                <div class="grid" v-if="tours?.length">
+                    <PokerTours
+                        v-for="(tour, index) in tours"
+                        :key="index"
+                        :tour="tour"
+                    />
+                </div>
+                <div
+                    v-if="tours?.length"
+                    v-observe-visibility="handleScrolledToBottomTours"
+                ></div>
+                <div v-else>
+                    <h4>There are no poker tours at the moment.</h4>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script setup>
@@ -244,11 +242,10 @@ import { createToast } from "mosha-vue-toastify";
 import "mosha-vue-toastify/dist/style.css";
 import moment from "moment";
 
-import FrontLayout from "@/Layouts/FrontLayout.vue";
 import LoadingBar from "@/Components/LoadingBar.vue";
-import PokerRooms from "./PokerRooms.vue";
-import PokerTours from "./PokerTours.vue";
-import MediaReporting from "./MediaReporting.vue";
+import PokerRooms from "@/Components/Frontend/PokerRooms.vue";
+import PokerTours from "@/Components/Frontend/PokerTours.vue";
+import MediaReporting from "@/Components/Frontend/MediaReporting.vue";
 
 const name = ref(null);
 const email = ref(null);
@@ -569,6 +566,12 @@ watch(
     opacity: 0;
 }
 
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
+    gap: 30px;
+}
+
 @media (min-width: 992px) {
     .left-filters {
         margin-bottom: 0;
@@ -583,11 +586,5 @@ watch(
     .right-filters select:not(:last-child) {
         margin-bottom: 0;
     }
-}
-
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
-    gap: 30px;
 }
 </style>
