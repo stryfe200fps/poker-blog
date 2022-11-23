@@ -301,6 +301,7 @@ onMounted(async () => {
             if (props.slug === eventSlug && selectDay.value == dayid) {
                 hasNewReport.value = true;
                 fetchLiveReports(false);
+                if (props.type === null) reportViewing(props.type);
                 isActive.value = true;
 
                 setTimeout(() => {
