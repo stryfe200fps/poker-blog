@@ -49,7 +49,12 @@ class Article extends Model implements HasMedia
     public function getContentAttribute($content)
     {
         $array = json_decode($content);
+        if ($array === null || count($array) <= 1) {
+            return [];
+        }
         array_shift($array);
+        
+
         return $array;
     }
 
@@ -78,7 +83,7 @@ class Article extends Model implements HasMedia
     public function getMainContentAttribute()
     {
         $array = json_decode($this->attributes['content']);
-        return $array[0]->body;
+        return @$array[0]->body;
    }
 
     public function tags()
