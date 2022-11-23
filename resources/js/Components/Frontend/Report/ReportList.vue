@@ -559,7 +559,6 @@ import "mosha-vue-toastify/dist/style.css";
 
 // components
 import EachReport from "./EachReport.vue";
-import AlertMessage from "@/photo_templates/AlertMessage.vue";
 
 const props = defineProps({
     event: {
@@ -604,7 +603,7 @@ const props = defineProps({
     },
 });
 
-const emit = defineEmits(["loadMore", "showLoading"]);
+const emit = defineEmits(["loadMore"]);
 
 const dayValue = computed(() => {
     if (props.day === props.currentTab) {
@@ -671,7 +670,6 @@ Inertia.on("success", () => {
 
 const changeTab = (currentTab) => {
     tab.value = currentTab;
-    emit("showLoading");
 };
 
 const lightbox = new PhotoSwipeLightbox({

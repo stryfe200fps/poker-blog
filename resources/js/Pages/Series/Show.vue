@@ -2,81 +2,71 @@
     <Head>
         <title>{{ series.data.title }}</title>
     </Head>
-    <FrontLayout>
-        <div class="block-content">
-            <div class="single-post-box">
-                <div class="title-section">
-                    <h1 class="text-primary">
-                        <span style="cursor: pointer" @click="goBack"
-                            ><i
-                                class="fa fa-chevron-left"
-                                aria-hidden="true"
-                            ></i>
-                            back</span
-                        >
-                    </h1>
-                </div>
-                <div class="row" style="margin-bottom: 25px">
-                    <div class="col-sm-6">
-                        <div class="post-content">
-                            <h2
-                                class="text-capitalize"
-                                style="margin-bottom: 15px"
-                            >
-                                <span>{{ series.data.title }}</span>
-                            </h2>
-                            <p>{{ series.data.description }}</p>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="post-gallery">
-                            <img
-                                v-if="series.data.image_set"
-                                :src="series.data.image_set.lg_image"
-                                :alt="series.data.image_set.lg_image"
-                            />
-                            <img v-else :src="defaultImg" :alt="defaultImg" />
-                        </div>
-                    </div>
-                </div>
-                <div class="forum-table" v-if="series.data.events.data.length">
-                    <div
-                        class="table-head"
-                        style="background-color: rgb(45, 52, 54) !important"
+    <div class="block-content">
+        <div class="single-post-box">
+            <div class="title-section">
+                <h1 class="text-primary">
+                    <span style="cursor: pointer" @click="goBack"
+                        ><i class="fa fa-chevron-left" aria-hidden="true"></i>
+                        back</span
                     >
-                        <div class="first-col" style="width: 20%">
-                            <span>Date</span>
-                        </div>
-                        <div class="second-col" style="width: 50%">
-                            <span>event</span>
-                        </div>
-                        <div class="third-col" style="width: 15%">
-                            <span>buy in</span>
-                        </div>
-                        <div class="third-col" style="width: 15%">
-                            <span>fee</span>
-                        </div>
+                </h1>
+            </div>
+            <div class="row" style="margin-bottom: 25px">
+                <div class="col-sm-6">
+                    <div class="post-content">
+                        <h2 class="text-capitalize" style="margin-bottom: 15px">
+                            <span>{{ series.data.title }}</span>
+                        </h2>
+                        <p>{{ series.data.description }}</p>
                     </div>
-                    <EventTable
-                        v-for="event in series.data.events.data"
-                        :key="event.id"
-                        :event="event"
-                    />
                 </div>
-                <div v-if="series.data.content.length">
-                    <p class="series-content" v-html="series.data.content"></p>
+                <div class="col-sm-6">
+                    <div class="post-gallery">
+                        <img
+                            v-if="series.data.image_set"
+                            :src="series.data.image_set.lg_image"
+                            :alt="series.data.image_set.lg_image"
+                        />
+                        <img v-else :src="defaultImg" :alt="defaultImg" />
+                    </div>
                 </div>
             </div>
+            <div class="forum-table" v-if="series.data.events.data.length">
+                <div
+                    class="table-head"
+                    style="background-color: rgb(45, 52, 54) !important"
+                >
+                    <div class="first-col" style="width: 20%">
+                        <span>Date</span>
+                    </div>
+                    <div class="second-col" style="width: 50%">
+                        <span>event</span>
+                    </div>
+                    <div class="third-col" style="width: 15%">
+                        <span>buy in</span>
+                    </div>
+                    <div class="third-col" style="width: 15%">
+                        <span>fee</span>
+                    </div>
+                </div>
+                <EventTable
+                    v-for="event in series.data.events.data"
+                    :key="event.id"
+                    :event="event"
+                />
+            </div>
+            <div v-if="series.data.content.length">
+                <p class="series-content" v-html="series.data.content"></p>
+            </div>
         </div>
-    </FrontLayout>
+    </div>
 </template>
 
 <script setup>
 import { Head } from "@inertiajs/inertia-vue3";
-import { Inertia } from "@inertiajs/inertia";
 
-import FrontLayout from "@/Layouts/FrontLayout.vue";
-import EventTable from "./EventTable.vue";
+import EventTable from "@/Components/Frontend/EventTable.vue";
 import defaultImg from "/public/default-img.png";
 
 const props = defineProps({
@@ -88,7 +78,6 @@ const props = defineProps({
 function goBack() {
     history.back();
     return false;
-    // Inertia.visit("/event-calendar");
 }
 </script>
 

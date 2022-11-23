@@ -1,350 +1,270 @@
 <template>
-    <FrontLayout title="">
-        <Head>
-            <title>{{ report.data.title_tab }}</title>
-            <meta name="description" content="Your page description" />
-            <meta property="og:title=" :content="report.data.title" />
-            <meta property="og:description" :content="report.data.content" />
-        </Head>
-
-        <div class="block-content">
-            <div class="title-section">
-                <h1 class="text-primary">
-                    <span style="cursor: pointer" @click="goBack"
-                        ><i class="fa fa-chevron-left" aria-hidden="true"></i>
-                        to event report</span
-                    >
-                </h1>
-            </div>
-            <div class="single-post-box">
-                <!-- <div
-                    class="day-divider"
-                    style="border-bottom: 1px solid #d3d3d3; margin-top: 20px"
+    <Head>
+        <title>{{ report.data.title_tab }}</title>
+    </Head>
+    <div class="block-content">
+        <div class="title-section">
+            <h1 class="text-primary">
+                <span style="cursor: pointer" @click="goBack"
+                    ><i class="fa fa-chevron-left" aria-hidden="true"></i> to
+                    event report</span
                 >
-                    <span>Day: {{ report.data.day }}</span
-                    ><br />
-                    <span
-                        >{{ report.data.level.level_value }}
-                        {{ report.data.slug }}</span
-                    ><br />
-                </div> -->
-                <div class="title-post">
-                    <h1 v-html="formattedTitle"></h1>
-                    <div
-                        style="
-                            display: flex;
-                            justify-content: space-between;
-                            align-items: center;
-                        "
-                    >
-                        <div style="flex-grow: 1">
-                            <ul class="post-tags">
-                                <li>
-                                    <i class="fa fa-clock-o"></i
-                                    >{{ report.data.date_for_humans }}
-                                </li>
-                                <li>
-                                    <i class="fa fa-user"></i>by
-                                    <a href="#"
-                                        >{{ report.data.author.name }}
-                                    </a>
-                                </li>
-                                <li v-if="report.data.level">
-                                    <i class="fa fa-bookmark"></i>
-                                    {{ report.data.level.level_value }}
-                                </li>
-                            </ul>
-                        </div>
-                        <div>
-                            <ul class="post-tags share-post-links">
-                                <div
-                                    class="share-post-mobile"
-                                    style="position: relative"
-                                >
-                                    <div
-                                        class="btn-group-vertical social-links-group"
-                                        :class="{ show: isOpen }"
-                                    >
-                                        <li
-                                            class="btn custom-btn"
-                                            style="
-                                                margin-right: 0;
-                                                background-color: #1854dd;
-                                            "
-                                        >
-                                            <a
-                                                target="_blank"
-                                                :href="`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-                                                    url
-                                                )}&amp;src=sdkpreparse`"
-                                                ><i
-                                                    class="fa-brands fa-facebook-f"
-                                                    style="
-                                                        margin-right: 0;
-                                                        color: #fff;
-                                                    "
-                                                ></i>
-                                            </a>
-                                        </li>
-                                        <li
-                                            class="btn custom-btn"
-                                            style="
-                                                margin-right: 0;
-                                                background-color: #18a3dd;
-                                            "
-                                        >
-                                            <a
-                                                target="_blank"
-                                                :href="`https://twitter.com/intent/tweet?text=${encodeURIComponent(
-                                                    url
-                                                )}`"
-                                                ><i
-                                                    class="fa fa-twitter"
-                                                    style="
-                                                        margin-right: 0;
-                                                        color: #fff;
-                                                    "
-                                                ></i
-                                            ></a>
-                                        </li>
-                                        <li
-                                            class="btn custom-btn"
-                                            style="background-color: #25d366"
-                                        >
-                                            <a
-                                                target="_blank"
-                                                :href="`https://api.whatsapp.com/send?text=%0a${url}`"
-                                                ><i
-                                                    class="fa fa-whatsapp"
-                                                    style="
-                                                        margin-right: 0;
-                                                        color: #fff;
-                                                    "
-                                                ></i
-                                            ></a>
-                                        </li>
-                                    </div>
-                                    <li
-                                        @click="showShare"
-                                        v-click-outside-element="onClickOutside"
-                                        class="btn btn-default share-btn-mobile"
-                                    >
-                                        <i class="fa fa-share-alt"></i
-                                        ><span class="text-uppercase"
-                                            >Share</span
-                                        >
-                                    </li>
-                                </div>
-                            </ul>
-                        </div>
-                        <!-- <div>
-                            <ul class="post-tags share-post-links">
-                                <li style="margin-left: 2px;">
-                                    <i class="fa fa-share-alt text-secondary"></i><span class="text-secondary">Share <span class="hide-on-smallest">Post</span></span>
-                                </li>
-                                <li ><a target="_blank" :href="'https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Flifeofpoker.com%2Freport%2F' + report.data.slug + '&amp;src=sdkpreparse'"  class="facebook"><i
-                                            class="fa fa-facebook text-secondary"></i></a>
-                                </li>
-                                <li><a target="_blank" :href="'https://twitter.com/intent/tweet?text=https%3A//lifeofpoker.com/report/' + report.data.slug" class="twitter"><i
-                                            class="fa fa-twitter text-secondary"></i></a>
-                                </li>
-                                <li><a target="_blank" :href="'https://api.whatsapp.com/send?text=%0ahttps://lifeofpoker.com/report/' + report.data.slug" class="whatsapp"><i
-                                            class="fa fa-whatsapp text-secondary"></i></a></li>
-                            </ul>
-                        </div> -->
-                    </div>
-                </div>
-                <!-- <div class="title-post">
-                    <h1>{{report.data.title}}</h1>
-                    <div style="display:flex; justify-content: space-between;">
-                        <div>
-                            <ul class="post-tags">
-                                <li><i class="fa fa-clock-o"></i>{{report.data.date_added}}</li>
-                                <li><i class="fa fa-user"></i>by <a href="#">{{item.author.first_name}} {{item.author.last_name}}</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div>
-                            <ul class="post-tags share-post-links">
-                                <li style="margin-left: 2px;">
-                                    <i class="fa fa-share-alt text-secondary"></i><span class="text-secondary">Share <span class="hide-on-smallest">Post</span></span>
-                                </li>
-                                <li ><a target="_blank" :href="'https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Flifeofpoker.com%2Farticle%2Fshow%2F'+ '&amp;src=sdkpreparse'"  class="facebook"><i
-                                            class="fa fa-facebook text-secondary"></i></a>
-                                </li>
-                                <li><a target="_blank" :href="'https://twitter.com/intent/tweet?text=https%3A//lifeofpoker.com/article/show/'" class="twitter"><i
-                                            class="fa fa-twitter text-secondary"></i></a>
-                                </li>
-                                <li><a target="_blank" :href="'https://api.whatsapp.com/send?text=%0ahttps://lifeofpoker.com/article/show/'" class="whatsapp"><i
-                                            class="fa fa-whatsapp text-secondary"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div> -->
+            </h1>
+        </div>
+        <div class="single-post-box">
+            <div class="title-post">
+                <h1 v-html="formattedTitle"></h1>
                 <div
-                    :class="
-                        report.data.image_set ? 'post-content-min-height' : ''
+                    style="
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
                     "
-                    class="post-content"
                 >
-                    <div
-                        class="post-gallery float-img"
-                        v-if="report.data.image_set"
-                        style="float: left; margin: 0px 15px 5px 0px"
-                    >
-                        <div style="position: relative">
-                            <img
-                                :src="report.data.image_set.lg_image"
-                                alt=""
-                                style="margin-bottom: unset"
-                                :style="[
-                                    report.data.theme
-                                        ? { filter: 'brightness(0.8)' }
-                                        : {},
-                                ]"
-                            />
-                            <div
-                                class="imageFrame"
-                                :style="{
-                                    'background-image':
-                                        'url(' +
-                                        getFrame(report.data.theme) +
-                                        ')',
-                                }"
-                            ></div>
-                        </div>
-                        <span
-                            v-if="report.data.caption"
-                            class="image-caption"
-                            >{{ report.data.caption }}</span
-                        >
-                    </div>
-                    <div
-                        class="remove-padding"
-                        v-html="report.data.content"
-                    ></div>
-                </div>
-
-                <div v-if="report.data.event_chips" style="margin-bottom: 20px">
-                    <CustomeTable>
-                        <template v-slot:table-body>
-                            <tr
-                                v-for="(item, index) in report.data.event_chips"
-                                :key="index"
-                            >
-                                <td v-if="item.player?.name">
-                                    <img
-                                        class="hide-on-mobile"
-                                        v-if="item.player?.avatar"
-                                        :src="item.player?.avatar"
-                                    />
-                                    <img
-                                        class="hide-on-mobile"
-                                        v-else
-                                        :src="defaultAvatar"
-                                    />
-                                    {{ item.player?.name }}
-                                    <span style="white-space: nowrap"></span>
-                                </td>
-                                <td class="text-center hide-on-tablet" v-else>
-                                    -
-                                </td>
-                                <td
-                                    class="text-center hide-on-tablet"
-                                    v-if="
-                                        item.player?.name &&
-                                        item.player?.country
-                                    "
-                                >
-                                    <CountryFlag
-                                        :title="item.player?.country"
-                                        :iso="item.player?.flag"
-                                    />
-                                </td>
-                                <td class="text-center hide-on-tablet" v-else>
-                                    -
-                                </td>
-                                <td v-if="item.player?.badge">
-                                    <img
-                                        :src="item.player?.badge"
-                                        :alt="item.player?.badge"
-                                    />
-                                </td>
-                                <td v-else></td>
-                                <td v-if="item.player?.name" class="text-right">
-                                    {{
-                                        item.current_chips === 0
-                                            ? "BUSTED"
-                                            : item.current_chips.toLocaleString()
-                                    }}
-                                </td>
-                                <td class="text-center hide-on-tablet" v-else>
-                                    -
-                                </td>
-                                <td
-                                    v-if="item.player?.name"
-                                    class="text-right hide-on-mobile"
-                                >
-                                    {{
-                                        item.current_chips === 0
-                                            ? ""
-                                            : item.changes.toLocaleString()
-                                    }}
-                                    <span
-                                        v-if="item.symbol === 'up'"
-                                        style="margin-left: 10px"
-                                        ><i
-                                            v-if="item.current_chips != 0"
-                                            class="fa-sharp fa-solid fa-caret-up text-green"
-                                        ></i
-                                    ></span>
-                                    <span v-else style="margin-left: 10px"
-                                        ><i
-                                            v-if="item.current_chips != 0"
-                                            class="fa-sharp fa-solid fa-caret-down text-red"
-                                        ></i
-                                    ></span>
-                                </td>
-                                <td class="text-center hide-on-tablet" v-else>
-                                    -
-                                </td>
-                            </tr>
-                        </template>
-                    </CustomeTable>
-                </div>
-                <div v-if="report.data?.event_chips?.length">
-                    <div class="post-tags-box">
-                        <ul class="tags-box">
+                    <div style="flex-grow: 1">
+                        <ul class="post-tags">
                             <li>
-                                <i class="fa fa-tags"></i><span>Tags:</span
-                                ><a
-                                    href="#"
-                                    v-for="(tag, index) in report.data
-                                        ?.event_chips"
-                                    :key="index"
-                                    >{{ tag.player?.name }}</a
-                                >
+                                <i class="fa fa-clock-o"></i
+                                >{{ report.data.date_for_humans }}
+                            </li>
+                            <li>
+                                <i class="fa fa-user"></i>by
+                                <a href="#">{{ report.data.author.name }} </a>
+                            </li>
+                            <li>
+                                <i class="fa fa-bookmark"></i>
+                                {{ report.data.level.level_value }}
                             </li>
                         </ul>
                     </div>
+                    <div>
+                        <ul class="post-tags share-post-links">
+                            <div
+                                class="share-post-mobile"
+                                style="position: relative"
+                            >
+                                <div
+                                    class="btn-group-vertical social-links-group"
+                                    :class="{ show: isOpen }"
+                                >
+                                    <li
+                                        class="btn custom-btn"
+                                        style="
+                                            margin-right: 0;
+                                            background-color: #1854dd;
+                                        "
+                                    >
+                                        <a
+                                            target="_blank"
+                                            :href="`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+                                                url
+                                            )}&amp;src=sdkpreparse`"
+                                            ><i
+                                                class="fa-brands fa-facebook-f"
+                                                style="
+                                                    margin-right: 0;
+                                                    color: #fff;
+                                                "
+                                            ></i>
+                                        </a>
+                                    </li>
+                                    <li
+                                        class="btn custom-btn"
+                                        style="
+                                            margin-right: 0;
+                                            background-color: #18a3dd;
+                                        "
+                                    >
+                                        <a
+                                            target="_blank"
+                                            :href="`https://twitter.com/intent/tweet?text=${encodeURIComponent(
+                                                url
+                                            )}`"
+                                            ><i
+                                                class="fa fa-twitter"
+                                                style="
+                                                    margin-right: 0;
+                                                    color: #fff;
+                                                "
+                                            ></i
+                                        ></a>
+                                    </li>
+                                    <li
+                                        class="btn custom-btn"
+                                        style="background-color: #25d366"
+                                    >
+                                        <a
+                                            target="_blank"
+                                            :href="`https://api.whatsapp.com/send?text=%0a${url}`"
+                                            ><i
+                                                class="fa fa-whatsapp"
+                                                style="
+                                                    margin-right: 0;
+                                                    color: #fff;
+                                                "
+                                            ></i
+                                        ></a>
+                                    </li>
+                                </div>
+                                <li
+                                    @click="showShare"
+                                    v-click-outside-element="onClickOutside"
+                                    class="btn btn-default share-btn-mobile"
+                                >
+                                    <i class="fa fa-share-alt"></i
+                                    ><span class="text-uppercase">Share</span>
+                                </li>
+                            </div>
+                        </ul>
+                    </div>
                 </div>
-                <p>
-                    &copy; 2021-{{ currentDate }} Life of poker. All rights
-                    reserved.
-                </p>
             </div>
+            <div
+                :class="report.data.image_set ? 'post-content-min-height' : ''"
+                class="post-content"
+            >
+                <div
+                    class="post-gallery float-img"
+                    v-if="report.data.image_set"
+                    style="
+                        float: left !important;
+                        margin: 0px 15px 5px 0px !important;
+                    "
+                >
+                    <div style="position: relative">
+                        <img
+                            :src="report.data.image_set.lg_image"
+                            alt=""
+                            style="margin-bottom: unset"
+                            :style="[
+                                report.data.theme
+                                    ? { filter: 'brightness(0.8)' }
+                                    : {},
+                            ]"
+                        />
+                        <div
+                            v-if="report.data.theme"
+                            class="imageFrame"
+                            :style="{
+                                'background-image':
+                                    'url(' + getFrame(report.data.theme) + ')',
+                            }"
+                        ></div>
+                    </div>
+                    <span v-if="report.data.caption" class="image-caption">{{
+                        report.data.caption
+                    }}</span>
+                </div>
+                <div class="remove-padding" v-html="report.data.content"></div>
+            </div>
+
+            <div v-if="report.data.event_chips" style="margin-bottom: 20px">
+                <CustomeTable>
+                    <template v-slot:table-body>
+                        <tr
+                            v-for="(item, index) in report.data.event_chips"
+                            :key="index"
+                        >
+                            <td v-if="item.player?.name">
+                                <img
+                                    class="hide-on-mobile"
+                                    v-if="item.player?.avatar"
+                                    :src="item.player?.avatar"
+                                />
+                                <img
+                                    class="hide-on-mobile"
+                                    v-else
+                                    :src="defaultAvatar"
+                                />
+                                {{ item.player?.name }}
+                                <span style="white-space: nowrap"></span>
+                            </td>
+                            <td class="text-center hide-on-tablet" v-else>-</td>
+                            <td
+                                class="text-center hide-on-tablet"
+                                v-if="item.player?.name && item.player?.country"
+                            >
+                                <CountryFlag
+                                    :title="item.player?.country"
+                                    :iso="item.player?.flag"
+                                />
+                            </td>
+                            <td class="text-center hide-on-tablet" v-else>-</td>
+                            <td v-if="item.player?.badge">
+                                <img
+                                    :src="item.player?.badge"
+                                    :alt="item.player?.badge"
+                                />
+                            </td>
+                            <td v-if="item.player?.name" class="text-right">
+                                {{
+                                    item.current_chips === 0
+                                        ? "BUSTED"
+                                        : item.current_chips.toLocaleString()
+                                }}
+                            </td>
+                            <td class="text-center hide-on-tablet" v-else>-</td>
+                            <td
+                                v-if="item.player?.name"
+                                class="text-right hide-on-mobile"
+                            >
+                                {{
+                                    item.current_chips === 0
+                                        ? ""
+                                        : item.changes.toLocaleString()
+                                }}
+                                <span
+                                    v-if="item.symbol === 'up'"
+                                    style="margin-left: 10px"
+                                    ><i
+                                        v-if="item.current_chips != 0"
+                                        class="fa-sharp fa-solid fa-caret-up text-green"
+                                    ></i
+                                ></span>
+                                <span v-else style="margin-left: 10px"
+                                    ><i
+                                        v-if="item.current_chips != 0"
+                                        class="fa-sharp fa-solid fa-caret-down text-red"
+                                    ></i
+                                ></span>
+                            </td>
+                            <td class="text-center hide-on-tablet" v-else>-</td>
+                        </tr>
+                    </template>
+                </CustomeTable>
+            </div>
+            <div v-if="report.data?.event_chips?.length">
+                <div class="post-tags-box">
+                    <ul class="tags-box">
+                        <li>
+                            <i class="fa fa-tags"></i><span>Tags:</span
+                            ><a
+                                href="#"
+                                v-for="(tag, index) in report.data?.event_chips"
+                                :key="index"
+                                >{{ tag.player?.name }}</a
+                            >
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <p>
+                &copy; 2021-{{ currentDate }} Life of poker. All rights
+                reserved.
+            </p>
         </div>
-    </FrontLayout>
+    </div>
 </template>
 
 <script setup>
 import { Head, Link } from "@inertiajs/inertia-vue3";
-import FrontLayout from "@/Layouts/FrontLayout.vue";
+import { Inertia } from "@inertiajs/inertia";
+import moment from "moment";
+import { ref, computed } from "@vue/runtime-core";
+
 import CustomeTable from "@/Components/Frontend/CustomeTable.vue";
 import CountryFlag from "vue3-country-flag-icon";
 import defaultAvatar from "@/default-avatar.png";
-import axios from "axios";
-import { Inertia } from "@inertiajs/inertia";
 
 import brokenMirror from "@/photo_templates/brokenmirror.png";
 import bulletHole from "@/photo_templates/bullethole.png";
@@ -355,11 +275,6 @@ import pocketAces from "@/photo_templates/pocketaces.png";
 import sunRays from "@/photo_templates/sunrays.png";
 import waterLeaves from "@/photo_templates/water-leaves.png";
 import waterWaves from "@/photo_templates/water-waves.png";
-import moment from "moment";
-import { useEventStore } from "@/Stores/event.js";
-import { onMounted, ref, watch, computed } from "@vue/runtime-core";
-
-const eventStore = useEventStore();
 
 const props = defineProps({
     slug: {
@@ -391,8 +306,6 @@ const showShare = () => {
 
 function goBack() {
     Inertia.visit(url.value.slice(0, url.value.lastIndexOf("/")));
-    // history.back();
-    // return false;
 }
 
 function onClickOutside(event) {

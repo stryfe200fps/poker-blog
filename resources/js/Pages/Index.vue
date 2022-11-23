@@ -1,3 +1,13 @@
+<template>
+    <MainBar
+        :liveEvents="liveEvents"
+        :mainBanner="mainBanner"
+        :articleList="articleList"
+        :ytLinks="youtubeLinks"
+        :isLoading="isLoading"
+    />
+</template>
+
 <script setup>
 import { useEventStore } from "@/Stores/event.js";
 import { useBannerStore } from "@/Stores/banner.js";
@@ -5,7 +15,6 @@ import { useArticleStore } from "@/Stores/article.js";
 import { useYoutubeStore } from "@/Stores/youtube.js";
 import { onMounted, ref } from "@vue/runtime-core";
 
-import FrontLayout from "../Layouts/FrontLayout.vue";
 import MainBar from "../Components/Frontend/MainContent/MainBar.vue";
 
 const eventStore = useEventStore();
@@ -37,15 +46,3 @@ onMounted(async () => {
     }
 });
 </script>
-
-<template>
-    <FrontLayout>
-        <MainBar
-            :liveEvents="liveEvents"
-            :mainBanner="mainBanner"
-            :articleList="articleList"
-            :ytLinks="youtubeLinks"
-            :isLoading="isLoading"
-        />
-    </FrontLayout>
-</template>

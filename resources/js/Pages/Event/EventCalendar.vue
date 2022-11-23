@@ -2,147 +2,139 @@
     <Head>
         <title>{{ page_title }}</title>
     </Head>
-    <FrontLayout>
-        <div class="block-content">
-            <div class="article-box" style="padding: 0">
-                <div class="title-section">
-                    <h1>
-                        <span>{{ page_title }}</span>
-                    </h1>
-                </div>
-                <div class="row" style="margin-bottom: 25px">
-                    <div class="col-md-6">
-                        <div class="filters left-filters">
-                            <button
-                                type="button"
-                                class="btn btn-default"
-                                @click="getDateToday()"
+    <div class="block-content">
+        <div class="article-box" style="padding: 0">
+            <div class="title-section">
+                <h1>
+                    <span>{{ page_title }}</span>
+                </h1>
+            </div>
+            <div class="row" style="margin-bottom: 25px">
+                <div class="col-md-6">
+                    <div class="filters left-filters">
+                        <button
+                            type="button"
+                            class="btn btn-default"
+                            @click="getDateToday()"
+                        >
+                            Today
+                        </button>
+                        <div class="custom-date-picker">
+                            <div
+                                class="custom-date-picker__btn"
+                                @click="openDatePicker"
+                                @blur="isOpen = false"
+                                tabindex="0"
                             >
-                                Today
-                            </button>
-                            <div class="custom-date-picker">
-                                <div
-                                    class="custom-date-picker__btn"
-                                    @click="openDatePicker"
-                                    @blur="isOpen = false"
-                                    tabindex="0"
-                                >
-                                    <span>{{ datePlaceholder }}</span>
-                                    <i
-                                        class="fas fa-angle-down custom-date-picker__icon"
-                                        :class="{ up: isOpen }"
-                                    ></i>
-                                </div>
-                                <div>
-                                    <input
-                                        type="date"
-                                        v-model="selectedDate"
-                                        class="custom-date-picker__input"
-                                        id="custom-date"
-                                        @change="changeDate"
-                                    />
-                                </div>
+                                <span>{{ datePlaceholder }}</span>
+                                <i
+                                    class="fas fa-angle-down custom-date-picker__icon"
+                                    :class="{ up: isOpen }"
+                                ></i>
+                            </div>
+                            <div>
+                                <input
+                                    type="date"
+                                    v-model="selectedDate"
+                                    class="custom-date-picker__input"
+                                    id="custom-date"
+                                    @change="changeDate"
+                                />
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="filters right-filters">
-                            <select class="form-control" v-model="selectedTour">
-                                <option value="" selected disabled>Tour</option>
-                                <option
-                                    v-for="(tour, index) in tours"
-                                    :key="index"
-                                    :value="tour.slug"
-                                >
-                                    {{ tour.title }}
-                                </option>
-                            </select>
-                            <select
-                                class="form-control"
-                                v-model="selectedCountry"
-                            >
-                                <option value="" selected disabled>
-                                    Location
-                                </option>
-                                <option
-                                    v-for="(country, index) in countries"
-                                    :key="index"
-                                    :value="country.iso_3166_2"
-                                >
-                                    {{ country.name }}
-                                </option>
-                            </select>
-                            <select class="form-control" v-model="selectedGame">
-                                <option value="" selected disabled>Game</option>
-                                <option
-                                    v-for="(game, index) in games"
-                                    :key="index"
-                                    :value="game.code"
-                                >
-                                    {{ game.title }}
-                                </option>
-                            </select>
-                            <button
-                                class="btn btn-default reset-btn"
-                                v-if="
-                                    selectedTour !== '' ||
-                                    selectedCountry !== '' ||
-                                    selectedGame !== ''
-                                "
-                                @click="resetFilter()"
-                            >
-                                Reset
-                            </button>
-                        </div>
-                    </div>
                 </div>
-                <div v-if="isLoading">
-                    <LoadingBar />
-                </div>
-                <div v-else>
-                    <div v-if="seriesList?.length">
-                        <div v-for="(series, index) in seriesList" :key="index">
-                            <div class="panel panel-default">
-                                <div
-                                    class="panel-heading text-center"
-                                    style="font-family: 'Lato', sans-serif"
-                                >
-                                    {{
-                                        moment(new Date(series.date)).format(
-                                            "MMMM YYYY"
-                                        )
-                                    }}
-                                </div>
-                            </div>
-                            <EventCalendarItem
-                                v-for="event in series.collection"
-                                :key="event.id"
-                                :event="event"
-                            />
-                        </div>
-                        <div
-                            v-if="seriesList?.length"
-                            v-observe-visibility="handleScrolledToBottom"
-                        ></div>
-                    </div>
-                    <div v-else style="margin-top: 45px">
-                        <h4>There are no events at the moment.</h4>
+                <div class="col-md-6">
+                    <div class="filters right-filters">
+                        <select class="form-control" v-model="selectedTour">
+                            <option value="" selected disabled>Tour</option>
+                            <option
+                                v-for="(tour, index) in tours"
+                                :key="index"
+                                :value="tour.slug"
+                            >
+                                {{ tour.title }}
+                            </option>
+                        </select>
+                        <select class="form-control" v-model="selectedCountry">
+                            <option value="" selected disabled>Location</option>
+                            <option
+                                v-for="(country, index) in countries"
+                                :key="index"
+                                :value="country.iso_3166_2"
+                            >
+                                {{ country.name }}
+                            </option>
+                        </select>
+                        <select class="form-control" v-model="selectedGame">
+                            <option value="" selected disabled>Game</option>
+                            <option
+                                v-for="(game, index) in games"
+                                :key="index"
+                                :value="game.code"
+                            >
+                                {{ game.title }}
+                            </option>
+                        </select>
+                        <button
+                            class="btn btn-default reset-btn"
+                            v-if="
+                                selectedTour !== '' ||
+                                selectedCountry !== '' ||
+                                selectedGame !== ''
+                            "
+                            @click="resetFilter()"
+                        >
+                            Reset
+                        </button>
                     </div>
                 </div>
             </div>
+            <div v-if="isLoading">
+                <LoadingBar />
+            </div>
+            <div v-else>
+                <div v-if="seriesList?.length">
+                    <div v-for="(series, index) in seriesList" :key="index">
+                        <div class="panel panel-default">
+                            <div
+                                class="panel-heading text-center"
+                                style="font-family: 'Lato', sans-serif"
+                            >
+                                {{
+                                    moment(new Date(series.date)).format(
+                                        "MMMM YYYY"
+                                    )
+                                }}
+                            </div>
+                        </div>
+                        <EventCalendarItem
+                            v-for="event in series.collection"
+                            :key="event.id"
+                            :event="event"
+                        />
+                    </div>
+                    <div
+                        v-if="seriesList?.length"
+                        v-observe-visibility="handleScrolledToBottom"
+                    ></div>
+                </div>
+                <div v-else style="margin-top: 45px">
+                    <h4>There are no events at the moment.</h4>
+                </div>
+            </div>
         </div>
-    </FrontLayout>
+    </div>
 </template>
 
 <script setup>
 import { Head } from "@inertiajs/inertia-vue3";
 import { computed, onMounted, ref, watch } from "@vue/runtime-core";
+import { useEventCalendarStore } from "@/Stores/eventCalendar.js";
 import moment from "moment";
 
-import FrontLayout from "@/Layouts/FrontLayout.vue";
 import LoadingBar from "@/Components/LoadingBar.vue";
-import EventCalendarItem from "./EventCalendarItem.vue";
-import { useEventCalendarStore } from "@/Stores/eventCalendar.js";
+import EventCalendarItem from "@/Components/Frontend/EventCalendarItem.vue";
 
 const props = defineProps({
     page_title: {

@@ -5,134 +5,118 @@
             LifeOfPoker
         </title>
     </Head>
-    <FrontLayout>
-        <div class="block-content">
-            <div class="grid-box">
-                <div class="title-section">
-                    <div
-                        style="
-                            display: flex;
-                            justify-content: space-between;
-                            align-items: center;
-                        "
+    <div class="block-content">
+        <div class="grid-box">
+            <div class="title-section">
+                <div
+                    style="
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                    "
+                >
+                    <h1 style="margin: 20px 0 -1px 0">
+                        <span>{{ page_title }}</span>
+                    </h1>
+                    <select
+                        class="form-control"
+                        v-model="selectCategory"
+                        @change="changeCategory"
+                        style="width: auto !important"
                     >
-                        <h1 style="margin: 20px 0 -1px 0">
-                            <span>{{ page_title }}</span>
-                        </h1>
-                        <select
-                            class="form-control"
-                            v-model="selectCategory"
-                            @change="changeCategory"
-                            style="width: auto !important"
+                        <option
+                            v-for="(category, index) in categories"
+                            :key="index"
+                            :value="category.slug"
+                            :checked="category.title == selectCategory"
+                            :disabled="category.title == 'Categories'"
                         >
-                            <option
-                                v-for="(category, index) in categories"
-                                :key="index"
-                                :value="category.slug"
-                                :checked="category.title == selectCategory"
-                                :disabled="category.title == 'Categories'"
-                            >
-                                {{ category.title }}
-                            </option>
-                        </select>
-                    </div>
+                            {{ category.title }}
+                        </option>
+                    </select>
                 </div>
-                <div v-if="isLoading">
-                    <LoadingBar />
-                </div>
-                <div v-else>
-                    <div v-if="articleCategories?.length">
-                        <div class="grid">
+            </div>
+            <div v-if="isLoading">
+                <LoadingBar />
+            </div>
+            <div v-else>
+                <div v-if="articleCategories?.length">
+                    <div class="grid">
+                        <div
+                            v-for="(category, index) in articleCategories"
+                            :key="index"
+                        >
                             <div
-                                v-for="(category, index) in articleCategories"
-                                :key="index"
+                                class="news-post standard-post2"
+                                style="
+                                    display: flex;
+                                    flex-direction: column;
+                                    height: 100%;
+                                    cursor: pointer;
+                                "
+                                @click="
+                                    showArticle(category.date, category.slug)
+                                "
                             >
-                                <div
-                                    class="news-post standard-post2"
-                                    style="
-                                        display: flex;
-                                        flex-direction: column;
-                                        height: 100%;
-                                        cursor: pointer;
-                                    "
-                                    @click="
-                                        showArticle(
-                                            category.date,
-                                            category.slug
-                                        )
-                                    "
-                                >
-                                    <div class="post-gallery">
-                                        <img
-                                            v-if="category.image_set"
-                                            :src="category.image_set.md_image"
-                                            :alt="category.image_set.md_image"
-                                        />
-                                        <img
-                                            v-else
-                                            :src="defaultImg"
-                                            :alt="defaultImg"
-                                        />
-                                        <Link
-                                            class="category-post food"
-                                            v-if="category.categories.length"
-                                            :href="`/news/${category.categories[0]?.slug}`"
-                                            @click.stop
-                                            >{{
-                                                category.categories[0]?.title
-                                            }}</Link
-                                        >
-                                    </div>
-                                    <div
-                                        class="post-title"
-                                        style="flex-grow: 1"
+                                <div class="post-gallery">
+                                    <img
+                                        v-if="category.image_set"
+                                        :src="category.image_set.md_image"
+                                        :alt="category.image_set.md_image"
+                                    />
+                                    <img
+                                        v-else
+                                        :src="defaultImg"
+                                        :alt="defaultImg"
+                                    />
+                                    <Link
+                                        class="category-post food"
+                                        v-if="category.categories.length"
+                                        :href="`/news/${category.categories[0]?.slug}`"
+                                        @click.stop
+                                        >{{
+                                            category.categories[0]?.title
+                                        }}</Link
                                     >
-                                        <h2>
-                                            <Link
-                                                :href="`/news/${moment(
-                                                    new Date(category.date)
-                                                ).format('YYYY')}/${moment(
-                                                    new Date(category.date)
-                                                ).format('MM')}/${
-                                                    category.slug
-                                                }`"
-                                                v-html="category.title"
-                                            ></Link>
-                                        </h2>
-                                    </div>
+                                </div>
+                                <div class="post-title" style="flex-grow: 1">
+                                    <h2>
+                                        <Link
+                                            :href="`/news/${moment(
+                                                new Date(category.date)
+                                            ).format('YYYY')}/${moment(
+                                                new Date(category.date)
+                                            ).format('MM')}/${category.slug}`"
+                                            v-html="category.title"
+                                        ></Link>
+                                    </h2>
                                 </div>
                             </div>
-                            <div
-                                v-if="articleCategories?.length"
-                                v-observe-visibility="handleScrolledToBottom"
-                            ></div>
                         </div>
+                        <div
+                            v-if="articleCategories?.length"
+                            v-observe-visibility="handleScrolledToBottom"
+                        ></div>
                     </div>
-                    <div v-else>
-                        <h4 class="text-capitalize">
-                            No {{ page_title }} available
-                        </h4>
-                    </div>
+                </div>
+                <div v-else>
+                    <h4 class="text-capitalize">
+                        No {{ page_title }} available
+                    </h4>
                 </div>
             </div>
         </div>
-    </FrontLayout>
+    </div>
 </template>
 
 <script setup>
-import FrontLayout from "@/Layouts/FrontLayout.vue";
 import LoadingBar from "@/Components/LoadingBar.vue";
 import defaultImg from "/public/default-img.png";
+
 import { Inertia } from "@inertiajs/inertia";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import { useArticleCategoryStore } from "@/Stores/articleCategory.js";
-import {
-    onMounted,
-    ref,
-    watch,
-    computed,
-    onBeforeMount,
-} from "@vue/runtime-core";
+import { onMounted, ref, watch } from "@vue/runtime-core";
 import moment from "moment";
 
 const props = defineProps({

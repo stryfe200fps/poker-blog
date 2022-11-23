@@ -4,7 +4,7 @@
             class="home home--custom"
             :class="{
                 child: menu.children.length,
-                'router-link-active': pathname == menu.link,
+                'router-link-active': usePage().url.value.includes(menu.link),
             }"
             :href="'/' + menu.link"
             v-if="!menu.children.length && menu.type === 'internal_link'"
@@ -14,7 +14,9 @@
             class="home home--custom"
             :class="{
                 child: menu.children.length,
-                'router-link-active': pathname == menu.link,
+                'router-link-active': usePage().url.value.includes(
+                    menu.page_slug
+                ),
             }"
             :href="'/' + menu.page_slug"
             v-else-if="!menu.children.length && menu.type === 'page_link'"
@@ -24,7 +26,6 @@
             class="home home--custom"
             :class="{
                 child: menu.children.length,
-                'router-link-active': pathname == menu.link,
             }"
             :href="menu.link"
             target="_blank"
@@ -97,14 +98,13 @@
 
 <script setup>
 import { ref } from "vue";
-import { Link } from "@inertiajs/inertia-vue3";
+import { Link, usePage } from "@inertiajs/inertia-vue3";
 
 const props = defineProps({
     menu: Object,
 });
 
 const toggleSubMenu = ref(false);
-const pathname = ref(window.location.pathname.split("/")[1]);
 
 function toggleDropdown() {
     toggleSubMenu.value = !toggleSubMenu.value;
