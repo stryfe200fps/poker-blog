@@ -16,7 +16,6 @@ final class ImageService
       protected $currentImage = null;
       protected $currentImagePath = '';
     protected $imageExtension = 'jpg';
-    protected $imageExtension = 'jpg';
 
     public function imageUpload(): bool
     {
@@ -60,15 +59,11 @@ final class ImageService
         $this->deleteImagePath($this->currentImagePath);
     }
 
-      private function deleteOldMedia(): void: void
+      private function deleteOldMedia(): void
       {
           $this->currentModel->media()->delete();
       }
 
-    public function getProcessedImage(): Image
-    {
-        return $this->currentImage;
-    }
 
       public function getProcessedImage(): Image
     {
