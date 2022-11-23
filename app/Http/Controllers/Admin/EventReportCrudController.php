@@ -39,7 +39,7 @@ class EventReportCrudController extends CrudController
     public function setup()
     {
         CRUD::setModel(\App\Models\EventReport::class);
-        CRUD::setRoute(config('backpack.base.route_prefix').'/report');
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/report');
         CRUD::setEntityNameStrings('report', 'report');
 
         $this->crud->denyAccess('show');
@@ -52,11 +52,13 @@ class EventReportCrudController extends CrudController
 
             $getEvent = Event::where('id', session()->get('event_id'))->first();
             $getDay = Day::where('id', session()->get('event_day'))->first();
-            CRUD::setEntityNameStrings('report',
-            'Report');
-            // CRUD::setHeading('Reports: <a href="/admin/day?event='.$getEvent->id.'">'.  $getEvent?->title.'</a> - 
+            CRUD::setEntityNameStrings(
+                'report',
+                'Report'
+            );
+            // CRUD::setHeading('Reports: <a href="/admin/day?event='.$getEvent->id.'">'.  $getEvent?->title.'</a> -
             // Day '.$getDay?->name);
-            customHeading('day?event='. $getEvent->id, 'Day', $getEvent?->title);
+            customHeading('day?event=' . $getEvent->id, 'Day', $getEvent?->title);
             CRUD::setTitle($getEvent?->title);
         } else {
             $this->crud->denyAccess('create');
@@ -102,7 +104,7 @@ class EventReportCrudController extends CrudController
             'type' => 'text',
             'wrapper' => [
                 'href' => function ($entry, $column, $crud) {
-                    return '/tours/rep/rep/asd/update-'.$crud->id;
+                    return '/tours/rep/rep/asd/update-' . $crud->id;
                 },
             ],
             'limit' => 50
@@ -114,8 +116,7 @@ class EventReportCrudController extends CrudController
 
     protected function setupCreateOperation()
     {
-
-        if (! session()->get('event_id')) {
+        if (!session()->get('event_id')) {
             $this->crud->denyAccess('create');
         }
 
@@ -144,7 +145,8 @@ class EventReportCrudController extends CrudController
                 'wrapper' => [
                     'class' => 'form-group col-md-12',
                 ],
-            ]);
+            ]
+        );
 
         // $lastLevelId = DB::table('event_reports')
         // ->join('levels', function ($join) {
@@ -177,7 +179,8 @@ class EventReportCrudController extends CrudController
                     'autoGrow_bottomSpace' => 50,
                     'removePlugins' => 'resize,maximize',
                 ],
-            ], ]);
+            ],
+        ]);
 
         if ($this->crud->getCurrentOperation() == 'create') {
             $this->crud->addField(
@@ -190,7 +193,8 @@ class EventReportCrudController extends CrudController
                     'wrapper' => [
                         'class' => 'form-group col-md-12',
                     ],
-                ]);
+                ]
+            );
         } else {
             $this->crud->addField(
                 [
@@ -201,7 +205,8 @@ class EventReportCrudController extends CrudController
                     'wrapper' => [
                         'class' => 'form-group col-md-12',
                     ],
-                ]);
+                ]
+            );
         }
 
         $this->crud->addFields([
@@ -224,22 +229,33 @@ class EventReportCrudController extends CrudController
                     'class' => 'form-group col-md-6',
                 ],
 
-            ], ]);
+            ],
+        ]);
+        $this->crud->addField([
+            'name' => 'test',
+            'type' => 'custom_html',
+            'value' => 'date and time is based on ' . session()->get('timezone') . ' timezone' ?? '',
+            'wrapper' => [
+                'class' => 'my-auto form-group col-md-6',
+                'style' => ' color:black; font-style:italic; '
+            ],
+
+        ]);
 
         CRUD::field('day_id')->type('hidden')->value(session()->get('event_day'));
 
         // $this->crud->addField(
-            //     [
-            //     'label' => 'Day',
-            //     'name' => 'day',
-            //     'type' => 'text',
-            //     'value' => '',
-            //     'attributes' => [
-            //         'readonly' => 'readonly',
-            //     ],
-            //     'wrapper' => [
-            //         'class' => 'form-group col-md-6',
-            //     ]] );
+        //     [
+        //     'label' => 'Day',
+        //     'name' => 'day',
+        //     'type' => 'text',
+        //     'value' => '',
+        //     'attributes' => [
+        //         'readonly' => 'readonly',
+        //     ],
+        //     'wrapper' => [
+        //         'class' => 'form-group col-md-6',
+        //     ]] );
 
         $this->crud->addFields([
             [
@@ -259,9 +275,9 @@ class EventReportCrudController extends CrudController
                 ],
             ],
             [
-            'name' => 'fake_tags',
-            'type' => 'view',
-            'view' => 'tag_custom_selector',
+                'name' => 'fake_tags',
+                'type' => 'view',
+                'view' => 'tag_custom_selector',
             ],
             [
                 'name' => 'eventChipPlayers',
@@ -345,44 +361,45 @@ class EventReportCrudController extends CrudController
 
 
         $this->crud->addFields(
-            [ 
             [
-                'label' => 'Media',
-                'name' => 'divider',
-                'type' => 'custom_html',
-                'value' => '<b>Media</b>',
-            ],
-            [
-                'label' => 'Image',
-                'name' => 'image',
-                'type' => 'image',
-                'crop' => true, // set to true to allow cropping, false to disable
-                'aspect_ratio' => 3 / 2, // omit or set to 0 to allow any aspect ratio
-                'wrapper' => [
-                    'class' => 'form-group col-md-12 image',
-                    'id' => 'image',
+                [
+                    'label' => 'Media',
+                    'name' => 'divider',
+                    'type' => 'custom_html',
+                    'value' => '<b>Media</b>',
                 ],
-            ],
-            [
-                'name' => 'image_caption',
-                'type' => 'text',
-                'wrapper' => [
-                    'class' => 'form-group col-md-6 image_caption  ',
+                [
+                    'label' => 'Image',
+                    'name' => 'image',
+                    'type' => 'image',
+                    'crop' => true, // set to true to allow cropping, false to disable
+                    'aspect_ratio' => 3 / 2, // omit or set to 0 to allow any aspect ratio
+                    'wrapper' => [
+                        'class' => 'form-group col-md-12 image',
+                        'id' => 'image',
+                    ],
                 ],
-            ],
-            [
-                'label' => 'Theme',
-                'name' => 'image_theme',
-                'type' => 'relationship',
-                'attributes' => [
-                    'id' => 'image-theme',
+                [
+                    'name' => 'image_caption',
+                    'type' => 'text',
+                    'wrapper' => [
+                        'class' => 'form-group col-md-6 image_caption  ',
+                    ],
                 ],
-                'wrapper' => [
-                    'class' => 'form-group col-md-6 image_theme ',
+                [
+                    'label' => 'Theme',
+                    'name' => 'image_theme',
+                    'type' => 'relationship',
+                    'attributes' => [
+                        'id' => 'image-theme',
+                    ],
+                    'wrapper' => [
+                        'class' => 'form-group col-md-6 image_theme ',
+                    ],
                 ],
-            ],
 
-        ]);
+            ]
+        );
 
         if ($this->crud->getCurrentOperation() === 'create') {
             Widget::add()->type('script')->content('assets/js/admin/create-admin-image-theme-attach.js');
@@ -394,10 +411,10 @@ class EventReportCrudController extends CrudController
         // }
     }
 
-public function fetchTags()
-{
-    return $this->fetch(\App\Models\Tag::class);
-}
+    public function fetchTags()
+    {
+        return $this->fetch(\App\Models\Tag::class);
+    }
 
     /**
      * Define what happens when the Update operation is loaded.
@@ -416,7 +433,6 @@ public function fetchTags()
     public function fetchLevel()
     {
         return $this->fetch(
-
             [
                 'model' => \App\Models\Level::class,
                 'paginate' => 10,
@@ -431,13 +447,12 @@ public function fetchTags()
     public function fetchPlayer()
     {
         return $this->fetch(
-
             [
                 'model' => \App\Models\Player::class,
                 'paginate' => 10,
                 'searchOperator' => 'LIKE',
                 'query' => function ($model) {
-                    return $model->where('status', '!=', 'disabled' )->orderBy('name');
+                    return $model->where('status', '!=', 'disabled')->orderBy('name');
                 },
             ]
         );
@@ -458,24 +473,30 @@ public function fetchTags()
         $lastPlayerId = 0;
         if ($players !== null) {
             foreach ($players as $user) {
-                Validator::make($user,
-                    ['player_id' => 'required',
+                Validator::make(
+                    $user,
+                    [
+                        'player_id' => 'required',
                         'current_chips' => 'required',
                     ],
                     [
                         'player_id' => 'Player field is required',
                         'current_chips' => 'Chip field is required',
-                    ])->validate();
+                    ]
+                )->validate();
 
                 if ($user['player_id'] == $lastPlayerId) {
-                    Validator::make([],
-                        ['player_id' => 'required',
+                    Validator::make(
+                        [],
+                        [
+                            'player_id' => 'required',
                             'current_chips' => 'required',
                         ],
                         [
                             'player_id' => 'There is a duplicate player in Chip Stacks',
                             'current_chips' => 'Chip field is required',
-                        ])->validate();
+                        ]
+                    )->validate();
                 }
 
                 $lastPlayerId = $user['player_id'];
@@ -507,8 +528,10 @@ public function fetchTags()
             $lastPlayerId = 0;
 
             foreach ($players as $user) {
-                Validator::make($user,
-                    ['player_id' => 'required',
+                Validator::make(
+                    $user,
+                    [
+                        'player_id' => 'required',
                         'current_chips' => 'required',
 
                     ],
@@ -516,18 +539,22 @@ public function fetchTags()
                         'player_id' => 'Player field is required',
                         'current_chips' => 'Chip field is required',
 
-                    ])->validate();
+                    ]
+                )->validate();
 
                 if ($user['player_id'] == $lastPlayerId) {
-                    Validator::make($user,
-                        ['player_id' => 'required',
+                    Validator::make(
+                        $user,
+                        [
+                            'player_id' => 'required',
                             'current_chips' => 'required',
                         ],
                         [
                             'player_id' => 'There is a duplicate player in Chip Stacks',
 
                             'current_chips' => 'Chip field is required',
-                        ])->validate();
+                        ]
+                    )->validate();
                 }
 
                 $lastPlayerId = $user['player_id'];
