@@ -120,6 +120,7 @@
                                 v-for="menu in $page['props']['menu']"
                                 :key="menu.id"
                                 :menu="menu"
+                                @closeMenu="closeMenu"
                             />
                         </ul>
                     </div>
@@ -149,6 +150,11 @@ function toggleBtn() {
         document.body.style.overflow = "hidden";
         return;
     }
+    document.body.style.overflow = "auto";
+}
+
+function closeMenu() {
+    toggleMenu.value = false;
     document.body.style.overflow = "auto";
 }
 
