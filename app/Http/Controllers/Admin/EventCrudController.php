@@ -7,6 +7,7 @@ use App\Http\Requests\EventRequest;
 use App\Models\Event;
 use App\Models\Tour;
 use App\Models\Tournament;
+use App\Services\BackpackUIService;
 use App\Traits\LimitUserPermissions;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
@@ -38,7 +39,7 @@ class EventCrudController extends CrudController
     {
         $this->crud->denyAccess('show');
         CRUD::setModel(\App\Models\Event::class);
-        CRUD::setRoute(config('backpack.base.route_prefix').'/events');
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/events');
         CRUD::setEntityNameStrings('event', 'events');
         $this->denyAccessIfNoPermission();
     }
@@ -70,28 +71,27 @@ class EventCrudController extends CrudController
         // TODO: Chips should be part of days
         $this->crud->addButtonFromModelFunction('line', 'days', 'openDay', 'beginning');
 
-    $this->crud->addFilter([
-    'name'  => 'tournament_id',
-    'type'  => 'select2',
-    'label' => 'Series'
-    ], function() {
-        return Tournament::all()->sortBy('title')->pluck('title', 'id')->toArray();
-    }, function($value) { // if the filter is active
-        $this->crud->addClause('where', 'tournament_id', $value);
-    });
-
-    $this->crud->addFilter([
-    'name'  => 'timezone_filter',
-    'type'  => 'select2',
-    'label' => 'Timezone'
-    ], function() {
-        return \Timezone::getTimezones();
-    }, function($value) { // if the filter is active
-        $this->crud->query = $this->crud->query->whereHas('tournament', function ($query) use ($value) {
-                $query->where('timezone', $value);
+        $this->crud->addFilter([
+            'name'  => 'tournament_id',
+            'type'  => 'select2',
+            'label' => 'Series'
+        ], function () {
+            return Tournament::all()->sortBy('title')->pluck('title', 'id')->toArray();
+        }, function ($value) { // if the filter is active
+            $this->crud->addClause('where', 'tournament_id', $value);
         });
-    });
 
+        $this->crud->addFilter([
+            'name'  => 'timezone_filter',
+            'type'  => 'select2',
+            'label' => 'Timezone'
+        ], function () {
+            return \Timezone::getTimezones();
+        }, function ($value) { // if the filter is active
+            $this->crud->query = $this->crud->query->whereHas('tournament', function ($query) use ($value) {
+                $query->where('timezone', $value);
+            });
+        });
     }
 
 
@@ -104,6 +104,7 @@ class EventCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
+        $ui = new BackpackUIService();
         CRUD::setValidation(EventRequest::class);
 
         $this->crud->addField([
@@ -117,64 +118,31 @@ class EventCrudController extends CrudController
                 return $query->orderBy('title', 'ASC')->get();
             }),
 
-            // 'allows_multiple' => true, // OPTIONAL; needs you to cast this to array in your model;
         ]);
 
-        CRUD::field('title');
+        $ui->title();
+        $ui->slug();
+        $ui->description();
+        $ui->content();
 
         $this->crud->addField([
-            'name' => 'slug',
-            'attributes' => [
-                'placeholder' => config('app.slug_placeholder'),
-            ],
-            'type' => 'text',
+            'name' => 'event_game_table',
+            'label' => 'Games',
+            'type' => 'relationship',
+            'allows_null' => false,
         ]);
 
-        CRUD::field('description');
+        $this->crud->addField([
+            'name' => 'buyin',
+            'type' => 'number',
+            'hint' =>  'note: All numbers will follow the currency from the series'
+        ]);
 
-        $this->crud->addFields([
-
-            [   // CKEditor
-                'name' => 'content',
-                'label' => 'Content',
-                'type' => 'ckeditor',
-                'extra_plugins' => ['widget', 'autocomplete', 'textmatch', 'toolbar', 'wysiwygarea', 'image', 'sourcearea'],
-
-                'options' => [
-                    'autoGrow_minHeight' => 200,
-                    'autoGrow_bottomSpace' => 50,
-                    'removePlugins' => 'resize,maximize',
-                ],
-            ], ]);
-
-
-        $start = Carbon::now()->toDateTimeString();
-        $end = Carbon::now()->addDays(1)->toDateTimeString();
-        $pokerTours = Tour::all();
-
-
-    $this->crud->addField([
-        'name' => 'event_game_table',
-        'label' => 'Games',
-        'type' => 'relationship',
-        'allows_null' => false,
-        // 'options' => (function ($query) {
-        //     return $query->where('author_id', '=', 0)->orWhere('author_id', '=', null)->get();
-        // }),
-    ]);
-
-    $this->crud->addField([
-        'name' => 'buyin',
-        'type' => 'number',
-        'hint' =>  'note: All numbers will follow the currency from the series'
-    ]);
-
-    $this->crud->addField([
-        'name' => 'fee',
-        'type' => 'number',
-        'hint' => 'note: All numbers will follow the currency from the series',
-    ]);
-
+        $this->crud->addField([
+            'name' => 'fee',
+            'type' => 'number',
+            'hint' => 'note: All numbers will follow the currency from the series',
+        ]);
 
         $this->crud->addField([
             'name' => 'image',
@@ -182,19 +150,10 @@ class EventCrudController extends CrudController
             'aspect_ratio' => 3 / 2,
             'crop' => true,
         ]);
-
-        // $this->crud->addField([
-        //     'name' => 'custom-ajax-button',
-        //     'type' => 'view',
-        //     'view' => 'partials/custom-ajax-button',
-        // ]);
     }
 
     public function showDetailsRow($id)
     {
-        // $this->data['entry'] = $this->crud->getEntry($id);
-        // $this->data['crud'] = $this->crud;
-
         // load the view from /resources/views/vendor/backpack/crud/ if it exists, otherwise load the one in the package
         return view('crud::event_details', ['event' => Event::find($id)]);
     }
@@ -216,7 +175,6 @@ class EventCrudController extends CrudController
             $id = session()->put('event_id', $id);
         }
         $this->setupCreateOperation();
-        // Widget::add()->to('after_content')->type('view')->view('vendor.backpack.helper.excel.uploader')->eventId($id); // widgets to show the ordering card
     }
 
     public function store(Request $request)
@@ -224,23 +182,7 @@ class EventCrudController extends CrudController
         $this->crud->hasAccessOrFail('create');
 
 
-
-        // if ($schedules === null) {
-        //     Validator::make($schedules ?? [],
-        //         [
-        //             'schedule' => 'required',
-        //         ], [
-        //             'schedule' => 'please check the schedule',
-        //         ])->validate();
-        // }
-
         $request = $this->crud->validateRequest();
-
-        // $date  = \Carbon\Carbon::parse($request->get('date_start'), session()->get('timezone') ?? 'UTC') ;
-        // $request['date_start'] = $date->setTimezone('UTC');
-
-        // $date2  = \Carbon\Carbon::parse($request->get('date_end'), session()->get('timezone') ?? 'UTC') ;
-        // $request['date_end'] = $date2->setTimezone('UTC');
 
         $this->crud->registerFieldEvents();
 
@@ -260,32 +202,10 @@ class EventCrudController extends CrudController
 
     public function update()
     {
-
-        // if ($schedules === null) {
-        //     Validator::make($schedules ?? [],
-        //         [
-        //             'schedule' => 'required',
-        //         ], [
-        //             'schedule' => 'please check the schedule',
-        //         ])->validate();
-        // }
-
         $this->crud->hasAccessOrFail('update');
 
         // execute the FormRequest authorization and validation, if one is required
         $request = $this->crud->validateRequest();
-
-        // $tournament = Tournament::find($request->tournament_id);
-        // $timezone_offset_minutes = $request->user_timezone;  // $_GET['timezone_offset_minutes']
-
-        // $timezone_name = timezone_name_from_abbr("", $timezone_offset_minutes*60, false);
-        // // $convertedDateEnd = Carbon::createFromFormat('Y-m-d H:i:s',Carbon::parse($request->date_end), $timezone_name);
-
-        // $request->date_start = Carbon::parse($request->date_start, $timezone_name)->setTimezone('UTC');
-        // $request->date_end = Carbon::parse($request->date_end, $timezone_name)->setTimezone('UTC');
-
-        // dd($request);
-
         // register any Model Events defined on fields
         $this->crud->registerFieldEvents();
 
@@ -294,6 +214,7 @@ class EventCrudController extends CrudController
             $request->get($this->crud->model->getKeyName()),
             $this->crud->getStrippedSaveRequest($request)
         );
+
         $this->data['entry'] = $this->crud->entry = $item;
 
         \Alert::success(trans('backpack::crud.update_success'))->flash();
