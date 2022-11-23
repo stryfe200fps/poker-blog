@@ -120,6 +120,11 @@ class EventReport extends Model implements HasMedia
         $this->attributes['published_date'] = Carbon::parse($value, session()->get('timezone') ?? 'UTC')->setTimezone('UTC');
     }
 
+    public function getRealtimeDateAttribute()
+    {
+        return Carbon::parse($this->attributes['published_date'],$this->event->tournament->word_timezone);
+    }
+
     public function getPublishedDateAttribute($value)
     {
         return Carbon::parse($value)->setTimezone(session()->get('timezone') ?? 'UTC');
