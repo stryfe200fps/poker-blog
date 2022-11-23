@@ -74,7 +74,6 @@
                     :isLoading="isLoading"
                     :hasNewReport="hasNewReport"
                     @loadMore="loadMoreReports"
-                    @showLoading="showLoading"
                 />
             </div>
         </div>
@@ -92,11 +91,10 @@
 </template>
 
 <script setup>
-import { Head, Link } from "@inertiajs/inertia-vue3";
+import { Head } from "@inertiajs/inertia-vue3";
 import { useEventStore } from "@/Stores/event.js";
-import { useTournamentStore } from "@/Stores/tournament.js";
 import { useBannerStore } from "@/Stores/banner.js";
-import { onMounted, ref, watch, onUpdated } from "@vue/runtime-core";
+import { onMounted, ref, watch } from "@vue/runtime-core";
 import { Inertia } from "@inertiajs/inertia";
 
 import ReportList from "../../Components/Frontend/Report/ReportList.vue";
@@ -123,7 +121,6 @@ const props = defineProps({
 });
 
 const eventStore = useEventStore();
-const tournamentStore = useTournamentStore();
 const bannerStore = useBannerStore();
 const eventData = ref([]);
 const selectDay = ref(null);
@@ -169,50 +166,90 @@ async function loadMoreReports() {
     lastPage.value = eventStore.liveReportList.meta.last_page;
 }
 
-function showLoading() {
-    isLoading.value = true;
+async function reportViewing(type) {
+    if (type === null) {
+        if (!Object.entries(liveReport.value).length) {
+            await eventStore.getLiveReport(1, selectDay.value);
+            liveReport.value = eventStore.liveReportList.data;
+            lastPage.value = eventStore.liveReportList.meta.last_page;
+            reportingBanner.value = bannerStore.getReportingBanner();
+        }
+        isLoading.value = false;
+        return;
+    }
+
+    if (type === "chip-stack") {
+        if (!Object.entries(chipCountsData.value).length) {
+            await eventStore.getChipCountsData(selectDay.value);
+            chipCountsData.value = eventStore.chipCounts.data;
+        }
+        isLoading.value = false;
+        return;
+    }
+
+    if (type === "whatsapp") {
+        if (!Object.entries(whatsappData.value).length) {
+            await eventStore.getWhatsappData(selectDay.value);
+            whatsappData.value = eventStore.whatsapp.data;
+            await eventStore.getWhatsappContent();
+            whatsappContent.value = eventStore.whatsappContent;
+        }
+        isLoading.value = false;
+        return;
+    }
+
+    if (type === "gallery") {
+        if (!Object.entries(galleryData.value).length) {
+            await eventStore.getGalleryData(selectDay.value);
+            galleryData.value = eventStore.galleryData.data;
+        }
+        isLoading.value = false;
+        return;
+    }
+
+    if (type === "payouts") {
+        if (!Object.entries(payoutsData.value).length) {
+            await eventStore.getPayoutsData(eventData.value.slug);
+            payoutsData.value = eventStore.payouts.data;
+        }
+        isLoading.value = false;
+        return;
+    }
 }
 
-async function reportViewing() {
+const fetchLiveReports = (value) => {
+    isLoading.value = value;
+    loadPage.value = 1;
+    lastPage.value = 1;
+    liveReport.value = [];
+    chipCountsData.value = [];
+    whatsappData.value = [];
+    galleryData.value = [];
+
+    const { name } = eventData.value.available_day_with_reports.find(
+        ({ id }) => id == selectDay.value
+    );
+
     if (props.type === null) {
-        await eventStore.getLiveReport(1, selectDay.value);
-        liveReport.value = eventStore.liveReportList.data;
-        lastPage.value = eventStore.liveReportList.meta.last_page;
-        reportingBanner.value = bannerStore.getReportingBanner();
-        isLoading.value = false;
+        Inertia.visit(
+            `/tours/${eventData.value.tour_slug}/${
+                eventData.value.tournament_slug
+            }/${eventData.value.slug}/${name
+                .replace(/[^A-Z0-9]+/gi, "-")
+                .toLowerCase()}`,
+            { preserveState: true }
+        );
         return;
     }
-
-    if (props.type === "chip-stack") {
-        await eventStore.getChipCountsData(selectDay.value);
-        chipCountsData.value = eventStore.chipCounts.data;
-        isLoading.value = false;
-        return;
-    }
-
-    if (props.type === "whatsapp") {
-        await eventStore.getWhatsappData(selectDay.value);
-        whatsappData.value = eventStore.whatsapp.data;
-        await eventStore.getWhatsappContent();
-        whatsappContent.value = eventStore.whatsappContent;
-        isLoading.value = false;
-        return;
-    }
-
-    if (props.type === "gallery") {
-        await eventStore.getGalleryData(selectDay.value);
-        galleryData.value = eventStore.galleryData.data;
-        isLoading.value = false;
-        return;
-    }
-
-    if (props.type === "payouts") {
-        await eventStore.getPayoutsData(eventData.value.slug);
-        payoutsData.value = eventStore.payouts.data;
-        isLoading.value = false;
-        return;
-    }
-}
+    Inertia.visit(
+        `/tours/${eventData.value.tour_slug}/${
+            eventData.value.tournament_slug
+        }/${eventData.value.slug}/${name
+            .replace(/[^A-Z0-9]+/gi, "-")
+            .toLowerCase()}/${props.type}`,
+        { preserveState: true }
+    );
+};
 
 function scrollToTop() {
     hasNewReport.value = false;
@@ -251,8 +288,12 @@ onMounted(async () => {
         );
         selectDay.value = id;
     }
+    reportViewing(props.type);
 
-    reportViewing();
+    Inertia.on("navigate", (event) => {
+        isLoading.value = true;
+        reportViewing(event.detail.page.props.type);
+    });
 
     window.Echo.channel("report").listen(
         "NewReport",
@@ -270,42 +311,6 @@ onMounted(async () => {
         }
     );
 });
-
-onUpdated(() => {
-    reportViewing();
-});
-
-const fetchLiveReports = (value) => {
-    isLoading.value = value;
-    loadPage.value = 1;
-    lastPage.value = 1;
-
-    reportViewing();
-
-    const { name } = eventData.value.available_day_with_reports.find(
-        ({ id }) => id == selectDay.value
-    );
-
-    if (props.type === null) {
-        Inertia.visit(
-            `/tours/${eventData.value.tour_slug}/${
-                eventData.value.tournament_slug
-            }/${eventData.value.slug}/${name
-                .replace(/[^A-Z0-9]+/gi, "-")
-                .toLowerCase()}`,
-            { preserveState: true }
-        );
-        return;
-    }
-    Inertia.visit(
-        `/tours/${eventData.value.tour_slug}/${
-            eventData.value.tournament_slug
-        }/${eventData.value.slug}/${name
-            .replace(/[^A-Z0-9]+/gi, "-")
-            .toLowerCase()}/${props.type}`,
-        { preserveState: true }
-    );
-};
 
 watch(
     () => eventStore.eventData.data,

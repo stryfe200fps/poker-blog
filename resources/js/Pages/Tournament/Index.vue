@@ -21,7 +21,8 @@
 <script setup>
 import { Head } from "@inertiajs/inertia-vue3";
 import { useTournamentStore } from "@/Stores/tournament.js";
-import { onMounted, onUpdated, ref } from "@vue/runtime-core";
+import { onMounted, ref } from "@vue/runtime-core";
+import { Inertia } from "@inertiajs/inertia";
 
 import TournamentList from "../../Components/Frontend/Tournament/List.vue";
 
@@ -34,7 +35,7 @@ const props = defineProps({
 const tournamentStore = useTournamentStore();
 const liveEventCollection = ref([]);
 const pastEventCollection = ref([]);
-const pathname = ref(window.location.pathname.split("/")[2]);
+const pathname = ref("");
 const loadPage = ref(1);
 const lastPage = ref(1);
 const isLoading = ref(true);
@@ -60,29 +61,30 @@ async function loadMoreReports() {
 
 async function eventViewing(pathname) {
     loadPage.value = 1;
-    lastPage.value = 1;
 
     if (pathname === undefined || pathname === "live") {
-        isLoading.value = true;
-        await tournamentStore.getList(1, "live");
-        liveEventCollection.value = tournamentStore.list.data;
-        await tournamentStore.getList(1, "upcoming");
-        liveEventCollection.value.push(...tournamentStore.upcoming.data);
-        lastPage.value = tournamentStore.upcoming.meta?.last_page;
-
-        if (liveEventCollection.value) {
+        if (!Object.entries(liveEventCollection.value).length) {
+            await tournamentStore.getList(1, "live");
+            liveEventCollection.value = tournamentStore.list.data;
+            await tournamentStore.getList(1, "upcoming");
+            liveEventCollection.value.push(...tournamentStore.upcoming.data);
+            lastPage.value = tournamentStore.upcoming.meta?.last_page;
+            isLoading.value = false;
+        } else {
+            lastPage.value = tournamentStore.upcoming.meta?.last_page;
             isLoading.value = false;
         }
         return;
     }
 
     if (pathname === "past") {
-        isLoading.value = true;
-        await tournamentStore.getList(1, "end");
-        pastEventCollection.value = tournamentStore.list.data;
-        lastPage.value = tournamentStore.list.meta?.last_page;
-
-        if (pastEventCollection.value) {
+        if (!Object.entries(pastEventCollection.value).length) {
+            await tournamentStore.getList(1, "end");
+            pastEventCollection.value = tournamentStore.list.data;
+            lastPage.value = tournamentStore.list.meta?.last_page;
+            isLoading.value = false;
+        } else {
+            lastPage.value = tournamentStore.list.meta?.last_page;
             isLoading.value = false;
         }
         return;
@@ -90,11 +92,10 @@ async function eventViewing(pathname) {
 }
 
 onMounted(() => {
-    eventViewing(pathname.value);
+    Inertia.on("navigate", (event) => {
+        isLoading.value = true;
+        eventViewing(event.detail.page.props.page);
+        pathname.value = event.detail.page.props.page;
+    });
 });
-
-// onUpdated(() => {
-//     pathname.value = window.location.pathname.split("/")[2];
-//     eventViewing(pathname.value);
-// });
 </script>
