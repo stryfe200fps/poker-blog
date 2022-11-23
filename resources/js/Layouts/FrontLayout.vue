@@ -114,8 +114,9 @@ const formattedReportingBanner = computed(() => {
 onMounted(async () => {
     document.body.style.overflow = "auto";
     Inertia.on("success", () => {
-        if (usePage().component.value !== "Event/Index")
+        if (typeof usePage().props.value.day == undefined) {
             window.scrollTo({ top: 0, behavior: "smooth" });
+        }
     });
     window.addEventListener("scroll", showScrollTopBtn);
     await bannerStore.getBanners();
