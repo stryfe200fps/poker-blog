@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Support\Str;
 use Spatie\Sluggable\HasSlug;
 use App\Traits\HasMultipleImages;
 use Spatie\MediaLibrary\HasMedia;
@@ -13,9 +12,7 @@ use App\Observers\SlugObserver;
 use App\Observers\MediaObserver;
 use App\Observers\ModelTaggableObserver;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Article extends Model implements HasMedia
 {
@@ -23,7 +20,10 @@ class Article extends Model implements HasMedia
     use \Backpack\CRUD\app\Models\Traits\CrudTrait;
     use HasFactory;
     use HasSlug;
-    use HasMediaCollection, HasMultipleImages;
+    use HasMediaCollection;
+    use HasMultipleImages;
+
+    public bool $shouldResizeImage = true;
 
     protected $casts = [
         'content' => 'json',
@@ -34,24 +34,24 @@ class Article extends Model implements HasMedia
     public static function boot()
     {
         parent::boot();
-        self::observe(new SlugObserver);
-        self::observe(new MediaObserver);
-        self::observe(new ModelTaggableObserver);
+        self::observe(new SlugObserver());
+        self::observe(new MediaObserver());
+        self::observe(new ModelTaggableObserver());
     }
 
-    public function resetContentHtml($content) 
+    public function resetContentHtml($content)
     {
         $pattern = '/<span translate="no">/i';
         $fPattern = '/<\/span>/i';
-        $reset1 = preg_replace($pattern, '' , $content);
-        $reset2 = preg_replace($fPattern, '' , $content);
+        $reset1 = preg_replace($pattern, '', $content);
+        $reset2 = preg_replace($fPattern, '', $content);
     }
 
     public function getContentAttribute($content)
     {
         $array = json_decode($content);
         array_shift($array);
-        return $array; 
+        return $array;
     }
 
     public function getFirstContentAttribute()
@@ -63,8 +63,9 @@ class Article extends Model implements HasMedia
     public function getOptionalContentAttribute()
     {
         $array = json_decode($this->attributes['content']);
-        if (count($array) <= 1)
+        if (count($array) <= 1) {
             return [];
+        }
 
         array_shift($array);
         return $array[0];
@@ -101,20 +102,20 @@ class Article extends Model implements HasMedia
         return  Article::where('id', '!=', $this->id)->whereHas('tags', function ($query) {
             $query->whereIn('slug', $this->tags()->get()->pluck('slug')->toArray());
         })
-        ->inRandomOrder()
-        ->limit(3)
-        ->get();
+            ->inRandomOrder()
+            ->limit(3)
+            ->get();
     }
 
-public function shareFacebook()
-{
-    return '<a class="btn btn-sm btn-link"  href="https://www.facebook.com/sharer/sharer.php?u='.config('app.url').'/news/year/month/'.$this->slug.'" data-toggle="tooltip" target="_blank" title="Share to facebook"><i class="la la-facebook"></i>    </a>';
-}
+    public function shareFacebook()
+    {
+        return '<a class="btn btn-sm btn-link"  href="https://www.facebook.com/sharer/sharer.php?u=' . config('app.url') . '/news/year/month/' . $this->slug . '" data-toggle="tooltip" target="_blank" title="Share to facebook"><i class="la la-facebook"></i>    </a>';
+    }
 
-public function shareTwitter()
-{
-    return '<a class="btn btn-sm btn-link"  href="https://twitter.com/intent/tweet?text='.config('app.url').'/news/year/month/'.$this->slug.'" data-toggle="tooltip" target="_blank" title="Share to facebook"><i class="la la-twitter"></i>    </a>';
-}
+    public function shareTwitter()
+    {
+        return '<a class="btn btn-sm btn-link"  href="https://twitter.com/intent/tweet?text=' . config('app.url') . '/news/year/month/' . $this->slug . '" data-toggle="tooltip" target="_blank" title="Share to facebook"><i class="la la-twitter"></i>    </a>';
+    }
 
 
     public function setPublishedDateAttribute($value)
@@ -158,6 +159,4 @@ public function shareTwitter()
     {
         return $this->belongsTo(Author::class);
     }
-
-    
 }
