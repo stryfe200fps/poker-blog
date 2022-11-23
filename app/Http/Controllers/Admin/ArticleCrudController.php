@@ -138,7 +138,7 @@ class ArticleCrudController extends CrudController
         $this->crud->addFields(
             [
                 [
-                    'name' => 'optional_content',
+                    'name' => 'content',
                     'label' => 'Content',
                     'type' => 'repeatable',
                     'new_item_label' => 'add section',
