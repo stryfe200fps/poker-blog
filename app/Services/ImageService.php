@@ -13,8 +13,9 @@ final class ImageService
     {
     }
 
-    protected $currentImage = null;
-    protected $currentImagePath = '';
+      protected $currentImage = null;
+      protected $currentImagePath = '';
+    protected $imageExtension = 'jpg';
     protected $imageExtension = 'jpg';
 
     public function imageUpload(): bool
@@ -59,27 +60,32 @@ final class ImageService
         $this->deleteImagePath($this->currentImagePath);
     }
 
-    private function deleteOldMedia(): void
-    {
-        $this->currentModel->media()->delete();
-    }
+      private function deleteOldMedia(): void: void
+      {
+          $this->currentModel->media()->delete();
+      }
 
     public function getProcessedImage(): Image
     {
         return $this->currentImage;
     }
 
-    private function deleteImagePath($path)
+      public function getProcessedImage(): Image
     {
-        if (file_exists($path)) {
-            unlink($path);
-        }
+        return $this->currentImage;
+    }
+
+    private function deleteImagePath($path)
+      {
+          if (file_exists($path)) { {
+              unlink($path);
+              }
+    }
     }
 
     //check what type of image is being uploaded
     public function validateUploadedImage($value): bool
     {
-    // dd(filter_var($value, FILTER_VALIDATE_URL));
         if (preg_match("/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).base64,.*/", $value) == 1) {
             $this->imageExtension = explode('/', mime_content_type($this->imageInput))[1];
             $this->setCurrentImagePath();
