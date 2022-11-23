@@ -17,7 +17,8 @@ class Player extends Model implements HasMedia
     use \Backpack\CRUD\app\Models\Traits\CrudTrait;
     use HasFactory;
 
-    use HasMediaCollection, HasMultipleImages;
+    use HasMediaCollection;
+    use HasMultipleImages;
 
     public function registerMediaConversions(?Media $media = null): void
     {
@@ -27,13 +28,16 @@ class Player extends Model implements HasMedia
             ->nonQueued();
     }
 
+
+    public bool $shouldResizeImage = true;
+
     protected $guarded = ['id'];
 
     public static function boot()
     {
         parent::boot();
-        self::observe(new SlugObserver);
-        self::observe(new MediaObserver);
+        self::observe(new SlugObserver());
+        self::observe(new MediaObserver());
 
         static::deleting(function ($deletePlayer) {
             $eventChip = EventChip::where('player_id', $deletePlayer->id)->get();
@@ -68,7 +72,7 @@ class Player extends Model implements HasMedia
 
     public function setStatusAttribute($value)
     {
-        $this->attributes['status'] =  !$value  ? 'disabled' : 'enabled';
+        $this->attributes['status'] =  !$value ? 'disabled' : 'enabled';
     }
 
 
@@ -79,7 +83,7 @@ class Player extends Model implements HasMedia
 
     public function openHistory()
     {
-        return '<a class="btn btn-sm btn-link"  href="player_history/'.urlencode($this->attributes['id']).'" data-toggle="tooltip" title="Chip  Count"><i class="fa fa-search"></i> history  </a>';
+        return '<a class="btn btn-sm btn-link"  href="player_history/' . urlencode($this->attributes['id']) . '" data-toggle="tooltip" title="Chip  Count"><i class="fa fa-search"></i> history  </a>';
     }
 
     public function getNameAttribute($value)
@@ -90,10 +94,10 @@ class Player extends Model implements HasMedia
     public function badge()
     {
         return $this->belongsTo(Badge::class);
-    } 
+    }
 
     // protected static function booted()
     // {
-        
+
     // }
 }

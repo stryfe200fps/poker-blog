@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\MediaReportingCategory>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Page>
  */
-class MediaReportingCategoryFactory extends Factory
+class PageFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,7 +17,10 @@ class MediaReportingCategoryFactory extends Factory
     public function definition()
     {
         return [
-            'title' => $this->faker->word
+            'name' => 'Test Page',
+            'title' => 'Test Page',
+            'content' => 'Content Page',
+            'template' => 'default',
         ];
     }
 }

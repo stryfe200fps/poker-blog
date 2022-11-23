@@ -109,7 +109,7 @@ class EventReportCrudController extends CrudController
 
         ]);
 
-        CRUD::column('published_date')->type('datetime')->format('MMM D, YYYY hh:mm a')->label('Published Date');
+        CRUD::column('realtime_date')->type('datetime')->format('MMM D, YYYY hh:mm a')->label('Published Date');
     }
 
     protected function setupCreateOperation()
@@ -253,30 +253,11 @@ class EventReportCrudController extends CrudController
                 'ajax' => true,
                 'minimum_input_length' => 0,
                 'allows_null' => false,
-                'value' => $this->crud->getCurrentOperation() === 'create' ? EventReport::lastLevel()->id ?? 0 : $this->crud->getCurrentEntry()->level->id,
+                'value' => $this->crud->getCurrentOperation() === 'create' ? EventReport::lastLevel()?->id ?? 0 : $this->crud->getCurrentEntry()->level?->id,
                 'wrapper' => [
                     'class' => 'form-group col-md-12',
                 ],
             ],
-
-         
-            // [
-            //     'label' => 'Tags',
-            //     'type' => 'relationship',
-            //     'name' => 'tags', // the method that defines the relationship in your Model
-            //     'entity' => 'tags', // the method that defines the relationship in your Model
-            //     'attribute' => 'title', // foreign key attribute that is shown to user
-            //     'pivot' => true, // on create&update, do you need to add/delete pivot table entries?
-            //     'inline_create' => ['entity' => 'tag'],
-            //     'ajax' => true,
-            //     'minimum_input_length' => 0,
-            //     'allows_null' => true,
-            //     // 'value' => $this->crud->getCurrentOperation() === 'update' ? $this->crud->getCurrentEntry()->level->id : $lastLevelId,
-            //     'wrapper' => [
-            //         'class' => 'form-group col-md-12',
-            //     ],
-            // ],
-
             [
             'name' => 'fake_tags',
             'type' => 'view',

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\MenuItemRequest;
 use Illuminate\Http\Request;
 use App\Traits\LimitUserPermissions;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
@@ -41,6 +42,8 @@ class MenuItemCrudController extends CrudController
         });
 
         $this->crud->operation(['create', 'update'], function () {
+
+            $this->crud->setValidation(MenuItemRequest::class);
             $this->crud->addField([
                 'name' => 'name',
                 'label' => 'Label',

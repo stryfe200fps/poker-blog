@@ -17,7 +17,11 @@ class MediaReportingFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'type' => $this->faker->word,
+            'title' => $this->faker->word,
+            'description' => $this->faker->paragraph,
+            'link' => $this->faker->url,
+            'published_date' =>now() 
         ];
     }
 }
