@@ -3,6 +3,7 @@ import Header from "../Components/Frontend/Header.vue";
 import Footer from "../Components/Frontend/Footer.vue";
 import SideBar from "../Components/Frontend/MainContent/SideBar.vue";
 
+import { Inertia } from "@inertiajs/inertia";
 import { usePage } from "@inertiajs/inertia-vue3";
 import { onMounted, onBeforeUnmount, ref, computed } from "@vue/runtime-core";
 import { useBannerStore } from "@/Stores/banner.js";
@@ -112,9 +113,9 @@ const formattedReportingBanner = computed(() => {
 
 onMounted(async () => {
     document.body.style.overflow = "auto";
-    setTimeout(() => {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-    }, 100);
+    Inertia.on("success", () =>
+        window.scrollTo({ top: 0, behavior: "smooth" })
+    );
     window.addEventListener("scroll", showScrollTopBtn);
     await bannerStore.getBanners();
     homeFullBanner.value = bannerStore.getHomeFullBanner();
