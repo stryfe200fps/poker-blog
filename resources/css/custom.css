@@ -281,3 +281,8 @@ button:focus {
 /* .single-post-box .post-tags-box {
     padding: unset;
 } */
+
+.ckeditor-img {
+    height:unset!important;
+    width:unset!important;
+}

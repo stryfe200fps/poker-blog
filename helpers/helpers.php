@@ -72,18 +72,10 @@ function tableReplacement($content)
 
 function imageResponsiveReplacement($content)
 {
-
-    // $result = preg_replace(
-    //     '%\b(([\w-]+://?|www[.])[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/)))%s',
-    //     '<a href="$1">$1</a>',
-    //     $html
-    // );
-
     $pattern = '/(<img) (!src="\/cards\/\w+.\w+"|alt=(["\'])(?:(?=(\\?))\2.)*?|alt="") /';
-    $replacement = '<img class="img-responsive" loading="lazy" ';
+    $replacement = '<img class="img-responsive ckeditor-img" loading="lazy" ';
     return preg_replace($pattern, $replacement, $content);
 }
-
 
 function checkUrlCode($url)
 {
