@@ -146,7 +146,7 @@ async function handleScrolledToBottom(isVisible) {
     if (currentPage.value > lastPage.value) return;
 
     await articleCategoryStore.getArticleCategoryLists(
-        props.page,
+        pathname.value,
         currentPage.value
     );
     lastPage.value = articleCategoryStore.articleCategoryLists.meta.last_page;
