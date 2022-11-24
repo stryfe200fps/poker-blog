@@ -96,10 +96,6 @@ const props = defineProps({
 const emit = defineEmits(["loadMore"]);
 const tab = ref("");
 
-Inertia.on("success", () => {
-    window.scrollTo({ top: 0 });
-});
-
 function changeTab(currentTab) {
     tab.value = currentTab;
 }

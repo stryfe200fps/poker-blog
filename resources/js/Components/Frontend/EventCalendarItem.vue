@@ -1,6 +1,6 @@
 <template>
     <div class="news-post article-post">
-        <div class="row">
+        <div class="row row--custom" @click="showSeries">
             <div class="col-sm-1">
                 <div class="panel panel-default">
                     <div
@@ -103,6 +103,7 @@
 </template>
 
 <script setup>
+import { Inertia } from "@inertiajs/inertia";
 import { Link } from "@inertiajs/inertia-vue3";
 import { computed } from "@vue/runtime-core";
 import CountryFlag from "vue3-country-flag-icon";
@@ -145,4 +146,14 @@ const formattedDate = computed(() => {
         return `${startMonth} ${startDay}, ${startYear} - ${endMonth} ${endDay}, ${endYear}`;
     }
 });
+
+function showSeries() {
+    Inertia.visit(`/tour/${props.event.poker_tour_slug}/${props.event.slug}`);
+}
 </script>
+
+<style scoped>
+.row--custom:hover {
+    cursor: pointer;
+}
+</style>

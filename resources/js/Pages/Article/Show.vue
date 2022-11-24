@@ -263,9 +263,9 @@ import {
     watch,
     computed,
 } from "@vue/runtime-core";
-import defaultImg from "/public/default-img.png";
 import moment from "moment";
-const articleStore = useArticleStore();
+
+import defaultImg from "/public/default-img.png";
 
 const props = defineProps({
     slug: {
@@ -274,9 +274,9 @@ const props = defineProps({
     },
 });
 
+const articleStore = useArticleStore();
 const article = ref([]);
 const related = ref(null);
-
 const isOpen = ref(false);
 const isPull = ref(false);
 const url = ref(window.location.href);
@@ -291,8 +291,6 @@ const showShare = () => {
 
 function goBack() {
     Inertia.visit(`/news`);
-    // history.back();
-    // return false;
 }
 
 function onClickOutside(event) {

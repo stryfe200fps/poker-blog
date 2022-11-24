@@ -166,7 +166,8 @@ const filteredSeries = computed(() => {
 });
 
 const datePlaceholder = computed(() => {
-    return selectedDate.value === moment().format("YYYY-MM-DD")
+    return selectedDate.value === moment().format("YYYY-MM-DD") ||
+        selectedDate.value === ""
         ? "Upcoming"
         : `${moment(new Date(selectedDate.value)).format("MMMM D")} onwards`;
 });
