@@ -12,14 +12,14 @@ use App\Observers\MediaObserver;
 use App\Observers\SlugObserver;
 use Illuminate\Database\Eloquent\Model;
 use App\Observers\ModelTaggableObserver;
-
+use App\Traits\RecordMedia;
+use App\Traits\RecordTag;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class EventReport extends Model implements HasMedia
 {
     use \Backpack\CRUD\app\Models\Traits\CrudTrait;
     use HasFactory;
-    use Prunable;
     use HasMediaCaching;
     use \Znck\Eloquent\Traits\BelongsToThrough;
 
@@ -31,13 +31,12 @@ class EventReport extends Model implements HasMedia
         'players' => 'json',
     ];
 
+    use RecordMedia, RecordTag;
+
     public static function boot()
     {
         parent::boot();
-        self::observe(new SlugObserver());
-        self::observe(new MediaObserver());
         self::observe(new EventReportObserver());
-        self::observe(new ModelTaggableObserver());
     }
 
     public $mediaCollection = 'event-report';

@@ -7,6 +7,8 @@ use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use App\Observers\MediaObserver;
 use App\Observers\SlugObserver;
+use App\Traits\RecordMedia;
+use App\Traits\RecordSlug;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -16,13 +18,7 @@ class ArticleCategory extends Model
     use HasFactory;
     use HasSlug;
 
-    public function getSlugOptions(): SlugOptions
-    {
-        return SlugOptions::create()
-            ->generateSlugsFrom('title')
-            ->saveSlugsTo('slug')
-            ->doNotGenerateSlugsOnUpdate();
-    }
+    use RecordSlug, RecordMedia;
 
     /**
      * The attributes that are mass assignable.
@@ -50,12 +46,7 @@ class ArticleCategory extends Model
         return $this->belongsToMany(Article::class);
     }
 
-    public static function boot()
-    {
-        parent::boot();
-        self::observe(new SlugObserver);
-        self::observe(new MediaObserver);
-    }
+
 
 
     

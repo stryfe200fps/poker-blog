@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Author;
 use App\Http\Requests\MediaReportingRequest;
 use App\Models\MediaReportingCategory;
+use App\Services\BackpackUIService;
 use App\Traits\LimitUserPermissions;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
@@ -53,19 +54,7 @@ public function setup()
         CRUD::addColumn('type');
         CRUD::addColumn('published_date');
 
-        $this->crud->addFilter([
-            'type' => 'select2',
-            'name' => 'filter_type',
-            'label' => 'Type',
-        ],
-            function () {
-                return MediaReportingCategory::all()->pluck('title', 'id')->toArray();
-            },
-            function ($values) {
-                $this->crud->query = $this->crud->query->whereHas('media_reporting_categories', function ($query) use ($values) {
-                    $query->where('id', $values);
-                });
-            });
+       
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
@@ -96,8 +85,9 @@ public function setup()
     protected function setupCreateOperation()
     {
         CRUD::setValidation(MediaReportingRequest::class);
+        $ui = new BackpackUIService();
 
-        CRUD::addField('title');
+        $ui->title();
         CRUD::addField([
                 'label' => 'Type',
                 'name' => 'type',
@@ -110,23 +100,7 @@ public function setup()
                     'class' => 'form-group col-md-12  ',
                 ],
             ]);
-        CRUD::addField([
-            'name' => 'description',
-            'type' => 'textarea'
-        ]);
-
-        // CRUD::addField(
-        //              [
-        //             'name' => 'media_reporting_categories',
-        //             'type' => 'select2_multiple',
-        //             'attribute' => 'title',
-        //             'label' => 'Categories',
-        //             'wrapper' => [
-        //                 'class' => 'form-group col-md-12',
-        //             ],
-        //         ]
-        //     );
-
+        $ui->description();
         CRUD::addField(      [
                 'label' => 'Categories',
                 'type' => 'relationship',
@@ -145,42 +119,9 @@ public function setup()
 
         CRUD::addField('link');
 
-        $author = Author::where('user_id', backpack_user()->id)->first();
+        $ui->date();
+        $ui->image();
 
-        $this->crud->addField(
-
-            [   // DateTime
-                'name' => 'published_date',
-                'label' => 'Published Date',
-                'type' => 'datetime_picker',
-                'default' => 'now',
-                'datetime_picker_options' => [
-                    'format' => 'MMM D, YYYY hh:mm a',
-                    'tooltips' => [ //use this to translate the tooltips in the field
-                        'today' => 'Hoje',
-                        'selectDate' => 'Selecione a data',
-                        // available tooltips: today, clear, close, selectMonth, prevMonth, nextMonth, selectYear, prevYear, nextYear, selectDecade, prevDecade, nextDecade, prevCentury, nextCentury, pickHour, incrementHour, decrementHour, pickMinute, incrementMinute, decrementMinute, pickSecond, incrementSecond, decrementSecond, togglePeriod, selectTime, selectDate
-                    ],
-                ],
-                'allows_null' => false,
-                'wrapper' => [
-                    'class' => 'form-group col-md-12',
-                ],
-
-            ] );
-
-        $this->crud->addField(
-
-                [
-                    'name' => 'image',
-                    'type' => 'image',
-                    'aspect_ratio' => 3 / 2,
-                    'crop' => true,
-                    'wrapper' => [
-                        'class' => 'form-group col-md-12',
-                    ],
-                ],
-            );
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:

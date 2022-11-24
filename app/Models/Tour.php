@@ -10,6 +10,8 @@ use Spatie\Sluggable\SlugOptions;
 use App\Traits\HasMediaCollection;
 use App\Observers\MediaObserver;
 use App\Observers\SlugObserver;
+use App\Traits\RecordMedia;
+use App\Traits\RecordSlug;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -27,20 +29,7 @@ class Tour extends Model implements HasMedia
 
     protected $guarded = ['id'];
 
-    public static function boot()
-    {
-        parent::boot();
-        self::observe(new SlugObserver);
-        self::observe(new MediaObserver);
-    }
-
-    public function getSlugOptions(): SlugOptions
-    {
-        return SlugOptions::create()
-            ->generateSlugsFrom('title')
-            ->saveSlugsTo('slug')
-            ->doNotGenerateSlugsOnUpdate();
-    }
+    use RecordMedia, RecordSlug;
 
     public function tournaments()
     {

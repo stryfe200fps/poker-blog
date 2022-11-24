@@ -15,6 +15,8 @@ use Spatie\Sluggable\SlugOptions;
 use App\Traits\HasMediaCollection;
 use App\Observers\MediaObserver;
 use App\Observers\SlugObserver;
+use App\Traits\RecordMedia;
+use App\Traits\RecordSlug;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\ImageOptimizer\OptimizerChain;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -38,13 +40,9 @@ class Event extends Model implements HasMedia
 
     public $mediaCollection = 'event';
     use HasMediaCollection, HasMultipleImages;
+    use RecordSlug, RecordMedia;
 
-    public static function boot()
-    {
-        parent::boot();
-        self::observe(new SlugObserver);
-        self::observe(new MediaObserver);
-    }
+    
 
     public function getScheduleAttribute()
     {
@@ -64,13 +62,7 @@ class Event extends Model implements HasMedia
         return $newSched;
     }
 
-    public function getSlugOptions(): SlugOptions
-    {
-        return SlugOptions::create()
-            ->generateSlugsFrom('title')
-            ->saveSlugsTo('slug')
-            ->doNotGenerateSlugsOnUpdate();
-    }
+  
 
 
     public function daysStatus()

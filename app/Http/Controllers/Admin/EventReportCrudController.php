@@ -7,6 +7,7 @@ use App\Models\Author;
 use App\Models\Day;
 use App\Models\Event;
 use App\Models\EventReport;
+use App\Services\BackpackUIService;
 use App\Traits\LimitUserPermissions;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
@@ -58,7 +59,7 @@ class EventReportCrudController extends CrudController
             );
             // CRUD::setHeading('Reports: <a href="/admin/day?event='.$getEvent->id.'">'.  $getEvent?->title.'</a> -
             // Day '.$getDay?->name);
-            customHeading('day?event=' . $getEvent->id, 'Day', $getEvent?->title);
+            customHeading('day?event=' . $getEvent->id, 'Day', $getDay?->name);
             CRUD::setTitle($getEvent?->title);
         } else {
             $this->crud->denyAccess('create');
@@ -83,11 +84,6 @@ class EventReportCrudController extends CrudController
 
     protected function setupListOperation()
     {
-        // if (request()->get('event') !== null && request()->get('day') !== null) {
-        //         session()->put('event_id', request()->get('event'));
-        //         session()->put('event_day', request()->get('day'));
-        // }
-
         $this->crud->disableResponsiveTable();
         Widget::add()->to('after_content')->type('view')->view('vendor.backpack.helper.live_report'); // widgets to show the ordering card
         $this->crud->addClause('where', 'day_id', session()->get('event_day'));
@@ -116,6 +112,9 @@ class EventReportCrudController extends CrudController
 
     protected function setupCreateOperation()
     {
+
+        $ui = new BackpackUIService();
+
         if (!session()->get('event_id')) {
             $this->crud->denyAccess('create');
         }
@@ -148,39 +147,11 @@ class EventReportCrudController extends CrudController
             ]
         );
 
-        // $lastLevelId = DB::table('event_reports')
-        // ->join('levels', function ($join) {
-        //     $join->on('levels.id', '=', 'event_reports.level_id');
-        // })->where('event_id', request()->session()->get('event_id'))->orderByDesc('name')
-        // ->get(['level_id'])->first()->level_id ?? 1;
-
-        CRUD::field('title');
-
-        // $this->crud->addField([
-        //     'name' => 'slug',
-        //     'attributes' => [
-        //         'placeholder' => config('app.slug_placeholder'),
-        //     ],
-        //     'type' => 'text',
-        // ]);
+        $ui->title();
 
         $author = Author::where('user_id', backpack_user()->id)->first();
 
-        $this->crud->addFields([
-
-            [   // CKEditor
-                'name' => 'content',
-                'label' => 'Content',
-                'type' => 'ckeditor',
-                'extra_plugins' => ['widget', 'autocomplete', 'textmatch', 'toolbar', 'wysiwygarea', 'image', 'sourcearea'],
-
-                'options' => [
-                    'autoGrow_minHeight' => 200,
-                    'autoGrow_bottomSpace' => 50,
-                    'removePlugins' => 'resize,maximize',
-                ],
-            ],
-        ]);
+        $ui->content();
 
         if ($this->crud->getCurrentOperation() == 'create') {
             $this->crud->addField(
@@ -243,19 +214,6 @@ class EventReportCrudController extends CrudController
         ]);
 
         CRUD::field('day_id')->type('hidden')->value(session()->get('event_day'));
-
-        // $this->crud->addField(
-        //     [
-        //     'label' => 'Day',
-        //     'name' => 'day',
-        //     'type' => 'text',
-        //     'value' => '',
-        //     'attributes' => [
-        //         'readonly' => 'readonly',
-        //     ],
-        //     'wrapper' => [
-        //         'class' => 'form-group col-md-6',
-        //     ]] );
 
         $this->crud->addFields([
             [
@@ -404,11 +362,6 @@ class EventReportCrudController extends CrudController
         if ($this->crud->getCurrentOperation() === 'create') {
             Widget::add()->type('script')->content('assets/js/admin/create-admin-image-theme-attach.js');
         }
-
-        // if ($this->crud->getCurrentOperation() === 'update') {
-        //     $liveReport = LiveReport::find($this->crud->getCurrentEntryId());
-        //     $players = collect($liveReport->liveReportPlayers);
-        // }
     }
 
     public function fetchTags()
