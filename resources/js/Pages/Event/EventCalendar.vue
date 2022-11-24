@@ -161,12 +161,13 @@ const filteredSeries = computed(() => {
         country: selectedCountry.value || null,
         game: selectedGame.value || null,
         tour: selectedTour.value || null,
-        date_start: selectedDate.value,
+        date_start: selectedDate.value || null,
     };
 });
 
 const datePlaceholder = computed(() => {
-    return selectedDate.value === moment().format("YYYY-MM-DD")
+    return selectedDate.value === moment().format("YYYY-MM-DD") ||
+        selectedDate.value === ""
         ? "Upcoming"
         : `${moment(new Date(selectedDate.value)).format("MMMM D")} onwards`;
 });
@@ -202,7 +203,7 @@ async function handleScrolledToBottom(isVisible) {
         country: selectedCountry.value || null,
         game: selectedGame.value || null,
         tour: selectedTour.value || null,
-        date_start: selectedDate.value,
+        date_start: selectedDate.value || null,
     });
     eventCalendarStore.series.data.forEach((data) => {
         const list = seriesList.value.filter((val) => val.date === data.date);

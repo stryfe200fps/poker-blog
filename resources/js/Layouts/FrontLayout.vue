@@ -111,13 +111,15 @@ const formattedReportingBanner = computed(() => {
     }
 });
 
+Inertia.on("success", (event) => {
+    event.preventDefault();
+    if (event.detail.page.component != "Event/Index") {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+});
+
 onMounted(async () => {
     document.body.style.overflow = "auto";
-    Inertia.on("success", () => {
-        if (typeof usePage().props.value.day == undefined) {
-            window.scrollTo({ top: 0, behavior: "smooth" });
-        }
-    });
     window.addEventListener("scroll", showScrollTopBtn);
     await bannerStore.getBanners();
     homeFullBanner.value = bannerStore.getHomeFullBanner();

@@ -168,7 +168,7 @@ async function loadMoreReports() {
 
 async function reportViewing(type) {
     if (type === null) {
-        if (!Object.entries(liveReport.value).length) {
+        if (!Object.entries(liveReport.value).length || hasNewReport.value) {
             await eventStore.getLiveReport(1, selectDay.value);
             liveReport.value = eventStore.liveReportList.data;
             lastPage.value = eventStore.liveReportList.meta.last_page;
@@ -221,10 +221,13 @@ const fetchLiveReports = (value) => {
     isLoading.value = value;
     loadPage.value = 1;
     lastPage.value = 1;
-    liveReport.value = [];
-    chipCountsData.value = [];
-    whatsappData.value = [];
-    galleryData.value = [];
+
+    if (!hasNewReport.value) {
+        liveReport.value = [];
+        chipCountsData.value = [];
+        whatsappData.value = [];
+        galleryData.value = [];
+    }
 
     const { name } = eventData.value.available_day_with_reports.find(
         ({ id }) => id == selectDay.value
@@ -290,19 +293,24 @@ onMounted(async () => {
     }
     reportViewing(props.type);
 
-    Inertia.on("navigate", (event) => {
-        isLoading.value = true;
-        reportViewing(event.detail.page.props.type);
-    });
+    Inertia.on(
+        "navigate",
+        (event) => {
+            event.preventDefault();
+            isLoading.value = true;
+            reportViewing(event.detail.page.props.type);
+        },
+        { preserveState: true }
+    );
 
     window.Echo.channel("report").listen(
         "NewReport",
         ({ eventSlug, dayid }) => {
             if (props.slug === eventSlug && selectDay.value == dayid) {
                 hasNewReport.value = true;
-                fetchLiveReports(false);
-                if (props.type === null) reportViewing(props.type);
                 isActive.value = true;
+                fetchLiveReports(false);
+                reportViewing(null);
 
                 setTimeout(() => {
                     hasNewReport.value = false;
