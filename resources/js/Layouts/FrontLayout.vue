@@ -112,7 +112,6 @@ const formattedReportingBanner = computed(() => {
 });
 
 Inertia.on("success", (event) => {
-    console.log("event :>> ", event.detail.page.component);
     event.preventDefault();
     if (event.detail.page.component != "Event/Index") {
         window.scrollTo({ top: 0, behavior: "smooth" });
