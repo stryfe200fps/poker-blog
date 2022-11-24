@@ -79,16 +79,9 @@ function imageResponsiveReplacement($content)
     //     $html
     // );
 
-    $pattern = '/src=(["\']).*\1(?![^\s])/';
-    $pattern ='%\b(([\w-]+://?|www[.])[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/)))%s';
-    $replacement = '$1" loading="lazy" class="img-responsive';
-    $result = preg_replace($pattern, $replacement, $content);
-
-    $pattern = '/style=(["\']).*\1(?![^\s])/';
-    $replacement = '';
-    $result = preg_replace($pattern, $replacement, $result);
-
-    return $result;
+    $pattern = '/(<img) (!src="\/cards\/\w+.\w+"|alt=(["\'])(?:(?=(\\?))\2.)*?|alt="") /';
+    $replacement = '<img class="img-responsive" loading="lazy" ';
+    return preg_replace($pattern, $replacement, $content);
 }
 
 
