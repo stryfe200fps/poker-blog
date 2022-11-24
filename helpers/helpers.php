@@ -72,9 +72,23 @@ function tableReplacement($content)
 
 function imageResponsiveReplacement($content)
 {
-    $pattern = '/(<img) (alt="\w+?"|alt="") /';
-    $replacement = '<img class="img-responsive" loading="lazy" ';
-    return preg_replace($pattern, $replacement, $content);
+
+    // $result = preg_replace(
+    //     '%\b(([\w-]+://?|www[.])[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/)))%s',
+    //     '<a href="$1">$1</a>',
+    //     $html
+    // );
+
+    $pattern = '/src=(["\']).*\1(?![^\s])/';
+    $pattern ='%\b(([\w-]+://?|www[.])[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/)))%s';
+    $replacement = '$1" loading="lazy" class="img-responsive';
+    $result = preg_replace($pattern, $replacement, $content);
+
+    $pattern = '/style=(["\']).*\1(?![^\s])/';
+    $replacement = '';
+    $result = preg_replace($pattern, $replacement, $result);
+
+    return $result;
 }
 
 
