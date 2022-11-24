@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
+use Illuminate\Log\Logger;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 use League\Glide\ServerFactory;
 use Illuminate\Contracts\Filesystem\Filesystem;
-use Illuminate\Log\Logger;
 use League\Glide\Responses\LaravelResponseFactory;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
@@ -36,7 +38,13 @@ class ImageController extends Controller
             'base_url' => 'img',
         ]);
    
-        return $server->getImageResponse("/public/$media->id/$media->file_name", request()->all());
+        
+        try {
+           return $server->getImageResponse("/public/$media->id/$media->file_name", request()->all());
+         } catch (Exception $e) { Logger('Image was not found'); }
+
+        $path = public_path().'/default-img.png';
+        return response()->file($path);
     }
     
 }
