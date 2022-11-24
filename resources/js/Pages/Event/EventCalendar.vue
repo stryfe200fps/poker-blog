@@ -161,7 +161,7 @@ const filteredSeries = computed(() => {
         country: selectedCountry.value || null,
         game: selectedGame.value || null,
         tour: selectedTour.value || null,
-        date_start: selectedDate.value,
+        date_start: selectedDate.value || null,
     };
 });
 
@@ -203,7 +203,7 @@ async function handleScrolledToBottom(isVisible) {
         country: selectedCountry.value || null,
         game: selectedGame.value || null,
         tour: selectedTour.value || null,
-        date_start: selectedDate.value,
+        date_start: selectedDate.value || null,
     });
     eventCalendarStore.series.data.forEach((data) => {
         const list = seriesList.value.filter((val) => val.date === data.date);
