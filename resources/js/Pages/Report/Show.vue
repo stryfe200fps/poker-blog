@@ -147,7 +147,7 @@
                             class="imageFrame"
                             :style="{
                                 'background-image':
-                                    'url(' + getFrame(report.data.theme) + ')',
+                                    'url(' + report.data.theme + ')',
                             }"
                         ></div>
                     </div>
@@ -266,16 +266,6 @@ import CustomeTable from "@/Components/Frontend/CustomeTable.vue";
 import CountryFlag from "vue3-country-flag-icon";
 import defaultAvatar from "@/default-avatar.png";
 
-import brokenMirror from "@/photo_templates/brokenmirror.png";
-import bulletHole from "@/photo_templates/bullethole.png";
-import flames from "@/photo_templates/flames.png";
-import happyBirthday from "@/photo_templates/happybirthday.png";
-import iceCubes from "@/photo_templates/icecubes.png";
-import pocketAces from "@/photo_templates/pocketaces.png";
-import sunRays from "@/photo_templates/sunrays.png";
-import waterLeaves from "@/photo_templates/water-leaves.png";
-import waterWaves from "@/photo_templates/water-waves.png";
-
 const props = defineProps({
     slug: {
         type: String,
@@ -312,29 +302,6 @@ function onClickOutside(event) {
     if (event.target.localName !== "a") {
         isOpen.value = false;
         return;
-    }
-}
-
-function getFrame(theme) {
-    switch (theme) {
-        case "brokenMirror":
-            return brokenMirror;
-        case "bulletHole":
-            return bulletHole;
-        case "flames":
-            return flames;
-        case "happyBirthday":
-            return happyBirthday;
-        case "iceCubes":
-            return iceCubes;
-        case "pocketAces":
-            return pocketAces;
-        case "sunRays":
-            return sunRays;
-        case "waterLeaves":
-            return waterLeaves;
-        case "waterWaves":
-            return waterWaves;
     }
 }
 </script>

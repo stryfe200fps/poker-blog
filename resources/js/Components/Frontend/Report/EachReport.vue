@@ -268,7 +268,8 @@ const props = defineProps({
     },
 });
 
-// const items = ref([]);
+const tab = ref(0);
+const isOpen = ref(false);
 
 const formattedTitle = computed(() => {
     return (
@@ -283,12 +284,6 @@ function onClickOutside(event) {
     }
 }
 
-// const newItem = ref(null);
-
-const tab = ref(0);
-const isOpen = ref(false);
-//const lastLevel = ref("");
-
 const changeTab = (currentTab) => {
     tab.value = currentTab;
 };
@@ -296,30 +291,6 @@ const changeTab = (currentTab) => {
 const showShare = () => {
     isOpen.value = !isOpen.value;
 };
-
-/* FRAMES */
-function getFrame(theme) {
-    switch (theme) {
-        case "brokenMirror":
-            return brokenMirror;
-        case "bulletHole":
-            return bulletHole;
-        case "flames":
-            return flames;
-        case "happyBirthday":
-            return happyBirthday;
-        case "iceCubes":
-            return iceCubes;
-        case "pocketAces":
-            return pocketAces;
-        case "sunRays":
-            return sunRays;
-        case "waterLeaves":
-            return waterLeaves;
-        case "waterWaves":
-            return waterWaves;
-    }
-}
 </script>
 
 <style scoped>
