@@ -19,12 +19,13 @@
         <meta property="og:site_name" content="LifeOfPoker">
         <meta property="og:description" content="{!! $page['props']['description'] ?? Setting::get('website_description')  ?? 'Life of poker is a one stop shop for all your poker needs. We are here to bring the action to your doorstep. Live event coverage, interviews, videos, podcasts and much more.'  !!}" />
         
-        <meta property="twitter:card" content="summary_large_image">
-        <meta property="twitter:url" content="{{ url()->current() }}">
-        <meta property="twitter:site" content="@lifeofpoker" />
-        <meta property="twitter:title"  content="{!! $page['props']['title'] ?? 'LifeOfPoker'  !!}">
-        <meta property="twitter:image" content="{{ $page['props']['image'] ?? config('app.url'). '/default_og-image.png'  }}" />
-        <meta property="twitter:description" content="{!! $page['props']['description'] ?? Setting::get('website_description') ?? 'Life of poker is a one stop shop for all your poker needs. We are here to bring the action to your doorstep. Live event coverage, interviews, videos, podcasts and much more.'  !!}" />
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:url" content="{{ url()->current() }}">
+        <meta name="twitter:site" content="@lifeofpoker" />
+        <meta name="twitter:creator" content="@lifeofpoker">
+        <meta name="twitter:title"  content="{!! $page['props']['title'] ?? 'LifeOfPoker'  !!}">
+        <meta name="twitter:image" content="{{ $page['props']['image'] ?? config('app.url'). '/default_og-image.png'  }}" />
+        <meta name="twitter:description" content="{!! $page['props']['description'] ?? Setting::get('website_description') ?? 'Life of poker is a one stop shop for all your poker needs. We are here to bring the action to your doorstep. Live event coverage, interviews, videos, podcasts and much more.'  !!}" />
 
 
         @routes
