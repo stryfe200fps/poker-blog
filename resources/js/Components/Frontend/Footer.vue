@@ -1,37 +1,3 @@
-<script setup>
-import { Link, usePage } from "@inertiajs/inertia-vue3";
-import { ref, computed } from "@vue/runtime-core";
-import { createToast } from "mosha-vue-toastify";
-import "mosha-vue-toastify/dist/style.css";
-import moment from "moment";
-
-const email = ref(null);
-
-const currentDate = computed(() => {
-    return moment().format("YYYY");
-});
-
-async function submitEmail() {
-    try {
-        await axios.post("api/subscribe", {
-            email: email.value,
-        });
-        email.value = null;
-        createToast("Thank you for subscribing.", {
-            position: "top-center",
-            hideProgressBar: true,
-            type: "success",
-            transition: "slide",
-            timeout: 2000,
-            showIcon: true,
-            showCloseButton: true,
-        });
-    } catch (error) {
-        console.error(error);
-    }
-}
-</script>
-
 <template>
     <footer style="position: relative; background-color: #2d3436">
         <div class="container">
@@ -92,19 +58,6 @@ async function submitEmail() {
                                         ><i class="fa-brands fa-youtube"></i
                                     ></a>
                                 </li>
-                                <!-- <li>
-                                    <a href="#" class="whatsapp-hover"
-                                        ><i class="fa-brands fa-whatsapp"></i
-                                    ></a>
-                                </li>
-                                <li>
-                                    <a
-                                        href="#"
-                                        class="whatsapp-hover"
-                                        style="border: none"
-                                        ><i class="fa-brands fa-spotify"></i
-                                    ></a>
-                                </li> -->
                             </ul>
                         </div>
                         <div class="widget subscribe-widget">
@@ -238,6 +191,40 @@ async function submitEmail() {
     </footer>
 </template>
 
+<script setup>
+import { Link } from "@inertiajs/inertia-vue3";
+import { ref, computed } from "@vue/runtime-core";
+import { createToast } from "mosha-vue-toastify";
+import "mosha-vue-toastify/dist/style.css";
+import moment from "moment";
+
+const email = ref(null);
+
+const currentDate = computed(() => {
+    return moment().format("YYYY");
+});
+
+async function submitEmail() {
+    try {
+        await axios.post("api/subscribe", {
+            email: email.value,
+        });
+        email.value = null;
+        createToast("Thank you for subscribing.", {
+            position: "top-center",
+            hideProgressBar: true,
+            type: "success",
+            transition: "slide",
+            timeout: 2000,
+            showIcon: true,
+            showCloseButton: true,
+        });
+    } catch (error) {
+        console.error(error);
+    }
+}
+</script>
+
 <style scoped>
 footer .social-widget ul.social-icons li a.instagram:hover {
     background: linear-gradient(
@@ -250,12 +237,8 @@ footer .social-widget ul.social-icons li a.instagram:hover {
     ) !important;
 }
 footer .social-widget ul.social-icons li a.whatsapp-hover:hover {
-    background: #2ecc71 !important;
+    background-color: #2ecc71 !important;
 }
-
-/* footer .social-widget ul.social-icons li {
-    margin-right: 30px;
-} */
 
 footer .social-widget ul.social-icons li a {
     border: 1px solid #333333;

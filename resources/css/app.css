@@ -1,9 +1,4 @@
-@import url('bootstrap.min.css');
-/* @import url('jquery.bxslider.css'); */
-@import url('font-awesome.css');
-/* @import url('magnific-popup.css');
-@import url('owl.carousel.css');
-@import url('owl.theme.css');
-@import url('ticker-style.css'); */
-@import url('style.css');
-@import url('custom.css');
+@import url("bootstrap.min.css");
+@import url("font-awesome.css");
+@import url("style.css");
+@import url("custom.css");
