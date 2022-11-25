@@ -11,6 +11,8 @@ class Country extends Model
     use CrudTrait;
     use HasFactory;
 
+    public $timestamps = false;
+
     protected $guarded = [
         'id',
     ];
@@ -23,5 +25,15 @@ class Country extends Model
     public function getFullName()
     {
         return $this->full_name;
+    }
+
+    public function tournaments()
+    {
+        return $this->hasMany(Tournament::class);
+    }
+
+    public function rooms()
+    {
+        return $this->hasMany(Room::class);
     }
 }

@@ -1,52 +1,87 @@
-import axios from 'axios'
-import { defineStore } from 'pinia'
-// import { ref } from 'vue'
+import axios from "axios";
+import { defineStore } from "pinia";
 
-// You can name the return value of `defineStore()` anything you want, but it's best to use the name of the store and surround it with `use` and `Store` (e.g. `useUserStore`, `useCartStore`, `useProductStore`)
-// the first argument is a unique id of the store across your application
-export const useEventStore = defineStore('event', { 
-
-  state: () => {
-    return {
-      eventData: [],
-      liveReportList: [],
-      mainEvents: []
-    }
-  },
-
-  getters: {
-     getLiveReportBySlug: (state) => {
-      console.log(state.liveReportList)
-      return (slug) => state.liveReportList.find((report) => report.slug === slug)
+export const useEventStore = defineStore("event", {
+    state: () => {
+        return {
+            eventData: [],
+            liveReportList: [],
+            mainEvents: [],
+            galleryData: [],
+            payouts: [],
+            chipCounts: [],
+            whatsapp: [],
+            whatsappContent: [],
+        };
     },
-  },
-
-  actions: {  
-  async getMainEvents() {
-    await axios.get('/api/lof-event/')
-      .then((res) => {
-        this.mainEvents = res.data
-      })
+    actions: {
+        async getMainEvents() {
+            try {
+                const { data } = await axios.get("/api/event/");
+                this.mainEvents = data;
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        async getEventData(id) {
+            try {
+                const { data } = await axios.get("/api/event/" + id);
+                this.eventData = data;
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        async getLiveReport(page, day) {
+            try {
+                let { data } = await axios.get(
+                    `/api/report?page=${page}&day=${day}`
+                );
+                this.liveReportList = data;
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        async getChipCountsData(day) {
+            try {
+                const { data } = await axios.get("/api/chip/day/" + day);
+                this.chipCounts = data;
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        async getWhatsappContent() {
+            try {
+                const { data } = await axios.get("/api/content/whatsapp");
+                this.whatsappContent = data;
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        async getWhatsappData(day) {
+            try {
+                const { data } = await axios.get(
+                    "/api/chip/day/" + day + "/whatsapp"
+                );
+                this.whatsapp = data;
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        async getGalleryData(day) {
+            try {
+                const { data } = await axios.get("/api/gallery/day/" + day);
+                this.galleryData = data;
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        async getPayoutsData(slug) {
+            try {
+                const { data } = await axios.get("/api/payout/event/" + slug);
+                this.payouts = data;
+            } catch (error) {
+                console.error(error);
+            }
+        },
     },
-   async getEventData(id) {
-    await axios.get('/api/lof-event/'+ id)
-      .then((res) => {
-        this.eventData = res.data
-      })
-    },
-
-    async getLiveReport(event, day ) {
-      await axios.get(`/api/lof-live-report?event=${event}&filterDay=${day}`)
-        .then((res) => {
-          this.liveReportList = res.data
-        })
-      },
-    // async getArticleBySlug(slug) {
-    //   await axios.get('/api/article/'+ slug).then((res) => {
-    //     this.singleArticle = res.data
-    //   })
-    // }
-}
-
-})
-
+});

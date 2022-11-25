@@ -3,7 +3,9 @@
 namespace Database\Factories;
 
 use App\Models\Event;
+use App\Models\EventGameTable;
 use App\Models\Tournament;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class EventFactory extends Factory
@@ -13,11 +15,9 @@ class EventFactory extends Factory
      *
      * @var string
      */
-
     protected $model = Event::class;
 
     /**
-     * 
      * Define the model's default state.
      *
      * @return array
@@ -26,10 +26,11 @@ class EventFactory extends Factory
     {
         return [
             'tournament_id' => Tournament::factory()->create()->id,
+            'buyin' => 200,
+            'fee' => 200,
             'title' => $this->faker->name,
+            'event_game_table_id'  => EventGameTable::factory()->create()->id,
             'description' => $this->faker->text,
-            'date_start' => $this->faker->dateTime(),
-            'date_end' => $this->faker->dateTime(),
         ];
     }
 }

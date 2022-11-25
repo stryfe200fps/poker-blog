@@ -1,7 +1,12 @@
 <?php
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use App\Models\User;
+use Tests\DuskTestCase;
+
+use Spatie\Permission\Models\Role;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Services\ImageService;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +20,10 @@ use Tests\TestCase;
 */
 
 uses(TestCase::class, RefreshDatabase::class)->in('Feature');
+uses(DuskTestCase::class)->in('Browser');
+
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -42,7 +51,74 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
+
+
+function superAdminAuthenticate()
 {
-    // ..
+    $u = User::factory()->create();
+    $role = Role::create([
+        'name' => 'super-admin',
+    ]);
+
+    $user = test()->actingAs(User::factory()->create(), 'web');
+    backpack_user()->assignRole('super-admin');
+
+    return $u;
+}
+
+function insert($route, array $attributes, $returnDefault = true, $routeParameters = [])
+{
+    //authenticate user
+    test()->superAdminAuthenticate();
+    $test = test()->get("/admin/$route/create?".http_build_query($routeParameters))->assertStatus(200);
+    $post = test()->post("/admin/$route", $attributes);
+    if (!$returnDefault)
+        return $post;
+
+    return test();
+}
+
+function delete($route, string $model)
+{
+
+    test()->superAdminAuthenticate();
+
+    $abstractModel = getModel($model) ;
+    $create = $abstractModel->factory()->create();
+    test()->delete("admin/$route/$create->id");
+
+    $count = $abstractModel->where('id', $create->id)->count();
+    expect($count)->toBe(0);
+    return test();
+}
+
+function update($route, string $model , array $attributes, $routeParameters = [])
+{
+    test()->superAdminAuthenticate();
+
+    //create new data
+    $create = getModel($model)->factory()->create($attributes);
+    $id = $create->id;
+    //go to the edit page
+    $visit =  test()->get("admin/$route/$id/edit?".http_build_query($routeParameters) )->assertStatus(200);
+    //save update
+    $test = test()->put("/admin/$route/update", $attributes);
+
+    return test();
+}
+
+
+function getModel(string $model)
+{
+    return test()->app()->make("App\Models\\$model");
+}
+
+ function getFileType($value)
+  {
+    return  (new \ReflectionClass(get_class($value)))->getShortName() ;
+  }
+
+  function uploadImage($image, $model )
+{
+    return (new ImageService($image, $model))->imageUpload();
 }

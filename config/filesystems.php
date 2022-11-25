@@ -56,6 +56,11 @@ return [
             'throw' => false,
         ],
 
+        'languages' => [
+            'driver' => 'local',
+            'root' => base_path('resources/lang'),
+        ],
+
     ],
 
     /*

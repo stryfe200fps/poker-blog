@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Facade;
 use App\Helpers\Timezone;
 use App\Providers\TimezoneProvider;
+use Illuminate\Support\Facades\Facade;
 use Webpatser\Countries\CountriesFacade;
 use Webpatser\Countries\CountriesServiceProvider;
 
@@ -18,8 +18,51 @@ return [
     | any other location as required by the application or its packages.
     |
     */
+    'crud_entities' => [
+        'article-category',
+        'article',
+        'author',
+        'badge',
+        'banner',
+        'chip count',
+        'content',
+        'day',
+        'event',
+        'report',
+        'game',
+        'glossary',
+        'image-theme',
+        'level',
+        'live-report',
+        'media reporting category',
+        'media reporting',
+        'menu-item',
+        'page',
+        'payouts',
+        'player',
+        'room',
+        'tag',
+        'tour',
+        'series',
+    ],
+    'xs-image' => [200, 200], //width, height
+    'sm-image' => [300,250],
+    'md-image' => [640,480],
+    'lg-image' => [900,600],
+    'xl-image' => [1600,900],
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'LifeOfPoker'),
+    'image_cache_lifetime' => 10,
+    'date_format' => 'MMM DD, OY,  h:mm a, ddd',
+    'carbon_date_format' => 'm-d-y h:ma T ',
+    'supported_locales' => ['zh', 'ko', 'ja', 'es', 'de'],
+    'slug_placeholder' => 'Slug will autogenerate if leave empty',
+    'badges' => [
+        'label' => 'apt champion', 'badge' => '/uploads/badges/apt-champion-badge.png',
+        'label' => 'apt champion', 'badge' => '/uploads/badges/apt-champion-badge.png',
+        'label' => 'apt champion', 'badge' => '/uploads/badges/apt-champion-badge.png',
+    ],
+
 
     /*
     |--------------------------------------------------------------------------
@@ -195,16 +238,14 @@ return [
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
-           CountriesServiceProvider::class,
+        CountriesServiceProvider::class,
         TimezoneProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
-          \Orangehill\Iseed\IseedServiceProvider::class,
+        App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
-        App\Providers\MetaTagsServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\FortifyServiceProvider::class,
         App\Providers\JetstreamServiceProvider::class,
-          Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
+        Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class
 
     ],
 
@@ -221,9 +262,11 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
-             'Countries' => CountriesFacade::class,
+        'Countries' => CountriesFacade::class,
         'Share' => Jorenvh\Share\ShareFacade::class,
-        'Timezone' => Timezone::class
+        'Timezone' => Timezone::class,
+        // 'Newsletter' => Spatie\Newsletter\NewsletterFacade::class,
+        'Twitter' => Atymic\Twitter\Facade\Twitter::class,
     ])->toArray(),
 
 ];

@@ -4,12 +4,15 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\ArticleRequest;
 use App\Models\Article;
-use App\Models\ArticleAuthor;
+use App\Models\Author;
 use App\Models\ArticleCategory;
+use App\Services\BackpackUIService;
+use App\Traits\LimitUserPermissions;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use Backpack\CRUD\app\Library\Widget;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 /**
  * Class ArticleCrudController
@@ -19,10 +22,16 @@ use Illuminate\Http\Request;
 class ArticleCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation {
+        store as traitStore;
+    }
+    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation {
+        update as traitUpdate;
+    }
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
+    use LimitUserPermissions;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -31,10 +40,11 @@ class ArticleCrudController extends CrudController
      */
     public function setup()
     {
-        $this->crud->denyAccess('show');
         CRUD::setModel(\App\Models\Article::class);
-        CRUD::setRoute(config('backpack.base.route_prefix').'/article');
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/article');
         CRUD::setEntityNameStrings('article', 'articles');
+        $this->crud->denyAccess('show');
+        $this->denyAccessIfNoPermission();
     }
 
     /**
@@ -46,14 +56,28 @@ class ArticleCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        $this->crud->disableResponsiveTable();
+
         if (session()->get('new_article')) {
             $articleId = Article::find(session()->get('new_article'))->first()->slug;
             Widget::add()->to('before_content')->type('view')->view('vendor.backpack.custom.share')->slug($articleId); // widgets to show the ordering card
         }
 
-        CRUD::column('title');
+        $this->crud->addButtonFromModelFunction('line', 'open_fb', 'shareFacebook', 'beginning');
+        $this->crud->addButtonFromModelFunction('line', 'open_twitter', 'shareTwitter', 'beginning');
 
-        CRUD::column('slug');
+        $this->crud->addColumn([
+            'name' => 'title',
+            'type' => 'text',
+            'limit' => 50,
+            'wrapper' => [
+                'href' => function ($entry, $column, $crud) {
+                    return '/news/day/day/' . $crud->slug;
+                },
+            ],
+
+        ]);
+
         $this->crud->addColumns([
             [
                 'name' => 'article_categories', // the column that contains the ID of that connected entity;
@@ -62,11 +86,13 @@ class ArticleCrudController extends CrudController
             ],
         ]);
 
-            $this->crud->addColumns([
+        $this->crud->addColumns([
             [
                 'name' => 'published_date', // the column that contains the ID of that connected entity;
                 'label' => 'Date', // Table column heading
-                'type' => 'text',
+                'type' => 'datetime',
+                'format' => config('app.date_format'),
+
             ],
         ]);
         /**
@@ -74,19 +100,21 @@ class ArticleCrudController extends CrudController
          * - CRUD::column('price')->type('number');
          * - CRUD::addColumn(['name' => 'price', 'type' => 'number']);
          */
-        $this->crud->addFilter([
-            'type' => 'select2',
-            'name' => 'article_categories',
-            'label' => 'Poker Event',
-        ],
+        $this->crud->addFilter(
+            [
+                'type' => 'select2',
+                'name' => 'article_categories',
+                'label' => 'Category',
+            ],
             function () {
-                return ArticleCategory::all()->pluck('title', 'id')->toArray();
+                return ArticleCategory::all()->sortBy('title')->pluck('title', 'id')->toArray();
             },
             function ($values) {
-                $this->crud->query = $this->crud->query->whereHas('article_category', function ($query) use ($values) {
+                $this->crud->query = $this->crud->query->whereHas('article_categories', function ($query) use ($values) {
                     $query->where('id', $values);
                 });
-            });
+            }
+        );
     }
 
     /**
@@ -98,22 +126,27 @@ class ArticleCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
+        $ui = new BackpackUIService();
         CRUD::setValidation(ArticleRequest::class);
 
         $userId = auth()->user()->id;
+
+        $ui->title();
+        $ui->slug();
+        $ui->description();
+        $ui->content('Main Content', 'main_content');
         $this->crud->addFields(
             [
                 [
-                    'name' => 'title',
-                    'label' => 'Title',
-                    'tab' => 'Basic',
-                    'wrapper' => [
-                        'class' => 'form-group col-md-6',
+                    'name' => 'content',
+                    'label' => 'Content',
+                    'type' => 'repeatable',
+                    'new_item_label' => 'add section',
+                    'subfields' => [
+                        $ui->titleSubfield(),
+                        $ui->contentSubfield('Content', 'body')
                     ],
-                ],
-                [
-                    'name' => 'description',
-                    'body' => 'ckeditor',
+                    'init_rows' => 0,
                 ],
 
                 [
@@ -121,63 +154,23 @@ class ArticleCrudController extends CrudController
                     'type' => 'select2_multiple',
                     'attribute' => 'title',
                     'label' => 'Categories',
-                    'tab' => 'Basic',
-                    'wrapper' => [
-                        'class' => 'form-group col-md-12',
-                    ],
-                ] ,[
-                    'name' => 'article_tags',
-                    'type' => 'relationship',
-                    'attribute' => 'title',
-                    'label' => 'Tags',
-                    'tab' => 'Basic',
                     'wrapper' => [
                         'class' => 'form-group col-md-12',
                     ],
                 ],
-
-                [
-
-                    'name' => 'description',
-                    'body' => 'select_multiple',
-                    'tab' => 'Basic',
-                    'wrapper' => [
-                        'class' => 'form-group col-md-12',
-                    ],
-                ],
-                [   // CKEditor
-                    'name' => 'body',
-                    'label' => 'Content',
-                    'type' => 'ckeditor',
-                    'extra_plugins' => ['widget', 'autocomplete', 'textmatch', 'toolbar', 'wysiwygarea', 'image', 'sourcearea'],
-                    'options' => [
-                        'autoGrow_minHeight' => 200,
-                        'autoGrow_bottomSpace' => 50,
-                        'removePlugins' => 'resize,maximize',
-                    ],
-                    'tab' => 'Basic',
-                    'wrapper' => [
-                        'class' => 'form-group col-md-12',
-                    ],
-                ],
-                [
+                [   // DateTime
                     'name' => 'published_date',
+                    'label' => 'Date',
                     'type' => 'datetime_picker',
-                    'tab' => 'Basic',
-                    'wrapper' => [
-                        'class' => 'form-group col-md-12',
+                    'default' => 'now',
+                    'datetime_picker_options' => [
+                        'format' => 'MMM D, YYYY hh:mm a',
+                        'tooltips' => [ //use this to translate the tooltips in the field
+                            'selectDate' => 'Selecione a data',
+                            // available tooltips: today, clear, close, selectMonth, prevMonth, nextMonth, selectYear, prevYear, nextYear, selectDecade, prevDecade, nextDecade, prevCentury, nextCentury, pickHour, incrementHour, decrementHour, pickMinute, incrementMinute, decrementMinute, pickSecond, incrementSecond, decrementSecond, togglePeriod, selectTime, selectDate
+                        ],
                     ],
-                    'date_picker_options' => [
-                        'todayBtn' => 'linked',
-                        'format' => 'yyyy-mm-dd',
-                    ],
-                ],
-                [
-                    'name' => 'image',
-                    'type' => 'image',
-                    'aspect_ratio' => 3 / 2,
-                    'crop' => true,
-                    'tab' => 'Basic',
+                    'allows_null' => false,
                     'wrapper' => [
                         'class' => 'form-group col-md-12',
                     ],
@@ -186,61 +179,119 @@ class ArticleCrudController extends CrudController
             ]
         );
 
- 
-        $author = ArticleAuthor::where('user_id', backpack_user()->id)->first();
-      
+        $this->crud->addField(
+            [
+                'name' => 'fake_tags',
+                'type' => 'view',
+                'view' => 'tag_custom_selector',
+            ]
+        );
+
+
+        $author = Author::where('user_id', backpack_user()->id)->first();
+
         if ($author !== null) {
             $this->crud->addField([
-                'name' => 'article_author_id',
+                'name' => 'author_id',
                 'type' => 'select2',
                 'attribute' => 'fullname',
                 'value' => $author->id,
                 'label' => 'Author',
-                'tab' => 'Basic',
                 'wrapper' => [
                     'class' => 'form-group col-md-12',
                 ],
             ]);
         } else {
             $this->crud->addField([
-                'name' => 'article_author_id',
+                'name' => 'author_id',
                 'type' => 'select2',
                 'attribute' => 'fullname',
-                'label' => 'author',
-                'tab' => 'Basic',
+                'label' => 'Author',
                 'wrapper' => [
                     'class' => 'form-group col-md-12',
                 ],
             ]);
         }
+
+
+        $this->crud->addField(
+            [
+                'name' => 'image',
+                'type' => 'image',
+                'aspect_ratio' => 3 / 2,
+                'crop' => true,
+                'wrapper' => [
+                    'class' => 'form-group col-md-12',
+                ],
+            ],
+        );
     }
 
-public function store(Request $request)
-{
-    $this->crud->hasAccessOrFail('create');
+    public function fetchTags()
+    {
+        return $this->fetch(
+            [
+                'model' => \App\Models\Tag::class,
+                'paginate' => 3,
+            ]
+        );
+    }
 
-    // execute the FormRequest authorization and validation, if one is required
-    $request = $this->crud->validateRequest();
+    public function store(Request $request)
+    {
+        $content = [
+            0 =>
+            [
+                'title' => $request['title'],
+                'body' => $request['main_content']
+            ]
+        ];
 
-    // register any Model Events defined on fields
-    $this->crud->registerFieldEvents();
+        if ($request['content'] !== null) {
+            $content = array_merge($content, $request['content']);
+        }
 
-    $item = $this->crud->create($this->crud->getStrippedSaveRequest($request));
-    $this->data['entry'] = $this->crud->entry = $item;
+        $request['content'] = $content;
 
-    // session()->put('new_article', 'a new article');
 
-    session()->flash('new_article', $item->id);
+        return $this->traitStore();
+    }
 
-    \Alert::success(trans('backpack::crud.insert_success'))->flash();
+    public function update(Request $request)
+    {
+        $content = [
+            0 =>
+            [
+                'title' => $request['title'],
+                'body' => $request['main_content']
+            ]
+        ];
 
-    $this->crud->setSaveAction();
+        if ($request['content'] !== null) {
+            $content = array_merge($content, $request['content']);
+        }
+        $request['content'] = $content;
 
-    return $this->crud->performSaveAction($item->getKey());
-}
+        return $this->traitUpdate();
+    }
 
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
+    }
+
+    protected function setupShowOperation()
+    {
+        //     CRUD::column('title')->limit(-1);
+
+        //    $content = $this->crud->getCurrentEntry()->content;
+
+        //    dd($content);
+
+        //     CRUD::column('content')->limit(50000000000)->type('function')->value(function ($ret) {
+
+        //         return $ret;
+        //     });
+        $this->setupListOperation();
     }
 }

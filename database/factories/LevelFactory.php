@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Event;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,8 +18,11 @@ class LevelFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name,
-            'level' => $this->faker->numberBetween(1,5),
+            'level' => $this->faker->numberBetween(1, 5),
+            'small_blinds' => $this->faker->numberBetween(500, 1000),
+            'big_blinds' => $this->faker->numberBetween(500, 1000),
+            'ante' => $this->faker->numberBetween(2000, 5000),
+            'event_id' => Event::factory()->create()->id,
         ];
     }
 }

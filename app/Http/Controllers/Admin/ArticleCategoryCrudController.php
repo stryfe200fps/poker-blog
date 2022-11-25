@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\ArticleCategoryRequest;
+use App\Traits\LimitUserPermissions;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -18,6 +19,7 @@ class ArticleCategoryCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    use LimitUserPermissions;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -29,7 +31,8 @@ class ArticleCategoryCrudController extends CrudController
         $this->crud->denyAccess('show');
         CRUD::setModel(\App\Models\ArticleCategory::class);
         CRUD::setRoute(config('backpack.base.route_prefix').'/article-category');
-        CRUD::setEntityNameStrings('article category', 'article categories');
+        CRUD::setEntityNameStrings('article-category', 'article categories');
+        $this->denyAccessIfNoPermission();
     }
 
     /**
@@ -41,13 +44,9 @@ class ArticleCategoryCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        $this->crud->disableResponsiveTable();
         CRUD::column('title');
-
-        /**
-         * Columns can be defined using the fluent syntax or array syntax:
-         * - CRUD::column('price')->type('number');
-         * - CRUD::addColumn(['name' => 'price', 'type' => 'number']);
-         */
+        CRUD::column('slug');
     }
 
     /**
@@ -62,6 +61,8 @@ class ArticleCategoryCrudController extends CrudController
         CRUD::setValidation(ArticleCategoryRequest::class);
 
         CRUD::field('title');
+
+        CRUD::field('slug');
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:

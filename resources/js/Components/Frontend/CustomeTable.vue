@@ -1,5 +1,5 @@
 <template>
-    <div class=" table-responsive py-5">
+    <div class="table-responsive">
         <table class="c-table table">
             <slot name="table-head"></slot>
             <slot name="table-body"></slot>
@@ -26,11 +26,11 @@
 }
 
 .c-table tr th {
-    padding: 10px 20px;
+    padding: 10px 5px;
 }
 
 .c-table tr td {
-    padding: 10px 20px;
+    padding: 10px 5px;
 }
 
 .c-table tr td img {
@@ -40,11 +40,18 @@
 }
 
 .c-table tr {
-    font-family: 'Lato', sans-serif;
+    font-family: "Lato", sans-serif;
     font-size: 14px;
 }
 
 .c-table tr th {
     text-transform: capitalize;
+}
+
+@media (min-width: 768px) {
+    .c-table tr th,
+    .c-table tr td {
+        padding: 10px 20px;
+    }
 }
 </style>

@@ -4,13 +4,13 @@ return [
     /*
      * The client_id from registering your app on Instagram
      */
-    'client_id'           => 'YOUR INSTAGRAM CLIENT ID',
+    'client_id' => env('INSTAGRAM_CLIENT_ID'),
 
     /*
      * The client secret from registering your app on Instagram,
      * This is not the same as an access token.
      */
-    'client_secret'       => 'YOUR INSTAGRAM CLIENT SECRET',
+    'client_secret' => env('INSTAGRAM_CLIENT_SECRET'),
 
     /*
      * The base url used to generate to auth callback route for instagram.
@@ -43,7 +43,7 @@ return [
      * will become the first image in the carousel, and if there are no images, then
      * the entire carousel will be ignored.
      */
-    'ignore_video' => false,
+    'ignore_video' => true,
 
     /*
      * You may set an email address below if you wish to be notified of errors when

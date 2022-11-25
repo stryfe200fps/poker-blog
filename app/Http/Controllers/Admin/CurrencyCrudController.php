@@ -41,6 +41,7 @@ class CurrencyCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        $this->crud->disableResponsiveTable();
         CRUD::column('prefix');
         CRUD::column('title');
 

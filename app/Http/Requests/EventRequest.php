@@ -27,6 +27,7 @@ class EventRequest extends FormRequest
         return [
             'title' => 'required',
             'description' => 'required',
+            'event_game_table' => 'required',
         ];
     }
 
@@ -53,6 +54,7 @@ class EventRequest extends FormRequest
             //
             'title.required' => 'Title is required',
             'description.required' => 'Description is required',
+            'event_game_table.required' => 'Games is required',
         ];
     }
 }

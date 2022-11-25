@@ -18,11 +18,10 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug');
             $table->text('content')->nullable();
-            $table->string('day');
             $table->foreignId('level_id');
             $table->foreignId('event_id');
-            $table->foreignId('article_author_id');
-            $table->dateTime('date_added');
+            $table->foreignId('author_id');
+            $table->dateTime('published_date');
             $table->text('players');
             $table->string('image')->nullable();
             $table->string('image_caption')->nullable();

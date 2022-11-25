@@ -2,6 +2,9 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
+
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ArticleRequest extends FormRequest
@@ -25,13 +28,26 @@ class ArticleRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => [
-                'required',
-                // Rule::unique('organizations')->ignore(request()->get('id')),
-            ],
+            'title' => 'required',
             'article_categories' => 'required',
-            'body' => 'required',
-            'published_date' => 'required'
+            'published_date' => 'required',
+            'author_id' => 'required',
+            'slug' =>  [ Rule::unique('articles')->ignore(request()->get('id'))], 
+            'content' => function($attribute, $value, $fail) {
+                  $fieldGroups = $value;
+                  if ($fieldGroups === null || count($fieldGroups) == 1) 
+                    return true;
+
+                  foreach ($fieldGroups as $key => $group) {
+                        $fieldGroupValidator = Validator::make((array)$group, [
+                            'title' => 'required',
+                            'body' => 'required',
+                        ]);
+
+                        if ($fieldGroupValidator->fails())
+                            return $fail('One of the entries in the '.$attribute.' is invalid.');
+                   }
+               }
         ];
     }
 
@@ -56,9 +72,10 @@ class ArticleRequest extends FormRequest
     {
         return [
             'title.required' => 'Title is required',
-            'article_category.required' => 'Category is required',
-            'body.required' => 'Content is required',
+            'article_categories.required' => 'Category is required',
             'published_date.required' => 'Published date is required',
+            'author_id.required' => 'Author is required',
+            'slug.unique' => 'Slug is unique',
         ];
     }
 }

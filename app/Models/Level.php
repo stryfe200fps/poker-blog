@@ -2,14 +2,17 @@
 
 namespace App\Models;
 
-
-use Illuminate\Database\Eloquent\Model;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Level extends Model
 {
     protected $guarded = ['id'];
+
+    protected $appends = [
+        'level_value',
+    ];
 
     use CrudTrait;
     use HasFactory;
@@ -19,10 +22,16 @@ class Level extends Model
         return $this->hasMany(EventReport::class);
     }
 
-    public function getNameAttribute()
+    public function getLevelValueAttribute()
     {
-        return 'Level '. $this->attributes['level'] . ' - '.  $this->attributes['name']  ;
+        return 'Level '.$this->attributes['level'].' - Blinds '.$this->attributes['small_blinds'].' - '.$this->attributes['big_blinds'].', '.$this->attributes['ante'].' ante';
     }
+
+    public function getBlindsAttribute()
+    {
+        return $this->attributes['small_blinds'].'/'.$this->attributes['big_blinds'];
+    }
+
 
     // public function getNameAttribute()
     // {

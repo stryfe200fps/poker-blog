@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ImageController;
+use App\Http\Controllers\Admin\Utilities\ExcelUploadController;
 
 // --------------------------
 // Custom Backpack Routes
@@ -19,18 +21,29 @@ Route::group([
 Route::crud('article', 'ArticleCrudController');
     Route::crud('events', 'EventCrudController');
     Route::crud('report', 'EventReportCrudController');
-    Route::crud('all-reports', 'AllReportsCrudController');
     Route::crud('poker-tour', 'TourCrudController');
-    Route::crud('poker-tournament', 'TournamentCrudController');
+    Route::crud('series', 'TournamentCrudController');
     Route::crud('article-category', 'ArticleCategoryCrudController');
-    Route::crud('live-report-player', 'EventChipCrudController');
     Route::crud('country', 'CountryCrudController');
     Route::crud('player', 'PlayerCrudController');
     Route::crud('chip-count', 'ChipCountCrudController');
     Route::crud('payout', 'PayoutCrudController');
     Route::crud('live', 'LiveCrudController');
     Route::crud('level', 'LevelCrudController');
-    Route::crud('article-author', 'ArticleAuthorCrudController');
+    Route::crud('author', 'AuthorCrudController');
     Route::crud('image-theme', 'ImageThemeCrudController');
-    Route::crud('article-tag', 'ArticleTagCrudController');
+    Route::crud('tag', 'TagCrudController');
+    Route::crud('day', 'DayCrudController');
+    Route::crud('event-game-table', 'EventGameTableCrudController');
+    Route::crud('glossary', 'GlossaryCrudController');
+    Route::crud('room', 'RoomCrudController');
+    Route::crud('banner', 'BannerCrudController');
+    Route::crud('media-reporting', 'MediaReportingCrudController');
+    Route::crud('media-reporting-category', 'MediaReportingCategoryCrudController');
+    Route::crud('content', 'ContentCrudController');
+    Route::crud('badge', 'BadgeCrudController');
+    Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
+    Route::get('image/regenerate', [ ImageController::class, 'regenerate' ]);
+    Route::post('prepare', [ExcelUploadController::class, 'prepare']);
+    Route::post('upload_excel', [ExcelUploadController::class, 'upload']);
 }); // this should be the absolute last line of this file

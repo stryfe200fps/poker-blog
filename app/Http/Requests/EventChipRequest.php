@@ -25,9 +25,8 @@ class EventChipRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string',
-            'current_chips' => 'required|integer',
-            'chips_before' => 'required|integer',
+            'player' => 'required',
+            'current_chips' => 'required',
         ];
     }
 
@@ -51,7 +50,8 @@ class EventChipRequest extends FormRequest
     public function messages()
     {
         return [
-            //
+            'player.required' => 'Please choose the player',
+            'current_chips.required' => 'Chips is required',
         ];
     }
 }

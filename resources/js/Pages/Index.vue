@@ -1,24 +1,48 @@
-<script setup>
-import { Head } from '@inertiajs/inertia-vue3';
-import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue';
-import Header from '../Components/Frontend/Header.vue';
-import Footer from '../Components/Frontend/Footer.vue';
-import FrontLayout from '../Layouts/FrontLayout.vue';
-import SideBar from '../Components/Frontend/MainContent/SideBar.vue';
-import MainBar from '../Components/Frontend/MainContent/MainBar.vue';
-import { useArticleStore } from '../stores/article.js'
-import { onMounted } from '@vue/runtime-core';
+<template>
+    <MainBar
+        :liveEvents="liveEvents"
+        :mainBanner="mainBanner"
+        :articleList="articleList"
+        :ytLinks="youtubeLinks"
+        :isLoading="isLoading"
+    />
+</template>
 
-const articleStore = useArticleStore()
+<script setup>
+import { useEventStore } from "@/Stores/event.js";
+import { useBannerStore } from "@/Stores/banner.js";
+import { useArticleStore } from "@/Stores/article.js";
+import { useYoutubeStore } from "@/Stores/youtube.js";
+import { onMounted, ref } from "@vue/runtime-core";
+
+import MainBar from "../Components/Frontend/MainContent/MainBar.vue";
+
+const eventStore = useEventStore();
+const liveEvents = ref([]);
+const bannerStore = useBannerStore();
+const mainBanner = ref([]);
+const articleStore = useArticleStore();
+const articleList = ref([]);
+const youtubeStore = useYoutubeStore();
+const youtubeLinks = ref([]);
+const isLoading = ref(true);
 
 onMounted(async () => {
-    articleStore.getList()
-})
+    await eventStore.getMainEvents();
+    liveEvents.value = eventStore.mainEvents.data;
+    await bannerStore.getBanners();
+    mainBanner.value = bannerStore.getMainBanner();
+    await articleStore.getList();
+    articleList.value = articleStore.list.data;
+    await youtubeStore.getYoutubeLinks();
+    youtubeLinks.value = youtubeStore.youtubeLinks;
 
+    if (
+        articleList.value &&
+        youtubeLinks.value &&
+        (liveEvents.value || mainBanner.value)
+    ) {
+        isLoading.value = false;
+    }
+});
 </script>
-
-<template>
-    <FrontLayout title="Kartok">
-        <MainBar :article-list="articleStore.list" />
-    </FrontLayout>
-</template>

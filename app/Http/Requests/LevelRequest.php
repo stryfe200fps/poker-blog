@@ -25,8 +25,10 @@ class LevelRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
-            'level' => 'required'
+            'level' => 'required',
+            'big_blinds' => 'required',
+            'small_blinds' => 'required',
+            'ante' => 'required',
         ];
     }
 
@@ -38,8 +40,7 @@ class LevelRequest extends FormRequest
     public function attributes()
     {
         return [
-            'name' => 'name is required',
-            'level' => 'level is required'
+
         ];
     }
 
@@ -51,7 +52,10 @@ class LevelRequest extends FormRequest
     public function messages()
     {
         return [
-            //
+            'level.required' => 'Level is required',
+            'big_blinds.required' => 'Big Blinds is required',
+            'small_blinds.required' => 'Small Blinds is required',
+            'ante.required' => 'Ante is required'
         ];
     }
 }

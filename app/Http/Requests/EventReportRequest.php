@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Support\Str;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
 
 class EventReportRequest extends FormRequest
 {
@@ -23,7 +23,6 @@ class EventReportRequest extends FormRequest
      *
      * @return array
      */
-
     public function rules()
     {
         return [
@@ -31,21 +30,20 @@ class EventReportRequest extends FormRequest
                 'required',
             ],
             'slug' => 'unique:event_reports,slug,'.\Request::get('id'),
-            'content' => 'required',
-            'day' => 'required',
-            'level' => 'required',
+            'type' => 'required',
+            'level_id' => 'required',
         ];
     }
 
     protected function prepareForValidation()
     {
-        if ($this->slug === null)
-        return;
+        if ($this->slug !== null) {
+            $this->merge([
+                'slug' => Str::slug($this->slug),
+            ]);
+        }
 
         // dd($this->slug);
-        $this->merge([
-            'slug' => Str::slug($this->slug),
-        ]);
     }
 
     /**
@@ -53,7 +51,6 @@ class EventReportRequest extends FormRequest
      *
      * @return array
      */
-
     public function attributes()
     {
         return [
@@ -66,13 +63,12 @@ class EventReportRequest extends FormRequest
      *
      * @return array
      */
+
     public function messages()
     {
         return [
             'title.required' => 'Title is required',
-            'day.required' => 'Day is required',
-            'content.required' => 'Content is required',
-            'level.required' => 'Level is required',
+            'level_id.required' => 'Level is required',
         ];
     }
 }
