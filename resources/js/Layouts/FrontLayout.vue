@@ -1,27 +1,52 @@
-<script setup>
-import Header from "../Components/Frontend/Header.vue";
-import Footer from "../Components/Frontend/Footer.vue";
-import SideBar from "../Components/Frontend/MainContent/SideBar.vue";
+<template>
+    <div class="active">
+        <Header />
+        <main>
+            <section class="block-wrapper">
+                <FullBanner
+                    :formattedHomeBanner="formattedHomeBanner"
+                    :formattedReportingBanner="formattedReportingBanner"
+                    :url="url"
+                    :currentComponent="currentComponent"
+                />
+                <div
+                    class="container"
+                    style="position: relative; background-color: #fff"
+                >
+                    <div class="row">
+                        <div class="col-md-9 col-sm-8">
+                            <slot />
+                        </div>
+                        <div class="col-md-3 col-sm-4" style="overflow: none">
+                            <SideBar
+                                :homeSideBanner="homeSideBanner"
+                                :reportingSideBanner="reportingSideBanner"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <Footer />
+    </div>
+    <CookieBanner />
+    <ScrollTopButton />
+</template>
 
+<script setup>
 import { Inertia } from "@inertiajs/inertia";
 import { usePage } from "@inertiajs/inertia-vue3";
 import { onMounted, onBeforeUnmount, ref, computed } from "@vue/runtime-core";
 import { useBannerStore } from "@/Stores/banner.js";
 import Echo from "laravel-echo";
 
-defineProps({
-    title: String,
-});
+import FullBanner from "../Components/Frontend/FullBanner.vue";
+import Header from "../Components/Frontend/Header.vue";
+import SideBar from "../Components/Frontend/MainContent/SideBar.vue";
+import Footer from "../Components/Frontend/Footer.vue";
+import CookieBanner from "../Components/Frontend/CookieBanner.vue";
+import ScrollTopButton from "../Components/Frontend/ScrollTopButton.vue";
 
-const isOpen = ref(false);
-const isSetCookie = ref(false);
-const preferences = ref([
-    "Necessary",
-    "Analytics",
-    "Functionality",
-    "Marketing",
-]);
-const selectedPreference = ref(["Necessary"]);
 const bannerStore = useBannerStore();
 const homeFullBanner = ref([]);
 const homeSemiFullBanner = ref([]);
@@ -29,59 +54,6 @@ const homeSideBanner = ref([]);
 const reportingFullBanner = ref([]);
 const reportingSemiFullBanner = ref([]);
 const reportingSideBanner = ref([]);
-
-function openPreference() {
-    isOpen.value = !isOpen.value;
-}
-
-function acceptAllCookies() {
-    document.cookie = `lop=${preferences.value}; expires=Fri, 31 Dec 9999 23:59:59 GMT`;
-    if (document.cookie) {
-        isSetCookie.value = true;
-    }
-}
-
-function visitBanner(url) {
-    if (url) window.open(url, "_blank");
-}
-
-function savePreferenceCookie() {
-    document.cookie = `lop=${selectedPreference.value}; expires=Fri, 31 Dec 9999 23:59:59 GMT`;
-    if (document.cookie) {
-        isSetCookie.value = true;
-    }
-}
-
-function scrollToTop() {
-    window.scroll({ top: 0, behavior: "smooth" });
-}
-
-function showScrollTopBtn() {
-    const cookie = document.querySelector(".cookie.hide");
-    const scrollTopBtn = document.querySelector(".scroll-top");
-
-    if (window.scrollY > 200) {
-        if (cookie) {
-            scrollTopBtn.style.display = "block";
-        }
-        return;
-    }
-    scrollTopBtn.style.display = "none";
-}
-
-const getCookie = computed(() => {
-    const cookieArr = document.cookie.split(";");
-
-    for (let i = 0; i < cookieArr.length; i++) {
-        const cookiePair = cookieArr[i].split("=");
-
-        if (cookiePair[0].trim() === "lop") {
-            return true;
-            // return decodeURIComponent(cookiePair[1]);
-        }
-    }
-    return false;
-});
 
 const url = computed(() => {
     return usePage().url.value;
@@ -111,6 +83,19 @@ const formattedReportingBanner = computed(() => {
     }
 });
 
+function showScrollTopBtn() {
+    const cookie = document.querySelector(".cookie.hide");
+    const scrollTopBtn = document.querySelector(".scroll-top");
+
+    if (window.scrollY > 200) {
+        if (cookie) {
+            scrollTopBtn.style.display = "block";
+        }
+        return;
+    }
+    scrollTopBtn.style.display = "none";
+}
+
 Inertia.on("success", (event) => {
     event.preventDefault();
     if (event.detail.page.component != "Event/Index") {
@@ -135,252 +120,7 @@ onBeforeUnmount(() => {
 });
 </script>
 
-<template>
-    <div class="active">
-        <Header />
-        <main>
-            <section class="block-wrapper">
-                <div
-                    class="home-banner"
-                    v-if="
-                        formattedReportingBanner &&
-                        (url.includes('live-reporting') ||
-                            currentComponent === 'Event/Index')
-                    "
-                    :style="{
-                        backgroundImage: `url(${formattedReportingBanner.image_set?.og_image})`,
-                        cursor: formattedReportingBanner.url
-                            ? 'pointer'
-                            : 'auto',
-                    }"
-                    @click="visitBanner(formattedReportingBanner.url)"
-                ></div>
-                <div
-                    class="home-banner"
-                    v-if="
-                        formattedHomeBanner &&
-                        currentComponent === 'Index' &&
-                        url === '/'
-                    "
-                    :style="{
-                        backgroundImage: `url(${formattedHomeBanner.image_set?.og_image})`,
-                        cursor: formattedHomeBanner.url ? 'pointer' : 'auto',
-                    }"
-                    @click="visitBanner(formattedHomeBanner.url)"
-                ></div>
-                <div
-                    class="container"
-                    style="position: relative; background-color: #fff"
-                >
-                    <div class="row">
-                        <div class="col-md-9 col-sm-8">
-                            <slot />
-                        </div>
-                        <div class="col-md-3 col-sm-4" style="overflow: none">
-                            <SideBar
-                                :homeSideBanner="homeSideBanner"
-                                :reportingSideBanner="reportingSideBanner"
-                            />
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </main>
-        <Footer />
-        <div class="cookie row" :class="{ hide: getCookie || isSetCookie }">
-            <div class="cookie__text col-sm-6 col-md-6">
-                This website uses cookies to ensure you get the best experience
-                on our website.
-            </div>
-            <div class="cookie__actions col-sm-6 col-md-6">
-                <div>
-                    <div class="cookie__buttons">
-                        <button
-                            type="button"
-                            class="btn btn-link btn-block"
-                            @click="openPreference"
-                        >
-                            Manage Cookies
-                        </button>
-                        <button
-                            type="button"
-                            class="btn btn-danger btn-block"
-                            @click="acceptAllCookies"
-                        >
-                            Accept All
-                        </button>
-                        <button
-                            type="button"
-                            class="btn btn-default btn-block save__btn"
-                            :class="{ open: isOpen }"
-                            @click="savePreferenceCookie"
-                        >
-                            Save Preference
-                        </button>
-                    </div>
-                    <div class="cookie__preferences" :class="{ open: isOpen }">
-                        <p>Manage Preference</p>
-                        <div class="row" style="margin: 0 !important">
-                            <div
-                                class="cookie__preference col-xs-6 col-md-5"
-                                v-for="(preference, index) in preferences"
-                                :key="index"
-                            >
-                                <label class="switch">
-                                    <input
-                                        type="checkbox"
-                                        :value="preference"
-                                        :checked="preference === 'Necessary'"
-                                        :disabled="preference === 'Necessary'"
-                                        v-model="selectedPreference"
-                                    />
-                                    <span class="slider"></span>
-                                </label>
-                                {{ preference }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="scroll-top">
-        <button @click="scrollToTop" class="btn btn-danger scroll-top-btn">
-            <i class="fa-sharp fa-solid fa-chevron-up"></i>
-        </button>
-    </div>
-</template>
-
 <style>
-.home-banner {
-    position: fixed;
-    inset: 0;
-    width: 100%;
-    min-height: 100vh;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: top center;
-    image-rendering: -webkit-optimize-contrast;
-}
-
-.scroll-top {
-    position: fixed;
-    bottom: 50px;
-    right: 50px;
-    z-index: 999;
-    display: none;
-    transition: all 0.5s ease;
-}
-
-.scroll-top-btn {
-    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.15);
-}
-
-.scroll-top-btn:focus {
-    outline: none;
-}
-
-.cookie {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    margin: 0 !important;
-    width: 100%;
-    padding: 2rem 1rem;
-    background-color: #c4c4c4;
-}
-
-.cookie.hide {
-    display: none;
-}
-
-.cookie__text {
-    margin-bottom: 1.5rem;
-    font-family: "Lato", sans-serif;
-    font-size: 15px;
-    color: #2d3436;
-}
-
-.cookie__actions button:focus {
-    outline: none !important;
-    text-decoration: none !important;
-}
-
-.save__btn {
-    display: none !important;
-}
-
-.save__btn.open {
-    display: block !important;
-}
-
-.cookie__preferences {
-    display: none;
-    margin-top: 1.3rem;
-}
-
-.cookie__preferences.open {
-    display: block;
-}
-
-.cookie__preference {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 1rem;
-    padding-left: 0 !important;
-    font-family: "Lato", sans-serif;
-    font-size: 14px;
-}
-
-.switch {
-    position: relative;
-    display: inline-block;
-    width: 3.5em;
-    height: 2em;
-    margin-bottom: 0 !important;
-    font-size: 8px;
-}
-
-.switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-.slider {
-    position: absolute;
-    inset: 0;
-    background-color: #2d3436;
-    transition: 0.4s;
-    border-radius: 30px;
-    cursor: pointer;
-}
-
-.slider:before {
-    content: "";
-    position: absolute;
-    left: 0.3em;
-    bottom: 0.3em;
-    height: 1.4em;
-    width: 1.4em;
-    background-color: white;
-    border-radius: 20px;
-    transition: 0.4s;
-}
-
-input:checked + .slider {
-    background-color: rgb(0, 221, 80);
-}
-
-input:focus + .slider {
-    box-shadow: 0 0 1px rgb(0, 221, 80);
-}
-
-input:checked + .slider:before {
-    transform: translateX(1.5em);
-}
-
 .reset-margin {
     margin: unset !important;
 }
@@ -392,35 +132,6 @@ input:checked + .slider:before {
 div.block-content {
     margin: 30px 0 30px 0;
     padding: unset;
-}
-
-@media (min-width: 768px) {
-    .cookie {
-        display: flex;
-    }
-
-    .cookie__text {
-        display: flex;
-        align-items: center;
-        margin-bottom: 0;
-    }
-
-    .cookie__actions {
-        display: flex;
-        justify-content: flex-end;
-    }
-
-    .cookie__actions .cookie__buttons {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .cookie__actions button {
-        display: inline-block;
-        width: auto;
-        margin: 0 !important;
-    }
 }
 
 @media (max-width: 768px) {
@@ -636,19 +347,6 @@ button.social-btn {
 @media (min-width: 992px) {
     .unset-padding-right {
         padding-right: unset;
-    }
-}
-
-@media (max-width: 1599px) {
-    .home-banner {
-        display: none;
-    }
-}
-
-@media (max-width: 452px) {
-    .scroll-top {
-        bottom: 20px;
-        right: 20px;
     }
 }
 
