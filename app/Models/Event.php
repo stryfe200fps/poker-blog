@@ -9,12 +9,20 @@ use App\Traits\ImageUpload;
 use Illuminate\Support\Str;
 use Spatie\Sluggable\HasSlug;
 use App\Traits\BackpackSlugify;
+<<<<<<< HEAD
+=======
+use App\Traits\LOPDefaultTrait;
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 use App\Traits\HasMultipleImages;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\Sluggable\SlugOptions;
 use App\Traits\HasMediaCollection;
+<<<<<<< HEAD
 use App\Observers\MediaObserver;
 use App\Observers\SlugObserver;
+=======
+use App\Observers\DefaultModelObserver;
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 use Illuminate\Database\Eloquent\Model;
 use Spatie\ImageOptimizer\OptimizerChain;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -39,6 +47,7 @@ class Event extends Model implements HasMedia
     public $mediaCollection = 'event';
     use HasMediaCollection, HasMultipleImages;
 
+<<<<<<< HEAD
     public static function boot()
     {
         parent::boot();
@@ -46,6 +55,16 @@ class Event extends Model implements HasMedia
         self::observe(new MediaObserver);
     }
 
+=======
+
+    public static function boot()
+    {
+        parent::boot();
+        self::observe(new DefaultModelObserver);
+    }
+
+
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
     public function getScheduleAttribute()
     {
         $schedule = $this->load('days')->getSchedule()->toArray() ?? [];
@@ -93,6 +112,7 @@ class Event extends Model implements HasMedia
         );
     }
 
+<<<<<<< HEAD
     public function getCurrentLiveEvent()
     {
         $date = Carbon::now()->toDateTime();
@@ -102,6 +122,8 @@ class Event extends Model implements HasMedia
         );
     }
 
+=======
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
     public function scopeShowLatest($query) {
         $date = Carbon::now()->toDateTime();
 
@@ -122,10 +144,13 @@ class Event extends Model implements HasMedia
         if (!count($statuses))
             return 'upcoming';
 
+<<<<<<< HEAD
             //ouput 'live' from start of day and end of day
             if ($this->getCurrentLiveEvent()->count())
                 return 'live';
 
+=======
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
             if (in_array('live', $statuses))
             return 'live';
         
@@ -138,6 +163,7 @@ class Event extends Model implements HasMedia
         return $this->days()->orderBy('lft')->pluck('name', 'id');
     }
 
+<<<<<<< HEAD
     public function getScheduleWithReports()
     {
         return $this->days()->orderBy('lft')->withCount('event_reports')
@@ -147,6 +173,8 @@ class Event extends Model implements HasMedia
 
     }
 
+=======
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
     public function getLastSchedule() 
     {
         return $this->days()->orderByDesc('lft')->withCount('event_reports')

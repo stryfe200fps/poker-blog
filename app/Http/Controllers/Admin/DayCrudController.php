@@ -6,7 +6,10 @@ use App\Models\Day;
 use App\Models\Event;
 use Illuminate\Http\Request;
 use App\Http\Requests\DayRequest;
+<<<<<<< HEAD
 use App\Traits\LimitUserPermissions;
+=======
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 use Backpack\CRUD\app\Library\Widget;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
@@ -25,7 +28,10 @@ class DayCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ReorderOperation { reorder as traitReorder; }
+<<<<<<< HEAD
     use LimitUserPermissions;
+=======
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 
     protected function setupReorderOperation()
     {
@@ -47,7 +53,10 @@ class DayCrudController extends CrudController
         CRUD::setModel(\App\Models\Day::class);
         CRUD::setRoute(config('backpack.base.route_prefix').'/day');
         CRUD::setEntityNameStrings('day', 'days');
+<<<<<<< HEAD
         $this->denyAccessIfNoPermission();
+=======
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 
         if (request()->get('event') || session()->get('event_id')) {
             if (request()->get('event') !== null) {

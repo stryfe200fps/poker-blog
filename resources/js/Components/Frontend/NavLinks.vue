@@ -4,17 +4,25 @@
             class="home home--custom"
             :class="{
                 child: menu.children.length,
+<<<<<<< HEAD
                 'router-link-active': usePage().url.value.includes(menu.link),
             }"
             :href="'/' + menu.link"
             v-if="!menu.children.length && menu.type === 'internal_link'"
             @click.prevent="closeMenu"
+=======
+                'router-link-active': pathname == menu.link,
+            }"
+            :href="'/' + menu.link"
+            v-if="!menu.children.length && menu.type === 'internal_link'"
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
             >{{ menu.name }}</Link
         >
         <Link
             class="home home--custom"
             :class="{
                 child: menu.children.length,
+<<<<<<< HEAD
                 'router-link-active': usePage().url.value.includes(
                     menu.page_slug
                 ),
@@ -22,17 +30,30 @@
             :href="'/' + menu.page_slug"
             v-else-if="!menu.children.length && menu.type === 'page_link'"
             @click.prevent="closeMenu"
+=======
+                'router-link-active': pathname == menu.link,
+            }"
+            :href="'/' + menu.page_slug"
+            v-else-if="!menu.children.length && menu.type === 'page_link'"
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
             >{{ menu.name }}</Link
         >
         <a
             class="home home--custom"
             :class="{
                 child: menu.children.length,
+<<<<<<< HEAD
+=======
+                'router-link-active': pathname == menu.link,
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
             }"
             :href="menu.link"
             target="_blank"
             v-else-if="!menu.children.length && menu.type === 'external_link'"
+<<<<<<< HEAD
             @click.prevent="closeMenu"
+=======
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
             >{{ menu.name }}</a
         >
         <a
@@ -66,7 +87,10 @@
                     "
                     :href="'/' + menu.link + '/' + children.link"
                     style="background: rgb(239, 239, 239)"
+<<<<<<< HEAD
                     @click.prevent="closeMenu"
+=======
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
                     >{{ children.name }}</Link
                 >
                 <Link
@@ -76,7 +100,10 @@
                     "
                     :href="'/' + children.page_slug"
                     style="background: rgb(239, 239, 239)"
+<<<<<<< HEAD
                     @click.prevent="closeMenu"
+=======
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
                     >{{ children.name }}</Link
                 >
                 <a
@@ -88,14 +115,20 @@
                     style="background: rgb(239, 239, 239)"
                     target="_blank"
                     rel="noopener noreferrer"
+<<<<<<< HEAD
                     @click.prevent="closeMenu"
+=======
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
                     >{{ children.name }}</a
                 >
                 <Link
                     v-else
                     :href="'/' + children.link"
                     style="background: rgb(239, 239, 239)"
+<<<<<<< HEAD
                     @click.prevent="closeMenu"
+=======
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
                     >{{ children.name }}</Link
                 >
             </li>
@@ -105,23 +138,35 @@
 
 <script setup>
 import { ref } from "vue";
+<<<<<<< HEAD
 import { Link, usePage } from "@inertiajs/inertia-vue3";
+=======
+import { Link } from "@inertiajs/inertia-vue3";
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 
 const props = defineProps({
     menu: Object,
 });
 
+<<<<<<< HEAD
 const emit = defineEmits(["closeMenu"]);
 
 const toggleSubMenu = ref(false);
+=======
+const toggleSubMenu = ref(false);
+const pathname = ref(window.location.pathname.split("/")[1]);
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 
 function toggleDropdown() {
     toggleSubMenu.value = !toggleSubMenu.value;
 }
+<<<<<<< HEAD
 
 function closeMenu() {
     emit("closeMenu");
 }
+=======
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 </script>
 
 <style scoped>

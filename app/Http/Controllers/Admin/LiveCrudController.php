@@ -35,7 +35,11 @@ class LiveCrudController extends CrudController
         $this->crud->denyAccess('create');
         CRUD::setModel(\App\Models\Event::class);
         CRUD::setRoute(config('backpack.base.route_prefix').'/live');
+<<<<<<< HEAD
         CRUD::setEntityNameStrings('live-report', 'Live Poker Event');
+=======
+        CRUD::setEntityNameStrings('report', 'Live Poker Event');
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
         CRUD::denyAccess('create');
         $this->denyAccessIfNoPermission();
 

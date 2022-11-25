@@ -1,5 +1,11 @@
 <?php
 
+<<<<<<< HEAD
+=======
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Spatie\Permission\Models\Role;
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 use Tests\TestCase;
 use App\Models\User;
 use Tests\DuskTestCase;
@@ -20,6 +26,14 @@ use App\Services\ImageService;
 */
 
 uses(TestCase::class, RefreshDatabase::class)->in('Feature');
+uses(DuskTestCase::class)->in('Browser');
+
+
+
+
+
+use Tests\DuskTestCase;
+
 uses(DuskTestCase::class)->in('Browser');
 
 
@@ -66,11 +80,19 @@ function superAdminAuthenticate()
     return $u;
 }
 
+<<<<<<< HEAD
 function insert($route, array $attributes, $returnDefault = true, $routeParameters = [])
 {
     //authenticate user
     test()->superAdminAuthenticate();
     $test = test()->get("/admin/$route/create?".http_build_query($routeParameters))->assertStatus(200);
+=======
+function insert($route, array $attributes, $returnDefault = true)
+{
+    //authenticate user
+    test()->superAdminAuthenticate();
+    test()->get("admin/$route/create")->assertStatus(200);
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
     $post = test()->post("/admin/$route", $attributes);
     if (!$returnDefault)
         return $post;
@@ -92,17 +114,31 @@ function delete($route, string $model)
     return test();
 }
 
+<<<<<<< HEAD
 function update($route, string $model , array $attributes, $routeParameters = [])
+=======
+function update($route, string $model , array $attributes)
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 {
     test()->superAdminAuthenticate();
 
     //create new data
+<<<<<<< HEAD
     $create = getModel($model)->factory()->create($attributes);
     $id = $create->id;
     //go to the edit page
     $visit =  test()->get("admin/$route/$id/edit?".http_build_query($routeParameters) )->assertStatus(200);
     //save update
     $test = test()->put("/admin/$route/update", $attributes);
+=======
+    $create = getModel($model)->factory()->create();
+    $id = $create->id;
+    //go to the edit page
+    test()->get("admin/$route/$id/edit")->assertStatus(200);
+    $attributes['id'] = $id;
+    //save update
+    test()->put("/admin/$route/update", $attributes);
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 
     return test();
 }
@@ -111,6 +147,7 @@ function update($route, string $model , array $attributes, $routeParameters = []
 function getModel(string $model)
 {
     return test()->app()->make("App\Models\\$model");
+<<<<<<< HEAD
 }
 
  function getFileType($value)
@@ -121,4 +158,6 @@ function getModel(string $model)
   function uploadImage($image, $model )
 {
     return (new ImageService($image, $model))->imageUpload();
+=======
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 }

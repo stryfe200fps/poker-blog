@@ -29,7 +29,11 @@ class EventController extends Controller
             'slug' => $eventSlug,
             'page' => $page ?? 'reports',
             'day' => $day == null && $type == null ?  $event->getLastSchedule()->name :  $day,
+<<<<<<< HEAD
             'type' => in_array($day, ['whatsapp', 'chip-stack', 'gallery', 'payouts', 'live-updates']) ? $day : $type,
+=======
+            'type' => in_array($day, ['whatsapp', 'chip-stack', 'gallery', 'payouts', 'live-updates']) ? $day : $type  ,
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
             'title' => $event->tournament->title.' | '.$event->title.' | LifeOfPoker',
             'description' => $event->description,
             'json-ld-webpage' => $type === 'payouts' ? \JsonLd\Context::create('web_page', [

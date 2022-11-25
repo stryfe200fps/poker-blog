@@ -17,7 +17,11 @@ class MediaReportingCategoryFactory extends Factory
     public function definition()
     {
         return [
+<<<<<<< HEAD
             'title' => $this->faker->word
+=======
+            //
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
         ];
     }
 }

@@ -17,7 +17,11 @@ class ReportCollection extends ResourceCollection
         $reducedCollection = $this->collection->groupBy('level')->reduce(function ($result, $item) {
             $level = $item->first()->level;
             $result[] = [
+<<<<<<< HEAD
                 'level' => $level->level_value ?? '-',
+=======
+                'level' => $level->level_value,
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
                 'collection' => collect($item)->map(function ($i) {
                     return new EventReportResource($i);
                 }),

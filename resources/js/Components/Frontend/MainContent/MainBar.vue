@@ -148,26 +148,39 @@
                     </div>
                 </div>
             </div>
+<<<<<<< HEAD
             <div class="grid-box" v-if="youtubeId.length">
+=======
+            <div class="grid-box">
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
                 <div class="title-section">
                     <h1><span>video</span></h1>
                 </div>
                 <div class="news-post article-post">
                     <div class="row">
+<<<<<<< HEAD
                         <div
                             class="col-md-4"
                             style="margin-bottom: 20px"
                             v-for="(youtube, index) in youtubeId"
                             :key="index"
                         >
+=======
+                        <div class="col-md-4" style="margin-bottom: 20px">
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
                             <div class="new-post standard-post2">
                                 <div
                                     class="embed-responsive embed-responsive-16by9"
                                 >
                                     <iframe
                                         class="embed-responsive-item"
+<<<<<<< HEAD
                                         :src="`https://www.youtube.com/embed/${youtube}`"
                                         title="YouTube video player"
+=======
+                                        src="https://www.youtube.com/embed/S2SSslc8wBs"
+                                        title="APT Philippines 2022 Main Event Highlights"
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
                                         frameborder="0"
                                         loading="lazy"
                                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -176,6 +189,39 @@
                                 </div>
                             </div>
                         </div>
+<<<<<<< HEAD
+=======
+                        <div class="col-md-4" style="margin-bottom: 20px">
+                            <div
+                                class="embed-responsive embed-responsive-16by9"
+                            >
+                                <iframe
+                                    class="embed-responsive-item"
+                                    src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FPokerStarsAsia%2Fvideos%2F1775890926121412%2F&show_text=false&width=560&t=0"
+                                    loading="lazy"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen
+                                    style="aspect-ratio: 16 / 9"
+                                ></iframe>
+                            </div>
+                        </div>
+                        <div class="col-md-4" style="margin-bottom: 20px">
+                            <div
+                                class="embed-responsive embed-responsive-16by9"
+                            >
+                                <iframe
+                                    class="embed-responsive-item"
+                                    src="https://www.youtube.com/embed/bNZd_JIKNKE"
+                                    loading="lazy"
+                                    title="WPT Prime Vietnam - Day 1 highlights"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen
+                                ></iframe>
+                            </div>
+                        </div>
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
                     </div>
                 </div>
             </div>
@@ -189,7 +235,10 @@ import defaultImg from "/public/default-img.png";
 import { Inertia } from "@inertiajs/inertia";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import moment from "moment";
+<<<<<<< HEAD
 import { computed } from "@vue/runtime-core";
+=======
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 
 const props = defineProps({
     liveEvents: {
@@ -201,15 +250,19 @@ const props = defineProps({
     articleList: {
         type: Object,
     },
+<<<<<<< HEAD
     ytLinks: {
         type: Object,
     },
+=======
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
     isLoading: {
         type: Boolean,
         default: true,
     },
 });
 
+<<<<<<< HEAD
 const youtubeId = computed(() => {
     const mergedLinks = [];
     for (const key in props.ytLinks) {
@@ -219,6 +272,8 @@ const youtubeId = computed(() => {
     return mergedLinks;
 });
 
+=======
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 function showArticle(date, slug) {
     Inertia.visit(
         `/news/${moment(new Date(date)).format("YYYY")}/${moment(

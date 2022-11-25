@@ -90,7 +90,11 @@
                     <span style="color:white;">Upload successfully! </span>
                   </div>
                 </div>
+<<<<<<< HEAD
                 <div v-else class="alert alert-success">Successfully forced upload</div>
+=======
+                <div v-else class="alert alert-error">Upload failed. Please check your excel</div>
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
                      
               </div>
             </div>

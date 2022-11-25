@@ -6,7 +6,10 @@ use App\Http\Requests\ChipCountRequest;
 use App\Http\Requests\EventChipRequest;
 use App\Models\Day;
 use App\Models\Event;
+<<<<<<< HEAD
 use App\Traits\LimitUserPermissions;
+=======
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use Illuminate\Http\Request;

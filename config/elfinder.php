@@ -10,7 +10,11 @@ return [
     | The dir where to store the images (relative from public).
     |
     */
+<<<<<<< HEAD
     'dir' => ['uploads', 'cards'],
+=======
+    'dir' => ['uploads'],
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 
     /*
     |--------------------------------------------------------------------------

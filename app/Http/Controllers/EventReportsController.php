@@ -42,7 +42,11 @@ class EventReportsController extends Controller
      */
     public function show($id)
     {
+<<<<<<< HEAD
         return  new EventReportResource(EventReport::where('id', $id)->first());
+=======
+        return  new EventReportResource(EventReport::where('slug', $slug)->first());
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
     }
 
     /**

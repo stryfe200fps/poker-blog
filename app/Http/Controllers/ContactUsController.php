@@ -21,7 +21,11 @@ class ContactUsController extends Controller
             'email' => $request->get('email'),
         ]);
 
+<<<<<<< HEAD
         $email = env('ADMIN_EMAIL', Setting::get('admin_email') ?? 'adi@yahoo.com' );
+=======
+        $email = env('ADMIN_EMAIL', Setting::get('contact_email') ?? 'adi@yahoo.com' );
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
         Mail::to($email)->send(new ContactMail($form));
 
         return response()->json(['status' => 200]);

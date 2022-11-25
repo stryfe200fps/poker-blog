@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+<<<<<<< HEAD
 use App\Observers\MediaObserver;
 use App\Traits\HasMediaCaching;
 use App\Traits\HasMediaCollection;
@@ -25,4 +26,14 @@ class SocialMedia extends Model implements HasMedia
         parent::boot();
         self::observe(new MediaObserver);
     }
+=======
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class SocialMedia extends Model
+{
+    use HasFactory;
+
+    protected $guarded = ['id'];
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 }

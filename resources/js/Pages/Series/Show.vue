@@ -2,6 +2,7 @@
     <Head>
         <title>{{ series.data.title }}</title>
     </Head>
+<<<<<<< HEAD
     <div class="block-content">
         <div class="single-post-box">
             <div class="title-section">
@@ -61,12 +62,88 @@
             </div>
         </div>
     </div>
+=======
+    <FrontLayout>
+        <div class="block-content">
+            <div class="single-post-box">
+                <div class="title-section">
+                    <h1 class="text-primary">
+                        <span style="cursor: pointer" @click="goBack"
+                            ><i
+                                class="fa fa-chevron-left"
+                                aria-hidden="true"
+                            ></i>
+                            back</span
+                        >
+                    </h1>
+                </div>
+                <div class="row" style="margin-bottom: 25px">
+                    <div class="col-sm-6">
+                        <div class="post-content">
+                            <h2
+                                class="text-capitalize"
+                                style="margin-bottom: 15px"
+                            >
+                                <span>{{ series.data.title }}</span>
+                            </h2>
+                            <p>{{ series.data.description }}</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="post-gallery">
+                            <img
+                                v-if="series.data.image_set"
+                                :src="series.data.image_set.lg_image"
+                                :alt="series.data.image_set.lg_image"
+                            />
+                            <img v-else :src="defaultImg" :alt="defaultImg" />
+                        </div>
+                    </div>
+                </div>
+                <div class="forum-table" v-if="series.data.events.data.length">
+                    <div
+                        class="table-head"
+                        style="background-color: rgb(45, 52, 54) !important"
+                    >
+                        <div class="first-col" style="width: 20%">
+                            <span>Date</span>
+                        </div>
+                        <div class="second-col" style="width: 50%">
+                            <span>event</span>
+                        </div>
+                        <div class="third-col" style="width: 15%">
+                            <span>buy in</span>
+                        </div>
+                        <div class="third-col" style="width: 15%">
+                            <span>fee</span>
+                        </div>
+                    </div>
+                    <EventTable
+                        v-for="event in series.data.events.data"
+                        :key="event.id"
+                        :event="event"
+                    />
+                </div>
+                <div v-if="series.data.content.length">
+                    <p class="series-content" v-html="series.data.content"></p>
+                </div>
+            </div>
+        </div>
+    </FrontLayout>
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 </template>
 
 <script setup>
 import { Head } from "@inertiajs/inertia-vue3";
+<<<<<<< HEAD
 
 import EventTable from "@/Components/Frontend/EventTable.vue";
+=======
+import { Inertia } from "@inertiajs/inertia";
+
+import FrontLayout from "@/Layouts/FrontLayout.vue";
+import EventTable from "./EventTable.vue";
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 import defaultImg from "/public/default-img.png";
 
 const props = defineProps({
@@ -78,6 +155,10 @@ const props = defineProps({
 function goBack() {
     history.back();
     return false;
+<<<<<<< HEAD
+=======
+    // Inertia.visit("/event-calendar");
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 }
 </script>
 

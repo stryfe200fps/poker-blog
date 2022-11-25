@@ -5,8 +5,12 @@ namespace App\Models;
 use App\Traits\HasMultipleImages;
 use Spatie\MediaLibrary\HasMedia;
 use App\Traits\HasMediaCollection;
+<<<<<<< HEAD
 use App\Observers\MediaObserver;
 use App\Observers\SlugObserver;
+=======
+use App\Observers\DefaultModelObserver;
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,8 +21,12 @@ class Player extends Model implements HasMedia
     use \Backpack\CRUD\app\Models\Traits\CrudTrait;
     use HasFactory;
 
+<<<<<<< HEAD
     use HasMediaCollection;
     use HasMultipleImages;
+=======
+    use HasMediaCollection, HasMultipleImages;
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 
     public function registerMediaConversions(?Media $media = null): void
     {
@@ -36,8 +44,12 @@ class Player extends Model implements HasMedia
     public static function boot()
     {
         parent::boot();
+<<<<<<< HEAD
         self::observe(new SlugObserver());
         self::observe(new MediaObserver());
+=======
+        self::observe(new DefaultModelObserver);
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 
         static::deleting(function ($deletePlayer) {
             $eventChip = EventChip::where('player_id', $deletePlayer->id)->get();
@@ -72,7 +84,11 @@ class Player extends Model implements HasMedia
 
     public function setStatusAttribute($value)
     {
+<<<<<<< HEAD
         $this->attributes['status'] =  !$value ? 'disabled' : 'enabled';
+=======
+        $this->attributes['status'] =  !$value  ? 'disabled' : 'enabled';
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
     }
 
 
@@ -83,7 +99,11 @@ class Player extends Model implements HasMedia
 
     public function openHistory()
     {
+<<<<<<< HEAD
         return '<a class="btn btn-sm btn-link"  href="player_history/' . urlencode($this->attributes['id']) . '" data-toggle="tooltip" title="Chip  Count"><i class="fa fa-search"></i> history  </a>';
+=======
+        return '<a class="btn btn-sm btn-link"  href="player_history/'.urlencode($this->attributes['id']).'" data-toggle="tooltip" title="Chip  Count"><i class="fa fa-search"></i> history  </a>';
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
     }
 
     public function getNameAttribute($value)
@@ -94,10 +114,18 @@ class Player extends Model implements HasMedia
     public function badge()
     {
         return $this->belongsTo(Badge::class);
+<<<<<<< HEAD
     }
 
     // protected static function booted()
     // {
 
+=======
+    } 
+
+    // protected static function booted()
+    // {
+        
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
     // }
 }

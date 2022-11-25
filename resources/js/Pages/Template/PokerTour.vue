@@ -2,6 +2,7 @@
     <Head>
         <title>{{ tour.data.title_tab }}</title>
     </Head>
+<<<<<<< HEAD
     <div class="block-content">
         <div class="single-post-box">
             <div class="title-section">
@@ -81,6 +82,97 @@
             </div>
         </div>
     </div>
+=======
+    <FrontLayout>
+        <div class="block-content">
+            <div class="single-post-box">
+                <div class="title-section">
+                    <h1 class="text-primary">
+                        <span style="cursor: pointer" @click="goBack"
+                            ><i
+                                class="fa fa-chevron-left"
+                                aria-hidden="true"
+                            ></i>
+                            to poker tours</span
+                        >
+                    </h1>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="post-content">
+                            <h2
+                                class="text-capitalize"
+                                style="margin-bottom: 15px"
+                            >
+                                <span v-html="tour.data.title"></span>
+                            </h2>
+                            <p
+                                class="tour-description"
+                                v-html="tour.data.content"
+                            ></p>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="post-gallery">
+                            <img
+                                v-if="tour.data.image_set"
+                                :src="tour.data.image_set.lg_image"
+                                :alt="tour.data.image_set.lg_image"
+                            />
+                            <img v-else :src="defaultImg" :alt="defaultImg" />
+                        </div>
+                    </div>
+                </div>
+                <div class="grid-box filters" v-if="seriesList.length">
+                    <h4>View Series By Year</h4>
+                    <div>
+                        <select class="form-control" v-model="selectedYear">
+                            <option value="" selected disabled>
+                                Select Year
+                            </option>
+                            <option
+                                v-for="(year, index) in years"
+                                :key="index"
+                                :value="year"
+                            >
+                                {{ year }}
+                            </option>
+                        </select>
+                    </div>
+                    <button
+                        class="btn btn-default"
+                        v-if="selectedYear !== ''"
+                        @click="resetFilter()"
+                    >
+                        Reset
+                    </button>
+                </div>
+                <div class="forum-table" v-if="seriesList.length">
+                    <div
+                        class="table-head"
+                        style="background-color: rgb(45, 52, 54) !important"
+                    >
+                        <div class="first-col" style="width: 50%">
+                            <span>Series</span>
+                        </div>
+                        <div class="second-col" style="width: 20%">
+                            <span>Date</span>
+                        </div>
+                        <div class="third-col" style="width: 25%">
+                            <span>Location</span>
+                        </div>
+                    </div>
+                    <SeriesTable
+                        v-for="series in seriesList"
+                        :key="series.id"
+                        :series="series"
+                        :tourSlug="tour.data.slug"
+                    />
+                </div>
+            </div>
+        </div>
+    </FrontLayout>
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 </template>
 
 <script setup>
@@ -89,7 +181,12 @@ import { Inertia } from "@inertiajs/inertia";
 import { useTourStore } from "@/Stores/pokerTour.js";
 import { onMounted, ref, computed, watch } from "@vue/runtime-core";
 
+<<<<<<< HEAD
 import SeriesTable from "@/Components/Frontend/SeriesTable.vue";
+=======
+import FrontLayout from "@/Layouts/FrontLayout.vue";
+import SeriesTable from "../Series/SeriesTable.vue";
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 import defaultImg from "/public/default-img.png";
 
 const props = defineProps({

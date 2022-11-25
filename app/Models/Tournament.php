@@ -5,16 +5,24 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Spatie\Sluggable\HasSlug;
+<<<<<<< HEAD
 use App\Traits\HasMultipleImages;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\Sluggable\SlugOptions;
 use App\Traits\HasMediaCollection;
 use App\Observers\MediaObserver;
 use App\Observers\SlugObserver;
+=======
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\Sluggable\SlugOptions;
+use App\Observers\DefaultModelObserver;
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use App\Traits\HasMultipleImages;
+use App\Traits\HasMediaCollection;
 
 class Tournament extends Model implements HasMedia
 {
@@ -28,6 +36,7 @@ class Tournament extends Model implements HasMedia
     public static function boot()
     {
         parent::boot();
+<<<<<<< HEAD
         self::observe(new SlugObserver);
         self::observe(new MediaObserver);
     }
@@ -37,6 +46,16 @@ class Tournament extends Model implements HasMedia
     //     'word_timezone'
 
     // ];
+=======
+        self::observe(new DefaultModelObserver);
+    }
+
+    protected $appends = [
+        'minimized_timezone',
+        'word_timezone'
+
+    ];
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 
     public function getSlugOptions(): SlugOptions
     {

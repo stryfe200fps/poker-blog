@@ -35,7 +35,11 @@ class ArticleRequest extends FormRequest
             'slug' =>  [ Rule::unique('articles')->ignore(request()->get('id'))], 
             'content' => function($attribute, $value, $fail) {
                   $fieldGroups = $value;
+<<<<<<< HEAD
                   if ($fieldGroups === null || count($fieldGroups) == 1) 
+=======
+                  if ($fieldGroups === null || count($fieldGroups) == 0) 
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
                     return true;
 
                   foreach ($fieldGroups as $key => $group) {

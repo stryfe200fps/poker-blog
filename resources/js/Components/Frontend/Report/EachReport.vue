@@ -5,18 +5,31 @@
             class="title-post"
             style="padding-top: 20px; border-top: 1px solid #d3d3d3"
         >
+<<<<<<< HEAD
             <!-- <h1 v-if="id == 1" :id="item.id" class="text-capitalize">
+=======
+            <h1 v-if="id == 1" :id="item.id" class="text-capitalize">
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
                 <Link
                     class="default-text-color"
                     :href="`/tours/${event.tour_slug}/${event.tournament_slug}/${event.slug}/update-${item.id}`"
                     v-html="item.title"
                 ></Link>
+<<<<<<< HEAD
             </h1> -->
             <h1 :id="item.id">
                 <Link
                     class="default-text-color"
                     :href="`/tours/${event.tour_slug}/${event.tournament_slug}/${event.slug}/update-${item.id}`"
                     v-html="formattedTitle"
+=======
+            </h1>
+            <h1 v-else class="text-capitalize">
+                <Link
+                    class="default-text-color"
+                    :href="`/tours/${event.tour_slug}/${event.tournament_slug}/${event.slug}/update-${item.id}`"
+                    v-html="item.title"
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
                 ></Link>
             </h1>
             <div
@@ -36,7 +49,11 @@
                             <i class="fa fa-clock-o"></i
                             >{{ item.realtime_published_date }}
                         </li>
+<<<<<<< HEAD
                         <li v-if="item.level">
+=======
+                        <li>
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
                             <i class="fa fa-bookmark"></i
                             >{{ item.level.level_value }}
                         </li>
@@ -247,7 +264,11 @@
 <script setup>
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import { ref } from "@vue/reactivity";
+<<<<<<< HEAD
 import { computed, onMounted } from "@vue/runtime-core";
+=======
+import { onMounted } from "@vue/runtime-core";
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 import CustomeTable from "../CustomeTable.vue";
 import CountryFlag from "vue3-country-flag-icon";
 import defaultAvatar from "@/default-avatar.png";
@@ -268,6 +289,7 @@ const props = defineProps({
     },
 });
 
+<<<<<<< HEAD
 const tab = ref(0);
 const isOpen = ref(false);
 
@@ -281,6 +303,59 @@ function onClickOutside(event) {
     if (event.target.localName !== "a") {
         isOpen.value = false;
         return;
+=======
+// const items = ref([]);
+
+function onClickOutside(event) {
+    if (event.target.localName !== "a") {
+        isOpen.value = false;
+        return;
+    }
+}
+
+const getDate = (date) => {
+    let eventEndDate = props.item.event.date_end;
+    let dateNow = moment().format("MMM D YYYY");
+    if (dateNow > eventEndDate) return moment(date).format("MMM DD YYYY");
+    return moment(date).fromNow();
+};
+
+// const newItem = ref(null);
+
+const tab = ref(0);
+const isOpen = ref(false);
+//const lastLevel = ref("");
+
+const changeTab = (currentTab) => {
+    tab.value = currentTab;
+};
+
+const showShare = () => {
+    isOpen.value = !isOpen.value;
+};
+
+/* FRAMES */
+function getFrame(theme) {
+    switch (theme) {
+        case "brokenMirror":
+            return brokenMirror;
+        case "bulletHole":
+            return bulletHole;
+        case "flames":
+            return flames;
+        case "happyBirthday":
+            return happyBirthday;
+        case "iceCubes":
+            return iceCubes;
+        case "pocketAces":
+            return pocketAces;
+        case "sunRays":
+            return sunRays;
+        case "waterLeaves":
+            return waterLeaves;
+        case "waterWaves":
+            return waterWaves;
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
     }
 }
 

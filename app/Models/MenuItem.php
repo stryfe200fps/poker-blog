@@ -3,13 +3,19 @@
 namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
+<<<<<<< HEAD
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+=======
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 use Illuminate\Database\Eloquent\Model;
 
 class MenuItem extends Model
 {
     use CrudTrait;
+<<<<<<< HEAD
     use HasFactory;
+=======
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 
     protected $table = 'menu_items';
 

@@ -25,7 +25,11 @@
                             "
                             v-if="event.game_table"
                         >
+<<<<<<< HEAD
                             Event Game: {{ event.game_table }}
+=======
+                            Event Game: {{ event.game_table }}dd
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
                         </p>
                         <p
                             style="
@@ -58,7 +62,11 @@
                             "
                             v-if="event.game_table"
                         >
+<<<<<<< HEAD
                             Event Game: {{ event.game_table }}
+=======
+                            Event Game: {{ event.game_table }}dd
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
                         </p>
                         <p
                             style="
@@ -81,11 +89,15 @@
                             Fee: {{ event.fee }}
                         </p>
                     </h2>
+<<<<<<< HEAD
                     <ul
                         class="post-tags"
                         style="margin-top: -15px"
                         v-if="event.schedule.date_start"
                     >
+=======
+                    <ul class="post-tags" v-if="event.date_start.length">
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
                         <li>
                             <i class="fa fa-clock-o"></i>
                             {{ formattedDate }}
@@ -178,7 +190,11 @@
                                 "
                                 v-if="event.game_table"
                             >
+<<<<<<< HEAD
                                 Event Game: {{ event.game_table }}
+=======
+                                Event Game: {{ event.game_table }}dd
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
                             </p>
                             <p
                                 style="

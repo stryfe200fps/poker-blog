@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+<<<<<<< HEAD
 use Exception;
 use Illuminate\Log\Logger;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
+=======
+use Illuminate\Http\Request;
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 use League\Glide\ServerFactory;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use League\Glide\Responses\LaravelResponseFactory;
@@ -21,6 +25,7 @@ class ImageController extends Controller
     // ]);
     //     }
 
+<<<<<<< HEAD
     public function regenerate()
     {
         \Artisan::call("media-library:regenerate --force ");
@@ -28,6 +33,8 @@ class ImageController extends Controller
         return redirect()->back();
     }
 
+=======
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
     public function show(Filesystem $filesystem, Media $media)
     {
         $server = ServerFactory::create([
@@ -38,6 +45,7 @@ class ImageController extends Controller
             'base_url' => 'img',
         ]);
    
+<<<<<<< HEAD
         
         try {
            return $server->getImageResponse("/public/$media->id/$media->file_name", request()->all());
@@ -45,6 +53,9 @@ class ImageController extends Controller
 
         $path = public_path().'/default-img.png';
         return response()->file($path);
+=======
+        return $server->getImageResponse("/public/$media->id/$media->file_name", request()->all());
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
     }
     
 }

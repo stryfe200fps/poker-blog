@@ -6,7 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\EventPayout;
 use App\Models\Player;
 use Exception;
+<<<<<<< HEAD
 use Illuminate\Log\Logger;
+=======
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 use Illuminate\Support\Facades\Schema;
 use Rap2hpoutre\FastExcel\FastExcel;
 
@@ -34,7 +37,10 @@ class ExcelUploadController extends Controller
 
             return 1;
         } catch (Exception $e) {
+<<<<<<< HEAD
             Logger($e);
+=======
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
             return 0;
         }
     }
@@ -64,6 +70,10 @@ class ExcelUploadController extends Controller
                             'event_id' => request()->all()['event_id'],
                     ]);
 
+<<<<<<< HEAD
+=======
+                    unlink('uploads/'. $realName);
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
                     return;
                 }
 
@@ -86,11 +96,19 @@ class ExcelUploadController extends Controller
                 }
                 
             });
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
             unlink('uploads/'. $realName);
             return 1;
         } catch (Exception $e) {
             return 0;
+<<<<<<< HEAD
             Logger($e);
+=======
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
         }
     }
 }

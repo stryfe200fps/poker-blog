@@ -6,7 +6,10 @@ namespace App\Models;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
+<<<<<<< HEAD
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+=======
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 use Illuminate\Database\Eloquent\Model;
 use Str;
 
@@ -15,7 +18,10 @@ class Page extends Model
     use CrudTrait;
     use Sluggable;
     use SluggableScopeHelpers;
+<<<<<<< HEAD
     use HasFactory;
+=======
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 
     /*
     |--------------------------------------------------------------------------

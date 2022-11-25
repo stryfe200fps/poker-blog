@@ -6,7 +6,10 @@ use App\Http\Requests\PayoutRequest;
 use App\Models\Country;
 use App\Models\Event;
 use App\Models\EventPayout;
+<<<<<<< HEAD
 use App\Traits\LimitUserPermissions;
+=======
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use Backpack\CRUD\app\Library\Widget;
@@ -55,7 +58,10 @@ class PayoutCrudController extends CrudController
         } else {
             $this->crud->denyAccess('create');
         }
+<<<<<<< HEAD
         $this->denyAccessIfNoPermission();
+=======
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
     }
 
     /**

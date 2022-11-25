@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
     <Head>
         <title>{{ article.title_tab }}</title>
     </Head>
@@ -137,6 +138,262 @@
                             </div>
                         </ul>
                     </div>
+=======
+    <FrontLayout title="">
+        <Head>
+            <title>{{ article.title_tab }}</title>
+        </Head>
+        <div class="block-content">
+            <label
+                id="table-of-contents"
+                class="table-contents"
+                v-if="article.content?.length"
+            >
+                <div @click="isPull = !isPull" class="table-header">
+                    Table of Contents
+                </div>
+                <ul class="table-menu" :class="{ pull: isPull }">
+                    <li
+                        v-for="(content, index) in article.content"
+                        :key="index"
+                    >
+                        <a
+                            :href="'#content' + index"
+                            v-html="content.title"
+                            @click="isPull = false"
+                        ></a>
+                    </li>
+                </ul>
+            </label>
+            <div class="title-section">
+                <h1 class="text-primary">
+                    <span style="cursor: pointer" @click="goBack"
+                        ><i class="fa fa-chevron-left" aria-hidden="true"></i>
+                        Back</span
+                    >
+                </h1>
+            </div>
+            <div class="single-post-box">
+                <div class="title-post">
+                    <h1>
+                        <h1 v-html="article.title"></h1>
+                    </h1>
+                    <div
+                        style="
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                        "
+                    >
+                        <div>
+                            <ul class="post-tags">
+                                <li>
+                                    <i class="fa fa-clock-o"></i
+                                    >{{
+                                        moment(new Date(article.date)).format(
+                                            "MMMM D, YYYY"
+                                        )
+                                    }}
+                                </li>
+                                <li>
+                                    <i class="fa fa-user"></i>by
+                                    <a href="#">{{ article.author?.name }} </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <ul class="post-tags share-post-links">
+                                <div
+                                    class="share-post-mobile"
+                                    style="position: relative"
+                                >
+                                    <div
+                                        class="btn-group-vertical social-links-group"
+                                        :class="{ show: isOpen }"
+                                    >
+                                        <li
+                                            class="btn custom-btn"
+                                            style="
+                                                margin-right: 0;
+                                                background-color: #1854dd;
+                                            "
+                                        >
+                                            <a
+                                                target="_blank"
+                                                :href="`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+                                                    url
+                                                )}&amp;src=sdkpreparse`"
+                                                ><i
+                                                    class="fa-brands fa-facebook-f"
+                                                    style="
+                                                        margin-right: 0;
+                                                        color: #fff;
+                                                    "
+                                                ></i>
+                                            </a>
+                                        </li>
+                                        <li
+                                            class="btn custom-btn"
+                                            style="
+                                                margin-right: 0;
+                                                background-color: #18a3dd;
+                                            "
+                                        >
+                                            <a
+                                                target="_blank"
+                                                :href="`https://twitter.com/intent/tweet?text=${encodeURIComponent(
+                                                    url
+                                                )}`"
+                                                ><i
+                                                    class="fa fa-twitter"
+                                                    style="
+                                                        margin-right: 0;
+                                                        color: #fff;
+                                                    "
+                                                ></i
+                                            ></a>
+                                        </li>
+                                        <li
+                                            class="btn custom-btn"
+                                            style="background-color: #25d366"
+                                        >
+                                            <a
+                                                target="_blank"
+                                                :href="`https://api.whatsapp.com/send?text=%0a${url}`"
+                                                ><i
+                                                    class="fa fa-whatsapp"
+                                                    style="
+                                                        margin-right: 0;
+                                                        color: #fff;
+                                                    "
+                                                ></i
+                                            ></a>
+                                        </li>
+                                    </div>
+                                    <li
+                                        @click="showShare"
+                                        v-click-outside-element="onClickOutside"
+                                        class="btn btn-default share-btn-mobile"
+                                    >
+                                        <i class="fa fa-share-alt"></i
+                                        ><span class="text-uppercase"
+                                            >Share</span
+                                        >
+                                    </li>
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div v-if="article.image_set" class="post-gallery">
+                    <img
+                        :src="article.image_set.xl_image"
+                        :alt="article.image_set.xl_image"
+                    />
+                    <span class="image-caption">{{ article.caption }}</span>
+                </div>
+                <div v-if="article.content?.length" style="margin-bottom: 24px">
+                    <h4
+                        class="text-uppercase"
+                        style="font-family: Lato, sans-serif"
+                    >
+                        Table of Contents
+                    </h4>
+                    <ul
+                        style="
+                            padding-inline-start: 20px;
+                            font-family: Lato, sans-serif;
+                            font-size: 16px;
+                        "
+                    >
+                        <li
+                            v-for="(content, index) in article.content"
+                            :key="index"
+                            style="margin: 10px 0; list-style: square"
+                        >
+                            <a
+                                class="text-primary"
+                                :href="'#content' + index"
+                                @click="isPull = false"
+                                v-html="content.title"
+                            ></a>
+                        </li>
+                    </ul>
+                </div>
+                <div
+                    v-if="article.main_content"
+                    class="main-content"
+                    v-html="article.main_content?.body"
+                ></div>
+                <div
+                    v-for="(content, index) in article.content"
+                    :key="index"
+                    class="post-content"
+                >
+                    <h3 style="margin-bottom: 20px" v-html="content.title"></h3>
+                    <div v-html="content.body"></div>
+                </div>
+                <p style="margin-bottom: 25px">
+                    &copy; 2021-{{ currentDate }} Life of poker. All rights
+                    reserved.
+                </p>
+                <div class="post-tags-box" v-if="article.tags?.length">
+                    <ul class="tags-box">
+                        <li><i class="fa fa-tags"></i><span>Tags:</span></li>
+                        <li v-for="tags in article.tags" :key="tags.id">
+                            <Link :href="'/tag/articles/' + tags.slug">{{
+                                tags.title
+                            }}</Link>
+                        </li>
+                    </ul>
+                </div>
+                <div
+                    class="title-section"
+                    style="margin-top: 50px"
+                    v-if="related?.length"
+                >
+                    <h1><span>Related news</span></h1>
+                </div>
+                <div class="row">
+                    <div
+                        class="col-xs-12 col-md-4"
+                        style="margin-bottom: 30px"
+                        v-for="relate in related"
+                        :key="relate.id"
+                    >
+                        <div
+                            class="item news-post image-post3"
+                            style="cursor: pointer"
+                            @click="showArticle(relate.date, relate.slug)"
+                        >
+                            <img
+                                v-if="relate.image_set"
+                                :src="relate.image_set.md_image"
+                                :alt="relate.image_set.md_image"
+                            />
+                            <img v-else :src="defaultImg" alt="" />
+                            <div class="hover-box">
+                                <h2>
+                                    <Link
+                                        :href="`/news/${moment(
+                                            new Date(relate.date)
+                                        ).format('YYYY')}/${moment(
+                                            new Date(relate.date)
+                                        ).format('MM')}/${relate.slug}`"
+                                        v-html="relate.title"
+                                    >
+                                    </Link>
+                                </h2>
+                                <ul class="post-tags">
+                                    <li>
+                                        <i class="fa fa-clock-o"></i
+                                        >{{ relate.date }}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
                 </div>
             </div>
             <div v-if="article.image_set" class="post-gallery">
@@ -254,6 +511,13 @@
 
 <script setup>
 import { Head, Link } from "@inertiajs/inertia-vue3";
+<<<<<<< HEAD
+=======
+import FrontLayout from "@/Layouts/FrontLayout.vue";
+import ReportList from "../../Components/Frontend/Report/ReportList.vue";
+import SideBar from "../../Components/Frontend/MainContent/SideBar.vue";
+import TournamentList from "../../Components/Frontend/Tournament/List.vue";
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 import { Inertia } from "@inertiajs/inertia";
 import { useArticleStore } from "@/Stores/article.js";
 import {
@@ -263,9 +527,15 @@ import {
     watch,
     computed,
 } from "@vue/runtime-core";
+<<<<<<< HEAD
 import moment from "moment";
 
 import defaultImg from "/public/default-img.png";
+=======
+import defaultImg from "/public/default-img.png";
+import moment from "moment";
+const articleStore = useArticleStore();
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 
 const props = defineProps({
     slug: {
@@ -274,6 +544,7 @@ const props = defineProps({
     },
 });
 
+<<<<<<< HEAD
 const articleStore = useArticleStore();
 const article = ref([]);
 const related = ref(null);
@@ -285,12 +556,30 @@ const currentDate = computed(() => {
     return moment().format("YYYY");
 });
 
+=======
+const article = ref([]);
+const related = ref(null);
+
+const isOpen = ref(false);
+const isPull = ref(false);
+const url = ref(window.location.href);
+
+const currentDate = computed(() => {
+    return moment().format("YYYY");
+});
+
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 const showShare = () => {
     isOpen.value = !isOpen.value;
 };
 
 function goBack() {
     Inertia.visit(`/news`);
+<<<<<<< HEAD
+=======
+    // history.back();
+    // return false;
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 }
 
 function onClickOutside(event) {

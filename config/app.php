@@ -63,6 +63,27 @@ return [
         'label' => 'apt champion', 'badge' => '/uploads/badges/apt-champion-badge.png',
     ],
 
+<<<<<<< HEAD
+=======
+    'xs-image' => [200, 200], //width, height
+    'sm-image' => [300,250],
+    'md-image' => [640,480],
+    'lg-image' => [900,600],
+    'xl-image' => [1600,900],
+
+    'name' => env('APP_NAME', 'LifeOfPoker'),
+    'image_cache_lifetime' => 10,
+    'date_format' => 'MMM DD, OY,  h:mm a, ddd',
+    'carbon_date_format' => 'm-d-y h:ma T ',
+    'supported_locales' => ['zh', 'ko', 'ja', 'es', 'de'],
+    'slug_placeholder' => 'Slug will autogenerate if leave empty',
+    'badges' => [
+        'label' => 'apt champion', 'badge' => '/uploads/badges/apt-champion-badge.png',
+        'label' => 'apt champion', 'badge' => '/uploads/badges/apt-champion-badge.png',
+        'label' => 'apt champion', 'badge' => '/uploads/badges/apt-champion-badge.png',
+    ],
+
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 
     /*
     |--------------------------------------------------------------------------
@@ -241,11 +262,22 @@ return [
         CountriesServiceProvider::class,
         TimezoneProvider::class,
         App\Providers\BroadcastServiceProvider::class,
+<<<<<<< HEAD
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\FortifyServiceProvider::class,
         App\Providers\JetstreamServiceProvider::class,
         Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class
+=======
+        \Orangehill\Iseed\IseedServiceProvider::class,
+        App\Providers\EventServiceProvider::class,
+        App\Providers\HorizonServiceProvider::class,
+        App\Providers\MetaTagsServiceProvider::class,
+        App\Providers\RouteServiceProvider::class,
+        App\Providers\FortifyServiceProvider::class,
+        App\Providers\JetstreamServiceProvider::class,
+        Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 
     ],
 

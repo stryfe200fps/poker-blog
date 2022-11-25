@@ -2,6 +2,7 @@
     <Head>
         <title>{{ room.title }}</title>
     </Head>
+<<<<<<< HEAD
     <div class="block-content">
         <div class="article-box">
             <div class="title-section">
@@ -109,10 +110,138 @@
 
 <script setup>
 import { Head } from "@inertiajs/inertia-vue3";
+=======
+    <FrontLayout>
+        <div class="block-content">
+            <div class="article-box">
+                <div class="title-section">
+                    <h1 class="text-primary">
+                        <span style="cursor: pointer" @click="goBack"
+                            ><i
+                                class="fa fa-chevron-left"
+                                aria-hidden="true"
+                            ></i>
+                            to poker rooms</span
+                        >
+                    </h1>
+                </div>
+                <div
+                    class="news-post article-post"
+                    style="margin-bottom: 50px; padding-bottom: 30px"
+                >
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="post-content">
+                                <h2
+                                    class="text-capitalize"
+                                    style="margin-bottom: 15px"
+                                >
+                                    <span>{{ room.title }} </span>
+                                </h2>
+                                <ul class="post-tags post-tags--custom">
+                                    <li v-if="room.country">
+                                        <i
+                                            ><CountryFlag
+                                                :title="room.country?.name"
+                                                :iso="room.country?.code"
+                                        /></i>
+                                        {{ room.country?.name }}
+                                    </li>
+                                    <li v-if="room.address">
+                                        <i class="fas fa-map-marker-alt"></i
+                                        >{{ room.address }}
+                                    </li>
+                                    <li v-if="room.phone">
+                                        <i class="fas fa-mobile-android-alt"></i
+                                        >{{ room.phone }}
+                                    </li>
+                                    <li
+                                        class="text-lowercase"
+                                        v-if="room.email"
+                                    >
+                                        <a :href="`mailto:${room.email}`"
+                                            ><i class="fas fa-envelope"></i
+                                            >{{ room.email }}</a
+                                        >
+                                    </li>
+                                    <li
+                                        class="text-lowercase"
+                                        v-if="room.website"
+                                    >
+                                        <a
+                                            :href="`${formattedWebsite}`"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            ><i class="fas fa-globe"></i
+                                            >{{
+                                                room.website?.replace(
+                                                    /(^\w+:|^)\/\//,
+                                                    ""
+                                                )
+                                            }}</a
+                                        >
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="post-gallery">
+                                <img
+                                    v-if="room.image_set"
+                                    :src="room.image_set?.md_image"
+                                    :alt="room.image_set?.md_image"
+                                />
+                                <img
+                                    v-else
+                                    :src="defaultImg"
+                                    :alt="defaultImg"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-bottom: 60px" v-if="room.description">
+                    <div class="title-section">
+                        <h1><span>Description</span></h1>
+                    </div>
+                    <p>{{ room.description }}</p>
+                </div>
+                <div style="margin-bottom: 60px" v-if="room.features">
+                    <div class="title-section">
+                        <h1><span>Features</span></h1>
+                    </div>
+                    <ul>
+                        <li
+                            v-for="(feature, index) in room.features"
+                            :key="index"
+                            style="list-style-type: disc"
+                        >
+                            {{ feature.feature }}
+                        </li>
+                    </ul>
+                </div>
+                <div v-if="room.content">
+                    <div class="title-section">
+                        <h1><span>General Information</span></h1>
+                    </div>
+                    <p class="room-content" v-html="room.content"></p>
+                </div>
+            </div>
+        </div>
+    </FrontLayout>
+</template>
+
+<script setup>
+import { Head, Link } from "@inertiajs/inertia-vue3";
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 import { useRoomStore } from "@/Stores/pokerRoom.js";
 import { onMounted, ref, computed } from "@vue/runtime-core";
 import { Inertia } from "@inertiajs/inertia";
 
+<<<<<<< HEAD
+=======
+import FrontLayout from "@/Layouts/FrontLayout.vue";
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 import CountryFlag from "vue3-country-flag-icon";
 import defaultImg from "/public/default-img.png";
 

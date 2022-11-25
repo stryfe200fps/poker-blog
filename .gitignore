@@ -1,5 +1,9 @@
 /node_modules
+<<<<<<< HEAD
 /public/build/manifest.json
+=======
+/public/build
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 /public/build/*
 /public/hot
 /public/storage
@@ -17,6 +21,11 @@ yarn-error.log
 /.vscode
 .DS_STORE
 /storage/media-library
+<<<<<<< HEAD
 /public/uploads
 .php-cs-fixer.cache
 .phpunit.result.cache
+=======
+/public/build/manifest.json
+/public/uploads
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32

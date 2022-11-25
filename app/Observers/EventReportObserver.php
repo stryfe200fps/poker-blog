@@ -5,8 +5,11 @@ namespace App\Observers;
 use App\Events\NewReport;
 use App\Models\EventChip;
 use App\Models\EventPayout;
+<<<<<<< HEAD
 use Exception;
 use Illuminate\Log\Logger;
+=======
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 
 class EventReportObserver
 {
@@ -14,9 +17,13 @@ class EventReportObserver
 
     public function created($model)
     {
+<<<<<<< HEAD
         try { 
         NewReport::dispatch($model->event->slug, $model->day_id);
         } catch (Exception $e) { Logger('event report observer is not working'); }
+=======
+        NewReport::dispatch($model->event->slug, $model->day_id);
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
     }
 
     public function saved($model)

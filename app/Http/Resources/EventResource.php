@@ -28,12 +28,19 @@ class EventResource extends JsonResource
 'schedule' => $this->schedule,
 'date_range' => $this->schedule,
 'image' => $this->image,
+<<<<<<< HEAD
 'image_set' => $this->allMedia(),
+=======
+'image_set' => $this->image,
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 'tournament' => $this->tournament->title,
 'country' => $this->tournament->load('country')->country,
 'currency' => $this->tournament->currency,
 'available_days' => $this->getSchedule(),
+<<<<<<< HEAD
 'available_day_with_reports' => $this->getScheduleWithReports(),
+=======
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 'tour_slug' => $this->tournament->tour->slug,
 'tournament_slug' => $this->tournament->slug,
 'buyin' => $this->buyin,

@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
     <div v-if="eventData">
         <div class="block-content">
             <div class="title-section">
@@ -98,6 +99,105 @@ import { onMounted, ref, watch } from "@vue/runtime-core";
 import { Inertia } from "@inertiajs/inertia";
 
 import ReportList from "../../Components/Frontend/Report/ReportList.vue";
+=======
+    <FrontLayout title="Event">
+        <div v-if="eventData">
+            <div class="block-content">
+                <div class="title-section">
+                    <h1>
+                        <span>{{ eventData.tournament }}</span>
+                    </h1>
+                </div>
+                <div class="title-section hide-underline">
+                    <div
+                        style="
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                        "
+                    >
+                        <h1>
+                            <span class="text-capitalize">{{
+                                eventData.title
+                            }}</span>
+                        </h1>
+                        <div :class="type !== 'payouts' ? 'visible' : 'hide'">
+                            <p v-if="eventDays?.length > 1">
+                                <select
+                                    class="form-control custom-form-control"
+                                    v-model="selectDay"
+                                    @change="fetchLiveReports"
+                                >
+                                    <option
+                                        class="text-start text-uppercase"
+                                        v-for="(data, index) in eventDays"
+                                        :key="index"
+                                        :value="data"
+                                        :checked="data == selectDay"
+                                    >
+                                        Day {{ eventData.available_days[data] }}
+                                    </option>
+                                </select>
+                            </p>
+                            <p
+                                v-else
+                                v-for="(data, index) in eventDays"
+                                :key="index"
+                            >
+                                Day:
+                                <span class="text-uppercase">
+                                    {{ eventData.available_days[data] }}</span
+                                >
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="single-post-box">
+                    <ReportList
+                        :event="eventData"
+                        :reports="liveReport"
+                        :chipCounts="chipCountsData"
+                        :whatsappContent="whatsappContent"
+                        :whatsapp="whatsappData"
+                        :gallery="galleryData"
+                        :payouts="payoutsData"
+                        :currentTab="type"
+                        :day="day"
+                        :url="url"
+                        :reportingBanner="reportingBanner"
+                        @loadMore="loadMoreReports"
+                    />
+                </div>
+            </div>
+        </div>
+        <div class="toast" :class="{ active: isActive }" @click="scrollToTop">
+            <div class="toast-content">
+                <i class="fas fa-info-circle info"></i>
+
+                <div class="message">
+                    <span class="text text-1">New post - click here</span>
+                </div>
+            </div>
+            <div class="progress" :class="{ active: isActive }"></div>
+        </div>
+    </FrontLayout>
+</template>
+
+<script setup>
+import { Head, Link } from "@inertiajs/inertia-vue3";
+import FrontLayout from "@/Layouts/FrontLayout.vue";
+import ReportList from "../../Components/Frontend/Report/ReportList.vue";
+import SideBar from "../../Components/Frontend/MainContent/SideBar.vue";
+import TournamentList from "../../Components/Frontend/Tournament/List.vue";
+
+import { useEventStore } from "@/Stores/event.js";
+import { useTournamentStore } from "@/Stores/tournament.js";
+import { useBannerStore } from "@/Stores/banner.js";
+import { onMounted, ref, watch, computed, onUpdated } from "@vue/runtime-core";
+import { Inertia } from "@inertiajs/inertia";
+const eventStore = useEventStore();
+const tournamentStore = useTournamentStore();
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 
 const props = defineProps({
     slug: {
@@ -120,8 +220,11 @@ const props = defineProps({
     },
 });
 
+<<<<<<< HEAD
 const eventStore = useEventStore();
 const bannerStore = useBannerStore();
+=======
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 const eventData = ref([]);
 const selectDay = ref(null);
 const liveReport = ref([]);
@@ -133,6 +236,7 @@ const payoutsData = ref([]);
 const loadPage = ref(1);
 const lastPage = ref(1);
 const isActive = ref(false);
+<<<<<<< HEAD
 const reportingBanner = ref([]);
 const daySlug = ref(window.location.pathname.split("/")[5]);
 const isLoading = ref(true);
@@ -143,6 +247,15 @@ const highestDay = () => {
     let days = available_day_with_reports.map((day) => day.id);
     return days[days.length - 1];
 };
+=======
+const bannerStore = useBannerStore();
+const reportingBanner = ref([]);
+const daySlug = ref(window.location.pathname.split("/")[5]);
+
+const eventDays = computed(() => {
+    return Object.keys(eventData?.value?.available_days ?? {});
+});
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 
 async function loadMoreReports() {
     if (loadPage.value >= lastPage.value) return;
@@ -150,6 +263,7 @@ async function loadMoreReports() {
 
     await eventStore.getLiveReport(loadPage.value, selectDay.value);
     liveReport.value.push(...eventStore.liveReportList.data);
+<<<<<<< HEAD
     // eventStore.liveReportList.data.forEach((data) => {
     //     const list = liveReport.value.filter((val) => val.level === data.level);
 
@@ -213,10 +327,64 @@ async function reportViewing(type) {
             payoutsData.value = eventStore.payouts.data;
         }
         isLoading.value = false;
+=======
+    // const newLevel = eventStore.liveReportList.data
+    //     .map((data) => data.level)
+    //     .toString();
+
+    // for (const report of liveReport.value) {
+    //     if (report.level === newLevel) {
+    //         const index = eventStore.liveReportList.data.findIndex(
+    //             (data) => data.level === report.level
+    //         );
+    //         const newCollection = report.collection.concat(
+    //             eventStore.liveReportList.data[index].collection
+    //         );
+    //         report.collection = newCollection;
+    //         return;
+    //     }
+    // }
+    lastPage.value = eventStore.liveReportList.meta.last_page;
+}
+
+async function reportViewing() {
+    if (props.type === null) {
+        await eventStore.getLiveReport(1, selectDay.value);
+        liveReport.value = eventStore.liveReportList.data;
+        lastPage.value = eventStore.liveReportList.meta.last_page;
+        reportingBanner.value = bannerStore.getReportingBanner();
+        return;
+    }
+
+    if (props.type === "chip-stack") {
+        await eventStore.getChipCountsData(selectDay.value);
+        chipCountsData.value = eventStore.chipCounts.data;
+        return;
+    }
+
+    if (props.type === "whatsapp") {
+        await eventStore.getWhatsappData(selectDay.value);
+        whatsappData.value = eventStore.whatsapp.data;
+        await eventStore.getWhatsappContent();
+        whatsappContent.value = eventStore.whatsappContent;
+        return;
+    }
+
+    if (props.type === "gallery") {
+        await eventStore.getGalleryData(selectDay.value);
+        galleryData.value = eventStore.galleryData.data;
+        return;
+    }
+
+    if (props.type === "payouts") {
+        await eventStore.getPayoutsData(eventData.value.slug);
+        payoutsData.value = eventStore.payouts.data;
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
         return;
     }
 }
 
+<<<<<<< HEAD
 const fetchLiveReports = (value) => {
     isLoading.value = value;
     loadPage.value = 1;
@@ -260,11 +428,21 @@ function scrollToTop() {
     const { name } = eventData.value.available_day_with_reports.find(
         ({ id }) => id == selectDay.value
     );
+=======
+function scrollToTop() {
+    isActive.value = false;
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
     if (props.type) {
         Inertia.visit(
             `/tours/${eventData.value.tour_slug}/${
                 eventData.value.tournament_slug
+<<<<<<< HEAD
             }/${eventData.value.slug}/${name
+=======
+            }/${eventData.value.slug}/${eventData.value.available_days[
+                selectDay.value
+            ]
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
                 .replace(/[^A-Z0-9]+/gi, "-")
                 .toLowerCase()}`,
             { preserveState: true }
@@ -277,6 +455,7 @@ function scrollToTop() {
 onMounted(async () => {
     await eventStore.getEventData(props.slug);
 
+<<<<<<< HEAD
     if (daySlug.value === undefined || daySlug.value === props.type) {
         selectDay.value = highestDay();
     } else {
@@ -284,11 +463,21 @@ onMounted(async () => {
             ({ name }) =>
                 JSON.stringify(
                     name.replace(/[^A-Z0-9]+/gi, "-").toLowerCase()
+=======
+    if (daySlug.value === undefined) {
+        selectDay.value = Object.keys(eventData.value.available_days).find(
+            (key) =>
+                JSON.stringify(
+                    eventData.value.available_days[key]
+                        .replace(/[^A-Z0-9]+/gi, "-")
+                        .toLowerCase()
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
                 ) ===
                 JSON.stringify(
                     props.day.replace(/[^A-Z0-9]+/gi, "-").toLowerCase()
                 )
         );
+<<<<<<< HEAD
         selectDay.value = id;
     }
     reportViewing(props.type);
@@ -302,11 +491,29 @@ onMounted(async () => {
         },
         { preserveState: true }
     );
+=======
+    } else {
+        selectDay.value = Object.keys(eventData.value.available_days).find(
+            (key) =>
+                JSON.stringify(
+                    eventData.value.available_days[key]
+                        .replace(/[^A-Z0-9]+/gi, "-")
+                        .toLowerCase()
+                ) ===
+                JSON.stringify(
+                    daySlug.value.replace(/[^A-Z0-9]+/gi, "-").toLowerCase()
+                )
+        );
+    }
+
+    reportViewing();
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 
     window.Echo.channel("report").listen(
         "NewReport",
         ({ eventSlug, dayid }) => {
             if (props.slug === eventSlug && selectDay.value == dayid) {
+<<<<<<< HEAD
                 hasNewReport.value = true;
                 isActive.value = true;
                 fetchLiveReports(false);
@@ -314,6 +521,12 @@ onMounted(async () => {
 
                 setTimeout(() => {
                     hasNewReport.value = false;
+=======
+                fetchLiveReports();
+                isActive.value = true;
+
+                setTimeout(() => {
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
                     isActive.value = false;
                 }, 5000);
             }
@@ -321,6 +534,43 @@ onMounted(async () => {
     );
 });
 
+<<<<<<< HEAD
+=======
+onUpdated(() => {
+    reportViewing();
+});
+
+const fetchLiveReports = () => {
+    loadPage.value = 1;
+    lastPage.value = 1;
+    reportViewing();
+
+    if (props.type === null) {
+        Inertia.visit(
+            `/tours/${eventData.value.tour_slug}/${
+                eventData.value.tournament_slug
+            }/${eventData.value.slug}/${eventData.value.available_days[
+                selectDay.value
+            ]
+                .replace(/[^A-Z0-9]+/gi, "-")
+                .toLowerCase()}`,
+            { preserveState: true }
+        );
+        return;
+    }
+    Inertia.visit(
+        `/tours/${eventData.value.tour_slug}/${
+            eventData.value.tournament_slug
+        }/${eventData.value.slug}/${eventData.value.available_days[
+            selectDay.value
+        ]
+            .replace(/[^A-Z0-9]+/gi, "-")
+            .toLowerCase()}/${props.type}`,
+        { preserveState: true }
+    );
+};
+
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 watch(
     () => eventStore.eventData.data,
     function () {

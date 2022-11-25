@@ -1,7 +1,11 @@
 <template>
     <header ref="sticky" class="clearfix" style="z-index: auto !important">
         <nav
+<<<<<<< HEAD
             class="navbar navbar-default navbar-static-top custom-header--bg mobile-header"
+=======
+            class="navbar navbar-default navbar-static-top custom-header--bg"
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
             role="navigation"
         >
             <div class="logo-advertisement custom-header--bg">
@@ -120,7 +124,10 @@
                                 v-for="menu in $page['props']['menu']"
                                 :key="menu.id"
                                 :menu="menu"
+<<<<<<< HEAD
                                 @closeMenu="closeMenu"
+=======
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
                             />
                         </ul>
                     </div>
@@ -153,16 +160,20 @@ function toggleBtn() {
     document.body.style.overflow = "auto";
 }
 
+<<<<<<< HEAD
 function closeMenu() {
     toggleMenu.value = false;
     document.body.style.overflow = "auto";
 }
 
+=======
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 function onScroll(e) {
     windowTop.value = e.target.documentElement.scrollTop;
     var width = document.body.clientWidth;
     const navImg = document.querySelector(".drop-img");
 
+<<<<<<< HEAD
     if (width <= 767 && window.scrollY > 20) {
         document.querySelector(".mobile-header").style.position = "fixed";
         document.querySelector(".mobile-header").style.top = 0;
@@ -180,6 +191,14 @@ function onScroll(e) {
         sticky.value.classList.add("active");
         navImg.classList.add("scroll");
     } else {
+=======
+    if (width < 769) return;
+
+    if (windowTop.value >= sticky.value.offsetTop + 100) {
+        sticky.value.classList.add("active");
+        navImg.classList.add("scroll");
+    } else {
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
         sticky.value.classList.remove("active");
         navImg.classList.remove("scroll");
     }
@@ -223,15 +242,24 @@ function googleTranslateElementInit() {
                 }
             });
         });
+<<<<<<< HEAD
         // select[0].addEventListener("change", function () {
         //     if (select[0].value === "en") {
         //         window.location.reload();
         //     }
         // });
+=======
+        select[0].addEventListener("change", function () {
+            if (select[0].value === "en") {
+                window.location.reload();
+            }
+        });
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
         isLoading.value = false;
     }
 }
 onMounted(() => {
+<<<<<<< HEAD
     window.addEventListener("scroll", onScroll);
     setTimeout(() => {
         googleTranslateElementInit();
@@ -249,6 +277,23 @@ onMounted(() => {
     //     }, 1500);
     //     return;
     // }
+=======
+    if (pathname.value !== "news") window.addEventListener("scroll", onScroll);
+
+    let targetElement = document.getElementById("google_translate_element");
+    if (targetElement) {
+        targetElement.innerHTML = "";
+        const script = document.createElement("script");
+        script.type = "text/javascript";
+        script.src =
+            "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+        document.head.appendChild(script);
+        setTimeout(() => {
+            googleTranslateElementInit();
+        }, 1500);
+        return;
+    }
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 });
 
 onBeforeUnmount(() => {
@@ -566,8 +611,11 @@ header.active .nav-list-container {
 
     .navbar-collapse--custom {
         display: none;
+<<<<<<< HEAD
         position: fixed;
         width: 100%;
+=======
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
         min-height: 100vh;
         background-color: #2a2828;
     }

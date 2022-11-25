@@ -6,7 +6,11 @@ use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+<<<<<<< HEAD
 // use Stichoza\GoogleTranslate\GoogleTranslate;
+=======
+use Stichoza\GoogleTranslate\GoogleTranslate;
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 
 
 class CreateJsonTranslationFileCommand extends Command
@@ -36,7 +40,11 @@ class CreateJsonTranslationFileCommand extends Command
         $directories = $storage->directories();
 
         $supportedLocales = config('app.supported_locales');
+<<<<<<< HEAD
             // $tr = new GoogleTranslate(); // Translates to 'en' from auto-detected language by default
+=======
+            $tr = new GoogleTranslate(); // Translates to 'en' from auto-detected language by default
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
            foreach ($directories as $directory) {
             $files = $storage->allFiles($directory);
 

@@ -3,6 +3,10 @@
 namespace App\Http\Middleware;
 
 use App\Models\MenuItem;
+<<<<<<< HEAD
+=======
+use Butschster\Head\Contracts\MetaTags\MetaInterface;
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 use Illuminate\Http\Request;
 Use App\Models\Banner;
 use Inertia\Middleware;
@@ -43,7 +47,11 @@ class HandleInertiaRequests extends Middleware
     {
         // dd(Banner::all());
         return array_merge(parent::share($request), [
+<<<<<<< HEAD
             // 'title' => fn (MetaInterface $meta) => ($meta->toArray()['head'][0]['content']),
+=======
+            'title' => fn (MetaInterface $meta) => ($meta->toArray()['head'][0]['content']),
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
             'menu' => MenuItem::getTree(),
             'supported_locales' => config('app.supported_locales'),
             'banners' => BannerResource::collection(Banner::all()),

@@ -8,8 +8,12 @@ use App\Traits\HasMultipleImages;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\Sluggable\SlugOptions;
 use App\Traits\HasMediaCollection;
+<<<<<<< HEAD
 use App\Observers\MediaObserver;
 use App\Observers\SlugObserver;
+=======
+use App\Observers\DefaultModelObserver;
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -30,8 +34,12 @@ class Tour extends Model implements HasMedia
     public static function boot()
     {
         parent::boot();
+<<<<<<< HEAD
         self::observe(new SlugObserver);
         self::observe(new MediaObserver);
+=======
+        self::observe(new DefaultModelObserver);
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
     }
 
     public function getSlugOptions(): SlugOptions

@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Country;
 use App\Http\Requests\RoomRequest;
+<<<<<<< HEAD
 use App\Traits\LimitUserPermissions;
+=======
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -20,7 +23,10 @@ class RoomCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+<<<<<<< HEAD
     use LimitUserPermissions;
+=======
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -32,7 +38,10 @@ class RoomCrudController extends CrudController
         CRUD::setModel(\App\Models\Room::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/room');
         CRUD::setEntityNameStrings('room', 'rooms');
+<<<<<<< HEAD
         $this->denyAccessIfNoPermission();
+=======
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
     }
 
     /**

@@ -42,8 +42,11 @@ Route::crud('article', 'ArticleCrudController');
     Route::crud('media-reporting-category', 'MediaReportingCategoryCrudController');
     Route::crud('content', 'ContentCrudController');
     Route::crud('badge', 'BadgeCrudController');
+<<<<<<< HEAD
     Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
     Route::get('image/regenerate', [ ImageController::class, 'regenerate' ]);
     Route::post('prepare', [ExcelUploadController::class, 'prepare']);
     Route::post('upload_excel', [ExcelUploadController::class, 'upload']);
+=======
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 }); // this should be the absolute last line of this file

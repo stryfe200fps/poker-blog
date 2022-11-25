@@ -14,11 +14,16 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\ChipController;
 use App\Http\Controllers\EventController;
+<<<<<<< HEAD
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\PayoutController;
 use App\Http\Controllers\ContentController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\SettingController;
+=======
+use App\Http\Controllers\PayoutController;
+use App\Http\Controllers\GalleryController;
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 use App\Http\Controllers\Api\RoomController;
 use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\Api\BannerController;
@@ -37,6 +42,11 @@ use App\Http\Controllers\Api\ReportsApiController;
 use App\Http\Controllers\ArticleCategoryController;
 use App\Http\Controllers\Api\TournamentApiController;
 use App\Http\Controllers\Api\MediaReportingController;
+<<<<<<< HEAD
+=======
+use App\Http\Controllers\ContentController;
+use App\Http\Controllers\ImageController;
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -137,5 +147,9 @@ Route::get('content/{slug}', [ContentController::class, 'show']);
 
 
 Route::get('fetch/tag', [TagController::class, 'fetch']);
+<<<<<<< HEAD
 Route::get('fetch/countries', [CountryController::class, 'index']);
 Route::get('settings', [SettingController::class, 'index']);
+=======
+Route::get('fetch/countries', [CountryController::class, 'index']);
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32

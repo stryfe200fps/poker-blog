@@ -17,11 +17,15 @@ class MediaReportingFactory extends Factory
     public function definition()
     {
         return [
+<<<<<<< HEAD
             'type' => $this->faker->word,
             'title' => $this->faker->word,
             'description' => $this->faker->paragraph,
             'link' => $this->faker->url,
             'published_date' =>now() 
+=======
+            //
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
         ];
     }
 }

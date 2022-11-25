@@ -75,7 +75,10 @@
 <script setup>
 import { onMounted, onBeforeUnmount, ref } from "@vue/runtime-core";
 import { Link } from "@inertiajs/inertia-vue3";
+<<<<<<< HEAD
 import { Inertia } from "@inertiajs/inertia";
+=======
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
 
 import TournamentItem from "./TournamentItem.vue";
 import LoadingBar from "@/Components/LoadingBar.vue";
@@ -107,11 +110,15 @@ function handleScrolledToBottom(isVisible) {
 
 function stickyScroll() {
     const tabs = document.querySelector(".custom-tabs");
+<<<<<<< HEAD
     const mobileHeader = document.querySelector(".mobile-header");
+=======
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
     const nav = document.querySelector(".nav-list-container");
     const { top } = tabs.getBoundingClientRect();
     const width = document.body.clientWidth;
 
+<<<<<<< HEAD
     if (top <= mobileHeader.offsetHeight && width <= 767) {
         tabs.style.top = `${mobileHeader.offsetHeight}px`;
         tabs.style.border = "none";
@@ -121,6 +128,9 @@ function stickyScroll() {
     }
 
     if (top <= nav.offsetHeight && width >= 768) {
+=======
+    if (top <= nav.offsetHeight) {
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
         tabs.style.top = width === 768 ? "0px" : `${nav.offsetHeight}px`;
         tabs.style.border = "none";
         tabs.style.backgroundColor = "white";

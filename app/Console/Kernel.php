@@ -16,6 +16,11 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('update:tweets')->everyTenMinutes();
+<<<<<<< HEAD
+=======
+        $schedule->command('update:instagram')->days(3);
+        // $schedule->command('update:tweets')->everyMinute();
+>>>>>>> add1d79f3c28592566e8c668557fa86d9e383b32
         $schedule->command('instagram-feed:refresh-token')->monthly();
     }
 
