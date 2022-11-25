@@ -24,7 +24,6 @@ class MenuItemFactory extends Factory
             'link' => 'facebook.com',
             'parent_id' => 0,
             'page_id' => Page::factory()->create()->id 
-
         ];
     }
 }

@@ -30,14 +30,22 @@ class ArticleFactory extends Factory
             'title' => $this->faker->name,
             'content' => [
                 [
-                    'title' => 'this title',
-                    'body' => 'this body',
+                    'title' => $this->faker->paragraph(5),
+                    'body' => $this->faker->paragraph(20),
+                ],
+                [
+                    'title' => $this->faker->paragraph(5),
+                    'body' => $this->faker->paragraph(20),
+                ],
+                [
+                    'title' => $this->faker->paragraph(5),
+                    'body' => $this->faker->paragraph(20),
                 ],
             ],
             'slug' => $this->faker->slug,
             'published_date' => Carbon::now()->toString(),
             'author_id' => Author::factory()->create()->id,
-            'description' => 'Descriptions',
+            'description' => $this->faker->paragraph(3),
         ];
     }
 }

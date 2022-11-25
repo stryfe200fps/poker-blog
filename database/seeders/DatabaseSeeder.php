@@ -14,6 +14,8 @@ use App\Models\EventReport;
 use App\Models\Level;
 use Illuminate\Database\Seeder;
 use App\Models\MediaReportingCategory;
+use App\Models\Tournament;
+use App\Services\ImageService;
 use Backpack\PermissionManager\app\Models\Role;
 
 use function DI\factory;
@@ -27,7 +29,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        User::truncate();
         $user = User::factory()->create([
             'name' => 'Adi',
             'email' => 'admin@chanzglobal.com',
@@ -49,7 +50,9 @@ class DatabaseSeeder extends Seeder
             ArticleCategorySeeder::class,
             CountrySeeder::class,
             MediaReportingCategorySeeder::class,
-            MediaReportingSeeder::class
+            MediaReportingSeeder::class,
+            SettingDefaultSeeder::class,
+            MenuItemSeeder::class
         ]);
 
        $country = Country::where('name', 'Taiwan, Province of China')->first();
@@ -60,7 +63,17 @@ class DatabaseSeeder extends Seeder
        $country->name = 'South Korea';
        $country->save();
 
-       $event = Event::factory()->create();
+       $tournament = Tournament::factory()->create();
+
+       $event = Event::factory()->create([
+        'tournament_id' => $tournament->id
+       ]);
+
+
+        $link = config('app.url'). '/default_og-image.png';
+       $imageService = new ImageService($link, $tournament);
+       $imageService->imageUpload();
+
        $level = Level::factory()->create([
         'event_id' => $event->id
        ]);
@@ -69,12 +82,20 @@ class DatabaseSeeder extends Seeder
         'event_id' => $event->id
        ]);
 
-
-       EventReport::factory()->times(5)->create([
+       EventReport::factory()->times(3)->create([
             'day_id' => $days[0]->id,
             'level_id' => $level->id
        ]);
 
-       Article::factory()->create();
+
+    $all =    Article::factory()->times(5)->create();
+
+    foreach ($all as $article) {
+        $link = config('app.url'). '/default_og-image.png';
+       $imageService = new ImageService($link , $article);
+       $imageService->imageUpload();
+    }
+
+
     }
 }
