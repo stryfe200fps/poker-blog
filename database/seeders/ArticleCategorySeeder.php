@@ -9,6 +9,7 @@ class ArticleCategorySeeder extends Seeder
 {
     public function run()
     {
+        ArticleCategory::truncate();
         $categories = ['News', 'Events', 'Blog'];
 
         foreach ($categories as $category) {

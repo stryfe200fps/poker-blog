@@ -4,11 +4,19 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-use App\Models\Event;
-use App\Models\User;
-use Backpack\PermissionManager\app\Models\Role;
+use App\Models\Article;
 use Carbon\Carbon;
+use App\Models\Day;
+use App\Models\User;
+use App\Models\Event;
+use App\Models\Country;
+use App\Models\EventReport;
+use App\Models\Level;
 use Illuminate\Database\Seeder;
+use App\Models\MediaReportingCategory;
+use Backpack\PermissionManager\app\Models\Role;
+
+use function DI\factory;
 
 class DatabaseSeeder extends Seeder
 {
@@ -19,72 +27,54 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        User::truncate();
         $user = User::factory()->create([
             'name' => 'Adi',
             'email' => 'admin@chanzglobal.com',
             'password' => bcrypt('admin'),
         ]);
 
-        $role = Role::create([
+        $role = Role::updateOrCreate([
             'name' => 'super-admin',
         ]);
 
-        $author = Role::create([
+        $author = Role::updateOrCreate([
             'name' => 'author',
         ]);
 
-        // backpack_user()->assignRole('super-admin');
         $user->assignRole('super-admin');
 
         $this->call([
-            // CountriesSeeder::class,
             CurrencySeeder::class,
-            // AuthorSeeder::class,
-            // LevelSeeder::class,
             ArticleCategorySeeder::class,
-            // ArticleSeeder::class,
             CountrySeeder::class,
-            // PlayerSeeder::class,
-
-            // LiveReportSeeder::class,
-
-        ]);
-        $this->call(ArticlesTableSeeder::class);
-        $this->call(AuthorsTableSeeder::class);
-        // $this->call(LiveReportEventChipTableSeeder::class);
-        // $this->call(EventChipsTableSeeder::class);
-        // $this->call(LiveReportsTableSeeder::class);
-        // $this->call(MediaTableSeeder::class);
-        $this->call(PlayersTableSeeder::class);
-        $this->call(ToursTableSeeder::class);
-        $this->call(TournamentsTableSeeder::class);
-        $this->call(EventsTableSeeder::class);
-
-        // $day1DateStart = Carbon::now();
-        // $day1DateEnd = $day1DateStart->addHours(12);
-
-        // $day2DateStart = $day1DateEnd->addDay(1);
-        // $day2DateEnd = $day2DateStart->addHours(12);
-
-        // $sheduleFormat =
-        // '[
-//     {"day":"1",
-//     "date_start":'. $day1DateStart->toString() .',
-//     "date_end":'. $day1DateEnd->toString() .'
-//     },
-
-//     {"day":"2",
-//     "date_start":'. $day2DateStart->toString() .',
-//     "date_end":'. $day2DateEnd->toString() .'
-//     }
-        // ]';
-
-        Event::factory()->create([
-            'title' => 'Adi poker event',
+            MediaReportingCategorySeeder::class,
+            MediaReportingSeeder::class
         ]);
 
-        Event::factory()->create([
-            'title' => 'Life of poker event',
-        ]);
+       $country = Country::where('name', 'Taiwan, Province of China')->first();
+       $country->name = 'Taiwan';
+       $country->save();
+
+       $country = Country::where('name', 'Korea, Republic of')->first();
+       $country->name = 'South Korea';
+       $country->save();
+
+       $event = Event::factory()->create();
+       $level = Level::factory()->create([
+        'event_id' => $event->id
+       ]);
+
+       $days = Day::factory()->times(3)->create([
+        'event_id' => $event->id
+       ]);
+
+
+       EventReport::factory()->times(5)->create([
+            'day_id' => $days[0]->id,
+            'level_id' => $level->id
+       ]);
+
+       Article::factory()->create();
     }
 }

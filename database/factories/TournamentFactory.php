@@ -26,7 +26,7 @@ class TournamentFactory extends Factory
     {
         $dateStart = Carbon::now();
         $dateEnd = Carbon::now()->addDays(30);
-        $country = Country::factory()->create();
+
 
         return [
             'title' => $this->faker->name,
@@ -34,7 +34,7 @@ class TournamentFactory extends Factory
             'date_start' => $dateStart,
             'date_end' => $dateEnd,
             'timezone' => '(GMT+8:00) Asia/Manila',
-            'country_id' => $country->id,
+            'country_id' => Country::first()->id ?? 0,
             'tour_id' => Tour::factory()->create()->id,
             'currency_id' => $this->faker->numberBetween(1, 3),
         ];

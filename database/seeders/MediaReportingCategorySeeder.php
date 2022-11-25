@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\EventChip;
+use App\Models\MediaReportingCategory;
 use Illuminate\Database\Seeder;
 
-class EventChipSeeder extends Seeder
+class MediaReportingCategorySeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +14,6 @@ class EventChipSeeder extends Seeder
      */
     public function run()
     {
-        EventChip::factory()->count(5)->create();
+      MediaReportingCategory::factory()->times(3)->create();
     }
 }

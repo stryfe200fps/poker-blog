@@ -19,8 +19,8 @@ class DayFactory extends Factory
     {
         return [
             'name' => $this->faker->name,
-            'date_start' => $this->faker->date,
-            'date_end' => $this->faker->date,
+            'date_start' => now()->addDays(-2),
+            'date_end' => now()->addDays(3),
             'event_id' => Event::factory()->create()->id,
         ];
     }
