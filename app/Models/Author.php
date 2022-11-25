@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\RecordSlug;
+use App\Traits\RecordMedia;
+use App\Observers\SlugObserver;
+use App\Observers\MediaObserver;
 use App\Traits\HasMultipleImages;
 use Spatie\MediaLibrary\HasMedia;
 use App\Traits\HasMediaCollection;
-use App\Observers\MediaObserver;
-use App\Observers\SlugObserver;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -18,6 +20,8 @@ class Author extends Model implements HasMedia
     use \Backpack\CRUD\app\Models\Traits\CrudTrait;
     use HasFactory;
 
+    use  RecordMedia;
+
     public function registerMediaConversions(?Media $media = null): void
     {
         $this->addMediaConversion('avatar-img')
@@ -27,14 +31,6 @@ class Author extends Model implements HasMedia
 
     public $mediaCollection = 'avatar';
     use HasMediaCollection, HasMultipleImages;
-
-
-    public static function boot()
-    {
-        parent::boot();
-        self::observe(new SlugObserver);
-        self::observe(new MediaObserver);
-    }
 
 
     public function getThumbImageAttribute($value)

@@ -6,6 +6,7 @@ use App\Observers\MediaObserver;
 use App\Traits\HasMediaCaching;
 use App\Traits\HasMediaCollection;
 use App\Traits\HasMultipleImages;
+use App\Traits\RecordMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
@@ -20,9 +21,6 @@ class SocialMedia extends Model implements HasMedia
 
     protected $guarded = ['id'];
 
-    public static function boot()
-    {
-        parent::boot();
-        self::observe(new MediaObserver);
-    }
+    use RecordMedia;
+
 }

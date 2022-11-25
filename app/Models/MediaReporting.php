@@ -8,6 +8,8 @@ use App\Traits\PublishedDateConvert;
 use App\Observers\SlugObserver;
 use App\Observers\MediaObserver;
 use App\Services\ImageService;
+use App\Traits\RecordMedia;
+use App\Traits\RecordSlug;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\MediaLibrary\HasMedia;
@@ -21,16 +23,9 @@ class MediaReporting extends Model implements HasMedia
 
     protected $guarded = ['id'];
     use HasMediaCollection, HasMultipleImages;
+    use RecordMedia;
 
     public $mediaCollection = 'media-reporting';
-
-    public static function boot()
-    {
-        parent::boot();
-        self::observe(new SlugObserver);
-        self::observe(new MediaObserver);
-    }
-
 
     public function media_reporting_categories()
     {

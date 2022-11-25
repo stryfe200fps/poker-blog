@@ -3,15 +3,18 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use App\Traits\RecordMedia;
 use Spatie\Sluggable\HasSlug;
+use App\Observers\SlugObserver;
+use App\Observers\MediaObserver;
 use App\Traits\HasMultipleImages;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\Sluggable\SlugOptions;
 use App\Traits\HasMediaCollection;
-use App\Observers\SlugObserver;
-use App\Observers\MediaObserver;
-use App\Observers\ModelTaggableObserver;
 use Illuminate\Database\Eloquent\Model;
+use App\Observers\ModelTaggableObserver;
+use App\Traits\RecordSlug;
+use App\Traits\RecordTag;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Article extends Model implements HasMedia
@@ -22,6 +25,8 @@ class Article extends Model implements HasMedia
     use HasMediaCollection;
     use HasMultipleImages;
 
+    use RecordMedia, RecordTag, RecordSlug;
+
     public bool $shouldResizeImage = true;
 
     protected $casts = [
@@ -29,14 +34,6 @@ class Article extends Model implements HasMedia
     ];
 
     public $mediaCollection = 'article';
-
-    public static function boot()
-    {
-        parent::boot();
-        self::observe(new SlugObserver());
-        self::observe(new MediaObserver());
-        self::observe(new ModelTaggableObserver());
-    }
 
     public function resetContentHtml($content)
     {
@@ -128,15 +125,6 @@ class Article extends Model implements HasMedia
     }
 
     protected $guarded = ['id'];
-
-    public function getSlugOptions(): SlugOptions
-    {
-        return SlugOptions::create()
-            ->generateSlugsFrom('title')
-            ->saveSlugsTo('slug')
-            ->doNotGenerateSlugsOnUpdate();
-    }
-
 
     public function user()
     {

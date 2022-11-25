@@ -31,10 +31,4 @@ class Level extends Model
     {
         return $this->attributes['small_blinds'].'/'.$this->attributes['big_blinds'];
     }
-
-
-    // public function getNameAttribute()
-    // {
-    //     return  $this->attributes['name'];
-    // }
 }

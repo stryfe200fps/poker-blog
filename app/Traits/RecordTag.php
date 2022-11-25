@@ -1,18 +1,16 @@
 <?php
-
-namespace App\Observers;
+namespace App\Traits;
 
 use App\Models\Tag;
 use Illuminate\Support\Str;
-use App\Services\ImageService;
-use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 
-class ModelTaggableObserver
+trait RecordTag
 {
-    public $afterCommit = true;
+    protected static function bootRecordTag()
+  {
+    static::saved(function ($model) {
 
-    public function saved($model) {
-    $tags = request()->get('fake_tags');
+            $tags = request()->get('fake_tags');
     $tagIds = [];
     foreach (explode(',', $tags) as $tag)  {
 
@@ -35,6 +33,9 @@ class ModelTaggableObserver
     }
 
     $model->tags()->sync($tagIds);
+    });
+
+  }
+
 }
-    
-}
+

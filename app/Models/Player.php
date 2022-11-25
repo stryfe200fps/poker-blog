@@ -7,6 +7,7 @@ use Spatie\MediaLibrary\HasMedia;
 use App\Traits\HasMediaCollection;
 use App\Observers\MediaObserver;
 use App\Observers\SlugObserver;
+use App\Traits\RecordMedia;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -19,6 +20,7 @@ class Player extends Model implements HasMedia
 
     use HasMediaCollection;
     use HasMultipleImages;
+    use RecordMedia;
 
     public function registerMediaConversions(?Media $media = null): void
     {
@@ -33,16 +35,13 @@ class Player extends Model implements HasMedia
 
     protected $guarded = ['id'];
 
+
     public static function boot()
     {
         parent::boot();
-        self::observe(new SlugObserver());
-        self::observe(new MediaObserver());
-
         static::deleting(function ($deletePlayer) {
             $eventChip = EventChip::where('player_id', $deletePlayer->id)->get();
             if ($eventChip->count()) {
-                // \Alert::add('error', 'This is a red bubble.');
                 return false;
             }
 
@@ -95,9 +94,5 @@ class Player extends Model implements HasMedia
     {
         return $this->belongsTo(Badge::class);
     }
-
-    // protected static function booted()
-    // {
-
-    // }
+   
 }

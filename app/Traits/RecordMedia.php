@@ -1,17 +1,15 @@
-<?php
+<?php 
 
-namespace App\Observers;
+namespace App\Traits;
 
-
-use Illuminate\Support\Str;
 use App\Services\ImageService;
-use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 
-class MediaObserver
+trait RecordMedia
 {
-    public $afterCommit = true;
 
-    public function saved($model) {
+  protected static function bootRecordMedia()
+  {
+    static::saved(function ($model) {
 
         if ($model?->image === null)
             return;
@@ -21,7 +19,10 @@ class MediaObserver
 
         $image = request()->input('image')  ?? request()->all()['image'] ?? $model->getAttributes()['image'] ?? '';
 
-
         (new ImageService($image, $model))->imageUpload();
-    }
+    });
+
+  }
+
+
 }

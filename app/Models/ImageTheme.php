@@ -6,6 +6,7 @@ use App\Observers\SlugObserver;
 use App\Observers\ImageThemeObserver;
 use App\Observers\MediaObserver;
 use App\Traits\HasMediaCaching;
+use App\Traits\RecordMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
@@ -17,21 +18,13 @@ class ImageTheme extends Model implements HasMedia
     use \Backpack\CRUD\app\Models\Traits\CrudTrait;
     use HasFactory;
     use HasMediaCaching;
+    use RecordMedia;
 
     public $mediaCollection = 'image-theme';
-
-    public static function boot()
-    {
-        parent::boot();
-        self::observe(new MediaObserver);
-    }
 
     protected $guarded = [
         'id',
     ];
-
-    // protected $appends = ['image'];
-
     public $timestamps = false;
 
     public function getImageAttribute($value)

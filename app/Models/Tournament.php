@@ -11,6 +11,8 @@ use Spatie\Sluggable\SlugOptions;
 use App\Traits\HasMediaCollection;
 use App\Observers\MediaObserver;
 use App\Observers\SlugObserver;
+use App\Traits\RecordMedia;
+use App\Traits\RecordSlug;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -22,30 +24,9 @@ class Tournament extends Model implements HasMedia
     use HasFactory;
     use HasSlug;
     use HasMediaCollection, HasMultipleImages;
+    use RecordSlug, RecordMedia;
 
     public $mediaCollection = 'tournament';
-
-    public static function boot()
-    {
-        parent::boot();
-        self::observe(new SlugObserver);
-        self::observe(new MediaObserver);
-    }
-
-    // protected $appends = [
-    //     'minimized_timezone',
-    //     'word_timezone'
-
-    // ];
-
-    public function getSlugOptions(): SlugOptions
-    {
-        return SlugOptions::create()
-            ->generateSlugsFrom('title')
-            ->saveSlugsTo('slug')
-            ->doNotGenerateSlugsOnUpdate();
-    }
-
 
     public function getMinimizedTimezoneAttribute()
     {

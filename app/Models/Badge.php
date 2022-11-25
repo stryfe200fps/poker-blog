@@ -9,6 +9,7 @@ use App\Observers\MediaObserver;
 use App\Observers\ImageThemeObserver;
 use App\Observers\SlugObserver;
 use App\Traits\HasMediaCaching;
+use App\Traits\RecordMedia;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -23,12 +24,7 @@ class Badge extends Model implements HasMedia
     protected $guarded = ['id'];
     public $mediaCollection = 'badge';
 
-    public static function boot()
-    {
-        parent::boot();
-        // self::observe(new ImageThemeObserver);
-        self::observe(new MediaObserver);
-    }
+    use RecordMedia;
 
     public function getImageAttribute($value)
     {
