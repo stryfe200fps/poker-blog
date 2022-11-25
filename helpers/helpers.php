@@ -13,7 +13,9 @@ function translations($json)
 
 function googleTranslateExclude($content)
 {
-    $content = collect($content)->map(function ($item) {
+    articleContentFormatter($content);
+
+    $content = collect($content)->map(function ($item) use ($content) {
         if (is_countable($item)) {
             $glossary = Glossary::all()->pluck('word')->toArray();
             foreach ($glossary as $word) {
@@ -24,7 +26,27 @@ function googleTranslateExclude($content)
             }
             $item['body'] = tableReplacement($item['body']);
             $item['body'] = imageResponsiveReplacement($item['body']);
-        } else {
+        } 
+        else if (gettype($item) === 'object') { 
+                $item = (array)$item;
+                  $glossary = Glossary::all()->pluck('word')->toArray();
+            foreach ($glossary as $word) {
+                $pattern = '/' . $word . '/i';
+                $item['body'] = preg_replace($pattern, '<span translate="no">' . $word . '</span>', $item['body']);
+             
+                $item['title'] = preg_replace($pattern, '<span translate="no">' . $word . '</span>', $item['title']);
+            }
+
+            // dd($content);
+            $item['body'] = tableReplacement($item['body']);
+            $item['body'] = imageResponsiveReplacement($item['body']);
+            return $item;
+
+            }
+        else {
+
+      
+
             $glossary = Glossary::all()->pluck('word')->toArray();
             foreach ($glossary as $word) {
                 $pattern = '/' . $word . '/i';
@@ -33,6 +55,7 @@ function googleTranslateExclude($content)
             }
             $item = tableReplacement($item);
             $item = imageResponsiveReplacement($item);
+
         }
         return $item;
     });
@@ -47,15 +70,21 @@ function googleTranslateExclude($content)
 
 function articleContentFormatter($content)
 {
-    if (!is_array($content)) {
-        $content->body = '<div class="content" id="content0">' . $content->body . '</div>';
+    if (gettype($content) === 'object'  ) {
+        $content->body = '<div class="content" id="main_content">' . $content->body . '</div>';
         return $content;
     }
 
+    if (gettype($content) === 'array') { 
     $new = collect($content)->map(function ($item, $key) {
         $item->body = '<div class="content" id="content' . $key . '">' . $item->body . '</div>';
         return $item;
     });
+    }
+
+    if (gettype($content) === 'string') {
+            return '';
+    }
 
     return $new;
 }
