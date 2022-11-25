@@ -80,13 +80,14 @@ function articleContentFormatter($content)
         $item->body = '<div class="content" id="content' . $key . '">' . $item->body . '</div>';
         return $item;
     });
+    return $new;
     }
 
     if (gettype($content) === 'string') {
             return '';
     }
 
-    return $new;
+    return '';
 }
 
 function customHeading($link, $title, $other)
