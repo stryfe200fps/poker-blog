@@ -16,6 +16,7 @@ yarn-error.log
 /.idea
 /.vscode
 .DS_STORE
+.DS_Store
 /storage/media-library
 /public/uploads
 .php-cs-fixer.cache
