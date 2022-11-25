@@ -25,6 +25,12 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(\Backpack\MenuCRUD\app\Http\Controllers\Admin\MenuItemCrudController::class, MenuItemCrudController::class);
         $this->app->bind(\Backpack\PermissionManager\app\Http\Controllers\RoleCrudController::class, RoleCrudController::class);
         $this->app->bind(\Backpack\Settings\app\Http\Controllers\SettingCrudController::class, SettingCrudController::class);
+
+        // if ($this->app->environment('local')) { 
+        //     $this->app->register(\Laravel\Telescope\TelescopeServiceProvider::class);
+        //     $this->app->register(TelescopeServiceProvider::class);
+        // }
+
     }
 
     /**

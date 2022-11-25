@@ -17,6 +17,8 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('update:tweets')->everyTenMinutes();
         $schedule->command('instagram-feed:refresh-token')->monthly();
+        $schedule->command('telescope:prune')->daily();
+
     }
 
     /**

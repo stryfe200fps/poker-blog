@@ -83,7 +83,7 @@ class SettingDefaultSeeder extends Seeder
             'key' => 'default_image_height',
             'name' => 'Default Image Height',
             'description' => '',
-            'value' => 900,
+            'value' => 1067,
             'field' => $this->fieldType('number'),
             'active' => 1
         ]);
