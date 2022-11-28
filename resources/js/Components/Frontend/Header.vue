@@ -106,8 +106,6 @@ function closeMenu() {
 }
 
 function onScroll(e) {
-    if (usePage().component.value === "Article/Show") return;
-
     windowTop.value = e.target.documentElement.scrollTop;
     let width = document.body.clientWidth;
     const navImg = document.querySelector(".drop-img");
@@ -177,7 +175,10 @@ function googleTranslateElementInit() {
     }
 }
 onMounted(() => {
-    window.addEventListener("scroll", onScroll);
+    if (usePage().component.value !== "Article/Show") {
+        window.addEventListener("scroll", onScroll);
+    }
+
     setTimeout(() => {
         googleTranslateElementInit();
     }, 1500);

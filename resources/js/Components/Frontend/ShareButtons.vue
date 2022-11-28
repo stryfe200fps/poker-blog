@@ -58,16 +58,9 @@ const props = defineProps({
 </script>
 
 <style scoped>
-.share-btn-mobile {
-    margin: 0;
-}
-
-.share-btn-mobile:focus {
-    outline: none;
-}
-
 .social-links-group {
     position: absolute;
+    z-index: 999;
     top: 0;
     left: 25%;
     display: none;
