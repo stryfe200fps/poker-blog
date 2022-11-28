@@ -213,6 +213,11 @@ function onScrollContents() {
 }
 
 onMounted(async () => {
+    document.querySelector("header").classList.remove("active");
+    document.querySelector(".drop-img").classList.remove("scroll");
+    document.querySelector(".mobile-header").style.position = "relative";
+    document.querySelector(".mobile-header").style.top = "unset";
+    document.querySelector(".mobile-header").style.left = "unset";
     await articleStore.getSingleArticle(props.slug);
     await articleStore.getRelatedNews(props.slug);
     window.addEventListener("scroll", onScrollContents);
