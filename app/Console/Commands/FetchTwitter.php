@@ -48,9 +48,6 @@ class FetchTwitter extends Command
                 'social_media_id' => $tweet->id,
             ]);
         }
-
-        Logger('Twitter Updated');
-
         return Command::SUCCESS;
     }
 }
