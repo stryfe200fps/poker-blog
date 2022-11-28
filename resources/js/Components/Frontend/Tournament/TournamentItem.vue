@@ -45,10 +45,14 @@
 <script setup>
 import { computed } from "@vue/runtime-core";
 import moment from "moment";
+
 import defaultImg from "/public/default-img.png";
 import EventItem from "./EventItem.vue";
+
 const props = defineProps({
-    tournament: Object,
+    tournament: {
+        type: Object,
+    },
 });
 
 const formattedDate = computed(() => {

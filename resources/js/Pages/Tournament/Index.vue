@@ -24,7 +24,7 @@ import { useTournamentStore } from "@/Stores/tournament.js";
 import { onMounted, ref } from "@vue/runtime-core";
 import { Inertia } from "@inertiajs/inertia";
 
-import TournamentList from "../../Components/Frontend/Tournament/List.vue";
+import TournamentList from "../../Components/Frontend/Tournament/TournamentList.vue";
 
 const props = defineProps({
     page: {
