@@ -89,7 +89,7 @@ const props = defineProps({
 const youtubeId = computed(() => {
     const mergedLinks = [];
     for (const key in props.ytLinks) {
-        mergedLinks.push(props.ytLinks[key].split("/")[3]);
+        mergedLinks.push(props.ytLinks[key]?.split("/")[3]);
     }
 
     return mergedLinks;

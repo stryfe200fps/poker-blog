@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\Event;
 use App\Models\Country;
 use App\Models\EventChip;
+use App\Models\EventPayout;
 use App\Models\EventReport;
 use App\Models\Level;
 use Illuminate\Database\Seeder;
@@ -92,7 +93,7 @@ class DatabaseSeeder extends Seeder
        ]);
 
        $event = Event::factory()->create([
-            'title' => $eventName, ' Event',
+            'title' => $eventName. ' Event',
             'tournament_id' => $tournament->id
        ]);
 
@@ -100,24 +101,29 @@ class DatabaseSeeder extends Seeder
         'event_id' => $event->id
        ]);
 
-       $level = Level::factory()->create([
+
+        $levels = Level::factory()->times(5)->create([
         'event_id' => $event->id
        ]);
 
-       $reports = EventReport::factory()->times(5)->create([
-        'level_id' => $level->id,
-        'day_id' => $days[0]->id
-       ]);
-
+       foreach ($levels as $level) {
+        $reports = EventReport::factory()->times(5)->create([
+            'level_id' => $level->id,
+            'day_id' => $days[0]->id
+            ]);
         $reportsInDay2 = EventReport::factory()->times(5)->create([
         'level_id' => $level->id,
         'day_id' => $days[1]->id
        ]);
 
-    $reportsInDay3 = EventReport::factory()->times(5)->create([
+        $reportsInDay3 = EventReport::factory()->times(5)->create([
         'level_id' => $level->id,
         'day_id' => $days[2]->id
        ]);
+       }
+     
+
+
 
        $player = Player::factory()->create([
         'name' => $playerName
@@ -151,11 +157,22 @@ class DatabaseSeeder extends Seeder
        }
 
        $this->upload($event);
+       $this->addPayouts($event);
        $this->upload($tournament);
 
-
-
     }
+
+    public function addPayouts($event)
+    {
+        $players = Player::factory()->times(10)->create();
+        foreach ($players as $player) {
+            EventPayout::factory([
+                'event_id'  => $event->id,
+                'player_id' => $player->id
+                ])->create();
+        }
+    }
+
 
     public function upload($model)
     {
