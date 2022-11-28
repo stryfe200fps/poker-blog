@@ -2,13 +2,17 @@
     "name": "laravel/laravel",
     "type": "project",
     "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "keywords": [
+        "framework",
+        "laravel"
+    ],
     "license": "MIT",
-         "repositories": [
+    "repositories": [
         {
             "type": "composer",
             "url": "https://repo.backpackforlaravel.com/"
-        }],
+        }
+    ],
     "require": {
         "php": "^8.0.2",
         "atymic/twitter": "^3.1",
@@ -31,6 +35,7 @@
         "laravel/jetstream": "^2.12",
         "laravel/pint": "^1.1",
         "laravel/sanctum": "^3.0",
+        "laravel/telescope": "^4.9",
         "laravel/tinker": "^2.7",
         "league/glide-laravel": "^1.0",
         "pusher/pusher-php-server": "*",
@@ -71,8 +76,8 @@
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
         },
-         "files": [
-        "helpers/helpers.php"
+        "files": [
+            "helpers/helpers.php"
         ]
     },
     "autoload-dev": {

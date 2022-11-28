@@ -75,7 +75,20 @@
                                         :href="`/news/${category.categories[0]?.slug}`"
                                         @click.stop
                                         >{{
-                                            category.categories[0]?.title
+                                            pathname === undefined
+                                                ? category.categories[0]?.title
+                                                : category.categories[
+                                                      category.categories.findIndex(
+                                                          (category) =>
+                                                              category.title
+                                                                  .charAt(0)
+                                                                  .toUpperCase() +
+                                                                  category.title
+                                                                      .slice(1)
+                                                                      .toLowerCase() ===
+                                                              page_title
+                                                      )
+                                                  ]?.title
                                         }}</Link
                                     >
                                 </div>
