@@ -177,6 +177,13 @@
                                 </option>
                             </select>
                         </div>
+                        <button
+                            class="btn btn-default reset-btn"
+                            v-if="selectedCategory !== ''"
+                            @click="resetFilter()"
+                        >
+                            Reset
+                        </button>
                     </div>
                 </div>
             </div>
@@ -283,19 +290,19 @@ const filteredLocation = computed(() => {
 const filteredMedia = computed(() => {
     return {
         category: selectedCategory.value || null,
-        date_start: selectedDate.value,
+        date_start: selectedDate.value || null,
     };
 });
 
 const datePlaceholder = computed(() => {
-    return selectedDate.value === moment().format("YYYY-MM-DD")
+    return selectedDate.value === moment().format("YYYY-MM-DD") ||
+        selectedDate.value === ""
         ? "Upcoming"
         : `${moment(new Date(selectedDate.value)).format("MMMM D")} onwards`;
 });
 
 function getDateToday() {
     selectedDate.value = moment().format("YYYY-MM-DD");
-    selectedCategory.value = "";
 }
 
 function openDatePicker() {
@@ -332,7 +339,7 @@ async function handleScrolledToBottomMedia(isVisible) {
     await mediaStore.getMedia({
         page: currentPage.value,
         category: selectedCategory.value || null,
-        date_start: selectedDate.value,
+        date_start: selectedDate.value || null,
     });
     medias.value.push(...mediaStore.media.data);
     lastPage.value = mediaStore.media.meta.last_page;
@@ -354,6 +361,7 @@ async function handleScrolledToBottomTours(isVisible) {
 
 function resetFilter() {
     selectedCountry.value = "";
+    selectedCategory.value = "";
 }
 
 async function submitMessage() {

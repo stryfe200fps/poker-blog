@@ -1,28 +1,6 @@
 <template>
     <div class="about-more-autor">
-        <ul class="nav nav-tabs custom-tabs">
-            <li
-                @click.prevent="changeTab(currentTab)"
-                :class="{ active: currentTab === 'live' }"
-            >
-                <Link href="/live-reporting" data-toggle="tab" preserve-state
-                    ><span class="hidden-xs">live & upcoming events</span
-                    ><span class="visible-xs">live & upcoming</span></Link
-                >
-            </li>
-            <li
-                @click.prevent="changeTab(currentTab)"
-                :class="{ active: currentTab === 'past' }"
-            >
-                <Link
-                    href="/live-reporting/past"
-                    data-toggle="tab"
-                    preserve-state
-                    ><span class="hidden-xs">past events</span
-                    ><span class="visible-xs">past</span>
-                </Link>
-            </li>
-        </ul>
+        <TabList :currentTab="currentTab" />
         <div class="tab-content">
             <div class="block-content" v-show="currentTab === 'live'">
                 <div v-if="isLoading">
@@ -73,16 +51,19 @@
 </template>
 
 <script setup>
-import { onMounted, onBeforeUnmount, ref } from "@vue/runtime-core";
-import { Link } from "@inertiajs/inertia-vue3";
-import { Inertia } from "@inertiajs/inertia";
+import { onMounted, onBeforeUnmount } from "@vue/runtime-core";
 
+import TabList from "./TabList.vue";
 import TournamentItem from "./TournamentItem.vue";
 import LoadingBar from "@/Components/LoadingBar.vue";
 
 const props = defineProps({
-    live: Object,
-    past: Object,
+    live: {
+        type: Object,
+    },
+    past: {
+        type: Object,
+    },
     currentTab: {
         type: String,
         default: "live",
@@ -94,11 +75,6 @@ const props = defineProps({
 });
 
 const emit = defineEmits(["loadMore"]);
-const tab = ref("");
-
-function changeTab(currentTab) {
-    tab.value = currentTab;
-}
 
 function handleScrolledToBottom(isVisible) {
     if (!isVisible) return;
@@ -141,13 +117,3 @@ onBeforeUnmount(() => {
     window.removeEventListener("scroll", stickyScroll);
 });
 </script>
-
-<style scoped>
-.custom-tabs {
-    position: sticky;
-    position: -webkit-sticky;
-    top: 0;
-    z-index: 999;
-    transition: all 0.5s ease;
-}
-</style>
