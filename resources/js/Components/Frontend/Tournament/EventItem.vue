@@ -219,6 +219,7 @@
 import { computed } from "@vue/runtime-core";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import moment from "moment";
+
 const props = defineProps({
     event: Object,
 });
