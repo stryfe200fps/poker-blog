@@ -31,10 +31,10 @@ class EventReportFactory extends Factory
         return [
             'title' => $this->faker->word,
             'content' => $this->faker->paragraph,
-            'level_id' => Level::factory()->create()->id,
-            'author_id' => Author::factory()->create()->id,
-            'day_id' => Day::factory()->create()->id,
-            'published_date' => Carbon::now(),
+            'level_id' => fn() => Level::factory()->create()->id,
+            'author_id' =>fn() => Author::factory()->create()->id,
+            'day_id' =>  fn() =>Day::factory()->create()->id,
+            'published_date' => $this->faker->dateTimeBetween(now(), '2 days'),
             'type' => 'report'
         ];
 

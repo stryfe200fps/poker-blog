@@ -24,6 +24,7 @@ class TourFactory extends Factory
         return [
             'title' => $this->faker->name,
             'description' => $this->faker->text,
+            'content' => $this->faker->paragraph(10)
         ];
     }
 }

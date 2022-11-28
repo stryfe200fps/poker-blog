@@ -2,11 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Models\Room;
 use App\Models\Tour;
 use App\Services\ImageService;
 use Illuminate\Database\Seeder;
 
-class TourSeeder extends Seeder
+class PokerRoomSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,11 +16,11 @@ class TourSeeder extends Seeder
      */
     public function run()
     {
-        $tours = ['World Series of poker', 'World Poker Tour'];
-        foreach ($tours as $tour) {
-            $tourFactory = Tour::factory()->create(['title' => $tour]);
+        $rooms = ['SkyCity Adelaide', 'Ginza Casino Paraja Tokyo'];
+        foreach ($rooms as $room) {
+            $roomFactory = Room::factory()->create(['title' => $room]);
             $link = config('app.url'). '/default_og-image.png';
-            $imageService = new ImageService($link, $tourFactory);
+            $imageService = new ImageService($link, $roomFactory);
             $imageService->imageUpload();
         }
     }

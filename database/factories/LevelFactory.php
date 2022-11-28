@@ -22,7 +22,7 @@ class LevelFactory extends Factory
             'small_blinds' => $this->faker->numberBetween(500, 1000),
             'big_blinds' => $this->faker->numberBetween(500, 1000),
             'ante' => $this->faker->numberBetween(2000, 5000),
-            'event_id' => Event::factory()->create()->id,
+            'event_id' => fn() => Event::factory()->create()->id,
         ];
     }
 }
