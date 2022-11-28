@@ -118,7 +118,19 @@ function getModel(string $model)
     return  (new \ReflectionClass(get_class($value)))->getShortName() ;
   }
 
+
   function uploadImage($image, $model )
 {
     return (new ImageService($image, $model))->imageUpload();
+}
+
+    function generateString($length = 100) {
+   $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $charactersLength = strlen($characters);
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, $charactersLength - 1)];
+    }
+
+    return $randomString;
 }

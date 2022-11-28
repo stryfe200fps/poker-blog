@@ -183,7 +183,7 @@ class SettingDefaultSeeder extends Seeder
             'key' => 'xl_image_height',
             'name' => 'Extra Large Image Height',
             'description' => '',
-            'value' => 900,
+            'value' => 1067,
             'field' => $this->fieldType('number'),
             'active' => 1
         ]);

@@ -22,6 +22,7 @@ class CountryFactory extends Factory
     public function definition()
     {
         return [
+            'id' => $this->faker->numberBetween(500,20000),
             'name' => $this->faker->country,
         ];
     }
