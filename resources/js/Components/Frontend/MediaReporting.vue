@@ -5,7 +5,7 @@
         @click="showMedia(media.link)"
     >
         <div class="news-post standard-post2 custom-post">
-            <div class="post-gallery" style="flex-grow: 1">
+            <div class="post-gallery">
                 <img
                     v-if="media.image_set"
                     :src="media.image_set.md_image"
@@ -74,13 +74,13 @@ function showMedia(link) {
 }
 
 .post-gallery img {
-    height: 100%;
     object-fit: contain;
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
 }
 
 .post-title {
+    flex-grow: 1;
     width: 100%;
     padding-inline: 10px !important;
     background-color: #fafafa;

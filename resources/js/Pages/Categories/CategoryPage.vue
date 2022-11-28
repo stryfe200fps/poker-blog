@@ -72,10 +72,42 @@
                                     <Link
                                         class="category-post food"
                                         v-if="category.categories.length"
-                                        :href="`/news/${category.categories[0]?.slug}`"
+                                        :href="
+                                            pathname === undefined
+                                                ? `/news/${category.categories[0]?.slug}`
+                                                : `/news/${
+                                                      category.categories[
+                                                          category.categories.findIndex(
+                                                              (category) =>
+                                                                  category.title
+                                                                      .charAt(0)
+                                                                      .toUpperCase() +
+                                                                      category.title
+                                                                          .slice(
+                                                                              1
+                                                                          )
+                                                                          .toLowerCase() ===
+                                                                  page_title
+                                                          )
+                                                      ]?.slug
+                                                  }`
+                                        "
                                         @click.stop
                                         >{{
-                                            category.categories[0]?.title
+                                            pathname === undefined
+                                                ? category.categories[0]?.title
+                                                : category.categories[
+                                                      category.categories.findIndex(
+                                                          (category) =>
+                                                              category.title
+                                                                  .charAt(0)
+                                                                  .toUpperCase() +
+                                                                  category.title
+                                                                      .slice(1)
+                                                                      .toLowerCase() ===
+                                                              page_title
+                                                      )
+                                                  ]?.title
                                         }}</Link
                                     >
                                 </div>
@@ -110,14 +142,14 @@
 </template>
 
 <script setup>
-import LoadingBar from "@/Components/LoadingBar.vue";
-import defaultImg from "/public/default-img.png";
-
 import { Inertia } from "@inertiajs/inertia";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import { useArticleCategoryStore } from "@/Stores/articleCategory.js";
 import { onMounted, ref, watch } from "@vue/runtime-core";
 import moment from "moment";
+
+import LoadingBar from "@/Components/LoadingBar.vue";
+import defaultImg from "/public/default-img.png";
 
 const props = defineProps({
     page: {

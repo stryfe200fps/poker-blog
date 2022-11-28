@@ -1,7 +1,7 @@
 <template>
     <div class="room-card" @click="showRoom(room.slug)">
         <div class="news-post standard-post2 custom-post">
-            <div class="post-gallery" style="flex-grow: 1">
+            <div class="post-gallery">
                 <img
                     v-if="room.image_set"
                     :src="room.image_set?.sm_image"
@@ -73,13 +73,13 @@ function showRoom(slug) {
 }
 
 .post-gallery img {
-    height: 100%;
     object-fit: contain;
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
 }
 
 .post-title {
+    flex-grow: 1;
     width: 100%;
     padding-inline: 10px !important;
     background-color: #fafafa;
