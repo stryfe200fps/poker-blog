@@ -3,24 +3,7 @@
         <title>{{ article.title_tab }}</title>
     </Head>
     <div class="block-content">
-        <label
-            id="table-of-contents"
-            class="table-contents"
-            v-if="article.content?.length"
-        >
-            <div @click="isPull = !isPull" class="table-header">
-                Table of Contents
-            </div>
-            <ul class="table-menu" :class="{ pull: isPull }">
-                <li v-for="(content, index) in article.content" :key="index">
-                    <a
-                        :href="'#content' + index"
-                        v-html="content.title"
-                        @click="isPull = false"
-                    ></a>
-                </li>
-            </ul>
-        </label>
+        <TableOfContents :article="article" :isPull="isPull" />
         <div class="title-section">
             <h1 class="text-primary">
                 <span style="cursor: pointer" @click="goBack"
@@ -63,69 +46,7 @@
                                 class="share-post-mobile"
                                 style="position: relative"
                             >
-                                <div
-                                    class="btn-group-vertical social-links-group"
-                                    :class="{ show: isOpen }"
-                                >
-                                    <li
-                                        class="btn custom-btn"
-                                        style="
-                                            margin-right: 0;
-                                            background-color: #1854dd;
-                                        "
-                                    >
-                                        <a
-                                            target="_blank"
-                                            :href="`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-                                                url
-                                            )}&amp;src=sdkpreparse`"
-                                            ><i
-                                                class="fa-brands fa-facebook-f"
-                                                style="
-                                                    margin-right: 0;
-                                                    color: #fff;
-                                                "
-                                            ></i>
-                                        </a>
-                                    </li>
-                                    <li
-                                        class="btn custom-btn"
-                                        style="
-                                            margin-right: 0;
-                                            background-color: #18a3dd;
-                                        "
-                                    >
-                                        <a
-                                            target="_blank"
-                                            :href="`https://twitter.com/intent/tweet?text=${encodeURIComponent(
-                                                url
-                                            )}`"
-                                            ><i
-                                                class="fa fa-twitter"
-                                                style="
-                                                    margin-right: 0;
-                                                    color: #fff;
-                                                "
-                                            ></i
-                                        ></a>
-                                    </li>
-                                    <li
-                                        class="btn custom-btn"
-                                        style="background-color: #25d366"
-                                    >
-                                        <a
-                                            target="_blank"
-                                            :href="`https://api.whatsapp.com/send?text=%0a${url}`"
-                                            ><i
-                                                class="fa fa-whatsapp"
-                                                style="
-                                                    margin-right: 0;
-                                                    color: #fff;
-                                                "
-                                            ></i
-                                        ></a>
-                                    </li>
-                                </div>
+                                <ShareButtons :isOpen="isOpen" :url="url" />
                                 <li
                                     @click="showShare"
                                     v-click-outside-element="onClickOutside"
@@ -204,49 +125,16 @@
             <div
                 class="title-section"
                 style="margin-top: 50px"
-                v-if="related?.length"
+                v-if="relatedNews?.length"
             >
                 <h1><span>Related news</span></h1>
             </div>
             <div class="row">
-                <div
-                    class="col-xs-12 col-md-4"
-                    style="margin-bottom: 30px"
-                    v-for="relate in related"
-                    :key="relate.id"
-                >
-                    <div
-                        class="item news-post image-post3"
-                        style="cursor: pointer"
-                        @click="showArticle(relate.date, relate.slug)"
-                    >
-                        <img
-                            v-if="relate.image_set"
-                            :src="relate.image_set.md_image"
-                            :alt="relate.image_set.md_image"
-                        />
-                        <img v-else :src="defaultImg" alt="" />
-                        <div class="hover-box">
-                            <h2>
-                                <Link
-                                    :href="`/news/${moment(
-                                        new Date(relate.date)
-                                    ).format('YYYY')}/${moment(
-                                        new Date(relate.date)
-                                    ).format('MM')}/${relate.slug}`"
-                                    v-html="relate.title"
-                                >
-                                </Link>
-                            </h2>
-                            <ul class="post-tags">
-                                <li>
-                                    <i class="fa fa-clock-o"></i
-                                    >{{ relate.date }}
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+                <RelatedNews
+                    v-for="(related, index) in relatedNews"
+                    :key="index"
+                    :related="related"
+                />
             </div>
         </div>
     </div>
@@ -266,6 +154,9 @@ import {
 import moment from "moment";
 
 import defaultImg from "/public/default-img.png";
+import TableOfContents from "@/Components/Frontend/TableOfContents.vue";
+import ShareButtons from "@/Components/Frontend/ShareButtons.vue";
+import RelatedNews from "@/Components/Frontend/RelatedNews.vue";
 
 const props = defineProps({
     slug: {
@@ -276,7 +167,7 @@ const props = defineProps({
 
 const articleStore = useArticleStore();
 const article = ref([]);
-const related = ref(null);
+const relatedNews = ref(null);
 const isOpen = ref(false);
 const isPull = ref(false);
 const url = ref(window.location.href);
@@ -302,9 +193,19 @@ function onClickOutside(event) {
 
 function onScrollContents() {
     const tableOfContents = document.querySelector("#table-of-contents");
+    const nav = document.querySelector(".nav-list-container");
+    const mobileHeader = document.querySelector(".mobile-header");
+    const width = document.body.clientWidth;
+
     if (tableOfContents) {
         if (window.scrollY > 200) {
             tableOfContents.classList.add("active");
+
+            if (width <= 767) {
+                tableOfContents.style.top = `${mobileHeader.offsetHeight}px`;
+            } else {
+                tableOfContents.style.top = `${nav.offsetHeight}px`;
+            }
         } else {
             tableOfContents.classList.remove("active");
         }
@@ -315,14 +216,6 @@ function onScrollContents() {
             tableOfContents.offsetHeight + 150 + "px"
         );
     }
-}
-
-function showArticle(date, slug) {
-    Inertia.visit(
-        `/news/${moment(new Date(date)).format("YYYY")}/${moment(
-            new Date(date)
-        ).format("MM")}/${slug}`
-    );
 }
 
 onMounted(async () => {
@@ -344,7 +237,7 @@ watch(
 watch(
     () => articleStore.related,
     function () {
-        related.value = articleStore.related.data;
+        relatedNews.value = articleStore.related.data;
     }
 );
 </script>
@@ -445,7 +338,6 @@ ul.post-tags {
 
 .facebook {
     background-color: unset;
-    /* margin-left: 10px; */
 }
 .twitter {
     background-color: unset;
@@ -458,133 +350,6 @@ ul.post-tags {
     border-top: 1px solid #d3d3d3;
     border-bottom: 1px solid #d3d3d3;
 }
-
-.share-btn-mobile {
-    margin: 0;
-}
-
-.share-btn-mobile:focus {
-    outline: none;
-}
-
-.social-links-group {
-    position: absolute;
-    top: 0;
-    left: 25%;
-    display: none;
-    transform: translateY(-100px);
-    transition: all 0.5s ease-in-out;
-}
-
-.social-links-group.show {
-    display: block;
-}
-
-.social-links-group::before {
-    content: "";
-    position: absolute;
-    bottom: -3px;
-    left: 50%;
-    height: 8px;
-    width: 8px;
-    background-color: #25d366;
-    transform: translate(-50%) rotate(45deg);
-}
-
-.custom-btn {
-    padding: 0;
-}
-
-.custom-btn a {
-    padding: 6px 12px;
-}
-
-.table-contents {
-    position: -webkit-sticky;
-    position: sticky;
-    top: 0;
-    left: 0;
-    z-index: 1;
-    display: none;
-    width: 100%;
-    margin-bottom: 0;
-    font-family: "Lato", sans-serif;
-    font-size: 18px;
-    font-weight: 400;
-    background-color: #2d3436;
-    border-bottom: 1px solid #222;
-    color: #fff;
-    user-select: none;
-}
-
-.table-contents.active {
-    display: inline-block;
-}
-
-.table-header {
-    display: inline-block;
-    width: 100%;
-    padding: 15px 30px 15px 20px;
-    white-space: nowrap;
-    cursor: pointer;
-}
-
-.table-header:after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    width: 0;
-    height: 0;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 5px solid #fff;
-    transform: translateY(-50%);
-}
-
-.table-menu {
-    position: absolute;
-    top: 100%;
-    z-index: 1;
-    right: 0;
-    display: none;
-    width: 100%;
-    margin: 2px 0 0 0;
-    padding: 0;
-    font-family: "Lato", sans-serif;
-    text-align: start;
-    list-style-type: none;
-    background-color: #2d3436;
-    color: #fff;
-    box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.1);
-}
-
-.table-menu.pull {
-    display: block;
-}
-
-.table-menu li {
-    border-bottom: 1px solid #fff;
-    cursor: pointer;
-}
-
-.table-menu li:hover {
-    background-color: #ccc;
-}
-
-.table-menu li a {
-    display: block;
-    width: 100%;
-    padding: 10px 20px;
-    text-decoration: none;
-    color: #fff;
-}
-
-/* ul.post-tags li .twitter, 
-ul.post-tags li .facebook, 
-ul.post-tags li .whatsapp {
-   font-size: 18px;
-} */
 
 @media (min-width: 768px) {
     .post-content-min-height {
