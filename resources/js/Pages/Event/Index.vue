@@ -53,7 +53,7 @@
                             :key="index"
                         >
                             Day:
-                            <span class="text-uppercase"> {{ data.name }}</span>
+                            <span class="text-uppercase">{{ data.name }}</span>
                         </p>
                     </div>
                 </div>
@@ -78,26 +78,18 @@
             </div>
         </div>
     </div>
-    <div class="toast" :class="{ active: isActive }" @click="scrollToTop">
-        <div class="toast-content">
-            <i class="fas fa-info-circle info"></i>
-
-            <div class="message">
-                <span class="text text-1">New post - click here</span>
-            </div>
-        </div>
-        <div class="progress" :class="{ active: isActive }"></div>
-    </div>
+    <AlertMessage :isActive="isActive" @scrollToTop="scrollToTop" />
 </template>
 
 <script setup>
 import { Head } from "@inertiajs/inertia-vue3";
 import { useEventStore } from "@/Stores/event.js";
 import { useBannerStore } from "@/Stores/banner.js";
-import { onMounted, ref, watch } from "@vue/runtime-core";
+import { onMounted, ref, computed, watch } from "@vue/runtime-core";
 import { Inertia } from "@inertiajs/inertia";
 
 import ReportList from "../../Components/Frontend/Report/ReportList.vue";
+import AlertMessage from "../../Components/Frontend/Report/AlertMessage.vue";
 
 const props = defineProps({
     slug: {
@@ -138,11 +130,11 @@ const daySlug = ref(window.location.pathname.split("/")[5]);
 const isLoading = ref(true);
 const hasNewReport = ref(false);
 
-const highestDay = () => {
+const highestDay = computed(() => {
     let { available_day_with_reports } = eventData.value;
     let days = available_day_with_reports.map((day) => day.id);
     return days[days.length - 1];
-};
+});
 
 async function loadMoreReports() {
     if (loadPage.value >= lastPage.value) return;
@@ -217,7 +209,7 @@ async function reportViewing(type) {
     }
 }
 
-const fetchLiveReports = (value) => {
+function fetchLiveReports(value) {
     isLoading.value = value;
     loadPage.value = 1;
     lastPage.value = 1;
@@ -252,7 +244,7 @@ const fetchLiveReports = (value) => {
             .toLowerCase()}/${props.type}`,
         { preserveState: true }
     );
-};
+}
 
 function scrollToTop() {
     hasNewReport.value = false;
@@ -278,7 +270,7 @@ onMounted(async () => {
     await eventStore.getEventData(props.slug);
 
     if (daySlug.value === undefined || daySlug.value === props.type) {
-        selectDay.value = highestDay();
+        selectDay.value = highestDay.value;
     } else {
         const { id } = eventData.value.available_day_with_reports.find(
             ({ name }) =>
@@ -345,81 +337,6 @@ watch(
     width: auto !important;
 }
 
-.toast {
-    position: fixed;
-    top: 25px;
-    right: 30px;
-    z-index: 1000;
-    overflow: hidden;
-    padding: 20px 35px 20px 25px;
-    background-color: #fff;
-    border-radius: 12px;
-    cursor: pointer;
-    box-shadow: 0 6px 20px -5px rgba(0, 0, 0, 0.5);
-    transform: translateX(calc(100% + 30px));
-    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.35);
-}
-
-.toast.active {
-    transform: translateX(0%);
-}
-
-.toast .toast-content {
-    display: flex;
-    align-items: center;
-}
-
-.toast-content .info {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 24px;
-}
-
-.toast-content .message {
-    display: flex;
-    flex-direction: column;
-    margin: 0 20px;
-}
-
-.message .text {
-    font-size: 16px;
-    font-weight: 400;
-    color: #666666;
-}
-
-.message .text.text-1 {
-    font-weight: 600;
-    color: #333;
-}
-
-.toast .progress {
-    position: absolute;
-    bottom: -20px;
-    left: 0;
-    width: 100%;
-    height: 3px;
-}
-
-.toast .progress:before {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #f44336;
-}
-
-.progress.active:before {
-    animation: progress 5s linear forwards;
-}
-
-@keyframes progress {
-    100% {
-        right: 100%;
-    }
-}
 .text-secondary {
     color: #2d3436 !important;
 }
@@ -453,12 +370,6 @@ watch(
     border-top: 1px solid #d3d3d3;
     border-bottom: 1px solid #d3d3d3;
 }
-
-/* ul.post-tags li .twitter, 
-ul.post-tags li .facebook, 
-ul.post-tags li .whatsapp {
-   font-size: 18px;
-} */
 
 @media (min-width: 768px) {
     .post-content-min-height {

@@ -3,72 +3,9 @@
         <title>Live Reporting</title>
     </Head>
     <div class="about-more-autor">
-        <ul class="nav nav-tabs custom-tabs">
-            <li
-                @click.prevent="changeTab(currentTab)"
-                :class="{
-                    active: currentTab == null,
-                }"
-            >
-                <Link
-                    :href="`/tours/${event.tour_slug}/${event.tournament_slug}/${event.slug}/${dayValue}`"
-                    data-toggle="tab"
-                    preserve-state
-                >
-                    <span class="hide-on-mobile">LIVE UPDATES</span>
-                    <span class="show-on-mobile">UPDATES</span>
-                </Link>
-            </li>
-
-            <li
-                @click="changeTab(currentTab)"
-                :class="{ active: currentTab == 'chip-stack' }"
-            >
-                <Link
-                    :href="`/tours/${event.tour_slug}/${event.tournament_slug}/${event.slug}/${dayValue}/chip-stack`"
-                    data-toggle="tab"
-                    preserve-state
-                >
-                    <span class="hide-on-mobile">CHIP COUNTS</span>
-                    <span class="show-on-mobile">CHIPS</span>
-                </Link>
-            </li>
-            <li
-                @click="changeTab(currentTab)"
-                :class="{ active: currentTab == 'whatsapp' }"
-            >
-                <Link
-                    :href="`/tours/${event.tour_slug}/${event.tournament_slug}/${event.slug}/${dayValue}/whatsapp`"
-                    data-toggle="tab"
-                    preserve-state
-                    >#WHATSAPP</Link
-                >
-            </li>
-            <li
-                @click="changeTab(currentTab)"
-                :class="{ active: currentTab == 'gallery' }"
-            >
-                <Link
-                    :href="`/tours/${event.tour_slug}/${event.tournament_slug}/${event.slug}/${dayValue}/gallery`"
-                    data-toggle="tab"
-                    preserve-state
-                    >GALLERY</Link
-                >
-            </li>
-            <li
-                @click="changeTab(currentTab)"
-                :class="{ active: currentTab == 'payouts' }"
-            >
-                <Link
-                    :href="`/tours/${event.tour_slug}/${event.tournament_slug}/${event.slug}/payouts`"
-                    data-toggle="tab"
-                    preserve-state
-                    >PAYOUTS</Link
-                >
-            </li>
-        </ul>
+        <TabList :currentTab="currentTab" :event="event" :dayValue="dayValue" />
         <div class="tab-content">
-            <div v-show="currentTab == null" id="liveReport">
+            <div v-show="currentTab == null">
                 <div v-if="isLoading">
                     <LoadingBar />
                 </div>
@@ -81,53 +18,15 @@
                         }"
                         @click="visitBanner(reportingBanner.url)"
                     >
-                        <div class="desktop-advert">
-                            <img
-                                :src="reportingBanner.image_set?.og_image"
-                                :alt="reportingBanner.image_set?.og_image"
-                                style="max-width: 100%; height: auto"
-                            />
-                        </div>
-                        <div class="tablet-advert">
-                            <img
-                                :src="reportingBanner.image_set?.og_image"
-                                :alt="reportingBanner.image_set?.og_image"
-                                style="max-width: 100%; height: auto"
-                            />
-                        </div>
-                        <div class="mobile-advert">
-                            <img
-                                :src="reportingBanner.image_set?.og_image"
-                                :alt="reportingBanner.image_set?.og_image"
-                                style="max-width: 100%; height: auto"
-                            />
-                        </div>
+                        <BannerCard :banner="reportingBanner" />
                     </div>
-                    <div
+                    <LiveUpdates
                         v-for="(report, index) in reports"
                         :key="index"
-                        class="single-post-box round"
-                    >
-                        <EachReport
-                            v-for="(item, index) in report.collection"
-                            :key="index"
-                            :item="item"
-                            :event="event"
-                            :id="index"
-                            :url="url"
-                        />
-                        <div
-                            class="day-divider"
-                            style="
-                                border-bottom: 1px solid #d3d3d3;
-                                margin-top: 20px;
-                                margin-bottom: 25px;
-                            "
-                        >
-                            <span>{{ report.level }}</span
-                            ><br />
-                        </div>
-                    </div>
+                        :report="report"
+                        :event="event"
+                        :url="url"
+                    />
                     <div
                         v-if="reports?.length"
                         v-observe-visibility="handleScrolledToBottom"
@@ -139,140 +38,7 @@
                     <LoadingBar />
                 </div>
                 <div v-else>
-                    <div class="margin-top">
-                        <div v-if="chipCounts.length">
-                            <CustomeTable>
-                                <template v-slot:table-head>
-                                    <tr class="text-primary">
-                                        <th class="text-center">Rank</th>
-                                        <th>Player</th>
-                                        <th class="text-center hide-on-tablet">
-                                            Country
-                                        </th>
-                                        <th></th>
-                                        <th class="text-right">Chips</th>
-                                        <th class="text-right hide-on-mobile">
-                                            Progress
-                                        </th>
-                                    </tr>
-                                </template>
-                                <template v-slot:table-body>
-                                    <tr
-                                        v-for="(stack, index) in chipCounts"
-                                        :key="index"
-                                    >
-                                        <td class="text-center">
-                                            {{ index + 1 }}
-                                        </td>
-                                        <td>
-                                            <img
-                                                class="hide-on-tablet"
-                                                v-if="stack?.player?.avatar"
-                                                :src="stack?.player?.avatar"
-                                            />
-                                            <img
-                                                class="hide-on-tablet"
-                                                v-else
-                                                :src="defaultAvatar"
-                                            />
-                                            <span
-                                                style="white-space: nowrap"
-                                                v-if="stack.player"
-                                                >{{ stack?.player?.name }}
-                                                <span
-                                                    class="hide-on-tablet"
-                                                    v-if="
-                                                        stack.player?.pseudonym
-                                                    "
-                                                    >({{
-                                                        stack.player?.pseudonym
-                                                    }})</span
-                                                ></span
-                                            >
-                                            <span
-                                                style="white-space: nowrap"
-                                                v-else
-                                                >-</span
-                                            >
-                                        </td>
-                                        <td
-                                            class="text-center hide-on-tablet"
-                                            v-if="stack?.player?.country"
-                                        >
-                                            <CountryFlag
-                                                :title="stack?.player?.country"
-                                                :iso="stack?.player?.flag"
-                                            />
-                                        </td>
-                                        <td
-                                            class="text-center hide-on-tablet"
-                                            v-else
-                                        >
-                                            -
-                                        </td>
-                                        <td v-if="stack.player?.badge">
-                                            <img
-                                                :src="stack.player?.badge"
-                                                :alt="stack.player?.badge"
-                                            />
-                                        </td>
-                                        <td v-else></td>
-                                        <td
-                                            v-if="stack.report_id"
-                                            class="text-right"
-                                        >
-                                            {{
-                                                stack.current_chips.toLocaleString()
-                                            }}
-                                        </td>
-                                        <td v-else class="text-right">
-                                            {{
-                                                stack.current_chips === 0
-                                                    ? "BUSTED"
-                                                    : stack.current_chips.toLocaleString()
-                                            }}
-                                        </td>
-                                        <!-- <td
-                                    v-if="stack.report_id == null"
-                                    class="text-right"
-                                >
-                                    <i class="fa fa-whatsapp"> </i> whatsapp
-                                </td> -->
-                                        <td class="text-right hide-on-mobile">
-                                            {{
-                                                stack.current_chips === 0
-                                                    ? ""
-                                                    : stack.changes.toLocaleString()
-                                            }}
-                                            <span
-                                                v-if="stack.symbol === 'up'"
-                                                style="margin-left: 10px"
-                                                ><i
-                                                    v-if="
-                                                        stack.current_chips != 0
-                                                    "
-                                                    class="fa-sharp fa-solid fa-caret-up text-green"
-                                                ></i
-                                            ></span>
-                                            <span
-                                                v-else
-                                                style="margin-left: 10px"
-                                                ><i
-                                                    v-if="
-                                                        stack.current_chips != 0
-                                                    "
-                                                    class="fa-sharp fa-solid fa-caret-down text-red"
-                                                ></i
-                                            ></span>
-                                        </td>
-                                    </tr>
-                                </template>
-                            </CustomeTable>
-                        </div>
-                        <div v-else>
-                            <h4>There are no chip counts at the moment.</h4>
-                        </div>
-                    </div>
+                    <ChipStack :chipCounts="chipCounts" />
                 </div>
             </div>
             <div v-show="currentTab == 'whatsapp'">
@@ -281,140 +47,7 @@
                 </div>
                 <div v-else>
                     <div v-html="whatsappContent.content"></div>
-                    <div class="margin-top">
-                        <div v-if="whatsapp?.length">
-                            <CustomeTable>
-                                <template v-slot:table-head>
-                                    <tr class="text-primary">
-                                        <th class="text-left">Date Posted</th>
-                                        <th>Player</th>
-                                        <th class="text-center hide-on-tablet">
-                                            Country
-                                        </th>
-                                        <th></th>
-                                        <th class="text-right">Chips</th>
-                                        <th class="text-right hide-on-mobile">
-                                            Progress
-                                        </th>
-                                    </tr>
-                                </template>
-                                <template v-slot:table-body>
-                                    <tr
-                                        v-for="(stack, index) in whatsapp"
-                                        :key="index"
-                                    >
-                                        <td class="text-left">
-                                            {{ stack.date }}
-                                        </td>
-                                        <td>
-                                            <img
-                                                class="hide-on-tablet"
-                                                v-if="stack?.player?.avatar"
-                                                :src="stack?.player?.avatar"
-                                            />
-                                            <img
-                                                class="hide-on-tablet"
-                                                v-else
-                                                :src="defaultAvatar"
-                                            />
-                                            <span
-                                                style="white-space: nowrap"
-                                                v-if="stack.player"
-                                                >{{ stack?.player?.name }}
-                                                <span
-                                                    class="hide-on-tablet"
-                                                    v-if="
-                                                        stack.player?.pseudonym
-                                                    "
-                                                    >({{
-                                                        stack.player?.pseudonym
-                                                    }})</span
-                                                ></span
-                                            >
-                                            <span
-                                                v-else
-                                                style="white-space: nowrap"
-                                                >-</span
-                                            >
-                                        </td>
-                                        <td
-                                            class="text-center hide-on-tablet"
-                                            v-if="stack?.player?.country"
-                                        >
-                                            <CountryFlag
-                                                :title="stack?.player?.country"
-                                                :iso="stack?.player?.flag"
-                                            />
-                                        </td>
-                                        <td
-                                            class="text-center hide-on-tablet"
-                                            v-else
-                                        >
-                                            -
-                                        </td>
-                                        <td v-if="stack.player?.badge">
-                                            <img
-                                                :src="stack.player?.badge"
-                                                :alt="stack.player?.badge"
-                                            />
-                                        </td>
-                                        <td v-else></td>
-                                        <td
-                                            v-if="stack.report_id"
-                                            class="text-right"
-                                        >
-                                            {{
-                                                stack.current_chips.toLocaleString()
-                                            }}
-                                        </td>
-                                        <td v-else class="text-right">
-                                            {{
-                                                stack.current_chips === 0
-                                                    ? "BUSTED"
-                                                    : stack.current_chips.toLocaleString()
-                                            }}
-                                        </td>
-                                        <!-- <td
-                                    v-if="stack.report_id == null"
-                                    class="text-right"
-                                >
-                                    <i class="fa fa-whatsapp"> </i> whatsapp
-                                </td> -->
-                                        <td class="text-right hide-on-mobile">
-                                            {{
-                                                stack.current_chips === 0
-                                                    ? ""
-                                                    : stack.changes.toLocaleString()
-                                            }}
-                                            <span
-                                                v-if="stack.symbol === 'up'"
-                                                style="margin-left: 10px"
-                                                ><i
-                                                    v-if="
-                                                        stack.current_chips != 0
-                                                    "
-                                                    class="fa-sharp fa-solid fa-caret-up text-green"
-                                                ></i
-                                            ></span>
-                                            <span
-                                                v-else
-                                                style="margin-left: 10px"
-                                                ><i
-                                                    v-if="
-                                                        stack.current_chips != 0
-                                                    "
-                                                    class="fa-sharp fa-solid fa-caret-down text-red"
-                                                ></i
-                                            ></span>
-                                        </td>
-                                    </tr>
-                                </template>
-                            </CustomeTable>
-                        </div>
-                        <div v-else>
-                            <h4>There are no whatsapp at the moment.</h4>
-                        </div>
-                    </div>
+                    <WhatsappTable :whatsapp="whatsapp" />
                 </div>
             </div>
             <div v-show="currentTab == 'gallery'">
@@ -457,71 +90,10 @@
                     <LoadingBar />
                 </div>
                 <div v-else>
-                    <div class="margin-top">
-                        <div v-if="payouts?.length">
-                            <CustomeTable>
-                                <template v-slot:table-head>
-                                    <tr class="text-primary">
-                                        <th class="text-center">Place</th>
-                                        <th>Name</th>
-                                        <th class="text-center hide-on-mobile">
-                                            Country
-                                        </th>
-                                        <th class="text-right">
-                                            Prize (<span
-                                                v-html="event.currency.prefix"
-                                            >
-                                            </span
-                                            >)
-                                        </th>
-                                    </tr>
-                                </template>
-                                <template v-slot:table-body>
-                                    <tr
-                                        v-for="(payout, index) in payouts"
-                                        :key="index"
-                                    >
-                                        <td class="text-center">
-                                            {{ payout.position }}
-                                        </td>
-                                        <td>
-                                            <span
-                                                v-if="payout.player?.name"
-                                                style="white-space: nowrap"
-                                                >{{ payout.player?.name }}
-                                            </span>
-                                            <span v-else>N/A</span>
-                                        </td>
-                                        <td class="text-center hide-on-mobile">
-                                            <span v-if="payout.player?.country">
-                                                <CountryFlag
-                                                    :title="
-                                                        payout.player?.country
-                                                    "
-                                                    :iso="payout.player?.flag"
-                                                />
-                                            </span>
-                                            <span v-else>-</span>
-                                        </td>
-                                        <td class="text-right">
-                                            <span
-                                                v-html="event.currency.prefix"
-                                            >
-                                            </span>
-                                            {{
-                                                Number(
-                                                    payout.prize
-                                                ).toLocaleString()
-                                            }}
-                                        </td>
-                                    </tr>
-                                </template>
-                            </CustomeTable>
-                        </div>
-                        <div v-else>
-                            <h4>There are no payouts at the moment.</h4>
-                        </div>
-                    </div>
+                    <PayoutsTable
+                        :payouts="payouts"
+                        :currency="event.currency.prefix"
+                    />
                 </div>
             </div>
         </div>
@@ -531,34 +103,23 @@
 <script setup>
 import { Inertia } from "@inertiajs/inertia";
 import { Head, Link } from "@inertiajs/inertia-vue3";
-import { ref } from "@vue/reactivity";
 import {
     onMounted,
     onBeforeUnmount,
     onUpdated,
     computed,
+    ref,
 } from "@vue/runtime-core";
-import LoadingBar from "@/Components/LoadingBar.vue";
-import CustomeTable from "../CustomeTable.vue";
-import CountryFlag from "vue3-country-flag-icon";
-import defaultAvatar from "@/default-avatar.png";
 import PhotoSwipeLightbox from "photoswipe/lightbox";
 import "photoswipe/style.css";
 
-import brokenMirror from "@/photo_templates/brokenmirror.png";
-import bulletHole from "@/photo_templates/bullethole.png";
-import flames from "@/photo_templates/flames.png";
-import happyBirthday from "@/photo_templates/happybirthday.png";
-import iceCubes from "@/photo_templates/icecubes.png";
-import pocketAces from "@/photo_templates/pocketaces.png";
-import sunRays from "@/photo_templates/sunrays.png";
-import waterLeaves from "@/photo_templates/water-leaves.png";
-import waterWaves from "@/photo_templates/water-waves.png";
-import { createToast } from "mosha-vue-toastify";
-import "mosha-vue-toastify/dist/style.css";
-
-// components
-import EachReport from "./EachReport.vue";
+import LoadingBar from "@/Components/LoadingBar.vue";
+import TabList from "./TabList.vue";
+import BannerCard from "../BannerCard.vue";
+import LiveUpdates from "./LiveUpdates.vue";
+import ChipStack from "./ChipStack.vue";
+import WhatsappTable from "./WhatsappTable.vue";
+import PayoutsTable from "./PayoutsTable.vue";
 
 const props = defineProps({
     event: {
@@ -605,6 +166,9 @@ const props = defineProps({
 
 const emit = defineEmits(["loadMore"]);
 
+const tab = ref(0);
+const id = ref(null);
+
 const dayValue = computed(() => {
     if (props.day === props.currentTab) {
         let { available_day_with_reports } = props.event;
@@ -622,9 +186,6 @@ function handleScrolledToBottom(isVisible) {
     if (!isVisible) return;
     emit("loadMore");
 }
-
-const tab = ref(0);
-const id = ref(null);
 
 function visitBanner(url) {
     if (url) window.open(url, "_blank");
@@ -668,39 +229,11 @@ Inertia.on("success", () => {
     if (!props.hasNewReport) window.scrollTo({ top: 0 });
 });
 
-const changeTab = (currentTab) => {
-    tab.value = currentTab;
-};
-
 const lightbox = new PhotoSwipeLightbox({
     gallery: "#my-gallery",
     children: "a",
     pswpModule: () => import("photoswipe"),
 });
-
-/* FRAMES */
-function getFrame(theme) {
-    switch (theme) {
-        case "brokenMirror":
-            return brokenMirror;
-        case "bulletHole":
-            return bulletHole;
-        case "flames":
-            return flames;
-        case "happyBirthday":
-            return happyBirthday;
-        case "iceCubes":
-            return iceCubes;
-        case "pocketAces":
-            return pocketAces;
-        case "sunRays":
-            return sunRays;
-        case "waterLeaves":
-            return waterLeaves;
-        case "waterWaves":
-            return waterWaves;
-    }
-}
 
 onBeforeUnmount(() => {
     window.removeEventListener("scroll", stickyScroll);
@@ -725,13 +258,6 @@ onUpdated(() => {
     grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
     gap: 10px;
 }
-.custom-tabs {
-    position: sticky;
-    position: -webkit-sticky;
-    top: 0;
-    z-index: 999;
-    transition: all 0.5s ease;
-}
 
 :deep(.gallery-thumbnail a img) {
     margin-bottom: 10px;
@@ -749,23 +275,8 @@ onUpdated(() => {
     color: #e74c3c;
 }
 
-.single-post-box .about-more-autor ul.nav-tabs {
-    margin-bottom: 20px;
-}
-
 .single-post-box .post-tags-box ul.tags-box li a {
     margin: 0px 10px 10px 0px;
-}
-
-.imageFrame {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
 }
 
 .each-post {
@@ -812,12 +323,6 @@ ul.post-tags li .twitter {
 @media (min-width: 768px) {
     .post-content-min-height {
         min-height: 200px;
-    }
-}
-
-@media (min-width: 769px) {
-    .show-on-mobile {
-        display: none;
     }
 }
 

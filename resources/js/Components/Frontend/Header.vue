@@ -75,7 +75,7 @@
 
 <script setup>
 import { onBeforeUnmount, onMounted, ref } from "vue";
-import { Link } from "@inertiajs/inertia-vue3";
+import { Link, usePage } from "@inertiajs/inertia-vue3";
 
 import logo from "/public/lop_logo_white.svg";
 import card from "/public/header-card.png";
@@ -106,6 +106,8 @@ function closeMenu() {
 }
 
 function onScroll(e) {
+    if (usePage().component.value === "Article/Show") return;
+
     windowTop.value = e.target.documentElement.scrollTop;
     let width = document.body.clientWidth;
     const navImg = document.querySelector(".drop-img");
