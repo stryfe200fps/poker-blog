@@ -200,12 +200,6 @@ function onScrollContents() {
     if (tableOfContents) {
         if (window.scrollY > 200) {
             tableOfContents.classList.add("active");
-
-            if (width <= 767) {
-                tableOfContents.style.top = `${mobileHeader.offsetHeight}px`;
-            } else {
-                tableOfContents.style.top = `${nav.offsetHeight}px`;
-            }
         } else {
             tableOfContents.classList.remove("active");
         }

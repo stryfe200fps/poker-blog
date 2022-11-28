@@ -25,11 +25,11 @@ class EventFactory extends Factory
     public function definition()
     {
         return [
-            'tournament_id' => Tournament::factory()->create()->id,
+            'tournament_id' => fn() => Tournament::factory()->create()->id,
             'buyin' => 200,
             'fee' => 200,
             'title' => $this->faker->name,
-            'event_game_table_id'  => EventGameTable::factory()->create()->id,
+            'event_game_table_id'  => fn() =>EventGameTable::factory()->create()->id,
             'description' => $this->faker->text,
         ];
     }

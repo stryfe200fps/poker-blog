@@ -127,7 +127,7 @@ final class ImageService
     private function imageResize()
     {
         if (isset($this->currentModel?->shouldResizeImage) && $this->currentModel?->shouldResizeImage) {
-            $this->currentImage->resize(Setting::get('default_image_width') ?? 1600, Setting::get('default_image_height') ?? 900)->save($this->currentImagePath);
+            $this->currentImage->resize(Setting::get('default_image_width') ?? 1600, Setting::get('default_image_height') ?? 1067)->save($this->currentImagePath);
         }
     }
 }

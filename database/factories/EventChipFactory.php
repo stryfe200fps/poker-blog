@@ -26,13 +26,12 @@ class EventChipFactory extends Factory
      */
     public function definition()
     {
-        $player = Player::factory()->create();
         return [
-            'player_id' => $player->id,
-            'event_report_id' => EventReport::factory()->create()->id,
-            'current_chips' => 2000,
-            'day_id' => Day::factory()->create()->id,
-            'published_date' => Carbon::now()
+            'player_id' => fn() => Player::factory()->create()->id,
+            'event_report_id' => fn() => EventReport::factory()->create()->id,
+            'current_chips' => $this->faker->numberBetween(100, 1000000),
+            'day_id' => fn() => Day::factory()->create()->id,
+            'published_date' => $this->faker->dateTimeBetween(now(), '2 days'),
         ];
     }
 }

@@ -34,6 +34,7 @@ const props = defineProps({
 .table-contents {
     position: -webkit-sticky;
     position: sticky;
+    top: 0;
     left: 0;
     z-index: 1;
     display: none;

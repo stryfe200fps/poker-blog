@@ -10,13 +10,16 @@ use App\Models\Day;
 use App\Models\User;
 use App\Models\Event;
 use App\Models\Country;
+use App\Models\EventChip;
 use App\Models\EventReport;
 use App\Models\Level;
 use Illuminate\Database\Seeder;
 use App\Models\MediaReportingCategory;
+use App\Models\Player;
 use App\Models\Tournament;
 use App\Services\ImageService;
 use Backpack\PermissionManager\app\Models\Role;
+use Illuminate\Support\Testing\Fakes\EventFake;
 
 use function DI\factory;
 
@@ -29,6 +32,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+
+        if (app()->environment() !== 'local') { 
+            dump('Please change your environment to local');
+            return;
+        }
+
         $user = User::factory()->create([
             'name' => 'Adi',
             'email' => 'admin@chanzglobal.com',
@@ -52,7 +61,8 @@ class DatabaseSeeder extends Seeder
             MediaReportingCategorySeeder::class,
             MediaReportingSeeder::class,
             SettingDefaultSeeder::class,
-            MenuItemSeeder::class
+            MenuItemSeeder::class,
+            PokerRoomSeeder::class
         ]);
 
        $country = Country::where('name', 'Taiwan, Province of China')->first();
@@ -63,39 +73,94 @@ class DatabaseSeeder extends Seeder
        $country->name = 'South Korea';
        $country->save();
 
-       $tournament = Tournament::factory()->create();
+       $this->createEvent('Adrian Radores', 'APT');
+       $this->createEvent('Raven Barrogo', 'Mega Stack');
 
-       $event = Event::factory()->create([
-        'tournament_id' => $tournament->id
+
+    $all =    Article::factory()->times(3)->create();
+
+    foreach ($all as $article) {
+        $this->upload($article);
+    }
+
+    }
+
+    public function createEvent($playerName, $eventName)
+    {
+       $tournament = Tournament::factory()->create([
+            'title' => $eventName. ' Championship'
        ]);
 
-
-        $link = config('app.url'). '/default_og-image.png';
-       $imageService = new ImageService($link, $tournament);
-       $imageService->imageUpload();
-
-       $level = Level::factory()->create([
-        'event_id' => $event->id
+       $event = Event::factory()->create([
+            'title' => $eventName, ' Event',
+            'tournament_id' => $tournament->id
        ]);
 
        $days = Day::factory()->times(3)->create([
         'event_id' => $event->id
        ]);
 
-       EventReport::factory()->times(3)->create([
-            'day_id' => $days[0]->id,
-            'level_id' => $level->id
+       $level = Level::factory()->create([
+        'event_id' => $event->id
        ]);
 
+       $reports = EventReport::factory()->times(5)->create([
+        'level_id' => $level->id,
+        'day_id' => $days[0]->id
+       ]);
 
-    $all =    Article::factory()->times(5)->create();
+        $reportsInDay2 = EventReport::factory()->times(5)->create([
+        'level_id' => $level->id,
+        'day_id' => $days[1]->id
+       ]);
 
-    foreach ($all as $article) {
-        $link = config('app.url'). '/default_og-image.png';
-       $imageService = new ImageService($link , $article);
-       $imageService->imageUpload();
+    $reportsInDay3 = EventReport::factory()->times(5)->create([
+        'level_id' => $level->id,
+        'day_id' => $days[2]->id
+       ]);
+
+       $player = Player::factory()->create([
+        'name' => $playerName
+       ]);
+
+       foreach ($reports as $report) {
+        EventChip::factory()->create([
+            'event_report_id' => $report->id,
+            'player_id' => $player->id,
+            'day_id' => $report->day->id,
+            'published_date' => $report->published_date
+        ]);
+       }
+
+        foreach ($reportsInDay2 as $report) {
+        EventChip::factory()->create([
+            'event_report_id' => $report->id,
+            'player_id' => $player->id,
+            'day_id' => $report->day->id,
+            'published_date' => $report->published_date
+        ]);
+       }
+
+        foreach ($reportsInDay3 as $report) {
+        EventChip::factory()->create([
+            'event_report_id' => $report->id,
+            'player_id' => $player->id,
+            'day_id' => $report->day->id,
+            'published_date' => $report->published_date
+        ]);
+       }
+
+       $this->upload($event);
+       $this->upload($tournament);
+
+
+
     }
 
-
+    public function upload($model)
+    {
+        $link = config('app.url'). '/default_og-image.png';
+       $imageService = new ImageService($link , $model);
+       $imageService->imageUpload();
     }
 }
