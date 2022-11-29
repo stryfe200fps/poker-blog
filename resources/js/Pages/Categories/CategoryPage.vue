@@ -24,12 +24,12 @@
                         @change="changeCategory"
                         style="width: auto !important"
                     >
+                        <option value="" selected disabled>Categories</option>
                         <option
                             v-for="(category, index) in categories"
                             :key="index"
                             :value="category.slug"
                             :checked="category.slug == selectCategory"
-                            :disabled="category.title == 'Categories'"
                         >
                             {{ category.title }}
                         </option>
@@ -163,10 +163,10 @@ const props = defineProps({
 
 const articleCategoryStore = useArticleCategoryStore();
 const articleCategories = ref(null);
-const categories = ref([{ title: "Categories", slug: "categories" }]);
+const categories = ref([]);
 const currentPage = ref(1);
 const lastPage = ref(1);
-const selectCategory = ref("categories");
+const selectCategory = ref("");
 const pathname = ref(window.location.pathname.split("/")[2]);
 const isLoading = ref(true);
 
@@ -198,11 +198,11 @@ function showArticle(date, slug) {
 
 onMounted(async () => {
     await articleCategoryStore.getCategoryLists();
-    categories.value.push(...articleCategoryStore.categoryLists.data);
+    categories.value = articleCategoryStore.categoryLists.data;
     await articleCategoryStore.getArticleCategoryLists(pathname.value, 1);
     lastPage.value = articleCategoryStore.articleCategoryLists.meta.last_page;
     pathname.value === undefined
-        ? (selectCategory.value = "categories")
+        ? (selectCategory.value = "")
         : (selectCategory.value = pathname.value);
     if (articleCategories.value) isLoading.value = false;
 });
