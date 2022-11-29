@@ -7,6 +7,18 @@
                     <LoadingBar />
                 </div>
                 <div v-else>
+                    <div
+                        class="advertisement"
+                        v-if="liveReportingBanner"
+                        :style="{
+                            cursor: liveReportingBanner.url
+                                ? 'pointer'
+                                : 'auto',
+                        }"
+                        @click="visitBanner(liveReportingBanner.url)"
+                    >
+                        <BannerCard :banner="liveReportingBanner" />
+                    </div>
                     <div class="article-box" v-if="live?.length">
                         <TournamentItem
                             v-for="main in live"
@@ -30,6 +42,18 @@
                     <LoadingBar />
                 </div>
                 <div v-else>
+                    <div
+                        class="advertisement"
+                        v-if="liveReportingBanner"
+                        :style="{
+                            cursor: liveReportingBanner.url
+                                ? 'pointer'
+                                : 'auto',
+                        }"
+                        @click="visitBanner(liveReportingBanner.url)"
+                    >
+                        <BannerCard :banner="liveReportingBanner" />
+                    </div>
                     <div class="article-box" v-if="past?.length">
                         <TournamentItem
                             v-for="main in past"
@@ -56,6 +80,7 @@ import { onMounted, onBeforeUnmount } from "@vue/runtime-core";
 import TabList from "./TabList.vue";
 import TournamentItem from "./TournamentItem.vue";
 import LoadingBar from "@/Components/LoadingBar.vue";
+import BannerCard from "@/Components/Frontend/BannerCard.vue";
 
 const props = defineProps({
     live: {
@@ -71,6 +96,9 @@ const props = defineProps({
     isLoading: {
         type: Boolean,
         default: true,
+    },
+    liveReportingBanner: {
+        type: Object,
     },
 });
 
@@ -107,6 +135,10 @@ function stickyScroll() {
     tabs.style.backgroundColor = "none";
     tabs.style.boxShadow = "none";
     tabs.style.borderBottom = "2px solid #f44336";
+}
+
+function visitBanner(url) {
+    if (url) window.open(url, "_blank");
 }
 
 onMounted(() => {

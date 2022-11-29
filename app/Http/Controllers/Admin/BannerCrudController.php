@@ -23,7 +23,7 @@ class BannerCrudController extends CrudController
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
-     * 
+     *
      * @return void
      */
     public function setup()
@@ -36,7 +36,7 @@ class BannerCrudController extends CrudController
 
     /**
      * Define what happens when the List operation is loaded.
-     * 
+     *
      * @see  https://backpackforlaravel.com/docs/crud-operation-list-entries
      * @return void
      */
@@ -49,13 +49,13 @@ class BannerCrudController extends CrudController
         /**
          * Columns can be defined using the fluent syntax or array syntax:
          * - CRUD::column('price')->type('number');
-         * - CRUD::addColumn(['name' => 'price', 'type' => 'number']); 
+         * - CRUD::addColumn(['name' => 'price', 'type' => 'number']);
          */
     }
 
     /**
      * Define what happens when the Create operation is loaded.
-     * 
+     *
      * @see https://backpackforlaravel.com/docs/crud-operation-create
      * @return void
      */
@@ -78,7 +78,23 @@ class BannerCrudController extends CrudController
                     'reporting-background-full' => 'reporting-background-full',
                     'reporting-background-full-1600' => 'reporting-background-full-1600',
                     'reporting-top-landscape' => 'reporting-top-landscape',
-                    'reporting-column-square' => 'reporting-column-square'
+                    'reporting-column-square' => 'reporting-column-square',
+                    'live reporting-background-full' => 'live reporting-background-full',
+                    'live reporting-background-full-1600' => 'live reporting-background-full-1600',
+                    'live reporting-top-landscape' => 'live reporting-top-landscape',
+                    'live reporting-column-square' => 'live reporting-column-square',
+                    'event calendar-background-full' => 'event calendar-background-full',
+                    'event calendar-background-full-1600' => 'event calendar-background-full-1600',
+                    'event calendar-top-landscape' => 'event calendar-top-landscape',
+                    'event calendar-column-square' => 'event calendar-column-square',
+                    'poker rooms-background-full' => 'poker rooms-background-full',
+                    'poker rooms-background-full-1600' => 'poker rooms-background-full-1600',
+                    'poker rooms-top-landscape' => 'poker rooms-top-landscape',
+                    'poker rooms-column-square' => 'poker rooms-column-square',
+                    'poker tours-background-full' => 'poker tours-background-full',
+                    'poker tours-background-full-1600' => 'poker tours-background-full-1600',
+                    'poker tours-top-landscape' => 'poker tours-top-landscape',
+                    'poker tours-column-square' => 'poker tours-column-square'
                 ],
                 'wrapper' => [
                     'class' => 'form-group col-md-12',
@@ -100,13 +116,13 @@ class BannerCrudController extends CrudController
         /**
          * Fields can be defined using the fluent syntax or array syntax:
          * - CRUD::field('price')->type('number');
-         * - CRUD::addField(['name' => 'price', 'type' => 'number'])); 
+         * - CRUD::addField(['name' => 'price', 'type' => 'number']));
          */
     }
 
     /**
      * Define what happens when the Update operation is loaded.
-     * 
+     *
      * @see https://backpackforlaravel.com/docs/crud-operation-update
      * @return void
      */

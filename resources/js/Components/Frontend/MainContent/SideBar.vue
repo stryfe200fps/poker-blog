@@ -8,11 +8,7 @@
         </div>
         <div
             class="advertisement"
-            v-if="
-                reportingSideBanner &&
-                (url.includes('live-reporting') ||
-                    currentComponent === 'Event/Index')
-            "
+            v-if="reportingSideBanner && currentComponent === 'Event/Index'"
             :style="{ cursor: reportingSideBanner.url ? 'pointer' : 'auto' }"
             @click="visitBanner(reportingSideBanner.url)"
         >
@@ -25,6 +21,62 @@
             @click="visitBanner(homeSideBanner.url)"
         >
             <BannerCard :banner="homeSideBanner" />
+        </div>
+        <div
+            class="advertisement"
+            v-if="
+                liveReportingSideBanner &&
+                currentComponent === 'Tournament/Index'
+            "
+            :style="{
+                cursor: liveReportingSideBanner.url ? 'pointer' : 'auto',
+            }"
+            @click="visitBanner(liveReportingSideBanner.url)"
+        >
+            <BannerCard :banner="liveReportingSideBanner" />
+        </div>
+        <div
+            class="advertisement"
+            v-if="
+                eventCalendarSideBanner &&
+                currentComponent === 'Event/EventCalendar'
+            "
+            :style="{
+                cursor: eventCalendarSideBanner.url ? 'pointer' : 'auto',
+            }"
+            @click="visitBanner(eventCalendarSideBanner.url)"
+        >
+            <BannerCard :banner="eventCalendarSideBanner" />
+        </div>
+        <div
+            class="advertisement"
+            v-if="
+                pokerRoomSideBanner &&
+                (currentComponent === 'Template/Index' ||
+                    currentComponent === 'Template/PokerRoom') &&
+                (url.includes('poker-rooms') || url.includes('rooms'))
+            "
+            :style="{
+                cursor: pokerRoomSideBanner.url ? 'pointer' : 'auto',
+            }"
+            @click="visitBanner(pokerRoomSideBanner.url)"
+        >
+            <BannerCard :banner="pokerRoomSideBanner" />
+        </div>
+        <div
+            class="advertisement"
+            v-if="
+                pokerTourSideBanner &&
+                (currentComponent === 'Template/Index' ||
+                    currentComponent === 'Template/PokerTour') &&
+                url.includes('tours')
+            "
+            :style="{
+                cursor: pokerTourSideBanner.url ? 'pointer' : 'auto',
+            }"
+            @click="visitBanner(pokerTourSideBanner.url)"
+        >
+            <BannerCard :banner="pokerTourSideBanner" />
         </div>
         <div class="widget social-widget">
             <div class="title-section">
@@ -71,6 +123,18 @@ const props = defineProps({
         type: Object,
     },
     reportingSideBanner: {
+        type: Object,
+    },
+    liveReportingSideBanner: {
+        type: Object,
+    },
+    eventCalendarSideBanner: {
+        type: Object,
+    },
+    pokerRoomSideBanner: {
+        type: Object,
+    },
+    pokerTourSideBanner: {
         type: Object,
     },
 });

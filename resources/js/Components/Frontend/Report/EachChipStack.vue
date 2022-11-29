@@ -15,8 +15,15 @@
                         :src="defaultAvatar"
                         :alt="defaultAvatar"
                     />
-                    {{ item.player?.name }}
-                    <span style="white-space: nowrap"></span>
+                    <span style="white-space: nowrap" v-if="item.player"
+                        >{{ item?.player?.name }}
+                        <span
+                            class="hide-on-tablet"
+                            v-if="item.player?.pseudonym"
+                            >({{ item.player?.pseudonym }})</span
+                        ></span
+                    >
+                    <span style="white-space: nowrap" v-else>-</span>
                 </td>
                 <td class="text-center hide-on-tablet" v-else>-</td>
                 <td

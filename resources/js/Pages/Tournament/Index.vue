@@ -12,6 +12,7 @@
                 :past="pastEventCollection"
                 :currentTab="page"
                 :isLoading="isLoading"
+                :liveReportingBanner="liveReportingBanner"
                 @loadMore="loadMoreReports"
             />
         </div>
@@ -23,6 +24,7 @@ import { Head } from "@inertiajs/inertia-vue3";
 import { useTournamentStore } from "@/Stores/tournament.js";
 import { onMounted, ref } from "@vue/runtime-core";
 import { Inertia } from "@inertiajs/inertia";
+import { useBannerStore } from "@/Stores/banner.js";
 
 import TournamentList from "../../Components/Frontend/Tournament/TournamentList.vue";
 
@@ -33,6 +35,8 @@ const props = defineProps({
 });
 
 const tournamentStore = useTournamentStore();
+const bannerStore = useBannerStore();
+const liveReportingBanner = ref([]);
 const liveEventCollection = ref([]);
 const pastEventCollection = ref([]);
 const pathname = ref("");
@@ -60,6 +64,8 @@ async function loadMoreReports() {
 }
 
 async function eventViewing(pathname) {
+    await bannerStore.getBanners();
+    liveReportingBanner.value = bannerStore.getLiveReportingBanner();
     loadPage.value = 1;
 
     if (pathname === undefined || pathname === "live") {

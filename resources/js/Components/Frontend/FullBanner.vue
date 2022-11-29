@@ -1,11 +1,7 @@
 <template>
     <div
         class="home-banner"
-        v-if="
-            formattedReportingBanner &&
-            (url.includes('live-reporting') ||
-                currentComponent === 'Event/Index')
-        "
+        v-if="formattedReportingBanner && currentComponent === 'Event/Index'"
         :style="{
             backgroundImage: `url(${formattedReportingBanner.image_set?.og_image})`,
             cursor: formattedReportingBanner.url ? 'pointer' : 'auto',
@@ -23,6 +19,58 @@
         }"
         @click="visitBanner(formattedHomeBanner.url)"
     ></div>
+    <div
+        class="home-banner"
+        v-if="
+            formattedLiveReportingBanner &&
+            currentComponent === 'Tournament/Index'
+        "
+        :style="{
+            backgroundImage: `url(${formattedLiveReportingBanner.image_set?.og_image})`,
+            cursor: formattedLiveReportingBanner.url ? 'pointer' : 'auto',
+        }"
+        @click="visitBanner(formattedLiveReportingBanner.url)"
+    ></div>
+    <div
+        class="home-banner"
+        v-if="
+            formattedEventCalendarBanner &&
+            currentComponent === 'Event/EventCalendar'
+        "
+        :style="{
+            backgroundImage: `url(${formattedEventCalendarBanner.image_set?.og_image})`,
+            cursor: formattedEventCalendarBanner.url ? 'pointer' : 'auto',
+        }"
+        @click="visitBanner(formattedEventCalendarBanner.url)"
+    ></div>
+    <div
+        class="home-banner"
+        v-if="
+            formattedPokerRoomBanner &&
+            (currentComponent === 'Template/Index' ||
+                currentComponent === 'Template/PokerRoom') &&
+            (url.includes('poker-rooms') || url.includes('rooms'))
+        "
+        :style="{
+            backgroundImage: `url(${formattedPokerRoomBanner.image_set?.og_image})`,
+            cursor: formattedPokerRoomBanner.url ? 'pointer' : 'auto',
+        }"
+        @click="visitBanner(formattedPokerRoomBanner.url)"
+    ></div>
+    <div
+        class="home-banner"
+        v-if="
+            formattedPokerTourBanner &&
+            (currentComponent === 'Template/Index' ||
+                currentComponent === 'Template/PokerTour') &&
+            url.includes('tours')
+        "
+        :style="{
+            backgroundImage: `url(${formattedPokerTourBanner.image_set?.og_image})`,
+            cursor: formattedPokerTourBanner.url ? 'pointer' : 'auto',
+        }"
+        @click="visitBanner(formattedPokerTourBanner.url)"
+    ></div>
 </template>
 
 <script setup>
@@ -31,6 +79,18 @@ const props = defineProps({
         type: Object,
     },
     formattedReportingBanner: {
+        type: Object,
+    },
+    formattedLiveReportingBanner: {
+        type: Object,
+    },
+    formattedEventCalendarBanner: {
+        type: Object,
+    },
+    formattedPokerRoomBanner: {
+        type: Object,
+    },
+    formattedPokerTourBanner: {
         type: Object,
     },
     url: {

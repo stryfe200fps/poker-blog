@@ -77,6 +77,16 @@
             </form>
         </div>
         <div v-if="page.template === 'rooms'">
+            <div
+                class="advertisement"
+                v-if="pokerRoomBanner"
+                :style="{
+                    cursor: pokerRoomBanner.url ? 'pointer' : 'auto',
+                }"
+                @click="visitBanner(pokerRoomBanner.url)"
+            >
+                <BannerCard :banner="pokerRoomBanner" />
+            </div>
             <div class="grid-box filters">
                 <h4>Find poker rooms near me</h4>
                 <div>
@@ -219,6 +229,16 @@
                 <LoadingBar />
             </div>
             <div v-else>
+                <div
+                    class="advertisement"
+                    v-if="pokerTourBanner"
+                    :style="{
+                        cursor: pokerTourBanner.url ? 'pointer' : 'auto',
+                    }"
+                    @click="visitBanner(pokerTourBanner.url)"
+                >
+                    <BannerCard :banner="pokerTourBanner" />
+                </div>
                 <div class="grid" v-if="tours?.length">
                     <PokerTours
                         v-for="(tour, index) in tours"
@@ -243,6 +263,7 @@ import { Head } from "@inertiajs/inertia-vue3";
 import { useRoomStore } from "@/Stores/pokerRoom.js";
 import { useTourStore } from "@/Stores/pokerTour.js";
 import { useMediaStore } from "@/Stores/mediaReports.js";
+import { useBannerStore } from "@/Stores/banner.js";
 import { onMounted, ref, computed, watch } from "@vue/runtime-core";
 import axios from "axios";
 import { createToast } from "mosha-vue-toastify";
@@ -253,6 +274,7 @@ import LoadingBar from "@/Components/LoadingBar.vue";
 import PokerRooms from "@/Components/Frontend/PokerRooms.vue";
 import PokerTours from "@/Components/Frontend/PokerTours.vue";
 import MediaReporting from "@/Components/Frontend/MediaReporting.vue";
+import BannerCard from "@/Components/Frontend/BannerCard.vue";
 
 const name = ref(null);
 const email = ref(null);
@@ -270,6 +292,9 @@ const lastPage = ref(1);
 const pokerRoomStore = useRoomStore();
 const pokerTourStore = useTourStore();
 const mediaStore = useMediaStore();
+const bannerStore = useBannerStore();
+const pokerRoomBanner = ref([]);
+const pokerTourBanner = ref([]);
 const selectedDate = ref(moment().format("YYYY-MM-DD"));
 const isOpen = ref(false);
 const isLoading = ref(true);
@@ -390,6 +415,10 @@ async function submitMessage() {
     }
 }
 
+function visitBanner(url) {
+    if (url) window.open(url, "_blank");
+}
+
 onMounted(async () => {
     if (props.page.template === "rooms") {
         isLoading.value = true;
@@ -400,6 +429,8 @@ onMounted(async () => {
         lastPage.value = pokerRoomStore.rooms.meta.last_page;
         await pokerRoomStore.getCountries();
         countries.value = pokerRoomStore.countries.data;
+        await bannerStore.getBanners();
+        pokerRoomBanner.value = bannerStore.getPokerRoomBanner();
 
         if (rooms.value) isLoading.value = false;
     }
@@ -423,6 +454,8 @@ onMounted(async () => {
         });
         tours.value = pokerTourStore.tours.data;
         lastPage.value = pokerTourStore.tours.meta.last_page;
+        await bannerStore.getBanners();
+        pokerTourBanner.value = bannerStore.getPokerTourBanner();
 
         if (tours.value) isLoading.value = false;
     }
