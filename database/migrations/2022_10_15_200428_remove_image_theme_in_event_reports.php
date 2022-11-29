@@ -26,7 +26,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('event_reports', function (Blueprint $table) {
-            $table->string('image_theme');
+            $table->string('image_theme')->nullable();
         });
     }
 };

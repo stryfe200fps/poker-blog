@@ -3,10 +3,10 @@
 use App\Models\Article;
 use App\Models\Tournament;
 use Carbon\Carbon;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+
 use function Pest\Faker\faker;
 
-uses(RefreshDatabase::class);
+
 
 // test('article is working', function () {
 //     $response = $this->get('api/articles');

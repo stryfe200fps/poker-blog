@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::table('levels', function (Blueprint $table) {
             // $table->integer('big_blinds')->nullable()->default(0);
-            $table->renameColumn('blinds', 'small_blinds');
+            // $table->renameColumn('blinds', 'small_blinds');
         });
     }
 
@@ -27,7 +27,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('levels', function (Blueprint $table) {
-            $table->renameColumn('small_blinds', 'blinds');
+            // $table->renameColumn('small_blinds', 'blinds');
             // $table->dropColumn('big_blinds');
         });
     }

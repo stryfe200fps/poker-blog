@@ -32,10 +32,10 @@ public function up()
     public function down()
     {
         Schema::table('event_reports', function (Blueprint $table) {
-            $table->string('players');
+            $table->string('players')->nullable();
             // $table->dateTime('date_added');
-            $table->foreignId('user_id');
-            $table->foreignId('event_id');
+            $table->foreignId('user_id')->nullable();
+            $table->foreignId('event_id')->nullable();
         });
     }
 };

@@ -1,8 +1,8 @@
 <?php
 
 use App\Models\Article;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-uses(RefreshDatabase::class);
+
+
 
 it('it accepts milions of text in content', function () {
 

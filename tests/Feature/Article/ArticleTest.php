@@ -4,10 +4,9 @@ use App\Models\Article;
 use App\Models\Author;
 use App\Models\ArticleCategory;
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+
 use Spatie\Permission\Models\Role;
 
-uses(RefreshDatabase::class);
 
 // test('article is working', function () {
 //     $response = $this->get('api/articles');
@@ -34,7 +33,8 @@ it('can insert article if authenticated', function () {
 
 
     $datas = $this->post('admin/article', $data);
-    $this->assertDatabaseHas('articles', ['title' => 'Things I do',
+    $this->assertDatabaseHas('articles', [
+        'title' => 'Things I do',
     ]);
 });
 
@@ -43,7 +43,7 @@ it('can update article if authenticated', function () {
 
     $article = Article::factory()->create();
 
-    $this->get('admin/article/'.$article->id.'/edit')->assertStatus(200);
+    $this->get('admin/article/' . $article->id . '/edit')->assertStatus(200);
 
     $data = Article::factory()->make([
         'id' => $article->id,

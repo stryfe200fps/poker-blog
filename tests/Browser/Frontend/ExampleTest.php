@@ -17,15 +17,14 @@ use Illuminate\Support\Str;
 
 use Illuminate\Support\Facades\DB;
 use Backpack\Settings\app\Models\Setting;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 
-uses(DatabaseMigrations::class);
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 it('website simulation', function () {
 
     $tournament = Tournament::factory()->create([
         'title' => 'Adi Tournament'
+
     ]);
 
     $article = Article::factory()->create([
@@ -104,7 +103,7 @@ it('website simulation', function () {
 
     $liveReport->assertSee('Adi report title');
     $liveReport->assertSee('adi report content');
-    $liveReport->pause(1000);
+        $liveReport->pause(3000);
     $liveReport->assertSee('New post');
     $liveReport->assertSee('Adi popup');
     $liveReport->screenshot('event/event');
@@ -122,7 +121,7 @@ it('website simulation', function () {
     $liveReport->screenshot('event/whatsapp');
 
     $liveReport->clickLink('GALLERY');
-    $liveReport->pause(1000);
+        $liveReport->pause(2500);
     $liveReport->assertVisible('#my-gallery');
     $liveReport->screenshot('event/gallery');
 
@@ -138,32 +137,23 @@ it('website simulation', function () {
 test('can view article', function () {
 
     $this->browse(function (Browser $browser) {
-       $articles = Article::factory()->times(10)->create();
+
+        $articles = Article::factory()->times(10)->create();
 
     $visit = $browser->visit('/news');
-    $visit->waitUntilMissingText('Loading...');
+        $visit->waitUntilMissingText('Loading...')
+        ->pause(1000);
 
     $visit->assertSee($articles[0]->title);
-    $visit->assertSee($articles[4]->title);
-    $visit->assertSee($articles[8]->title);
+        $visit->assertSee($articles[4]->title);
 
     $visit->screenshot('articles/latest-news');
 
     $visit = $browser->visit('/news/2022/10/'. $articles[0]->slug);
     $visit->waitUntilMissingText('Loading...');
     $visit->pause(1000);
-    $visit->assertSee($articles[0]->title);
-    $visit->within('.single-post-box ul', function ($item) use ($articles) {
+        $visit->assertSee($articles[0]->title);
 
-        // $item->assertSee($articles[0]->content[0]->title);
-    });
-
-    // $visit->withinEach('.single-post-box ul', function (Browser $listItem) {
-    //         $listItem->assertSee('ratik');
-    //         dd($listItem);
-    // });
-
-    // expect(10)->toBe(50);
     $visit->screenshot('articles/show');
     });
 

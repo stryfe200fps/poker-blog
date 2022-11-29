@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('levels', function (Blueprint $table) {
-            $table->integer('blinds');
+            $table->integer('small_blinds');
             $table->integer('ante');
         });
     }

@@ -13,10 +13,9 @@ class TournamentController extends Controller
     {
         $tournaments = Tournament::
         with([ 'events', 'events.days','events.days.event_reports', 'tour', 'currency', 'country',  'events.tournament',  'events.event_game_table'])
-        ->groupBy()->withCount('events')->having('events_count', '>', 0);
-
-        // dd($tournaments->count());
-        // dd($tournaments->query()->get());
+        ->whereHas('events', function ($q) {
+            $q->whereHas('days');
+        });
 
         return  new TournamentCollection($request->get('status') == 'upcoming' 
         ? $tournaments->orderBy('date_start')->paginate(5) 

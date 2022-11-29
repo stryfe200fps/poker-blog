@@ -5,9 +5,9 @@ use App\Models\Article;
 use App\Models\Event;
 use App\Models\EventReport;
 use App\Models\Tag;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
-uses(RefreshDatabase::class);
+
+
 
 test('article with tags ', function () {
     $this->withExceptionHandling();

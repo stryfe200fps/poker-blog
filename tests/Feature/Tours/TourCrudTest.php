@@ -4,9 +4,9 @@ use App\Models\Tour;
 use App\Models\User;
 use App\Models\Article;
 use Spatie\Permission\Models\Role;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
-uses(RefreshDatabase::class);
+
+
 
 test('tour index  is working', function () {
     $response = $this->get('api/tours');

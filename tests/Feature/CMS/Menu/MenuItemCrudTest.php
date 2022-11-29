@@ -1,8 +1,8 @@
 <?php
 
 use App\Models\Page;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-uses(RefreshDatabase::class);
+
+
 
 $route = 'menu-item';
 $model = 'MenuItem';

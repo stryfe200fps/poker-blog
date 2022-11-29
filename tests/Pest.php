@@ -4,9 +4,10 @@ use Tests\TestCase;
 use App\Models\User;
 use Tests\DuskTestCase;
 
+use App\Services\ImageService;
 use Spatie\Permission\Models\Role;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\Services\ImageService;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +21,7 @@ use App\Services\ImageService;
 */
 
 uses(TestCase::class, RefreshDatabase::class)->in('Feature');
-uses(DuskTestCase::class)->in('Browser');
+uses(DuskTestCase::class, DatabaseMigrations::class)->in('Browser');
 
 
 

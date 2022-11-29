@@ -8,9 +8,9 @@ use App\Models\Glossary;
 use App\Models\Level;
 use App\Models\Player;
 use Carbon\Carbon;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
-uses(RefreshDatabase::class);
+
+
 
 test('if the "stacks before" is updating on next report ', function () {
     $this->withoutExceptionHandling();

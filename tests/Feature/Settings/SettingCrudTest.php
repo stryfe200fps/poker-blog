@@ -3,8 +3,8 @@
 
 use Backpack\Settings\app\Models\Setting;
 use Backpack\Settings\database\seeds\SettingsTableSeeder;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-uses(RefreshDatabase::class);
+
+
 
 $route = 'setting';
 

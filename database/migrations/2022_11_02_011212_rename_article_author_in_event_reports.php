@@ -13,16 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        try { 
-        Schema::table('event_reports', function (Blueprint $table) {
-            $table->renameColumn('article_author_id', 'author_id');
-        });
+    //     try { 
+    //     Schema::table('event_reports', function (Blueprint $table) {
+    //         $table->renameColumn('article_author_id', 'author_id');
+    //     });
 
-        Schema::table('articles', function (Blueprint $table) {
-            $table->renameColumn('article_author_id', 'author_id');
-        });
+    //     Schema::table('articles', function (Blueprint $table) {
+    //         $table->renameColumn('article_author_id', 'author_id');
+    //     });
 
-    } catch (Exception $e) { }
+    // } catch (Exception $e) { }
 
     }
 
@@ -33,13 +33,13 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('event_reports', function (Blueprint $table) {
-            $table->renameColumn('author_id', 'article_author_id');
-            $table->renameColumn('date_added', 'published_date');
-        });
+        // Schema::table('event_reports', function (Blueprint $table) {
+        //     $table->renameColumn('author_id', 'article_author_id');
+        //     $table->renameColumn('date_added', 'published_date');
+        // });
 
-        Schema::table('articles', function (Blueprint $table) {
-            $table->renameColumn('author_id', 'article_author_id');
-        });
+        // Schema::table('articles', function (Blueprint $table) {
+        //     $table->renameColumn('author_id', 'article_author_id');
+        // });
     }
 };

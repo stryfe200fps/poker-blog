@@ -27,7 +27,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('event_reports', function (Blueprint $table) {
-            $table->string('day');
+            $table->string('day')->nullable();
         });
     }
 };

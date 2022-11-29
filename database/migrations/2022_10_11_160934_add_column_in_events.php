@@ -26,8 +26,8 @@ return new class extends Migration
     public function down()
     {
         Schema::table('events', function (Blueprint $table) {
-            $table->dateTime('date_start');
-            $table->dateTime('date_end');
+            $table->dateTime('date_start')->nullable();
+            $table->dateTime('date_end')->nullable();
         });
     }
 };

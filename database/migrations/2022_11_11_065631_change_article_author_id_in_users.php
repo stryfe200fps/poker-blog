@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->renameColumn('article_author_id', 'author_id');
-        });
+        // Schema::table('users', function (Blueprint $table) {
+        //     $table->renameColumn('article_author_id', 'author_id');
+        // });
     }
 
     /**
@@ -25,8 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->renameColumn('author_id', 'article_author_id');
-        });
+        // Schema::table('users', function (Blueprint $table) {
+        //     $table->renameColumn('author_id', 'article_author_id');
+        // });
     }
 };

@@ -2,9 +2,9 @@
 
 use App\Models\Event;
 use App\Models\Tournament;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
-uses(RefreshDatabase::class);
+
+
 
 
 it('it upload base64 image', function () {

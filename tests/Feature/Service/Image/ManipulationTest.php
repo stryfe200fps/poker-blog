@@ -5,9 +5,9 @@ use App\Models\Day;
 use App\Models\EventReport;
 use App\Services\ImageService;
 use Backpack\Settings\app\Models\Setting;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
-uses(RefreshDatabase::class);
+
+
 
 
 it('it resize the image', function () {

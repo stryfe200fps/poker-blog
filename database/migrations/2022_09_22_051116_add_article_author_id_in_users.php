@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->foreignId('article_author_id')->default(0)->change();
+            $table->foreignId('author_id')->default(0)->change();
         });
     }
 
@@ -26,7 +26,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->foreignId('article_author_id')->change();
+            $table->foreignId('author_id')->change();
         });
     }
 };

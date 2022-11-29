@@ -3,9 +3,9 @@
 
 use App\Models\Article;
 use App\Models\Tag;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
-uses(RefreshDatabase::class);
+
+
 
 test('limit the related article', function () {
     $articles = Article::factory()->create();

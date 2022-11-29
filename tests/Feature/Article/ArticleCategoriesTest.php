@@ -1,9 +1,9 @@
 <?php
 
 use App\Models\ArticleCategory;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
-uses(RefreshDatabase::class);
+
+
 
 it('cannot create articles if unauthenticated', function () {
     $this->post('admin/article-category/', [

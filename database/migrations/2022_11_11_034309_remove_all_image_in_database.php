@@ -34,15 +34,15 @@ return new class extends Migration
     public function down()
     {
         Schema::table('events', function (Blueprint $table) {
-            $table->string('image');
+            $table->string('image')->nullable();
         });
 
            Schema::table('tournaments', function (Blueprint $table) {
-            $table->string('image');
+            $table->string('image')->nullable();
         });
 
             Schema::table('articles', function (Blueprint $table) {
-            $table->string('image');
+            $table->string('image')->nullable();
         });
     }
 };

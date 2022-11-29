@@ -1,8 +1,8 @@
 <?php
 
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-uses(RefreshDatabase::class);
+
+
 
 $route = 'banner';
 $model = 'Banner';

@@ -3,9 +3,9 @@
 use App\Models\EventPayout;
 use Illuminate\Http\UploadedFile;
 use App\Services\SpreadsheetService;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
-uses(RefreshDatabase::class);
+
+
 
 test('it can prepare something in spreadsheet', function () {
 
@@ -33,7 +33,7 @@ test('it uploads a spreadsheet and save something', function () {
             'player_id' => 'position'
         ]
     ];
-    dd($spreadsheet->upload($chosen));
+    // dd($spreadsheet->upload($chosen));
 
 
 });

@@ -4,8 +4,8 @@
 use App\Models\ImageTheme;
 use App\Models\EventReport;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-uses(RefreshDatabase::class);
+
+
 
 $route = 'image-theme';
 $model = 'ImageTheme';

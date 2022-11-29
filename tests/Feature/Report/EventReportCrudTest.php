@@ -2,11 +2,11 @@
 
 use App\Models\Day;
 use App\Models\Level;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+
 
 use function DI\factory;
 
-uses(RefreshDatabase::class);
+
 
 $route = 'report';
 $model = 'EventReport';

@@ -4,9 +4,9 @@ use App\Models\Event;
 use App\Models\EventGameTable;
 use App\Models\Tournament;
 use Carbon\Carbon;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
-uses(RefreshDatabase::class);
+
+
 
 it('cannot create events if unauthenticated', function () {
     $this->post('admin/events/', [
