@@ -1,34 +1,9 @@
 composer install
-
-cp .env.example .env
-php artisan key:generate
-
-php artisan backpack:filemanager:install
-
-npm install
-
-fill your .env database connection to migrate data
-
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=file
-DB_USERNAME=root
-DB_PASSWORD=
+npm run build
 
 //initialize database and dummy data
 php artisan migrate
 php artisan db:seed
-
-
-
-php artisan storage:link
-php artisan cache:clear
-php artisan optimize:clear
-
-
-
-npm run build
 
 so you can upload image
 chmod -R 775 public/tmp
@@ -97,15 +72,4 @@ use this command to test the CRUD if it's all saving data and validating correct
 ./vendor/bin/pest --parallel
 
 
-Browser Testing,  
 
-edit .env.dusk for browser testing
-note: run soketi start before running dusk to also simulate notification push
-DATABASE_CONNECTION=sqlite
-then make a database/database.sqlite file
-
-// if there's an error, run this and clear cache
-npm run build
-
-php artisan dusk:chrome-driver
-php artisan pest:dusk 

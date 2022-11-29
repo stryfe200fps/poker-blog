@@ -15,11 +15,27 @@ jobs:
     - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
       with:
         php-version: '8.0'
+    - name: Cache PHP dependencies
+      uses: actions/cache@v2
+      id: vendor-cache
+      with:
+        path: vendor
+        key: ${{ runner.OS }}-build-${{ hashFiles('**/composer.lock') }}
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
       with: 
         node-version: 16
-
+    - name: Get Composer Cache Directory 2
+      id: composer-cache
+      run: |
+        echo "::set-output name=dir::$(composer config cache-files-dir)"
+    - uses: actions/cache@v2
+      id: actions-cache
+      with:
+        path: ${{ steps.composer-cache.outputs.dir }}
+        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-composer-
     - name: Cache node_modules directory
       uses: actions/cache@v2
       id: node_modules-cache
@@ -32,6 +48,7 @@ jobs:
     - name: Install BACKPACK config
       run: composer config http-basic.backpackforlaravel.com 46246897 YLRizEJAen5G
     - name: Install Dependencies
+      if: steps.vendor-cache.outputs.cache-hit != 'true'
       run: composer update -W --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
     - name: Install node dependencies
       if: steps.node_modules-cache.outputs.cache-hit != 'true'
@@ -57,8 +74,8 @@ jobs:
     - name: Execute tests (Unit and Feature tests) via PEST
       env:
         DB_CONNECTION: sqlite
-        DB_DATABASE: database/database.sqlite
-      run: vendor/bin/pest
+        DB_DATABASE: ":memory:" 
+      run: vendor/bin/pest --parallel
     - name: Browser Test - upgrade and start Chrome Driver
       run: |
         php artisan dusk:chrome-driver --detect
