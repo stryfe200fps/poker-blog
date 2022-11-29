@@ -95,5 +95,5 @@ jobs:
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
-        scropt: "./deploy.sh > deployment.txt"
+        script: "./deploy.sh > deployment.txt"
 
