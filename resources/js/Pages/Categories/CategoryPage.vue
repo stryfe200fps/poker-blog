@@ -28,7 +28,7 @@
                             v-for="(category, index) in categories"
                             :key="index"
                             :value="category.slug"
-                            :checked="category.title == selectCategory"
+                            :checked="category.slug == selectCategory"
                             :disabled="category.title == 'Categories'"
                         >
                             {{ category.title }}
@@ -201,7 +201,9 @@ onMounted(async () => {
     categories.value.push(...articleCategoryStore.categoryLists.data);
     await articleCategoryStore.getArticleCategoryLists(pathname.value, 1);
     lastPage.value = articleCategoryStore.articleCategoryLists.meta.last_page;
-
+    pathname.value === undefined
+        ? (selectCategory.value = "categories")
+        : (selectCategory.value = pathname.value);
     if (articleCategories.value) isLoading.value = false;
 });
 
