@@ -16,14 +16,21 @@ jobs:
       with:
         php-version: '8.0'
     - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+        with: 
+          node-version: 16
     - name: Copy .env
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
     - name: Install BACKPACK config
       run: composer config http-basic.backpackforlaravel.com 46246897 YLRizEJAen5G
     - name: Install Dependencies
       run: composer update -W --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+    - name: Install node dependencies
+        run: npm ci
     - name: Generate key
-      run: php artisan key:generate
+      run: | 
+        php artisan key:generate
+        npm run build
     - name: Directory Permissions
       run: chmod -R 777 storage bootstrap/cache
     - name: Create Database
