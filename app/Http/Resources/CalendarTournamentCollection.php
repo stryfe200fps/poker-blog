@@ -23,7 +23,7 @@ class CalendarTournamentCollection extends ResourceCollection
         })->reduce(function ($result, $item) use ($date) {
             $result[] = [
                 'date' =>  $item->first()->date_start->format('F-Y'),
-                'collection' => collect($item)->filter(function ($item) use ($date) {  return Carbon::parse($date) <= $item->date_end; })->map(function ($i) {
+                'collection' => collect($item)->map(function ($i) {
                     return new TournamentEventResource($i);
                 }) ?? []
             ];
@@ -32,7 +32,7 @@ class CalendarTournamentCollection extends ResourceCollection
         }, collect([]))->toArray();
 
         return [
-            'data' => $reducedCollection 
+            'data' => $reducedCollection
         ];
     }
 }
