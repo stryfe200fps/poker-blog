@@ -22,7 +22,7 @@ class RoomFactory extends Factory
             'slug' => $this->faker->slug,
             'description' => $this->faker->paragraph,
             'content' => $this->faker->paragraph(20),
-            'country_id' => Country::factory()->create()->id,
+            'country_id' => fn() => Country::factory()->create()->id,
             'address' => $this->faker->address(),
             'phone' => $this->faker->phoneNumber,
             'email' => $this->faker->safeEmail,

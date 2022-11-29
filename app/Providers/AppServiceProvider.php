@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Laravel\Telescope\Telescope;
 use Dymantic\InstagramFeed\Instagram;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
@@ -20,6 +21,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        Telescope::ignoreMigrations();
         $this->app->bind(\Backpack\CRUD\app\Http\Controllers\Auth\LoginController::class, LoginController::class);
         $this->app->bind(\Backpack\PageManager\app\Http\Controllers\Admin\PageCrudController::class, PageCrudController::class);
         $this->app->bind(\Backpack\MenuCRUD\app\Http\Controllers\Admin\MenuItemCrudController::class, MenuItemCrudController::class);
