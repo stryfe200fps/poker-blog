@@ -36,6 +36,6 @@ it('it upload HTTPUpload image', function () {
 
 it('it upload image via url', function () {
     $event = Tournament::factory()->create();
-    $upload = uploadImage('https://www.lifeofpoker.com/storage/953/conversions/article-37-md-image.jpg', $event);
+    $upload = uploadImage('https://wp.lifeofpoker.com/wp-content/uploads/2022/08/Trophy-Main-Event-APPT-2022-1-1024x682.jpg', $event);
     expect($upload)->toBe(true);
 });

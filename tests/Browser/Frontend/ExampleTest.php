@@ -51,8 +51,8 @@ it('website simulation', function () {
         'day_id' => $day->id
     ]);
 
-    $link = config('app.url') . '/default_og-image.png';
-    $image = new ImageService($link, $eventReport);
+    // $link = config('app.url') . '/default_og-image.png';
+    $image = new ImageService('https://wp.lifeofpoker.com/wp-content/uploads/2022/08/Trophy-Main-Event-APPT-2022-1-1024x682.jpg', $eventReport);
     $image->imageUpload();
 
     $player = Player::factory()->create([
