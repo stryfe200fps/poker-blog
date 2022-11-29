@@ -6,6 +6,10 @@
                 <FullBanner
                     :formattedHomeBanner="formattedHomeBanner"
                     :formattedReportingBanner="formattedReportingBanner"
+                    :formattedLiveReportingBanner="formattedLiveReportingBanner"
+                    :formattedEventCalendarBanner="formattedEventCalendarBanner"
+                    :formattedPokerRoomBanner="formattedPokerRoomBanner"
+                    :formattedPokerTourBanner="formattedPokerTourBanner"
                     :url="url"
                     :currentComponent="currentComponent"
                 />
@@ -21,6 +25,14 @@
                             <SideBar
                                 :homeSideBanner="homeSideBanner"
                                 :reportingSideBanner="reportingSideBanner"
+                                :liveReportingSideBanner="
+                                    liveReportingSideBanner
+                                "
+                                :eventCalendarSideBanner="
+                                    eventCalendarSideBanner
+                                "
+                                :pokerRoomSideBanner="pokerRoomSideBanner"
+                                :pokerTourSideBanner="pokerTourSideBanner"
                             />
                         </div>
                     </div>
@@ -54,6 +66,18 @@ const homeSideBanner = ref([]);
 const reportingFullBanner = ref([]);
 const reportingSemiFullBanner = ref([]);
 const reportingSideBanner = ref([]);
+const liveReportingFullBanner = ref([]);
+const liveReportingSemiFullBanner = ref([]);
+const liveReportingSideBanner = ref([]);
+const eventCalendarFullBanner = ref([]);
+const eventCalendarSemiFullBanner = ref([]);
+const eventCalendarSideBanner = ref([]);
+const pokerRoomFullBanner = ref([]);
+const pokerRoomSemiFullBanner = ref([]);
+const pokerRoomSideBanner = ref([]);
+const pokerTourFullBanner = ref([]);
+const pokerTourSemiFullBanner = ref([]);
+const pokerTourSideBanner = ref([]);
 
 const url = computed(() => {
     return usePage().url.value;
@@ -80,6 +104,46 @@ const formattedReportingBanner = computed(() => {
         return reportingFullBanner.value;
     } else {
         return reportingSemiFullBanner.value;
+    }
+});
+
+const formattedLiveReportingBanner = computed(() => {
+    const width = window.innerWidth;
+
+    if (width >= 1920) {
+        return liveReportingFullBanner.value;
+    } else {
+        return liveReportingSemiFullBanner.value;
+    }
+});
+
+const formattedEventCalendarBanner = computed(() => {
+    const width = window.innerWidth;
+
+    if (width >= 1920) {
+        return eventCalendarFullBanner.value;
+    } else {
+        return eventCalendarSemiFullBanner.value;
+    }
+});
+
+const formattedPokerRoomBanner = computed(() => {
+    const width = window.innerWidth;
+
+    if (width >= 1920) {
+        return pokerRoomFullBanner.value;
+    } else {
+        return pokerRoomSemiFullBanner.value;
+    }
+});
+
+const formattedPokerTourBanner = computed(() => {
+    const width = window.innerWidth;
+
+    if (width >= 1920) {
+        return pokerTourFullBanner.value;
+    } else {
+        return pokerTourSemiFullBanner.value;
     }
 });
 
@@ -113,6 +177,20 @@ onMounted(async () => {
     reportingFullBanner.value = bannerStore.getReportingFullBanner();
     reportingSemiFullBanner.value = bannerStore.getReportingSemiFullBanner();
     reportingSideBanner.value = bannerStore.getReportingSideBanner();
+    liveReportingFullBanner.value = bannerStore.getLiveReportingFullBanner();
+    liveReportingSemiFullBanner.value =
+        bannerStore.getLiveReportingSemiFullBanner();
+    liveReportingSideBanner.value = bannerStore.getLiveReportingSideBanner();
+    eventCalendarFullBanner.value = bannerStore.getEventCalendarFullBanner();
+    eventCalendarSemiFullBanner.value =
+        bannerStore.getEventCalendarSemiFullBanner();
+    eventCalendarSideBanner.value = bannerStore.getEventCalendarSideBanner();
+    pokerRoomFullBanner.value = bannerStore.getPokerRoomFullBanner();
+    pokerRoomSemiFullBanner.value = bannerStore.getPokerRoomSemiFullBanner();
+    pokerRoomSideBanner.value = bannerStore.getPokerRoomSideBanner();
+    pokerTourFullBanner.value = bannerStore.getPokerTourFullBanner();
+    pokerTourSemiFullBanner.value = bannerStore.getPokerTourSemiFullBanner();
+    pokerTourSideBanner.value = bannerStore.getPokerTourSideBanner();
 });
 
 onBeforeUnmount(() => {

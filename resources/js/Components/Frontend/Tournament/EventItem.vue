@@ -166,6 +166,7 @@
                             display: flex;
                             justify-content: space-between;
                             align-items: baseline;
+                            flex-wrap: wrap;
                         "
                     >
                         <h2 class="text-capitalize">
