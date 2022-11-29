@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Utilities;
 use App\Http\Controllers\Controller;
 use App\Models\EventPayout;
 use App\Models\Player;
+use App\Services\SpreadsheetService;
 use Exception;
 use Illuminate\Log\Logger;
 use Illuminate\Support\Facades\Schema;
@@ -19,33 +20,42 @@ class ExcelUploadController extends Controller
 {
     public function prepare()
     {
-        try {
-            $realName = request()->all()['file']->getClientOriginalName();
-            request()->all()['file']->move('uploads', $realName);
-            $collection = (new FastExcel)->import('uploads/'.$realName);
-            $header = array_values(collect(Schema::getColumnListing('event_payouts'))->filter(fn ($z) => $z == 'player_id' || $z == 'prize' || $z == 'position')->toArray());
+        // try {
+            // $realName = request()->all()['file']->getClientOriginalName();
+            // request()->all()['file']->move('uploads', $realName);
+            // $collection = (new FastExcel)->import('uploads/'.$realName);
 
+            // $header = array_values(collect(Schema::getColumnListing('event_payouts'))->filter(fn ($z) => $z == 'player_id' || $z == 'prize' || $z == 'position')->toArray());
+            // unlink('uploads/'. $realName);
 
-            unlink('uploads/'. $realName);
+            $spreadsheet = new SpreadsheetService(request()->all()['file'], new EventPayout());
+
             return [
-                'excel_header' => array_keys($collection[0]),
-                'main_header' => $header,
+                'excel_header' => $spreadsheet->getSpreadsheetHeader(),
+                'main_header' => $spreadsheet->getHeader(),
             ];
 
-            return 1;
-        } catch (Exception $e) {
-            Logger($e);
-            return 0;
-        }
+            // return 1;
+        // } catch (Exception $e) {
+        //     Logger($e);
+        //     return 0;
+        // }
     }
 
     public function upload()
     {
+
+       $spreadsheet = new SpreadsheetService(request()->all()['file'], new EventPayout());
+
+       $currentHeader = json_decode(request()->all()['headers'], true);
+       $spreadsheet->upload($currentHeader);
+    //    dd();
+
         if (request()->all()['checkbox_overwrite'] === 'true') {
             EventPayout::where('event_id', request()->all()['event_id'])->delete();
         }
 
-        try {
+        // try {
             $realName = request()->all()['file']->getClientOriginalName();
             request()->all()['file']->move('uploads', $realName);
             $currentHeader = json_decode(request()->all()['headers'], true);
@@ -67,7 +77,6 @@ class ExcelUploadController extends Controller
                     return;
                 }
 
-
                 $player = $line[$headerPlayerId[0]['player_id']];
                 $playerArray = explode(' ', trim($player));
              
@@ -88,9 +97,9 @@ class ExcelUploadController extends Controller
             });
             unlink('uploads/'. $realName);
             return 1;
-        } catch (Exception $e) {
-            return 0;
-            Logger($e);
-        }
+        // } catch (Exception $e) {
+        //     return 0;
+        //     Logger($e);
+        // }
     }
 }

@@ -12,6 +12,7 @@ class EventPayout extends Model
     use HasFactory;
 
     protected $fillable = ['prize', 'event_id', 'player_id', 'position'];
+    public $excelHeaders = ['prize', 'player_id', 'position'];
 
     public function event()
     {
