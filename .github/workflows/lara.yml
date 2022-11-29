@@ -17,8 +17,8 @@ jobs:
         php-version: '8.0'
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
-        with: 
-          node-version: 16
+      with: 
+        node-version: 16
     - name: Copy .env
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
     - name: Install BACKPACK config
@@ -26,7 +26,7 @@ jobs:
     - name: Install Dependencies
       run: composer update -W --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
     - name: Install node dependencies
-        run: npm ci
+      run: npm ci
     - name: Generate key
       run: | 
         php artisan key:generate
