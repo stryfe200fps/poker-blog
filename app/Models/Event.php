@@ -35,6 +35,7 @@ class Event extends Model implements HasMedia
     use \Znck\Eloquent\Traits\BelongsToThrough;
 
     public $shouldOptimize = false;
+    public bool $shouldResizeImage = true;
 
     protected $guarded = ['id'];
 
@@ -132,8 +133,7 @@ class Event extends Model implements HasMedia
 
     public function getScheduleWithReports()
     {
-        return $this->days()->orderBy('lft')->withCount('event_reports')
-            // ->having('event_reports_count', '>', 0 )->pluck('name', 'id');
+        return $this->days()->orderBy('lft')->groupBy('id')->withCount('event_reports')
             ->having('event_reports_count', '>', 0 )->get()->map->only('id', 'name');
             
 
@@ -141,7 +141,7 @@ class Event extends Model implements HasMedia
 
     public function getLastSchedule() 
     {
-        return $this->days()->orderByDesc('lft')->withCount('event_reports')
+        return $this->days()->orderByDesc('lft')->groupBy('id')->withCount('event_reports')
             ->having('event_reports_count', '>', 0 )->first();
     }
 

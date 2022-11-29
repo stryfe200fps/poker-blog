@@ -102,7 +102,7 @@ class DatabaseSeeder extends Seeder
        ]);
 
 
-        $levels = Level::factory()->times(5)->create([
+        $levels = Level::factory()->times(3)->create([
         'event_id' => $event->id
        ]);
 
@@ -122,8 +122,6 @@ class DatabaseSeeder extends Seeder
        ]);
        }
      
-
-
 
        $player = Player::factory()->create([
         'name' => $playerName
@@ -157,8 +155,8 @@ class DatabaseSeeder extends Seeder
        }
 
        $this->upload($event);
-       $this->addPayouts($event);
        $this->upload($tournament);
+       $this->addPayouts($event);
 
     }
 
