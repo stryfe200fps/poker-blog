@@ -51,7 +51,7 @@ it('website simulation', function () {
         'day_id' => $day->id
     ]);
 
-    $link = config('app.url'). '/default_og-image.png';
+    $link = config('app.url') . '/default_og-image.png';
     $image = new ImageService($link, $eventReport);
     $image->imageUpload();
 
@@ -59,13 +59,13 @@ it('website simulation', function () {
         'name' => 'Adrian Radores'
     ]);
 
-  EventChip::factory()->create([
+    EventChip::factory()->create([
         'player_id' => $player->id,
         'event_report_id' => $eventReport->id,
         'day_id' => $day->id
     ]);
 
-  EventChip::factory()->create([
+    EventChip::factory()->create([
         'player_id' => $player->id,
         'event_report_id' => $eventReport->id,
         'day_id' => $day->id,
@@ -77,59 +77,58 @@ it('website simulation', function () {
         'player_id' => $player->id
     ]);
 
-    $this->browse(function (Browser $browser) use ($level, $day)  {
-    $visit = $browser->visit('/');
-    $visit->waitUntilMissingText('Loading...');
-    $visit->assertSee('NEWS');
-    $visit->assertSee('Adi content');
-    $visit->assertSee('LIVE NOW');
-    $browser->screenshot('home');
+    $this->browse(function (Browser $browser) use ($level, $day) {
+        $visit = $browser->visit('/');
+        $visit->waitUntilMissingText('Loading...');
+        $visit->assertSee('NEWS');
+        $visit->assertSee('Adi content');
+        $visit->assertSee('LIVE NOW');
+        $browser->screenshot('home');
 
-    $liveReport = $browser->visit('/live-reporting');
-    $liveReport->waitUntilMissingText('Loading...');
-    $liveReport->assertSee('Adi Event');
-    $browser->screenshot('live-report');
+        $liveReport = $browser->visit('/live-reporting');
+        $liveReport->waitUntilMissingText('Loading...');
+        $liveReport->assertSee('Adi Event');
+        $browser->screenshot('live-report');
 
-    $liveReport->click('.tour-wrapper .post-content .link--custom');
+        $liveReport->click('.tour-wrapper .post-content .link--custom');
 
-    $liveReport->waitUntilMissingText('Loading...');
-    $liveReport->pause(2500);
-    EventReport::factory()->create([
-        'level_id' => $level->id,
-        'title' => 'Adi popup',
-        'content' => 'Adi popup',
-        'day_id' => $day->id
-    ]);
-
-    $liveReport->assertSee('Adi report title');
-    $liveReport->assertSee('adi report content');
+        $liveReport->waitUntilMissingText('Loading...');
+        $liveReport->pause(3500);
+        EventReport::factory()->create([
+            'level_id' => $level->id,
+            'title' => 'Adi popup',
+            'content' => 'Adi popup',
+            'day_id' => $day->id
+        ]);
+        $liveReport->assertSee('Adi report title');
+        $liveReport->assertSee('adi report content');
         $liveReport->pause(3000);
-    $liveReport->assertSee('New post');
-    $liveReport->assertSee('Adi popup');
-    $liveReport->screenshot('event/event');
+        $liveReport->assertSee('New post');
+        $liveReport->assertSee('Adi popup');
+        $liveReport->screenshot('event/event');
 
-    $liveReport->clickLink('CHIP COUNTS');
-    $liveReport->pause(1000);
-    $liveReport->waitUntilMissingText('Loading...');
-    $liveReport->assertSee('Adrian Radores');
-    $liveReport->screenshot('event/chips');
+        $liveReport->clickLink('CHIP COUNTS');
+        $liveReport->pause(1000);
+        $liveReport->waitUntilMissingText('Loading...');
+        $liveReport->assertSee('Adrian Radores');
+        $liveReport->screenshot('event/chips');
 
-    $liveReport->clickLink('#WHATSAPP');
-    $liveReport->pause(1000);
-    $liveReport->waitUntilMissingText('Loading...');
-    $liveReport->assertSee('Adrian Radores');
-    $liveReport->screenshot('event/whatsapp');
+        $liveReport->clickLink('#WHATSAPP');
+        $liveReport->pause(1000);
+        $liveReport->waitUntilMissingText('Loading...');
+        $liveReport->assertSee('Adrian Radores');
+        $liveReport->screenshot('event/whatsapp');
 
-    $liveReport->clickLink('GALLERY');
+        $liveReport->clickLink('GALLERY');
         $liveReport->pause(2500);
-    $liveReport->assertVisible('#my-gallery');
-    $liveReport->screenshot('event/gallery');
+        $liveReport->assertVisible('#my-gallery');
+        $liveReport->screenshot('event/gallery');
 
-    $liveReport->clickLink('PAYOUTS');
-    $liveReport->pause(1000);
-    $liveReport->waitUntilMissingText('Loading...');
-    $liveReport->assertSee('Adrian Radores');
-    $liveReport->screenshot('event/payouts');
+        $liveReport->clickLink('PAYOUTS');
+        $liveReport->pause(1000);
+        $liveReport->waitUntilMissingText('Loading...');
+        $liveReport->assertSee('Adrian Radores');
+        $liveReport->screenshot('event/payouts');
     });
 });
 
@@ -140,22 +139,20 @@ test('can view article', function () {
 
         $articles = Article::factory()->times(10)->create();
 
-    $visit = $browser->visit('/news');
+        $visit = $browser->visit('/news');
         $visit->waitUntilMissingText('Loading...')
-        ->pause(1000);
+            ->pause(1000);
 
-    $visit->assertSee($articles[0]->title);
+        $visit->assertSee($articles[0]->title);
         $visit->assertSee($articles[4]->title);
 
-    $visit->screenshot('articles/latest-news');
+        $visit->screenshot('articles/latest-news');
 
-    $visit = $browser->visit('/news/2022/10/'. $articles[0]->slug);
-    $visit->waitUntilMissingText('Loading...');
-    $visit->pause(1000);
+        $visit = $browser->visit('/news/2022/10/' . $articles[0]->slug);
+        $visit->waitUntilMissingText('Loading...');
+        $visit->pause(1000);
         $visit->assertSee($articles[0]->title);
 
-    $visit->screenshot('articles/show');
+        $visit->screenshot('articles/show');
     });
-
-
 });
