@@ -28,8 +28,10 @@ jobs:
     - name: Install node dependencies
       run: |
         npm ci
-        npm install -g @soketi/soketi
-        npm install pm2
+    - name: Install pm2
+      run: npm i -g pm2
+    - name: install soketi
+      run: npm i -g @soketi/soketi
     - name: RUN soketi globally
       run: pm2 start soketi-pm2 -- start
     - name: Generate key
