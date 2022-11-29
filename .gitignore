@@ -20,3 +20,4 @@ yarn-error.log
 /storage/media-library
 /public/uploads
 .php-cs-fixer.cache
+/storage/debugbar
