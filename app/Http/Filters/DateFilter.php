@@ -12,12 +12,9 @@ class DateFilter
             return $next($builder);
         }
 
-        // $test =  $next($builder)->where(function ($q) {
-        //     $q->whereHas('events', function ($queryEvent) {
-        //         // $q->where('date_start','>=' , request()->get('date_start'));
-        //         $queryEvent->wh
-        //     });
-        // });
+        $next($builder)->where(function ($q) {
+                $q->where('date_end','>=' , request()->get('date_start'));
+        });
 
         return $next($builder);
     }

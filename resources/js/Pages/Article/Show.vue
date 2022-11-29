@@ -200,26 +200,60 @@ function onScrollContents() {
     if (tableOfContents) {
         if (window.scrollY > 200) {
             tableOfContents.classList.add("active");
+            tableOfContents.style.top =
+                width <= 767
+                    ? `${mobileHeader.offsetHeight}px`
+                    : `${nav.offsetHeight}px`;
+            // adding scroll-padding-top
+            document.documentElement.style.setProperty(
+                "--scroll-padding",
+                width <= 767
+                    ? tableOfContents.offsetHeight +
+                          nav.offsetHeight +
+                          250 +
+                          "px"
+                    : tableOfContents.offsetHeight +
+                          nav.offsetHeight +
+                          150 +
+                          "px"
+            );
         } else {
             tableOfContents.classList.remove("active");
         }
-
+    } else {
         // adding scroll-padding-top
         document.documentElement.style.setProperty(
             "--scroll-padding",
-            tableOfContents.offsetHeight + 150 + "px"
+            width <= 767
+                ? nav.offsetHeight + 250 + "px"
+                : nav.offsetHeight + 150 + "px"
         );
     }
 }
 
 onMounted(async () => {
-    document.querySelector("header").classList.remove("active");
-    document.querySelector(".drop-img").classList.remove("scroll");
-    document.querySelector(".mobile-header").style.position = "relative";
-    document.querySelector(".mobile-header").style.top = "unset";
-    document.querySelector(".mobile-header").style.left = "unset";
     await articleStore.getSingleArticle(props.slug);
     await articleStore.getRelatedNews(props.slug);
+    const tableOfContents = document.querySelector("#table-of-contents");
+    const nav = document.querySelector(".nav-list-container");
+    const width = document.body.clientWidth;
+
+    if (tableOfContents) {
+        document.documentElement.style.setProperty(
+            "--scroll-padding",
+            width <= 767
+                ? tableOfContents.offsetHeight + nav.offsetHeight + 250 + "px"
+                : tableOfContents.offsetHeight + nav.offsetHeight + 150 + "px"
+        );
+    } else {
+        // adding scroll-padding-top
+        document.documentElement.style.setProperty(
+            "--scroll-padding",
+            width <= 767
+                ? nav.offsetHeight + 250 + "px"
+                : nav.offsetHeight + 150 + "px"
+        );
+    }
     window.addEventListener("scroll", onScrollContents);
 });
 

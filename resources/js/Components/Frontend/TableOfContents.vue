@@ -34,7 +34,6 @@ const props = defineProps({
 .table-contents {
     position: -webkit-sticky;
     position: sticky;
-    top: 0;
     left: 0;
     z-index: 1;
     display: none;
@@ -43,9 +42,9 @@ const props = defineProps({
     font-family: "Lato", sans-serif;
     font-size: 18px;
     font-weight: 400;
-    background-color: #2d3436;
-    border-bottom: 1px solid #222;
-    color: #fff;
+    background-color: #fff;
+    border-bottom: 1px solid #ccc;
+    color: #222;
     user-select: none;
     box-shadow: 0px 8px 40px rgba(0, 0, 0, 0.2);
 }
@@ -71,7 +70,7 @@ const props = defineProps({
     height: 0;
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
-    border-top: 5px solid #fff;
+    border-top: 5px solid #222;
     transform: translateY(-50%);
 }
 
@@ -87,8 +86,8 @@ const props = defineProps({
     font-family: "Lato", sans-serif;
     text-align: start;
     list-style-type: none;
-    background-color: #2d3436;
-    color: #fff;
+    background-color: #fff;
+    color: #222;
     box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.1);
 }
 
@@ -97,7 +96,7 @@ const props = defineProps({
 }
 
 .table-menu li {
-    border-bottom: 1px solid #fff;
+    border-bottom: 1px solid #ccc;
     cursor: pointer;
 }
 
@@ -110,6 +109,6 @@ const props = defineProps({
     width: 100%;
     padding: 10px 20px;
     text-decoration: none;
-    color: #fff;
+    color: #222;
 }
 </style>

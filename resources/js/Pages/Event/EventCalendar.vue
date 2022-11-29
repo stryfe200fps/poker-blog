@@ -94,6 +94,16 @@
                 <LoadingBar />
             </div>
             <div v-else>
+                <div
+                    class="advertisement"
+                    v-if="eventCalendarBanner"
+                    :style="{
+                        cursor: eventCalendarBanner.url ? 'pointer' : 'auto',
+                    }"
+                    @click="visitBanner(eventCalendarBanner.url)"
+                >
+                    <BannerCard :banner="eventCalendarBanner" />
+                </div>
                 <div v-if="seriesList?.length">
                     <div v-for="(series, index) in seriesList" :key="index">
                         <div class="panel panel-default">
@@ -131,10 +141,12 @@
 import { Head } from "@inertiajs/inertia-vue3";
 import { computed, onMounted, ref, watch } from "@vue/runtime-core";
 import { useEventCalendarStore } from "@/Stores/eventCalendar.js";
+import { useBannerStore } from "@/Stores/banner.js";
 import moment from "moment";
 
 import LoadingBar from "@/Components/LoadingBar.vue";
 import EventCalendarItem from "@/Components/Frontend/EventCalendarItem.vue";
+import BannerCard from "@/Components/Frontend/BannerCard.vue";
 
 const props = defineProps({
     page_title: {
@@ -143,6 +155,8 @@ const props = defineProps({
 });
 
 const eventCalendarStore = useEventCalendarStore();
+const bannerStore = useBannerStore();
+const eventCalendarBanner = ref([]);
 const tours = ref([]);
 const selectedTour = ref("");
 const countries = ref([]);
@@ -171,6 +185,10 @@ const datePlaceholder = computed(() => {
         ? "Upcoming"
         : `${moment(new Date(selectedDate.value)).format("MMMM D")} onwards`;
 });
+
+function visitBanner(url) {
+    if (url) window.open(url, "_blank");
+}
 
 function getDateToday() {
     selectedDate.value = moment().format("YYYY-MM-DD");
@@ -232,6 +250,8 @@ onMounted(async () => {
     countries.value = eventCalendarStore.countries.data;
     await eventCalendarStore.getGames();
     games.value = eventCalendarStore.games.data;
+    await bannerStore.getBanners();
+    eventCalendarBanner.value = bannerStore.getEventCalendarBanner();
 });
 
 watch(

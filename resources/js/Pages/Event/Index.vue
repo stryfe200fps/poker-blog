@@ -164,6 +164,7 @@ async function reportViewing(type) {
             await eventStore.getLiveReport(1, selectDay.value);
             liveReport.value = eventStore.liveReportList.data;
             lastPage.value = eventStore.liveReportList.meta.last_page;
+            await bannerStore.getBanners();
             reportingBanner.value = bannerStore.getReportingBanner();
         }
         isLoading.value = false;
