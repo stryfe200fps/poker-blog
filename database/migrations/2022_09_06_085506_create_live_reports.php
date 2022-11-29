@@ -20,7 +20,7 @@ return new class extends Migration
             $table->text('content')->nullable();
             $table->foreignId('level_id');
             $table->foreignId('event_id');
-            $table->foreignId('author_id');
+            $table->foreignId('article_author_id');
             $table->dateTime('published_date');
             $table->text('players');
             $table->string('image')->nullable();

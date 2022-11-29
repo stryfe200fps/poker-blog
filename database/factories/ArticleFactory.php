@@ -31,15 +31,15 @@ class ArticleFactory extends Factory
             'content' => [
                 [
                     'title' => $this->faker->paragraph(5),
-                    'body' => $this->faker->paragraph(5000),
+                    'body' => $this->faker->paragraph(100),
                 ],
                 [
                     'title' => $this->faker->paragraph(5),
-                    'body' => $this->faker->paragraph(10000),
+                    'body' => $this->faker->paragraph(200),
                 ],
                 [
                     'title' => $this->faker->paragraph(5),
-                    'body' => $this->faker->paragraph(10000),
+                    'body' => $this->faker->paragraph(300),
                 ],
             ],
             'slug' => $this->faker->slug,

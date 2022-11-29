@@ -34,7 +34,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
 
-        if (app()->environment() !== 'local') { 
+        if (app()->environment() !== 'local' && app()->environment() !== 'dusk' ) { 
             dump('Please change your environment to local');
             return;
         }

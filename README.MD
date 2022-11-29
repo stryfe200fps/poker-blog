@@ -27,6 +27,10 @@ You can also check the request logs via {APP_URL}/telescope
 PUSH Notification
 Soketi
 
+.env
+
+BROADCAST_DRIVER=pusher
+
 install soketi
 
 npm install -g @soketi/soketi

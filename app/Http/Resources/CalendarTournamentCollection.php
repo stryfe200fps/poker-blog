@@ -17,12 +17,13 @@ class CalendarTournamentCollection extends ResourceCollection
     public function toArray($request)
     {
 
+        $date = request()->get('date_start');
         $reducedCollection = $this->collection->groupBy(function ($date) {
             return Carbon::parse($date->date_start->format('F-Y'));
-        })->reduce(function ($result, $item) {
+        })->reduce(function ($result, $item) use ($date) {
             $result[] = [
                 'date' =>  $item->first()->date_start->format('F-Y'),
-                'collection' => collect($item)->map(function ($i) {
+                'collection' => collect($item)->filter(function ($item) use ($date) {  return Carbon::parse($date) <= $item->date_end; })->map(function ($i) {
                     return new TournamentEventResource($i);
                 }) ?? []
             ];

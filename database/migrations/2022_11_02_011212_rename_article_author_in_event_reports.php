@@ -21,7 +21,9 @@ return new class extends Migration
         Schema::table('articles', function (Blueprint $table) {
             $table->renameColumn('article_author_id', 'author_id');
         });
+
     } catch (Exception $e) { }
+
     }
 
     /**

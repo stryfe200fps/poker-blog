@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        try {
-            Schema::table('event_chips', function (Blueprint $table) {
-                $table->foreignId('event_id')->constrained()->cascadeOnDelete();
-            });
-        } catch(Exception $e) {
-        }
+        // try {
+        //     Schema::table('event_chips', function (Blueprint $table) {
+        //         $table->foreignId('event_id')->constrained()->cascadeOnDelete();
+        //     });
+        // } catch(Exception $e) {
+        // }
     }
 
     /**
@@ -28,8 +28,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('event_chips', function (Blueprint $table) {
-            //
-        });
+        // Schema::table('event_chips', function (Blueprint $table) {
+        //     //
+        // });
     }
 };

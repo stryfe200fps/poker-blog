@@ -2,10 +2,11 @@
 
 namespace Database\Factories;
 
-use App\Models\Country;
-use App\Models\Tour;
-use App\Models\Tournament;
 use Carbon\Carbon;
+use App\Models\Tour;
+use App\Models\Country;
+use App\Models\Currency;
+use App\Models\Tournament;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class TournamentFactory extends Factory
@@ -34,9 +35,9 @@ class TournamentFactory extends Factory
             'date_start' => $dateStart,
             'date_end' => $dateEnd,
             'timezone' => '(GMT+8:00) Asia/Manila',
-            'country_id' => Country::first()->id ?? 0,
+            'country_id' => fn() => Country::factory()->create()->id,
             'tour_id' => fn() => Tour::factory()->create()->id,
-            'currency_id' => $this->faker->numberBetween(1, 3),
+            'currency_id' => fn() => Currency::factory()->create()->id,
         ];
     }
 }

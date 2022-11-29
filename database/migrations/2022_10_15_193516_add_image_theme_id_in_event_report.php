@@ -25,7 +25,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('event_report', function (Blueprint $table) {
+        Schema::table('event_reports', function (Blueprint $table) {
             $table->dropColumn(['image_theme_id']);
         });
     }

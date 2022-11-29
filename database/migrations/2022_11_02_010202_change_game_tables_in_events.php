@@ -13,11 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        try { 
         Schema::table('events', function (Blueprint $table) {
-            $table->foreignId('event_game_table_id')->nullable()->change();
+            $table->foreignId('event_game_table_id')->nullable();
         });
-        } catch (Exception $e) { }
     }
 
     /**
@@ -28,7 +26,9 @@ return new class extends Migration
     public function down()
     {
         Schema::table('events', function (Blueprint $table) {
-            $table->foreignId('event_game_table_id');
+            $table->dropColumn(['event_game_table_id']);
+            // $table->foreignId('event_game_table_id');
         });
+
     }
 };

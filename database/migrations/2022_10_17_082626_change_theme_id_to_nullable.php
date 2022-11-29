@@ -28,7 +28,7 @@ return new class extends Migration
     {
         Schema::table('event_reports', function (Blueprint $table) {
             //
-            $table->foreignId('image_theme_id');
+            $table->foreignId('image_theme_id')->change();
         });
     }
 };
