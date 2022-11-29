@@ -26,7 +26,12 @@ jobs:
     - name: Install Dependencies
       run: composer update -W --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
     - name: Install node dependencies
-      run: npm ci
+      run: |
+        npm ci
+        npm install -g @soketi/soketi
+        npm install pm2
+    - name: RUN soketi globally
+      run: pm2 start soketi-pm2 -- start
     - name: Generate key
       run: | 
         php artisan key:generate
