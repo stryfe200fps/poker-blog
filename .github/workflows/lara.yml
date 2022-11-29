@@ -19,6 +19,14 @@ jobs:
     - uses: actions/setup-node@v3
       with: 
         node-version: 16
+
+    - name: Cache node_modules directory
+      uses: actions/cache@v2
+      id: node_modules-cache
+      with:
+        path: node_modules
+        key: ${{ runner.OS }}-build-${{ hashFiles('**/package.json') }}-${{ hashFiles('**/package-lock.json') }}
+
     - name: Copy .env
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
     - name: Install BACKPACK config
@@ -26,8 +34,8 @@ jobs:
     - name: Install Dependencies
       run: composer update -W --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
     - name: Install node dependencies
-      run: |
-        npm ci
+      if: steps.node_modules-cache.outputs.cache-hit != 'true'
+      run: npm ci
     - name: Install pm2
       run: npm i -g pm2
     - name: install soketi
@@ -51,19 +59,14 @@ jobs:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
       run: vendor/bin/pest
-
     - name: Browser Test - upgrade and start Chrome Driver
       run: |
-        composer require --dev laravel/dusk
         php artisan dusk:chrome-driver --detect
         ./vendor/laravel/dusk/bin/chromedriver-linux > /dev/null 2>&1 &
     - name: Run Dusk Tests
       run: |
         php artisan serve > /dev/null 2>&1 &
-        chmod -R 0755 vendor/laravel/dusk/bin/
-        php artisan migrate
         php artisan pest:dusk
-    # Set environment
       env:
         SESSION_DRIVER: array
         DB_CONNECTION: sqlite
