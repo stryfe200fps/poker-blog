@@ -89,11 +89,11 @@ jobs:
 
     - name: deploy to site
       uses: appleboy/ssh-action@master 
-      working-directory: / 
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
-        script: "./deploy.sh"
+        script: |
+          bash /home/adi/web/life-of-poker.boragnitrealty.xyz/public_html/deploy.sh
 
