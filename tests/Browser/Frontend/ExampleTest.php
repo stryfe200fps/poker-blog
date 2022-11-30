@@ -79,54 +79,59 @@ it('website simulation', function () {
 
     $this->browse(function (Browser $browser) use ($level, $day) {
         $visit = $browser->visit('/');
-        $visit->waitUntilMissingText('Loading...');
+
+        $visit->waitForText('Adi content');
         $visit->assertSee('NEWS');
         $visit->assertSee('Adi content');
         $visit->assertSee('LIVE NOW');
         $browser->screenshot('home');
 
         $liveReport = $browser->visit('/live-reporting');
-        $liveReport->waitUntilMissingText('Loading...');
+        $liveReport->waitForText('Adi Event');
         $liveReport->assertSee('Adi Event');
         $browser->screenshot('live-report');
 
         $liveReport->click('.tour-wrapper .post-content .link--custom');
 
-        $liveReport->waitUntilMissingText('Loading...');
-        $liveReport->pause(1000);
         EventReport::factory()->create([
             'level_id' => $level->id,
             'title' => 'Adi popup',
             'content' => 'Adi popup',
             'day_id' => $day->id
         ]);
+
+        $liveReport->waitUntilMissingText('Loading...');
+        $liveReport->waitForText('Adi report title');
         $liveReport->assertSee('Adi report title');
+
+        $liveReport->waitForText('adi report content');
         $liveReport->assertSee('adi report content');
-        $liveReport->pause(1000);
-        $liveReport->assertSee('New post');
+
+
+        $liveReport->waitForText('Adi popup');
         $liveReport->assertSee('Adi popup');
         $liveReport->screenshot('event/event');
 
         $liveReport->clickLink('CHIP COUNTS');
-        $liveReport->pause(1000);
-        $liveReport->waitUntilMissingText('Loading...');
+
+        $liveReport->waitForText('Adrian Radores');
         $liveReport->assertSee('Adrian Radores');
         $liveReport->screenshot('event/chips');
 
         $liveReport->clickLink('#WHATSAPP');
-        $liveReport->pause(1000);
-        $liveReport->waitUntilMissingText('Loading...');
+
+        $liveReport->waitForText('Adrian Radores');
         $liveReport->assertSee('Adrian Radores');
         $liveReport->screenshot('event/whatsapp');
 
         $liveReport->clickLink('GALLERY');
+        $liveReport->waitUntilMissingText('Loading...');
         $liveReport->pause(1000);
         $liveReport->assertVisible('#my-gallery');
         $liveReport->screenshot('event/gallery');
 
         $liveReport->clickLink('PAYOUTS');
-        $liveReport->pause(1000);
-        $liveReport->waitUntilMissingText('Loading...');
+        $liveReport->waitForText('Adrian Radores');
         $liveReport->assertSee('Adrian Radores');
         $liveReport->screenshot('event/payouts');
     });
@@ -140,8 +145,7 @@ test('can view article', function () {
         $articles = Article::factory()->times(10)->create();
 
         $visit = $browser->visit('/news');
-        $visit->waitUntilMissingText('Loading...')
-            ->pause(1000);
+        $visit->waitForText($articles[0]->title);
 
         $visit->assertSee($articles[0]->title);
         $visit->assertSee($articles[4]->title);
@@ -149,8 +153,8 @@ test('can view article', function () {
         $visit->screenshot('articles/latest-news');
 
         $visit = $browser->visit('/news/2022/10/' . $articles[0]->slug);
-        $visit->waitUntilMissingText('Loading...');
-        $visit->pause(1000);
+
+        $visit->waitForText($articles[0]->title);
         $visit->assertSee($articles[0]->title);
 
         $visit->screenshot('articles/show');

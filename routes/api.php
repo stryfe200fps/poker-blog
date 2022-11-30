@@ -42,7 +42,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('article', [ArticleController::class, 'index']);
+Route::resource('article', ArticleController::class);
 Route::get('article/{slug}/related', [ArticleController::class, 'related']);
 Route::get('article/{slug}', [ArticleController::class, 'article']);
 Route::get('article/category/{slug}', [ArticleController::class, 'articleCategory']);
@@ -52,9 +52,8 @@ Route::get('tag/articles/{slug}', [TagController::class, 'articles']);
 Route::get('tag/reports/{slug}', [TagController::class, 'reports']);
 
 
-Route::get('series/{slug}', [TournamentApiController::class, 'show']);
-Route::get('level', [levelApiController::class, 'index']);
-Route::get('level/{id}', [levelApiController::class, 'show']);
+Route::resource('series', TournamentApiController::class);
+Route::resource('level', levelApiController::class);
 Route::get('events', [EventApiController::class, 'index']);
 
 Route::post('events/gallery/upload', [EventApiController::class, 'upload']);
@@ -70,11 +69,8 @@ Route::get('event/{slug}', [EventController::class, 'show']);
 Route::get('tours', [TourApiController::class, 'index']);
 Route::get('tours/{slug}', [TourApiController::class, 'show']);
 
-Route::get('report', [EventReportsController::class, 'index']);
-Route::get('report/{id}', [EventReportsController::class, 'show']);
-
-Route::get('page', [PageManagerController::class, 'index']);
-Route::get('page/{slug}', [PageManagerController::class, 'show']);
+Route::resource('report', EventReportsController::class);
+Route::resource('page', PageManagerController::class);
 
 Route::get('twitter', [SocialMediaController::class, 'fetchTwitter']);
 Route::get('instagram', [SocialMediaController::class, 'fetchInstagram']);
@@ -137,6 +133,8 @@ Route::get('media-reports', [MediaReportingController::class, 'index']);
 Route::get('images/{media}', [ImageController::class, 'show'])->where('path', '.*');
 
 Route::get('content/{slug}', [ContentController::class, 'show']);
+
+
 
 Route::get('fetch/tag', [TagController::class, 'fetch']);
 Route::get('fetch/countries', [CountryController::class, 'index']);
