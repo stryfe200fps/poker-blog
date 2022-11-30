@@ -55,7 +55,7 @@ jobs:
     - name: Generate key
       run: | 
         php artisan key:generate
-        npm run dev > /dev/null 2>&1 & 
+        npm run build
         php artisan dusk:chrome-driver
         php artisan storage:link
     - name: Directory Permissions
