@@ -98,5 +98,7 @@ jobs:
           cd /home
           cd adi
           cd web
+          cd life-of-poker.boragnitrealty.xyz
+          cd public_html
           pwd
 
