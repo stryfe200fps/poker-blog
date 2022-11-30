@@ -54,12 +54,12 @@ jobs:
       run: npm ci
     - name: Install pm2
       if: steps.node_modules-cache.outputs.cache-hit != 'true'
-      run: npm i -g pm2
+      run: npm i pm2
     - name: install soketi
       if: steps.node_modules-cache.outputs.cache-hit != 'true'
-      run: npm i -g @soketi/soketi
+      run: npm i @soketi/soketi
     - name: RUN soketi globally
-      run: pm2 start soketi-pm2 -- start
+      run: .\node_modules\.bin\pm2 start soketi-pm2 -- start
     - name: Generate key
       run: | 
         php artisan key:generate
