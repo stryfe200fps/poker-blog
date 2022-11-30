@@ -1,3 +1,7 @@
+variables:
+- name: directory
+  value: /home/adi/web/life-of-poker.boragnitrealty.xyz/public_html 
+
 name: Laravel
 
 on:
@@ -95,5 +99,5 @@ jobs:
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
-        script: "./deploy.sh > deployment.txt"
+        script: "$(directory)/deploy.sh > deployment.txt"
 
