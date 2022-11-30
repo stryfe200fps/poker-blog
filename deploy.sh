@@ -1,5 +1,5 @@
 git pull
-composer install
+composer install -W 
 php artisan migrate
 npm i
 npm run build
