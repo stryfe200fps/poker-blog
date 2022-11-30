@@ -53,8 +53,10 @@ jobs:
       if: steps.node_modules-cache.outputs.cache-hit != 'true'
       run: npm ci
     - name: Install pm2
+      if: steps.node_modules-cache.outputs.cache-hit != 'true'
       run: npm i -g pm2
     - name: install soketi
+      if: steps.node_modules-cache.outputs.cache-hit != 'true'
       run: npm i -g @soketi/soketi
     - name: RUN soketi globally
       run: pm2 start soketi-pm2 -- start

@@ -93,6 +93,7 @@ it('website simulation', function () {
         $liveReport->click('.tour-wrapper .post-content .link--custom');
 
         $liveReport->waitUntilMissingText('Loading...');
+        $liveReport->pause(1000);
         EventReport::factory()->create([
             'level_id' => $level->id,
             'title' => 'Adi popup',
