@@ -43,7 +43,7 @@ class Event extends Model implements HasMedia
     use HasMediaCollection, HasMultipleImages;
     use RecordSlug, RecordMedia;
 
-    
+
 
     public function getScheduleAttribute()
     {
@@ -53,7 +53,7 @@ class Event extends Model implements HasMedia
             return 'TBA';
 
         $newSched = [
-            'date_start' => Carbon::parse( Day::find(array_key_first($schedule))->date_start, 'UTC' )
+            'date_start' => Carbon::parse(Day::find(array_key_first($schedule))->date_start, 'UTC')
                 ->setTimezone(session()->get('timezone'))->toDateTimeString(),
 
             'date_end' => Carbon::parse(Day::find(array_key_last($schedule))->date_end, 'UTC')
@@ -62,8 +62,6 @@ class Event extends Model implements HasMedia
 
         return $newSched;
     }
-
-  
 
 
     public function daysStatus()
@@ -80,30 +78,33 @@ class Event extends Model implements HasMedia
     {
         $date = Carbon::now()->toDateTime();
 
-        return self::orWhereHas('days', 
-        fn ($q) => $q->whereDate('date_start', '<=' , $date )
-            ->whereDate('date_end', '>=' ,  $date)
+        return self::orWhereHas(
+            'days',
+            fn ($q) => $q->whereDate('date_start', '<=', $date)
+                ->whereDate('date_end', '>=',  $date)
         );
     }
 
     public function getCurrentLiveEvent()
     {
         $date = Carbon::now()->toDateTime();
-        return $this->where('id', $this->id)->whereHas('days', 
-        fn ($q) => $q->whereDate('date_start', '<=' , $date )
-            ->whereDate('date_end', '>=' ,  $date)
+        return $this->where('id', $this->id)->whereHas(
+            'days',
+            fn ($q) => $q->whereDate('date_start', '<=', $date)
+                ->whereDate('date_end', '>=',  $date)
         );
     }
 
-    public function scopeShowLatest($query) {
+    public function scopeShowLatest($query)
+    {
         $date = Carbon::now()->toDateTime();
 
-      return $query->addSelect([
-        'last_date_start' => Day::select('date_start')->whereColumn('event_id', 'events.id')
-            ->whereDate('date_start', '<=' , $date )
-            ->whereDate('date_end', '>=' ,  $date)
-            ->orderBy('date_start', 'desc')->limit(1),
-      ])->orderByDesc('last_date_start');
+        return $query->addSelect([
+            'last_date_start' => Day::select('date_start')->whereColumn('event_id', 'events.id')
+                ->whereDate('date_start', '<=', $date)
+                ->whereDate('date_end', '>=',  $date)
+                ->orderBy('date_start', 'desc')->limit(1),
+        ])->orderByDesc('last_date_start');
     }
 
     public function status()
@@ -115,15 +116,14 @@ class Event extends Model implements HasMedia
         if (!count($statuses))
             return 'upcoming';
 
-            //ouput 'live' from start of day and end of day
-            if ($this->getCurrentLiveEvent()->count())
-                return 'live';
-
-            if (in_array('live', $statuses))
+        //ouput 'live' from start of day and end of day
+        if ($this->getCurrentLiveEvent()->count())
             return 'live';
-        
+
+        if (in_array('live', $statuses))
+            return 'live';
+
         return  in_array('upcoming', $statuses) ? 'upcoming' : 'end';
-        
     }
 
     public function getSchedule()
@@ -133,16 +133,16 @@ class Event extends Model implements HasMedia
 
     public function getScheduleWithReports()
     {
-        return $this->days()->orderBy('lft')->groupBy('id')->withCount('event_reports')
-            ->having('event_reports_count', '>', 0 )->get()->map->only('id', 'name');
-            
-
+        return $this->days()->orderBy('lft')
+            ->whereHas('event_reports')
+            ->get()->map->only('id', 'name');
     }
 
-    public function getLastSchedule() 
+    public function getLastSchedule()
     {
-        return $this->days()->orderByDesc('lft')->groupBy('id')->withCount('event_reports')
-            ->having('event_reports_count', '>', 0 )->first();
+        return $this->days()->orderByDesc('lft')
+            ->whereHas('event_reports')
+            ->first();
     }
 
     public function days()
@@ -179,7 +179,7 @@ class Event extends Model implements HasMedia
 
     public function getParentAttribute($value)
     {
-        return $this->poker_tournament()->first()->title.' > '.$this->title;
+        return $this->poker_tournament()->first()->title . ' > ' . $this->title;
     }
 
     public function live_report_players()
@@ -232,28 +232,26 @@ class Event extends Model implements HasMedia
 
     public function openLiveReporting($crud = false)
     {
-        return '<a class="btn btn-sm btn-link"  href="report?event='.urlencode($this->attributes['id']).'" data-toggle="tooltip" title="Live reporting"><i class="fa fa-search"></i> Reports  </a>';
+        return '<a class="btn btn-sm btn-link"  href="report?event=' . urlencode($this->attributes['id']) . '" data-toggle="tooltip" title="Live reporting"><i class="fa fa-search"></i> Reports  </a>';
     }
 
     public function openPayout($crud = false)
     {
-        return '<a class="btn btn-sm btn-link"  href="payout?event='.urlencode($this->attributes['id']).'" data-toggle="tooltip" title="Live reporting"><i class="fa fa-search"></i> Payouts  </a>';
+        return '<a class="btn btn-sm btn-link"  href="payout?event=' . urlencode($this->attributes['id']) . '" data-toggle="tooltip" title="Live reporting"><i class="fa fa-search"></i> Payouts  </a>';
     }
 
     public function openChipCount($crud = false)
     {
-        return '<a class="btn btn-sm btn-link"  href="chip-count?event='.urlencode($this->attributes['id']).'" data-toggle="tooltip" title="Chip Counts"><i class="fa fa-search"></i> Chips  </a>';
+        return '<a class="btn btn-sm btn-link"  href="chip-count?event=' . urlencode($this->attributes['id']) . '" data-toggle="tooltip" title="Chip Counts"><i class="fa fa-search"></i> Chips  </a>';
     }
 
     public function openDay($crud = false)
     {
-        return '<a class="btn btn-sm btn-link"  href="day?event='.urlencode($this->attributes['id']).'" data-toggle="tooltip" title="Days"><i class="fa fa-search"></i> Days  </a>';
+        return '<a class="btn btn-sm btn-link"  href="day?event=' . urlencode($this->attributes['id']) . '" data-toggle="tooltip" title="Days"><i class="fa fa-search"></i> Days  </a>';
     }
 
     public function openLevel($crud = false)
     {
-        return '<a class="btn btn-sm btn-link"  href="level?event='.urlencode($this->attributes['id']).'" data-toggle="tooltip" title="Days"><i class="fa fa-search"></i> Levels  </a>';
+        return '<a class="btn btn-sm btn-link"  href="level?event=' . urlencode($this->attributes['id']) . '" data-toggle="tooltip" title="Days"><i class="fa fa-search"></i> Levels  </a>';
     }
-
-
 }

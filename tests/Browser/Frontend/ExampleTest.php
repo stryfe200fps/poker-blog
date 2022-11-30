@@ -101,30 +101,30 @@ it('website simulation', function () {
         ]);
         $liveReport->assertSee('Adi report title');
         $liveReport->assertSee('adi report content');
-        // $liveReport->pause(1000);
+        $liveReport->pause(1000);
         $liveReport->assertSee('New post');
         $liveReport->assertSee('Adi popup');
         $liveReport->screenshot('event/event');
 
         $liveReport->clickLink('CHIP COUNTS');
-        // $liveReport->pause(1000);
+        $liveReport->pause(1000);
         $liveReport->waitUntilMissingText('Loading...');
         $liveReport->assertSee('Adrian Radores');
         $liveReport->screenshot('event/chips');
 
         $liveReport->clickLink('#WHATSAPP');
-        // $liveReport->pause(1000);
+        $liveReport->pause(1000);
         $liveReport->waitUntilMissingText('Loading...');
         $liveReport->assertSee('Adrian Radores');
         $liveReport->screenshot('event/whatsapp');
 
         $liveReport->clickLink('GALLERY');
-        // $liveReport->pause(1000);
+        $liveReport->pause(1000);
         $liveReport->assertVisible('#my-gallery');
         $liveReport->screenshot('event/gallery');
 
         $liveReport->clickLink('PAYOUTS');
-        // $liveReport->pause(1000);
+        $liveReport->pause(1000);
         $liveReport->waitUntilMissingText('Loading...');
         $liveReport->assertSee('Adrian Radores');
         $liveReport->screenshot('event/payouts');
@@ -140,7 +140,7 @@ test('can view article', function () {
 
         $visit = $browser->visit('/news');
         $visit->waitUntilMissingText('Loading...');
-        // ->pause(1000);
+        ->pause(1000);
 
         $visit->assertSee($articles[0]->title);
         $visit->assertSee($articles[4]->title);
@@ -149,7 +149,7 @@ test('can view article', function () {
 
         $visit = $browser->visit('/news/2022/10/' . $articles[0]->slug);
         $visit->waitUntilMissingText('Loading...');
-        // $visit->pause(1000);
+        $visit->pause(1000);
         $visit->assertSee($articles[0]->title);
 
         $visit->screenshot('articles/show');
