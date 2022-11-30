@@ -95,5 +95,8 @@ jobs:
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
         script: |
-          bash /home/adi/web/life-of-poker.boragnitrealty.xyz/public_html/deploy.sh
+          cd /home
+          cd adi
+          cd web
+          pwd
 
