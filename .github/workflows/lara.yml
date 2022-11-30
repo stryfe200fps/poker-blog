@@ -10,10 +10,8 @@ jobs:
   laravel-tests:
 
     runs-on: ubuntu-latest
-
-    variables:
-    - name: directory
-      value: /home/adi/web/life-of-poker.boragnitrealty.xyz/public_html 
+    env:
+      directory: /home/adi/web/life-of-poker.boragnitrealty.xyz/public_html
     steps:
     - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
       with:
@@ -98,5 +96,5 @@ jobs:
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
-        script: "$(directory)/deploy.sh > deployment.txt"
+        script: "$directory/deploy.sh > deployment.txt"
 
