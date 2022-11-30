@@ -139,8 +139,8 @@ test('can view article', function () {
         $articles = Article::factory()->times(10)->create();
 
         $visit = $browser->visit('/news');
-        $visit->waitUntilMissingText('Loading...');
-        ->pause(1000);
+        $visit->waitUntilMissingText('Loading...')
+            ->pause(1000);
 
         $visit->assertSee($articles[0]->title);
         $visit->assertSee($articles[4]->title);
