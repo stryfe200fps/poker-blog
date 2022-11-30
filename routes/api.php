@@ -42,7 +42,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::resource('article', ArticleController::class);
+Route::get('article', [ArticleController::class, 'index']);
 Route::get('article/{slug}/related', [ArticleController::class, 'related']);
 Route::get('article/{slug}', [ArticleController::class, 'article']);
 Route::get('article/category/{slug}', [ArticleController::class, 'articleCategory']);
@@ -52,8 +52,9 @@ Route::get('tag/articles/{slug}', [TagController::class, 'articles']);
 Route::get('tag/reports/{slug}', [TagController::class, 'reports']);
 
 
-Route::resource('series', TournamentApiController::class);
-Route::resource('level', levelApiController::class);
+Route::get('series/{slug}', [TournamentApiController::class, 'show']);
+Route::get('level', [levelApiController::class, 'index']);
+Route::get('level/{id}', [levelApiController::class, 'show']);
 Route::get('events', [EventApiController::class, 'index']);
 
 Route::post('events/gallery/upload', [EventApiController::class, 'upload']);
@@ -62,15 +63,18 @@ Route::get('events/gallery/fetch/{dayId}', [EventApiController::class, 'fetchGal
 Route::delete('events/gallery/delete/{dayId}', [EventApiController::class, 'deleteImage']);
 Route::resource('tournaments', TournamentController::class);
 
-Route::get('event', [EventController::class, 'index' ]);
+Route::get('event', [EventController::class, 'index']);
 Route::get('event/calendar', [EventController::class, 'calendar']);
-Route::get('event/{slug}', [EventController::class, 'show' ]);
+Route::get('event/{slug}', [EventController::class, 'show']);
 
 Route::get('tours', [TourApiController::class, 'index']);
 Route::get('tours/{slug}', [TourApiController::class, 'show']);
 
-Route::resource('report', EventReportsController::class);
-Route::resource('page', PageManagerController::class);
+Route::get('report', [EventReportsController::class, 'index']);
+Route::get('report/{id}', [EventReportsController::class, 'show']);
+
+Route::get('page', [PageManagerController::class, 'index']);
+Route::get('page/{slug}', [PageManagerController::class, 'show']);
 
 Route::get('twitter', [SocialMediaController::class, 'fetchTwitter']);
 Route::get('instagram', [SocialMediaController::class, 'fetchInstagram']);
@@ -92,37 +96,37 @@ Route::get('admin/attach-image/{id}', function ($id) {
 
 
 Route::get('select/games', function () {
-    return [ 'data' => EventGameTable::get(['title', 'code']) ];
+    return ['data' => EventGameTable::get(['title', 'code'])];
 });
 
 
 Route::get('media-reports/select/categories', function () {
-    return [ 'data' => MediaReporting::selectAvailableCategories() ];
+    return ['data' => MediaReporting::selectAvailableCategories()];
 });
 
 Route::get('select/games', function () {
-    return [ 'data' => Tournament::selectAvailableGamesInEvents() ?? [] ];
+    return ['data' => Tournament::selectAvailableGamesInEvents() ?? []];
 });
 
 Route::get('select/tours', function () {
-    return [ 'data' => Tournament::selectAvailableTours() ?? [] ];
+    return ['data' => Tournament::selectAvailableTours() ?? []];
 });
 
 Route::get('select/countries', function () {
-    return [ 'data' => Tournament::selectAvailableCountries() ?? [] ];
+    return ['data' => Tournament::selectAvailableCountries() ?? []];
 });
 
 Route::get('rooms/select/countries', function () {
-    return [ 'data' => Room::selectAvailableCountries() ?? [] ];
+    return ['data' => Room::selectAvailableCountries() ?? []];
 });
 
 
 Route::get('tours/{slug}/select/years', function ($slug) {
-    return [ 'data' => Tournament::selectYearFilter($slug) ?? [] ];
+    return ['data' => Tournament::selectYearFilter($slug) ?? []];
 });
 
 Route::get('tours/{slug}/select/years', function ($slug) {
-    return [ 'data' => Tournament::selectYearFilter($slug) ?? [] ];
+    return ['data' => Tournament::selectYearFilter($slug) ?? []];
 });
 
 Route::get('rooms', [RoomController::class, 'index']);
@@ -130,11 +134,9 @@ Route::get('rooms/{slug}', [RoomController::class, 'show']);
 Route::get('banners', [BannerController::class, 'index']);
 Route::get('media-reports', [MediaReportingController::class, 'index']);
 
-Route::get('images/{media}', [ ImageController::class, 'show' ])->where('path', '.*');
+Route::get('images/{media}', [ImageController::class, 'show'])->where('path', '.*');
 
 Route::get('content/{slug}', [ContentController::class, 'show']);
-
-
 
 Route::get('fetch/tag', [TagController::class, 'fetch']);
 Route::get('fetch/countries', [CountryController::class, 'index']);
