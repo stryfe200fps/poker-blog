@@ -56,7 +56,8 @@ jobs:
       if: steps.node_modules-cache.outputs.cache-hit != 'true'
       run: npm i @soketi/soketi
     - name: RUN soketi globally
-      run: ./node_modules/.bin/soketi start soketi-pm2 -- start
+      run: ./node_modules/.bin/soketi start > /dev/null 2>&1 &
+        
     - name: Generate key
       run: | 
         php artisan key:generate
@@ -81,7 +82,6 @@ jobs:
     - name: Run Dusk Tests
       run: |
         php artisan serve > /dev/null 2>&1 &
-        ./node_modules/.bin/soketi start > /dev/null 2>&1 &
         php artisan pest:dusk
       env:
         SESSION_DRIVER: array
