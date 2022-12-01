@@ -68,18 +68,16 @@ class ArticleCrudController extends CrudController
         $this->crud->addButtonFromModelFunction('line', 'open_fb', 'shareFacebook', 'beginning');
         $this->crud->addButtonFromModelFunction('line', 'open_twitter', 'shareTwitter', 'beginning');
 
-        (new BackpackTableService())->title(fn ($entry, $column, $crud) => '/news/day/day/'. $crud->slug );
-        
+        (new BackpackTableService())->title(fn ($entry, $column, $crud) => '/news/day/day/' . $crud->slug);
+
         CRUD::column('article_categories')->label('Category');
-        CRUD::column('published_date')->label('Date')->format(config('app.date_format')); 
-         (new BackpackFilterService())->articleCategories($this);
+        CRUD::column('published_date')->label('Date')->format(config('app.date_format'));
+        (new BackpackFilterService())->articleCategories($this);
         /**
          * Columns can be defined using the fluent syntax or array syntax:
          * - CRUD::column('price')->type('number');
          * - CRUD::addColumn(['name' => 'price', 'type' => 'number']);
          */
-
-    
     }
 
     /**
@@ -104,10 +102,10 @@ class ArticleCrudController extends CrudController
         ])->init_rows(0)->new_item_label('add section');
 
         CRUD::field('article_categories')->type('select2_multiple')->attribute('title')->label('Categories');
+        $ui->tags();
         $ui->date();
         $ui->author();
         $ui->image();
-
     }
 
     public function fetchTags()
@@ -162,5 +160,4 @@ class ArticleCrudController extends CrudController
     {
         $this->setupCreateOperation();
     }
-
 }

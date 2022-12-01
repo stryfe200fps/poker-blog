@@ -18,8 +18,8 @@ class MenuItemCrudController extends CrudController
 
     public function setup()
     {
-        $this->crud->setModel("Backpack\MenuCRUD\app\Models\MenuItem");
-        $this->crud->setRoute(config('backpack.base.route_prefix').'/menu-item');
+        $this->crud->setModel("\app\Models\MenuItem");
+        $this->crud->setRoute(config('backpack.base.route_prefix') . '/menu-item');
         $this->crud->setEntityNameStrings('menu-item', 'menu items');
 
         $this->denyAccessIfNoPermission();
@@ -37,7 +37,7 @@ class MenuItemCrudController extends CrudController
                 'name' => 'parent_id',
                 'entity' => 'parent',
                 'attribute' => 'name',
-                'model' => "\Backpack\MenuCRUD\app\Models\MenuItem",
+                'model' => "\app\Models\MenuItem",
             ]);
         });
 
@@ -59,10 +59,10 @@ class MenuItemCrudController extends CrudController
 
             // ]);
             $this->crud->addField(
-                   [
-                'name' => 'parent_id',
-                'type' => 'view',
-                'view' => 'menu_parent_selector' 
+                [
+                    'name' => 'parent_id',
+                    'type' => 'view',
+                    'view' => 'menu_parent_selector'
                 ]
             );
             $this->crud->addField([
