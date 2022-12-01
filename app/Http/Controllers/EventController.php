@@ -25,11 +25,6 @@ class EventController extends Controller
     public function index()
     {
         return EventResource::collection(Event::getLiveEvents()->showLatest()->take(2)->get());
-
-        // return  EventResource::collection(Event::latest()->get()->filter(function ($item) {
-        //     return $item->status() == 'live';
-        // })->slice(0, 2));
-        //
     }
 
     /**

@@ -18,9 +18,9 @@ class EventCollection extends ResourceCollection
         $status = request()->get('status') ?? '';
         $events = $this->collection;
 
-        if (request()->has('status') && request()->get('status') !== 'all' ) { 
+        if (request()->has('status') && request()->get('status') !== 'all') {
             $events = $events->filter(function ($event) use ($status) {
-                return  $event->status() === $status ;
+                return  $event->status() === $status;
             });
         }
 

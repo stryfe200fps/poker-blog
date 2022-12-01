@@ -19,6 +19,7 @@ test('it can see the event', function () {
 
     );
 
+
     $response->assertJsonPath(
         'data.0.fee_usd',
         $event->fee_usd

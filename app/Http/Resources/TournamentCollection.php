@@ -20,7 +20,8 @@ class TournamentCollection extends ResourceCollection
         }
 
         $tournamentList = $this->collection->map(function ($tourna) use ($request) {
-            $tourna->events = $tourna->events->filter(fn ($event) => $event->status() == $request->get('status')
+            $tourna->events = $tourna->events->filter(
+                fn ($event) => $event->is_live == true && $event->status() == $request->get('status')
             );
             return $tourna;
         })->filter(function ($tourna) {

@@ -74,15 +74,18 @@ class Event extends Model implements HasMedia
         return $this->hasOne(Day::class)->orderBy('date_start', 'DESC');
     }
 
+    // This getLiveEvents  will be called statically on the homepage where there's 2 live event showing
     public static function getLiveEvents()
     {
         $date = Carbon::now()->toDateTime();
 
-        return self::orWhereHas(
+        $query = self::where('is_live', true)->whereHas(
             'days',
             fn ($q) => $q->whereDate('date_start', '<=', $date)
                 ->whereDate('date_end', '>=',  $date)
         );
+
+        return $query;
     }
 
     public function getCurrentLiveEvent()
@@ -97,6 +100,7 @@ class Event extends Model implements HasMedia
 
     public function scopeShowLatest($query)
     {
+
         $date = Carbon::now()->toDateTime();
 
         return $query->addSelect([
@@ -105,11 +109,12 @@ class Event extends Model implements HasMedia
                 ->whereDate('date_end', '>=',  $date)
                 ->orderBy('date_start', 'desc')->limit(1),
         ])->orderByDesc('last_date_start');
+
+        return $query;
     }
 
     public function status()
     {
-
 
         $statuses = $this->daysStatus()->toArray() ?? [];
 
@@ -123,7 +128,7 @@ class Event extends Model implements HasMedia
         if (in_array('live', $statuses))
             return 'live';
 
-        return  in_array('upcoming', $statuses) ? 'upcoming' : 'end';
+        return in_array('upcoming', $statuses) ? 'upcoming' : 'end';
     }
 
     public function getSchedule()
