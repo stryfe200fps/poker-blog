@@ -98,5 +98,4 @@ jobs:
           cd life-of-poker.boragnitrealty.xyz
           cd public_html
           pwd
-          ./deploy.sh > deploy.txt
 
