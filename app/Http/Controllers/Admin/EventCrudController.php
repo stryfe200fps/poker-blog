@@ -84,7 +84,7 @@ class EventCrudController extends CrudController
         CRUD::setValidation(EventRequest::class);
 
 
-        CRUD::field('is_live')->type('switch')->label('Live');
+        CRUD::field('is_live')->type('switch')->label('Live Reporting');
 
         $this->crud->addField([
             'name' => 'tournament_id',
@@ -103,12 +103,13 @@ class EventCrudController extends CrudController
         $ui->description();
         $ui->content();
         CRUD::field('event_game_table')->label('Games')->type('relationship')->allows_null(false);
-        CRUD::field('label_local')->value('<b>Local Rate</b><br><hr>')->type('custom_html');
+        // CRUD::field('label_local')->value('<b>Local Rate</b><br><hr>')->type('custom_html');
         CRUD::field('buyin')->type('number')->hint('note: All numbers will follow the currency from the series');
+        CRUD::field('buyin_usd')->label('Buyin USD equivalent')->type('number');
+
         CRUD::field('fee')->type('number')->hint('note: All numbers will follow the currency from the series');
-        CRUD::field('label_usd')->value('<b>USD Rate</b><br><hr>')->type('custom_html');
-        CRUD::field('buyin_usd')->label('Buyin')->type('number')->hint('note: All numbers will follow the currency from the series');
-        CRUD::field('fee_usd')->label('Fee')->type('number')->hint('note: All numbers will follow the currency from the series');
+        CRUD::field('fee_usd')->label('Fee USD equivalent')->type('number');
+        // CRUD::field('label_usd')->value('<b>USD Rate</b><br><hr>')->type('custom_html');
         $ui->image();
     }
 
