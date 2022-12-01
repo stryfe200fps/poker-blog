@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\GroupedLastScope;
 use Carbon\Carbon;
+use DateTime;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -19,17 +20,16 @@ class EventChip extends Model
      * @var array
      */
     protected $fillable = [
-        'chips',
-        'name',
         'current_chips',
         'player_id',
         'event_report_id',
-        'chips_before',
         'is_whatsapp',
-        'rank',
         'published_date',
         'day_id',
     ];
+
+    public $excelHeaders = ['player_id', 'current_chips'];
+    public $group = ['day_id'];
 
     /**
      * The attributes that should be cast to native types.
@@ -73,7 +73,12 @@ class EventChip extends Model
 
     public function setPublishedDateAttribute($value)
     {
+
         $this->attributes['published_date'] = Carbon::parse($value, session()->get('timezone') ?? 'UTC')->setTimezone('UTC');
+
+        // if (strtotime($value) < 0) {
+        //     $this->attributes['published_date'] = now();
+        // }
     }
 
     public function getPublishedDateAttribute($value)
@@ -84,20 +89,17 @@ class EventChip extends Model
     protected static function booted()
     {
         static::creating(function ($createdChipCount) {
+            // $createdChipCount->published_date;
             if ($createdChipCount?->event_report_id !== null) {
                 \Alert::add('success', 'Player added');
-            } 
-            // else {
-            //     $eventChip = EventChip::where('player_id', $createdChipCount->player_id)->whereNull('event_report_id')->where('day_id', $createdChipCount->day_id);
-            //     if ($eventChip->count()) {
-            //         \Alert::add('error', 'Oops. This player is already added');
-
-            //         return false;
-            //     }
-            // }
+            }
 
             \Alert::add('success', 'Success');
         });
+
+        // static::saving(function ($model) {
+        //     dd($model);
+        // });
 
         static::deleting(function ($deletedEventChip) {
             $reportId = $deletedEventChip->event_report_id;

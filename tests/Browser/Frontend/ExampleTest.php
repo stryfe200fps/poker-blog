@@ -113,15 +113,18 @@ it('website simulation', function () {
         $liveReport->screenshot('event/event');
 
         $liveReport->clickLink('CHIP COUNTS');
-
         $liveReport->waitUntilMissingText('Loading...');
         $liveReport->waitForText('Adrian Radores');
+
+        $liveReport->pause(1000);
         $liveReport->assertSee('Adrian Radores');
         $liveReport->screenshot('event/chips');
 
         $liveReport->clickLink('#WHATSAPP');
 
         $liveReport->waitUntilMissingText('Loading...');
+
+        $liveReport->pause(1000);
         $liveReport->waitForText('Adrian Radores');
         $liveReport->assertSee('Adrian Radores');
         $liveReport->screenshot('event/whatsapp');

@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\ChipCountRequest;
-use App\Http\Requests\EventChipRequest;
 use App\Models\Day;
 use App\Models\Event;
+use Illuminate\Http\Request;
 use App\Traits\LimitUserPermissions;
+use Backpack\CRUD\app\Library\Widget;
+use App\Http\Requests\ChipCountRequest;
+use App\Http\Requests\EventChipRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
-use Illuminate\Http\Request;
 
 /**
  * Class ChipCountCrudController
@@ -35,7 +36,7 @@ class ChipCountCrudController extends CrudController
     {
         $this->crud->denyAccess('show');
         CRUD::setModel(\App\Models\EventChip::class);
-        CRUD::setRoute(config('backpack.base.route_prefix').'/chip-count');
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/chip-count');
         CRUD::setEntityNameStrings('chip count', 'chip counts');
         $this->denyAccessIfNoPermission();
 
@@ -47,7 +48,7 @@ class ChipCountCrudController extends CrudController
 
             $getEvent = Event::where('id', session()->get('event_id'))->first();
             $getDay = Day::where('id', session()->get('event_day'))->first();
-            CRUD::setEntityNameStrings('chip count', $getEvent?->title.' - Day: '.$getDay?->name);
+            CRUD::setEntityNameStrings('chip count', $getEvent?->title . ' - Day: ' . $getDay?->name);
 
             if ($getEvent === null) {
                 \Alert::error('Dates is incorrect')->flash();
@@ -55,10 +56,9 @@ class ChipCountCrudController extends CrudController
                 return back();
             }
             $this->crud->query = $this->crud->query
-            ->where('day_id', session()->get('event_day'))
-            ->orderByDesc('published_date');
-            customHeading('day?event='. $getEvent->id, 'Chip Counts', $getEvent?->title);
-
+                ->where('day_id', session()->get('event_day'))
+                ->orderByDesc('published_date');
+            customHeading('day?event=' . $getEvent->id, 'Chip Counts', $getEvent?->title);
         } else {
             $this->crud->denyAccess('create');
         }
@@ -89,38 +89,38 @@ class ChipCountCrudController extends CrudController
             'type' => 'relationship',
             'searchLogic' => function ($query, $column, $searchTerm) {
                 $query->whereHas('player', function ($q) use ($searchTerm) {
-                    $q->where('name', 'like', '%'.$searchTerm.'%');
+                    $q->where('name', 'like', '%' . $searchTerm . '%');
                 });
             },
         ]);
         // editable_switch
 
-    //     CRUD::addColumn([
-    //     'name'    => 'name',
-    //     'label'   => 'Source',
-    //     'type'    => 'editable_select',
-    //     'options' => [ 'normal' => 'normal', 'whatsapp' => 'whatsapp' ],
-    //     // or
-    //     // 'options' => [
-    //     //     '1' => 'One',
-    //     //     '2' => 'Two',
-    //     //     '3' => 'Three',
-    //     // ],
+        //     CRUD::addColumn([
+        //     'name'    => 'name',
+        //     'label'   => 'Source',
+        //     'type'    => 'editable_select',
+        //     'options' => [ 'normal' => 'normal', 'whatsapp' => 'whatsapp' ],
+        //     // or
+        //     // 'options' => [
+        //     //     '1' => 'One',
+        //     //     '2' => 'Two',
+        //     //     '3' => 'Three',
+        //     // ],
 
-    //     // Optionals
-    //     'underlined'       => true, // show a dotted line under the editable column for differentiation? default: true
-    //     'save_on_focusout' => true, // if user clicks out, the value should be saved (instead of greyed out)
-    //     'save_on_change'   => true,
-    //     'on_error' => [
-    //         'text_color'          => '#df4759', // set a custom text color instead of the red
-    //         'text_color_duration' => 0, // how long (in miliseconds) should the text stay that color (0 for infinite, aka until page refresh)
-    //         'text_value_undo'     => false, // set text to the original value (user will lose the value that was recently input)
-    //     ],
-    //     'on_success' => [
-    //         'text_color'          => '#42ba96', // set a custom text color instead of the green
-    //         'text_color_duration' => 3000, // how long (in miliseconds) should the text stay that color (0 for infinite, aka until page refresh)
-    //     ],
-    //     'auto_update_row' => true, // update related columns in same row, after the AJAX call?
+        //     // Optionals
+        //     'underlined'       => true, // show a dotted line under the editable column for differentiation? default: true
+        //     'save_on_focusout' => true, // if user clicks out, the value should be saved (instead of greyed out)
+        //     'save_on_change'   => true,
+        //     'on_error' => [
+        //         'text_color'          => '#df4759', // set a custom text color instead of the red
+        //         'text_color_duration' => 0, // how long (in miliseconds) should the text stay that color (0 for infinite, aka until page refresh)
+        //         'text_value_undo'     => false, // set text to the original value (user will lose the value that was recently input)
+        //     ],
+        //     'on_success' => [
+        //         'text_color'          => '#42ba96', // set a custom text color instead of the green
+        //         'text_color_duration' => 3000, // how long (in miliseconds) should the text stay that color (0 for infinite, aka until page refresh)
+        //     ],
+        //     'auto_update_row' => true, // update related columns in same row, after the AJAX call?
         // ]);
 
         // $this->crud->addColumn([
@@ -169,15 +169,17 @@ class ChipCountCrudController extends CrudController
             'label' => 'Date',
         ]);
 
-      CRUD::addColumn([
+        CRUD::addColumn([
             'name' => 'view',
             'type' => 'custom_html',
             'label' => 'Report',
             'value' => function ($chip) {
-                return 
-                $chip->event_report_id == null ? '' : '<a  href="/tours/view/view/view/update-'.$chip->event_report_id.'/">view</a> | <a  href="/admin/report/'.$chip->event_report_id.'/edit">edit</a>' ;
-            } 
+                return
+                    $chip->event_report_id == null ? '' : '<a  href="/tours/view/view/view/update-' . $chip->event_report_id . '/">view</a> | <a  href="/admin/report/' . $chip->event_report_id . '/edit">edit</a>';
+            }
         ]);
+
+        Widget::add()->to('after_content')->type('view')->view('vendor.backpack.helper.payout')->dayId(session()->get('event_day'))->modelName(addslashes(get_class($this->crud->model)));
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
@@ -242,7 +244,6 @@ class ChipCountCrudController extends CrudController
             ]
         );
 
-      
 
 
         // $this->crud->addField([

@@ -36,7 +36,7 @@ class PayoutCrudController extends CrudController
     {
         $this->crud->denyAccess('show');
         CRUD::setModel(\App\Models\EventPayout::class);
-        CRUD::setRoute(config('backpack.base.route_prefix').'/payout');
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/payout');
 
         if (request()->get('event') || session()->get('payout_event_id')) {
             if (request()->get('event') !== null) {
@@ -46,12 +46,12 @@ class PayoutCrudController extends CrudController
             $getEvent = Event::where('id', session()->get('payout_event_id'))->first();
 
 
-                CRUD::setEntityNameStrings('payouts', 'payouts');
+            CRUD::setEntityNameStrings('payouts', 'payouts');
             if ($getEvent?->title !== null) {
                 customHeading('events', 'Payouts', $getEvent?->title);
             }
 
-        // $this->crud->addFilter($options, $values, $filter_logic);
+            // $this->crud->addFilter($options, $values, $filter_logic);
         } else {
             $this->crud->denyAccess('create');
         }
@@ -77,7 +77,7 @@ class PayoutCrudController extends CrudController
             'type' => 'relationship',
             'searchLogic' => function ($query, $column, $searchTerm) {
                 $query->whereHas('player', function ($q) use ($searchTerm) {
-                    $q->where('name', 'like', '%'.$searchTerm.'%');
+                    $q->where('name', 'like', '%' . $searchTerm . '%');
                 });
             },
         ]);
@@ -131,7 +131,7 @@ class PayoutCrudController extends CrudController
 
         ]);
 
-        Widget::add()->to('after_content')->type('view')->view('vendor.backpack.helper.payout')->eventId(session()->get('payout_event_id')); // widgets to show the ordering card
+        Widget::add()->to('after_content')->type('view')->view('vendor.backpack.helper.payout')->eventId(session()->get('payout_event_id'))->modelName(addslashes(get_class($this->crud->model)));; // widgets to show the ordering card
 
         // $this->crud->addFilter([
         //     'type' => 'select2',
@@ -225,7 +225,7 @@ class PayoutCrudController extends CrudController
         $currentRequest = $this->crud->getStrippedSaveRequest($request);
 
         $payout = EventPayout::where('player_id', $currentRequest['player'] ?? 0)
-        ->where('event_id', $currentId);
+            ->where('event_id', $currentId);
 
         if ($payout->count()) {
             $payout = $payout->first();
@@ -246,9 +246,9 @@ class PayoutCrudController extends CrudController
         }
 
         //  return redirect()->route('mymodel.picture.index',
-    //     [
-    //         'id' => 20
-    //     ]);
+        //     [
+        //         'id' => 20
+        //     ]);
         // return $response;
     }
 }

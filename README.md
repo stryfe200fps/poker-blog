@@ -1,9 +1,16 @@
+composer config http-basic.backpackforlaravel.com 46246897 YLRizEJAen5G
+php artisan key:generate
 composer install
+npm i
 npm run build
+
+its important to change APP url to your current app url
+APP_URL=http://poker.test
 
 //initialize database and dummy data
 php artisan migrate
 php artisan db:seed
+php artisan storage:link
 
 so you can upload image
 chmod -R 775 public/tmp
