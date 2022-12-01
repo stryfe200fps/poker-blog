@@ -28,6 +28,7 @@ class EventFactory extends Factory
             'tournament_id' => fn () => Tournament::factory()->create()->id,
             'buyin' => 200,
             'fee' => 200,
+            'is_live' => true,
             'buyin_usd' => $this->faker->numberBetween(100, 50000),
             'fee_usd' => $this->faker->numberBetween(100, 50000),
             'title' => $this->faker->name,
