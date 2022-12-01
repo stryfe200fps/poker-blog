@@ -114,12 +114,14 @@ it('website simulation', function () {
 
         $liveReport->clickLink('CHIP COUNTS');
 
+        $liveReport->waitUntilMissingText('Loading...');
         $liveReport->waitForText('Adrian Radores');
         $liveReport->assertSee('Adrian Radores');
         $liveReport->screenshot('event/chips');
 
         $liveReport->clickLink('#WHATSAPP');
 
+        $liveReport->waitUntilMissingText('Loading...');
         $liveReport->waitForText('Adrian Radores');
         $liveReport->assertSee('Adrian Radores');
         $liveReport->screenshot('event/whatsapp');
@@ -131,6 +133,8 @@ it('website simulation', function () {
         $liveReport->screenshot('event/gallery');
 
         $liveReport->clickLink('PAYOUTS');
+
+        $liveReport->waitUntilMissingText('Loading...');
         $liveReport->waitForText('Adrian Radores');
         $liveReport->assertSee('Adrian Radores');
         $liveReport->screenshot('event/payouts');
