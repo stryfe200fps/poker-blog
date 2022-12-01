@@ -1,49 +1,100 @@
-# This file is a template, and might need editing before it works on your project.
-# This is a sample GitLab CI/CD configuration file that should run without any modifications.
-# It demonstrates a basic 3 stage CI/CD pipeline. Instead of real tests or scripts,
-# it uses echo commands to simulate the pipeline execution.
-#
-# A pipeline is composed of independent jobs that run scripts, grouped into stages.
-# Stages run in sequential order, but jobs within stages run in parallel.
-#
-# For more information, see: https://docs.gitlab.com/ee/ci/yaml/index.html#stages
-#
-# You can copy and paste this template into a new `.gitlab-ci.yml` file.
-# You should not add this template to an existing `.gitlab-ci.yml` file by using the `include:` keyword.
-#
-# To contribute improvements to CI/CD templates, please follow the Development guide at:
-# https://docs.gitlab.com/ee/development/cicd/templates.html
-# This specific template is located at:
-# https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Getting-Started.gitlab-ci.yml
+name: Laravel
 
-stages:          # List of stages for jobs, and their order of execution
-  - build
-  - test
-  - deploy
+on:
+  push:
+    branches: [ "main" , 'adi/development']
+  pull_request:
+    branches: [ "main", 'adi/development' ]
 
-build-job:       # This job runs in the build stage, which runs first.
-  stage: build
-  script:
-    - echo "Compiling the code..."
-    - echo "Compile complete."
+jobs:
+  laravel-tests:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
+      with:
+        php-version: '8.0'
+    - uses: actions/checkout@v3
+    - name: Cache PHP dependencies
+      uses: actions/cache@v2
+      id: vendor-cache
+      with:
+        path: vendor
+        key: ${{ runner.OS }}-build-${{ hashFiles('**/composer.lock') }}
+    - uses: actions/setup-node@v3
+      with: 
+        node-version: 16
+    - name: Get Composer Cache Directory 2
+      id: composer-cache
+      run: |
+        echo "::set-output name=dir::$(composer config cache-files-dir)"
+    - uses: actions/cache@v2
+      id: actions-cache
+      with:
+        path: ${{ steps.composer-cache.outputs.dir }}
+        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-composer-
+    - name: Cache node_modules directory
+      uses: actions/cache@v2
+      id: node_modules-cache
+      with:
+        path: node_modules
+        key: ${{ runner.OS }}-build-${{ hashFiles('**/package.json') }}-${{ hashFiles('**/package-lock.json') }}
+    - name: Copy .env
+      run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+    - name: Install BACKPACK config
+      run: composer config http-basic.backpackforlaravel.com 46246897 YLRizEJAen5G
+    - name: Install Dependencies
+      if: steps.vendor-cache.outputs.cache-hit != 'true'
+      run: composer update -W --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+    - name: Install node dependencies
+      if: steps.node_modules-cache.outputs.cache-hit != 'true'
+      run: npm ci
+    - name: RUN soketi globally
+      run: ./node_modules/.bin/soketi start > /dev/null 2>&1 &
+    - name: Generate key
+      run: | 
+        php artisan key:generate
+        npm run build
+        php artisan dusk:chrome-driver
+        php artisan storage:link
+    - name: Directory Permissions
+      run: | 
+        chmod -R 777 storage bootstrap/cache
+        chmod -R 777 ./deploy.sh 
+    - name: Create Database
+      run: |
+        mkdir -p database
+        touch database/database.sqlite
+    - name: Execute tests (Unit and Feature tests) via PEST
+      env:
+        DB_CONNECTION: sqlite
+        DB_DATABASE: ":memory:" 
+      run: vendor/bin/pest --parallel
+    - name: Browser Test - upgrade and start Chrome Driver
+      run: |
+        php artisan dusk:chrome-driver --detect
+        ./vendor/laravel/dusk/bin/chromedriver-linux > /dev/null 2>&1 &
+    - name: Run Dusk Tests
+      run: |
+        php artisan serve > /dev/null 2>&1 &
+        php artisan pest:dusk
+      env:
+        SESSION_DRIVER: array
+        DB_CONNECTION: sqlite
+        DB_DATABASE: ":memory:"
 
-unit-test-job:   # This job runs in the test stage.
-  stage: test    # It only starts when the job in the build stage completes successfully.
-  script:
-    - echo "Running unit tests... This will take about 60 seconds."
-    - sleep 60
-    - echo "Code coverage is 90%"
-
-lint-test-job:   # This job also runs in the test stage.
-  stage: test    # It can run at the same time as unit-test-job (in parallel).
-  script:
-    - echo "Linting code... This will take about 10 seconds."
-    - sleep 10
-    - echo "No lint issues found."
-
-deploy-job:      # This job runs in the deploy stage.
-  stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
-  environment: production
-  script:
-    - echo "Deploying application..."
-    - echo "Application successfully deployed."
+    - name: deploy to site
+      uses: appleboy/ssh-action@master 
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT }}
+        script: |
+          cd /home
+          cd adi
+          cd web
+          cd life-of-poker.boragnitrealty.xyz
+          cd public_html
+          pwd
