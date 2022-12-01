@@ -59,7 +59,9 @@ jobs:
         php artisan dusk:chrome-driver
         php artisan storage:link
     - name: Directory Permissions
-      run: chmod -R 777 storage bootstrap/cache
+      run: | 
+        chmod -R 777 storage bootstrap/cache
+        chmod -R 777 ./deploy.sh 
     - name: Create Database
       run: |
         mkdir -p database
