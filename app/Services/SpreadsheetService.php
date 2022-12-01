@@ -82,7 +82,7 @@ final class SpreadsheetService
 
     public function extraAttributes($attributes)
     {
-        $this->deleteOldData = filter_var($attributes['checkbox_overwrite'], FILTER_VALIDATE_BOOLEAN) ?? false;
+        $this->deleteOldData = filter_var(@$attributes['checkbox_overwrite'], FILTER_VALIDATE_BOOLEAN) ?? false;
 
         $array =  array_flip(array_values(array_diff($this->currentModel->getFillable(), $this->getHeader())));
         $this->modelGroupValue =  array_intersect_key($attributes, array_flip($this->currentModel->group));
