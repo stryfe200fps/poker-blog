@@ -6,6 +6,7 @@ use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\Widget;
 use Backpack\PermissionManager\app\Http\Requests\RoleStoreCrudRequest as StoreRequest;
 use Backpack\PermissionManager\app\Http\Requests\RoleUpdateCrudRequest as UpdateRequest;
+use Exception;
 
 // VALIDATION
 
@@ -58,18 +59,23 @@ class RoleCrudController extends CrudController
          * the result, using Laravel's `withCount()` method.
          * That way, no users are loaded.
          */
-        $this->crud->query->withCount('users');
-        $this->crud->addColumn([
-            'label' => trans('backpack::permissionmanager.users'),
-            'type' => 'text',
-            'name' => 'users_count',
-            'wrapper' => [
-                'href' => function ($crud, $column, $entry, $related_key) {
-                    return backpack_url('user?role='.$entry->getKey());
-                },
-            ],
-            'suffix' => ' '.strtolower(trans('backpack::permissionmanager.users')),
-        ]);
+
+        // try {
+        //     $this->crud->query->withCount('users');
+        // } catch (Exception $e) {
+        // }
+
+        // $this->crud->addColumn([
+        //     'label' => trans('backpack::permissionmanager.users'),
+        //     'type' => 'text',
+        //     'name' => 'users_count',
+        //     'wrapper' => [
+        //         'href' => function ($crud, $column, $entry, $related_key) {
+        //             return backpack_url('user?role=' . $entry->getKey());
+        //         },
+        //     ],
+        //     'suffix' => ' ' . strtolower(trans('backpack::permissionmanager.users')),
+        // ]);
 
         /**
          * In case multiple guards are used, show a column for the guard.

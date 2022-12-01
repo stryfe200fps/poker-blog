@@ -30,7 +30,7 @@ class MediaReportingCrudController extends CrudController
      * 
      * @return void
      */
-public function setup()
+    public function setup()
     {
         CRUD::setModel(\App\Models\MediaReporting::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/media-reporting');
@@ -54,7 +54,7 @@ public function setup()
         CRUD::addColumn('type');
         CRUD::addColumn('published_date');
 
-       
+
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
@@ -87,35 +87,36 @@ public function setup()
         CRUD::setValidation(MediaReportingRequest::class);
         $ui = new BackpackUIService();
 
+        CRUD::field('show_homepage')->type('switch')->label('Should be on homepage');
         $ui->title();
         CRUD::addField([
-                'label' => 'Type',
-                'name' => 'type',
-                'type' => 'select2_from_array',
-                'options' => [
-                    'video' => 'Video',
-                    'podcast' => 'Podcast',
-                ],
-                'wrapper' => [
-                    'class' => 'form-group col-md-12  ',
-                ],
-            ]);
+            'label' => 'Type',
+            'name' => 'type',
+            'type' => 'select2_from_array',
+            'options' => [
+                'video' => 'Video',
+                'podcast' => 'Podcast',
+            ],
+            'wrapper' => [
+                'class' => 'form-group col-md-12  ',
+            ],
+        ]);
         $ui->description();
-        CRUD::addField(      [
-                'label' => 'Categories',
-                'type' => 'relationship',
-                'name' => 'media_reporting_categories', // the method that defines the relationship in your Model
-                'attribute' => 'title', // foreign key attribute that is shown to user
-                'pivot' => true, // on create&update, do you need to add/delete pivot table entries?
-                'inline_create' => ['entity' => 'media-reporting-category'],
-                'ajax' => true,
-                'minimum_input_length' => 0,
-                'allows_null' => true,
-                // 'value' => $this->crud->getCurrentOperation() === 'update' ? $this->crud->getCurrentEntry()->level->id : $lastLevelId,
-                'wrapper' => [
-                    'class' => 'form-group col-md-12',
-                ],
-            ]);
+        CRUD::addField([
+            'label' => 'Categories',
+            'type' => 'relationship',
+            'name' => 'media_reporting_categories', // the method that defines the relationship in your Model
+            'attribute' => 'title', // foreign key attribute that is shown to user
+            'pivot' => true, // on create&update, do you need to add/delete pivot table entries?
+            'inline_create' => ['entity' => 'media-reporting-category'],
+            'ajax' => true,
+            'minimum_input_length' => 0,
+            'allows_null' => true,
+            // 'value' => $this->crud->getCurrentOperation() === 'update' ? $this->crud->getCurrentEntry()->level->id : $lastLevelId,
+            'wrapper' => [
+                'class' => 'form-group col-md-12',
+            ],
+        ]);
 
         CRUD::addField('link');
 

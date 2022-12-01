@@ -20,8 +20,9 @@ class MediaReportingResource extends JsonResource
             'type' => $this->type,
             'link' => $this->link,
             'published_date' => $this->published_date,
+            'show_homepage' => $this->show_homepage,
             'categories' => $this->media_reporting_categories->map->only(['title', 'slug']),
-            'image_set' => $this->allMedia() 
+            'image_set' => $this->allMedia()
         ];
     }
 }

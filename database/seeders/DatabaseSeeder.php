@@ -34,7 +34,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
 
-        if (app()->environment() !== 'local' && app()->environment() !== 'dusk' ) { 
+        if (app()->environment() !== 'local' && app()->environment() !== 'dusk') {
             dump('Please change your environment to local');
             return;
         }
@@ -61,103 +61,102 @@ class DatabaseSeeder extends Seeder
             CountrySeeder::class,
             MediaReportingCategorySeeder::class,
             MediaReportingSeeder::class,
+            UserPermissionSeeder::class,
             SettingDefaultSeeder::class,
             MenuItemSeeder::class,
             PokerRoomSeeder::class
         ]);
 
-       $country = Country::where('name', 'Taiwan, Province of China')->first();
-       $country->name = 'Taiwan';
-       $country->save();
+        $country = Country::where('name', 'Taiwan, Province of China')->first();
+        $country->name = 'Taiwan';
+        $country->save();
 
-       $country = Country::where('name', 'Korea, Republic of')->first();
-       $country->name = 'South Korea';
-       $country->save();
+        $country = Country::where('name', 'Korea, Republic of')->first();
+        $country->name = 'South Korea';
+        $country->save();
 
-       $this->createEvent('Adrian Radores', 'APT');
-       $this->createEvent('Raven Barrogo', 'Mega Stack');
+        $this->createEvent('Adrian Radores', 'APT');
+        $this->createEvent('Raven Barrogo', 'Mega Stack');
 
 
-    $all =    Article::factory()->times(3)->create();
+        $all =    Article::factory()->times(3)->create();
 
-    foreach ($all as $article) {
-        $this->upload($article);
-    }
-
+        foreach ($all as $article) {
+            $this->upload($article);
+        }
     }
 
     public function createEvent($playerName, $eventName)
     {
-       $tournament = Tournament::factory()->create([
-            'title' => $eventName. ' Championship'
-       ]);
+        $tournament = Tournament::factory()->create([
+            'title' => $eventName . ' Championship'
+        ]);
 
-       $event = Event::factory()->create([
-            'title' => $eventName. ' Event',
+        $event = Event::factory()->create([
+            'title' => $eventName . ' Event',
             'tournament_id' => $tournament->id
-       ]);
+        ]);
 
-       $days = Day::factory()->times(3)->create([
-        'event_id' => $event->id
-       ]);
+        $days = Day::factory()->times(3)->create([
+            'event_id' => $event->id
+        ]);
 
 
         $levels = Level::factory()->times(3)->create([
-        'event_id' => $event->id
-       ]);
-
-       foreach ($levels as $level) {
-        $reports = EventReport::factory()->times(5)->create([
-            'level_id' => $level->id,
-            'day_id' => $days[0]->id
-            ]);
-        $reportsInDay2 = EventReport::factory()->times(5)->create([
-        'level_id' => $level->id,
-        'day_id' => $days[1]->id
-       ]);
-
-        $reportsInDay3 = EventReport::factory()->times(5)->create([
-        'level_id' => $level->id,
-        'day_id' => $days[2]->id
-       ]);
-       }
-     
-
-       $player = Player::factory()->create([
-        'name' => $playerName
-       ]);
-
-       foreach ($reports as $report) {
-        EventChip::factory()->create([
-            'event_report_id' => $report->id,
-            'player_id' => $player->id,
-            'day_id' => $report->day->id,
-            'published_date' => $report->published_date
+            'event_id' => $event->id
         ]);
-       }
+
+        foreach ($levels as $level) {
+            $reports = EventReport::factory()->times(5)->create([
+                'level_id' => $level->id,
+                'day_id' => $days[0]->id
+            ]);
+            $reportsInDay2 = EventReport::factory()->times(5)->create([
+                'level_id' => $level->id,
+                'day_id' => $days[1]->id
+            ]);
+
+            $reportsInDay3 = EventReport::factory()->times(5)->create([
+                'level_id' => $level->id,
+                'day_id' => $days[2]->id
+            ]);
+        }
+
+
+        $player = Player::factory()->create([
+            'name' => $playerName
+        ]);
+
+        foreach ($reports as $report) {
+            EventChip::factory()->create([
+                'event_report_id' => $report->id,
+                'player_id' => $player->id,
+                'day_id' => $report->day->id,
+                'published_date' => $report->published_date
+            ]);
+        }
 
         foreach ($reportsInDay2 as $report) {
-        EventChip::factory()->create([
-            'event_report_id' => $report->id,
-            'player_id' => $player->id,
-            'day_id' => $report->day->id,
-            'published_date' => $report->published_date
-        ]);
-       }
+            EventChip::factory()->create([
+                'event_report_id' => $report->id,
+                'player_id' => $player->id,
+                'day_id' => $report->day->id,
+                'published_date' => $report->published_date
+            ]);
+        }
 
         foreach ($reportsInDay3 as $report) {
-        EventChip::factory()->create([
-            'event_report_id' => $report->id,
-            'player_id' => $player->id,
-            'day_id' => $report->day->id,
-            'published_date' => $report->published_date
-        ]);
-       }
+            EventChip::factory()->create([
+                'event_report_id' => $report->id,
+                'player_id' => $player->id,
+                'day_id' => $report->day->id,
+                'published_date' => $report->published_date
+            ]);
+        }
 
-       $this->upload($event);
-       $this->upload($tournament);
-       $this->addPayouts($event);
-
+        $this->upload($event);
+        $this->upload($tournament);
+        $this->addPayouts($event);
     }
 
     public function addPayouts($event)
@@ -167,15 +166,15 @@ class DatabaseSeeder extends Seeder
             EventPayout::factory([
                 'event_id'  => $event->id,
                 'player_id' => $player->id
-                ])->create();
+            ])->create();
         }
     }
 
 
     public function upload($model)
     {
-        $link = config('app.url'). '/default_og-image.png';
-       $imageService = new ImageService($link , $model);
-       $imageService->imageUpload();
+        $link = config('app.url') . '/default_og-image.png';
+        $imageService = new ImageService($link, $model);
+        $imageService->imageUpload();
     }
 }
