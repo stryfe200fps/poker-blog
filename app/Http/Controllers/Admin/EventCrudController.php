@@ -27,7 +27,9 @@ class EventCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation { destroy as traitDestroy; }
+    use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation {
+        destroy as traitDestroy;
+    }
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
     use LimitUserPermissions;
 
@@ -66,7 +68,6 @@ class EventCrudController extends CrudController
         $this->crud->addButtonFromModelFunction('line', 'days', 'openDay', 'beginning');
         (new BackpackFilterService())->tournaments($this);
         (new BackpackFilterService())->timezone($this);
-
     }
 
 
@@ -82,7 +83,7 @@ class EventCrudController extends CrudController
         $ui = new BackpackUIService();
         CRUD::setValidation(EventRequest::class);
 
-         $this->crud->addField([
+        $this->crud->addField([
             'name' => 'tournament_id',
             'label' => 'Series',
             'type' => 'relationship',
@@ -99,8 +100,16 @@ class EventCrudController extends CrudController
         $ui->description();
         $ui->content();
         CRUD::field('event_game_table')->label('Games')->type('relationship')->allows_null(false);
+
+        CRUD::field('label_local')->value('<b>Local Rate</b><br><hr>')->type('custom_html');
+
         CRUD::field('buyin')->type('number')->hint('note: All numbers will follow the currency from the series');
         CRUD::field('fee')->type('number')->hint('note: All numbers will follow the currency from the series');
+
+        CRUD::field('label_usd')->value('<b>USD Rate</b><br><hr>')->type('custom_html');
+
+        CRUD::field('buyin_usd')->label('Buyin')->type('number')->hint('note: All numbers will follow the currency from the series');
+        CRUD::field('fee_usd')->label('Fee')->type('number')->hint('note: All numbers will follow the currency from the series');
         $ui->image();
     }
 

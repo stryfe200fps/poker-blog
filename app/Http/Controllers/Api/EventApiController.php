@@ -11,12 +11,10 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class EventApiController extends Controller
 {
-    // public function index()
-    // {
-    //     return EventResource::collection(Event::with(['payouts', 'poker_tournament' => function ($q) {
-    //         $q->with('poker_tour');
-    //     }])->latest()->paginate(10));
-    // }
+    public function index()
+    {
+        return EventResource::collection(Event::latest()->paginate(10));
+    }
 
     // public function show($id)
     // {
@@ -33,7 +31,7 @@ class EventApiController extends Controller
 
         if ($request->file('image')) {
             $day->addMediaFromRequest('image')
-                   ->toMediaCollection('event_gallery');
+                ->toMediaCollection('event_gallery');
         }
 
         return 200;
