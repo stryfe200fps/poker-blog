@@ -71,7 +71,7 @@ function insert($route, array $attributes, $returnDefault = true, $routeParamete
 {
     //authenticate user
     test()->superAdminAuthenticate();
-    $test = test()->get("/admin/$route/create?".http_build_query($routeParameters))->assertStatus(200);
+    $test = test()->get("/admin/$route/create?" . http_build_query($routeParameters))->assertStatus(200);
     $post = test()->post("/admin/$route", $attributes);
     if (!$returnDefault)
         return $post;
@@ -84,7 +84,7 @@ function delete($route, string $model)
 
     test()->superAdminAuthenticate();
 
-    $abstractModel = getModel($model) ;
+    $abstractModel = getModel($model);
     $create = $abstractModel->factory()->create();
     test()->delete("admin/$route/$create->id");
 
@@ -93,7 +93,7 @@ function delete($route, string $model)
     return test();
 }
 
-function update($route, string $model , array $attributes, $routeParameters = [])
+function update($route, string $model, array $attributes, $routeParameters = [])
 {
     test()->superAdminAuthenticate();
 
@@ -101,7 +101,7 @@ function update($route, string $model , array $attributes, $routeParameters = []
     $create = getModel($model)->factory()->create($attributes);
     $id = $create->id;
     //go to the edit page
-    $visit =  test()->get("admin/$route/$id/edit?".http_build_query($routeParameters) )->assertStatus(200);
+    $visit =  test()->get("admin/$route/$id/edit?" . http_build_query($routeParameters))->assertStatus(200);
     //save update
     $test = test()->put("/admin/$route/update", $attributes);
 
@@ -114,19 +114,20 @@ function getModel(string $model)
     return test()->app()->make("App\Models\\$model");
 }
 
- function getFileType($value)
-  {
-    return  (new \ReflectionClass(get_class($value)))->getShortName() ;
-  }
+function getFileType($value)
+{
+    return (new \ReflectionClass(get_class($value)))->getShortName();
+}
 
 
-  function uploadImage($image, $model )
+function uploadImage($image, $model)
 {
     return (new ImageService($image, $model))->imageUpload();
 }
 
-    function generateString($length = 100) {
-   $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+function generateString($length = 100)
+{
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $charactersLength = strlen($characters);
     $randomString = '';
     for ($i = 0; $i < $length; $i++) {

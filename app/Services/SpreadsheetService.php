@@ -17,7 +17,7 @@ final class SpreadsheetService
 
     public function __construct(protected UploadedFile $file, protected Model $currentModel)
     {
-         $this->excelData = (new FastExcel)->import($file);
+        $this->excelData = (new FastExcel)->import($file);
     }
 
     // public function moveFile()
@@ -28,7 +28,6 @@ final class SpreadsheetService
     public function getSpreadsheetHeader()
     {
         return array_keys($this->excelData->toArray()[0]);
-
     }
 
     public function getHeader()
@@ -41,12 +40,12 @@ final class SpreadsheetService
         $headerPlayerId = array_values(collect($chosenHeaders)->toArray());
 
         foreach ($this->excelData as $row) {
+            $model =  (new \ReflectionClass(get_class($this->currentModel)))->getShortName();
+            $class = app()->make("App\Models\\$model");
 
-            // dd($row, $chosenHeaders);
-
-
-
+            $class->create([]);
         }
+        dd($headerPlayerId, $chosenHeaders);
+        return $headerPlayerId;
     }
-
 }
